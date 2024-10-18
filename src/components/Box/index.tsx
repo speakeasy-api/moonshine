@@ -5,5 +5,5 @@ interface BoxProps {
 }
 
 export function Box({ children }: BoxProps) {
-  return <div style={{ border: "1px solid red" }}>{children}</div>;
+  return <div style={{ border: "1px solid blue" }}>{children}</div>;
 }
