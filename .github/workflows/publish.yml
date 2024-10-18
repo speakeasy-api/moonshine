@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Install PNPM
+        uses: pnpm/action-setup@v4
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         env:
