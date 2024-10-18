@@ -4,7 +4,7 @@
   "packageManager": "pnpm@8.15.0",
   "description": "Speakeasy's design system Moonshine",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/speakeasy-api/moonshine.git"
