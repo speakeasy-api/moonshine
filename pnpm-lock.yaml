@@ -51,6 +51,9 @@ importers:
       '@storybook/test':
         specifier: ^8.3.6
         version: 8.3.6(storybook@8.3.6)
+      chromatic:
+        specifier: ^11.12.6
+        version: 11.12.6
       esbuild:
         specifier: ^0.24.0
         version: 0.24.0
