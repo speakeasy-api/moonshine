@@ -10,9 +10,10 @@ build({
   minify: true,
   sourcemap: true,
   bundle: true,
+  target: "es2019",
 });
 
 new Generator({
-  entry: "src/index.ts",
+  entry: "./index.ts",
   output: "dist/index.d.ts",
-}).generate();
+}, true, true).generate();

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "target": "es2019",
     "declaration": true,
@@ -10,6 +11,7 @@
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "rootDir": "./src",
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "src/**/*.stories.@(mdx|tsx)"]
