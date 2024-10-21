@@ -13,5 +13,13 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  core: {
+    builder: '@storybook/builder-vite',
+  },
+  async viteFinal(config) {
+    const { mergeConfig } = await import('vite')
+
+    return mergeConfig(config, {})
+  },
 }
 export default config
