@@ -4,3 +4,4 @@ node_modules/
 *storybook.log
 *.log
 *.tsbuildinfo
+*.tgz

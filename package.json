@@ -5,11 +5,16 @@
   "description": "Speakeasy's design system Moonshine",
   "main": "dist/moonshine.cjs.js",
   "module": "dist/moonshine.es.js",
-  "types": "dist/moonshine.d.ts",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/moonshine.cjs.js",
-      "import": "./dist/moonshine.es.js"
+      "import": "./dist/moonshine.es.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./moonshine.css": {
+      "require": "./dist/style.css",
+      "import": "./dist/style.css"
     }
   },
   "repository": {
@@ -22,7 +27,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "pnpm clean && vite build",
-    "prepack": "pnpm build",
+    "prepare": "pnpm build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic",
