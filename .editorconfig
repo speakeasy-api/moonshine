@@ -1,0 +1,31 @@
+# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+root = true
+
+# All files
+[*]
+indent_style = space
+indent_size = 2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Specific for markdown files (allow trailing whitespace for alignment)
+[*.md]
+trim_trailing_whitespace = false
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# YAML files
+[*.yml, *.yaml]
+indent_size = 2
+
+# HTML, CSS, and SCSS files
+[*.html, *.css, *.scss]
+indent_size = 2
+
+# JavaScript and TypeScript
+[*.js, *.ts, *.jsx, *.tsx]
+indent_size = 2
