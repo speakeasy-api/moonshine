@@ -17,12 +17,16 @@
     "prepack": "pnpm build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "lint": "pnpm eslint",
+    "lint:fix": "pnpm eslint --fix"
   },
   "author": "Speakeasy",
   "license": "ISC",
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
+    "@eslint/compat": "^1.2.1",
+    "@eslint/js": "^9.13.0",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
@@ -34,12 +38,18 @@
     "@storybook/react": "^8.3.6",
     "@storybook/react-vite": "^8.3.6",
     "@storybook/test": "^8.3.6",
+    "@types/eslint__js": "^8.42.3",
     "chromatic": "^11.12.6",
     "esbuild": "^0.24.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "npm-dts": "^1.3.13",
+    "prettier": "^3.3.3",
     "semantic-release": "^24.1.2",
     "storybook": "^8.3.6",
-    "typescript": "^5.4.5"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.10.0"
   },
   "peerDependencies": {
     "@types/react": "^18.3.11",
