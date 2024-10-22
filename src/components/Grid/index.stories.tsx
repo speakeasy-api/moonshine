@@ -5,6 +5,7 @@ import { createSampleChildren } from '@/lib/storybookUtils'
 
 const meta: Meta<typeof Grid> = {
   component: Grid,
+  tags: ['autodocs'],
 }
 
 export default meta
