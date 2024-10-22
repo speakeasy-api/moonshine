@@ -7,6 +7,11 @@ const packageName = 'moonshine'
 
 export default defineConfig({
   plugins: [react(), dts()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './tests/setup.js',
+  },
   build: {
     outDir: 'dist',
     lib: {
