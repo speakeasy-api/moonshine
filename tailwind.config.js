@@ -1,16 +1,17 @@
-import { maxGridColumns } from '@/components/Grid'
-const gridColumnsSafelist = [...Array.from({ length: maxGridColumns })].map(
-  (_, index) => `grid-cols-${index + 1}`
-)
-
-const gapSafelist = [...Array.from({ length: 10 })].map(
-  (_, index) => `gap-${index + 1}`
-)
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  safelist: [...gridColumnsSafelist, ...gapSafelist],
+  // Tailwind purges classnames that are not "used" in the codebase. This includes
+  // any classnames that are interpolated such as: const className =
+  // `grid-cols-${index + 1}` so we need to whitelist them here.
+  safelist: [
+    {
+      pattern: /grid-cols-\d+/,
+    },
+    {
+      pattern: /gap-\d+/,
+    },
+  ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
