@@ -6,10 +6,12 @@ export default {
   // `grid-cols-${index + 1}` so we need to whitelist them here.
   safelist: [
     {
-      pattern: /grid-cols-\d+/,
+      pattern: /gap-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
-      pattern: /gap-\d+/,
+      pattern: /grid-cols-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],

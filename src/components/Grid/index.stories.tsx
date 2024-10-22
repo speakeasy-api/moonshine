@@ -26,3 +26,10 @@ export const WithCustomGap: Story = {
     gap: 10,
   },
 }
+
+export const WithResponsiveColumns: Story = {
+  args: {
+    ...Primary.args,
+    columns: { sm: 1, md: 2, lg: 3 },
+  },
+}
