@@ -8,5 +8,7 @@
     "typescript",
     "typescriptreact"
   ],
-  "css.lint.unknownAtRules": "ignore"
+  "files.associations": {
+    "global.css": "tailwindcss"
+  }
 }
