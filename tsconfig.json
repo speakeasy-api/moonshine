@@ -14,7 +14,7 @@
     "rootDir": "./src",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     "baseUrl": ".",

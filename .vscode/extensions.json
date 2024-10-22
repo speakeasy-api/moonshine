@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense
+    "dbaeumer.vscode-eslint" // ESLint extension
+  ]
+}

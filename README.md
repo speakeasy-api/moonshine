@@ -80,3 +80,15 @@ The release workflow is as follows:
 We're using [Vitest](https://vitest.dev/) and [@testing-library/react](https://testing-library.com/react/) for testing components when necessary.
 
 Run `pnpm test` to run the tests.
+
+### Packing the library locally
+
+If you want to test that the library is being packaged correctly and can be used from a client app, run `pnpm pack` to pack the library into a tarball.
+
+Then install the package from the tarball in another application:
+
+```bash
+pnpm install ../moonshine/speakeasy-api-moonshine-0.0.1.tgz 
+```
+
+This will add a `file:` entry to your `package.json` for the local moonshine package.
