@@ -73,3 +73,10 @@ The release workflow is as follows:
 - `docs`: Documentation only changes
 - `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 - `test`: Adding missing tests
+
+
+### Testing
+
+We're using [Vitest](https://vitest.dev/) and [@testing-library/react](https://testing-library.com/react/) for testing components when necessary.
+
+Run `pnpm test` to run the tests.
