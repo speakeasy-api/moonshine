@@ -1,5 +1,5 @@
 import { maxGridColumns } from '@/components/Grid'
-const safelist = [...Array.from({ length: maxGridColumns })].map(
+const gridColumnsSafelist = [...Array.from({ length: maxGridColumns })].map(
   (_, index) => `grid-cols-${index + 1}`
 )
 
@@ -10,7 +10,7 @@ const gapSafelist = [...Array.from({ length: 10 })].map(
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  safelist: [...safelist, ...gapSafelist],
+  safelist: [...gridColumnsSafelist, ...gapSafelist],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
