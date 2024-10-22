@@ -21,13 +21,19 @@ Then install the package:
 pnpm add @speakeasy-api/moonshine
 ```
 
+Reference the CSS file in your project:
+
+```ts
+import "@speakeasy-api/moonshine/moonshine.css";
+```
+
 Then you can import components from the package:
 
 ```tsx
 import { Box } from "@speakeasy-api/moonshine";
 ```
 
-The package is built with [esbuild](https://esbuild.github.io/), and is distributed using [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). CommonJS modules are not currently generated but could be if that's helpful for your use case.
+The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
 
 ## Contributing
 

@@ -1,1 +1,3 @@
-export * from './components/Box'
+import './variables.css'
+
+export * from '@/components/Box'

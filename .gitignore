@@ -1,4 +1,7 @@
 dist/
-node_modules
+node_modules/
 .DS_Store
 *storybook.log
+*.log
+*.tsbuildinfo
+*.tgz
