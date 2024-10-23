@@ -66,14 +66,27 @@ The release workflow is as follows:
 
 #### Conventional changelog reference
 
-- `feat`: A new feature
-- `fix`: A bug fix
-- `perf`: A code change that improves performance
-- `refactor`: A code change that neither fixes a bug nor adds a feature
-- `docs`: Documentation only changes
-- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- `test`: Adding missing tests
+Only certain commit types will trigger a release (noted below in **bold**).
 
+- **`feat`:** A new feature (triggers a minor release)
+- **`fix`:** A bug fix (triggers a patch release)
+- **`perf`:** A code change that improves performance (triggers a patch release)
+- `refactor`: A code change that neither fixes a bug nor adds a feature (no release)
+- `docs`: Documentation only changes (no release)
+- `style`: Changes that do not affect the meaning of the code (no release)
+- `test`: Adding missing tests (no release)
+- `ci`: Changes to CI configuration files and scripts (no release)
+- `build`: Changes that affect the build system or external dependencies (no release)
+- `chore`: Other changes that don't modify src or test files (no release)
+
+##### Breaking changes
+
+If a PR is a breaking change for consumers, then the commit message should use a bang (`!`) to signify a breaking change, which will trigger a major release:
+
+```
+feat(component-name)!: breaking change description
+fix(component-name)!: breaking change description
+```
 
 ### Testing
 
