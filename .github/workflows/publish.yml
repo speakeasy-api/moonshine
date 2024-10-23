@@ -6,7 +6,18 @@ on:
       - main
 
 jobs:
+  # Sense check that the merge commit is a conventional commit
+  # However, it should have already been checked by the conventional-commit-checker
+  check:
+    name: Check Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish:
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
