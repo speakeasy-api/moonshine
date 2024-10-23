@@ -1,7 +1,7 @@
 function generateDarkPastelColor(index: number) {
   const hue = (index * 137) % 360
-  const saturation = 40 + Math.random() * 20
-  const lightness = 30 + Math.random() * 10
+  const saturation = 30
+  const lightness = 45
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`
 }
 
