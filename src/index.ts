@@ -1,3 +1,3 @@
 import './global.css'
 
-export * from '@/components/Box'
+export * from '@/components/Grid'
