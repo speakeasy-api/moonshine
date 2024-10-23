@@ -12,24 +12,23 @@ export default meta
 type Story = StoryObj<typeof Grid>
 
 const columnCount = 6
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     children: createSampleChildren(columnCount),
     columns: columnCount,
-    gap: 0,
   },
 }
 
 export const WithCustomGap: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     gap: 10,
   },
 }
 
 export const WithResponsiveColumns: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     columns: { sm: 1, md: 2, lg: 3 },
   },
 }

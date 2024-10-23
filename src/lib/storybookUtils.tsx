@@ -17,7 +17,6 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
         style={{
           backgroundColor,
           padding: '10px',
-          margin: '5px',
           borderRadius: '5px',
           color: 'white',
         }}
