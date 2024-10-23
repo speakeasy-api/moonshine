@@ -13,6 +13,14 @@ export default {
       pattern: /grid-cols-\d+$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /flex-row$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /flex-col$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
