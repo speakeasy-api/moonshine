@@ -5,3 +5,4 @@ node_modules/
 *.log
 *.tsbuildinfo
 *.tgz
+storybook-static/
