@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react/*'
-import { Button } from './'
+import { Button, ButtonProps } from './'
 import { PlusIcon as RadixPlusIcon } from '@radix-ui/react-icons'
+import { fn as storybookActionFn } from '@storybook/test'
 
 const meta: Meta<typeof Button> = {
   component: Button,
@@ -11,8 +12,13 @@ export default meta
 
 type Story = StoryObj<typeof Button>
 
+const baseProps: Partial<ButtonProps> = {
+  onClick: storybookActionFn(),
+}
+
 export const Default: Story = {
   args: {
+    ...baseProps,
     children: 'Button',
     variant: 'default',
   },
