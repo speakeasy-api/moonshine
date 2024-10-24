@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ['class'],
+  darkMode: 'class',
   // Tailwind purges classnames that are not "used" in the codebase. This includes
   // any classnames that are interpolated such as: const className =
   // `grid-cols-${index + 1}` so we need to whitelist them here.
   safelist: [
+    'dark',
     {
       pattern: /gap-\d+$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
