@@ -1,1 +1,0 @@
-import{j as a}from"./jsx-runtime-DEdD30eg.js";function n(r){return`hsl(${r*137%360}, 30%, 45%)`}function c(r,e){return Array.from({length:r}).map((o,t)=>{const s=n(t);return a.jsx("div",{style:{backgroundColor:s,padding:"10px",borderRadius:"5px",color:"white"},"data-testid":void 0,children:t+1},t)})}export{c};
