@@ -1,5 +1,8 @@
 import { Range } from '@/lib/typeUtils'
 
+// Generic
+export type Orientation = 'horizontal' | 'vertical'
+
 // Breakpoints
 export type Breakpoints = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 export type ResponsiveValue<T> = T | { [key in Breakpoints]?: T }
