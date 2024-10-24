@@ -19,6 +19,8 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
           padding: '10px',
           borderRadius: '5px',
           color: 'white',
+          minWidth: '100px',
+          textAlign: 'center',
         }}
         data-testid={attachTestIds ? `sample-child-${index + 1}` : undefined}
       >

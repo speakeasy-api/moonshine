@@ -16,6 +16,7 @@ export const Default: Story = {
   args: {
     children: createSampleChildren(columnCount),
     columns: columnCount,
+    gap: 5,
   },
 }
 
