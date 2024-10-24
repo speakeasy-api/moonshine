@@ -1,0 +1,18 @@
+name: Check components are exported
+
+on:
+  pull_request:
+    branches:
+      - main
+
+# Check that all components are exported in src/index.ts
+# We can remove this if it proves to be too noisy
+jobs:
+  check-index-exports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
+      - run: ./scripts/check-index-exports.sh

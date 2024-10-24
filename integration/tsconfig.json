@@ -12,24 +12,9 @@
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "rootDir": "./src",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
     "baseUrl": ".",
     "types": [
       "@testing-library/jest-dom"
-    ]
+    ],
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.stories.@(mdx|tsx)",
-    "src/**/*.test.@(ts|tsx)"
-  ]
 }

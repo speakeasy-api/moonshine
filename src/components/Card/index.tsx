@@ -14,7 +14,7 @@ const CardContent: FC<PropsWithChildren> = ({ children }) => (
 CardContent.displayName = 'CardContent'
 
 const CardFooter: FC<PropsWithChildren> = ({ children }) => (
-  <div className="flex items-center p-6 pt-0 text-sm text-muted-foreground">
+  <div className="text-muted-foreground flex items-center p-6 pt-0 text-sm">
     {children}
   </div>
 )
@@ -67,7 +67,7 @@ const Card: FC<CardProps> = ({ children }) => {
 
   return (
     <div
-      className={cn('rounded-xl border bg-card text-card-foreground shadow')}
+      className={cn('bg-card text-card-foreground rounded-xl border shadow')}
     >
       {filteredChildren}
     </div>
@@ -80,4 +80,4 @@ const CardWithSubcomponents = Object.assign(Card, {
   Footer: CardFooter,
 })
 
-export default CardWithSubcomponents
+export { CardWithSubcomponents as Card }

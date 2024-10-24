@@ -20,11 +20,12 @@ export default defineConfig({
       fileName: (format) => `${packageName}.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'lucide-react'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'lucide-react': 'LucideReact',
         },
       },
     },
