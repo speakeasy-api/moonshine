@@ -22,6 +22,9 @@ export default {
       pattern: /flex-col$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^line-clamp-/,
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
