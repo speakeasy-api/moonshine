@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
 import { Breakpoints } from '@/types.js'
+import debounce from '@/lib/debounce'
 
 const fullConfig = resolveConfig(tailwindConfig)
 
-const getBreakpoint = (width: number) => {
-  const breakpoints = fullConfig.theme.screens
-  const sortedBreakpoints = Object.entries(breakpoints)
-    .map(([key, value]) => ({ key, minWidth: parseInt(value, 10) }))
-    .sort((a, b) => a.minWidth - b.minWidth)
+const sortedBreakpoints = Object.entries(fullConfig.theme.screens)
+  .map(([key, value]) => ({ key, minWidth: parseInt(value, 10) }))
+  .sort((a, b) => a.minWidth - b.minWidth)
 
+const getBreakpoint = (width: number) => {
   for (let i = sortedBreakpoints.length - 1; i >= 0; i--) {
     if (width >= sortedBreakpoints[i].minWidth) return sortedBreakpoints[i].key
   }
@@ -20,11 +20,11 @@ const getBreakpoint = (width: number) => {
 const useTailwindBreakpoint = (): Breakpoints => {
   const [breakpoint, setBreakpoint] = useState(getBreakpoint(window.innerWidth))
 
-  useEffect(() => {
-    const handleResize = () => {
+  useLayoutEffect(() => {
+    const handleResize = debounce(() => {
       const newBreakpoint = getBreakpoint(window.innerWidth)
       setBreakpoint(newBreakpoint)
-    }
+    }, 100)
 
     window.addEventListener('resize', handleResize)
     handleResize()
