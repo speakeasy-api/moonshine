@@ -1,4 +1,4 @@
-import type { Meta, StoryFn, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 
 import { Card } from '.'
 
@@ -10,18 +10,7 @@ const meta: Meta<typeof Card> = {
 export default meta
 type Story = StoryObj<typeof Card>
 
-const defaultDecorator = (Story: StoryFn) => (
-  <div className="px-5 py-5">
-    <Story />
-  </div>
-)
-
-const defaultStoryProps = {
-  decorators: [defaultDecorator],
-}
-
 export const Default: Story = {
-  ...defaultStoryProps,
   args: {
     children: [
       <Card.Header key="header">This is a card title</Card.Header>,
@@ -41,7 +30,6 @@ export const Default: Story = {
 }
 
 export const WithNoHeader: Story = {
-  ...defaultStoryProps,
   args: {
     ...Default.args,
     children: [
@@ -61,7 +49,6 @@ export const WithNoHeader: Story = {
 }
 
 export const WithNoFooter: Story = {
-  ...defaultStoryProps,
   args: {
     ...WithNoHeader.args,
     children: [
@@ -81,7 +68,6 @@ export const WithNoFooter: Story = {
 }
 
 export const WithInvalidChildren: Story = {
-  ...defaultStoryProps,
   args: {
     ...Default.args,
     children: [
