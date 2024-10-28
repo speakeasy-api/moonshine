@@ -5,6 +5,7 @@ interface BadgeProps
   extends VariantProps<typeof badgeVariants>,
     React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
+  as?: React.ElementType
 }
 
 const badgeVariants = cva('inline-flex text-xs rounded-full px-3 py-1', {
@@ -21,8 +22,12 @@ const badgeVariants = cva('inline-flex text-xs rounded-full px-3 py-1', {
   },
 })
 
-export function Badge({ children, variant = 'default' }: BadgeProps) {
+export function Badge({
+  children,
+  variant = 'default',
+  as = 'span',
+}: BadgeProps) {
   const variantClass = badgeVariants({ variant })
-
-  return <div className={cn(variantClass)}>{children}</div>
+  const Comp = as
+  return <Comp className={cn(variantClass)}>{children}</Comp>
 }
