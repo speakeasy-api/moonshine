@@ -3,6 +3,13 @@ import '../src/global.css'
 import { allModes } from './modes'
 import { withThemeByClassName } from '@storybook/addon-themes'
 
+export const decorators = [
+  withThemeByClassName({
+    themes: { light: 'light', dark: 'dark' },
+    defaultTheme: 'light',
+  }),
+]
+
 const preview: Preview = {
   parameters: {
     viewport: {
@@ -20,15 +27,6 @@ const preview: Preview = {
         { name: 'dark', value: '#1E293B' },
       ],
     },
-    decorators: [
-      withThemeByClassName({
-        themes: {
-          light: 'light',
-          dark: 'dark',
-        },
-        defaultTheme: 'light',
-      }),
-    ],
 
     // Tells Chromatic to test each story in both light and dark modes
     chromatic: {
@@ -42,13 +40,6 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
-    },
-
-    darkMode: {
-      stylePreview: true,
-      // Will apply .light or .dark to the iframe body element
-      // which is an ancestor to the .storybook-preview-wrapper below
-      classTarget: 'body',
     },
   },
 }
