@@ -4,6 +4,7 @@ import Heading from '.'
 
 const meta: Meta<typeof Heading> = {
   component: Heading,
+  tags: ['autodocs'],
 }
 
 export default meta
@@ -35,19 +36,5 @@ export const Heading4: Story = {
   args: {
     level: 4,
     children: 'Heading level 4',
-  },
-}
-
-export const Heading5: Story = {
-  args: {
-    level: 5,
-    children: 'Heading level 5',
-  },
-}
-
-export const Heading6: Story = {
-  args: {
-    level: 6,
-    children: 'Heading level 6',
   },
 }
