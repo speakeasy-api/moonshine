@@ -3,10 +3,19 @@ import React from 'react'
 import '../src/global.css'
 import './storybook-preview-wrapper.css'
 import { themes } from '@storybook/theming'
+import { allModes } from './modes'
 
 const preview: Preview = {
   parameters: {
     layout: 'fullscreen',
+
+    // Tells Chromatic to test each story in both light and dark modes
+    chromatic: {
+      modes: {
+        light: allModes.light,
+        dark: allModes.dark,
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
