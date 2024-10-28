@@ -6,6 +6,7 @@ import {
   Button,
   Icon,
   Stack,
+  Badge,
 } from '@speakeasy-api/moonshine'
 import { describe, it, expect } from 'vitest'
 
@@ -65,5 +66,11 @@ describe('Stack', () => {
         <div>2</div>
       </Stack>
     )
+  })
+})
+
+describe('Badge', () => {
+  it('renders', () => {
+    render(<Badge>Default</Badge>)
   })
 })
