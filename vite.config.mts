@@ -11,6 +11,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './tests/setup.js',
+    exclude: ['integration', 'node_modules', 'dist'],
   },
   build: {
     outDir: 'dist',
