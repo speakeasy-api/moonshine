@@ -6,6 +6,7 @@ import { includeIgnoreFile } from '@eslint/compat'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import prettier from 'eslint-plugin-prettier'
+import reactRefresh from 'eslint-plugin-react-refresh'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -25,9 +26,14 @@ export default tseslint.config(
   {
     plugins: {
       prettier,
+      'react-refresh': reactRefresh,
     },
     rules: {
       'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Enable Prettier and ensure it uses .prettierrc
+
+      // Ensure only components are exported in a component file
+      // so that HMR doesn't break
+      'react-refresh/only-export-components': 'error',
     },
   }
 )

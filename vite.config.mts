@@ -11,6 +11,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './tests/setup.js',
+    exclude: ['integration', 'node_modules', 'dist'],
   },
   build: {
     outDir: 'dist',
@@ -20,11 +21,12 @@ export default defineConfig({
       fileName: (format) => `${packageName}.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'lucide-react'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'lucide-react': 'LucideReact',
         },
       },
     },

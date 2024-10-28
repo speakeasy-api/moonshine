@@ -1,3 +1,8 @@
+// IMPORTANT: the tsconfig rootDir is set to src/ so we have the correct structure in the published package
+// and additionally there is an issue with vite-dts-plugin generating incorrect types for class-variance-authority
+// so we need to colocate the tailwind config within the src directory
+// the postcss config points to this file so that tailwind is picked up by the build process
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',

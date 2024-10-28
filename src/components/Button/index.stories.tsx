@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react/*'
 import { Button, ButtonProps } from './'
-import { PlusIcon as RadixPlusIcon } from '@radix-ui/react-icons'
+import { PlusIcon as LucidePlusIcon } from 'lucide-react'
 import { fn as storybookActionFn } from '@storybook/test'
 
 const meta: Meta<typeof Button> = {
@@ -85,10 +85,10 @@ export const Large: Story = {
   },
 }
 
-// Wrapper for Radix PlusIcon that allows us to bypass issue
+// Wrapper for Lucide PlusIcon that allows us to bypass issue
 // where the code snippet would render React.forwardRef instead of <PlusIcon />
-function PlusIcon(props: React.ComponentProps<typeof RadixPlusIcon>) {
-  return <RadixPlusIcon {...props} />
+function PlusIcon(props: React.ComponentProps<typeof LucidePlusIcon>) {
+  return <LucidePlusIcon {...props} />
 }
 
 export const IconOnly: Story = {

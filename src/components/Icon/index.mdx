@@ -1,0 +1,17 @@
+import { Meta, IconGallery, IconItem, ArgTypes } from '@storybook/blocks';
+import * as IconStories from './index.stories.tsx';
+import { Icon } from './index.tsx';
+import { iconNames } from './names';
+
+<Meta of={IconStories} />
+
+# All Icons
+
+<IconGallery>
+  {iconNames.map((name) => (
+    <IconItem key={name} name={name}>
+      <Icon name={name} stroke="white" size={60} />
+    </IconItem>
+  ))}
+</IconGallery>
+

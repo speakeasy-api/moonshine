@@ -3,8 +3,12 @@ import { Range } from '@/lib/typeUtils'
 // Generic
 export type Orientation = 'horizontal' | 'vertical'
 
+export const sizes = ['small', 'medium', 'large', 'xl', '2xl'] as const
+export type Size = (typeof sizes)[number]
+
 // Breakpoints
-export type Breakpoints = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const
+export type Breakpoints = (typeof breakpoints)[number]
 export type ResponsiveValue<T> = T | { [key in Breakpoints]?: T }
 
 // Gap

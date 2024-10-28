@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import Grid from './'
+import { Grid } from './'
 import { createSampleChildren } from '@/lib/storybookUtils'
 
 describe('Grid', () => {

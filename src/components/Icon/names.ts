@@ -1,0 +1,5 @@
+import dynamicIconImports from 'lucide-react/dynamicIconImports'
+
+export const iconNames = Object.keys(
+  dynamicIconImports
+) as (keyof typeof dynamicIconImports)[]

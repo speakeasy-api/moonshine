@@ -1,0 +1,30 @@
+name: Published Package Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
+
+      - run: pnpm install
+      - run: pnpm pack
+
+      - run: pnpm link ../ # This links the root package into the integration project
+        working-directory: integration
+
+      - run: pnpm install --no-frozen-lockfile
+        working-directory: integration
+
+
+      - run: pnpm test
+        working-directory: integration
