@@ -19,6 +19,9 @@ jobs:
       - run: pnpm install
       - run: pnpm pack
 
+      - run: pnpm install
+        working-directory: integration
+
       - run: pnpm link ../ # This links the root package into the integration project
         working-directory: integration
 
