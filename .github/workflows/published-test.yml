@@ -19,11 +19,12 @@ jobs:
       - run: pnpm install
       - run: pnpm pack
 
+      - run: pnpm link ../ # This links the root package into the integration project
+        working-directory: integration
+
       - run: pnpm install --no-frozen-lockfile
         working-directory: integration
 
-      - run: pnpm link ../ # This links the root package into the integration project
-        working-directory: integration
 
       - run: pnpm test
         working-directory: integration
