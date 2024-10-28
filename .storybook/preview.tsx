@@ -1,31 +1,47 @@
 import type { Preview } from '@storybook/react'
-import React from 'react'
 import '../src/global.css'
-import './storybook-preview-wrapper.css'
-import { themes } from '@storybook/theming'
+import { allModes } from './modes'
+import { withThemeByClassName } from '@storybook/addon-themes'
+
+export const decorators = [
+  withThemeByClassName({
+    themes: { light: 'light', dark: 'dark' },
+    defaultTheme: 'light',
+  }),
+]
 
 const preview: Preview = {
   parameters: {
-    layout: 'fullscreen',
+    viewport: {
+      viewports: {
+        small: { name: 'Small', styles: { width: '640px', height: '800px' } },
+        large: {
+          name: 'Large',
+          styles: { width: '1024px', height: '1000px' },
+        },
+      },
+    },
+    backgrounds: {
+      values: [
+        { name: 'light', value: '#fff' },
+        { name: 'dark', value: '#1E293B' },
+      ],
+    },
+
+    // Tells Chromatic to test each story in both light and dark modes
+    chromatic: {
+      modes: {
+        'light mobile': allModes['light mobile'],
+        'dark desktop': allModes['dark desktop'],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
     },
-    // TODO: figure out how to make this work with autodocs
-    // Couldn't easily get it to work :(
-    docs: { theme: themes.dark },
-    darkMode: {
-      stylePreview: true,
-      // Will apply .light or .dark to the iframe body element
-      // which is an ancestor to the .storybook-preview-wrapper below
-      classTarget: 'body',
-    },
   },
-  decorators: [
-    (Story) => <div className="storybook-preview-wrapper">{Story()}</div>,
-  ],
 }
 
 export default preview

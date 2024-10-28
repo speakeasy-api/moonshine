@@ -13,7 +13,6 @@ export const Default: Story = {
   args: {
     name: 'plus',
     size: 'small',
-    stroke: 'black',
   },
   parameters: {
     layout: 'centered',

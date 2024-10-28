@@ -11,7 +11,7 @@ export default meta
 type Story = StoryObj<typeof Separator>
 
 const defaultDecorator = (Story: React.ComponentType) => (
-  <div className="flex h-20 items-center justify-center">
+  <div className="flex h-20 items-center justify-center p-5">
     <Story />
   </div>
 )
