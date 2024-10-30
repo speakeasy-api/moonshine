@@ -1,14 +1,26 @@
 import { Size } from '@/types'
+import type { Range } from '@/lib/typeUtils'
 import { useMemo, type CSSProperties } from 'react'
 import styles from './index.module.css'
 type Threshold = [number, number]
 
 export interface ScoreProps {
-  score: number
+  /**
+   * The score to display. Must be between 0 and 100.
+   */
+  score: Range<100>
+  /**
+   * The size of the score component e.g small, medium, large, xl, 2xl
+   */
   size?: Size
+  /**
+   * Whether to show the label.
+   */
   showLabel?: boolean
+  /**
+   * The color of the track.
+   */
   trackColor?: string
-
   /**
    * Custom definition of thresholds for color changes.
    * e.g [50, 75] will change color to green at 75%, orange at 50%. Otherwise red.

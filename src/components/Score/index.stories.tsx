@@ -5,6 +5,12 @@ const meta: Meta<typeof Score> = {
   component: Score,
   tags: ['autodocs'],
   argTypes: {
+    score: {
+      control: 'range',
+      min: 0,
+      max: 100,
+      step: 1,
+    },
     size: {
       options: ['small', 'medium', 'large', 'xl', '2xl'],
       control: 'select',
@@ -42,21 +48,21 @@ export const Small: Story = {
 
 export const Medium: Story = {
   args: {
-    score: 50,
+    score: 60,
     size: 'medium',
   },
 }
 
 export const Large: Story = {
   args: {
-    score: 50,
+    score: 75,
     size: 'large',
   },
 }
 
 export const XL: Story = {
   args: {
-    score: 50,
+    score: 25,
     size: 'xl',
   },
 }
