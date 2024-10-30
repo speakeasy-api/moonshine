@@ -1,5 +1,10 @@
 import { Breakpoints, ResponsiveValue, Size, sizes } from '@/types'
 
+/**
+ * Create a range of numbers from 0 to N
+ * @example
+ * type Range0to100 = Range<100> // [0, 1, 2, ..., 100]
+ */
 export type Range<
   N extends number,
   Arr extends unknown[] = [],
