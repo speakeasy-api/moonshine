@@ -326,7 +326,7 @@ packages:
     os: [win32]
 
   '@speakeasy-api/moonshine@file:../speakeasy-api-moonshine-0.0.1.tgz':
-    resolution: {integrity: sha512-BnmUMeFcbEi3cnDuX5e0iWKfZIn//HDMihQsj3EBV9RHGey+WJ1gtV24wws5/o8YeZztyhAD/eWnXFvdybG8Uw==, tarball: file:../speakeasy-api-moonshine-0.0.1.tgz}
+    resolution: {integrity: sha512-Ws0CocWRNXUjcXcEh/WMh7vvcT2OIfCSImBVcWe/WGS5gfUMGupQmJ4xSkK9lwfc3/1hP23h8ca8Yk4l0B3Qmg==, tarball: file:../speakeasy-api-moonshine-0.0.1.tgz}
     version: 0.0.1
     peerDependencies:
       '@types/react': ^18.3.11
