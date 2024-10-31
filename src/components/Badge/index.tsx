@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 
 type BadgeVariants =
   | 'default'
@@ -10,9 +10,7 @@ type BadgeVariants =
   | 'warning'
   | 'danger'
 
-interface BadgeProps
-  extends VariantProps<typeof badgeVariants>,
-    React.HTMLAttributes<HTMLDivElement> {
+interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   as?: React.ElementType
   variant?: BadgeVariants
