@@ -1,76 +1,167 @@
 import { cn } from '@/lib/utils'
-import React, { ReactElement, FC, PropsWithChildren, Children } from 'react'
+import React, { FC, PropsWithChildren, ReactNode } from 'react'
+import { Icon } from '../Icon'
+import { Stack } from '../Stack'
+import { Button } from '../Button'
+import { Score } from '../Score'
+import { iconNames } from '../Icon/names'
+import { Children } from 'react'
+import { Range } from '@/lib/typeUtils'
 
-const CardHeader: FC<PropsWithChildren> = ({ children }) => (
-  <div className="flex flex-col space-y-1.5 p-6 pb-0 text-lg font-semibold leading-none tracking-tight">
-    {children}
+type RightElement =
+  | {
+      type: 'button'
+      label: string
+      onClick: () => void
+    }
+  | {
+      type: 'gauge'
+      value: Range<100>
+    }
+
+type IconProps = {
+  name: (typeof iconNames)[number]
+  size?: 'small' | 'medium' | 'large'
+}
+
+type CardHeaderProps = PropsWithChildren & {
+  subheader?: React.ReactNode
+  icon?: IconProps
+  rightElement?: RightElement
+}
+
+const CardHeader: FC<CardHeaderProps> = ({
+  children,
+  subheader,
+  icon,
+  rightElement,
+}) => (
+  <div
+    className={cn(
+      'flex w-full flex-row gap-4',
+      subheader ? 'items-start' : 'items-center'
+    )}
+  >
+    {icon && (
+      <div className="flex-shrink-0 rounded-[8px] border p-2">
+        <Icon name={icon.name} size={icon.size} />
+      </div>
+    )}
+
+    <div className="flex min-w-0 flex-grow flex-col gap-1">
+      <div className="text-md font-semibold leading-none tracking-tight">
+        {children}
+      </div>
+      {subheader && (
+        <div className="text-muted-foreground mt-1 flex items-center text-sm">
+          {subheader}
+        </div>
+      )}
+    </div>
+
+    {rightElement && (
+      <div className="flex flex-shrink-0 justify-end gap-2">
+        {rightElement.type === 'button' && (
+          <Button onClick={rightElement.onClick} variant="outline">
+            {rightElement.label}
+          </Button>
+        )}
+        {rightElement.type === 'gauge' && rightElement.value && (
+          <Score score={rightElement.value} size="small" />
+        )}
+      </div>
+    )}
   </div>
 )
-CardHeader.displayName = 'CardHeader'
 
 const CardContent: FC<PropsWithChildren> = ({ children }) => (
-  <div className="p-6">{children}</div>
+  <div className="text-sm">{children}</div>
 )
 CardContent.displayName = 'CardContent'
 
-const CardFooter: FC<PropsWithChildren> = ({ children }) => (
-  <div className="text-muted-foreground flex items-center p-6 pt-0 text-sm">
-    {children}
+type FooterContent = {
+  text: string
+  link?: {
+    label: string
+    href: string
+  }
+}
+
+type CardFooterProps = {
+  content: FooterContent
+}
+
+const CardFooter: FC<CardFooterProps> = ({ content }) => (
+  <div className="border-t px-6 py-4">
+    <div className="text-muted-foreground flex items-center text-sm">
+      {content.text}
+      {content.link && (
+        <a
+          href={content.link.href}
+          className="text-primary ml-2 hover:underline"
+        >
+          {content.link.label}
+        </a>
+      )}
+    </div>
   </div>
 )
 CardFooter.displayName = 'CardFooter'
 
 type CardProps = {
-  children: Array<
-    | ReactElement<typeof CardHeader>
-    | ReactElement<typeof CardContent>
-    | ReactElement<typeof CardFooter>
-  >
+  children: ReactNode[]
+  onClick?: () => void
+  href?: string
 }
 
-type AllChildren = typeof CardHeader | typeof CardContent | typeof CardFooter
+const Card: FC<CardProps> = ({ children, onClick, href }) => {
+  const hasButtonElement = Children.toArray(children).some((child) => {
+    if (React.isValidElement(child) && child.type === CardHeader) {
+      return child.props.rightElement?.type === 'button'
+    }
+    return false
+  })
 
-const customSort = (a: ReactElement, b: ReactElement) => {
-  const order = [CardHeader, CardContent, CardFooter]
-  return (
-    order.indexOf(a.type as AllChildren) - order.indexOf(b.type as AllChildren)
-  )
-}
-
-const Card: FC<CardProps> = ({ children }) => {
-  // We will omit any invalid children if they are present
-  const isValidChild = (child: ReactElement): boolean =>
-    child.type === CardHeader ||
-    child.type === CardContent ||
-    child.type === CardFooter
-
-  const invalidChildren = Children.toArray(children).filter(
-    (child): child is ReactElement =>
-      React.isValidElement(child) && !isValidChild(child)
-  )
-
-  if (invalidChildren.length > 0) {
+  if (hasButtonElement && (onClick || href)) {
     console.warn(
-      'Card component received invalid children (will be omitted):',
-      invalidChildren
+      'Card: Card-level interaction (onClick/href) will be ignored when header contains a button element. ' +
+        'This prevents confusing UX with nested clickable elements.'
     )
   }
 
-  const filteredChildren = Children.toArray(children)
-    .filter(
-      (child): child is ReactElement<AllChildren> =>
-        React.isValidElement(child) && isValidChild(child)
-    )
-    // Sort the children in the order of CardHeader, CardContent, CardFooter
-    // no matter what order they are defined in code.
-    .sort(customSort)
+  const isInteractive = !hasButtonElement && Boolean(onClick || href)
+  const Wrapper = href && !hasButtonElement ? 'a' : 'div'
+  const wrapperProps = !hasButtonElement
+    ? href
+      ? { href }
+      : onClick
+        ? { onClick }
+        : {}
+    : {}
 
   return (
-    <div
-      className={cn('bg-card text-card-foreground rounded-xl border shadow')}
+    <Wrapper
+      className={cn(
+        'bg-card text-card-foreground relative flex w-fit flex-col rounded-[8px] border shadow',
+        isInteractive && 'hover:bg-card/70 cursor-pointer'
+      )}
+      {...wrapperProps}
     >
-      {filteredChildren}
-    </div>
+      <div className="p-6">
+        <Stack gap={3}>
+          {children.map((child) => {
+            if (React.isValidElement(child) && child.type === CardFooter) {
+              return null
+            }
+
+            return child
+          })}
+        </Stack>
+      </div>
+      {children.find(
+        (child) => React.isValidElement(child) && child.type === CardFooter
+      )}
+    </Wrapper>
   )
 }
 

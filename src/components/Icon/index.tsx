@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { LucideProps } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { ResponsiveValue, Size } from '@/types'
@@ -33,43 +33,48 @@ const sizeMap: Record<Size, number> = {
 }
 
 export interface IconProps extends Omit<SvgProps, 'size'> {
-  /**
-   * The name of the icon to render
-   * For a full list of available icons, see [Lucide Icons](https://lucide.dev/icons/)
-   */
   name: keyof typeof dynamicIconImports
-
-  /**
-   * Provide different icon sizes for different breakpoints
-   */
   size?: ResponsiveValue<Size>
-
-  /**
-   * Optional additional CSS classes to apply to the icon
-   */
-  className?: string
 }
 
-const defaultSize = 'small'
+const iconCache = new Map<
+  string,
+  React.LazyExoticComponent<React.ComponentType<LucideProps>>
+>()
 
-export function Icon({
-  name,
-  size = defaultSize,
-  className,
-  ...props
-}: IconProps) {
-  const LucideIcon = useMemo(() => lazy(dynamicIconImports[name]), [name])
+function tryGetIcon(
+  name: string
+): React.LazyExoticComponent<React.ComponentType<LucideProps>> {
+  if (iconCache.has(name)) {
+    return iconCache.get(name) as React.LazyExoticComponent<
+      React.ComponentType<LucideProps>
+    >
+  }
+
+  const LucideIcon = lazy(
+    dynamicIconImports[name as keyof typeof dynamicIconImports]
+  )
+  iconCache.set(name, LucideIcon)
+  return LucideIcon
+}
+
+export function Icon({ name, size = 'small', ...props }: IconProps) {
+  const LucideIcon = tryGetIcon(name)
   const breakpoint = useTailwindBreakpoint()
   const resolvedSize = isResponsiveValueObject<Size>(size)
     ? size[breakpoint]
     : isSize(size)
       ? size
-      : defaultSize
+      : 'small'
   const sizeNumber = sizeMap[resolvedSize]
 
   return (
     <Suspense fallback={fallback}>
-      <LucideIcon {...props} size={sizeNumber} className={className} />
+      <LucideIcon
+        {...props}
+        size={sizeNumber}
+        className="light:stroke-black dark:stroke-white"
+      />
     </Suspense>
   )
 }
