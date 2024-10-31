@@ -37,6 +37,11 @@
     --sidebar-accent-foreground: 24 10% 10%;
     --sidebar-border: 20 6% 90%;
     --sidebar-ring: 24 5% 64%;
+    --score-red: 10 78% 54%;
+    /* TODO: Update these once we know what these map to in terms of generic tokens */
+    --score-orange: 25 95% 53%;
+    --score-green: 163 75% 26%;
+    --score-track: 48 4% 70%;
   }
 
   .dark {
@@ -73,6 +78,11 @@
     --sidebar-accent-foreground: 60 5% 96%;
     --sidebar-border: 12 6% 15%;
     --sidebar-ring: 24 6% 83%;
+    /* TODO: Update these once we know what these map to in terms of generic tokens */
+    --score-red: 10 78% 54%;
+    --score-orange: 53 100% 58%;
+    --score-green: 163 75% 48%;
+    --score-track: 48 4% 28%;
   }
 }
 

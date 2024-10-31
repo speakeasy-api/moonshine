@@ -3,7 +3,7 @@
 }
 
 .text {
-  fill: var(--progress-colour);
+  fill: hsl(var(--progress-colour));
   transition: fill var(--transition-length) ease var(--delay);
   font-weight: bold;
   font-size: 36px;
@@ -16,17 +16,17 @@
   transform-origin: 50% 50%;
   shape-rendering: geometricprecision;
   stroke-width: var(--stroke-width);
-  transition: all var(--transition-length) ease var(--delay);
+  transition: stroke var(--transition-length) ease var(--delay);
 }
 
 .progress {
   composes: circleBase;
-  stroke: var(--progress-colour);
+  stroke: hsl(var(--progress-colour));
   stroke-dasharray: var(--progress-stroke-dasharray);
 }
 
 .track {
   composes: circleBase;
-  stroke: var(--track-colour);
+  stroke: hsl(var(--track-colour));
   stroke-dasharray: var(--track-stroke-dasharray);
 }
