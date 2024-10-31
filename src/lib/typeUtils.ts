@@ -19,5 +19,7 @@ export function isResponsiveValueObject<T>(
 }
 
 export function isSize(value: unknown): value is Size {
-  return typeof value === 'string' && value in sizes
+  return (
+    typeof value === 'string' && (sizes as readonly string[]).includes(value)
+  )
 }
