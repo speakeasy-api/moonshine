@@ -7,6 +7,10 @@ import {
   Icon,
   Stack,
   Badge,
+  Heading,
+  Text,
+  Logo,
+  Score,
 } from '@speakeasy-api/moonshine'
 import { describe, it, expect } from 'vitest'
 
@@ -72,5 +76,29 @@ describe('Stack', () => {
 describe('Badge', () => {
   it('renders', () => {
     render(<Badge>Default</Badge>)
+  })
+})
+
+describe('Heading', () => {
+  it('renders', () => {
+    render(<Heading level={1}>Heading</Heading>)
+  })
+})
+
+describe('Score', () => {
+  it('renders', () => {
+    render(<Score score={75} />)
+  })
+})
+
+describe('Text', () => {
+  it('renders', () => {
+    render(<Text>Text</Text>)
+  })
+})
+
+describe('Logo', () => {
+  it('renders', () => {
+    render(<Logo variant="wordmark" />)
   })
 })

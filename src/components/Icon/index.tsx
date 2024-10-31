@@ -33,27 +33,43 @@ const sizeMap: Record<Size, number> = {
 }
 
 export interface IconProps extends Omit<SvgProps, 'size'> {
+  /**
+   * The name of the icon to render
+   * For a full list of available icons, see [Lucide Icons](https://lucide.dev/icons/)
+   */
   name: keyof typeof dynamicIconImports
+
+  /**
+   * Provide different icon sizes for different breakpoints
+   */
   size?: ResponsiveValue<Size>
+
+  /**
+   * Optional additional CSS classes to apply to the icon
+   */
+  className?: string
 }
 
-export function Icon({ name, size = 'small', ...props }: IconProps) {
+const defaultSize = 'small'
+
+export function Icon({
+  name,
+  size = defaultSize,
+  className,
+  ...props
+}: IconProps) {
   const LucideIcon = useMemo(() => lazy(dynamicIconImports[name]), [name])
   const breakpoint = useTailwindBreakpoint()
   const resolvedSize = isResponsiveValueObject<Size>(size)
     ? size[breakpoint]
     : isSize(size)
       ? size
-      : 'small'
+      : defaultSize
   const sizeNumber = sizeMap[resolvedSize]
 
   return (
     <Suspense fallback={fallback}>
-      <LucideIcon
-        {...props}
-        size={sizeNumber}
-        className="light:stroke-black dark:stroke-white"
-      />
+      <LucideIcon {...props} size={sizeNumber} className={className} />
     </Suspense>
   )
 }

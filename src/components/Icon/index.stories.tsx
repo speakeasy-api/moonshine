@@ -1,10 +1,17 @@
 import { StoryObj, Meta } from '@storybook/react'
 import { Icon } from '.'
+import dynamicIconImports from 'lucide-react/dynamicIconImports'
 
 type Story = StoryObj<typeof Icon>
 
 const meta: Meta<typeof Icon> = {
   component: Icon,
+  argTypes: {
+    name: {
+      control: 'select',
+      options: Object.keys(dynamicIconImports),
+    },
+  },
 }
 
 export default meta
@@ -12,10 +19,7 @@ export default meta
 export const Default: Story = {
   args: {
     name: 'plus',
-    size: 'small',
-  },
-  parameters: {
-    layout: 'centered',
+    size: 'xl',
   },
 }
 
@@ -31,4 +35,14 @@ export const Responsive: Story = {
       '2xl': '2xl',
     },
   },
+}
+
+export const Animate: Story = {
+  args: {
+    name: 'baby',
+    size: '2xl',
+    stroke: 'blue',
+    className: 'animate-bounce',
+  },
+  decorators: [(Story) => <div className="p-10">{Story()}</div>],
 }
