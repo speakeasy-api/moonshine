@@ -43,21 +43,11 @@ export interface IconProps extends Omit<SvgProps, 'size'> {
    * Provide different icon sizes for different breakpoints
    */
   size?: ResponsiveValue<Size>
-
-  /**
-   * Optional additional CSS classes to apply to the icon
-   */
-  className?: string
 }
 
 const defaultSize = 'small'
 
-export function Icon({
-  name,
-  size = defaultSize,
-  className,
-  ...props
-}: IconProps) {
+export function Icon({ name, size = defaultSize, ...props }: IconProps) {
   const LucideIcon = useMemo(() => lazy(dynamicIconImports[name]), [name])
   const breakpoint = useTailwindBreakpoint()
   const resolvedSize = isResponsiveValueObject<Size>(size)
@@ -69,7 +59,7 @@ export function Icon({
 
   return (
     <Suspense fallback={fallback}>
-      <LucideIcon {...props} size={sizeNumber} className={className} />
+      <LucideIcon {...props} size={sizeNumber} />
     </Suspense>
   )
 }
