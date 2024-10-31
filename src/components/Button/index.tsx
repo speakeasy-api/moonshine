@@ -41,7 +41,8 @@ type Attributes = Pick<
 
 export interface ButtonProps
   extends Attributes,
-    VariantProps<typeof buttonVariants> {
+    VariantProps<typeof buttonVariants>,
+    React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean
 }
 

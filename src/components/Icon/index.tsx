@@ -22,6 +22,7 @@ type SvgProps = Pick<
   | 'viewBox'
   | 'fill'
   | 'fillOpacity'
+  | 'className'
 >
 
 const sizeMap: Record<Size, number> = {
