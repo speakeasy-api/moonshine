@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react'
 import '../src/global.css'
 import { allModes } from './modes'
 import { withThemeByClassName } from '@storybook/addon-themes'
+import { ThemedDocsContainer } from './themedDocsContainer'
 
 export const decorators = [
   withThemeByClassName({
@@ -26,6 +27,10 @@ const preview: Preview = {
         { name: 'light', value: '#fff' },
         { name: 'dark', value: '#1E293B' },
       ],
+    },
+
+    docs: {
+      container: ThemedDocsContainer,
     },
 
     // Tells Chromatic to test each story in both light and dark modes

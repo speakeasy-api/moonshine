@@ -8,7 +8,7 @@ export interface HeadingProps {
   level: Level
 }
 
-export default function Heading({ children, level }: HeadingProps) {
+export function Heading({ children, level }: HeadingProps) {
   const variant = `h${level}` as const
   const tag = `h${level}` as const
 
