@@ -2,7 +2,13 @@ import { Size } from '@/types'
 import type { Range } from '@/lib/typeUtils'
 import { useMemo, type CSSProperties } from 'react'
 import styles from './index.module.css'
-type Threshold = [number, number]
+
+interface ThresholdStyles {
+  /**
+   * The color of the track when the score is greater than the threshold.
+   */
+  [key: number]: string
+}
 
 export interface ScoreProps {
   /**
@@ -25,7 +31,7 @@ export interface ScoreProps {
    * Custom definition of thresholds for color changes.
    * e.g [50, 75] will change color to green at 75%, orange at 50%. Otherwise red.
    */
-  thresholds?: Threshold
+  thresholds?: ThresholdStyles
 }
 
 const transition = {
@@ -35,6 +41,13 @@ const transition = {
 }
 const gapPercent = 5
 const strokeWidth = 10
+const circleSize = 100
+const radius = circleSize / 2 - strokeWidth / 2
+const circumference = 2 * Math.PI * radius
+const percentToDegree = 360 / 100 // deg
+const percentToPx = circumference / 100 // px
+const offsetFactor = 0
+const offsetFactorSecondary = 1 - offsetFactor
 
 const sizeMap: Record<Size, number> = {
   small: 40,
@@ -44,29 +57,27 @@ const sizeMap: Record<Size, number> = {
   '2xl': 80,
 }
 
+const defaultThresholds: ThresholdStyles = {
+  0: 'var(--score-red)',
+  40: 'var(--score-orange)',
+  60: 'var(--score-green)',
+}
+
+const defaultTrackColor = 'var(--score-track)'
+
 export function Score({
   score,
   size = 'large',
   showLabel = true,
-  trackColor = 'lightgray',
-  thresholds = [40, 70],
+  trackColor = defaultTrackColor,
+  thresholds = defaultThresholds,
 }: ScoreProps) {
   const strokePercent = score // %
   const progressColour = useMemo(() => {
-    if (score >= thresholds[1]) return 'green'
-    if (score >= thresholds[0]) return 'darkorange'
-    return 'red'
+    for (const [threshold, color] of Object.entries(thresholds).reverse()) {
+      if (score >= Number(threshold)) return color
+    }
   }, [score, thresholds])
-
-  const circleSize = 100
-  const radius = circleSize / 2 - strokeWidth / 2
-  const circumference = 2 * Math.PI * radius
-
-  const percentToDegree = 360 / 100 // deg
-  const percentToPx = circumference / 100 // px
-
-  const offsetFactor = 0
-  const offsetFactorSecondary = 1 - offsetFactor
 
   const primaryStrokeDasharray = () => {
     if (
@@ -179,7 +190,6 @@ export function Score({
             '--track-colour': trackColor,
             '--track-stroke-dasharray': secondaryStrokeDasharray(),
             transform: secondaryTransform(),
-            stroke: trackColor,
             opacity: secondaryOpacity(),
           } as CSSProperties
         }
@@ -197,7 +207,6 @@ export function Score({
             '--transition-length': `${transition?.length}ms`,
             '--delay': `${transition?.delay}ms`,
             transform: primaryTransform(),
-            stroke: progressColour,
             opacity: primaryOpacity(),
           } as CSSProperties
         }
