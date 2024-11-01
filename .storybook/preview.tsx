@@ -7,7 +7,7 @@ import { ThemedDocsContainer } from './themedDocsContainer'
 export const decorators = [
   withThemeByClassName({
     themes: { light: 'light', dark: 'dark' },
-    defaultTheme: 'light',
+    defaultTheme: 'dark',
   }),
 ]
 
