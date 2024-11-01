@@ -1,6 +1,7 @@
 import { DocsContainer } from '@storybook/blocks'
 import React from 'react'
 import { themes } from '@storybook/theming'
+import { speakeasyTheme } from './manager'
 
 export const ThemedDocsContainer = ({ children, context }) => {
   return (
@@ -11,7 +12,7 @@ export const ThemedDocsContainer = ({ children, context }) => {
         // for autodocs previews to properly respect the theme
         // Ref: https://github.com/storybookjs/storybook/issues/28758#issuecomment-2380062194
         context.store.userGlobals.globals.theme === 'dark'
-          ? themes.dark
+          ? speakeasyTheme
           : themes.light
       }
     >

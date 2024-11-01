@@ -6,7 +6,7 @@ export const allModes = {
     viewport: 'large',
   },
   dark: {
-    backgrounds: { value: '#1E293B' },
+    backgrounds: { value: 'hsl(54, 20%, 10%)' },
     theme: 'dark',
   },
   light: {
@@ -14,7 +14,7 @@ export const allModes = {
     theme: 'light',
   },
   'dark desktop': {
-    backgrounds: { value: '#1E293B' },
+    backgrounds: { value: 'hsl(54, 20%, 10%)' },
     theme: 'dark',
     viewport: 'large',
   },
