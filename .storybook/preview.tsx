@@ -7,7 +7,7 @@ import { ThemedDocsContainer } from './themedDocsContainer'
 export const decorators = [
   withThemeByClassName({
     themes: { light: 'light', dark: 'dark' },
-    defaultTheme: 'light',
+    defaultTheme: 'dark',
   }),
 ]
 
@@ -25,7 +25,7 @@ const preview: Preview = {
     backgrounds: {
       values: [
         { name: 'light', value: '#fff' },
-        { name: 'dark', value: '#1E293B' },
+        { name: 'dark', value: 'hsl(54, 20%, 10%)' },
       ],
     },
 

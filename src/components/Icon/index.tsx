@@ -70,11 +70,7 @@ export function Icon({ name, size = 'small', ...props }: IconProps) {
 
   return (
     <Suspense fallback={fallback}>
-      <LucideIcon
-        {...props}
-        size={sizeNumber}
-        className="light:stroke-black dark:stroke-white"
-      />
+      <LucideIcon {...props} size={sizeNumber} />
     </Suspense>
   )
 }

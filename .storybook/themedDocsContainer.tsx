@@ -1,19 +1,51 @@
 import { DocsContainer } from '@storybook/blocks'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { themes } from '@storybook/theming'
+import { speakeasyTheme } from './manager'
+
+import { addons } from '@storybook/preview-api'
+
+const DARK_MODE_EVENT_NAME = 'DARK_MODE'
+
+function useDocumentClassListObserver(
+  callback: (classList: DOMTokenList) => void
+) {
+  useEffect(() => {
+    // Define a MutationObserver that listens to changes in classList
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.attributeName === 'class') {
+          callback(document.documentElement.classList)
+        }
+      }
+    })
+
+    // Start observing the documentElement for attribute changes
+    observer.observe(document.documentElement, { attributes: true })
+
+    // Clean up on component unmount
+    return () => observer.disconnect()
+  }, [callback])
+}
 
 export const ThemedDocsContainer = ({ children, context }) => {
+  const [isDark, setIsDark] = useState(
+    document.documentElement.classList.contains('dark')
+  )
+
+  useDocumentClassListObserver((classList) => {
+    setIsDark(classList.contains('dark'))
+  })
+  useEffect(() => {
+    const chan = addons.getChannel()
+    chan.on(DARK_MODE_EVENT_NAME, setIsDark)
+    return () => chan.off(DARK_MODE_EVENT_NAME, setIsDark)
+  }, [])
+
   return (
     <DocsContainer
       context={context}
-      theme={
-        // This is a bit of a hack to get the theme from the global state
-        // for autodocs previews to properly respect the theme
-        // Ref: https://github.com/storybookjs/storybook/issues/28758#issuecomment-2380062194
-        context.store.userGlobals.globals.theme === 'dark'
-          ? themes.dark
-          : themes.light
-      }
+      theme={isDark ? speakeasyTheme : themes.light}
     >
       {children}
     </DocsContainer>
