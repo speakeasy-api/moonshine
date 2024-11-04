@@ -37,6 +37,7 @@ export const WithResponsiveColumns: Story = {
 export const WithCustomColspan: Story = {
   args: {
     ...Default.args,
+    wrap: false,
     children: createSampleGridChildren(columnCount).map((child, index) => (
       <Grid.Item
         key={child.key}

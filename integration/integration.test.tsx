@@ -11,6 +11,7 @@ import {
   Text,
   Logo,
   Score,
+  Container,
 } from '@speakeasy-api/moonshine'
 import { describe, it, expect } from 'vitest'
 
@@ -100,5 +101,11 @@ describe('Text', () => {
 describe('Logo', () => {
   it('renders', () => {
     render(<Logo variant="wordmark" />)
+  })
+})
+
+describe('Container', () => {
+  it('renders', () => {
+    render(<Container>Container</Container>)
   })
 })
