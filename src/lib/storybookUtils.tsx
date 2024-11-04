@@ -34,7 +34,11 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
 
 export function createSampleGridChildren(count: number) {
   return createSampleChildren(count).map((child) => (
-    <Grid.Item key={child.key} {...child.props}>
+    <Grid.Item
+      key={child.key}
+      {...child.props}
+      data-testid={`sample-child-${child.key}`}
+    >
       {child}
     </Grid.Item>
   ))
