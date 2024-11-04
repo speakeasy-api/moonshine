@@ -115,7 +115,15 @@ type CardProps = {
 }
 
 const Card: FC<CardProps> = ({ children, onClick, href }) => {
-  const hasButtonElement = Children.toArray(children).some((child) => {
+  const validChildren = Children.toArray(children).filter(
+    (child) =>
+      React.isValidElement(child) &&
+      (child.type === CardHeader ||
+        child.type === CardContent ||
+        child.type === CardFooter)
+  )
+
+  const hasButtonElement = Children.toArray(validChildren).some((child) => {
     if (React.isValidElement(child) && child.type === CardHeader) {
       return child.props.rightElement?.type === 'button'
     }
@@ -149,7 +157,7 @@ const Card: FC<CardProps> = ({ children, onClick, href }) => {
     >
       <div className="p-6">
         <Stack gap={3}>
-          {children.map((child) => {
+          {validChildren.map((child) => {
             if (React.isValidElement(child) && child.type === CardFooter) {
               return null
             }
@@ -158,7 +166,7 @@ const Card: FC<CardProps> = ({ children, onClick, href }) => {
           })}
         </Stack>
       </div>
-      {children.find(
+      {validChildren.find(
         (child) => React.isValidElement(child) && child.type === CardFooter
       )}
     </Wrapper>
