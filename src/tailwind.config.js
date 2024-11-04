@@ -30,6 +30,10 @@ export default {
     {
       pattern: /^line-clamp-/,
     },
+    {
+      pattern: /^col-span-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

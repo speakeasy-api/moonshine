@@ -1,3 +1,5 @@
+import { Grid } from '@/components/Grid'
+
 function generateDarkPastelColor(index: number) {
   const hue = (index * 137) % 360
   const saturation = 30
@@ -28,4 +30,12 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
       </div>
     )
   })
+}
+
+export function createSampleGridChildren(count: number) {
+  return createSampleChildren(count).map((child) => (
+    <Grid.Item key={child.key} {...child.props}>
+      {child}
+    </Grid.Item>
+  ))
 }
