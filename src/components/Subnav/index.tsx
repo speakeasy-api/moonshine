@@ -11,7 +11,6 @@ interface SubnavItem {
 interface SubnavProps {
   items: SubnavItem[]
   renderItem: (item: SubnavItem) => React.ReactNode
-  indicatorMovesOnHover?: boolean
 }
 
 const transitionProps: Transition = {
@@ -21,11 +20,7 @@ const transitionProps: Transition = {
   duration: 0.05,
 }
 
-export function Subnav({
-  items,
-  renderItem,
-  indicatorMovesOnHover = true,
-}: SubnavProps) {
+export function Subnav({ items, renderItem }: SubnavProps) {
   const [activeItem, setActiveItem] = useState<string | null>(
     items.find((item) => item.active)?.href ?? null
   )
@@ -33,7 +28,6 @@ export function Subnav({
   const [indicatorProps, setIndicatorProps] = useState<{
     width: number
     left: number
-    type: 'all' | 'background'
   } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -65,7 +59,6 @@ export function Subnav({
         setIndicatorProps({
           width,
           left,
-          type: indicatorMovesOnHover ? 'all' : 'background',
         })
       }
     } else {

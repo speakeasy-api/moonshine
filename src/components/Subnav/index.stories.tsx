@@ -32,10 +32,3 @@ export const ManyItems: Story = {
     })),
   },
 }
-
-export const IndicatorDoesNotMoveOnHover: Story = {
-  args: {
-    ...ManyItems.args,
-    indicatorMovesOnHover: false,
-  },
-}
