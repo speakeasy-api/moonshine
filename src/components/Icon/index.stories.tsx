@@ -46,3 +46,10 @@ export const Animate: Story = {
   },
   decorators: [(Story) => <div className="p-10">{Story()}</div>],
 }
+
+export const WithCustomSize: Story = {
+  args: {
+    name: 'chevron-right',
+    size: '2xl',
+  },
+}

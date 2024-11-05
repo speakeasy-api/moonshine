@@ -23,7 +23,7 @@ describe('Card', () => {
       <Card>
         <Card.Header>Header</Card.Header>
         <Card.Content>Content</Card.Content>
-        <Card.Footer>Footer</Card.Footer>
+        <Card.Footer content={{ text: 'Footer' }} />
       </Card>
     )
 
