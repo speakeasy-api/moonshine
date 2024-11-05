@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { motion, Transition } from 'framer-motion'
+import { motion, TargetAndTransition, Transition } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 
 interface SubnavItem {
@@ -11,9 +11,21 @@ interface SubnavItem {
 interface SubnavProps {
   items: SubnavItem[]
   renderItem: (item: SubnavItem) => React.ReactNode
+  indicatorMovesOnHover?: boolean
 }
 
-export function Subnav({ items, renderItem }: SubnavProps) {
+const transitionProps: Transition = {
+  type: 'spring',
+  stiffness: 200,
+  damping: 30,
+  duration: 0.05,
+}
+
+export function Subnav({
+  items,
+  renderItem,
+  indicatorMovesOnHover = true,
+}: SubnavProps) {
   const [activeItem, setActiveItem] = useState<string | null>(
     items.find((item) => item.active)?.href ?? null
   )
@@ -21,6 +33,7 @@ export function Subnav({ items, renderItem }: SubnavProps) {
   const [indicatorProps, setIndicatorProps] = useState<{
     width: number
     left: number
+    type: 'all' | 'background'
   } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -32,6 +45,13 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     setHoveredItem(href)
   }
 
+  const animateProps: TargetAndTransition | undefined = indicatorProps
+    ? {
+        translateX: indicatorProps.left,
+        width: indicatorProps.width,
+      }
+    : undefined
+
   useEffect(() => {
     if (!containerRef.current) return
 
@@ -42,19 +62,16 @@ export function Subnav({ items, renderItem }: SubnavProps) {
       )
       if (itemElement) {
         const { offsetWidth: width, offsetLeft: left } = itemElement
-        setIndicatorProps({ width, left })
+        setIndicatorProps({
+          width,
+          left,
+          type: indicatorMovesOnHover ? 'all' : 'background',
+        })
       }
     } else {
       setIndicatorProps(null)
     }
   }, [hoveredItem, activeItem])
-
-  const transitionProps: Transition = {
-    type: 'spring',
-    stiffness: 200,
-    damping: 30,
-    duration: 0.05,
-  }
 
   return (
     <div ref={containerRef} className="relative flex">
@@ -62,10 +79,7 @@ export function Subnav({ items, renderItem }: SubnavProps) {
         <motion.div
           className="bg-muted absolute h-full rounded-md"
           initial={false}
-          animate={{
-            left: indicatorProps.left,
-            width: indicatorProps.width,
-          }}
+          animate={animateProps}
           transition={transitionProps}
         />
       )}
@@ -90,10 +104,7 @@ export function Subnav({ items, renderItem }: SubnavProps) {
         <motion.div
           className="bg-primary absolute bottom-[-9px] h-[2.75px]"
           initial={false}
-          animate={{
-            left: indicatorProps.left,
-            width: indicatorProps.width,
-          }}
+          animate={animateProps}
           transition={transitionProps}
         />
       )}
