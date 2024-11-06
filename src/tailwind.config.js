@@ -42,6 +42,10 @@ export default {
       pattern: /^p[x|y|t|r|b|l]-\d+$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^justify-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

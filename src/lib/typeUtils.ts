@@ -1,6 +1,7 @@
 import {
   breakpoints,
-  Breakpoints,
+  Breakpoint,
+  Direction,
   PaddingPerSide,
   PaddingPerSides,
   PaddingValue,
@@ -23,7 +24,7 @@ export type Range<
 
 export function isResponsiveValueObject<T>(
   value: unknown
-): value is ResponsiveValue<T> & Record<Breakpoints, T> {
+): value is ResponsiveValue<T> & Record<Breakpoint, T> {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -34,6 +35,13 @@ export function isResponsiveValueObject<T>(
 export function isSize(value: unknown): value is Size {
   return (
     typeof value === 'string' && (sizes as readonly string[]).includes(value)
+  )
+}
+
+export function isDirection(value: unknown): value is Direction {
+  return (
+    typeof value === 'string' &&
+    (['row', 'column'] as readonly string[]).includes(value)
   )
 }
 
@@ -72,6 +80,6 @@ export function assert(condition: boolean, message: string): asserts condition {
     throw new Error(message)
   }
 }
-function isBreakpoint(key: string): key is Breakpoints {
+function isBreakpoint(key: string): key is Breakpoint {
   return (breakpoints as readonly string[]).includes(key)
 }
