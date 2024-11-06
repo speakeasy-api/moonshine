@@ -8,11 +8,12 @@ export type Size = (typeof sizes)[number]
 
 // Breakpoints
 export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const
-export type Breakpoints = (typeof breakpoints)[number]
-export type ResponsiveValue<T> = T | { [key in Breakpoints]?: T }
+export type Breakpoint = (typeof breakpoints)[number]
+export type ResponsiveValue<T> = T | { [key in Breakpoint]?: T }
 
 // Stack
-export type Direction = 'row' | 'column'
+export const directionOptions = ['row', 'column'] as const
+export type Direction = (typeof directionOptions)[number]
 
 // Gap
 export type Gap = 0 | 0.5 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16
@@ -44,3 +45,16 @@ export type PaddingPerSide =
   | PaddingPerSides
 
 export type Padding = PaddingValue | PaddingPerSide
+
+export const alignmentOptions = [
+  'start',
+  'center',
+  'end',
+  'spaceBetween',
+  'spaceAround',
+] as const
+/**
+ * Alignment is an abstraction / amalgamation of the CSS `justify-content`
+ * and `align-items` properties.
+ */
+export type Alignment = (typeof alignmentOptions)[number]

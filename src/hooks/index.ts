@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
-import { Breakpoints } from '@/types.js'
+import { Breakpoint } from '@/types.js'
 import debounce from '@/lib/debounce'
 
 const fullConfig = resolveConfig(tailwindConfig)
@@ -17,7 +17,7 @@ const getBreakpoint = (width: number) => {
   return 'xs'
 }
 
-const useTailwindBreakpoint = (): Breakpoints => {
+const useTailwindBreakpoint = (): Breakpoint => {
   const [breakpoint, setBreakpoint] = useState(getBreakpoint(window.innerWidth))
 
   useLayoutEffect(() => {
@@ -32,7 +32,7 @@ const useTailwindBreakpoint = (): Breakpoints => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return breakpoint as Breakpoints
+  return breakpoint as Breakpoint
 }
 
 export default useTailwindBreakpoint
