@@ -12,6 +12,7 @@ import {
   Logo,
   Score,
   Container,
+  Combobox,
 } from '@speakeasy-api/moonshine'
 import { describe, it, expect } from 'vitest'
 
@@ -107,5 +108,11 @@ describe('Logo', () => {
 describe('Container', () => {
   it('renders', () => {
     render(<Container>Container</Container>)
+  })
+})
+
+describe('Combobox', () => {
+  it('renders', () => {
+    render(<Combobox options={[]} />)
   })
 })
