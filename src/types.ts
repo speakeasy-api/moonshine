@@ -15,24 +15,32 @@ export type ResponsiveValue<T> = T | { [key in Breakpoints]?: T }
 export type Direction = 'row' | 'column'
 
 // Gap
-export type Gap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16
+export type Gap = 0 | 0.5 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16
 
 // Grid Columns
 export const maxGridColumns = 12
 export type Columns = Exclude<Range<typeof maxGridColumns>, 0>
 
 // Padding
-export const paddingValues = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
+export const paddingValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
 export type PaddingValue = (typeof paddingValues)[number]
+
+export type PaddingPerAxis = { x: PaddingValue; y: PaddingValue }
+export type PaddingPerSides = {
+  top: PaddingValue
+  right: PaddingValue
+  bottom: PaddingValue
+  left: PaddingValue
+}
 
 export type PaddingPerSide =
   /**
    * x, y
    */
-  | [PaddingValue, PaddingValue]
+  | PaddingPerAxis
   /**
    * top, right, bottom, left
    */
-  | [PaddingValue, PaddingValue, PaddingValue, PaddingValue]
+  | PaddingPerSides
 
 export type Padding = PaddingValue | PaddingPerSide

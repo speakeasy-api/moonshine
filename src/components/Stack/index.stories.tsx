@@ -62,13 +62,13 @@ export const ResponsivePadding: Story = {
 export const PaddingPerSide: Story = {
   args: {
     ...Default.args,
-    padding: [1, 2, 3, 4],
+    padding: { top: 12, right: 0, bottom: 12, left: 0 },
   },
 }
 
 export const ResponsivePaddingPerSide: Story = {
   args: {
     ...Default.args,
-    padding: { sm: 0, md: 0, lg: 0, xl: [10, 12] },
+    padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } },
   },
 }

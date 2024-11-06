@@ -1,6 +1,10 @@
-import { colSpanMapper, gapMapper } from '@/lib/responsiveMappers'
+import {
+  colSpanMapper,
+  gapMapper,
+  paddingMapper,
+} from '@/lib/responsiveMappers'
 import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Columns, Gap, ResponsiveValue } from '@/types'
+import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
 import { isValidElement, ReactElement } from 'react'
 
 interface GridProps {
@@ -51,6 +55,12 @@ interface GridProps {
    * @default false
    */
   wrap?: boolean
+
+  /**
+   * The padding of the grid.
+   * @default 0
+   */
+  padding?: ResponsiveValue<Padding>
 }
 
 const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
@@ -58,7 +68,13 @@ const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
 const isValidGridChild = (child: ReactElement) =>
   isValidElement(child) && child.type === GridItem
 
-const Grid = ({ children, columns = 1, gap = 0, wrap = false }: GridProps) => {
+const Grid = ({
+  children,
+  columns = 1,
+  gap = 0,
+  wrap = false,
+  padding = 0,
+}: GridProps) => {
   const validGridChildren = children.filter(isValidGridChild)
   return (
     <div
@@ -66,7 +82,8 @@ const Grid = ({ children, columns = 1, gap = 0, wrap = false }: GridProps) => {
         'grid',
         getResponsiveClasses(columns, columnsMapper),
         getResponsiveClasses(gap, gapMapper),
-        !wrap && 'grid-flow-col'
+        !wrap && 'grid-flow-col',
+        getResponsiveClasses(padding, paddingMapper)
       )}
     >
       {validGridChildren}
