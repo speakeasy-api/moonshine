@@ -13,9 +13,6 @@ interface StackProps {
   gap?: ResponsiveValue<Gap>
 
   /**
-   * Padding between the stack and its children
-   * @default 0
-   *
    * Can be an object of responsive Padding values, or just Padding values.
    *
    * @example Simple Padding
@@ -25,13 +22,13 @@ interface StackProps {
    * padding: { sm: 10, md: 20, lg: 30, xl: 40 }
    *
    * @example Padding per side
-   * padding: [10, 20, 30, 40]
+   * padding: { top: 10, right: 0, bottom: 10, left: 0 }
    *
-   * @example Responsive Padding per side (just x and y)
-   * padding: { sm: 0, md: 0, lg: 0, xl: [10, 12] }
+   * @example Responsive Padding per side (just x and y axis)
+   * padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } }
    *
    * @example Responsive Padding per side with different values for each side
-   * padding: { sm: 0, md: 0, lg: 0, xl: [10, 12, 14, 16] }
+   * padding: { sm: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
    */
   padding?: ResponsiveValue<Padding>
 }
