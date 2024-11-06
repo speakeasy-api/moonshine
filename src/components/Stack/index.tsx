@@ -70,7 +70,7 @@ export function Stack({
   direction = 'column',
   gap = 0,
   padding = 0,
-  alignment = 'start',
+  alignment = undefined,
 }: StackProps) {
   return (
     <div
@@ -79,10 +79,11 @@ export function Stack({
         getResponsiveClasses(direction, directionMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),
-        getResponsiveClasses(alignment, (val, breakpoint) =>
-          // We need to pass the direction in here as well, because the alignment classes are different for row and column
-          alignmentMapper(val, direction, breakpoint)
-        )
+        alignment &&
+          getResponsiveClasses(alignment, (val, breakpoint) =>
+            // We need to pass the direction in here as well, because the alignment classes are different for row and column
+            alignmentMapper(val, direction, breakpoint)
+          )
       )}
     >
       {children}
