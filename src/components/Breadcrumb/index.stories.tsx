@@ -1,3 +1,4 @@
+import { Icon } from '@/index'
 import { Breadcrumb } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 
@@ -25,7 +26,7 @@ export const Default: Story = {
 export const WithCustomSeparator: Story = {
   args: {
     ...Default.args,
-    separator: <div className="text-muted">{'>'}</div>,
+    separator: <Icon name="chevron-right" />,
   },
 }
 
