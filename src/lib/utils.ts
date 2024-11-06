@@ -1,6 +1,7 @@
 import { ResponsiveValue } from '@/types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { isResponsiveValueObject } from './typeUtils'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -22,13 +23,19 @@ export function getResponsiveClasses<T>(
   value: ResponsiveValue<T>,
   mapper: (val: T) => string
 ): string {
-  if (typeof value === 'object' && value !== null) {
+  if (isResponsiveValueObject(value)) {
     return Object.entries(value)
-      .map(
-        ([breakpoint, val]) =>
-          `${breakpoint === 'sm' ? '' : breakpoint + ':'}${mapper(val)}`
-      )
+      .map(([breakpoint, val]) => {
+        const resolvedClasses = mapper(val as T)
+        const classFragments = resolvedClasses.split(' ')
+
+        return classFragments
+          .map((fragment) => {
+            return breakpoint === 'sm' ? fragment : `${breakpoint}:${fragment}`
+          })
+          .join(' ')
+      })
       .join(' ')
   }
-  return mapper(value)
+  return mapper(value as T)
 }

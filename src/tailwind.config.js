@@ -34,6 +34,14 @@ export default {
       pattern: /^col-span-/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^p-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^p[x|y|t|r|b|l]-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

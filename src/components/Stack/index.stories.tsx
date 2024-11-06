@@ -44,3 +44,31 @@ export const ResponsiveGap: Story = {
     gap: { sm: 2, md: 5, lg: 10, xl: 12 },
   },
 }
+
+export const Padding: Story = {
+  args: {
+    ...Default.args,
+    padding: 2,
+  },
+}
+
+export const ResponsivePadding: Story = {
+  args: {
+    ...Default.args,
+    padding: { sm: 2, md: 4, lg: 6, xl: 8 },
+  },
+}
+
+export const PaddingPerSide: Story = {
+  args: {
+    ...Default.args,
+    padding: [1, 2, 3, 4],
+  },
+}
+
+export const ResponsivePaddingPerSide: Story = {
+  args: {
+    ...Default.args,
+    padding: { sm: 0, md: 0, lg: 0, xl: [10, 12] },
+  },
+}

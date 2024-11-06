@@ -23,3 +23,9 @@ export function isSize(value: unknown): value is Size {
     typeof value === 'string' && (sizes as readonly string[]).includes(value)
   )
 }
+
+export function assert(condition: boolean, message: string): asserts condition {
+  if (!condition) {
+    throw new Error(message)
+  }
+}

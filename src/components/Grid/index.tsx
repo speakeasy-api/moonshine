@@ -1,4 +1,4 @@
-import { gapMapper } from '@/lib/responsiveUtils'
+import { colSpanMapper, gapMapper } from '@/lib/responsiveMappers'
 import { cn, getResponsiveClasses } from '@/lib/utils'
 import { Columns, Gap, ResponsiveValue } from '@/types'
 import { isValidElement, ReactElement } from 'react'
@@ -83,8 +83,6 @@ interface GridItemProps extends GridItemBaseProps {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
 }
-
-const colSpanMapper = (colSpan: number) => `col-span-${colSpan}`
 
 const GridItem = ({ children, colSpan, ...props }: GridItemProps) => {
   return (
