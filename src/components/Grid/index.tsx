@@ -1,3 +1,4 @@
+import { gapMapper } from '@/lib/responsiveUtils'
 import { cn, getResponsiveClasses } from '@/lib/utils'
 import { Columns, Gap, ResponsiveValue } from '@/types'
 import { isValidElement, ReactElement } from 'react'
@@ -53,7 +54,6 @@ interface GridProps {
 }
 
 const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
-const gapMapper = (gap: Gap) => `gap-${gap}`
 
 const isValidGridChild = (child: ReactElement) =>
   isValidElement(child) && child.type === GridItem
