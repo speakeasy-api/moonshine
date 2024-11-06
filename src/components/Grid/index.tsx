@@ -1,6 +1,10 @@
-import { gapMapper } from '@/lib/responsiveUtils'
+import {
+  colSpanMapper,
+  gapMapper,
+  paddingMapper,
+} from '@/lib/responsiveMappers'
 import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Columns, Gap, ResponsiveValue } from '@/types'
+import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
 import { isValidElement, ReactElement } from 'react'
 
 interface GridProps {
@@ -51,6 +55,26 @@ interface GridProps {
    * @default false
    */
   wrap?: boolean
+
+  /**
+   * Can be an object of responsive Padding values, or just Padding values.
+   *
+   * @example Simple Padding
+   * padding: 10
+   *
+   * @example Responsive Padding
+   * padding: { sm: 10, md: 20, lg: 30, xl: 40 }
+   *
+   * @example Padding per side
+   * padding: { top: 10, right: 0, bottom: 10, left: 0 }
+   *
+   * @example Responsive Padding per side (just x and y axis)
+   * padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } }
+   *
+   * @example Responsive Padding per side with different values for each side
+   * padding: { sm: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
+   */
+  padding?: ResponsiveValue<Padding>
 }
 
 const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
@@ -58,7 +82,13 @@ const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
 const isValidGridChild = (child: ReactElement) =>
   isValidElement(child) && child.type === GridItem
 
-const Grid = ({ children, columns = 1, gap = 0, wrap = false }: GridProps) => {
+const Grid = ({
+  children,
+  columns = 1,
+  gap = 0,
+  wrap = false,
+  padding = 0,
+}: GridProps) => {
   const validGridChildren = children.filter(isValidGridChild)
   return (
     <div
@@ -66,7 +96,8 @@ const Grid = ({ children, columns = 1, gap = 0, wrap = false }: GridProps) => {
         'grid',
         getResponsiveClasses(columns, columnsMapper),
         getResponsiveClasses(gap, gapMapper),
-        !wrap && 'grid-flow-col'
+        !wrap && 'grid-flow-col',
+        getResponsiveClasses(padding, paddingMapper)
       )}
     >
       {validGridChildren}
@@ -83,8 +114,6 @@ interface GridItemProps extends GridItemBaseProps {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
 }
-
-const colSpanMapper = (colSpan: number) => `col-span-${colSpan}`
 
 const GridItem = ({ children, colSpan, ...props }: GridItemProps) => {
   return (

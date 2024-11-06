@@ -74,3 +74,35 @@ export const WithInvalidChildren: Story = {
     ],
   },
 }
+
+export const WithPadding: Story = {
+  args: {
+    ...Default.args,
+    padding: 10,
+  },
+}
+
+export const WithResponsivePadding: Story = {
+  args: {
+    ...Default.args,
+    padding: { sm: 0, md: 10, lg: 16 },
+  },
+}
+
+export const WithResponsivePaddingPerSide: Story = {
+  args: {
+    ...WithResponsivePadding.args,
+    padding: {
+      sm: 0,
+      md: 10,
+      lg: { top: 16, right: 0, bottom: 16, left: 0 },
+    },
+  },
+}
+
+export const WithResponsivePaddingPerAxis: Story = {
+  args: {
+    ...WithResponsivePaddingPerSide.args,
+    padding: { sm: 0, md: { x: 10, y: 0 }, lg: { x: 16, y: 0 } },
+  },
+}
