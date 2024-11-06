@@ -29,20 +29,6 @@ export const WithCustomSeparator: Story = {
   },
 }
 
-export const WithGap: Story = {
-  args: {
-    ...Default.args,
-    gap: 12,
-  },
-}
-
-export const WithResponsiveGap: Story = {
-  args: {
-    ...Default.args,
-    gap: { sm: 6, md: 12 },
-  },
-}
-
 export const WithInvalidChildren: Story = {
   args: {
     ...Default.args,

@@ -1,17 +1,12 @@
-import { gapMapper } from '@/lib/responsiveUtils'
 import { cn } from '@/lib/utils'
-import { getResponsiveClasses } from '@/lib/utils'
-import { ResponsiveValue } from '@/types'
-import { Gap } from '@/types'
 import { isValidElement, ReactElement, ReactNode, Children } from 'react'
 
 interface BreadcrumbProps {
   children: ReactElement<typeof BreadcrumbItem>[]
   separator?: ReactNode
-  gap?: ResponsiveValue<Gap>
 }
 
-const defaultSeparator = <div className="text-muted">{'/'}</div>
+const defaultSeparator = '/'
 
 const isValidBreadcrumbChild = (child: ReactElement) =>
   isValidElement(child) && child.type === BreadcrumbItem
@@ -19,19 +14,18 @@ const isValidBreadcrumbChild = (child: ReactElement) =>
 const Breadcrumb = ({
   children,
   separator = defaultSeparator,
-  gap = 6,
 }: BreadcrumbProps) => {
   const validChildren = children.filter(isValidBreadcrumbChild)
 
   return (
-    <div
-      className={cn('flex items-center', getResponsiveClasses(gap, gapMapper))}
-    >
+    <div className={cn('flex items-center gap-4')}>
       {Children.map(validChildren, (child, index) => {
         return (
           <>
             {child}
-            {index < validChildren.length - 1 && separator}
+            {index < validChildren.length - 1 && (
+              <div className="text-muted">{separator}</div>
+            )}
           </>
         )
       })}
