@@ -1,0 +1,76 @@
+import { Size } from '@/types'
+import { SupportedLanguage } from '@/types'
+
+import TypeScriptIcon from '@/assets/icons/languages/typescript.svg'
+import GoIcon from '@/assets/icons/languages/go.svg'
+import JavaIcon from '@/assets/icons/languages/java.svg'
+import PythonIcon from '@/assets/icons/languages/python.svg'
+import CSharpIcon from '@/assets/icons/languages/csharp.svg'
+import TerraformIcon from '@/assets/icons/languages/terraform.svg'
+import UnityIcon from '@/assets/icons/languages/unity.svg'
+import PhpIcon from '@/assets/icons/languages/php.svg'
+import SwiftIcon from '@/assets/icons/languages/swift.svg'
+import RubyIcon from '@/assets/icons/languages/ruby.svg'
+import PostmanIcon from '@/assets/icons/languages/postman.svg'
+
+const sizeMap: Record<Size, number> = {
+  small: 32,
+  medium: 40,
+  large: 48,
+  xl: 64,
+  '2xl': 80,
+}
+
+const iconSizeMap: Record<Size, number> = {
+  small: 16,
+  medium: 24,
+  large: 32,
+  xl: 48,
+  '2xl': 64,
+}
+
+const icons: Record<
+  SupportedLanguage,
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  typescript: TypeScriptIcon,
+  go: GoIcon,
+  java: JavaIcon,
+  python: PythonIcon,
+  csharp: CSharpIcon,
+  terraform: TerraformIcon,
+  unity: UnityIcon,
+  php: PhpIcon,
+  swift: SwiftIcon,
+  ruby: RubyIcon,
+  postman: PostmanIcon,
+}
+
+export interface TargetLanguageIconProps {
+  language: SupportedLanguage
+  size?: Size
+}
+
+export function TargetLanguageIcon({
+  language,
+  size = 'medium',
+}: TargetLanguageIconProps) {
+  const IconComponent = icons[language]
+
+  return (
+    <div
+      className="bg-background/50 flex items-center justify-center rounded-lg border p-2"
+      style={{
+        width: sizeMap[size],
+        height: sizeMap[size],
+      }}
+    >
+      <IconComponent
+        style={{
+          width: iconSizeMap[size],
+          height: iconSizeMap[size],
+        }}
+      />
+    </div>
+  )
+}

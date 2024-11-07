@@ -95,3 +95,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.devicon-devicon-plain {
+  max-width: 2em;
+}
+
+/* if you want to change the original color */
+.devicon-devicon-plain path {
+  fill: var(--primary);
+}

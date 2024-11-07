@@ -58,3 +58,19 @@ export const alignmentOptions = [
  * and `align-items` properties.
  */
 export type Alignment = (typeof alignmentOptions)[number]
+
+export const supportedLanguages = [
+  'typescript',
+  'go',
+  'java',
+  'python',
+  'csharp',
+  'terraform',
+  'unity',
+  'php',
+  'swift',
+  'ruby',
+  'postman',
+] as const
+
+export type SupportedLanguage = (typeof supportedLanguages)[number]
