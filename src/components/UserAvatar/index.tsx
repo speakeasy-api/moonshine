@@ -21,24 +21,24 @@ const sizeMap: Record<Size, number> = {
   '2xl': 32,
 }
 
-function UserAvatarMenu({
-  email,
-  onSignOut,
-}: {
+interface UserAvatarMenuProps {
   email: string
+  name: string
   onSignOut: () => void
-}) {
+}
+
+function UserAvatarMenu({ email, name, onSignOut }: UserAvatarMenuProps) {
   return (
     <div className="flex flex-col p-0">
-      <div
-        className="text-muted-foreground break-words px-3 py-1 text-sm"
-        title={email}
-      >
-        {email}
+      <div className="px-3 py-1 text-sm" title={email}>
+        <div className="font-semibold">{name}</div>
+        <div className="text-muted-foreground truncate" title={email}>
+          {email}
+        </div>
       </div>
       <Separator />
       <div
-        className="text-muted-foreground hover:text-foreground flex cursor-pointer select-none flex-row items-center gap-2 px-3 py-1 text-sm"
+        className="text-muted-foreground hover:text-foreground flex cursor-pointer select-none flex-row items-center gap-1.5 px-3 py-1 text-sm"
         onClick={onSignOut}
       >
         <Icon name="log-out" />
@@ -118,9 +118,9 @@ export function UserAvatar({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="relative top-1 w-fit max-w-48 px-0 py-2"
+        className="relative top-1 w-fit max-w-60 px-0 py-2"
       >
-        <UserAvatarMenu email={email} onSignOut={onSignOut} />
+        <UserAvatarMenu name={name} email={email} onSignOut={onSignOut} />
       </PopoverContent>
     </Popover>
   )
