@@ -46,6 +46,9 @@ export default {
       pattern: /^justify-/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^size-\d+$/,
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
