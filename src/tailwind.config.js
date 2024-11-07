@@ -48,6 +48,14 @@ export default {
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
+      pattern: /^align-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^items-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
       pattern: /^size-\d+$/,
     },
   ],

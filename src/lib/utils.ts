@@ -1,7 +1,7 @@
-import { Alignment, Breakpoint, Direction, ResponsiveValue } from '@/types'
+import { Breakpoint, ResponsiveValue } from '@/types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { isDirection, isResponsiveValueObject } from './typeUtils'
+import { isResponsiveValueObject } from './typeUtils'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -38,45 +38,4 @@ export function getResponsiveClasses<T>(
       .join(' ')
   }
   return mapper(value as T, 'sm')
-}
-
-export function getAlignmentClasses(
-  alignment: Alignment,
-  direction: ResponsiveValue<Direction>,
-  breakpoint: Breakpoint
-) {
-  // Flex class mappings based on alignment
-  const alignmentMapper: Record<Alignment, Record<Direction, string>> = {
-    start: {
-      row: 'justify-start',
-      column: 'items-start',
-    },
-    center: {
-      row: 'justify-center',
-      column: 'items-center',
-    },
-    end: {
-      row: 'justify-end',
-      column: 'items-end',
-    },
-    spaceBetween: {
-      row: 'justify-between',
-      column: 'justify-between', // spaceBetween works the same for both row and column
-    },
-    spaceAround: {
-      row: 'justify-around',
-      column: 'justify-around',
-    },
-  }
-
-  const directionValue = (
-    isResponsiveValueObject(direction)
-      ? direction[breakpoint]
-      : isDirection(direction)
-        ? direction
-        : 'row'
-  ) as Direction
-
-  // Select the correct alignment class based on direction
-  return alignmentMapper[alignment][directionValue]
 }

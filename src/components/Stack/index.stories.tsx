@@ -1,15 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Stack } from '.'
 import { createSampleChildren } from '@/lib/storybookUtils'
-import { alignmentOptions, directionOptions } from '@/types'
+import { alignmentOptions, directionOptions, justifyOptions } from '@/types'
 
 const meta: Meta<typeof Stack> = {
   component: Stack,
   tags: ['autodocs'],
   argTypes: {
-    alignment: {
+    align: {
       control: 'select',
       options: alignmentOptions,
+    },
+    justify: {
+      control: 'select',
+      options: justifyOptions,
     },
     direction: {
       control: 'select',
@@ -87,49 +91,58 @@ export const ResponsivePaddingPerSide: Story = {
   },
 }
 
-export const AlignmentStart: Story = {
+export const RowJustifyStart: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: 'start',
+    justify: 'start',
   },
 }
 
-export const AlignmentCenter: Story = {
+export const RowJustifyCenter: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: 'center',
+    justify: 'center',
   },
 }
 
-export const AlignmentEnd: Story = {
+export const RowJustifyEnd: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: 'end',
+    justify: 'end',
   },
 }
 
-export const AlignmentSpaceBetween: Story = {
+export const RowJustifySpaceBetween: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: 'spaceBetween',
+    justify: 'spaceBetween',
   },
 }
 
-export const AlignmentSpaceAround: Story = {
+export const RowJustifySpaceAround: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: 'spaceAround',
+    justify: 'spaceAround',
   },
 }
-export const ResponsiveAlignment: Story = {
+
+export const ResponsiveJustify: Story = {
   args: {
     ...Default.args,
     direction: 'row',
-    alignment: { sm: 'end', md: 'center', lg: 'start' },
+    justify: { sm: 'start', md: 'center', lg: 'end' },
+  },
+}
+
+export const ResponsiveAlign: Story = {
+  args: {
+    ...Default.args,
+    direction: 'column',
+    align: { sm: 'start', md: 'center', lg: 'end' },
   },
 }

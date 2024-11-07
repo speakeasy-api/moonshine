@@ -1,9 +1,14 @@
 import { cn } from '@/lib/utils'
 import { Size } from '@/types'
-import { useState } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import { Separator } from '../Separator'
 import { Icon } from '../Icon'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../Dropdown'
+import { Stack } from '../Stack'
 
 interface UserAvatarProps {
   name: string
@@ -29,22 +34,22 @@ interface UserAvatarMenuProps {
 
 function UserAvatarMenu({ email, name, onSignOut }: UserAvatarMenuProps) {
   return (
-    <div className="flex flex-col p-0">
-      <div className="px-3 py-1 text-sm" title={email}>
-        <div className="font-semibold">{name}</div>
-        <div className="text-muted-foreground truncate" title={email}>
+    <>
+      <Stack padding={3} direction="column">
+        <div className="truncate text-sm font-semibold">{name}</div>
+        <div className="text-muted-foreground truncate text-sm" title={email}>
           {email}
         </div>
-      </div>
-      <Separator />
-      <div
-        className="text-muted-foreground hover:text-foreground flex cursor-pointer select-none flex-row items-center gap-1.5 px-3 py-1 text-sm"
-        onClick={onSignOut}
+      </Stack>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        onSelect={onSignOut}
+        className="cursor-pointer px-3 py-2"
       >
         <Icon name="log-out" />
         Logout
-      </div>
-    </div>
+      </DropdownMenuItem>
+    </>
   )
 }
 
@@ -77,8 +82,8 @@ export function UserAvatar({
   const hasImage = !!imageUrl
 
   return (
-    <Popover>
-      <PopoverTrigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="cursor-pointer outline-none">
         <div
           className={cn(
             'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
@@ -113,13 +118,10 @@ export function UserAvatar({
             </svg>
           )}
         </div>
-      </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        className="relative top-1 w-fit max-w-60 px-0 py-2"
-      >
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="mt-2 max-w-64 p-0">
         <UserAvatarMenu name={name} email={email} onSignOut={onSignOut} />
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

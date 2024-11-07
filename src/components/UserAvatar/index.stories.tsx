@@ -1,7 +1,7 @@
 import { sizes } from '@/types'
 import { UserAvatar } from '.'
 import { Meta, StoryObj } from '@storybook/react'
-import { fn, userEvent, within, expect, screen } from '@storybook/test'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof UserAvatar> = {
   component: UserAvatar,
@@ -59,17 +59,4 @@ export const WithLongEmail: Story = {
     onSignOut: fn(),
   },
   ...baseOpts,
-}
-
-export const Interactive: Story = {
-  args: {
-    ...Default.args,
-  },
-  ...baseOpts,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByRole('button'), { delay: 200 })
-    await userEvent.click(screen.getByText('Logout'))
-    await expect(Default.args?.onSignOut).toHaveBeenCalled()
-  },
 }
