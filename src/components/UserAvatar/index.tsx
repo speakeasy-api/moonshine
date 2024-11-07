@@ -73,12 +73,11 @@ export function UserAvatar({
   size = 'medium',
   onSignOut,
 }: UserAvatarProps) {
-  const [isOpen, setIsOpen] = useState(false)
   const sizeValue = sizeMap[size]
   const hasImage = !!imageUrl
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover>
       <PopoverTrigger>
         <div
           className={cn(
@@ -86,7 +85,6 @@ export function UserAvatar({
             `size-${sizeValue}`,
             !hasImage && getFallbackColor(name)
           )}
-          onClick={() => setIsOpen(true)}
         >
           {hasImage ? (
             <img
