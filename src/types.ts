@@ -1,5 +1,20 @@
 import { Range } from '@/lib/typeUtils'
 
+// Button variants
+export const buttonVariants = [
+  'default',
+  'destructive',
+  'outline',
+  'secondary',
+  'ghost',
+  'link',
+] as const
+export type ButtonVariant = (typeof buttonVariants)[number]
+
+// Button sizes
+export const buttonSizes = ['default', 'sm', 'lg', 'icon'] as const
+export type ButtonSize = (typeof buttonSizes)[number]
+
 // Generic
 export type Orientation = 'horizontal' | 'vertical'
 
@@ -26,12 +41,12 @@ export type Columns = Exclude<Range<typeof maxGridColumns>, 0>
 export const paddingValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
 export type PaddingValue = (typeof paddingValues)[number]
 
-export type PaddingPerAxis = { x: PaddingValue; y: PaddingValue }
+export type PaddingPerAxis = { x?: PaddingValue; y?: PaddingValue }
 export type PaddingPerSides = {
-  top: PaddingValue
-  right: PaddingValue
-  bottom: PaddingValue
-  left: PaddingValue
+  top?: PaddingValue
+  right?: PaddingValue
+  bottom?: PaddingValue
+  left?: PaddingValue
 }
 
 export type PaddingPerSide =
