@@ -105,13 +105,18 @@ const Grid = ({
   )
 }
 
-interface GridItemProps {
+type PermittedHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'className'
+>
+
+interface GridItemProps extends PermittedHTMLAttributes {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
   padding?: ResponsiveValue<Padding>
 }
 
-const GridItem = ({ children, colSpan, padding }: GridItemProps) => {
+const GridItem = ({ children, colSpan, padding, ...props }: GridItemProps) => {
   return (
     <div
       className={cn(
@@ -119,6 +124,7 @@ const GridItem = ({ children, colSpan, padding }: GridItemProps) => {
         colSpan && getResponsiveClasses(colSpan, colSpanMapper),
         padding && getResponsiveClasses(padding, paddingMapper)
       )}
+      {...props}
     >
       {children}
     </div>
