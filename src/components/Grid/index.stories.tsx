@@ -106,3 +106,23 @@ export const WithResponsivePaddingPerAxis: Story = {
     padding: { sm: 0, md: { x: 10, y: 0 }, lg: { x: 16, y: 0 } },
   },
 }
+
+export const WithGridItemPadding: Story = {
+  args: {
+    ...Default.args,
+    children: [
+      <Grid.Item key="1" padding={10}>
+        Grid Item 1
+      </Grid.Item>,
+      <Grid.Item
+        key="2"
+        padding={{
+          x: 10,
+          y: 5,
+        }}
+      >
+        Grid Item 2
+      </Grid.Item>,
+    ],
+  },
+}

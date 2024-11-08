@@ -105,24 +105,20 @@ const Grid = ({
   )
 }
 
-type GridItemBaseProps = Pick<
-  React.HTMLAttributes<HTMLDivElement>,
-  'className' | 'style'
->
-
-interface GridItemProps extends GridItemBaseProps {
+interface GridItemProps {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
+  padding?: ResponsiveValue<Padding>
 }
 
-const GridItem = ({ children, colSpan, ...props }: GridItemProps) => {
+const GridItem = ({ children, colSpan, padding }: GridItemProps) => {
   return (
     <div
       className={cn(
         'grid-item',
-        colSpan && getResponsiveClasses(colSpan, colSpanMapper)
+        colSpan && getResponsiveClasses(colSpan, colSpanMapper),
+        padding && getResponsiveClasses(padding, paddingMapper)
       )}
-      {...props}
     >
       {children}
     </div>
