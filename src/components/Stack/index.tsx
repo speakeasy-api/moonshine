@@ -1,10 +1,18 @@
 import React from 'react'
 import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Alignment, Direction, Gap, Padding, ResponsiveValue } from '@/types'
+import {
+  Alignment,
+  Direction,
+  Gap,
+  Justify,
+  Padding,
+  ResponsiveValue,
+} from '@/types'
 import {
   alignmentMapper,
   directionMapper,
   gapMapper,
+  justifyMapper,
   paddingMapper,
 } from '@/lib/responsiveMappers'
 
@@ -55,14 +63,15 @@ interface StackProps {
 
   /**
    * Can be a simple Alignment value, or a responsive Alignment value.
-   *
-   * @example Simple Alignment
-   * horizontalAlignment: 'start'
-   *
-   * @example Responsive Alignment
-   * horizontalAlignment: { sm: 'start', md: 'center', lg: 'end', xl: 'start' }
+   * Under the hood, this manipulates the `align-items` CSS property.
    */
-  alignment?: ResponsiveValue<Alignment>
+  align?: ResponsiveValue<Alignment>
+
+  /**
+   * Can be a simple Justify value, or a responsive Justify value.
+   * Under the hood, this manipulates the `justify-content` CSS property.
+   */
+  justify?: ResponsiveValue<Justify>
 }
 
 export function Stack({
@@ -70,7 +79,8 @@ export function Stack({
   direction = 'column',
   gap = 0,
   padding = 0,
-  alignment = undefined,
+  align = undefined,
+  justify = undefined,
 }: StackProps) {
   return (
     <div
@@ -79,11 +89,8 @@ export function Stack({
         getResponsiveClasses(direction, directionMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),
-        alignment &&
-          getResponsiveClasses(alignment, (val, breakpoint) =>
-            // We need to pass the direction in here as well, because the alignment classes are different for row and column
-            alignmentMapper(val, direction, breakpoint)
-          )
+        align && getResponsiveClasses(align, alignmentMapper),
+        justify && getResponsiveClasses(justify, justifyMapper)
       )}
     >
       {children}

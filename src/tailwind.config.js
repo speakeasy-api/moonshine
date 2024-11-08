@@ -2,6 +2,7 @@
 // and additionally there is an issue with vite-dts-plugin generating incorrect types for class-variance-authority
 // so we need to colocate the tailwind config within the src directory
 // the postcss config points to this file so that tailwind is picked up by the build process
+import animate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -44,6 +45,14 @@ export default {
     },
     {
       pattern: /^justify-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^align-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^items-/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
@@ -123,5 +132,5 @@ export default {
       },
     },
   },
-  plugins: [import('tailwindcss-animate')],
+  plugins: [animate],
 }

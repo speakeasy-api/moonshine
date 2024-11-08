@@ -50,14 +50,25 @@ export const alignmentOptions = [
   'start',
   'center',
   'end',
-  'spaceBetween',
-  'spaceAround',
+  'stretch',
+  'baseline',
 ] as const
 /**
  * Alignment is an abstraction / amalgamation of the CSS `justify-content`
  * and `align-items` properties.
  */
 export type Alignment = (typeof alignmentOptions)[number]
+
+export const justifyOptions = [
+  'start',
+  'center',
+  'end',
+  'spaceBetween',
+  'spaceAround',
+  'spaceEvenly',
+] as const
+
+export type Justify = (typeof justifyOptions)[number]
 
 export const supportedLanguages = [
   'typescript',

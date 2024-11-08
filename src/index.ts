@@ -14,3 +14,9 @@ export * from '@/components/Logo'
 export * from '@/components/Container'
 export * from '@/components/Combobox'
 export * from '@/components/TargetLanguageIcon'
+export * from '@/components/UserAvatar'
+
+// TODO: Shall we keep sidebar?
+export * from '@/components/Sidebar'
+export * from '@/components/Subnav'
+export * from '@/components/Breadcrumb'

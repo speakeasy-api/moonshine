@@ -1,17 +1,15 @@
 import {
   Alignment,
-  Breakpoint,
   Direction,
   Gap,
+  Justify,
   Padding,
   PaddingPerSide,
-  ResponsiveValue,
 } from '@/types'
 import {
   isPaddingHorizontalOrVerticalAxis,
   isPaddingPerSide,
 } from './typeUtils'
-import { getAlignmentClasses } from './utils'
 
 const directionClasses: Record<Direction, string> = {
   row: 'flex-row',
@@ -40,10 +38,24 @@ export const paddingMapper = (padding: Padding): string => {
 }
 export const colSpanMapper = (colSpan: number) => `col-span-${colSpan}`
 
-export const alignmentMapper = (
-  alignment: Alignment,
-  direction: ResponsiveValue<Direction>,
-  breakpoint: Breakpoint
-) => {
-  return getAlignmentClasses(alignment, direction, breakpoint)
+const alignmentClasses: Record<Alignment, string> = {
+  start: 'items-start',
+  center: 'items-center',
+  end: 'items-end',
+  stretch: 'items-stretch',
+  baseline: 'items-baseline',
 }
+
+export const alignmentMapper = (alignment: Alignment) =>
+  alignmentClasses[alignment]
+
+const justifyClasses: Record<Justify, string> = {
+  start: 'justify-start',
+  center: 'justify-center',
+  end: 'justify-end',
+  spaceBetween: 'justify-between',
+  spaceAround: 'justify-around',
+  spaceEvenly: 'justify-evenly',
+}
+
+export const justifyMapper = (justify: Justify) => justifyClasses[justify]
