@@ -1,7 +1,6 @@
 import { sizes } from '@/types'
 import { UserAvatar } from '.'
 import { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof UserAvatar> = {
   component: UserAvatar,
@@ -27,9 +26,7 @@ const baseOpts = {
 export const Default: Story = {
   args: {
     name: 'John Doe',
-    email: 'john.doe@example.com',
     imageUrl: 'https://robohash.org/3',
-    onSignOut: fn(),
   },
   ...baseOpts,
 }
@@ -37,8 +34,6 @@ export const Default: Story = {
 export const NoImageJohnDoe: Story = {
   args: {
     name: 'John Doe',
-    email: 'john.doe@example.com',
-    onSignOut: fn(),
   },
   ...baseOpts,
 }
@@ -46,17 +41,14 @@ export const NoImageJohnDoe: Story = {
 export const NoImageAliceSmith: Story = {
   args: {
     name: 'Alice Smith',
-    email: 'alice.smith@example.com',
-    onSignOut: fn(),
   },
   ...baseOpts,
 }
 
-export const WithLongEmail: Story = {
+export const Large: Story = {
+  ...Default.parameters,
   args: {
-    name: 'John Doe',
-    email: 'john.doe.long.email.example.com@example.com',
-    onSignOut: fn(),
+    ...Default.args,
+    size: 'large',
   },
-  ...baseOpts,
 }
