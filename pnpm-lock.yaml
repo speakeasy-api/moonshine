@@ -20,6 +20,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.12)(react@18.3.1)
+      '@speed-highlight/core':
+        specifier: ^1.2.6
+        version: 1.2.6
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1315,6 +1318,9 @@ packages:
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
+
+  '@speed-highlight/core@1.2.6':
+    resolution: {integrity: sha512-kzS2W5fLGz2wcmA+4JoMlw3eglj2NqYTdzU/Db1P9phIJ20glYFW4tGpPRfpqP08qEn2H0NV9/7E8kh5/iaTgQ==}
 
   '@storybook/addon-actions@8.4.2':
     resolution: {integrity: sha512-+hA200XN5aeA4T3jq8IifQq6Y+9FyNQ0Q+blM1L0Tl7WLzBc7B1kHQnKvhSj5pvMSBWc/Q/kY7Ev5t9gdOu13g==}
@@ -5449,6 +5455,8 @@ snapshots:
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
+
+  '@speed-highlight/core@1.2.6': {}
 
   '@storybook/addon-actions@8.4.2(storybook@8.4.2(prettier@3.3.3))':
     dependencies:
