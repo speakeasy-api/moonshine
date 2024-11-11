@@ -1,6 +1,6 @@
 import { LoggedInUserMenu } from '.'
 import { StoryObj, Meta } from '@storybook/react'
-import { fn } from '@storybook/test'
+import { fn, userEvent, within, screen, expect } from '@storybook/test'
 
 const meta: Meta<typeof LoggedInUserMenu> = {
   component: LoggedInUserMenu,
@@ -45,5 +45,20 @@ export const NoImage: Story = {
     ...Default.args,
     name: 'Trevor Smith',
     imageUrl: undefined,
+  },
+}
+
+export const Interactive: Story = {
+  ...Default.parameters,
+  args: {
+    ...Default.args,
+    onSignOut: fn(),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole('button'), { delay: 500 })
+    await userEvent.click(screen.getByText('Logout'))
+
+    expect(Interactive.args?.onSignOut).toHaveBeenCalled()
   },
 }
