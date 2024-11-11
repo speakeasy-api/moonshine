@@ -1,11 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { TargetLanguageIcon } from './index'
-import { supportedLanguages } from '@/types'
+import { sizes, supportedLanguages } from '@/types'
 
 const meta: Meta<typeof TargetLanguageIcon> = {
   title: 'Components/TargetLanguageIcon',
   component: TargetLanguageIcon,
   tags: ['autodocs'],
+  argTypes: {
+    size: {
+      control: 'select',
+      options: sizes,
+    },
+    language: {
+      control: 'select',
+      options: supportedLanguages,
+    },
+  },
 }
 
 export default meta
@@ -38,6 +48,14 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+  argTypes: {
+    size: {
+      control: false,
+    },
+    language: {
+      control: false,
+    },
+  },
 }
 
 // Grid of all supported languages
