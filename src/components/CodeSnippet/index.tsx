@@ -103,7 +103,7 @@ export function CodeSnippet({
         ref={codeRef}
         onBeforeInput={handleBeforeInput}
         className={cn(
-          '!my-0 self-center !bg-transparent !py-0 px-2 font-mono !text-sm font-normal outline-none',
+          '!my-0 self-center !bg-transparent !py-0 px-2 font-mono !text-sm font-normal text-white outline-none',
           highlighted && 'selection:bg-zinc-800'
         )}
         dangerouslySetInnerHTML={{
