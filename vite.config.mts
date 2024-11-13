@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import dynamicImport from 'vite-plugin-dynamic-import'
 
 const packageName = 'moonshine'
 
@@ -18,6 +19,11 @@ export default defineConfig({
         titleProp: true,
       },
       include: '**/*.svg',
+    }),
+    dynamicImport({
+      filter(id) {
+        if (id.includes('@speed-highlight/core')) return true
+      },
     }),
   ],
   test: {
