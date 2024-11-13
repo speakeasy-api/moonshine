@@ -48,6 +48,9 @@ export default defineConfig({
     minify: 'esbuild',
     cssMinify: true,
   },
+  optimizeDeps: {
+    include: ['@speed-highlight/core'],
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
