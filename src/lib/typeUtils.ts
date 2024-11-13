@@ -56,6 +56,16 @@ export function isPaddingHorizontalOrVerticalAxis(
   )
 }
 
+export function isPaddingPerSideValue(
+  value: unknown
+): value is PaddingPerSides {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    ('top' in value || 'right' in value || 'bottom' in value || 'left' in value)
+  )
+}
+
 export function isPaddingPerSide(value: unknown): value is PaddingPerSide {
   return isPaddingHorizontalOrVerticalAxis(value) || isPaddingPerSides(value)
 }

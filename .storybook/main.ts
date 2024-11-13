@@ -19,7 +19,12 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     const { mergeConfig } = await import('vite')
 
-    return mergeConfig(config, {})
+    return mergeConfig(config, {
+      optimizeDeps: {
+        // https://github.com/storybookjs/storybook/issues/28542#issuecomment-2268031095
+        exclude: ['node_modules/.cache/sb-vite'],
+      },
+    })
   },
 }
 export default config

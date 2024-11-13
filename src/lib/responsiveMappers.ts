@@ -9,6 +9,7 @@ import {
 import {
   isPaddingHorizontalOrVerticalAxis,
   isPaddingPerSide,
+  isPaddingPerSideValue,
 } from './typeUtils'
 
 const directionClasses: Record<Direction, string> = {
@@ -20,16 +21,19 @@ export const directionMapper = (direction: Direction) =>
   directionClasses[direction]
 export const gapMapper = (gap: Gap) => `gap-${gap}`
 
-const paddingPerSideMapper = (padding: PaddingPerSide) => {
+const paddingPerSideMapper = (padding: PaddingPerSide): string => {
   // x, y
   if (isPaddingHorizontalOrVerticalAxis(padding)) {
     const { x, y } = padding
     return `px-${x} py-${y}`
   }
 
-  // top, right, bottom, left
-  const { top, right, bottom, left } = padding
-  return `pt-${top} pr-${right} pb-${bottom} pl-${left}`
+  if (isPaddingPerSideValue(padding)) {
+    const { top, right, bottom, left } = padding
+    return `pt-${top} pr-${right} pb-${bottom} pl-${left}`
+  }
+
+  return ''
 }
 
 export const paddingMapper = (padding: Padding): string => {

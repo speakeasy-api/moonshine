@@ -17,4 +17,6 @@ jobs:
 
       - run: pnpm install
 
+      - run: pnpm typecheck
+
       - run: pnpm test
