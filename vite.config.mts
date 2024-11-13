@@ -26,6 +26,7 @@ export default defineConfig({
     setupFiles: './tests/setup.js',
     exclude: ['integration', 'node_modules', 'dist'],
   },
+  base: './',
   build: {
     outDir: 'dist',
     lib: {
