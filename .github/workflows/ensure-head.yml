@@ -14,18 +14,22 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch main branch
-        run: |
-          git fetch origin main
+        run: git fetch origin main
+
+      - name: Get latest commit hash of main
+        id: main_commit
+        run: echo "::set-output name=hash::$(git rev-parse origin/main)"
+
+      - name: Get latest commit hash of PR branch
+        id: pr_commit
+        run: echo "::set-output name=hash::$(git rev-parse HEAD)"
 
       - name: Check if PR is up-to-date with main
-        id: check_diff
+        if: steps.main_commit.outputs.hash != steps.pr_commit.outputs.hash
         run: |
-          if ! git diff --quiet HEAD origin/main; then
-            echo "Pull request is not up-to-date with main."
-            exit 1
-          fi
-          echo "Pull request is up-to-date with main."
+          echo "The pull request is not up-to-date with main. Please rebase or merge main into this branch."
+          exit 1
 
-      - name: Set Check Result
-        if: failure()
-        run: echo "The pull request must be up-to-date with main. Please rebase or merge main into this branch."
+      - name: Confirm PR is up-to-date
+        if: steps.main_commit.outputs.hash == steps.pr_commit.outputs.hash
+        run: echo "The pull request is up-to-date with main."
