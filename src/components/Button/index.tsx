@@ -37,7 +37,7 @@ const buttonVariants = cva(
 
 type Attributes = Pick<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  'disabled' | 'onClick' | 'type' | 'children'
+  'disabled' | 'onClick' | 'type' | 'children' | 'role'
 >
 
 export interface ButtonProps extends Attributes {
