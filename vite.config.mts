@@ -48,7 +48,6 @@ export default defineConfig({
     minify: 'esbuild',
     cssMinify: true,
   },
-  assetsInclude: ['**/*.js'],
   optimizeDeps: {
     include: ['@speed-highlight/core'],
   },
