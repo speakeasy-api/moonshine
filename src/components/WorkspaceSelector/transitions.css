@@ -1,4 +1,5 @@
-::view-transition-group(workspace-content) {
+::view-transition-group(workspace-content),
+::view-transition-group(create-dialog) {
   overflow: hidden;
 }
 
@@ -10,6 +11,44 @@
   animation: 300ms ease-out slide-fade-in;
 }
 
+::view-transition-old(create-dialog) {
+  animation: 300ms ease-out slide-fade-out;
+}
+
+::view-transition-new(create-dialog) {
+  animation: 300ms ease-out slide-fade-in;
+}
+
 div[cmdk-list-sizer] {
   flex-grow: 1;
+}
+
+@keyframes slide-fade-in-reverse {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-fade-out-reverse {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.view-transition-reverse::view-transition-old(create-dialog) {
+  animation: 300ms ease-out slide-fade-out-reverse;
+}
+
+.view-transition-reverse::view-transition-new(create-dialog) {
+  animation: 300ms ease-out slide-fade-in-reverse;
 }

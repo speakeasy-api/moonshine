@@ -16,6 +16,7 @@ import { ScrollArea } from '../ScrollArea'
 import { ChevronsUpDown, Plus } from 'lucide-react'
 import { GradientCircle } from './GradientCircle'
 import './transitions.css'
+import { Icon } from '../Icon'
 
 export interface Org {
   id: string
@@ -37,6 +38,13 @@ export interface WorkspaceSelectorProps {
   placeholder?: string
   emptyText?: string
   asPopover?: boolean
+}
+
+type ViewTransition = {
+  ready: Promise<void>
+  finished: Promise<void>
+  updateCallbackDone: Promise<void>
+  skipTransition: () => void
 }
 
 export function WorkspaceSelector({
@@ -146,16 +154,40 @@ export function WorkspaceSelector({
     }
   }, [createDialogOpen])
 
+  const backToWorkspaceSelector = React.useCallback(() => {
+    if (document.startViewTransition) {
+      const root = document.documentElement
+      root.classList.add('view-transition-reverse')
+
+      const transition = (
+        document.startViewTransition as unknown as (
+          callback: () => void
+        ) => ViewTransition
+      )(() => {
+        setCreateDialogOpen(false)
+      })
+
+      transition.finished.then(() => {
+        root.classList.remove('view-transition-reverse')
+      })
+    } else {
+      setCreateDialogOpen(false)
+    }
+  }, [])
+
   const Inner = (
-    <div
-      style={{ viewTransitionName: 'workspace-content' }}
-      className="border-border w-max rounded-md border"
-    >
+    <div className="border-border w-max overflow-hidden rounded-md border">
       {createDialogOpen ? (
         <div style={{ viewTransitionName: 'create-dialog' }}>
           <Command>
+            <div className="my-2 ml-2 flex justify-start">
+              <Button variant="ghost" onClick={() => backToWorkspaceSelector()}>
+                <Icon name="chevron-left" size="small" />
+                Back
+              </Button>
+            </div>
             <CommandList>
-              <div className="flex flex-col p-6">
+              <div className="flex flex-col">
                 <div className="flex flex-row items-center p-4">
                   <h1 className="text-md font-semibold">
                     {selectedOrg?.label}
@@ -184,66 +216,68 @@ export function WorkspaceSelector({
           </Command>
         </div>
       ) : (
-        <Command shouldFilter={false} className="h-full w-max flex-grow">
-          <CommandInput
-            ref={inputRef}
-            placeholder="Search workspaces..."
-            value={search}
-            onValueChange={setSearch}
-          />
-          <CommandList className="flex h-full flex-grow">
-            <CommandEmpty className="text-gray-500">{emptyText}</CommandEmpty>
-            {filteredOrgs.length > 0 ? (
-              <div className="flex h-full flex-grow flex-row">
-                <ScrollArea className="border-border h-full w-max border-r">
-                  {filteredOrgs.map((org) => (
-                    <CommandItem
-                      key={org.id}
-                      onSelect={() => setSelectedOrg(org)}
-                      aria-selected={selectedOrg?.id === org.id}
-                      className={cn(
-                        'mx-1 cursor-pointer gap-1.5 p-2 first:mt-1 last:mb-1', // lighter hover style
-                        selectedOrg?.id === org.id &&
-                          'bg-accent text-accent-foreground font-semibold'
-                      )}
-                      data-selected={
-                        selectedOrg?.id === org.id ? 'true' : undefined
-                      }
-                    >
-                      <GradientCircle name={org.label} />
-                      {org.label}
-                    </CommandItem>
-                  ))}
-                </ScrollArea>
-                <ScrollArea className="w-max">
-                  {selectedOrg && (
-                    <CommandGroup>
-                      {selectedOrg.workspaces.map((workspace) => (
-                        <CommandItem
-                          key={workspace.id}
-                          onSelect={() => handleSelect(workspace.id)}
-                          className="cursor-pointer hover:bg-gray-100"
-                        >
-                          <GradientCircle name={workspace.label} />
-                          {workspace.label}
-                        </CommandItem>
-                      ))}
+        <div style={{ viewTransitionName: 'workspace-content' }}>
+          <Command shouldFilter={false} className="h-full w-max flex-grow">
+            <CommandInput
+              ref={inputRef}
+              placeholder="Search workspaces..."
+              value={search}
+              onValueChange={setSearch}
+            />
+            <CommandList className="flex h-full flex-grow">
+              <CommandEmpty className="text-gray-500">{emptyText}</CommandEmpty>
+              {filteredOrgs.length > 0 ? (
+                <div className="flex h-full flex-grow flex-row">
+                  <ScrollArea className="border-border h-full w-max border-r">
+                    {filteredOrgs.map((org) => (
                       <CommandItem
-                        onSelect={handleCreateDialogOpen}
-                        className="cursor-pointer !items-center hover:bg-gray-100"
+                        key={org.id}
+                        onSelect={() => setSelectedOrg(org)}
+                        aria-selected={selectedOrg?.id === org.id}
+                        className={cn(
+                          'mx-1 cursor-pointer gap-1.5 p-2 first:mt-1 last:mb-1', // lighter hover style
+                          selectedOrg?.id === org.id &&
+                            'bg-accent text-accent-foreground font-semibold'
+                        )}
+                        data-selected={
+                          selectedOrg?.id === org.id ? 'true' : undefined
+                        }
                       >
-                        <Plus className="h-4 w-4" />
-                        Create new workspace
+                        <GradientCircle name={org.label} />
+                        {org.label}
                       </CommandItem>
-                    </CommandGroup>
-                  )}
-                </ScrollArea>
-              </div>
-            ) : (
-              <CommandItem className="text-gray-500">{emptyText}</CommandItem>
-            )}
-          </CommandList>
-        </Command>
+                    ))}
+                  </ScrollArea>
+                  <ScrollArea className="w-max">
+                    {selectedOrg && (
+                      <CommandGroup>
+                        {selectedOrg.workspaces.map((workspace) => (
+                          <CommandItem
+                            key={workspace.id}
+                            onSelect={() => handleSelect(workspace.id)}
+                            className="cursor-pointer hover:bg-gray-100"
+                          >
+                            <GradientCircle name={workspace.label} />
+                            {workspace.label}
+                          </CommandItem>
+                        ))}
+                        <CommandItem
+                          onSelect={handleCreateDialogOpen}
+                          className="cursor-pointer !items-center hover:bg-gray-100"
+                        >
+                          <Plus className="h-4 w-4" />
+                          Create new workspace
+                        </CommandItem>
+                      </CommandGroup>
+                    )}
+                  </ScrollArea>
+                </div>
+              ) : (
+                <CommandItem className="text-gray-500">{emptyText}</CommandItem>
+              )}
+            </CommandList>
+          </Command>
+        </div>
       )}
     </div>
   )
