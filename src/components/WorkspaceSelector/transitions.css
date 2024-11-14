@@ -20,7 +20,8 @@
 }
 
 div[cmdk-list-sizer] {
-  flex-grow: 1;
+  display: flex;
+  width: 100%;
 }
 
 @keyframes slide-fade-in-reverse {

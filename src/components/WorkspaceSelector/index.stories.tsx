@@ -13,28 +13,20 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof WorkspaceSelector>
 
+const lotsOfOrgs = Array.from({ length: 100 }, (_, i) => ({
+  id: i.toString(),
+  label: `Org ${i}`,
+  workspaces: Array.from({ length: 100 }, (_, j) => ({
+    id: `${i}-${j}`,
+    label: `Org ${i} workspace ${j}`,
+  })),
+}))
+
 const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
   const [selectedWorkspace, setSelectedWorkspace] = useState<
     string | undefined
   >(undefined)
-  const [orgs, setOrgs] = useState<Org[]>([
-    {
-      id: '1',
-      label: '@speakeasy/self',
-      workspaces: [
-        { id: '2', label: 'test-vrt' },
-        { id: '3', label: 'nolan-test' },
-      ],
-    },
-    {
-      id: '2',
-      label: '@speakeasy/misc',
-      workspaces: [
-        { id: '4', label: 'Project Zeus' },
-        { id: '5', label: 'BAU' },
-      ],
-    },
-  ])
+  const [orgs, setOrgs] = useState<Org[]>(lotsOfOrgs)
 
   const handleCreateWorkspace = (orgId: string, name: string) => {
     const existingOrg = orgs.find((org) => org.id === orgId)
@@ -71,7 +63,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
 }
 
 export const Default: Story = {
-  render: () => <WorkspaceSelectorWithState />,
+  render: () => <WorkspaceSelectorWithState width={500} />,
 }
 
 export const AsPopover: Story = {

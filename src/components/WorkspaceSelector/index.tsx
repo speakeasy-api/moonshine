@@ -17,6 +17,7 @@ import { ChevronsUpDown, Plus } from 'lucide-react'
 import { GradientCircle } from './GradientCircle'
 import './transitions.css'
 import { Icon } from '../Icon'
+import { Stack } from '../Stack'
 
 export interface Org {
   id: string
@@ -38,6 +39,8 @@ export interface WorkspaceSelectorProps {
   placeholder?: string
   emptyText?: string
   asPopover?: boolean
+  width?: number | string
+  height?: number | string
 }
 
 type ViewTransition = {
@@ -55,6 +58,8 @@ export function WorkspaceSelector({
   placeholder = 'Select workspace...',
   emptyText = 'No workspaces found.',
   asPopover = false,
+  width = 350,
+  height = 250,
 }: WorkspaceSelectorProps) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
@@ -154,6 +159,11 @@ export function WorkspaceSelector({
     }
   }, [createDialogOpen])
 
+  const handleCreateWithValues = React.useCallback(() => {
+    handleCreateDialogOpen()
+    setNewWorkspaceName(search)
+  }, [handleCreateDialogOpen, search])
+
   const backToWorkspaceSelector = React.useCallback(() => {
     if (document.startViewTransition) {
       const root = document.documentElement
@@ -176,16 +186,13 @@ export function WorkspaceSelector({
   }, [])
 
   const Inner = (
-    <div className="border-border w-max overflow-hidden rounded-md border">
+    <div
+      className="border-border overflow-hidden rounded-md border"
+      style={{ width, height }}
+    >
       {createDialogOpen ? (
-        <div style={{ viewTransitionName: 'create-dialog' }}>
+        <div style={{ viewTransitionName: 'create-dialog' }} className="h-full">
           <Command>
-            <div className="my-2 ml-2 flex justify-start">
-              <Button variant="ghost" onClick={() => backToWorkspaceSelector()}>
-                <Icon name="chevron-left" size="small" />
-                Back
-              </Button>
-            </div>
             <CommandList>
               <div className="flex flex-col">
                 <div className="flex flex-row items-center p-4">
@@ -202,22 +209,32 @@ export function WorkspaceSelector({
                     className="border-input bg-background ring-offset-background flex h-10 w-full rounded-md text-sm outline-none"
                   />
                 </div>
-                <div className="flex justify-end">
-                  <Button
-                    variant="secondary"
-                    disabled={!newWorkspaceName}
-                    onClick={handleCreateNewWorkspace}
-                  >
-                    Create
-                  </Button>
-                </div>
               </div>
             </CommandList>
+
+            <div className="mt-auto flex p-4">
+              <Button variant="ghost" onClick={() => backToWorkspaceSelector()}>
+                <Icon name="chevron-left" size="small" />
+                Back
+              </Button>
+              <div className="ml-auto">
+                <Button
+                  variant="secondary"
+                  disabled={!newWorkspaceName}
+                  onClick={handleCreateNewWorkspace}
+                >
+                  Create
+                </Button>
+              </div>
+            </div>
           </Command>
         </div>
       ) : (
-        <div style={{ viewTransitionName: 'workspace-content' }}>
-          <Command shouldFilter={false} className="h-full w-max flex-grow">
+        <div
+          style={{ viewTransitionName: 'workspace-content' }}
+          className="h-full"
+        >
+          <Command shouldFilter={false} className="h-full w-full flex-grow">
             <CommandInput
               ref={inputRef}
               placeholder="Search workspaces..."
@@ -227,8 +244,11 @@ export function WorkspaceSelector({
             <CommandList className="flex h-full flex-grow">
               <CommandEmpty className="text-gray-500">{emptyText}</CommandEmpty>
               {filteredOrgs.length > 0 ? (
-                <div className="flex h-full flex-grow flex-row">
-                  <ScrollArea className="border-border h-full w-max border-r">
+                <div className="flex h-full w-full flex-grow flex-row">
+                  <ScrollArea
+                    className="border-border h-full w-max border-r"
+                    style={{ flex: 1 }}
+                  >
                     {filteredOrgs.map((org) => (
                       <CommandItem
                         key={org.id}
@@ -248,9 +268,16 @@ export function WorkspaceSelector({
                       </CommandItem>
                     ))}
                   </ScrollArea>
-                  <ScrollArea className="w-max">
+                  <ScrollArea className="flex-grow" style={{ flex: 2 }}>
                     {selectedOrg && (
                       <CommandGroup>
+                        <CommandItem
+                          onSelect={handleCreateDialogOpen}
+                          className="cursor-pointer !items-center hover:bg-gray-100"
+                        >
+                          <Plus className="h-4 w-4" />
+                          Create new workspace
+                        </CommandItem>
                         {selectedOrg.workspaces.map((workspace) => (
                           <CommandItem
                             key={workspace.id}
@@ -261,19 +288,25 @@ export function WorkspaceSelector({
                             {workspace.label}
                           </CommandItem>
                         ))}
-                        <CommandItem
-                          onSelect={handleCreateDialogOpen}
-                          className="cursor-pointer !items-center hover:bg-gray-100"
-                        >
-                          <Plus className="h-4 w-4" />
-                          Create new workspace
-                        </CommandItem>
                       </CommandGroup>
                     )}
                   </ScrollArea>
                 </div>
               ) : (
-                <CommandItem className="text-gray-500">{emptyText}</CommandItem>
+                <CommandItem className="flex w-full flex-col items-center justify-center text-gray-500 data-[selected=true]:bg-inherit">
+                  <Stack
+                    direction="column"
+                    align="center"
+                    justify="center"
+                    gap={3}
+                  >
+                    <div>{emptyText}</div>
+
+                    <Button variant="outline" onClick={handleCreateWithValues}>
+                      Create '{search}'
+                    </Button>
+                  </Stack>
+                </CommandItem>
               )}
             </CommandList>
           </Command>
