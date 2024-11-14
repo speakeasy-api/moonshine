@@ -6,7 +6,6 @@ import { Button } from '../Button'
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
@@ -15,7 +14,6 @@ import { ScrollArea } from '../ScrollArea'
 import { GradientCircle } from './GradientCircle'
 import './transitions.css'
 import { Icon } from '../Icon'
-import { Stack } from '../Stack'
 import { Text } from '../Text'
 export interface Org {
   id: string
@@ -244,81 +242,66 @@ export function WorkspaceSelector({
               value={search}
               onValueChange={setSearch}
             />
-            <CommandList>
-              <CommandEmpty className="text-gray-500">{emptyText}</CommandEmpty>
-
-              {filteredOrgs.length > 0 ? (
-                <div className="flex h-[400px] flex-grow flex-row">
-                  <ScrollArea className="border-border w-2/5 border-r">
-                    {filteredOrgs.map((org) => (
-                      <CommandItem
-                        key={org.id}
-                        onSelect={() => setSelectedOrg(org)}
-                        aria-selected={selectedOrg?.id === org.id}
-                        className={cn(
-                          'mx-1 cursor-pointer gap-1.5 p-2 first:mt-1 last:mb-1', // lighter hover style
-                          selectedOrg?.id === org.id &&
-                            'bg-accent text-accent-foreground font-semibold'
-                        )}
-                        data-selected={
-                          selectedOrg?.id === org.id ? 'true' : undefined
-                        }
-                      >
-                        <GradientCircle name={org.label} />
-                        {org.label}
-
-                        {selectedOrg?.id === org.id && (
-                          <div className="ml-auto">
-                            <Icon name="chevron-right" size="small" />
-                          </div>
-                        )}
-                      </CommandItem>
-                    ))}
-                  </ScrollArea>
-
-                  <div className="flex w-3/5 flex-col">
-                    <div className="bg-background sticky top-0 z-10 m-1 border-b pb-1">
-                      <CommandItem
-                        onSelect={handleCreateDialogOpen}
-                        className="cursor-pointer !items-center py-2 hover:bg-gray-100"
-                      >
-                        <Icon name="plus" />
-                        Create new workspace
-                      </CommandItem>
+            {filteredOrgs.length > 0 ? (
+              <div className="flex h-[400px] flex-grow flex-row">
+                <div className="border-border w-1/2 border-r">
+                  <ScrollArea className="h-[400px]">
+                    <div>
+                      {filteredOrgs.map((org) => (
+                        <CommandItem
+                          key={org.id}
+                          onSelect={() => setSelectedOrg(org)}
+                          aria-selected={selectedOrg?.id === org.id}
+                          className={cn(
+                            'mx-1 cursor-pointer gap-1.5 p-2 first:mt-1 last:mb-1',
+                            selectedOrg?.id === org.id &&
+                              'bg-accent text-accent-foreground font-semibold'
+                          )}
+                        >
+                          <GradientCircle name={org.label} />
+                          {org.label}
+                          {selectedOrg?.id === org.id && (
+                            <div className="ml-auto">
+                              <Icon name="chevron-right" size="small" />
+                            </div>
+                          )}
+                        </CommandItem>
+                      ))}
                     </div>
-                    <ScrollArea className="flex-grow">
-                      <CommandGroup>
-                        {selectedOrg?.workspaces.map((workspace) => (
-                          <CommandItem
-                            key={workspace.id}
-                            onSelect={() => handleSelect(workspace.id)}
-                            className="hover:!bg-accent data-[selected]:!bg-accent cursor-pointer"
-                          >
-                            <GradientCircle name={workspace.label} />
-                            {workspace.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </ScrollArea>
-                  </div>
+                  </ScrollArea>
                 </div>
-              ) : (
-                <CommandItem className="flex w-full flex-col items-center justify-center text-gray-500 data-[selected=true]:bg-inherit">
-                  <Stack
-                    direction="column"
-                    align="center"
-                    justify="center"
-                    gap={3}
-                  >
-                    <div>{emptyText}</div>
 
-                    <Button variant="outline" onClick={handleCreateWithValues}>
-                      Create '{search}'
-                    </Button>
-                  </Stack>
-                </CommandItem>
-              )}
-            </CommandList>
+                <div className="flex w-1/2 flex-col">
+                  <div className="bg-background sticky top-0 z-10 border-b">
+                    <CommandItem
+                      onSelect={handleCreateDialogOpen}
+                      className="cursor-pointer !items-center py-2 hover:bg-gray-100"
+                    >
+                      <Icon name="plus" />
+                      Create new workspace
+                    </CommandItem>
+                  </div>
+                  <ScrollArea className="h-[calc(400px-44px)]">
+                    <div>
+                      {selectedOrg?.workspaces.map((workspace) => (
+                        <CommandItem
+                          key={workspace.id}
+                          onSelect={() => handleSelect(workspace.id)}
+                          className="hover:!bg-accent data-[selected]:!bg-accent cursor-pointer"
+                        >
+                          <GradientCircle name={workspace.label} />
+                          {workspace.label}
+                        </CommandItem>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </div>
+              </div>
+            ) : (
+              <CommandEmpty className="p-6 text-gray-500">
+                {emptyText}
+              </CommandEmpty>
+            )}
           </Command>
         </div>
       )}

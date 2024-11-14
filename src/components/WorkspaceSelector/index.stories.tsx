@@ -99,6 +99,16 @@ const sampleData = [
       },
     ],
   },
+  ...Array.from({ length: 100 }, (_, i) => ({
+    id: `org-${i}`,
+    label: `org-${i}`,
+    workspaces: [
+      {
+        id: `workspace-${i}`,
+        label: `workspace-${i}`,
+      },
+    ],
+  })),
 ]
 
 const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
