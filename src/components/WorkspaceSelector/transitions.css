@@ -1,0 +1,15 @@
+::view-transition-group(workspace-content) {
+  overflow: hidden;
+}
+
+::view-transition-old(workspace-content) {
+  animation: 300ms ease-out slide-fade-out;
+}
+
+::view-transition-new(workspace-content) {
+  animation: 300ms ease-out slide-fade-in;
+}
+
+div[cmdk-list-sizer] {
+  flex-grow: 1;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { WorkspaceSelector } from '.'
+import { Org, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 
 const meta = {
   title: 'Components/WorkspaceSelector',
@@ -13,54 +13,67 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof WorkspaceSelector>
 
-const WorkspaceSelectorWithState = () => {
+const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
   const [selectedWorkspace, setSelectedWorkspace] = useState<
     string | undefined
   >(undefined)
-  const [workspaces, setWorkspaces] = useState<
-    {
-      id: string
-      label: string
-      value: string
-      options: {
-        id: string
-        label: string
-        value: string
-      }[]
-    }[]
-  >([
+  const [orgs, setOrgs] = useState<Org[]>([
     {
       id: '1',
-      label: 'Personal',
-      value: '1',
-      options: [
-        { id: '2', label: 'Work', value: '2' },
-        { id: '3', label: 'Side Projects', value: '3' },
+      label: '@speakeasy/self',
+      workspaces: [
+        { id: '2', label: 'test-vrt' },
+        { id: '3', label: 'nolan-test' },
+      ],
+    },
+    {
+      id: '2',
+      label: '@speakeasy/misc',
+      workspaces: [
+        { id: '4', label: 'Project Zeus' },
+        { id: '5', label: 'BAU' },
       ],
     },
   ])
 
-  const handleCreateWorkspace = (name: string) => {
-    const newWorkspace = {
-      id: String(workspaces.length + 1),
-      label: name,
-      value: '1',
-      options: [],
+  const handleCreateWorkspace = (orgId: string, name: string) => {
+    const existingOrg = orgs.find((org) => org.id === orgId)
+    if (existingOrg) {
+      setOrgs(
+        orgs.map((org) =>
+          org.id === existingOrg.id
+            ? {
+                ...org,
+                workspaces: [
+                  ...org.workspaces,
+                  {
+                    id: name,
+                    label: name,
+                  },
+                ],
+              }
+            : org
+        )
+      )
+      setSelectedWorkspace(name)
     }
-    setWorkspaces([...workspaces, newWorkspace])
-    setSelectedWorkspace(newWorkspace.id)
   }
 
   return (
     <WorkspaceSelector
-      groups={workspaces}
+      orgs={orgs}
       value={selectedWorkspace}
       onValueChange={setSelectedWorkspace}
-      onCreateNewItem={handleCreateWorkspace}
+      onCreateNewWorkspace={handleCreateWorkspace}
+      {...props}
     />
   )
 }
 
 export const Default: Story = {
   render: () => <WorkspaceSelectorWithState />,
+}
+
+export const AsPopover: Story = {
+  render: () => <WorkspaceSelectorWithState asPopover={true} />,
 }

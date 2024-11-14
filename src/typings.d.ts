@@ -5,3 +5,11 @@ declare module '*.svg' {
   const SVGComponent: React.FC<React.SVGProps<SVGSVGElement>>
   export default SVGComponent
 }
+
+declare global {
+  interface Document {
+    startViewTransition?: (callback: () => void) => void
+  }
+}
+
+export {}
