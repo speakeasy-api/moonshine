@@ -162,3 +162,15 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
 export const Default: Story = {
   render: () => <WorkspaceSelectorWithState />,
 }
+
+export const WithOneOrg: Story = {
+  render: () => <WorkspaceSelectorWithState orgs={sampleData.slice(0, 1)} />,
+}
+
+export const WithOneOrgAndAFewWorkspaces: Story = {
+  render: () => {
+    const org = Object.assign({}, sampleData[0])
+    org.workspaces = org.workspaces.slice(0, 3)
+    return <WorkspaceSelectorWithState orgs={[org]} />
+  },
+}
