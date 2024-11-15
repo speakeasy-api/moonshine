@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Command, CommandEmpty, CommandInput } from '../Command'
+import { Command, CommandEmpty } from '../Command'
 import { CreateDialog } from './CreateDialog'
 import { OrgList } from './OrgList'
 import { WorkspaceList } from './WorkspaceList'

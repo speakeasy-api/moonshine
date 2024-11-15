@@ -24,8 +24,7 @@ export function WorkspaceList({
         <CommandItem
           onSelect={handleCreateDialogOpen}
           className={cn(
-            'm-1 cursor-pointer !items-center py-2 hover:bg-gray-100',
-            useGridLayout && 'px-5 py-3'
+            'm-1 cursor-pointer !items-center py-2 hover:bg-gray-100'
           )}
         >
           <Icon name="plus" />
