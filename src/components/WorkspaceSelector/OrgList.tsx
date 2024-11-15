@@ -14,7 +14,7 @@ interface OrgListProps {
 export function OrgList({ orgs, selectedOrg, setSelectedOrg }: OrgListProps) {
   return (
     <div className="border-border w-1/3 border-r">
-      <ScrollArea className="h-[400px]">
+      <ScrollArea className="h-[calc(400px-44px)]">
         <div>
           {orgs.map((org) => (
             <CommandItem
