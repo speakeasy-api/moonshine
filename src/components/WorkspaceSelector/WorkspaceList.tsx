@@ -31,7 +31,7 @@ export function WorkspaceList({
           Create new workspace
         </CommandItem>
       </div>
-      <ScrollArea className="h-[calc(400px-44px)]">
+      <ScrollArea className="h-[calc(400px-90px)]">
         <div
           className={cn(
             useGridLayout && `grid grid-cols-${gridCols} m-4 gap-2`,
