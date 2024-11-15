@@ -5,7 +5,9 @@ import { Command, CommandEmpty, CommandInput } from '../Command'
 import { CreateDialog } from './CreateDialog'
 import { OrgList } from './OrgList'
 import { WorkspaceList } from './WorkspaceList'
-import './transitions.css'
+import './styles.css'
+import { FilteredWorkspaces } from './FilteredWorkspaces'
+import { SearchBox } from './SearchBox'
 
 export interface Org {
   id: string
@@ -48,22 +50,25 @@ export function WorkspaceSelector({
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
 
-  const filteredOrgs = React.useMemo(() => {
-    if (!search) return orgs
-    return orgs
-      .map((org) => ({
-        ...org,
-        workspaces: org.workspaces.filter((workspace) =>
-          workspace.label.toLowerCase().includes(search.toLowerCase())
-        ),
-      }))
-      .filter((org) => org.workspaces.length > 0)
-  }, [orgs, search])
+  const filteredOrgs = React.useMemo(
+    () =>
+      search
+        ? orgs
+            .map((org) => ({
+              ...org,
+              workspaces: org.workspaces.filter((workspace) =>
+                workspace.label.toLowerCase().startsWith(search.toLowerCase())
+              ),
+            }))
+            .filter((org) => org.workspaces.length > 0)
+        : undefined,
+    [orgs, search]
+  )
 
   const handleSelect = React.useCallback(
-    (id: string) => {
+    (id: string, clearSearch: boolean = true) => {
       onSelect(id)
-      setSearch('')
+      if (clearSearch) setSearch('')
     },
     [onSelect]
   )
@@ -152,21 +157,25 @@ export function WorkspaceSelector({
       ) : (
         <div
           style={{ viewTransitionName: 'workspace-content' }}
-          className="flex h-full w-full"
+          className="flex h-[400px] w-full"
         >
           <Command shouldFilter={false}>
-            {requiresSearch(filteredOrgs) && (
-              <CommandInput
-                ref={inputRef}
-                placeholder="Search workspaces..."
-                value={search}
-                onValueChange={setSearch}
+            {requiresSearch(orgs) && (
+              <SearchBox
+                inputRef={inputRef}
+                search={search}
+                setSearch={setSearch}
               />
             )}
-            {filteredOrgs.length > 0 ? (
-              <div className="flex h-[400px] flex-grow flex-row">
+            {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
+              <FilteredWorkspaces
+                onSelect={(id) => handleSelect(id, false)}
+                orgsWithFilteredWorkspaces={filteredOrgs}
+              />
+            ) : orgs.length > 0 && !search ? (
+              <div className="flex flex-grow flex-row">
                 <OrgList
-                  orgs={filteredOrgs}
+                  orgs={orgs}
                   selectedOrg={selectedOrg}
                   setSelectedOrg={setSelectedOrg}
                 />
@@ -177,7 +186,7 @@ export function WorkspaceSelector({
                 />
               </div>
             ) : (
-              <CommandEmpty className="p-6 text-gray-500">
+              <CommandEmpty className="text-md text-muted-foreground p-6">
                 {emptyText}
               </CommandEmpty>
             )}

@@ -25,6 +25,10 @@ div[cmdk-list-sizer] {
   height: 100%;
 }
 
+div[cmdk-input-wrapper] {
+  border-bottom: none !important;
+}
+
 @keyframes slide-fade-in-reverse {
   from {
     opacity: 0;
