@@ -28,6 +28,7 @@ export interface WorkspaceSelectorProps {
   onCreateNewWorkspace: (orgId: string, newWorkspaceName: string) => void
   placeholder?: string
   emptyText?: string
+  recents?: Org[]
 }
 
 type ViewTransition = {
@@ -42,6 +43,7 @@ export function WorkspaceSelector({
   onSelect,
   onCreateNewWorkspace,
   emptyText = 'No workspaces found.',
+  recents = [],
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(orgs[0])
@@ -49,7 +51,7 @@ export function WorkspaceSelector({
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
-
+  const [showRecents, setShowRecents] = React.useState(recents.length > 0)
   const filteredOrgs = React.useMemo(
     () =>
       search
@@ -72,6 +74,11 @@ export function WorkspaceSelector({
     },
     [onSelect]
   )
+
+  const handleSelectOrg = React.useCallback((org: Org) => {
+    setSelectedOrg(org)
+    setShowRecents(false)
+  }, [])
 
   const handleCreateNewWorkspace = React.useCallback(() => {
     if (selectedOrg && newWorkspaceName) {
@@ -171,13 +178,30 @@ export function WorkspaceSelector({
               <FilteredWorkspaces
                 onSelect={(id) => handleSelect(id, false)}
                 orgsWithFilteredWorkspaces={filteredOrgs}
+                fullWidth
               />
+            ) : showRecents ? (
+              <div className="flex w-full flex-grow flex-row">
+                <OrgList
+                  orgs={orgs}
+                  selectedOrg={selectedOrg}
+                  setSelectedOrg={handleSelectOrg}
+                  onSelectRecent={() => setShowRecents(true)}
+                  showRecents={showRecents}
+                />
+                <FilteredWorkspaces
+                  onSelect={(id) => handleSelect(id, false)}
+                  orgsWithFilteredWorkspaces={recents}
+                />
+              </div>
             ) : orgs.length > 0 && !search ? (
               <div className="flex flex-grow flex-row">
                 <OrgList
                   orgs={orgs}
                   selectedOrg={selectedOrg}
-                  setSelectedOrg={setSelectedOrg}
+                  setSelectedOrg={handleSelectOrg}
+                  onSelectRecent={() => setShowRecents(true)}
+                  showRecents={showRecents}
                 />
                 <WorkspaceList
                   selectedOrg={selectedOrg!}

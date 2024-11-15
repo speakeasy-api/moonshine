@@ -9,28 +9,32 @@ interface WorkspaceListProps {
   selectedOrg: Org
   handleCreateDialogOpen: () => void
   handleSelect: (workspaceId: string) => void
+  enableCreate?: boolean
 }
 
 export function WorkspaceList({
   selectedOrg,
   handleCreateDialogOpen,
   handleSelect,
+  enableCreate = true,
 }: WorkspaceListProps) {
   const useGridLayout = requiresGridLayout(selectedOrg)
   const gridCols = getGridCols(selectedOrg)
   return (
     <div className="flex w-2/3 flex-col">
-      <div className="bg-background sticky top-0 z-10 border-b">
-        <CommandItem
-          onSelect={handleCreateDialogOpen}
-          className={cn(
-            'm-1 cursor-pointer !items-center py-2 hover:bg-gray-100'
-          )}
-        >
-          <Icon name="plus" />
-          Create new workspace
-        </CommandItem>
-      </div>
+      {enableCreate && (
+        <div className="bg-background sticky top-0 z-10 border-b">
+          <CommandItem
+            onSelect={handleCreateDialogOpen}
+            className={cn(
+              'm-1 cursor-pointer !items-center py-2 hover:bg-gray-100'
+            )}
+          >
+            <Icon name="plus" />
+            Create new workspace
+          </CommandItem>
+        </div>
+      )}
       <ScrollArea className="h-[calc(400px-90px)]">
         <div
           className={cn(

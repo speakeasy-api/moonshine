@@ -148,6 +148,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
           orgs={orgs}
           onCreateNewWorkspace={handleCreateWorkspace}
           onSelect={setSelectedWorkspaceId}
+          recents={props.recents ?? []}
           {...props}
         />
 
@@ -172,5 +173,16 @@ export const WithOneOrgAndAFewWorkspaces: Story = {
     const org = Object.assign({}, sampleData[0])
     org.workspaces = org.workspaces.slice(0, 3)
     return <WorkspaceSelectorWithState orgs={[org]} />
+  },
+}
+
+export const WithRecents: Story = {
+  render: () => {
+    const firstOrg = Object.assign({}, sampleData[0])
+    firstOrg.workspaces = firstOrg.workspaces.slice(0, 3)
+    const secondOrg = Object.assign({}, sampleData[1])
+    secondOrg.workspaces = secondOrg.workspaces.slice(0, 3)
+    const recents = [firstOrg, secondOrg]
+    return <WorkspaceSelectorWithState recents={recents} />
   },
 }
