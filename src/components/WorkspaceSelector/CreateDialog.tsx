@@ -3,7 +3,7 @@ import { Org } from '.'
 import { Command, CommandList } from '../Command'
 import { Text } from '../Text'
 import { Icon } from '../Icon'
-import { Button } from '@/index'
+import { Button, Separator } from '@/index'
 
 interface CreateDialogProps {
   open: boolean
@@ -40,12 +40,15 @@ export function CreateDialog({
           Workspaces are used to organize your SDK targets into logical groups.
         </Text>
       </div>
+      <div className="mt-6">
+        <Separator />
+      </div>
       <CommandList className="flex max-h-none flex-grow flex-col">
-        <div className="flex flex-grow flex-col justify-center">
-          <div className="flex flex-row items-baseline justify-stretch rounded-xl border border-dashed p-6 pb-4">
-            <h1 className="text-md font-semibold">{selectedOrg?.label}</h1>
+        <div className="border-border my-6 flex w-full flex-col items-stretch justify-center rounded-lg border p-10">
+          <div className="flex flex-grow flex-row items-center justify-stretch">
+            <span className="text-md font-semibold">{selectedOrg?.label}</span>
             <span className="text-muted-foreground mx-2 text-sm">/</span>
-            <div className="flex flex-col justify-start">
+            <div className="flex w-full flex-1">
               <input
                 ref={createInputRef}
                 type="text"
@@ -53,24 +56,17 @@ export function CreateDialog({
                 placeholder="your-new-workspace"
                 value={newWorkspaceName}
                 onChange={(e) => setNewWorkspaceName(e.target.value)}
-                className="border-input bg-background ring-offset-background text-md flex h-10 w-fit min-w-fit flex-1 rounded-md px-2 py-1.5 outline-none invalid:border-b invalid:border-red-400"
+                className="border-input bg-background ring-offset-background text-muted-foreground text-md flex h-10 w-fit min-w-fit flex-1 rounded-md px-2 py-1.5 pl-0 outline-none invalid:border-b invalid:border-red-400"
               />
-
-              <div
-                className="mt-1 text-sm text-red-400"
-                style={{
-                  visibility:
-                    newWorkspaceName &&
-                    !newWorkspaceName.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-                      ? 'visible'
-                      : 'hidden',
-                }}
-              >
+            </div>
+          </div>
+          {newWorkspaceName &&
+            !newWorkspaceName.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) && (
+              <div className="mt-1 text-sm text-red-400">
                 Workspace names can only contain lowercase letters, numbers, and
                 hyphens
               </div>
-            </div>
-          </div>
+            )}
         </div>
       </CommandList>
 
