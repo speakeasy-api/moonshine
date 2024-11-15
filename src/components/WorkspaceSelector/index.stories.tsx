@@ -179,9 +179,9 @@ export const WithOneOrgAndAFewWorkspaces: Story = {
 export const WithRecents: Story = {
   render: () => {
     const firstOrg = Object.assign({}, sampleData[0])
-    firstOrg.workspaces = firstOrg.workspaces.slice(0, 3)
+    firstOrg.workspaces = firstOrg.workspaces.slice(0, 1)
     const secondOrg = Object.assign({}, sampleData[1])
-    secondOrg.workspaces = secondOrg.workspaces.slice(0, 3)
+    secondOrg.workspaces = secondOrg.workspaces.slice(0, 2)
     const recents = [firstOrg, secondOrg]
     return <WorkspaceSelectorWithState recents={recents} />
   },
