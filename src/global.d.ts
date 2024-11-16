@@ -1,9 +1,8 @@
 declare module '*.module.css'
 
 declare module '*.svg' {
-  import React from 'react'
-  const SVGComponent: React.FC<React.SVGProps<SVGSVGElement>>
-  export default SVGComponent
+  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>
+  export default content
 }
 
 declare global {
