@@ -16,18 +16,16 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
     },
     "baseUrl": ".",
     "types": [
-      "@testing-library/jest-dom"
-    ],
+      "@testing-library/jest-dom",
+      "vite-plugin-svgr/client"
+    ]
   },
   "include": [
     "src"
-  ],
-  "files": [
-    "src/global.d.ts"
   ],
   "exclude": [
     "node_modules",

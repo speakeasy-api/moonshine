@@ -11,15 +11,7 @@ export default defineConfig({
   plugins: [
     react(),
     dts(),
-    svgr({
-      svgrOptions: {
-        exportType: 'default',
-        ref: true,
-        svgo: true,
-        titleProp: true,
-      },
-      include: '**/*.svg',
-    }),
+    svgr(),
     dynamicImport({
       filter(id) {
         if (id.includes('@speed-highlight/core')) return true
