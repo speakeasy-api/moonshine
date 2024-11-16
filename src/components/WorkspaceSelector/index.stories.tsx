@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { Org, WorkspaceSelector, WorkspaceSelectorProps } from '.'
+import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
 
 const meta = {
@@ -113,10 +113,10 @@ const sampleData = [
 
 const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
   const [orgs, setOrgs] = useState<Org[]>(sampleData)
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(
+  const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(
     null
   )
-
+  const [selectedOrg, setSelectedOrg] = useState<Org | null>(null)
   const handleCreateWorkspace = (orgId: string, name: string) => {
     const existingOrg = orgs.find((org) => org.id === orgId)
     if (existingOrg) {
@@ -137,7 +137,10 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
         )
       )
 
-      setSelectedWorkspaceId(name)
+      setSelectedWorkspace({
+        id: name,
+        label: name,
+      })
     }
   }
 
@@ -147,13 +150,17 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
         <WorkspaceSelector
           orgs={orgs}
           onCreateNewWorkspace={handleCreateWorkspace}
-          onSelect={setSelectedWorkspaceId}
+          onSelect={(org, workspace) => {
+            setSelectedOrg(org)
+            setSelectedWorkspace(workspace)
+          }}
           recents={props.recents ?? []}
           {...props}
         />
 
-        <div className="mt-4">
-          <b>Selected workspaceId:</b> {selectedWorkspaceId ?? 'none'}
+        <div className="border-border mt-8 flex flex-col gap-2 border-t pt-4">
+          <b>Selected org:</b> {selectedOrg?.label ?? 'none'}
+          <b>Selected workspaceId:</b> {selectedWorkspace?.label ?? 'none'}
         </div>
       </Container>
     </div>

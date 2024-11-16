@@ -8,6 +8,7 @@ import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
 import { FilteredWorkspaces } from './FilteredWorkspaces'
 import { SearchBox } from './SearchBox'
+import useRecentWorkspacesFromLocalStorage from '@/hooks/useRecentWorkspacesFromLocalStorage'
 
 export interface Org {
   id: string
@@ -24,11 +25,12 @@ export interface Workspace {
 export interface WorkspaceSelectorProps {
   orgs: Org[]
   value?: string
-  onSelect: (id: string) => void
+  onSelect: (org: Org, workspace: Workspace) => void
   onCreateNewWorkspace: (orgId: string, newWorkspaceName: string) => void
   placeholder?: string
   emptyText?: string
   recents?: Org[]
+  height?: string | number
 }
 
 type ViewTransition = {
@@ -44,14 +46,19 @@ export function WorkspaceSelector({
   onCreateNewWorkspace,
   emptyText = 'No workspaces found.',
   recents = [],
+  height = '500px',
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
+  const [selectedWorkspace, setSelectedWorkspace] =
+    React.useState<Workspace | null>(null)
   const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(orgs[0])
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [showRecents, setShowRecents] = React.useState(recents.length > 0)
+  const { addRecentWorkspace } = useRecentWorkspacesFromLocalStorage(recents)
+
   const filteredOrgs = React.useMemo(
     () =>
       search
@@ -68,11 +75,13 @@ export function WorkspaceSelector({
   )
 
   const handleSelect = React.useCallback(
-    (id: string, clearSearch: boolean = true) => {
-      onSelect(id)
+    (org: Org, workspace: Workspace, clearSearch: boolean = true) => {
+      onSelect(org, workspace)
+      addRecentWorkspace(org, workspace)
       if (clearSearch) setSearch('')
+      setSelectedWorkspace(workspace)
     },
-    [onSelect]
+    [onSelect, addRecentWorkspace]
   )
 
   const handleSelectOrg = React.useCallback((org: Org) => {
@@ -84,24 +93,24 @@ export function WorkspaceSelector({
     if (selectedOrg && newWorkspaceName) {
       onCreateNewWorkspace(selectedOrg.id, newWorkspaceName)
 
+      const workspace: Workspace = {
+        id: newWorkspaceName,
+        label: newWorkspaceName,
+      }
+
       // Update the selectedOrg state with the new workspace
       setSelectedOrg((prev) =>
         prev
           ? {
               ...prev,
-              workspaces: [
-                ...prev.workspaces,
-                {
-                  id: newWorkspaceName,
-                  label: newWorkspaceName,
-                },
-              ],
+              workspaces: [...prev.workspaces, workspace],
             }
           : null
       )
 
       setNewWorkspaceName('')
       setCreateDialogOpen(false)
+      setSelectedWorkspace(workspace)
     }
   }, [selectedOrg, newWorkspaceName, onCreateNewWorkspace])
 
@@ -164,7 +173,7 @@ export function WorkspaceSelector({
       ) : (
         <div
           style={{ viewTransitionName: 'workspace-content' }}
-          className="flex h-[400px] w-full"
+          className="flex w-full"
         >
           <Command shouldFilter={false}>
             {requiresSearch(orgs) && (
@@ -176,37 +185,56 @@ export function WorkspaceSelector({
             )}
             {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
               <FilteredWorkspaces
-                onSelect={(id) => handleSelect(id, false)}
+                onSelect={(org, workspace) =>
+                  handleSelect(org, workspace, false)
+                }
                 orgsWithFilteredWorkspaces={filteredOrgs}
                 fullWidth
+                selectedOrg={selectedOrg}
+                selectedWorkspace={selectedWorkspace}
+                height={height}
               />
             ) : showRecents ? (
-              <div className="flex w-full flex-grow flex-row">
+              <div
+                className="flex w-full flex-grow flex-row"
+                style={{ height }}
+              >
                 <OrgList
                   orgs={orgs}
                   selectedOrg={selectedOrg}
                   setSelectedOrg={handleSelectOrg}
                   onSelectRecent={() => setShowRecents(true)}
                   showRecents={showRecents}
+                  enableRecents={recents.length > 0}
+                  height={height}
                 />
                 <FilteredWorkspaces
-                  onSelect={(id) => handleSelect(id, false)}
+                  onSelect={(org, workspace) =>
+                    handleSelect(org, workspace, false)
+                  }
                   orgsWithFilteredWorkspaces={recents}
+                  selectedOrg={selectedOrg}
+                  selectedWorkspace={selectedWorkspace}
+                  height={height}
                 />
               </div>
             ) : orgs.length > 0 && !search ? (
-              <div className="flex flex-grow flex-row">
+              <div className="flex flex-row" style={{ height }}>
                 <OrgList
                   orgs={orgs}
                   selectedOrg={selectedOrg}
                   setSelectedOrg={handleSelectOrg}
                   onSelectRecent={() => setShowRecents(true)}
                   showRecents={showRecents}
+                  enableRecents={recents.length > 0}
+                  height={height}
                 />
                 <WorkspaceList
                   selectedOrg={selectedOrg!}
                   handleCreateDialogOpen={handleCreateDialogOpen}
                   handleSelect={handleSelect}
+                  selectedWorkspace={selectedWorkspace}
+                  height={height}
                 />
               </div>
             ) : (

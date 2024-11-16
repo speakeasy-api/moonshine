@@ -58,6 +58,12 @@ export default {
     {
       pattern: /^size-\d+$/,
     },
+    {
+      pattern: /^h-/,
+    },
+    {
+      pattern: /^w-/,
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

@@ -1,4 +1,20 @@
-export function GradientCircle({ name }: { name: string }) {
+import { cn } from '@/lib/utils'
+import { Size } from '@/types'
+
+interface GradientCircleProps {
+  name: string
+  size?: Size
+}
+
+const sizeMap: Record<Size, number> = {
+  small: 6,
+  medium: 8,
+  large: 10,
+  xl: 12,
+  '2xl': 16,
+}
+
+export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
   // Define vibrant base colors (in HSL)
   const baseColors = [
     0, // Red
@@ -30,9 +46,14 @@ export function GradientCircle({ name }: { name: string }) {
   const fromColor = `hsl(${hue1}, 85%, 60%)`
   const toColor = `hsl(${hue2}, 85%, 55%)`
 
+  const sizeValue = sizeMap[size]
+
   return (
     <div
-      className="h-4 w-4 rounded-full border-[1px] border-white"
+      className={cn(
+        'rounded-full border-[1px] border-white',
+        sizeValue && `h-${sizeValue} w-${sizeValue}`
+      )}
       style={{
         background: `linear-gradient(to bottom right, ${fromColor}, ${toColor})`,
       }}

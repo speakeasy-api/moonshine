@@ -29,6 +29,10 @@ div[cmdk-input-wrapper] {
   border-bottom: none !important;
 }
 
+div[cmdk-group-heading] {
+  font-size: 1rem;
+}
+
 @keyframes slide-fade-in-reverse {
   from {
     opacity: 0;

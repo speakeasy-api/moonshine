@@ -1,76 +1,70 @@
 import { CommandItem } from '../Command'
 import { ScrollArea } from '../ScrollArea'
-import { GradientCircle } from './GradientCircle'
 import { Icon } from '../Icon'
-import { Org } from '.'
+import { Org, Workspace } from '.'
 import { cn } from '@/lib/utils'
+import { WorkspaceItem } from './WorkspaceItem'
+import { useEffect, useRef } from 'react'
 
 interface WorkspaceListProps {
   selectedOrg: Org
+  selectedWorkspace: Workspace | null
   handleCreateDialogOpen: () => void
-  handleSelect: (workspaceId: string) => void
+  handleSelect: (org: Org, workspace: Workspace) => void
   enableCreate?: boolean
+  height: string | number
 }
 
 export function WorkspaceList({
   selectedOrg,
+  selectedWorkspace,
   handleCreateDialogOpen,
   handleSelect,
   enableCreate = true,
+  height,
 }: WorkspaceListProps) {
-  const useGridLayout = requiresGridLayout(selectedOrg)
-  const gridCols = getGridCols(selectedOrg)
+  const workspaceRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+
+  useEffect(() => {
+    if (selectedWorkspace) {
+      const element = workspaceRefs.current[selectedWorkspace.id]
+      if (element) {
+        element.scrollIntoView({
+          behavior: selectedOrg?.workspaces.length < 20 ? 'smooth' : 'instant',
+          block: 'nearest',
+        })
+      }
+    }
+  }, [selectedWorkspace])
+
   return (
-    <div className="flex w-2/3 flex-col">
+    <div className="relative flex w-2/3 flex-col">
       {enableCreate && (
-        <div className="bg-background sticky top-0 z-10 border-b">
+        <div className="bg-background absolute bottom-0 left-0 right-0 z-20 border-b border-t">
           <CommandItem
             onSelect={handleCreateDialogOpen}
-            className={cn(
-              'm-1 cursor-pointer !items-center py-2 hover:bg-gray-100'
-            )}
+            className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
           >
             <Icon name="plus" />
             Create new workspace
           </CommandItem>
         </div>
       )}
-      <ScrollArea className="h-[calc(400px-90px)]">
-        <div
-          className={cn(
-            useGridLayout && `grid grid-cols-${gridCols} m-4 gap-2`,
-            selectedOrg.workspaces.length === 1 && 'justify-items-start'
-          )}
-        >
-          {selectedOrg?.workspaces.map((workspace) => (
-            <CommandItem
-              key={workspace.id}
-              onSelect={() => handleSelect(workspace.id)}
-              className={cn(
-                'hover:!bg-accent data-[selected]:!bg-accent cursor-pointer',
-                useGridLayout && 'rounded-lg border p-4'
-              )}
-            >
-              <GradientCircle name={workspace.label} />
-              {workspace.label}
-            </CommandItem>
-          ))}
-        </div>
+      <ScrollArea style={{ height: `calc(${height} * 0.87)` }}>
+        {selectedOrg?.workspaces.map((workspace) => (
+          <WorkspaceItem
+            key={workspace.id}
+            workspace={workspace}
+            selectedOrg={selectedOrg}
+            handleSelect={handleSelect}
+            ref={(el) => (workspaceRefs.current[workspace.id] = el)}
+            isSelected={
+              selectedOrg.id === selectedOrg.id &&
+              selectedWorkspace?.id === workspace.id
+            }
+          />
+        ))}
       </ScrollArea>
     </div>
   )
-}
-
-function requiresGridLayout(selectedOrg: Org) {
-  return selectedOrg.workspaces.length <= 10
-}
-
-function getGridCols(selectedOrg: Org): number {
-  // if one workspace, then one col
-  // if two workspaces, then two cols
-  // if three or four workspaces, then two cols
-  // if five or six workspaces, then three cols
-  // if seven or eight workspaces, then four cols
-  // if nine or ten workspaces, then five cols
-  return Math.min(Math.ceil(selectedOrg.workspaces.length / 2), 5)
 }
