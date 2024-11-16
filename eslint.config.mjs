@@ -7,6 +7,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import prettier from 'eslint-plugin-prettier'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import unusedImports from 'eslint-plugin-unused-imports'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -27,6 +28,7 @@ export default tseslint.config(
     plugins: {
       prettier,
       'react-refresh': reactRefresh,
+      'unused-imports': unusedImports,
     },
     rules: {
       'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Enable Prettier and ensure it uses .prettierrc
@@ -34,6 +36,18 @@ export default tseslint.config(
       // Ensure only components are exported in a component file
       // so that HMR doesn't break
       'react-refresh/only-export-components': 'error',
+
+      'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
     },
   }
 )
