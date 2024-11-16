@@ -21,6 +21,7 @@
     "baseUrl": ".",
     "types": [
       "@testing-library/jest-dom",
+      "vite/client",
       "vite-plugin-svgr/client"
     ]
   },
