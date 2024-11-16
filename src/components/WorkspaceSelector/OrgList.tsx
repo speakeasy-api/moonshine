@@ -28,6 +28,7 @@ export function OrgList({
   const orgRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   useEffect(() => {
+    // TODO: dont scroll if the org is already in view
     if (selectedOrg) {
       const element = orgRefs.current[selectedOrg.id]
       if (element) {

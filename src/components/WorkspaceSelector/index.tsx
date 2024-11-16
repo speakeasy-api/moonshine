@@ -79,6 +79,7 @@ export function WorkspaceSelector({
       onSelect(org, workspace)
       addRecentWorkspace(org, workspace)
       if (clearSearch) setSearch('')
+      setSelectedOrg(org)
       setSelectedWorkspace(workspace)
     },
     [onSelect, addRecentWorkspace]
