@@ -36,7 +36,7 @@ export function WorkspaceList({
             (workspace) => workspace.id === selectedWorkspace.id
           ) ?? 0,
         align: 'end',
-        behavior: selectedOrg?.workspaces.length < 20 ? 'smooth' : 'auto',
+        behavior: selectedOrg?.workspaces.length < 10 ? 'smooth' : 'auto',
       })
     }
   }, [selectedWorkspace])

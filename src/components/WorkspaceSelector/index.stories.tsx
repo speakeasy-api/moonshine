@@ -167,14 +167,19 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
 }
 
 export const Default: Story = {
+  parameters: {
+    layout: 'centered',
+  },
   render: () => <WorkspaceSelectorWithState />,
 }
 
 export const WithOneOrg: Story = {
+  ...Default,
   render: () => <WorkspaceSelectorWithState orgs={sampleData.slice(0, 1)} />,
 }
 
 export const WithOneOrgAndAFewWorkspaces: Story = {
+  ...Default,
   render: () => {
     const org = Object.assign({}, sampleData[0])
     org.workspaces = org.workspaces.slice(0, 3)
@@ -183,6 +188,7 @@ export const WithOneOrgAndAFewWorkspaces: Story = {
 }
 
 export const WithRecents: Story = {
+  ...Default,
   render: () => {
     const firstOrg = Object.assign({}, sampleData[0])
     firstOrg.workspaces = firstOrg.workspaces.slice(0, 1)
@@ -194,6 +200,7 @@ export const WithRecents: Story = {
 }
 
 export const WithManyOrgs: Story = {
+  ...Default,
   render: () => {
     const manyOrgs = Array.from({ length: 100 }, (_, i) => ({
       id: `org-${i}`,
@@ -208,6 +215,7 @@ export const WithManyOrgs: Story = {
 }
 
 export const WithAnExtremeAmountOfOrgs: Story = {
+  ...Default,
   render: () => {
     const manyOrgs = Array.from({ length: 5000 }, (_, i) => ({
       id: `org-${i}`,

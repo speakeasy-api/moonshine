@@ -189,7 +189,7 @@ export function WorkspaceSelector({
                 setSearch={setSearch}
               />
             )}
-            {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
+            {filteredOrgs !== undefined ? (
               <FilteredWorkspaces
                 onSelect={(org, workspace) =>
                   handleSelect(org, workspace, false)
