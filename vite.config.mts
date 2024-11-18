@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import dynamicImport from 'vite-plugin-dynamic-import'
 
 const packageName = 'moonshine'
 
@@ -16,6 +17,11 @@ export default defineConfig({
         ref: true,
         svgo: true,
         exportType: 'default',
+      },
+    }),
+    dynamicImport({
+      filter(id) {
+        if (id.includes('@speed-highlight/core')) return true
       },
     }),
   ],
@@ -47,6 +53,9 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     cssMinify: true,
+  },
+  optimizeDeps: {
+    include: ['@speed-highlight/core'],
   },
   resolve: {
     alias: {
