@@ -4,15 +4,15 @@
 }
 
 ::view-transition-old(workspace-content) {
-  animation: 300ms ease-out slide-fade-out;
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out;
 }
 
 ::view-transition-new(workspace-content) {
-  animation: 300ms ease-out slide-fade-in;
+  animation: 300ms var(--ease-in-out-quad) slide-fade-in;
 }
 
 ::view-transition-old(create-dialog) {
-  animation: 300ms ease-out slide-fade-out;
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out;
 }
 
 ::view-transition-new(create-dialog) {
@@ -57,9 +57,9 @@
 }
 
 .view-transition-reverse::view-transition-old(create-dialog) {
-  animation: 300ms ease-out slide-fade-out-reverse;
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out-reverse;
 }
 
 .view-transition-reverse::view-transition-new(create-dialog) {
-  animation: 300ms ease-out slide-fade-in-reverse;
+  animation: 300ms var(--ease-in-out-quad) slide-fade-in-reverse;
 }

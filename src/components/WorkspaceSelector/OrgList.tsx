@@ -43,7 +43,7 @@ export function OrgList({
 
   return (
     <div className="border-border w-1/3 border-r">
-      <div
+      {/* <div
         className={cn(
           'flex flex-col justify-center gap-2 px-4 py-6',
           !enableRecents && 'border-b'
@@ -54,7 +54,7 @@ export function OrgList({
           Select the workspace you want to use for this project. Alternatively,
           you can create a new workspace.
         </Text>
-      </div>
+      </div> */}
       {enableRecents && (
         <div className="bg-background border-y">
           <CommandItem
