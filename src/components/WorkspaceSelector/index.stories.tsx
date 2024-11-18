@@ -206,3 +206,17 @@ export const WithManyOrgs: Story = {
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
   },
 }
+
+export const WithAnExtremeAmountOfOrgs: Story = {
+  render: () => {
+    const manyOrgs = Array.from({ length: 5000 }, (_, i) => ({
+      id: `org-${i}`,
+      label: `org-${i}`,
+      workspaces: Array.from({ length: 5 }, (_, j) => ({
+        id: `workspace-${i}-${j}`,
+        label: `workspace-${i}-${j}`,
+      })),
+    }))
+    return <WorkspaceSelectorWithState orgs={manyOrgs} />
+  },
+}

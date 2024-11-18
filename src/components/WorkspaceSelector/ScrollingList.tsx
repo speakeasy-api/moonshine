@@ -73,4 +73,12 @@ function GroupedScrollingListInner<G, I>(
   )
 }
 
-export const GroupedScrollingList = React.forwardRef(GroupedScrollingListInner)
+const forwardRefWithGenerics = <T, P = {}>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
+): ((props: P & React.RefAttributes<T>) => React.ReactNode | null) =>
+  // @ts-expect-error cant type this correctly
+  React.forwardRef<T, P>(render)
+
+export const GroupedScrollingList = forwardRefWithGenerics(
+  GroupedScrollingListInner
+)
