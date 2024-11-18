@@ -19,18 +19,19 @@
   animation: 300ms ease-out slide-fade-in;
 }
 
-div[cmdk-list-sizer] {
+.workspace-selector div[cmdk-list-sizer] {
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-div[cmdk-input-wrapper] {
+.workspace-selector div[cmdk-input-wrapper] {
   border-bottom: none !important;
 }
 
-div[cmdk-group-heading] {
-  font-size: 1rem;
+.workspace-selector div[cmdk-group-heading] {
+  font-size: 0.95rem !important;
+  margin: 0.5rem 0 !important;
 }
 
 @keyframes slide-fade-in-reverse {

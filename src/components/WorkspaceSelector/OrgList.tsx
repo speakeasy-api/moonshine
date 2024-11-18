@@ -5,6 +5,7 @@ import { GradientCircle } from './GradientCircle'
 import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
+import { ScrollingList } from './ScrollingList'
 
 interface OrgListProps {
   orgs: Org[]
@@ -34,7 +35,7 @@ export function OrgList({
       if (element) {
         element.scrollIntoView({
           behavior: 'instant',
-          block: 'start',
+          block: 'nearest',
         })
       }
     }
@@ -61,14 +62,16 @@ export function OrgList({
           </CommandItem>
         </div>
       )}
-      <ScrollArea style={{ height: `calc(${height} * 0.87)` }}>
-        {orgs.map((org) => (
+      <ScrollingList
+        items={orgs}
+        height={height}
+        renderItem={(org) => (
           <CommandItem
             key={org.id}
             onSelect={() => setSelectedOrg(org)}
             aria-selected={selectedOrg?.id === org.id}
             className={cn(
-              'mx-1 flex cursor-pointer flex-row gap-3 p-4 text-base first:mt-1 last:mb-1',
+              'flex cursor-pointer flex-row gap-3 p-4 text-base',
               !showRecents &&
                 selectedOrg?.id === org.id &&
                 'bg-accent text-accent-foreground font-semibold'
@@ -83,8 +86,8 @@ export function OrgList({
               </div>
             )}
           </CommandItem>
-        ))}
-      </ScrollArea>
+        )}
+      />
     </div>
   )
 }

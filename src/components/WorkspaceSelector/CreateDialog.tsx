@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
@@ -6,11 +6,22 @@ import { Icon } from '../Icon'
 import { Button } from '@/index'
 import { Separator } from '../Separator'
 import { GradientCircle } from './GradientCircle'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../Select'
+
+const CH_WIDTH = 1.09
+
 interface CreateDialogProps {
   open: boolean
   selectedOrg: Org
+  allOrgs: Org[]
   onClose: () => void
-  onSubmit: (workspaceName: string) => void
+  onSubmit: (org: Org, workspaceName: string) => Promise<boolean>
   newWorkspaceName: string
   setNewWorkspaceName: (name: string) => void
 }
@@ -18,12 +29,16 @@ interface CreateDialogProps {
 export function CreateDialog({
   open,
   selectedOrg,
+  allOrgs,
   onClose,
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
 }: CreateDialogProps) {
   const createInputRef = React.useRef<HTMLInputElement>(null)
+  const [currentOrg, setCurrentOrg] = useState(selectedOrg)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   React.useEffect(() => {
     if (open) {
@@ -37,14 +52,36 @@ export function CreateDialog({
     createInputRef.current?.focus()
   }
 
-  const handleSubmit = () => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        onSubmit(newWorkspaceName)
-      })
-    } else {
-      onSubmit(newWorkspaceName)
+  const longestOrgName = Math.min(
+    30,
+    allOrgs.reduce((longest, org) => {
+      return org.label.length > longest ? org.label.length : longest
+    }, 0)
+  )
+
+  const orgCount = allOrgs.length
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true)
+
+    const success = await handleSubmission()
+    setIsSubmitting(false)
+
+    if (!success) {
+      setError('Failed to create workspace')
     }
+  }
+
+  const handleSubmission = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          onSubmit(currentOrg, newWorkspaceName).then(resolve)
+        })
+      } else {
+        return onSubmit(currentOrg, newWorkspaceName)
+      }
+    })
   }
 
   return (
@@ -54,7 +91,7 @@ export function CreateDialog({
           className="flex flex-col items-center justify-center gap-2 text-center"
           style={{ flex: 3 }}
         >
-          <GradientCircle name={selectedOrg.label} size="2xl" />
+          <GradientCircle name={currentOrg.label} size="2xl" />
           <Text variant="h3">Create new workspace</Text>
           <div className="max-w-[250px]">
             <Text variant="muted">
@@ -81,9 +118,38 @@ export function CreateDialog({
             className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input mt-5 flex w-full flex-row items-center justify-stretch gap-2 rounded-md px-4 py-1 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0"
             onClick={focusInput}
           >
-            <span className="text-md text-foreground select-none text-nowrap text-lg font-semibold">
-              {selectedOrg?.label}
-            </span>
+            {orgCount > 1 ? (
+              <Select
+                value={currentOrg.id}
+                onValueChange={(value) =>
+                  setCurrentOrg(allOrgs.find((o) => o.id === value)!)
+                }
+              >
+                <SelectTrigger
+                  className={
+                    'text-md text-foreground/80 hover:text-foreground max-w-1/4 w-fit select-none gap-3 text-nowrap border-none bg-transparent p-0 text-lg font-semibold outline-none focus:ring-transparent'
+                  }
+                  style={{ minWidth: `${longestOrgName * CH_WIDTH}ch` }}
+                >
+                  <SelectValue className="truncate" />
+                </SelectTrigger>
+                <SelectContent>
+                  {allOrgs.map((org) => (
+                    <SelectItem
+                      key={org.id}
+                      value={org.id}
+                      className="text-md my-1"
+                    >
+                      {org.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <span className="text-foreground/80 select-none text-lg font-semibold">
+                {currentOrg.label}
+              </span>
+            )}
             <span className="text-muted-foreground/50 mx-2 select-none text-lg">
               /
             </span>
@@ -108,6 +174,7 @@ export function CreateDialog({
                   and hyphens
                 </div>
               )}
+            {error && <div className="text-sm text-red-400">{error}</div>}
           </div>
         </div>
       </div>
@@ -126,7 +193,11 @@ export function CreateDialog({
             }
             onClick={handleSubmit}
           >
-            Create
+            {isSubmitting ? (
+              <Icon name="loader" className="animate-spin" />
+            ) : (
+              'Create'
+            )}
           </Button>
         </div>
       </div>

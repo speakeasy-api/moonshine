@@ -10,11 +10,12 @@ interface WorkspaceItemProps {
   selectedOrg: Org
   isSelected: boolean
   handleSelect: (org: Org, workspace: Workspace) => void
+  indent?: boolean
 }
 
 export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
   function WorkspaceItem(
-    { workspace, selectedOrg, handleSelect, isSelected },
+    { workspace, selectedOrg, handleSelect, isSelected, indent },
     ref
   ) {
     return (
@@ -23,8 +24,9 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
         ref={ref}
         onSelect={() => handleSelect(selectedOrg, workspace)}
         className={cn(
-          'hover:!bg-accent data-[selected]:!bg-accent m-1 mr-3 flex cursor-pointer flex-row gap-3 p-4 text-base',
-          isSelected && 'font-semibold'
+          'hover:!bg-accent data-[selected]:!bg-accent flex cursor-pointer flex-row gap-3 p-4 text-base',
+          isSelected && 'font-semibold',
+          indent && 'pl-10'
         )}
       >
         <GradientCircle name={workspace.label} />

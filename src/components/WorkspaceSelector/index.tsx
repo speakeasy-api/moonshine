@@ -8,7 +8,7 @@ import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
 import { FilteredWorkspaces } from './FilteredWorkspaces'
 import { SearchBox } from './SearchBox'
-import useRecentWorkspacesFromLocalStorage from '@/hooks/useRecentWorkspacesFromLocalStorage'
+import { ViewTransition } from '@/types'
 
 export interface Org {
   id: string
@@ -26,24 +26,21 @@ export interface WorkspaceSelectorProps {
   orgs: Org[]
   value?: string
   onSelect: (org: Org, workspace: Workspace) => void
-  onCreateNewWorkspace: (orgId: string, newWorkspaceName: string) => void
+
+  /**
+   * Returns a promise that resolves to true if the workspace was created, false otherwise.
+   */
+  onCreate: (org: Org, newWorkspaceName: string) => Promise<boolean>
   placeholder?: string
   emptyText?: string
   recents?: Org[]
   height?: string | number
 }
 
-type ViewTransition = {
-  ready: Promise<void>
-  finished: Promise<void>
-  updateCallbackDone: Promise<void>
-  skipTransition: () => void
-}
-
 export function WorkspaceSelector({
   orgs,
   onSelect,
-  onCreateNewWorkspace,
+  onCreate,
   emptyText = 'No workspaces found.',
   recents = [],
   height = '500px',
@@ -57,7 +54,6 @@ export function WorkspaceSelector({
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [showRecents, setShowRecents] = React.useState(recents.length > 0)
-  const { addRecentWorkspace } = useRecentWorkspacesFromLocalStorage(recents)
 
   const filteredOrgs = React.useMemo(
     () =>
@@ -77,12 +73,11 @@ export function WorkspaceSelector({
   const handleSelect = React.useCallback(
     (org: Org, workspace: Workspace, clearSearch: boolean = true) => {
       onSelect(org, workspace)
-      addRecentWorkspace(org, workspace)
       if (clearSearch) setSearch('')
       setSelectedOrg(org)
       setSelectedWorkspace(workspace)
     },
-    [onSelect, addRecentWorkspace]
+    [onSelect]
   )
 
   const handleSelectOrg = React.useCallback((org: Org) => {
@@ -90,30 +85,39 @@ export function WorkspaceSelector({
     setShowRecents(false)
   }, [])
 
-  const handleCreateNewWorkspace = React.useCallback(() => {
-    if (selectedOrg && newWorkspaceName) {
-      onCreateNewWorkspace(selectedOrg.id, newWorkspaceName)
+  const handleCreateNewWorkspace = React.useCallback(
+    async (org: Org, newWorkspaceName: string): Promise<boolean> => {
+      if (newWorkspaceName) {
+        const success = await onCreate(org, newWorkspaceName)
 
-      const workspace: Workspace = {
-        id: newWorkspaceName,
-        label: newWorkspaceName,
+        if (!success) {
+          return false
+        }
+
+        const workspace: Workspace = {
+          id: newWorkspaceName,
+          label: newWorkspaceName,
+        }
+
+        // Update the selectedOrg state with the new workspace
+        setSelectedOrg((prev) =>
+          prev
+            ? {
+                ...prev,
+                workspaces: [...prev.workspaces, workspace],
+              }
+            : null
+        )
+
+        setNewWorkspaceName('')
+        setCreateDialogOpen(false)
+        setSelectedWorkspace(workspace)
+        return true
       }
-
-      // Update the selectedOrg state with the new workspace
-      setSelectedOrg((prev) =>
-        prev
-          ? {
-              ...prev,
-              workspaces: [...prev.workspaces, workspace],
-            }
-          : null
-      )
-
-      setNewWorkspaceName('')
-      setCreateDialogOpen(false)
-      setSelectedWorkspace(workspace)
-    }
-  }, [selectedOrg, newWorkspaceName, onCreateNewWorkspace])
+      return false
+    },
+    [selectedOrg, newWorkspaceName, onCreate]
+  )
 
   const handleCreateDialogOpen = React.useCallback(() => {
     if (document.startViewTransition) {
@@ -155,7 +159,7 @@ export function WorkspaceSelector({
   return (
     <div
       ref={containerRef}
-      className="border-border flex w-full flex-grow overflow-hidden rounded-md border"
+      className="workspace-selector border-border flex w-full flex-grow overflow-hidden rounded-md border"
     >
       {createDialogOpen ? (
         <div
@@ -166,7 +170,8 @@ export function WorkspaceSelector({
             open={createDialogOpen}
             selectedOrg={selectedOrg!}
             onClose={backToWorkspaceSelector}
-            onSubmit={handleCreateNewWorkspace}
+            allOrgs={orgs}
+            onSubmit={(org, name) => handleCreateNewWorkspace(org, name)}
             newWorkspaceName={newWorkspaceName}
             setNewWorkspaceName={setNewWorkspaceName}
           />
@@ -239,7 +244,10 @@ export function WorkspaceSelector({
                 />
               </div>
             ) : (
-              <CommandEmpty className="text-md text-muted-foreground p-6">
+              <CommandEmpty
+                style={{ height }}
+                className="text-md text-muted-foreground p-6"
+              >
                 {emptyText}
               </CommandEmpty>
             )}

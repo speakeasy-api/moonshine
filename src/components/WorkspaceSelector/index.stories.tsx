@@ -99,16 +99,6 @@ const sampleData = [
       },
     ],
   },
-  ...Array.from({ length: 100 }, (_, i) => ({
-    id: `org-${i}`,
-    label: `org-${i}`,
-    workspaces: [
-      {
-        id: `workspace-${i}`,
-        label: `workspace-${i}`,
-      },
-    ],
-  })),
 ]
 
 const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
@@ -117,9 +107,14 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
     null
   )
   const [selectedOrg, setSelectedOrg] = useState<Org | null>(null)
-  const handleCreateWorkspace = (orgId: string, name: string) => {
-    const existingOrg = orgs.find((org) => org.id === orgId)
+
+  const handleCreateWorkspace = async (
+    o: Org,
+    name: string
+  ): Promise<boolean> => {
+    const existingOrg = orgs.find((org) => org.id === o.id)
     if (existingOrg) {
+      setSelectedOrg(existingOrg)
       setOrgs(
         orgs.map((org) =>
           org.id === existingOrg.id
@@ -141,7 +136,11 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
         id: name,
         label: name,
       })
+
+      return true
     }
+
+    return false
   }
 
   return (
@@ -149,7 +148,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
       <Container>
         <WorkspaceSelector
           orgs={orgs}
-          onCreateNewWorkspace={handleCreateWorkspace}
+          onCreate={handleCreateWorkspace}
           onSelect={(org, workspace) => {
             setSelectedOrg(org)
             setSelectedWorkspace(workspace)
@@ -191,5 +190,19 @@ export const WithRecents: Story = {
     secondOrg.workspaces = secondOrg.workspaces.slice(0, 2)
     const recents = [firstOrg, secondOrg]
     return <WorkspaceSelectorWithState recents={recents} />
+  },
+}
+
+export const WithManyOrgs: Story = {
+  render: () => {
+    const manyOrgs = Array.from({ length: 100 }, (_, i) => ({
+      id: `org-${i}`,
+      label: `org-${i}`,
+      workspaces: Array.from({ length: 5 }, (_, j) => ({
+        id: `workspace-${i}-${j}`,
+        label: `workspace-${i}-${j}`,
+      })),
+    }))
+    return <WorkspaceSelectorWithState orgs={manyOrgs} />
   },
 }

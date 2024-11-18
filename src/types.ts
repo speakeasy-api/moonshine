@@ -100,3 +100,10 @@ export const supportedLanguages = [
 ] as const
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]
+
+export type ViewTransition = {
+  ready: Promise<void>
+  finished: Promise<void>
+  updateCallbackDone: Promise<void>
+  skipTransition: () => void
+}
