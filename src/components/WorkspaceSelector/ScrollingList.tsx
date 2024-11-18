@@ -1,10 +1,17 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   GroupedVirtuoso,
   GroupedVirtuosoHandle,
   Virtuoso,
   VirtuosoHandle,
 } from 'react-virtuoso'
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+const forwardRefWithGenerics = <T, P = {}>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
+): ((props: P & React.RefAttributes<T>) => React.ReactNode | null) =>
+  // @ts-expect-error cant type this correctly
+  React.forwardRef<T, P>(render)
 
 interface ScrollingListProps<T> {
   items: T[]
@@ -13,10 +20,10 @@ interface ScrollingListProps<T> {
   ref?: React.RefObject<VirtuosoHandle>
 }
 
-export const ScrollingList = React.forwardRef<
-  VirtuosoHandle,
-  ScrollingListProps<any>
->(({ items, renderItem, height }, ref) => {
+function ScrollingListInner<T>(
+  { items, renderItem, height }: ScrollingListProps<T>,
+  ref: React.ForwardedRef<VirtuosoHandle>
+) {
   return (
     <Virtuoso
       style={{
@@ -29,9 +36,11 @@ export const ScrollingList = React.forwardRef<
       ref={ref}
     />
   )
-})
+}
 
-interface GroupedScrollingListProps<G, I> {
+export const ScrollingList = forwardRefWithGenerics(ScrollingListInner)
+
+interface GroupedScrollingListProps<G> {
   groups: G[]
 
   /**
@@ -45,14 +54,14 @@ interface GroupedScrollingListProps<G, I> {
   ref?: React.RefObject<GroupedVirtuosoHandle>
 }
 
-function GroupedScrollingListInner<G, I>(
+function GroupedScrollingListInner<G>(
   {
     groups,
     groupCounts,
     renderGroupHeader,
     renderItem,
     height,
-  }: GroupedScrollingListProps<G, I>,
+  }: GroupedScrollingListProps<G>,
   ref: React.ForwardedRef<GroupedVirtuosoHandle>
 ) {
   return (
@@ -72,12 +81,6 @@ function GroupedScrollingListInner<G, I>(
     />
   )
 }
-
-const forwardRefWithGenerics = <T, P = {}>(
-  render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
-): ((props: P & React.RefAttributes<T>) => React.ReactNode | null) =>
-  // @ts-expect-error cant type this correctly
-  React.forwardRef<T, P>(render)
 
 export const GroupedScrollingList = forwardRefWithGenerics(
   GroupedScrollingListInner

@@ -1,5 +1,4 @@
 import { Org } from '.'
-import { ScrollArea } from '../ScrollArea'
 import { CommandItem } from '../Command'
 import { GradientCircle } from './GradientCircle'
 import { Icon } from '../Icon'

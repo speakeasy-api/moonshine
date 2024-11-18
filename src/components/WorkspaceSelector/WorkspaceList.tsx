@@ -1,5 +1,4 @@
 import { CommandItem } from '../Command'
-import { ScrollArea } from '../ScrollArea'
 import { Icon } from '../Icon'
 import { Org, Workspace } from '.'
 import { cn } from '@/lib/utils'

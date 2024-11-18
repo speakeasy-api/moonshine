@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils'
 import { Org, Workspace } from '.'
-import { CommandGroup } from '../Command'
 import { WorkspaceItem } from './WorkspaceItem'
 import { GroupedScrollingList } from './ScrollingList'
 import { GradientCircle } from './GradientCircle'
@@ -24,7 +23,7 @@ export function FilteredWorkspaces({
 }: FilteredWorkspacesProps) {
   return (
     <div className={cn(fullWidth ? 'w-full' : 'w-2/3')}>
-      <GroupedScrollingList<Org, Workspace>
+      <GroupedScrollingList
         groups={orgsWithFilteredWorkspaces}
         groupCounts={orgsWithFilteredWorkspaces.map(
           (org) => org.workspaces.length
