@@ -35,7 +35,11 @@ export interface WorkspaceSelectorProps {
   emptyText?: string
   recents?: Org[]
   height?: string | number
+  filterFn?: (workspace: Workspace, search: string) => boolean
 }
+
+const defaultFilterFn = (workspace: Workspace, search: string) =>
+  workspace.label.toLowerCase().startsWith(search.toLowerCase())
 
 export function WorkspaceSelector({
   orgs,
@@ -44,6 +48,7 @@ export function WorkspaceSelector({
   emptyText = 'No workspaces found.',
   recents = [],
   height = '500px',
+  filterFn = defaultFilterFn,
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
@@ -62,12 +67,12 @@ export function WorkspaceSelector({
             .map((org) => ({
               ...org,
               workspaces: org.workspaces.filter((workspace) =>
-                workspace.label.toLowerCase().startsWith(search.toLowerCase())
+                filterFn(workspace, search)
               ),
             }))
             .filter((org) => org.workspaces.length > 0)
         : undefined,
-    [orgs, search]
+    [orgs, search, filterFn]
   )
 
   const handleSelect = React.useCallback(
@@ -189,7 +194,7 @@ export function WorkspaceSelector({
                 setSearch={setSearch}
               />
             )}
-            {filteredOrgs !== undefined ? (
+            {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
               <FilteredWorkspaces
                 onSelect={(org, workspace) =>
                   handleSelect(org, workspace, false)
@@ -200,7 +205,7 @@ export function WorkspaceSelector({
                 selectedWorkspace={selectedWorkspace}
                 height={height}
               />
-            ) : showRecents ? (
+            ) : showRecents && filteredOrgs === undefined ? (
               <div
                 className="flex w-full flex-grow flex-row"
                 style={{ height }}

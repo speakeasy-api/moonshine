@@ -5,6 +5,7 @@ import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
+import { Text } from '../Text'
 
 interface OrgListProps {
   orgs: Org[]
@@ -42,12 +43,24 @@ export function OrgList({
 
   return (
     <div className="border-border w-1/3 border-r">
+      <div
+        className={cn(
+          'flex flex-col justify-center gap-2 px-4 py-6',
+          !enableRecents && 'border-b'
+        )}
+      >
+        <Text variant="h4">Select your workspace</Text>
+        <Text variant="muted">
+          Select the workspace you want to use for this project. Alternatively,
+          you can create a new workspace.
+        </Text>
+      </div>
       {enableRecents && (
-        <div className="bg-background border-b">
+        <div className="bg-background border-y">
           <CommandItem
             onSelect={onSelectRecent}
             className={cn(
-              'bg-background text-foreground/80 sticky top-0 z-10 m-1 flex cursor-pointer items-center p-4 text-base',
+              'bg-background text-foreground/80 sticky top-0 z-10 flex cursor-pointer items-center p-4 text-base',
               showRecents && 'bg-accent text-accent-foreground font-semibold'
             )}
           >

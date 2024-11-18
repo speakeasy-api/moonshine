@@ -13,8 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../Select'
+import { Virtuoso } from 'react-virtuoso'
 
-const CH_WIDTH = 1.09
+const CH_WIDTH = 1.2
 
 interface CreateDialogProps {
   open: boolean
@@ -115,7 +116,7 @@ export function CreateDialog({
             </Text>
           </div>
           <div
-            className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input mt-5 flex w-full flex-row items-center justify-stretch gap-2 rounded-md px-4 py-1 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0"
+            className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input/5 mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0"
             onClick={focusInput}
           >
             {orgCount > 1 ? (
@@ -127,22 +128,29 @@ export function CreateDialog({
               >
                 <SelectTrigger
                   className={
-                    'text-md text-foreground/80 hover:text-foreground max-w-1/4 w-fit select-none gap-3 text-nowrap border-none bg-transparent p-0 text-lg font-semibold outline-none focus:ring-transparent'
+                    'text-md text-foreground/80 hover:text-foreground max-w-1/4 w-fit select-none gap-3 text-nowrap border-none bg-transparent p-0 text-lg font-semibold tracking-wide shadow-none outline-none focus:ring-transparent'
                   }
                   style={{ minWidth: `${longestOrgName * CH_WIDTH}ch` }}
                 >
-                  <SelectValue className="truncate" />
+                  <SelectValue className="truncate">
+                    {currentOrg.label}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  {allOrgs.map((org) => (
-                    <SelectItem
-                      key={org.id}
-                      value={org.id}
-                      className="text-md my-1"
-                    >
-                      {org.label}
-                    </SelectItem>
-                  ))}
+                  <Virtuoso
+                    data={allOrgs}
+                    totalCount={allOrgs.length}
+                    style={{ height: '300px' }}
+                    itemContent={(_, item) => (
+                      <SelectItem
+                        key={item.id}
+                        value={item.id}
+                        className="text-md my-1"
+                      >
+                        {item.label}
+                      </SelectItem>
+                    )}
+                  />
                 </SelectContent>
               </Select>
             ) : (
