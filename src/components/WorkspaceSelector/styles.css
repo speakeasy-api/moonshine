@@ -1,0 +1,65 @@
+::view-transition-group(workspace-content),
+::view-transition-group(create-dialog) {
+  overflow: hidden;
+}
+
+::view-transition-old(workspace-content) {
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out;
+}
+
+::view-transition-new(workspace-content) {
+  animation: 300ms var(--ease-in-out-quad) slide-fade-in;
+}
+
+::view-transition-old(create-dialog) {
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out;
+}
+
+::view-transition-new(create-dialog) {
+  animation: 300ms ease-out slide-fade-in;
+}
+
+.workspace-selector div[cmdk-list-sizer] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.workspace-selector div[cmdk-input-wrapper] {
+  border-bottom: none !important;
+}
+
+.workspace-selector div[cmdk-group-heading] {
+  font-size: 0.95rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+@keyframes slide-fade-in-reverse {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-fade-out-reverse {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.view-transition-reverse::view-transition-old(create-dialog) {
+  animation: 300ms var(--ease-in-out-quad) slide-fade-out-reverse;
+}
+
+.view-transition-reverse::view-transition-new(create-dialog) {
+  animation: 300ms var(--ease-in-out-quad) slide-fade-in-reverse;
+}

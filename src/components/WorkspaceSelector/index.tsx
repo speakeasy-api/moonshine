@@ -1,0 +1,295 @@
+'use client'
+
+import * as React from 'react'
+import { Command, CommandEmpty } from '../Command'
+import { CreateDialog } from './CreateDialog'
+import { OrgList } from './OrgList'
+import { WorkspaceList } from './WorkspaceList'
+import './styles.css'
+import { FilteredWorkspaces } from './FilteredWorkspaces'
+import { SearchBox } from './SearchBox'
+import { ViewTransition } from '@/types'
+import { Text } from '../Text'
+import { Separator } from '../Separator'
+import { Logo } from '../Logo'
+import { Stack } from '../Stack'
+
+export interface Org {
+  id: string
+  label: string
+  workspaces: Workspace[]
+}
+
+export interface Workspace {
+  id: string
+  label: string
+  disabled?: boolean
+}
+
+function requiresSearch(orgs: Org[]) {
+  // if there is only one org, then no search
+  // if there is one org with multiple workspaces, then no search
+  return orgs.length > 1 || (orgs.length === 1 && orgs[0].workspaces.length > 5)
+}
+
+export interface WorkspaceSelectorProps {
+  orgs: Org[]
+  value?: string
+  onSelect: (org: Org, workspace: Workspace) => void
+
+  /**
+   * Returns a promise that resolves to true if the workspace was created, false otherwise.
+   */
+  onCreate: (org: Org, newWorkspaceName: string) => Promise<boolean>
+  placeholder?: string
+  emptyText?: string
+  recents?: Org[]
+  height?: string | number
+  filterFn?: (workspace: Workspace, search: string) => boolean
+}
+
+const defaultFilterFn = (workspace: Workspace, search: string) =>
+  workspace.label.toLowerCase().startsWith(search.toLowerCase())
+
+export function WorkspaceSelector({
+  orgs,
+  onSelect,
+  onCreate,
+  emptyText = 'No workspaces found.',
+  recents = [],
+  height = '500px',
+  filterFn = defaultFilterFn,
+}: WorkspaceSelectorProps) {
+  const [search, setSearch] = React.useState('')
+  const [selectedWorkspace, setSelectedWorkspace] =
+    React.useState<Workspace | null>(null)
+  const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(orgs[0])
+  const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [showRecents, setShowRecents] = React.useState(recents.length > 0)
+
+  const filteredOrgs = React.useMemo(
+    () =>
+      search
+        ? orgs
+            .map((org) => ({
+              ...org,
+              workspaces: org.workspaces.filter((workspace) =>
+                filterFn(workspace, search)
+              ),
+            }))
+            .filter((org) => org.workspaces.length > 0)
+        : undefined,
+    [orgs, search, filterFn]
+  )
+
+  const handleSelect = React.useCallback(
+    (org: Org, workspace: Workspace, clearSearch: boolean = true) => {
+      onSelect(org, workspace)
+      if (clearSearch) setSearch('')
+      setSelectedOrg(org)
+      setSelectedWorkspace(workspace)
+    },
+    [onSelect]
+  )
+
+  const handleSelectOrg = React.useCallback((org: Org) => {
+    setSelectedOrg(org)
+    setShowRecents(false)
+  }, [])
+
+  const handleCreateNewWorkspace = React.useCallback(
+    async (org: Org, newWorkspaceName: string): Promise<boolean> => {
+      if (newWorkspaceName) {
+        const success = await onCreate(org, newWorkspaceName)
+
+        if (!success) {
+          return false
+        }
+
+        const workspace: Workspace = {
+          id: newWorkspaceName,
+          label: newWorkspaceName,
+        }
+
+        // Update the selectedOrg state with the new workspace
+        setSelectedOrg((prev) =>
+          prev
+            ? {
+                ...prev,
+                workspaces: [...prev.workspaces, workspace],
+              }
+            : null
+        )
+
+        setNewWorkspaceName('')
+        setCreateDialogOpen(false)
+        setSelectedWorkspace(workspace)
+        return true
+      }
+      return false
+    },
+    [selectedOrg, newWorkspaceName, onCreate]
+  )
+
+  const handleCreateViewOpen = React.useCallback(() => {
+    if (document.startViewTransition) {
+      // Capture the current height before transition
+      const height = containerRef.current?.offsetHeight
+
+      document.startViewTransition(() => {
+        if (containerRef.current && height) {
+          containerRef.current.style.height = `${height}px`
+        }
+        setCreateDialogOpen(true)
+      })
+    } else {
+      setCreateDialogOpen(true)
+    }
+  }, [])
+
+  const backToWorkspaceSelector = React.useCallback(() => {
+    if (document.startViewTransition) {
+      const root = document.documentElement
+      root.classList.add('view-transition-reverse')
+
+      const transition = (
+        document.startViewTransition as unknown as (
+          callback: () => void
+        ) => ViewTransition
+      )(() => {
+        setCreateDialogOpen(false)
+      })
+
+      transition.finished.then(() => {
+        root.classList.remove('view-transition-reverse')
+      })
+    } else {
+      setCreateDialogOpen(false)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className="workspace-selector border-border flex w-full flex-grow overflow-hidden rounded-md border"
+    >
+      {createDialogOpen ? (
+        <div
+          style={{ viewTransitionName: 'create-dialog' }}
+          className="h-full w-full"
+        >
+          <CreateDialog
+            open={createDialogOpen}
+            selectedOrg={selectedOrg!}
+            onClose={backToWorkspaceSelector}
+            allOrgs={orgs}
+            onSubmit={(org, name) => handleCreateNewWorkspace(org, name)}
+            newWorkspaceName={newWorkspaceName}
+            setNewWorkspaceName={setNewWorkspaceName}
+          />
+        </div>
+      ) : (
+        <div
+          style={{ viewTransitionName: 'workspace-content' }}
+          className="flex w-full"
+        >
+          <div className="flex h-full w-1/3 flex-col items-center justify-center">
+            <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
+              <Stack align="center" justify="center" gap={4}>
+                <div className="flex h-16 w-16 items-center justify-center">
+                  <Logo variant="icon" />
+                </div>
+                <Stack align="center" justify="center" gap={2}>
+                  <Text variant="h3">Select your workspace</Text>
+                  <Text variant="muted">
+                    Select the workspace you want to use for this project.
+                    Alternatively, you can create
+                  </Text>
+                </Stack>
+              </Stack>
+            </div>
+          </div>
+
+          <Separator orientation="vertical" />
+
+          <div className="w-2/3">
+            <Command shouldFilter={false}>
+              {requiresSearch(orgs) && (
+                <SearchBox
+                  inputRef={inputRef}
+                  search={search}
+                  setSearch={setSearch}
+                />
+              )}
+              {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
+                <FilteredWorkspaces
+                  onSelect={(org, workspace) =>
+                    handleSelect(org, workspace, false)
+                  }
+                  orgsWithFilteredWorkspaces={filteredOrgs}
+                  fullWidth
+                  selectedOrg={selectedOrg}
+                  selectedWorkspace={selectedWorkspace}
+                  height={height}
+                />
+              ) : showRecents && filteredOrgs === undefined ? (
+                <div
+                  className="flex w-full flex-grow flex-row"
+                  style={{ height }}
+                >
+                  <OrgList
+                    orgs={orgs}
+                    selectedOrg={selectedOrg}
+                    setSelectedOrg={handleSelectOrg}
+                    onSelectRecent={() => setShowRecents(true)}
+                    showRecents={showRecents}
+                    enableRecents={recents.length > 0}
+                    height={height}
+                  />
+                  <FilteredWorkspaces
+                    onSelect={(org, workspace) =>
+                      handleSelect(org, workspace, false)
+                    }
+                    orgsWithFilteredWorkspaces={recents}
+                    selectedOrg={selectedOrg}
+                    selectedWorkspace={selectedWorkspace}
+                    height={height}
+                  />
+                </div>
+              ) : orgs.length > 0 && !search ? (
+                <div className="flex flex-row" style={{ height }}>
+                  <OrgList
+                    orgs={orgs}
+                    selectedOrg={selectedOrg}
+                    setSelectedOrg={handleSelectOrg}
+                    onSelectRecent={() => setShowRecents(true)}
+                    showRecents={showRecents}
+                    enableRecents={recents.length > 0}
+                    height={height}
+                  />
+                  <WorkspaceList
+                    selectedOrg={selectedOrg!}
+                    handleCreateViewOpen={handleCreateViewOpen}
+                    handleSelect={handleSelect}
+                    selectedWorkspace={selectedWorkspace}
+                    height={height}
+                  />
+                </div>
+              ) : (
+                <CommandEmpty
+                  style={{ height }}
+                  className="text-md text-muted-foreground p-6"
+                >
+                  {emptyText}
+                </CommandEmpty>
+              )}
+            </Command>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

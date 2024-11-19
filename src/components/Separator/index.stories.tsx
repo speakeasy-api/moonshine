@@ -26,7 +26,7 @@ export const Horizontal: Story = {
 
 const verticalDecorator = (Story: React.ComponentType) => (
   // TODO: Make the height handling better between autodocs and stories
-  <div className="flex h-[400px] w-full items-center justify-center">
+  <div className="flex h-[600px] w-full items-center justify-center">
     <Story />
   </div>
 )

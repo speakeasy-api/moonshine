@@ -1,17 +1,17 @@
 import { Size } from '@/types'
 import { SupportedLanguage } from '@/types'
 
-import TypeScriptIcon from '@/assets/icons/languages/typescript.svg'
-import GoIcon from '@/assets/icons/languages/go.svg'
-import JavaIcon from '@/assets/icons/languages/java.svg'
-import PythonIcon from '@/assets/icons/languages/python.svg'
-import CSharpIcon from '@/assets/icons/languages/csharp.svg'
-import TerraformIcon from '@/assets/icons/languages/terraform.svg'
-import UnityIcon from '@/assets/icons/languages/unity.svg'
-import PhpIcon from '@/assets/icons/languages/php.svg'
-import SwiftIcon from '@/assets/icons/languages/swift.svg'
-import RubyIcon from '@/assets/icons/languages/ruby.svg'
-import PostmanIcon from '@/assets/icons/languages/postman.svg'
+import TypeScriptIcon from '@/assets/icons/languages/typescript.svg?react'
+import GoIcon from '@/assets/icons/languages/go.svg?react'
+import JavaIcon from '@/assets/icons/languages/java.svg?react'
+import PythonIcon from '@/assets/icons/languages/python.svg?react'
+import CSharpIcon from '@/assets/icons/languages/csharp.svg?react'
+import TerraformIcon from '@/assets/icons/languages/terraform.svg?react'
+import UnityIcon from '@/assets/icons/languages/unity.svg?react'
+import PhpIcon from '@/assets/icons/languages/php.svg?react'
+import SwiftIcon from '@/assets/icons/languages/swift.svg?react'
+import RubyIcon from '@/assets/icons/languages/ruby.svg?react'
+import PostmanIcon from '@/assets/icons/languages/postman.svg?react'
 
 const sizeMap: Record<Size, number> = {
   small: 32,

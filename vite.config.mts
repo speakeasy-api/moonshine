@@ -13,12 +13,11 @@ export default defineConfig({
     dts(),
     svgr({
       svgrOptions: {
-        exportType: 'default',
+        titleProp: true,
         ref: true,
         svgo: true,
-        titleProp: true,
+        exportType: 'default',
       },
-      include: '**/*.svg',
     }),
     dynamicImport({
       filter(id) {
