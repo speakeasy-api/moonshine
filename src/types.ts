@@ -107,3 +107,17 @@ export type ViewTransition = {
   updateCallbackDone: Promise<void>
   skipTransition: () => void
 }
+
+export const packOptions = ['start', 'center', 'end'] as const
+export type Pack = (typeof packOptions)[number]
+
+export const spacingOptions = [
+  'packed',
+  'spaceBetween',
+  'spaceAround',
+  'spaceEvenly',
+] as const
+export type Spacing = (typeof spacingOptions)[number]
+
+export const wrapOptions = ['nowrap', 'wrap', 'wrap-reverse'] as const
+export type Wrap = (typeof wrapOptions)[number]

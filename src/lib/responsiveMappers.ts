@@ -22,7 +22,6 @@ export const directionMapper = (direction: Direction) =>
 export const gapMapper = (gap: Gap) => `gap-${gap}`
 
 const paddingPerSideMapper = (padding: PaddingPerSide): string => {
-  // x, y
   if (isPaddingHorizontalOrVerticalAxis(padding)) {
     const { x, y } = padding
     return `px-${x} py-${y}`
@@ -63,3 +62,21 @@ const justifyClasses: Record<Justify, string> = {
 }
 
 export const justifyMapper = (justify: Justify) => justifyClasses[justify]
+
+const packClasses: Record<'start' | 'center' | 'end', string> = {
+  start: 'justify-start',
+  center: 'justify-center',
+  end: 'justify-end',
+}
+
+export const packMapper = (pack: 'start' | 'center' | 'end') =>
+  packClasses[pack]
+
+const wrapClasses: Record<'nowrap' | 'wrap' | 'wrap-reverse', string> = {
+  nowrap: 'flex-nowrap',
+  wrap: 'flex-wrap',
+  'wrap-reverse': 'flex-wrap-reverse',
+}
+
+export const wrapMapper = (wrap: 'nowrap' | 'wrap' | 'wrap-reverse') =>
+  wrapClasses[wrap]

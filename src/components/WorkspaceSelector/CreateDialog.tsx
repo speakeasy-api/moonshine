@@ -90,7 +90,7 @@ export function CreateDialog({
         <div className="flex w-1/3 flex-col items-center justify-center gap-4 px-8 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
             <GradientCircle name={currentOrg.label} size="2xl" />
-            <Stack align="center" justify="center" gap={2}>
+            <Stack align="center" gap={2}>
               <Text variant="h3">Create new workspace</Text>
               <div className="max-w-64">
                 <Text variant="muted">
@@ -107,7 +107,7 @@ export function CreateDialog({
         <div className="flex w-2/3 flex-col items-center justify-center px-8">
           <div className="flex max-w-lg flex-col">
             <div className="flex flex-col gap-4">
-              <Stack align="start" justify="center" gap={2}>
+              <Stack align="start" gap={2}>
                 <Text variant="h4">Choose your workspace name</Text>
                 <Text variant="muted">
                   Enter a name for your new workspace. Names must be in slug
