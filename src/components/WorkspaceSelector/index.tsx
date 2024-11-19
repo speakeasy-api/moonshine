@@ -17,11 +17,13 @@ import { Stack } from '../Stack'
 export interface Org {
   id: string
   label: string
+  slug: string
   workspaces: Workspace[]
 }
 
 export interface Workspace {
   id: string
+  slug: string
   label: string
   disabled?: boolean
 }
@@ -112,6 +114,7 @@ export function WorkspaceSelector({
         const workspace: Workspace = {
           id: newWorkspaceName,
           label: newWorkspaceName,
+          slug: newWorkspaceName,
         }
 
         // Update the selectedOrg state with the new workspace
@@ -196,7 +199,7 @@ export function WorkspaceSelector({
           style={{ viewTransitionName: 'workspace-content' }}
           className="flex w-full"
         >
-          <div className="flex h-full w-1/3 flex-col items-center justify-center">
+          <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
             <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
               <Stack align="center" justify="center" gap={4}>
                 <div className="flex h-16 w-16 items-center justify-center">
@@ -205,8 +208,8 @@ export function WorkspaceSelector({
                 <Stack align="center" justify="center" gap={2}>
                   <Text variant="h3">Select your workspace</Text>
                   <Text variant="muted">
-                    Select the workspace you want to use for this project.
-                    Alternatively, you can create
+                    Select or create the workspace you want to use for this
+                    project.
                   </Text>
                 </Stack>
               </Stack>

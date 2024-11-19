@@ -11,7 +11,15 @@ const sizeMap: Record<Size, number> = {
   medium: 8,
   large: 10,
   xl: 12,
-  '2xl': 16,
+  '2xl': 20,
+}
+
+const borderSizeMap: Record<Size, number> = {
+  small: 2,
+  medium: 2,
+  large: 3,
+  xl: 4,
+  '2xl': 4,
 }
 
 export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
@@ -47,12 +55,13 @@ export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
   const toColor = `hsl(${hue2}, 85%, 55%)`
 
   const sizeValue = sizeMap[size]
-
+  const borderSize = borderSizeMap[size]
   return (
     <div
       className={cn(
-        'rounded-full border-[1px] border-white',
-        sizeValue && `h-${sizeValue} w-${sizeValue}`
+        'rounded-full border-white',
+        sizeValue && `h-${sizeValue} w-${sizeValue}`,
+        borderSize && `border-${borderSize}`
       )}
       style={{
         background: `linear-gradient(to bottom right, ${fromColor}, ${toColor})`,

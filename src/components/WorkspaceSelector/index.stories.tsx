@@ -18,84 +18,104 @@ const sampleData = [
   {
     id: '1',
     label: 'speakeasy',
+    slug: 'speakeasy',
     workspaces: [
       {
         id: '1',
         label: 'zeus',
+        slug: 'zeus',
       },
       {
         id: '2',
         label: 'hermes',
+        slug: 'hermes',
       },
       {
         id: '3',
         label: 'poseidon',
+        slug: 'poseidon',
       },
       {
         id: '4',
         label: 'athena',
+        slug: 'athena',
       },
       {
         id: '5',
         label: 'apollo',
+        slug: 'apollo',
       },
       {
         id: '6',
         label: 'dionysus',
+        slug: 'dionysus',
       },
       {
         id: '7',
         label: 'fable',
+        slug: 'fable',
       },
       {
         id: '8',
         label: 'hercules',
+        slug: 'hercules',
       },
       {
         id: '9',
         label: 'medusa',
+        slug: 'medusa',
       },
       {
         id: '10',
         label: 'nike',
+        slug: 'nike',
       },
       {
         id: '11',
         label: 'odysseus',
+        slug: 'odysseus',
       },
       {
         id: '12',
         label: 'pandora',
+        slug: 'pandora',
       },
       {
         id: '13',
         label: 'prometheus',
+        slug: 'prometheus',
       },
     ],
   },
   {
     id: '2',
     label: 'stripe',
+    slug: 'stripe',
     workspaces: [
       {
         id: '1',
         label: 'dev',
+        slug: 'dev',
       },
       {
         id: '2',
         label: 'staging',
+        slug: 'staging',
       },
       {
         id: '3',
         label: 'prod',
+        slug: 'prod',
       },
       {
         id: '4',
         label: 'test',
+        slug: 'test',
       },
       {
         id: '5',
         label: 'staging-2',
+        slug: 'staging-2',
       },
     ],
   },
@@ -125,6 +145,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
                   {
                     id: name,
                     label: name,
+                    slug: name,
                   },
                 ],
               }
@@ -135,6 +156,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
       setSelectedWorkspace({
         id: name,
         label: name,
+        slug: name,
       })
 
       return true
@@ -205,9 +227,11 @@ export const WithManyOrgs: Story = {
     const manyOrgs = Array.from({ length: 100 }, (_, i) => ({
       id: `org-${i}`,
       label: `org-${i}`,
+      slug: `org-${i}`,
       workspaces: Array.from({ length: 5 }, (_, j) => ({
         id: `workspace-${i}-${j}`,
         label: `workspace-${i}-${j}`,
+        slug: `workspace-${i}-${j}`,
       })),
     }))
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
@@ -220,9 +244,11 @@ export const WithAnExtremeAmountOfOrgs: Story = {
     const manyOrgs = Array.from({ length: 5000 }, (_, i) => ({
       id: `org-${i}`,
       label: `org-${i}`,
+      slug: `org-${i}`,
       workspaces: Array.from({ length: 5 }, (_, j) => ({
         id: `workspace-${i}-${j}`,
         label: `workspace-${i}-${j}`,
+        slug: `workspace-${i}-${j}`,
       })),
     }))
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
