@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Command, CommandEmpty } from '../Command'
-import { CreateDialog } from './CreateDialog'
+import { CreateDialog, CreateResult } from './CreateDialog'
 import { OrgList } from './OrgList'
 import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
@@ -42,7 +42,7 @@ export interface WorkspaceSelectorProps {
   /**
    * Returns a promise that resolves to true if the workspace was created, false otherwise.
    */
-  onCreate: (org: Org, newWorkspaceName: string) => Promise<boolean>
+  onCreate: (org: Org, newWorkspaceName: string) => Promise<CreateResult>
   placeholder?: string
   emptyText?: string
   recents?: Org[]
@@ -103,12 +103,12 @@ export function WorkspaceSelector({
   }, [])
 
   const handleCreateNewWorkspace = React.useCallback(
-    async (org: Org, newWorkspaceName: string): Promise<boolean> => {
+    async (org: Org, newWorkspaceName: string): Promise<CreateResult> => {
       if (newWorkspaceName) {
-        const success = await onCreate(org, newWorkspaceName)
+        const result = await onCreate(org, newWorkspaceName)
 
-        if (!success) {
-          return false
+        if (!result.success) {
+          return result
         }
         function updateState() {
           setSelectedOrg((prev) =>
@@ -136,9 +136,9 @@ export function WorkspaceSelector({
           updateState()
         }
 
-        return true
+        return { success: true }
       }
-      return false
+      return { success: false, error: 'No workspace name provided' }
     },
     [selectedOrg, newWorkspaceName, onCreate]
   )
