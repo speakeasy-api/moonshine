@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
+import { CreateResult } from './CreateDialog'
 
 const meta = {
   title: 'Components/WorkspaceSelector',
@@ -131,10 +132,17 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
   const handleCreateWorkspace = async (
     o: Org,
     name: string
-  ): Promise<boolean> => {
+  ): Promise<CreateResult> => {
     const existingOrg = orgs.find((org) => org.id === o.id)
     if (existingOrg) {
       setSelectedOrg(existingOrg)
+
+      const workspaceExists = existingOrg.workspaces.find(
+        (workspace) => workspace.slug === name
+      )
+      if (workspaceExists) {
+        return { success: false, error: 'Workspace already exists' }
+      }
       setOrgs(
         orgs.map((org) =>
           org.id === existingOrg.id
@@ -159,10 +167,10 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
         slug: name,
       })
 
-      return true
+      return { success: true }
     }
 
-    return false
+    return { success: false, error: 'Failed to create workspace' }
   }
 
   return (
