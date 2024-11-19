@@ -13,6 +13,9 @@ const forwardRefWithGenerics = <T, P = {}>(
   // @ts-expect-error cant type this correctly
   React.forwardRef<T, P>(render)
 
+const DEFAULT_SCROLLBAR_CLASSES =
+  '[&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:active]:bg-black/20 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb:active]:bg-white/50 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-900 [&::-webkit-scrollbar]:w-2'
+
 interface ScrollingListProps<T> {
   items: T[]
   renderItem: (item: T) => React.ReactNode
@@ -29,7 +32,7 @@ function ScrollingListInner<T>(
       style={{
         height,
       }}
-      className="[&::-webkit-scrollbar-thumb]:bg-gray-200 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-900 [&::-webkit-scrollbar]:w-2"
+      className={DEFAULT_SCROLLBAR_CLASSES}
       totalCount={items.length}
       data={items}
       itemContent={(_, item) => renderItem(item)}
@@ -69,7 +72,7 @@ function GroupedScrollingListInner<G>(
       style={{
         height,
       }}
-      className="[&::-webkit-scrollbar-thumb]:bg-gray-200 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-900 [&::-webkit-scrollbar]:w-2"
+      className={DEFAULT_SCROLLBAR_CLASSES}
       groupCounts={groupCounts}
       groupContent={(index) => renderGroupHeader(groups[index])}
       itemContent={(itemIndex, groupIndex) => {

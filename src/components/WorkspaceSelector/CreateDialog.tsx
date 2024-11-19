@@ -160,7 +160,7 @@ export function CreateDialog({
                   </SelectContent>
                 </Select>
               ) : (
-                <span className="text-foreground/80 select-none text-lg font-semibold">
+                <span className="text-foreground/80 select-none whitespace-pre text-lg font-semibold">
                   {currentOrg.label}
                 </span>
               )}
