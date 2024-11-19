@@ -118,7 +118,7 @@ export function CreateDialog({
             </div>
             <div className="flex flex-col">
               <div
-                className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input/5 mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 transition-all duration-200 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 data-[invalid=true]:border-b data-[invalid=true]:border-red-400"
+                className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input/5 ease-in-out-expo mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 transition-[border-color] duration-500 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 data-[invalid=true]:border-red-400/75"
                 onClick={focusInput}
                 data-invalid={isInvalid}
               >
@@ -180,12 +180,14 @@ export function CreateDialog({
               <div className="mt-2.5 min-h-6 self-start">
                 {newWorkspaceName &&
                   !newWorkspaceName.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) && (
-                    <div className="text-sm text-red-400">
+                    <div className="text-sm text-red-400/75">
                       Workspace names can only contain lowercase letters,
                       numbers, and hyphens
                     </div>
                   )}
-                {error && <div className="text-sm text-red-400">{error}</div>}
+                {error && (
+                  <div className="text-sm text-red-400/75">{error}</div>
+                )}
               </div>
             </div>
           </div>
