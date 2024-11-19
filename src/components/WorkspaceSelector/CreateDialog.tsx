@@ -17,12 +17,17 @@ import { Virtuoso } from 'react-virtuoso'
 
 const CH_WIDTH = 1.2
 
+export interface CreateResult {
+  success: boolean
+  error?: string
+}
+
 interface CreateDialogProps {
   open: boolean
   selectedOrg: Org
   allOrgs: Org[]
   onClose: () => void
-  onSubmit: (org: Org, workspaceName: string) => Promise<boolean>
+  onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>
   newWorkspaceName: string
   setNewWorkspaceName: (name: string) => void
 }
@@ -69,10 +74,10 @@ export function CreateDialog({
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-    const success = await onSubmit(currentOrg, newWorkspaceName)
+    const result = await onSubmit(currentOrg, newWorkspaceName)
     setIsSubmitting(false)
-    if (!success) {
-      setError('Failed to create workspace')
+    if (!result.success) {
+      setError(result.error || 'Failed to create workspace')
     }
   }
 
