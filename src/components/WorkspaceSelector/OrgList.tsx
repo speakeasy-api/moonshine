@@ -5,7 +5,6 @@ import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
-import { Text } from '../Text'
 
 interface OrgListProps {
   orgs: Org[]

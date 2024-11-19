@@ -1,8 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Org, Workspace } from '.'
 import { WorkspaceItem } from './WorkspaceItem'
-import { GroupedScrollingList, ScrollingList } from './ScrollingList'
-import { GradientCircle } from './GradientCircle'
+import { ScrollingList } from './ScrollingList'
 import { CommandGroup, CommandItem } from '../Command'
 
 interface FilteredWorkspacesProps {
