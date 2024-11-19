@@ -21,11 +21,7 @@ export default {
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
-      pattern: /flex-row$/,
-      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
-    },
-    {
-      pattern: /flex-col$/,
+      pattern: /flex-(row|col)$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
@@ -45,10 +41,6 @@ export default {
     },
     {
       pattern: /^justify-/,
-      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
-    },
-    {
-      pattern: /^align-/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {

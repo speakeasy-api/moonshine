@@ -207,11 +207,11 @@ export function WorkspaceSelector({
         >
           <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
             <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
-              <Stack align="center" justify="center" gap={4}>
+              <Stack align="center" gap={4}>
                 <div className="flex h-16 w-16 items-center justify-center">
                   <Logo variant="icon" />
                 </div>
-                <Stack align="center" justify="center" gap={2}>
+                <Stack align="center" gap={2}>
                   <Text variant="h3">Select your workspace</Text>
                   <Text variant="muted">
                     Select or create the workspace you want to use for this

@@ -4,74 +4,47 @@ import {
   Alignment,
   Direction,
   Gap,
-  Justify,
+  Pack,
   Padding,
   ResponsiveValue,
+  Spacing,
+  Wrap,
 } from '@/types'
 import {
   alignmentMapper,
   directionMapper,
   gapMapper,
-  justifyMapper,
   paddingMapper,
+  packMapper,
+  wrapMapper,
 } from '@/lib/responsiveMappers'
 
 interface StackProps {
   children: React.ReactNode
 
-  /**
-   * Can be a simple Direction value, or a responsive Direction value.
-   *
-   * @example Simple Direction
-   * direction: 'row'
-   *
-   * @example Responsive Direction
-   * direction: { sm: 'row', md: 'column', lg: 'row', xl: 'column' }
-   */
+  /** @figma Orientation in Auto Layout */
   direction?: ResponsiveValue<Direction>
 
-  /**
-   * Can be a simple Gap value, or a responsive Gap value.
-   *
-   * @example Simple Gap
-   * gap: 10
-   *
-   * @example Responsive Gap
-   * gap: { sm: 10, md: 12, lg: 16, xl: 16 }
-   */
+  /** @figma Spacing between items in Auto Layout */
   gap?: ResponsiveValue<Gap>
 
-  /**
-   * Can be an object of responsive Padding values, or just Padding values.
-   *
-   * @example Simple Padding
-   * padding: 10
-   *
-   * @example Responsive Padding
-   * padding: { sm: 10, md: 12, lg: 16, xl: 16 }
-   *
-   * @example Padding per side
-   * padding: { top: 10, right: 0, bottom: 10, left: 0 }
-   *
-   * @example Responsive Padding per side (just x and y axis)
-   * padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } }
-   *
-   * @example Responsive Padding per side with different values for each side
-   * padding: { sm: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
-   */
-  padding?: ResponsiveValue<Padding>
+  /** @figma Space between items in Auto Layout */
+  spacing?: ResponsiveValue<Spacing>
 
-  /**
-   * Can be a simple Alignment value, or a responsive Alignment value.
-   * Under the hood, this manipulates the `align-items` CSS property.
-   */
+  /** @figma Alignment in Auto Layout */
   align?: ResponsiveValue<Alignment>
 
-  /**
-   * Can be a simple Justify value, or a responsive Justify value.
-   * Under the hood, this manipulates the `justify-content` CSS property.
-   */
-  justify?: ResponsiveValue<Justify>
+  /** @figma Alignment in Auto Layout when items are packed */
+  mainAxisAlign?: ResponsiveValue<Pack>
+
+  /** @figma Padding in Auto Layout */
+  padding?: ResponsiveValue<Padding>
+
+  /** @figma Fill container in Auto Layout */
+  stretch?: boolean
+
+  /** Controls item wrapping behavior */
+  wrap?: ResponsiveValue<Wrap>
 }
 
 export function Stack({
@@ -79,18 +52,28 @@ export function Stack({
   direction = 'column',
   gap = 0,
   padding = 0,
-  align = undefined,
-  justify = undefined,
+  align,
+  spacing = 'packed',
+  mainAxisAlign = 'start',
+  stretch = false,
+  wrap = 'nowrap',
 }: StackProps) {
   return (
     <div
       className={cn(
-        'flex h-full w-full',
+        'flex',
+        stretch && direction === 'row' && 'h-full',
+        stretch && direction === 'column' && 'w-full',
         getResponsiveClasses(direction, directionMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),
+        getResponsiveClasses(wrap, wrapMapper),
         align && getResponsiveClasses(align, alignmentMapper),
-        justify && getResponsiveClasses(justify, justifyMapper)
+        spacing === 'packed' && getResponsiveClasses(mainAxisAlign, packMapper),
+        spacing === 'spaceBetween' && 'justify-between',
+        spacing === 'spaceAround' && 'justify-around',
+        spacing === 'spaceEvenly' && 'justify-evenly',
+        stretch && 'items-stretch'
       )}
     >
       {children}
