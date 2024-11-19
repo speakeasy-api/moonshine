@@ -110,6 +110,19 @@ export function WorkspaceSelector({
         if (!success) {
           return false
         }
+        function updateState() {
+          setSelectedOrg((prev) =>
+            prev
+              ? {
+                  ...prev,
+                  workspaces: [...prev.workspaces, workspace],
+                }
+              : null
+          )
+          setNewWorkspaceName('')
+          setCreateDialogOpen(false)
+          setSelectedWorkspace(workspace)
+        }
 
         const workspace: Workspace = {
           id: newWorkspaceName,
@@ -117,19 +130,12 @@ export function WorkspaceSelector({
           slug: newWorkspaceName,
         }
 
-        // Update the selectedOrg state with the new workspace
-        setSelectedOrg((prev) =>
-          prev
-            ? {
-                ...prev,
-                workspaces: [...prev.workspaces, workspace],
-              }
-            : null
-        )
+        if (document.startViewTransition) {
+          document.startViewTransition(() => updateState())
+        } else {
+          updateState()
+        }
 
-        setNewWorkspaceName('')
-        setCreateDialogOpen(false)
-        setSelectedWorkspace(workspace)
         return true
       }
       return false

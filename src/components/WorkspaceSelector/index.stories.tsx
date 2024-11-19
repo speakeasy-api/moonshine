@@ -254,3 +254,18 @@ export const WithAnExtremeAmountOfOrgs: Story = {
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
   },
 }
+
+// TODO: this is not a valid scenario
+// export const NoOrgs: Story = {
+//   ...Default,
+//   render: () => <WorkspaceSelectorWithState orgs={[]} />,
+// }
+
+export const NoWorkspacesInOrg: Story = {
+  ...Default,
+  render: () => {
+    const org = Object.assign({}, sampleData[0])
+    org.workspaces = []
+    return <WorkspaceSelectorWithState orgs={[org]} />
+  },
+}
