@@ -10,7 +10,7 @@ import { VirtuosoHandle } from 'react-virtuoso'
 interface WorkspaceListProps {
   selectedOrg: Org
   selectedWorkspace: Workspace | null
-  handleCreateDialogOpen: () => void
+  handleCreateViewOpen: () => void
   handleSelect: (org: Org, workspace: Workspace) => void
   enableCreate?: boolean
   height: string | number
@@ -19,7 +19,7 @@ interface WorkspaceListProps {
 export function WorkspaceList({
   selectedOrg,
   selectedWorkspace,
-  handleCreateDialogOpen,
+  handleCreateViewOpen,
   handleSelect,
   enableCreate = true,
   height,
@@ -29,7 +29,6 @@ export function WorkspaceList({
 
   useEffect(() => {
     if (selectedWorkspace && virtuoso.current) {
-      console.log('foo')
       virtuoso.current.scrollToIndex({
         index:
           selectedOrg?.workspaces.findIndex(
@@ -64,7 +63,7 @@ export function WorkspaceList({
       {enableCreate && (
         <div className="bg-background border-t">
           <CommandItem
-            onSelect={handleCreateDialogOpen}
+            onSelect={handleCreateViewOpen}
             className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
           >
             <Icon name="plus" />

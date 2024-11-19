@@ -26,6 +26,12 @@ export interface Workspace {
   disabled?: boolean
 }
 
+function requiresSearch(orgs: Org[]) {
+  // if there is only one org, then no search
+  // if there is one org with multiple workspaces, then no search
+  return orgs.length > 1 || (orgs.length === 1 && orgs[0].workspaces.length > 5)
+}
+
 export interface WorkspaceSelectorProps {
   orgs: Org[]
   value?: string
@@ -128,7 +134,7 @@ export function WorkspaceSelector({
     [selectedOrg, newWorkspaceName, onCreate]
   )
 
-  const handleCreateDialogOpen = React.useCallback(() => {
+  const handleCreateViewOpen = React.useCallback(() => {
     if (document.startViewTransition) {
       // Capture the current height before transition
       const height = containerRef.current?.offsetHeight
@@ -266,7 +272,7 @@ export function WorkspaceSelector({
                   />
                   <WorkspaceList
                     selectedOrg={selectedOrg!}
-                    handleCreateDialogOpen={handleCreateDialogOpen}
+                    handleCreateViewOpen={handleCreateViewOpen}
                     handleSelect={handleSelect}
                     selectedWorkspace={selectedWorkspace}
                     height={height}
@@ -286,10 +292,4 @@ export function WorkspaceSelector({
       )}
     </div>
   )
-}
-
-function requiresSearch(orgs: Org[]) {
-  // if there is only one org, then no search
-  // if there is one org with multiple workspaces, then no search
-  return orgs.length > 1 || (orgs.length === 1 && orgs[0].workspaces.length > 5)
 }

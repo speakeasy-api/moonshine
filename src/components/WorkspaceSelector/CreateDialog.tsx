@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
@@ -53,11 +53,15 @@ export function CreateDialog({
     createInputRef.current?.focus()
   }
 
-  const longestOrgName = Math.min(
-    30,
-    allOrgs.reduce((longest, org) => {
-      return org.label.length > longest ? org.label.length : longest
-    }, 0)
+  const longestOrgName = useMemo(
+    () =>
+      Math.min(
+        30,
+        allOrgs.reduce((longest, org) => {
+          return org.label.length > longest ? org.label.length : longest
+        }, 0)
+      ),
+    [allOrgs]
   )
 
   const orgCount = allOrgs.length
@@ -93,7 +97,7 @@ export function CreateDialog({
             <GradientCircle name={currentOrg.label} size="2xl" />
             <Stack align="center" justify="center" gap={2}>
               <Text variant="h3">Create new workspace</Text>
-              <div className="max-w-[250px]">
+              <div className="max-w-64">
                 <Text variant="muted">
                   Workspaces are used to organize your SDK targets into logical
                   groups.
@@ -106,7 +110,7 @@ export function CreateDialog({
         <Separator orientation="vertical" />
 
         <div className="flex w-2/3 flex-col items-center justify-center px-8">
-          <div className="flex max-w-[500px] flex-col items-center">
+          <div className="flex max-w-lg flex-col items-center">
             <div className="flex flex-col gap-4">
               <Stack align="start" justify="center" gap={2}>
                 <Text variant="h4">Choose your workspace name</Text>
@@ -171,7 +175,6 @@ export function CreateDialog({
                   placeholder="your-new-workspace"
                   value={newWorkspaceName}
                   onChange={(e) => setNewWorkspaceName(e.target.value)}
-                  style={{ width: `${newWorkspaceName.length * 5}px` }}
                   className="border-input text-foreground/80 placeholder:text-muted-foreground/50 ring-offset-background text-md flex h-10 w-full min-w-fit flex-1 flex-grow bg-transparent px-2 py-1.5 pl-0 text-lg outline-none invalid:border-b invalid:border-red-400"
                 />
               </div>
