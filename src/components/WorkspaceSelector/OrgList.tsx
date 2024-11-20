@@ -82,7 +82,7 @@ export function OrgList({
             onSelect={() => setSelectedOrg(org)}
             aria-selected={selectedOrg?.id === org.id}
             className={cn(
-              'flex cursor-pointer flex-row gap-3 p-4 text-base',
+              'flex max-w-lg cursor-pointer flex-row gap-3 p-4 text-base',
               !showRecents &&
                 selectedOrg?.id === org.id &&
                 'bg-accent text-accent-foreground font-semibold'
@@ -90,7 +90,7 @@ export function OrgList({
             ref={(el) => (orgRefs.current[org.id] = el)}
           >
             <GradientCircle name={org.label} />
-            {org.label}
+            <span className="truncate">{org.label}</span>
             {!showRecents && selectedOrg?.id === org.id && (
               <div className="ml-auto">
                 <Icon name="chevron-right" size="small" />

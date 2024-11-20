@@ -277,3 +277,47 @@ export const NoWorkspacesInOrg: Story = {
     return <WorkspaceSelectorWithState orgs={[org]} />
   },
 }
+
+export const WithLongOrgName: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      orgs={[
+        {
+          id: '1',
+          label: 'a'.repeat(100),
+          slug: 'a'.repeat(100),
+          workspaces: [
+            {
+              id: '1',
+              label: 'workspace-1',
+              slug: 'workspace-1',
+            },
+          ],
+        },
+      ]}
+    />
+  ),
+}
+
+export const WithLongWorkspaceName: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      orgs={[
+        {
+          id: '1',
+          label: 'my-org',
+          slug: 'my-org',
+          workspaces: [
+            {
+              id: '1',
+              label: 'a'.repeat(100),
+              slug: 'a'.repeat(100),
+            },
+          ],
+        },
+      ]}
+    />
+  ),
+}
