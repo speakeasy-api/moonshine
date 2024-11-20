@@ -24,7 +24,8 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
         onSelect={() => handleSelect(selectedOrg, workspace)}
         className={cn(
           'hover:!bg-accent data-[selected]:!bg-accent flex w-full max-w-full cursor-pointer flex-row gap-3 p-4 text-base',
-          isSelected && 'font-semibold'
+          isSelected && 'font-semibold',
+          !workspace.active && 'opacity-50'
         )}
       >
         <GradientCircle name={workspace.label} />
