@@ -25,7 +25,9 @@ export interface Workspace {
   id: string
   slug: string
   label: string
-  disabled?: boolean
+  active: boolean
+  createdAt: Date
+  updatedAt: Date
 }
 
 function requiresSearch(orgs: Org[]) {
@@ -128,6 +130,9 @@ export function WorkspaceSelector({
           id: newWorkspaceName,
           label: newWorkspaceName,
           slug: newWorkspaceName,
+          active: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }
 
         if (document.startViewTransition) {

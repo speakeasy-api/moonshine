@@ -25,66 +25,105 @@ const sampleData = [
         id: '1',
         label: 'zeus',
         slug: 'zeus',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '2',
         label: 'hermes',
         slug: 'hermes',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '3',
         label: 'poseidon',
         slug: 'poseidon',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '4',
         label: 'athena',
         slug: 'athena',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '5',
         label: 'apollo',
         slug: 'apollo',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '6',
         label: 'dionysus',
         slug: 'dionysus',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '7',
         label: 'fable',
         slug: 'fable',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '8',
         label: 'hercules',
         slug: 'hercules',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '9',
         label: 'medusa',
         slug: 'medusa',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '10',
         label: 'nike',
         slug: 'nike',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '11',
         label: 'odysseus',
         slug: 'odysseus',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '12',
         label: 'pandora',
         slug: 'pandora',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '13',
         label: 'prometheus',
         slug: 'prometheus',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ],
   },
@@ -97,26 +136,41 @@ const sampleData = [
         id: '1',
         label: 'dev',
         slug: 'dev',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '2',
         label: 'staging',
         slug: 'staging',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '3',
         label: 'prod',
         slug: 'prod',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '4',
         label: 'test',
         slug: 'test',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: '5',
         label: 'staging-2',
         slug: 'staging-2',
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ],
   },
@@ -154,6 +208,9 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
                     id: name,
                     label: name,
                     slug: name,
+                    active: true,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                   },
                 ],
               }
@@ -165,6 +222,9 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
         id: name,
         label: name,
         slug: name,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
 
       return { success: true }
@@ -240,6 +300,9 @@ export const WithManyOrgs: Story = {
         id: `workspace-${i}-${j}`,
         label: `workspace-${i}-${j}`,
         slug: `workspace-${i}-${j}`,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })),
     }))
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
@@ -257,6 +320,9 @@ export const WithAnExtremeAmountOfOrgs: Story = {
         id: `workspace-${i}-${j}`,
         label: `workspace-${i}-${j}`,
         slug: `workspace-${i}-${j}`,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })),
     }))
     return <WorkspaceSelectorWithState orgs={manyOrgs} />
@@ -276,4 +342,78 @@ export const NoWorkspacesInOrg: Story = {
     org.workspaces = []
     return <WorkspaceSelectorWithState orgs={[org]} />
   },
+}
+
+export const WithLongOrgName: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      orgs={[
+        {
+          id: '1',
+          label: 'a'.repeat(100),
+          slug: 'a'.repeat(100),
+          workspaces: [
+            {
+              id: '1',
+              label: 'workspace-1',
+              slug: 'workspace-1',
+              active: true,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+        },
+      ]}
+    />
+  ),
+}
+
+export const WithLongWorkspaceName: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      orgs={[
+        {
+          id: '1',
+          label: 'my-org',
+          slug: 'my-org',
+          workspaces: [
+            {
+              id: '1',
+              label: 'a'.repeat(100),
+              slug: 'a'.repeat(100),
+              active: true,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+        },
+      ]}
+    />
+  ),
+}
+
+export const WithInactiveWorkspace: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      orgs={[
+        {
+          ...sampleData[0],
+          workspaces: [
+            ...sampleData[0].workspaces,
+            {
+              id: 'inactive',
+              label: 'inactive',
+              slug: 'inactive',
+              active: false,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+        },
+      ]}
+    />
+  ),
 }

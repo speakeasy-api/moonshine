@@ -59,7 +59,7 @@ export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
   return (
     <div
       className={cn(
-        'rounded-full border-white',
+        'min-h-6 min-w-6 rounded-full border-white',
         sizeValue && `h-${sizeValue} w-${sizeValue}`,
         borderSize && `border-${borderSize}`
       )}

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
@@ -14,8 +14,6 @@ import {
   SelectValue,
 } from '../Select'
 import { Virtuoso } from 'react-virtuoso'
-
-const CH_WIDTH = 1.2
 
 export interface CreateResult {
   success: boolean
@@ -58,17 +56,6 @@ export function CreateDialog({
   const focusInput = () => {
     createInputRef.current?.focus()
   }
-
-  const longestOrgName = useMemo(
-    () =>
-      Math.min(
-        30,
-        allOrgs.reduce((longest, org) => {
-          return org.label.length > longest ? org.label.length : longest
-        }, 0)
-      ),
-    [allOrgs]
-  )
 
   const orgCount = allOrgs.length
 
@@ -134,13 +121,8 @@ export function CreateDialog({
                       setCurrentOrg(allOrgs.find((o) => o.id === value)!)
                     }
                   >
-                    <SelectTrigger
-                      className={
-                        'text-md text-foreground/80 hover:text-foreground max-w-1/4 w-fit select-none gap-3 text-nowrap border-none bg-transparent p-0 text-lg font-semibold tracking-wide shadow-none outline-none focus:ring-transparent'
-                      }
-                      style={{ minWidth: `${longestOrgName * CH_WIDTH}ch` }}
-                    >
-                      <SelectValue className="truncate">
+                    <SelectTrigger className="create-dialog-select-trigger text-md text-foreground/80 hover:text-foreground max-w-min select-none gap-3 border-none bg-transparent p-0 text-start text-lg font-semibold tracking-wide shadow-none outline-none focus:ring-transparent">
+                      <SelectValue title={currentOrg.label}>
                         {currentOrg.label}
                       </SelectValue>
                     </SelectTrigger>
@@ -162,7 +144,10 @@ export function CreateDialog({
                     </SelectContent>
                   </Select>
                 ) : (
-                  <span className="text-foreground/80 select-none whitespace-pre text-lg font-semibold">
+                  <span
+                    title={currentOrg.label}
+                    className="text-foreground/80 w-fit min-w-16 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
+                  >
                     {currentOrg.label}
                   </span>
                 )}

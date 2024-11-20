@@ -25,6 +25,13 @@
   height: 100%;
 }
 
+.create-dialog-select-trigger > span {
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  @apply max-w-32;
+  @apply min-w-16;
+}
+
 .workspace-selector div[cmdk-input-wrapper] {
   border-bottom: none !important;
 }

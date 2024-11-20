@@ -23,12 +23,13 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
         ref={ref}
         onSelect={() => handleSelect(selectedOrg, workspace)}
         className={cn(
-          'hover:!bg-accent data-[selected]:!bg-accent flex w-full cursor-pointer flex-row gap-3 p-4 text-base',
-          isSelected && 'font-semibold'
+          'hover:!bg-accent data-[selected]:!bg-accent flex w-full max-w-full cursor-pointer flex-row gap-3 p-4 text-base',
+          isSelected && 'font-semibold',
+          !workspace.active && 'opacity-50'
         )}
       >
         <GradientCircle name={workspace.label} />
-        {workspace.label}
+        <span className="truncate">{workspace.label}</span>
 
         {isSelected && (
           <div className="ml-auto">
