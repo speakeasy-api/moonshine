@@ -1,9 +1,13 @@
 import { cn } from '@/lib/utils'
 import { Size } from '@/types'
+import './gradientCircle.css'
+import { useMemo } from 'react'
 
 interface GradientCircleProps {
   name: string
   size?: Size
+  transition?: boolean
+  showInitial?: boolean
 }
 
 const sizeMap: Record<Size, number> = {
@@ -22,7 +26,16 @@ const borderSizeMap: Record<Size, number> = {
   '2xl': 4,
 }
 
-export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
+export function GradientCircle({
+  name,
+  size = 'small',
+  transition = false,
+  showInitial = false,
+}: GradientCircleProps) {
+  const initial = useMemo<string | undefined>(
+    () => (name.length > 0 ? name[0].toUpperCase() : undefined),
+    [name]
+  )
   // Define vibrant base colors (in HSL)
   const baseColors = [
     0, // Red
@@ -56,16 +69,71 @@ export function GradientCircle({ name, size = 'small' }: GradientCircleProps) {
 
   const sizeValue = sizeMap[size]
   const borderSize = borderSizeMap[size]
+
   return (
     <div
       className={cn(
-        'min-h-6 min-w-6 rounded-full border-white',
+        'gradient-circle relative min-h-6 min-w-6 rounded-full border-white',
         sizeValue && `h-${sizeValue} w-${sizeValue}`,
         borderSize && `border-${borderSize}`
       )}
-      style={{
-        background: `linear-gradient(to bottom right, ${fromColor}, ${toColor})`,
-      }}
-    />
+      style={
+        {
+          '--from-color': fromColor,
+          '--to-color': toColor,
+          transition: transition
+            ? '--from-color 0.5s, --to-color 2s'
+            : undefined,
+        } as React.CSSProperties
+      }
+    >
+      {showInitial && name.length > 0 && (
+        <div
+          className="gradient-circle-initial"
+          style={
+            {
+              '--translate': initial
+                ? getInitialTranslateY(initial)
+                : undefined,
+            } as React.CSSProperties
+          }
+        >
+          {name[0].toUpperCase()}
+        </div>
+      )}
+    </div>
   )
+}
+
+/**
+ * every letter has a different central focal point
+ * so may need some adjustment in order to center them
+ */
+function getInitialTranslateY(letter: string): [string, string] {
+  switch (letter) {
+    case 'A':
+      return ['-50%', '-55%']
+    case 'B':
+      return ['-50%', '-55%']
+    case 'C':
+      return ['-54%', '-50%']
+    case 'D':
+      return ['-46%', '-50%']
+    case 'E':
+      return ['-52%', '-50%']
+    case 'F':
+      return ['-50%', '-52%']
+    case 'G':
+      return ['-52%', '-52%']
+    case 'J':
+      return ['-55%', '-52%']
+    case 'L':
+      return ['-47%', '-54%']
+    case 'Q':
+      return ['-53%', '-55%']
+    case 'R':
+      return ['-52%', '-55%']
+    default:
+      return ['-50%', '-50%']
+  }
 }

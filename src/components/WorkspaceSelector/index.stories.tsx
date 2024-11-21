@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
-import { CreateResult } from './CreateDialog'
+import { CreateResult } from './CreateWorkspace'
 
 const meta = {
   title: 'Components/WorkspaceSelector',
@@ -233,12 +233,26 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
     return { success: false, error: 'Failed to create workspace' }
   }
 
+  const handleCreateOrg = async (newOrgName: string): Promise<Org> => {
+    const org: Org = {
+      id: newOrgName,
+      label: newOrgName,
+      slug: newOrgName,
+      workspaces: [],
+    }
+
+    setOrgs([...orgs, org])
+
+    return org
+  }
+
   return (
     <div className="h-full w-screen">
       <Container>
         <WorkspaceSelector
           orgs={orgs}
           onCreate={handleCreateWorkspace}
+          onCreateOrg={handleCreateOrg}
           onSelect={(org, workspace) => {
             setSelectedOrg(org)
             setSelectedWorkspace(workspace)
@@ -329,11 +343,10 @@ export const WithAnExtremeAmountOfOrgs: Story = {
   },
 }
 
-// TODO: this is not a valid scenario
-// export const NoOrgs: Story = {
-//   ...Default,
-//   render: () => <WorkspaceSelectorWithState orgs={[]} />,
-// }
+export const NoOrgs: Story = {
+  ...Default,
+  render: () => <WorkspaceSelectorWithState orgs={[]} />,
+}
 
 export const NoWorkspacesInOrg: Story = {
   ...Default,

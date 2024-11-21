@@ -20,7 +20,7 @@ export interface CreateResult {
   error?: string
 }
 
-interface CreateDialogProps {
+interface CreateWorkspaceProps {
   open: boolean
   selectedOrg: Org
   allOrgs: Org[]
@@ -30,7 +30,7 @@ interface CreateDialogProps {
   setNewWorkspaceName: (name: string) => void
 }
 
-export function CreateDialog({
+export function CreateWorkspace({
   open,
   selectedOrg,
   allOrgs,
@@ -38,7 +38,7 @@ export function CreateDialog({
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
-}: CreateDialogProps) {
+}: CreateWorkspaceProps) {
   const createInputRef = React.useRef<HTMLInputElement>(null)
   const [isInvalid, setIsInvalid] = useState(false)
   const [currentOrg, setCurrentOrg] = useState(selectedOrg)

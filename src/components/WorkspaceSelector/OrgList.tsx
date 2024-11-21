@@ -15,6 +15,7 @@ interface OrgListProps {
   setSelectedOrg: (org: Org) => void
   onSelectRecent: () => void
   height: string | number
+  handleCreateViewOpen: () => void
 }
 
 export function OrgList({
@@ -25,6 +26,7 @@ export function OrgList({
   enableRecents,
   onSelectRecent,
   height,
+  handleCreateViewOpen,
 }: OrgListProps) {
   const virtuoso = useRef<VirtuosoHandle | null>(null)
 
@@ -42,7 +44,7 @@ export function OrgList({
   }, [selectedOrg, orgs])
 
   return (
-    <div className="border-border w-1/3 border-r">
+    <div className="border-border flex w-1/3 flex-col border-r">
       {enableRecents && (
         <div className="bg-background border-y">
           <CommandItem
@@ -88,6 +90,16 @@ export function OrgList({
           </CommandItem>
         )}
       />
+
+      <div className="bg-background border-t">
+        <CommandItem
+          onSelect={handleCreateViewOpen}
+          className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
+        >
+          <Icon name="plus" />
+          Create new company
+        </CommandItem>
+      </div>
     </div>
   )
 }
