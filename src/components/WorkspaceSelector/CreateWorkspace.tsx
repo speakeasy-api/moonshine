@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '../Select'
 import { Virtuoso } from 'react-virtuoso'
+import { cn } from '@/lib/utils'
 
 export interface CreateResult {
   success: boolean
@@ -130,7 +131,9 @@ export function CreateWorkspace({
                     </SelectTrigger>
                     <SelectContent>
                       <Virtuoso
-                        data={allOrgs}
+                        data={allOrgs.sort((a, b) =>
+                          a.label.localeCompare(b.label)
+                        )}
                         totalCount={allOrgs.length}
                         style={{ height: '300px' }}
                         itemContent={(_, item) => (
@@ -148,7 +151,11 @@ export function CreateWorkspace({
                 ) : (
                   <span
                     title={currentOrg.slug}
-                    className="text-foreground/80 min-w-24 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
+                    className={cn(
+                      'text-foreground/80 select-none whitespace-pre text-lg font-semibold',
+                      currentOrg.slug.length > 20 &&
+                        'max-w-40 truncate whitespace-pre'
+                    )}
                   >
                     {currentOrg.slug}
                   </span>

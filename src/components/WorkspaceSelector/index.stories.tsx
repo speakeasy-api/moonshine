@@ -439,7 +439,7 @@ export const InteractiveNoOrgs: Story = {
     await userEvent.type(orgInput, 'new company name', { delay: 500 })
     await userEvent.click(canvas.getByText('Next'), { delay: 300 })
 
-    expect(canvas.getByText('new company name')).toBeInTheDocument()
+    expect(canvas.getByText('new-company-name')).toBeInTheDocument()
 
     const workspaceInput = canvas.getByRole('textbox')
     await userEvent.type(workspaceInput, 'new-workspace-slug', { delay: 300 })
