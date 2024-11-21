@@ -189,8 +189,6 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
   ): Promise<CreateResult> => {
     const existingOrg = orgs.find((org) => org.slug === o.slug)
     if (existingOrg) {
-      setSelectedOrg(existingOrg)
-
       const workspaceExists = existingOrg.workspaces.find(
         (workspace) => workspace.slug === name
       )
@@ -230,22 +228,19 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
       return { success: true }
     }
 
-    return { success: false, error: 'Failed to create workspace' }
+    setOrgs([...orgs, o])
+    setSelectedOrg(o)
+
+    return { success: true }
   }
 
   const handleCreateOrg = async (newOrgName: string): Promise<Org> => {
-    const org: Org = {
+    return Promise.resolve({
       id: newOrgName,
       label: newOrgName,
       slug: newOrgName,
       workspaces: [],
-    }
-
-    const newOrgs = [...orgs, org]
-    setOrgs(newOrgs)
-    setSelectedOrg(org)
-
-    return org
+    })
   }
 
   return (

@@ -28,6 +28,7 @@ interface CreateWorkspaceProps {
   onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>
   newWorkspaceName: string
   setNewWorkspaceName: (name: string) => void
+  backButtonEnabled?: boolean
 }
 
 export function CreateWorkspace({
@@ -38,6 +39,7 @@ export function CreateWorkspace({
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
+  backButtonEnabled = true,
 }: CreateWorkspaceProps) {
   const createInputRef = React.useRef<HTMLInputElement>(null)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -64,7 +66,7 @@ export function CreateWorkspace({
     const result = await onSubmit(currentOrg, newWorkspaceName)
     setIsSubmitting(false)
     if (!result.success) {
-      setError(result.error || 'Failed to create workspace')
+      setError(result.error ?? 'Unknown error')
     }
   }
 
@@ -185,10 +187,12 @@ export function CreateWorkspace({
       </div>
 
       <div className="border-input bg-background flex border-t px-8 py-4">
-        <Button variant="outline" onClick={onClose}>
-          <Icon name="chevron-left" size="small" />
-          Back
-        </Button>
+        {backButtonEnabled && (
+          <Button variant="outline" onClick={onClose}>
+            <Icon name="chevron-left" size="small" />
+            Back
+          </Button>
+        )}
         <div className="ml-auto">
           <Button
             variant="secondary"
