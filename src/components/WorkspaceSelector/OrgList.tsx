@@ -70,7 +70,7 @@ export function OrgList({
           <CommandItem
             key={org.slug}
             onSelect={() => setSelectedOrg(org)}
-            value={org.slug}
+            value={`org-${org.slug}`}
             className={cn(
               'flex max-w-lg cursor-pointer flex-row gap-3 p-4 text-base',
               !showRecents &&

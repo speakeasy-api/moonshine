@@ -146,7 +146,7 @@ export function CreateDialog({
                 ) : (
                   <span
                     title={currentOrg.label}
-                    className="text-foreground/80 w-fit min-w-16 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
+                    className="text-foreground/80 min-w-24 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
                   >
                     {currentOrg.label}
                   </span>

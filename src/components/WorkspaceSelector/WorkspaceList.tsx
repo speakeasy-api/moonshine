@@ -6,6 +6,7 @@ import { WorkspaceItem } from './WorkspaceItem'
 import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
 import { VirtuosoHandle } from 'react-virtuoso'
+import { Text } from '../Text'
 
 interface WorkspaceListProps {
   selectedOrg: Org
@@ -44,23 +45,29 @@ export function WorkspaceList({
 
   return (
     <div className="flex w-2/3 flex-col">
-      <ScrollingList
-        ref={virtuoso}
-        items={selectedOrg?.workspaces}
-        renderItem={(workspace) => (
-          <WorkspaceItem
-            key={workspace.slug}
-            workspace={workspace}
-            selectedOrg={selectedOrg}
-            handleSelect={handleSelect}
-            isSelected={
-              selectedOrg.slug === selectedOrg.slug &&
-              selectedWorkspace?.slug === workspace.slug
-            }
-          />
-        )}
-        height={height}
-      />
+      {selectedOrg?.workspaces.length === 0 ? (
+        <div className="flex h-full items-center justify-center">
+          <Text variant="muted">No workspaces exist in this organization</Text>
+        </div>
+      ) : (
+        <ScrollingList
+          ref={virtuoso}
+          items={selectedOrg?.workspaces}
+          renderItem={(workspace) => (
+            <WorkspaceItem
+              key={workspace.slug}
+              workspace={workspace}
+              selectedOrg={selectedOrg}
+              handleSelect={handleSelect}
+              isSelected={
+                selectedOrg.slug === selectedOrg.slug &&
+                selectedWorkspace?.slug === workspace.slug
+              }
+            />
+          )}
+          height={height}
+        />
+      )}
       {enableCreate && (
         <div className="bg-background border-t">
           <CommandItem

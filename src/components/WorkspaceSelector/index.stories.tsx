@@ -329,12 +329,6 @@ export const WithAnExtremeAmountOfOrgs: Story = {
   },
 }
 
-// TODO: this is not a valid scenario
-// export const NoOrgs: Story = {
-//   ...Default,
-//   render: () => <WorkspaceSelectorWithState orgs={[]} />,
-// }
-
 export const NoWorkspacesInOrg: Story = {
   ...Default,
   render: () => {

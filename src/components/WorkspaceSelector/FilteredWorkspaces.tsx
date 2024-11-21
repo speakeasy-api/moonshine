@@ -28,17 +28,17 @@ export function FilteredWorkspaces({
         height={height}
         renderItem={(org) => {
           return (
-            <CommandGroup key={org.id} heading={org.label}>
+            <CommandGroup key={org.slug} heading={org.label}>
               {org.workspaces.map((workspace) => (
                 <CommandItem
-                  key={workspace.id}
+                  key={`${org.slug}-${workspace.slug}`}
                   onSelect={() => onSelect(org, workspace)}
                 >
                   <WorkspaceItem
                     workspace={workspace}
                     isSelected={
-                      selectedOrg?.id === org.id &&
-                      selectedWorkspace?.id === workspace.id
+                      selectedOrg?.slug === org.slug &&
+                      selectedWorkspace?.slug === workspace.slug
                     }
                     selectedOrg={org}
                     handleSelect={onSelect}
