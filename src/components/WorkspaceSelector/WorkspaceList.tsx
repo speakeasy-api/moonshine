@@ -24,21 +24,23 @@ export function WorkspaceList({
   enableCreate = true,
   height,
 }: WorkspaceListProps) {
-  const workspaceRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const virtuoso = useRef<VirtuosoHandle | null>(null)
 
   useEffect(() => {
     if (selectedWorkspace && virtuoso.current) {
-      virtuoso.current.scrollToIndex({
-        index:
-          selectedOrg?.workspaces.findIndex(
-            (workspace) => workspace.id === selectedWorkspace.id
-          ) ?? 0,
-        align: 'end',
-        behavior: selectedOrg?.workspaces.length < 10 ? 'smooth' : 'auto',
-      })
+      const index = selectedOrg?.workspaces.findIndex(
+        (workspace) => workspace.slug === selectedWorkspace.slug
+      )
+
+      // wait for the ref to update
+      setTimeout(() => {
+        virtuoso.current?.scrollToIndex({
+          index,
+          behavior: selectedOrg?.workspaces.length < 10 ? 'smooth' : 'auto',
+        })
+      }, 100)
     }
-  }, [selectedWorkspace])
+  }, [selectedWorkspace, selectedOrg?.workspaces])
 
   return (
     <div className="flex w-2/3 flex-col">
@@ -47,14 +49,13 @@ export function WorkspaceList({
         items={selectedOrg?.workspaces}
         renderItem={(workspace) => (
           <WorkspaceItem
-            key={workspace.id}
+            key={workspace.slug}
             workspace={workspace}
             selectedOrg={selectedOrg}
             handleSelect={handleSelect}
-            ref={(el) => (workspaceRefs.current[workspace.id] = el)}
             isSelected={
-              selectedOrg.id === selectedOrg.id &&
-              selectedWorkspace?.id === workspace.id
+              selectedOrg.slug === selectedOrg.slug &&
+              selectedWorkspace?.slug === workspace.slug
             }
           />
         )}

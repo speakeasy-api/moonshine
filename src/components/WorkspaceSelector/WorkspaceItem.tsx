@@ -19,8 +19,9 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
   ) {
     return (
       <CommandItem
-        key={workspace.id}
+        key={workspace.slug}
         ref={ref}
+        value={`${selectedOrg.slug}-${workspace.slug}`}
         onSelect={() => handleSelect(selectedOrg, workspace)}
         className={cn(
           'hover:!bg-accent data-[selected]:!bg-accent flex w-full max-w-full cursor-pointer flex-row gap-3 p-4 text-base',

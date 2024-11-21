@@ -3,8 +3,9 @@ import { CommandItem } from '../Command'
 import { GradientCircle } from './GradientCircle'
 import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
-import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
+import { VirtuosoHandle } from 'react-virtuoso'
+import { useEffect, useRef } from 'react'
 
 interface OrgListProps {
   orgs: Org[]
@@ -25,35 +26,23 @@ export function OrgList({
   onSelectRecent,
   height,
 }: OrgListProps) {
-  const orgRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const virtuoso = useRef<VirtuosoHandle | null>(null)
 
   useEffect(() => {
-    // TODO: dont scroll if the org is already in view
-    if (selectedOrg) {
-      const element = orgRefs.current[selectedOrg.id]
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'instant',
-          block: 'nearest',
+    if (selectedOrg && virtuoso.current) {
+      const index = orgs.findIndex((org) => org.slug === selectedOrg.slug)
+
+      setTimeout(() => {
+        virtuoso.current?.scrollIntoView({
+          index,
+          behavior: orgs.length < 10 ? 'smooth' : 'auto',
         })
-      }
+      }, 100)
     }
-  }, [selectedOrg])
+  }, [selectedOrg, orgs])
 
   return (
     <div className="border-border w-1/3 border-r">
-      {/* <div
-        className={cn(
-          'flex flex-col justify-center gap-2 px-4 py-6',
-          !enableRecents && 'border-b'
-        )}
-      >
-        <Text variant="h4">Select your workspace</Text>
-        <Text variant="muted">
-          Select the workspace you want to use for this project. Alternatively,
-          you can create a new workspace.
-        </Text>
-      </div> */}
       {enableRecents && (
         <div className="bg-background border-y">
           <CommandItem
@@ -75,23 +64,23 @@ export function OrgList({
       )}
       <ScrollingList
         items={orgs}
+        ref={virtuoso}
         height={height}
         renderItem={(org) => (
           <CommandItem
-            key={org.id}
+            key={org.slug}
             onSelect={() => setSelectedOrg(org)}
-            aria-selected={selectedOrg?.id === org.id}
+            value={org.slug}
             className={cn(
               'flex max-w-lg cursor-pointer flex-row gap-3 p-4 text-base',
               !showRecents &&
-                selectedOrg?.id === org.id &&
+                selectedOrg?.slug === org.slug &&
                 'bg-accent text-accent-foreground font-semibold'
             )}
-            ref={(el) => (orgRefs.current[org.id] = el)}
           >
             <GradientCircle name={org.label} />
             <span className="truncate">{org.label}</span>
-            {!showRecents && selectedOrg?.id === org.id && (
+            {!showRecents && selectedOrg?.slug === org.slug && (
               <div className="ml-auto">
                 <Icon name="chevron-right" size="small" />
               </div>

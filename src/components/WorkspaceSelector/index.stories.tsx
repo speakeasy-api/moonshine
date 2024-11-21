@@ -177,7 +177,7 @@ const sampleData = [
 ]
 
 const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
-  const [orgs, setOrgs] = useState<Org[]>(sampleData)
+  const [orgs, setOrgs] = useState<Org[]>(props.orgs ?? sampleData)
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(
     null
   )
@@ -187,7 +187,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
     o: Org,
     name: string
   ): Promise<CreateResult> => {
-    const existingOrg = orgs.find((org) => org.id === o.id)
+    const existingOrg = orgs.find((org) => org.slug === o.slug)
     if (existingOrg) {
       setSelectedOrg(existingOrg)
 
@@ -199,7 +199,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
       }
       setOrgs(
         orgs.map((org) =>
-          org.id === existingOrg.id
+          org.slug === existingOrg.slug
             ? {
                 ...org,
                 workspaces: [

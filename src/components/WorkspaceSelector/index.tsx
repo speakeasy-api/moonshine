@@ -112,6 +112,15 @@ export function WorkspaceSelector({
         if (!result.success) {
           return result
         }
+
+        const workspace: Workspace = {
+          id: newWorkspaceName,
+          label: newWorkspaceName,
+          slug: newWorkspaceName,
+          active: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
         function updateState() {
           setSelectedOrg((prev) =>
             prev
@@ -124,15 +133,6 @@ export function WorkspaceSelector({
           setNewWorkspaceName('')
           setCreateDialogOpen(false)
           setSelectedWorkspace(workspace)
-        }
-
-        const workspace: Workspace = {
-          id: newWorkspaceName,
-          label: newWorkspaceName,
-          slug: newWorkspaceName,
-          active: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         }
 
         if (document.startViewTransition) {
