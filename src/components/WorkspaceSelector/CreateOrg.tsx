@@ -50,8 +50,8 @@ export function CreateOrg({
               <Text variant="h3">Create new company</Text>
               <div className="max-w-64">
                 <Text variant="muted">
-                  Once you have created your company, we take you through some
-                  onboarding steps to get you started with Speakeasy.
+                  Once you have created your company, we'll take you through
+                  some onboarding steps to get you started with Speakeasy.
                 </Text>
               </div>
             </Stack>
