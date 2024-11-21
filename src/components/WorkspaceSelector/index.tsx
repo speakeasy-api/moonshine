@@ -175,7 +175,6 @@ export function WorkspaceSelector({
     },
     [onCreateOrg]
   )
-
   const handleCreateWorkspaceViewOpen = React.useCallback(() => {
     if (document.startViewTransition) {
       // Capture the current height before transition
@@ -234,6 +233,7 @@ export function WorkspaceSelector({
   return (
     <div
       ref={containerRef}
+      style={{ height }}
       className="workspace-selector border-border flex w-full flex-grow overflow-hidden rounded-md border"
     >
       {createOrgViewOpen ? (
@@ -244,6 +244,7 @@ export function WorkspaceSelector({
           <CreateOrg
             onSubmit={handleCreateOrg}
             onClose={backToWorkspaceSelector}
+            enableBackButton={orgs.length > 0}
           />
         </div>
       ) : createWorkspaceViewOpen ? (
@@ -303,13 +304,9 @@ export function WorkspaceSelector({
                   fullWidth
                   selectedOrg={selectedOrg}
                   selectedWorkspace={selectedWorkspace}
-                  height={height}
                 />
               ) : showRecents && filteredOrgs === undefined ? (
-                <div
-                  className="flex w-full flex-grow flex-row"
-                  style={{ height }}
-                >
+                <div className="flex w-full flex-grow flex-row">
                   <OrgList
                     orgs={orgs}
                     selectedOrg={selectedOrg}
@@ -317,7 +314,6 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    height={height}
                     handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <FilteredWorkspaces
@@ -327,11 +323,10 @@ export function WorkspaceSelector({
                     orgsWithFilteredWorkspaces={recents}
                     selectedOrg={selectedOrg}
                     selectedWorkspace={selectedWorkspace}
-                    height={height}
                   />
                 </div>
               ) : orgs.length > 0 && !search ? (
-                <div className="flex flex-row" style={{ height }}>
+                <div className="flex h-full flex-row">
                   <OrgList
                     orgs={orgs}
                     selectedOrg={selectedOrg}
@@ -339,7 +334,6 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    height={height}
                     handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <WorkspaceList
@@ -347,7 +341,6 @@ export function WorkspaceSelector({
                     handleCreateViewOpen={handleCreateWorkspaceViewOpen}
                     handleSelect={handleSelect}
                     selectedWorkspace={selectedWorkspace}
-                    height={height}
                   />
                 </div>
               ) : (

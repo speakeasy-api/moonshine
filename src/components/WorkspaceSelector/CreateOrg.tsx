@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Org } from '.'
 import { Command } from '../Command'
 import { Stack } from '../Stack'
@@ -11,17 +11,29 @@ import { Button } from '../Button'
 interface CreateOrgProps {
   onSubmit: (name: string) => Promise<Org>
   onClose: () => void
+  enableBackButton?: boolean
 }
 
-export function CreateOrg({ onSubmit, onClose }: CreateOrgProps) {
+export function CreateOrg({
+  onSubmit,
+  onClose,
+  enableBackButton = true,
+}: CreateOrgProps) {
   const [companyName, setCompanyName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
     await onSubmit(companyName)
     setIsSubmitting(false)
   }
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   return (
     <Command className="relative">
@@ -65,6 +77,7 @@ export function CreateOrg({ onSubmit, onClose }: CreateOrgProps) {
                   <input
                     type="text"
                     pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                    ref={inputRef}
                     placeholder="Your company name"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -78,10 +91,12 @@ export function CreateOrg({ onSubmit, onClose }: CreateOrgProps) {
       </div>
 
       <div className="border-input bg-background flex border-t px-8 py-4">
-        <Button variant="outline" onClick={onClose}>
-          <Icon name="chevron-left" size="small" />
-          Back
-        </Button>
+        {enableBackButton && (
+          <Button variant="outline" onClick={onClose}>
+            <Icon name="chevron-left" size="small" />
+            Back
+          </Button>
+        )}
         <div className="ml-auto">
           <Button
             variant="secondary"

@@ -10,22 +10,19 @@ interface FilteredWorkspacesProps {
   fullWidth?: boolean
   selectedOrg: Org | null
   selectedWorkspace: Workspace | null
-  height: string | number
 }
 
 export function FilteredWorkspaces({
   orgsWithFilteredWorkspaces,
   onSelect,
   fullWidth = false,
-  height,
   selectedOrg,
   selectedWorkspace,
 }: FilteredWorkspacesProps) {
   return (
-    <div className={cn(fullWidth ? 'w-full' : 'w-2/3')}>
+    <div className={cn('h-full', fullWidth ? 'w-full' : 'w-2/3')}>
       <ScrollingList
         items={orgsWithFilteredWorkspaces}
-        height={height}
         renderItem={(org) => {
           return (
             <CommandGroup key={org.id} heading={org.label}>

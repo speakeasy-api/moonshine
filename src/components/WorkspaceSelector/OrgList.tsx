@@ -14,7 +14,6 @@ interface OrgListProps {
   selectedOrg: Org | null
   setSelectedOrg: (org: Org) => void
   onSelectRecent: () => void
-  height: string | number
   handleCreateViewOpen: () => void
 }
 
@@ -25,7 +24,6 @@ export function OrgList({
   setSelectedOrg,
   enableRecents,
   onSelectRecent,
-  height,
   handleCreateViewOpen,
 }: OrgListProps) {
   const virtuoso = useRef<VirtuosoHandle | null>(null)
@@ -67,7 +65,6 @@ export function OrgList({
       <ScrollingList
         items={orgs}
         ref={virtuoso}
-        height={height}
         renderItem={(org) => (
           <CommandItem
             key={org.slug}
@@ -94,7 +91,7 @@ export function OrgList({
       <div className="bg-background border-t">
         <CommandItem
           onSelect={handleCreateViewOpen}
-          className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
+          className="m-1 cursor-pointer !items-center whitespace-pre p-4 text-base"
         >
           <Icon name="plus" />
           Create new company

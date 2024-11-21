@@ -81,7 +81,7 @@ export function CreateWorkspace({
       <div className="flex h-full w-full flex-row items-center">
         <div className="flex w-1/3 flex-col items-center justify-center gap-4 px-8 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
-            <GradientCircle name={currentOrg.label} size="2xl" />
+            <GradientCircle name={currentOrg.label} size="2xl" showInitial />
             <Stack align="center" gap={2}>
               <Text variant="h3">Create new workspace</Text>
               <div className="max-w-64">

@@ -6,6 +6,7 @@ import { WorkspaceItem } from './WorkspaceItem'
 import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
 import { VirtuosoHandle } from 'react-virtuoso'
+import { Text } from '../Text'
 
 interface WorkspaceListProps {
   selectedOrg: Org
@@ -13,7 +14,6 @@ interface WorkspaceListProps {
   handleCreateViewOpen: () => void
   handleSelect: (org: Org, workspace: Workspace) => void
   enableCreate?: boolean
-  height: string | number
 }
 
 export function WorkspaceList({
@@ -22,7 +22,6 @@ export function WorkspaceList({
   handleCreateViewOpen,
   handleSelect,
   enableCreate = true,
-  height,
 }: WorkspaceListProps) {
   const virtuoso = useRef<VirtuosoHandle | null>(null)
 
@@ -44,23 +43,28 @@ export function WorkspaceList({
 
   return (
     <div className="flex w-2/3 flex-col">
-      <ScrollingList
-        ref={virtuoso}
-        items={selectedOrg?.workspaces}
-        renderItem={(workspace) => (
-          <WorkspaceItem
-            key={workspace.slug}
-            workspace={workspace}
-            selectedOrg={selectedOrg}
-            handleSelect={handleSelect}
-            isSelected={
-              selectedOrg.slug === selectedOrg.slug &&
-              selectedWorkspace?.slug === workspace.slug
-            }
-          />
-        )}
-        height={height}
-      />
+      {selectedOrg?.workspaces.length === 0 ? (
+        <div className="flex flex-grow items-center justify-center">
+          <Text variant="muted">No workspaces in this organization</Text>
+        </div>
+      ) : (
+        <ScrollingList
+          ref={virtuoso}
+          items={selectedOrg?.workspaces}
+          renderItem={(workspace) => (
+            <WorkspaceItem
+              key={workspace.slug}
+              workspace={workspace}
+              selectedOrg={selectedOrg}
+              handleSelect={handleSelect}
+              isSelected={
+                selectedOrg.slug === selectedOrg.slug &&
+                selectedWorkspace?.slug === workspace.slug
+              }
+            />
+          )}
+        />
+      )}
       {enableCreate && (
         <div className="bg-background border-t">
           <CommandItem

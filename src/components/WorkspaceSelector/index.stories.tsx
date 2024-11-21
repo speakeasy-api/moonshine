@@ -241,7 +241,9 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
       workspaces: [],
     }
 
-    setOrgs([...orgs, org])
+    const newOrgs = [...orgs, org]
+    setOrgs(newOrgs)
+    setSelectedOrg(org)
 
     return org
   }
@@ -250,7 +252,6 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
     <div className="h-full w-screen">
       <Container>
         <WorkspaceSelector
-          orgs={orgs}
           onCreate={handleCreateWorkspace}
           onCreateOrg={handleCreateOrg}
           onSelect={(org, workspace) => {
@@ -259,6 +260,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
           }}
           recents={props.recents ?? []}
           {...props}
+          orgs={orgs}
         />
 
         <div className="border-border mt-8 flex flex-col gap-2 border-t pt-4">
