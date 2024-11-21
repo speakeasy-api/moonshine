@@ -94,7 +94,7 @@ export function OrgList({
           className="m-1 cursor-pointer !items-center whitespace-pre p-4 text-base"
         >
           <Icon name="plus" />
-          Create new company
+          Create company
         </CommandItem>
       </div>
     </div>

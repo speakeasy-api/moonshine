@@ -72,7 +72,7 @@ export function WorkspaceList({
             className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
           >
             <Icon name="plus" />
-            Create new workspace
+            Create workspace
           </CommandItem>
         </div>
       )}
