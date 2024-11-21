@@ -69,7 +69,6 @@ export function OrgList({
         renderItem={(org) => (
           <CommandItem
             key={org.slug}
-            data-slug={org.slug}
             onSelect={() => setSelectedOrg(org)}
             value={org.slug}
             className={cn(
