@@ -147,10 +147,10 @@ export function CreateWorkspace({
                   </Select>
                 ) : (
                   <span
-                    title={currentOrg.label}
+                    title={currentOrg.slug}
                     className="text-foreground/80 min-w-24 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
                   >
-                    {currentOrg.label}
+                    {currentOrg.slug}
                   </span>
                 )}
                 <span className="text-muted-foreground/50 mx-2 select-none text-lg">
@@ -161,6 +161,8 @@ export function CreateWorkspace({
                     ref={createInputRef}
                     type="text"
                     pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                    role="textbox"
+                    name="workspaceName"
                     placeholder="your-new-workspace"
                     value={newWorkspaceName}
                     onChange={handleChange}

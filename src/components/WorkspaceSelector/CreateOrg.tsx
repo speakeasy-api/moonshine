@@ -62,6 +62,8 @@ export function CreateOrg({ onSubmit }: CreateOrgProps) {
                 <div className="flex w-full">
                   <input
                     type="text"
+                    role="textbox"
+                    name="companyName"
                     pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
                     ref={inputRef}
                     placeholder="Your company name"

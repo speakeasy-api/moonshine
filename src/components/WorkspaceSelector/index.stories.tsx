@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
 import { CreateResult } from './CreateWorkspace'
+import { expect, userEvent, within } from '@storybook/test'
 
 const meta = {
   title: 'Components/WorkspaceSelector',
@@ -238,7 +239,7 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
     return Promise.resolve({
       id: newOrgName,
       label: newOrgName,
-      slug: newOrgName,
+      slug: newOrgName.toLowerCase().replace(/ /g, '-'),
       workspaces: [],
     })
   }
@@ -426,4 +427,24 @@ export const WithInactiveWorkspace: Story = {
       ]}
     />
   ),
+}
+
+export const InteractiveNoOrgs: Story = {
+  ...Default,
+  render: () => <WorkspaceSelectorWithState orgs={[]} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const orgInput = canvas.getByRole('textbox')
+    await userEvent.type(orgInput, 'new company name', { delay: 500 })
+    await userEvent.click(canvas.getByText('Next'), { delay: 300 })
+
+    expect(canvas.getByText('new company name')).toBeInTheDocument()
+
+    const workspaceInput = canvas.getByRole('textbox')
+    await userEvent.type(workspaceInput, 'new-workspace-slug', { delay: 300 })
+    await userEvent.click(canvas.getByText('Create'), { delay: 300 })
+
+    expect(canvas.getByText('new-workspace-slug')).toBeInTheDocument()
+  },
 }

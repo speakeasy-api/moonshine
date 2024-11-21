@@ -76,7 +76,7 @@ export function OrgList({
             )}
           >
             <GradientCircle name={org.label} />
-            <span className="truncate">{org.label}</span>
+            <span className="truncate">{org.slug}</span>
             {!showRecents && selectedOrg?.slug === org.slug && (
               <div className="ml-auto">
                 <Icon name="chevron-right" size="small" />
