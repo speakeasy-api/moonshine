@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Command, CommandEmpty } from '../Command'
-import { CreateDialog, CreateResult } from './CreateDialog'
+import { CreateWorkspace, CreateResult } from './CreateWorkspace'
 import { OrgList } from './OrgList'
 import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
@@ -13,6 +13,7 @@ import { Text } from '../Text'
 import { Separator } from '../Separator'
 import { Logo } from '../Logo'
 import { Stack } from '../Stack'
+import { CreateOrg } from './CreateOrg'
 
 export interface Org {
   id: string
@@ -41,6 +42,8 @@ export interface WorkspaceSelectorProps {
   value?: string
   onSelect: (org: Org, workspace: Workspace) => void
 
+  onCreateOrg: (newOrgName: string) => Promise<Org>
+
   /**
    * Returns a promise that resolves to true if the workspace was created, false otherwise.
    */
@@ -62,13 +65,18 @@ export function WorkspaceSelector({
   emptyText = 'No workspaces found.',
   recents = [],
   height = '500px',
+  onCreateOrg,
   filterFn = defaultFilterFn,
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
   const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(orgs[0])
-  const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
+  const [createWorkspaceViewOpen, setCreateWorkspaceViewOpen] =
+    React.useState(false)
+  const [createOrgViewOpen, setCreateOrgViewOpen] = React.useState(
+    orgs.length === 0
+  )
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
@@ -131,7 +139,7 @@ export function WorkspaceSelector({
               : null
           )
           setNewWorkspaceName('')
-          setCreateDialogOpen(false)
+          setCreateWorkspaceViewOpen(false)
           setSelectedWorkspace(workspace)
         }
 
@@ -148,7 +156,26 @@ export function WorkspaceSelector({
     [selectedOrg, newWorkspaceName, onCreate]
   )
 
-  const handleCreateViewOpen = React.useCallback(() => {
+  const handleCreateOrg = React.useCallback(
+    async (newOrgName: string): Promise<Org> => {
+      const result = await onCreateOrg(newOrgName)
+
+      function updateState() {
+        setSelectedOrg(result)
+        setCreateOrgViewOpen(false)
+      }
+
+      if (document.startViewTransition) {
+        document.startViewTransition(() => updateState())
+      } else {
+        updateState()
+      }
+
+      return result
+    },
+    [onCreateOrg]
+  )
+  const handleCreateWorkspaceViewOpen = React.useCallback(() => {
     if (document.startViewTransition) {
       // Capture the current height before transition
       const height = containerRef.current?.offsetHeight
@@ -157,10 +184,26 @@ export function WorkspaceSelector({
         if (containerRef.current && height) {
           containerRef.current.style.height = `${height}px`
         }
-        setCreateDialogOpen(true)
+        setCreateWorkspaceViewOpen(true)
       })
     } else {
-      setCreateDialogOpen(true)
+      setCreateWorkspaceViewOpen(true)
+    }
+  }, [])
+
+  const handleCreateOrgViewOpen = React.useCallback(() => {
+    if (document.startViewTransition) {
+      // Capture the current height before transition
+      const height = containerRef.current?.offsetHeight
+
+      document.startViewTransition(() => {
+        if (containerRef.current && height) {
+          containerRef.current.style.height = `${height}px`
+        }
+        setCreateOrgViewOpen(true)
+      })
+    } else {
+      setCreateOrgViewOpen(true)
     }
   }, [])
 
@@ -174,29 +217,43 @@ export function WorkspaceSelector({
           callback: () => void
         ) => ViewTransition
       )(() => {
-        setCreateDialogOpen(false)
+        setCreateWorkspaceViewOpen(false)
+        setCreateOrgViewOpen(false)
       })
 
       transition.finished.then(() => {
         root.classList.remove('view-transition-reverse')
       })
     } else {
-      setCreateDialogOpen(false)
+      setCreateWorkspaceViewOpen(false)
+      setCreateOrgViewOpen(false)
     }
   }, [])
 
   return (
     <div
       ref={containerRef}
+      style={{ height }}
       className="workspace-selector border-border flex w-full flex-grow overflow-hidden rounded-md border"
     >
-      {createDialogOpen ? (
+      {createOrgViewOpen ? (
         <div
           style={{ viewTransitionName: 'create-dialog' }}
           className="h-full w-full"
         >
-          <CreateDialog
-            open={createDialogOpen}
+          <CreateOrg
+            onSubmit={handleCreateOrg}
+            onClose={backToWorkspaceSelector}
+            enableBackButton={orgs.length > 0}
+          />
+        </div>
+      ) : createWorkspaceViewOpen ? (
+        <div
+          style={{ viewTransitionName: 'create-dialog' }}
+          className="h-full w-full"
+        >
+          <CreateWorkspace
+            open={createWorkspaceViewOpen}
             selectedOrg={selectedOrg!}
             onClose={backToWorkspaceSelector}
             allOrgs={orgs}
@@ -247,13 +304,9 @@ export function WorkspaceSelector({
                   fullWidth
                   selectedOrg={selectedOrg}
                   selectedWorkspace={selectedWorkspace}
-                  height={height}
                 />
               ) : showRecents && filteredOrgs === undefined ? (
-                <div
-                  className="flex w-full flex-grow flex-row"
-                  style={{ height }}
-                >
+                <div className="flex w-full flex-grow flex-row">
                   <OrgList
                     orgs={orgs}
                     selectedOrg={selectedOrg}
@@ -261,7 +314,7 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    height={height}
+                    handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <FilteredWorkspaces
                     onSelect={(org, workspace) =>
@@ -270,11 +323,10 @@ export function WorkspaceSelector({
                     orgsWithFilteredWorkspaces={recents}
                     selectedOrg={selectedOrg}
                     selectedWorkspace={selectedWorkspace}
-                    height={height}
                   />
                 </div>
               ) : orgs.length > 0 && !search ? (
-                <div className="flex flex-row" style={{ height }}>
+                <div className="flex h-full flex-row">
                   <OrgList
                     orgs={orgs}
                     selectedOrg={selectedOrg}
@@ -282,14 +334,13 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    height={height}
+                    handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <WorkspaceList
                     selectedOrg={selectedOrg!}
-                    handleCreateViewOpen={handleCreateViewOpen}
+                    handleCreateViewOpen={handleCreateWorkspaceViewOpen}
                     handleSelect={handleSelect}
                     selectedWorkspace={selectedWorkspace}
-                    height={height}
                   />
                 </div>
               ) : (

@@ -19,19 +19,15 @@ const DEFAULT_SCROLLBAR_CLASSES =
 interface ScrollingListProps<T> {
   items: T[]
   renderItem: (item: T) => React.ReactNode
-  height?: string | number
   ref?: React.RefObject<VirtuosoHandle>
 }
 
 function ScrollingListInner<T>(
-  { items, renderItem, height }: ScrollingListProps<T>,
+  { items, renderItem }: ScrollingListProps<T>,
   ref: React.ForwardedRef<VirtuosoHandle>
 ) {
   return (
     <Virtuoso
-      style={{
-        height,
-      }}
       className={DEFAULT_SCROLLBAR_CLASSES}
       totalCount={items.length}
       data={items}
@@ -53,7 +49,6 @@ interface GroupedScrollingListProps<G> {
   groupCounts: number[]
   renderGroupHeader: (group: G) => React.ReactNode
   renderItem: (group: G, itemIndex: number) => React.ReactNode
-  height?: string | number
   ref?: React.RefObject<GroupedVirtuosoHandle>
 }
 
@@ -63,14 +58,13 @@ function GroupedScrollingListInner<G>(
     groupCounts,
     renderGroupHeader,
     renderItem,
-    height,
   }: GroupedScrollingListProps<G>,
   ref: React.ForwardedRef<GroupedVirtuosoHandle>
 ) {
   return (
     <GroupedVirtuoso
       style={{
-        height,
+        height: '100%',
       }}
       className={DEFAULT_SCROLLBAR_CLASSES}
       groupCounts={groupCounts}

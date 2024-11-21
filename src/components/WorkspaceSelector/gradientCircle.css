@@ -1,0 +1,34 @@
+@property --from-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: red;
+}
+
+@property --to-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: blue;
+}
+
+.gradient-circle {
+  box-sizing: border-box;
+  background: linear-gradient(var(--from-color), var(--to-color));
+}
+
+.gradient-circle-initial {
+  @apply text-5xl;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(var(--translate));
+  font-weight: bold;
+  color: white;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  text-shadow: 1px 0 5px rgb(0, 0, 0, 0.2);
+  justify-content: center;
+}

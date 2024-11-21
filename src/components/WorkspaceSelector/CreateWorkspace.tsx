@@ -20,7 +20,7 @@ export interface CreateResult {
   error?: string
 }
 
-interface CreateDialogProps {
+interface CreateWorkspaceProps {
   open: boolean
   selectedOrg: Org
   allOrgs: Org[]
@@ -30,7 +30,7 @@ interface CreateDialogProps {
   setNewWorkspaceName: (name: string) => void
 }
 
-export function CreateDialog({
+export function CreateWorkspace({
   open,
   selectedOrg,
   allOrgs,
@@ -38,7 +38,7 @@ export function CreateDialog({
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
-}: CreateDialogProps) {
+}: CreateWorkspaceProps) {
   const createInputRef = React.useRef<HTMLInputElement>(null)
   const [isInvalid, setIsInvalid] = useState(false)
   const [currentOrg, setCurrentOrg] = useState(selectedOrg)
@@ -81,7 +81,7 @@ export function CreateDialog({
       <div className="flex h-full w-full flex-row items-center">
         <div className="flex w-1/3 flex-col items-center justify-center gap-4 px-8 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
-            <GradientCircle name={currentOrg.label} size="2xl" />
+            <GradientCircle name={currentOrg.label} size="2xl" showInitial />
             <Stack align="center" gap={2}>
               <Text variant="h3">Create new workspace</Text>
               <div className="max-w-64">
@@ -146,7 +146,7 @@ export function CreateDialog({
                 ) : (
                   <span
                     title={currentOrg.label}
-                    className="text-foreground/80 w-fit min-w-16 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
+                    className="text-foreground/80 min-w-24 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
                   >
                     {currentOrg.label}
                   </span>
