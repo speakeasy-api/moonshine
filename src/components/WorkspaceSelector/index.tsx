@@ -270,92 +270,153 @@ export function WorkspaceSelector({
           style={{ viewTransitionName: 'workspace-content' }}
           className="flex w-full"
         >
-          <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
-            <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
-              <Stack align="center" gap={4}>
-                <div className="flex h-16 w-16 items-center justify-center">
-                  <Logo variant="icon" />
-                </div>
-                <Stack align="center" gap={2}>
-                  <Text variant="h3">Select your workspace</Text>
-                  <Text variant="muted">
-                    Select or create the workspace you want to use for this
-                    project.
-                  </Text>
-                </Stack>
-              </Stack>
-            </div>
-          </div>
-
-          <Separator orientation="vertical" />
-
-          <div className="w-2/3">
-            <Command shouldFilter={false}>
-              {requiresSearch(orgs) && (
-                <SearchBox
-                  inputRef={inputRef}
-                  search={search}
-                  setSearch={setSearch}
-                />
-              )}
-              {filteredOrgs !== undefined && filteredOrgs.length > 0 ? (
-                <FilteredWorkspaces
-                  onSelect={(org, workspace) =>
-                    handleSelect(org, workspace, false)
-                  }
-                  orgsWithFilteredWorkspaces={filteredOrgs}
-                  fullWidth
-                  selectedOrg={selectedOrg}
-                  selectedWorkspace={selectedWorkspace}
-                />
-              ) : showRecents && filteredOrgs === undefined ? (
-                <div className="flex w-full flex-grow flex-row">
-                  <OrgList
-                    orgs={orgs}
-                    selectedOrg={selectedOrg}
-                    setSelectedOrg={handleSelectOrg}
-                    onSelectRecent={() => setShowRecents(true)}
-                    showRecents={showRecents}
-                    enableRecents={recents.length > 0}
-                  />
-                  <FilteredWorkspaces
-                    onSelect={(org, workspace) =>
-                      handleSelect(org, workspace, false)
-                    }
-                    orgsWithFilteredWorkspaces={recents}
-                    selectedOrg={selectedOrg}
-                    selectedWorkspace={selectedWorkspace}
-                  />
-                </div>
-              ) : orgs.length > 0 && !search ? (
-                <div className="flex h-full flex-row">
-                  <OrgList
-                    orgs={orgs}
-                    selectedOrg={selectedOrg}
-                    setSelectedOrg={handleSelectOrg}
-                    onSelectRecent={() => setShowRecents(true)}
-                    showRecents={showRecents}
-                    enableRecents={recents.length > 0}
-                  />
-                  <WorkspaceList
-                    selectedOrg={selectedOrg!}
-                    handleCreateViewOpen={handleCreateWorkspaceViewOpen}
-                    handleSelect={handleSelect}
-                    selectedWorkspace={selectedWorkspace}
-                  />
-                </div>
-              ) : (
-                <CommandEmpty
-                  style={{ height }}
-                  className="text-md text-muted-foreground p-6"
-                >
-                  {emptyText}
-                </CommandEmpty>
-              )}
-            </Command>
-          </div>
+          <WorkspaceViewContents
+            orgs={orgs}
+            search={search}
+            filteredOrgs={filteredOrgs}
+            selectedOrg={selectedOrg}
+            selectedWorkspace={selectedWorkspace}
+            handleSelect={handleSelect}
+            showRecents={showRecents}
+            setShowRecents={setShowRecents}
+            inputRef={inputRef}
+            emptyText={emptyText}
+            height={height}
+            recents={recents}
+            handleCreateWorkspaceViewOpen={handleCreateWorkspaceViewOpen}
+            setSearch={setSearch}
+            handleSelectOrg={handleSelectOrg}
+          />
         </div>
       )}
     </div>
+  )
+}
+
+interface WorkspaceViewContentsProps {
+  orgs: Org[]
+  search: string
+  filteredOrgs: Org[] | undefined
+  selectedOrg: Org | null
+  selectedWorkspace: Workspace | null
+  handleSelect: (org: Org, workspace: Workspace, clearSearch: boolean) => void
+  showRecents: boolean
+  setShowRecents: (show: boolean) => void
+  inputRef: React.RefObject<HTMLInputElement>
+  emptyText: string
+  height: string | number
+  recents: Org[]
+  handleCreateWorkspaceViewOpen: () => void
+  setSearch: (search: string) => void
+  handleSelectOrg: (org: Org) => void
+}
+
+function WorkspaceViewContents({
+  orgs,
+  search,
+  filteredOrgs,
+  selectedOrg,
+  selectedWorkspace,
+  handleSelect,
+  showRecents,
+  setShowRecents,
+  inputRef,
+  emptyText,
+  height,
+  recents,
+  handleCreateWorkspaceViewOpen,
+  setSearch,
+  handleSelectOrg,
+}: WorkspaceViewContentsProps) {
+  const showDefaultView = orgs.length > 0 && filteredOrgs === undefined
+  const showFilteredView = filteredOrgs !== undefined && filteredOrgs.length > 0
+  const showRecentsView =
+    filteredOrgs === undefined && recents.length > 0 && showRecents
+  return (
+    <>
+      <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
+        <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
+          <Stack align="center" gap={4}>
+            <div className="flex h-16 w-16 items-center justify-center">
+              <Logo variant="icon" />
+            </div>
+            <Stack align="center" gap={2}>
+              <Text variant="h3">Select your workspace</Text>
+              <Text variant="muted">
+                Select or create the workspace you want to use for this project.
+              </Text>
+            </Stack>
+          </Stack>
+        </div>
+      </div>
+
+      <Separator orientation="vertical" />
+
+      <div className="w-2/3">
+        <Command shouldFilter={false}>
+          {requiresSearch(orgs) && (
+            <SearchBox
+              inputRef={inputRef}
+              search={search}
+              setSearch={setSearch}
+            />
+          )}
+          {showFilteredView ? (
+            <FilteredWorkspaces
+              onSelect={(org, workspace) => handleSelect(org, workspace, false)}
+              orgsWithFilteredWorkspaces={filteredOrgs}
+              fullWidth
+              selectedOrg={selectedOrg}
+              selectedWorkspace={selectedWorkspace}
+            />
+          ) : showRecentsView ? (
+            <div className="flex w-full flex-grow flex-row">
+              <OrgList
+                orgs={orgs}
+                selectedOrg={selectedOrg}
+                setSelectedOrg={handleSelectOrg}
+                onSelectRecent={() => setShowRecents(true)}
+                showRecents={showRecents}
+                enableRecents={recents.length > 0}
+              />
+              <FilteredWorkspaces
+                onSelect={(org, workspace) =>
+                  handleSelect(org, workspace, false)
+                }
+                orgsWithFilteredWorkspaces={recents}
+                selectedOrg={selectedOrg}
+                selectedWorkspace={selectedWorkspace}
+              />
+            </div>
+          ) : showDefaultView ? (
+            <div className="flex h-full flex-row">
+              <OrgList
+                orgs={orgs}
+                selectedOrg={selectedOrg}
+                setSelectedOrg={handleSelectOrg}
+                onSelectRecent={() => setShowRecents(true)}
+                showRecents={showRecents}
+                enableRecents={recents.length > 0}
+              />
+              <WorkspaceList
+                selectedOrg={selectedOrg!}
+                handleCreateViewOpen={handleCreateWorkspaceViewOpen}
+                handleSelect={(org, workspace) =>
+                  handleSelect(org, workspace, false)
+                }
+                selectedWorkspace={selectedWorkspace}
+              />
+            </div>
+          ) : (
+            <CommandEmpty
+              style={{ height }}
+              className="text-md text-muted-foreground p-6"
+            >
+              {emptyText}
+            </CommandEmpty>
+          )}
+        </Command>
+      </div>
+    </>
   )
 }
