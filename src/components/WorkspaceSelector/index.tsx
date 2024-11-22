@@ -328,10 +328,18 @@ function WorkspaceViewContents({
   setSearch,
   handleSelectOrg,
 }: WorkspaceViewContentsProps) {
-  const showDefaultView = orgs.length > 0 && filteredOrgs === undefined
-  const showFilteredView = filteredOrgs !== undefined && filteredOrgs.length > 0
-  const showRecentsView =
-    filteredOrgs === undefined && recents.length > 0 && showRecents
+  const showDefaultView = React.useMemo(
+    () => orgs.length > 0 && filteredOrgs === undefined,
+    [orgs, filteredOrgs]
+  )
+  const showFilteredView = React.useMemo(
+    () => filteredOrgs !== undefined && filteredOrgs.length > 0,
+    [filteredOrgs]
+  )
+  const showRecentsView = React.useMemo(
+    () => filteredOrgs === undefined && recents.length > 0 && showRecents,
+    [filteredOrgs, recents, showRecents]
+  )
   return (
     <>
       <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
