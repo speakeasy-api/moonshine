@@ -372,7 +372,7 @@ function WorkspaceViewContents({
           {showFilteredView ? (
             <FilteredWorkspaces
               onSelect={(org, workspace) => handleSelect(org, workspace, false)}
-              orgsWithFilteredWorkspaces={filteredOrgs}
+              orgsWithFilteredWorkspaces={filteredOrgs ?? []}
               fullWidth
               selectedOrg={selectedOrg}
               selectedWorkspace={selectedWorkspace}
