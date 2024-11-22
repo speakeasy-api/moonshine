@@ -73,7 +73,7 @@ export function Logo({ fill }: SvgProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0)">
+      <g clipPath="url(#clip0)">
         <path
           d="M0 32V26.7401L10.3548 0H16V5.43618L5.67641 32H0Z"
           fill={fill}

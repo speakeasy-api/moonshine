@@ -53,6 +53,11 @@ export interface WorkspaceSelectorProps {
   recents?: Org[]
   height?: string | number
   filterFn?: (workspace: Workspace, search: string) => boolean
+
+  /**
+   * If true, creating a new workspace will trigger the onSelect callback.
+   */
+  createTriggersSelection?: boolean
 }
 
 const defaultFilterFn = (workspace: Workspace, search: string) =>
@@ -67,6 +72,7 @@ export function WorkspaceSelector({
   height = '500px',
   onCreateOrg,
   filterFn = defaultFilterFn,
+  createTriggersSelection = false,
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
@@ -129,6 +135,12 @@ export function WorkspaceSelector({
           createdAt: new Date(),
           updatedAt: new Date(),
         }
+
+        if (createTriggersSelection) {
+          onSelect(org, workspace)
+          return { success: true }
+        }
+
         function updateState() {
           setSelectedOrg((prev) =>
             prev
