@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
 import { CreateResult } from './CreateWorkspace'
+import { expect, userEvent, within } from '@storybook/test'
 
 const meta = {
   title: 'Components/WorkspaceSelector',
@@ -176,96 +177,94 @@ const sampleData = [
   },
 ]
 
-const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
-  const [orgs, setOrgs] = useState<Org[]>(props.orgs ?? sampleData)
+// Move state logic to a custom hook
+const useWorkspaceSelectorState = (initialOrgs: Org[] = sampleData) => {
+  const [orgs, setOrgs] = useState<Org[]>(initialOrgs)
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(
     null
   )
   const [selectedOrg, setSelectedOrg] = useState<Org | null>(null)
 
   const handleCreateWorkspace = async (
-    o: Org,
+    org: Org,
     name: string
   ): Promise<CreateResult> => {
-    const existingOrg = orgs.find((org) => org.slug === o.slug)
-    if (existingOrg) {
-      setSelectedOrg(existingOrg)
-
-      const workspaceExists = existingOrg.workspaces.find(
-        (workspace) => workspace.slug === name
-      )
-      if (workspaceExists) {
-        return { success: false, error: 'Workspace already exists' }
-      }
-      setOrgs(
-        orgs.map((org) =>
-          org.slug === existingOrg.slug
-            ? {
-                ...org,
-                workspaces: [
-                  ...org.workspaces,
-                  {
-                    id: name,
-                    label: name,
-                    slug: name,
-                    active: true,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                  },
-                ],
-              }
-            : org
-        )
-      )
-
-      setSelectedWorkspace({
-        id: name,
-        label: name,
-        slug: name,
-        active: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-
-      return { success: true }
+    const existingOrg = orgs.find((o) => o.slug === org.slug)
+    if (!existingOrg) {
+      return { success: false, error: 'Organization not found' }
     }
 
-    return { success: false, error: 'Failed to create workspace' }
+    if (existingOrg.workspaces.find((w) => w.slug === name)) {
+      return { success: false, error: 'Workspace already exists' }
+    }
+
+    const newWorkspace = {
+      id: name,
+      label: name,
+      slug: name,
+      active: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
+    setOrgs(
+      orgs.map((o) =>
+        o.slug === org.slug
+          ? { ...o, workspaces: [...o.workspaces, newWorkspace] }
+          : o
+      )
+    )
+    setSelectedWorkspace(newWorkspace)
+    return { success: true }
   }
 
   const handleCreateOrg = async (newOrgName: string): Promise<Org> => {
-    const org: Org = {
+    const newOrg = {
       id: newOrgName,
       label: newOrgName,
-      slug: newOrgName,
+      slug: newOrgName.toLowerCase().replace(/ /g, '-'),
       workspaces: [],
     }
-
-    const newOrgs = [...orgs, org]
-    setOrgs(newOrgs)
-    setSelectedOrg(org)
-
-    return org
+    setOrgs([...orgs, newOrg])
+    setSelectedOrg(newOrg)
+    return newOrg
   }
+
+  const handleSelect = (org: Org, workspace: Workspace) => {
+    setSelectedOrg(org)
+    setSelectedWorkspace(workspace)
+  }
+
+  return {
+    orgs,
+    selectedOrg,
+    selectedWorkspace,
+    handleCreateWorkspace,
+    handleCreateOrg,
+    handleSelect,
+  }
+}
+
+// Simplified component
+const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
+  const state = useWorkspaceSelectorState(props.orgs)
 
   return (
     <div className="h-full w-screen">
       <Container>
         <WorkspaceSelector
-          onCreate={handleCreateWorkspace}
-          onCreateOrg={handleCreateOrg}
-          onSelect={(org, workspace) => {
-            setSelectedOrg(org)
-            setSelectedWorkspace(workspace)
-          }}
+          onCreate={state.handleCreateWorkspace}
+          onCreateOrg={state.handleCreateOrg}
+          onSelect={state.handleSelect}
           recents={props.recents ?? []}
           {...props}
-          orgs={orgs}
+          orgs={state.orgs}
         />
 
         <div className="border-border mt-8 flex flex-col gap-2 border-t pt-4">
-          <b>Selected org:</b> {selectedOrg?.label ?? 'none'}
-          <b>Selected workspaceId:</b> {selectedWorkspace?.label ?? 'none'}
+          <b>Selected org:</b> {state.selectedOrg?.label ?? 'none'}
+          <b>Selected workspaceId:</b>{' '}
+          {state.selectedWorkspace?.label ?? 'none'}
         </div>
       </Container>
     </div>
@@ -431,4 +430,29 @@ export const WithInactiveWorkspace: Story = {
       ]}
     />
   ),
+}
+
+export const InteractiveNoOrgs: Story = {
+  ...Default,
+  parameters: {
+    // TODO: fix issue with this particular interactive test failing to snapshot successfully
+    // Ref: https://www.chromatic.com/test?appId=67127f39a7c35b3c23b07af9&id=67406008bda2864831d7dcf3
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => <WorkspaceSelectorWithState orgs={[]} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const orgInput = canvas.getByRole('textbox')
+    await userEvent.type(orgInput, 'new company name', { delay: 500 })
+    await userEvent.click(canvas.getByText('Next'), { delay: 300 })
+
+    expect(canvas.getByText('new-company-name')).toBeInTheDocument()
+
+    const workspaceInput = canvas.getByRole('textbox')
+    await userEvent.type(workspaceInput, 'new-workspace-slug', { delay: 300 })
+    await userEvent.click(canvas.getByText('Create'), { delay: 300 })
+
+    expect(canvas.getByText('new-workspace-slug')).toBeInTheDocument()
+  },
 }

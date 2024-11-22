@@ -5,29 +5,15 @@ import { Stack } from '../Stack'
 import { GradientCircle } from './GradientCircle'
 import { Separator } from '../Separator'
 import { Text } from '../Text'
-import { Icon } from '../Icon'
 import { Button } from '../Button'
 
 interface CreateOrgProps {
   onSubmit: (name: string) => Promise<Org>
-  onClose: () => void
-  enableBackButton?: boolean
 }
 
-export function CreateOrg({
-  onSubmit,
-  onClose,
-  enableBackButton = true,
-}: CreateOrgProps) {
+export function CreateOrg({ onSubmit }: CreateOrgProps) {
   const [companyName, setCompanyName] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const handleSubmit = async () => {
-    setIsSubmitting(true)
-    await onSubmit(companyName)
-    setIsSubmitting(false)
-  }
 
   useEffect(() => {
     if (inputRef.current) {
@@ -76,6 +62,8 @@ export function CreateOrg({
                 <div className="flex w-full">
                   <input
                     type="text"
+                    role="textbox"
+                    name="companyName"
                     pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
                     ref={inputRef}
                     placeholder="Your company name"
@@ -91,23 +79,13 @@ export function CreateOrg({
       </div>
 
       <div className="border-input bg-background flex border-t px-8 py-4">
-        {enableBackButton && (
-          <Button variant="outline" onClick={onClose}>
-            <Icon name="chevron-left" size="small" />
-            Back
-          </Button>
-        )}
         <div className="ml-auto">
           <Button
             variant="secondary"
             disabled={!companyName}
-            onClick={handleSubmit}
+            onClick={() => onSubmit(companyName)}
           >
-            {isSubmitting ? (
-              <Icon name="loader" className="animate-spin" />
-            ) : (
-              'Create'
-            )}
+            Next
           </Button>
         </div>
       </div>

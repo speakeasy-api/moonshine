@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '../Select'
 import { Virtuoso } from 'react-virtuoso'
+import { cn } from '@/lib/utils'
 
 export interface CreateResult {
   success: boolean
@@ -28,6 +29,7 @@ interface CreateWorkspaceProps {
   onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>
   newWorkspaceName: string
   setNewWorkspaceName: (name: string) => void
+  backButtonEnabled?: boolean
 }
 
 export function CreateWorkspace({
@@ -38,6 +40,7 @@ export function CreateWorkspace({
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
+  backButtonEnabled = true,
 }: CreateWorkspaceProps) {
   const createInputRef = React.useRef<HTMLInputElement>(null)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -64,7 +67,7 @@ export function CreateWorkspace({
     const result = await onSubmit(currentOrg, newWorkspaceName)
     setIsSubmitting(false)
     if (!result.success) {
-      setError(result.error || 'Failed to create workspace')
+      setError(result.error ?? 'Unknown error')
     }
   }
 
@@ -128,7 +131,9 @@ export function CreateWorkspace({
                     </SelectTrigger>
                     <SelectContent>
                       <Virtuoso
-                        data={allOrgs}
+                        data={allOrgs.sort((a, b) =>
+                          a.label.localeCompare(b.label)
+                        )}
                         totalCount={allOrgs.length}
                         style={{ height: '300px' }}
                         itemContent={(_, item) => (
@@ -145,10 +150,14 @@ export function CreateWorkspace({
                   </Select>
                 ) : (
                   <span
-                    title={currentOrg.label}
-                    className="text-foreground/80 min-w-24 max-w-40 select-none truncate whitespace-pre text-lg font-semibold"
+                    title={currentOrg.slug}
+                    className={cn(
+                      'text-foreground/80 select-none whitespace-pre text-lg font-semibold',
+                      currentOrg.slug.length > 20 &&
+                        'max-w-40 truncate whitespace-pre'
+                    )}
                   >
-                    {currentOrg.label}
+                    {currentOrg.slug}
                   </span>
                 )}
                 <span className="text-muted-foreground/50 mx-2 select-none text-lg">
@@ -159,6 +168,8 @@ export function CreateWorkspace({
                     ref={createInputRef}
                     type="text"
                     pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                    role="textbox"
+                    name="workspaceName"
                     placeholder="your-new-workspace"
                     value={newWorkspaceName}
                     onChange={handleChange}
@@ -185,10 +196,12 @@ export function CreateWorkspace({
       </div>
 
       <div className="border-input bg-background flex border-t px-8 py-4">
-        <Button variant="outline" onClick={onClose}>
-          <Icon name="chevron-left" size="small" />
-          Back
-        </Button>
+        {backButtonEnabled && (
+          <Button variant="outline" onClick={onClose}>
+            <Icon name="chevron-left" size="small" />
+            Back
+          </Button>
+        )}
         <div className="ml-auto">
           <Button
             variant="secondary"

@@ -14,7 +14,6 @@ interface OrgListProps {
   selectedOrg: Org | null
   setSelectedOrg: (org: Org) => void
   onSelectRecent: () => void
-  handleCreateViewOpen: () => void
 }
 
 export function OrgList({
@@ -24,7 +23,6 @@ export function OrgList({
   setSelectedOrg,
   enableRecents,
   onSelectRecent,
-  handleCreateViewOpen,
 }: OrgListProps) {
   const virtuoso = useRef<VirtuosoHandle | null>(null)
 
@@ -78,7 +76,7 @@ export function OrgList({
             )}
           >
             <GradientCircle name={org.label} />
-            <span className="truncate">{org.label}</span>
+            <span className="truncate">{org.slug}</span>
             {!showRecents && selectedOrg?.slug === org.slug && (
               <div className="ml-auto">
                 <Icon name="chevron-right" size="small" />
@@ -87,16 +85,6 @@ export function OrgList({
           </CommandItem>
         )}
       />
-
-      <div className="bg-background border-t">
-        <CommandItem
-          onSelect={handleCreateViewOpen}
-          className="m-1 cursor-pointer !items-center whitespace-pre p-4 text-base"
-        >
-          <Icon name="plus" />
-          Create company
-        </CommandItem>
-      </div>
     </div>
   )
 }

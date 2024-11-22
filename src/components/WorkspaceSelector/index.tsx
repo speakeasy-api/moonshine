@@ -53,6 +53,11 @@ export interface WorkspaceSelectorProps {
   recents?: Org[]
   height?: string | number
   filterFn?: (workspace: Workspace, search: string) => boolean
+
+  /**
+   * If true, creating a new workspace will trigger the onSelect callback.
+   */
+  createTriggersSelection?: boolean
 }
 
 const defaultFilterFn = (workspace: Workspace, search: string) =>
@@ -67,6 +72,7 @@ export function WorkspaceSelector({
   height = '500px',
   onCreateOrg,
   filterFn = defaultFilterFn,
+  createTriggersSelection = false,
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
@@ -129,6 +135,12 @@ export function WorkspaceSelector({
           createdAt: new Date(),
           updatedAt: new Date(),
         }
+
+        if (createTriggersSelection) {
+          onSelect(org, workspace)
+          return { success: true }
+        }
+
         function updateState() {
           setSelectedOrg((prev) =>
             prev
@@ -163,6 +175,7 @@ export function WorkspaceSelector({
       function updateState() {
         setSelectedOrg(result)
         setCreateOrgViewOpen(false)
+        setCreateWorkspaceViewOpen(true)
       }
 
       if (document.startViewTransition) {
@@ -188,22 +201,6 @@ export function WorkspaceSelector({
       })
     } else {
       setCreateWorkspaceViewOpen(true)
-    }
-  }, [])
-
-  const handleCreateOrgViewOpen = React.useCallback(() => {
-    if (document.startViewTransition) {
-      // Capture the current height before transition
-      const height = containerRef.current?.offsetHeight
-
-      document.startViewTransition(() => {
-        if (containerRef.current && height) {
-          containerRef.current.style.height = `${height}px`
-        }
-        setCreateOrgViewOpen(true)
-      })
-    } else {
-      setCreateOrgViewOpen(true)
     }
   }, [])
 
@@ -241,11 +238,7 @@ export function WorkspaceSelector({
           style={{ viewTransitionName: 'create-dialog' }}
           className="h-full w-full"
         >
-          <CreateOrg
-            onSubmit={handleCreateOrg}
-            onClose={backToWorkspaceSelector}
-            enableBackButton={orgs.length > 0}
-          />
+          <CreateOrg onSubmit={handleCreateOrg} />
         </div>
       ) : createWorkspaceViewOpen ? (
         <div
@@ -253,6 +246,7 @@ export function WorkspaceSelector({
           className="h-full w-full"
         >
           <CreateWorkspace
+            backButtonEnabled={orgs.length > 0}
             open={createWorkspaceViewOpen}
             selectedOrg={selectedOrg!}
             onClose={backToWorkspaceSelector}
@@ -314,7 +308,6 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <FilteredWorkspaces
                     onSelect={(org, workspace) =>
@@ -334,7 +327,6 @@ export function WorkspaceSelector({
                     onSelectRecent={() => setShowRecents(true)}
                     showRecents={showRecents}
                     enableRecents={recents.length > 0}
-                    handleCreateViewOpen={handleCreateOrgViewOpen}
                   />
                   <WorkspaceList
                     selectedOrg={selectedOrg!}
