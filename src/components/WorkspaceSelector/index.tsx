@@ -58,6 +58,10 @@ export interface WorkspaceSelectorProps {
    * If true, creating a new workspace will trigger the onSelect callback.
    */
   createTriggersSelection?: boolean
+
+  showCreateWorkspaceView?: boolean
+
+  defaultSelectedOrg?: Org
 }
 
 const defaultFilterFn = (workspace: Workspace, search: string) =>
@@ -73,13 +77,18 @@ export function WorkspaceSelector({
   onCreateOrg,
   filterFn = defaultFilterFn,
   createTriggersSelection = false,
+  showCreateWorkspaceView = false,
+  defaultSelectedOrg,
 }: WorkspaceSelectorProps) {
   const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
-  const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(orgs[0])
-  const [createWorkspaceViewOpen, setCreateWorkspaceViewOpen] =
-    React.useState(false)
+  const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(
+    defaultSelectedOrg ?? orgs[0]
+  )
+  const [createWorkspaceViewOpen, setCreateWorkspaceViewOpen] = React.useState(
+    showCreateWorkspaceView ?? false
+  )
   const [createOrgViewOpen, setCreateOrgViewOpen] = React.useState(
     orgs.length === 0
   )

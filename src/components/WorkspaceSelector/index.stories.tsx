@@ -432,6 +432,16 @@ export const WithInactiveWorkspace: Story = {
   ),
 }
 
+export const WithCreateWorkspaceViewShownByDefault: Story = {
+  ...Default,
+  render: () => (
+    <WorkspaceSelectorWithState
+      showCreateWorkspaceView
+      defaultSelectedOrg={sampleData[1]}
+    />
+  ),
+}
+
 export const InteractiveNoOrgs: Story = {
   ...Default,
   parameters: {
