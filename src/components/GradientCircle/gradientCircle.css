@@ -23,8 +23,6 @@
   transform: translate(var(--translate));
   font-weight: bold;
   color: white;
-  width: 1em;
-  height: 1em;
   line-height: 1em;
   text-align: center;
   display: flex;
