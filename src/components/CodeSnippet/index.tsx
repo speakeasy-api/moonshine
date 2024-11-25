@@ -1,24 +1,26 @@
-import { Button, Icon } from '@/index'
+import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/Icon'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { highlightText, ShjLanguage } from '@speed-highlight/core'
 import '@speed-highlight/core/themes/dark.css'
 import { cn } from '@/lib/utils'
-
-type ProgrammingLanguage =
-  | 'javascript'
-  | 'typescript'
-  | 'python'
-  | 'bash'
-  | 'json'
-  | 'go'
-  | 'dotnet'
-  | 'java'
+import { ProgrammingLanguage, Size } from '@/types'
 
 interface CodeSnippetProps {
   code: string
   copyable?: boolean
   language: ProgrammingLanguage
   promptSymbol?: React.ReactNode
+  inline?: boolean
+  fontSize?: Size
+}
+
+const fontSizeMap: Record<Size, string> = {
+  small: 'text-sm',
+  medium: 'text-base',
+  large: 'text-base',
+  xl: 'text-lg',
+  '2xl': 'text-xl',
 }
 
 function getLanguage(language: ProgrammingLanguage): ShjLanguage | undefined {
@@ -47,6 +49,8 @@ export function CodeSnippet({
   copyable = false,
   language,
   promptSymbol,
+  inline = false,
+  fontSize = 'medium',
 }: CodeSnippetProps) {
   const [copied, setCopied] = useState(false)
   const [highlighted, setHighlighted] = useState(false)
@@ -93,7 +97,12 @@ export function CodeSnippet({
     event.preventDefault()
 
   return (
-    <div className="inline-flex flex-row items-start rounded-lg bg-zinc-900 p-2">
+    <div
+      className={cn(
+        'flex w-fit flex-row items-start rounded-lg bg-zinc-900 p-3',
+        inline && 'inline-flex'
+      )}
+    >
       {language === 'bash' && (
         <div className="text-muted-foreground ml-1 mr-0.5 self-center font-mono font-light">
           {promptSymbol ?? '$'}
@@ -103,15 +112,17 @@ export function CodeSnippet({
         ref={codeRef}
         onBeforeInput={handleBeforeInput}
         className={cn(
-          '!my-0 self-center !bg-transparent !py-0 px-2 font-mono !text-sm font-normal text-white outline-none',
-          highlighted && 'selection:bg-zinc-800'
+          '!my-0 w-fit self-center !bg-transparent !py-0 px-3 font-mono text-white outline-none',
+          highlighted && 'selection:bg-zinc-800',
+          fontSizeMap[fontSize]
         )}
         dangerouslySetInnerHTML={{
           __html: highlightedCode,
         }}
       ></pre>
+
       {copyable && (
-        <div className="ml-1">
+        <div className="ml-auto text-white">
           <Button
             role="button"
             variant="ghost"
@@ -121,7 +132,7 @@ export function CodeSnippet({
             {copied ? (
               <Icon fill="green" name="circle-check-big" />
             ) : (
-              <Icon name="copy" />
+              <Icon name="copy" stroke="currentColor" />
             )}
           </Button>
         </div>

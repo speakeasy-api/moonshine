@@ -121,3 +121,13 @@ export type Spacing = (typeof spacingOptions)[number]
 
 export const wrapOptions = ['nowrap', 'wrap', 'wrap-reverse'] as const
 export type Wrap = (typeof wrapOptions)[number]
+
+export type ProgrammingLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'python'
+  | 'bash'
+  | 'json'
+  | 'go'
+  | 'dotnet'
+  | 'java'
