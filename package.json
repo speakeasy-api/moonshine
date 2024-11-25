@@ -59,6 +59,7 @@
     "@storybook/theming": "^8.4.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
+    "@types/dom-view-transitions": "^1.0.5",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",

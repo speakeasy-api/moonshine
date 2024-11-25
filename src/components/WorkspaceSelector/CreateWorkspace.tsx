@@ -25,7 +25,7 @@ interface CreateWorkspaceProps {
   open: boolean
   selectedOrg: Org
   allOrgs: Org[]
-  onClose: () => void
+  onBack?: () => void
   onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>
   newWorkspaceName: string
   setNewWorkspaceName: (name: string) => void
@@ -36,7 +36,7 @@ export function CreateWorkspace({
   open,
   selectedOrg,
   allOrgs,
-  onClose,
+  onBack,
   onSubmit,
   newWorkspaceName,
   setNewWorkspaceName,
@@ -196,8 +196,8 @@ export function CreateWorkspace({
       </div>
 
       <div className="border-input bg-background flex border-t px-8 py-4">
-        {backButtonEnabled && (
-          <Button variant="outline" onClick={onClose}>
+        {backButtonEnabled && onBack && (
+          <Button variant="outline" onClick={onBack}>
             <Icon name="chevron-left" size="small" />
             Back
           </Button>

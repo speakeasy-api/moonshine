@@ -8,7 +8,6 @@ import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
 import { FilteredWorkspaces } from './FilteredWorkspaces'
 import { SearchBox } from './SearchBox'
-import { ViewTransition } from '@/types'
 import { Text } from '../Text'
 import { Separator } from '../Separator'
 import { Logo } from '../Logo'
@@ -67,6 +66,32 @@ export interface WorkspaceSelectorProps {
 const defaultFilterFn = (workspace: Workspace, search: string) =>
   workspace.label.toLowerCase().startsWith(search.toLowerCase())
 
+const useViewTransition = () => {
+  const [isTransitioning, setIsTransitioning] = React.useState(false)
+
+  const startTransition = React.useCallback(
+    (callback: () => void, finished?: () => void) => {
+      if ('startViewTransition' in document) {
+        setIsTransitioning(true)
+        const transition = document.startViewTransition(callback)
+        transition.finished.then(() => {
+          setIsTransitioning(false)
+          finished?.()
+        })
+      } else {
+        callback()
+      }
+    },
+    []
+  )
+
+  return {
+    isTransitioning,
+    startTransition,
+    setIsTransitioning,
+  }
+}
+
 export function WorkspaceSelector({
   orgs,
   onSelect,
@@ -96,6 +121,18 @@ export function WorkspaceSelector({
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [showRecents, setShowRecents] = React.useState(recents.length > 0)
+  const { isTransitioning, startTransition, setIsTransitioning } =
+    useViewTransition()
+  const [previousView, setPreviousView] = React.useState<
+    'workspace' | 'org' | null
+  >(null)
+
+  React.useLayoutEffect(() => {
+    if (createOrgViewOpen) {
+      setPreviousView('org')
+      setIsTransitioning(true)
+    }
+  }, [createOrgViewOpen])
 
   const filteredOrgs = React.useMemo(
     () =>
@@ -150,7 +187,7 @@ export function WorkspaceSelector({
           return { success: true }
         }
 
-        function updateState() {
+        startTransition(() => {
           setSelectedOrg((prev) =>
             prev
               ? {
@@ -162,19 +199,14 @@ export function WorkspaceSelector({
           setNewWorkspaceName('')
           setCreateWorkspaceViewOpen(false)
           setSelectedWorkspace(workspace)
-        }
-
-        if (document.startViewTransition) {
-          document.startViewTransition(() => updateState())
-        } else {
-          updateState()
-        }
+          setPreviousView(null)
+        })
 
         return { success: true }
       }
       return { success: false, error: 'No workspace name provided' }
     },
-    [selectedOrg, newWorkspaceName, onCreate]
+    [onCreate, createTriggersSelection, onSelect, startTransition]
   )
 
   const handleCreateOrg = React.useCallback(
@@ -198,43 +230,27 @@ export function WorkspaceSelector({
     [onCreateOrg]
   )
   const handleCreateWorkspaceViewOpen = React.useCallback(() => {
-    if (document.startViewTransition) {
-      // Capture the current height before transition
-      const height = containerRef.current?.offsetHeight
-
-      document.startViewTransition(() => {
-        if (containerRef.current && height) {
-          containerRef.current.style.height = `${height}px`
-        }
-        setCreateWorkspaceViewOpen(true)
-      })
-    } else {
+    startTransition(() => {
+      if (containerRef.current && height) {
+        containerRef.current.style.height = `${height}px`
+      }
       setCreateWorkspaceViewOpen(true)
-    }
-  }, [])
+    })
+  }, [startTransition])
 
   const backToWorkspaceSelector = React.useCallback(() => {
-    if (document.startViewTransition) {
-      const root = document.documentElement
-      root.classList.add('view-transition-reverse')
-
-      const transition = (
-        document.startViewTransition as unknown as (
-          callback: () => void
-        ) => ViewTransition
-      )(() => {
+    const root = document.documentElement
+    root.classList.add('view-transition-reverse')
+    startTransition(
+      () => {
         setCreateWorkspaceViewOpen(false)
         setCreateOrgViewOpen(false)
-      })
-
-      transition.finished.then(() => {
+      },
+      () => {
         root.classList.remove('view-transition-reverse')
-      })
-    } else {
-      setCreateWorkspaceViewOpen(false)
-      setCreateOrgViewOpen(false)
-    }
-  }, [])
+      }
+    )
+  }, [startTransition])
 
   return (
     <div
@@ -244,21 +260,23 @@ export function WorkspaceSelector({
     >
       {createOrgViewOpen ? (
         <div
-          style={{ viewTransitionName: 'create-dialog' }}
+          style={{ viewTransitionName: isTransitioning ? 'create-dialog' : '' }}
           className="h-full w-full"
         >
           <CreateOrg onSubmit={handleCreateOrg} />
         </div>
       ) : createWorkspaceViewOpen ? (
         <div
-          style={{ viewTransitionName: 'create-dialog' }}
+          style={{
+            viewTransitionName: isTransitioning ? 'create-dialog' : '',
+          }}
           className="h-full w-full"
         >
           <CreateWorkspace
             backButtonEnabled={orgs.length > 0}
             open={createWorkspaceViewOpen}
             selectedOrg={selectedOrg!}
-            onClose={backToWorkspaceSelector}
+            onBack={previousView === null ? backToWorkspaceSelector : undefined}
             allOrgs={orgs}
             onSubmit={(org, name) => handleCreateNewWorkspace(org, name)}
             newWorkspaceName={newWorkspaceName}
@@ -267,7 +285,9 @@ export function WorkspaceSelector({
         </div>
       ) : (
         <div
-          style={{ viewTransitionName: 'workspace-content' }}
+          style={{
+            viewTransitionName: isTransitioning ? 'workspace-content' : '',
+          }}
           className="flex w-full"
         >
           <WorkspaceViewContents
