@@ -82,7 +82,7 @@ export function Accordion({
     <div className="max-w-screen-x flex flex-col gap-2">
       <Card className="mx-autol">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CardHeader className="border-b">
+          <CardHeader className={cn(isOpen && 'border-b')}>
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 {headerContent(completedSteps, steps)}
@@ -168,19 +168,17 @@ export function Accordion({
                               {step.description}
                             </p>
 
-                            {step.commands?.map((command, cmdIndex) => (
-                              <div
-                                key={cmdIndex}
-                                className="group relative mb-2"
-                              >
+                            <div className="flex w-max flex-col gap-5">
+                              {step.commands?.map((command, cmdIndex) => (
                                 <CodeSnippet
+                                  key={cmdIndex}
                                   code={command.code}
                                   language={command.language}
                                   copyable
                                   fontSize="small"
                                 />
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </CollapsibleContent>
                         </div>
                       </Collapsible>

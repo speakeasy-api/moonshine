@@ -1,10 +1,11 @@
-import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/Icon'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { highlightText, ShjLanguage } from '@speed-highlight/core'
-import '@speed-highlight/core/themes/dark.css'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
+import useTailwindTheme from '@/hooks/useTailwindTheme'
+
+type Theme = 'dark' | 'light'
 
 interface CodeSnippetProps {
   code: string
@@ -13,6 +14,8 @@ interface CodeSnippetProps {
   promptSymbol?: React.ReactNode
   inline?: boolean
   fontSize?: Size
+  minWidth?: string
+  theme?: Theme
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -55,7 +58,16 @@ export function CodeSnippet({
   const [copied, setCopied] = useState(false)
   const [highlighted, setHighlighted] = useState(false)
   const [highlightedCode, setHighlightedCode] = useState(code)
+  const isMultiline = code.split('\n').length > 1
+  const theme = useTailwindTheme()
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      import('@speed-highlight/core/themes/dark.css')
+    } else {
+      import('@speed-highlight/core/themes/github-light.css')
+    }
+  }, [theme])
   const codeRef = useRef<HTMLPreElement>(null)
   useEffect(() => {
     const highlight = async () => {
@@ -98,13 +110,16 @@ export function CodeSnippet({
 
   return (
     <div
+      data-theme={theme}
       className={cn(
-        'flex w-fit flex-row items-start rounded-lg bg-zinc-900 p-3',
-        inline && 'inline-flex'
+        'flex w-full flex-row items-start rounded-lg border border-neutral-200/5 p-4',
+        inline && 'inline-flex',
+        theme === 'dark' && 'bg-zinc-900',
+        theme === 'light' && 'bg-zinc-50'
       )}
     >
       {language === 'bash' && (
-        <div className="text-muted-foreground ml-1 mr-0.5 self-center font-mono font-light">
+        <div className="ml-1 mr-0.5 self-center font-mono font-light">
           {promptSymbol ?? '$'}
         </div>
       )}
@@ -112,8 +127,9 @@ export function CodeSnippet({
         ref={codeRef}
         onBeforeInput={handleBeforeInput}
         className={cn(
-          '!my-0 w-fit self-center !bg-transparent !py-0 px-3 font-mono text-white outline-none',
-          highlighted && 'selection:bg-zinc-800',
+          '!my-0 w-fit self-center !bg-transparent !py-0 px-3 font-mono outline-none',
+          highlighted && theme === 'dark' && 'selection:bg-zinc-800',
+          highlighted && theme === 'light' && 'selection:bg-zinc-200',
           fontSizeMap[fontSize]
         )}
         dangerouslySetInnerHTML={{
@@ -122,11 +138,19 @@ export function CodeSnippet({
       ></pre>
 
       {copyable && (
-        <div className="ml-auto text-white">
-          <Button
+        <div
+          className={cn(
+            'ml-auto mr-2 flex self-center text-white',
+            isMultiline && 'self-start'
+          )}
+        >
+          <button
             role="button"
-            variant="ghost"
-            size="icon"
+            className={cn(
+              'relative ml-2 border-none bg-transparent',
+              theme === 'dark' && 'text-white',
+              theme === 'light' && 'text-black'
+            )}
             onClick={handleCopy}
           >
             {copied ? (
@@ -134,7 +158,7 @@ export function CodeSnippet({
             ) : (
               <Icon name="copy" stroke="currentColor" />
             )}
-          </Button>
+          </button>
         </div>
       )}
     </div>
