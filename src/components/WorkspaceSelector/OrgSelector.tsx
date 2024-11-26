@@ -49,7 +49,7 @@ export function OrgSelector({
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
   const [activeIndex, setActiveIndex] = React.useState(0)
-
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
   const handleSelect = (org: Org, index: number) => {
     onSelect(org)
     setOpen(false)
@@ -64,6 +64,32 @@ export function OrgSelector({
     )
   }, [search, orgs])
 
+  const getSelectorMedianWidth = React.useMemo(() => {
+    if (!orgs.length) return 0
+
+    // Get lengths of all slugs
+    const lengths = orgs.map((org) => org.slug.length)
+
+    // Sort lengths to find the middle value(s)
+    const sortedLengths = [...lengths].sort((a, b) => a - b)
+    const mid = Math.floor(sortedLengths.length / 2)
+
+    // Get median length (average of two middle values for even-length arrays)
+    const medianLength =
+      sortedLengths.length % 2 === 0
+        ? (sortedLengths[mid - 1] + sortedLengths[mid]) / 2
+        : sortedLengths[mid]
+
+    // Base width calculation:
+    // - Average lowercase letter: ~8px at 16px font size
+    // - Average uppercase letter: ~10px at 16px font size
+    // - Numbers: ~8px at 16px font size
+    // - Font size adjustment (text-lg = 1.125rem = 18px): 18/16 = 1.125
+    const baseCharWidth = 8 * 1.125
+
+    return Math.round(medianLength * baseCharWidth * 1.2)
+  }, [orgs])
+
   const virtuosoRef = React.useRef<VirtuosoHandle>(null)
 
   const handleOpenChange = (open: boolean) => {
@@ -74,13 +100,14 @@ export function OrgSelector({
   }
 
   const VirtuosoItem = React.memo(
-    ({ index, org }: { index: number; org: Org }) => {
+    ({ index, org, width }: { index: number; org: Org; width: number }) => {
       return (
         <CommandItem
           key={org.slug}
           value={org.slug}
           onSelect={() => handleSelect(org, index)}
-          className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none"
+          style={{ width }}
+          className="relative block max-w-full cursor-pointer select-none items-center gap-2 truncate rounded-sm px-2 py-1.5 text-sm outline-none"
         >
           {org.label}
         </CommandItem>
@@ -132,15 +159,17 @@ export function OrgSelector({
         <button
           type="button"
           role="combobox"
+          ref={triggerRef}
           aria-expanded={open}
           title={selectedOrg ? selectedOrg.slug : 'Select organization...'}
           className="flex flex-row items-center gap-2 outline-none"
         >
           <div
             className={cn(
-              'w-fit min-w-20 max-w-48 flex-1 truncate text-left text-lg font-semibold',
+              'min-w-0 flex-1 truncate text-left text-lg font-semibold',
               open ? 'text-white' : 'text-white/80'
             )}
+            style={{ width: getSelectorMedianWidth }}
           >
             {selectedOrg ? selectedOrg.slug : 'Select organization...'}
           </div>
@@ -150,7 +179,12 @@ export function OrgSelector({
           />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent
+        className="w-fit p-0"
+        align="start"
+        sideOffset={10}
+        style={{ width: triggerRef.current?.clientWidth }}
+      >
         <Command shouldFilter={false} onKeyDown={handleKeyDown}>
           {searchable && (
             <CommandInput
@@ -172,7 +206,11 @@ export function OrgSelector({
                 initialTopMostItemIndex={activeIndex}
                 totalCount={filteredItems.length}
                 itemContent={(index, org) => (
-                  <VirtuosoItem index={index} org={org} />
+                  <VirtuosoItem
+                    index={index}
+                    org={org}
+                    width={triggerRef.current?.clientWidth ?? 0}
+                  />
                 )}
               />
             )}
