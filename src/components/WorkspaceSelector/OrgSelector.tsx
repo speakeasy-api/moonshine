@@ -100,6 +100,21 @@ export function OrgSelector({
     }
   }
 
+  const VirtuosoItem = React.memo(
+    ({ index, org }: { index: number; org: Org }) => {
+      return (
+        <CommandItem
+          key={org.slug}
+          value={org.slug}
+          onSelect={() => handleSelect(org, index)}
+          className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none"
+        >
+          {org.label}
+        </CommandItem>
+      )
+    }
+  )
+
   // When the search changes, reset the active index and scroll to the top
   React.useEffect(() => {
     setActiveIndex(0)
@@ -185,14 +200,7 @@ export function OrgSelector({
                 initialTopMostItemIndex={activeIndex}
                 totalCount={filteredItems.length}
                 itemContent={(index, org) => (
-                  <CommandItem
-                    key={org.slug}
-                    value={org.slug}
-                    onSelect={() => handleSelect(org, index)}
-                    className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none"
-                  >
-                    {org.label}
-                  </CommandItem>
+                  <VirtuosoItem index={index} org={org} />
                 )}
               />
             )}
