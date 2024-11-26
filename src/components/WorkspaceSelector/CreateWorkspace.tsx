@@ -6,15 +6,9 @@ import { Icon } from '../Icon'
 import { Button, Stack } from '@/index'
 import { Separator } from '../Separator'
 import { GradientCircle } from '../GradientCircle'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../Select'
-import { Virtuoso } from 'react-virtuoso'
+
 import { cn } from '@/lib/utils'
+import { OrgSelector } from './OrgSelector'
 
 export interface CreateResult {
   success: boolean
@@ -59,8 +53,6 @@ export function CreateWorkspace({
   const focusInput = () => {
     createInputRef.current?.focus()
   }
-
-  const orgCount = allOrgs.length
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
@@ -117,37 +109,12 @@ export function CreateWorkspace({
                 onClick={focusInput}
                 data-invalid={isInvalid}
               >
-                {orgCount > 1 ? (
-                  <Select
-                    value={currentOrg.id}
-                    onValueChange={(value) =>
-                      setCurrentOrg(allOrgs.find((o) => o.id === value)!)
-                    }
-                  >
-                    <SelectTrigger className="create-dialog-select-trigger text-md text-foreground/80 hover:text-foreground max-w-min select-none gap-3 border-none bg-transparent p-0 text-start text-lg font-semibold tracking-wide shadow-none outline-none focus:ring-transparent">
-                      <SelectValue title={currentOrg.label}>
-                        {currentOrg.label}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <Virtuoso
-                        data={allOrgs.sort((a, b) =>
-                          a.label.localeCompare(b.label)
-                        )}
-                        totalCount={allOrgs.length}
-                        style={{ height: '300px' }}
-                        itemContent={(_, item) => (
-                          <SelectItem
-                            key={item.id}
-                            value={item.id}
-                            className="text-md my-1"
-                          >
-                            {item.label}
-                          </SelectItem>
-                        )}
-                      />
-                    </SelectContent>
-                  </Select>
+                {allOrgs.length > 1 ? (
+                  <OrgSelector
+                    orgs={allOrgs}
+                    selectedOrg={currentOrg}
+                    onSelect={setCurrentOrg}
+                  />
                 ) : (
                   <span
                     title={currentOrg.slug}
