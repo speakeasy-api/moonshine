@@ -5,7 +5,7 @@ import { Text } from '../Text'
 import { Icon } from '../Icon'
 import { Button, Stack } from '@/index'
 import { Separator } from '../Separator'
-import { GradientCircle } from './GradientCircle'
+import { GradientCircle } from '../GradientCircle'
 import {
   Select,
   SelectContent,

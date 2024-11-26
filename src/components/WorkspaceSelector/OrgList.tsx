@@ -1,6 +1,6 @@
 import { Org } from '.'
 import { CommandItem } from '../Command'
-import { GradientCircle } from './GradientCircle'
+import { GradientCircle } from '../GradientCircle'
 import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { ScrollingList } from './ScrollingList'

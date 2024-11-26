@@ -18,10 +18,18 @@ const sizeMap: Record<Size, number> = {
   '2xl': 20,
 }
 
+const initialSizeMap: Record<Size, number> = {
+  small: 16,
+  medium: 24,
+  large: 24,
+  xl: 32,
+  '2xl': 48,
+}
+
 const borderSizeMap: Record<Size, number> = {
   small: 2,
   medium: 2,
-  large: 3,
+  large: 4,
   xl: 4,
   '2xl': 4,
 }
@@ -95,6 +103,7 @@ export function GradientCircle({
               '--translate': initial
                 ? getInitialTranslateY(initial)
                 : undefined,
+              fontSize: initialSizeMap[size],
             } as React.CSSProperties
           }
         >
