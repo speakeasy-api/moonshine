@@ -4,7 +4,7 @@ import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
 import { Container } from '@/index'
 import { CreateResult } from './CreateWorkspace'
 import { expect, userEvent, within } from '@storybook/test'
-
+import { faker } from '@faker-js/faker'
 const meta = {
   title: 'Components/WorkspaceSelector',
   component: WorkspaceSelector,
@@ -440,6 +440,24 @@ export const WithCreateWorkspaceViewShownByDefault: Story = {
       defaultSelectedOrg={sampleData[1]}
     />
   ),
+}
+
+export const WithSearchableOrgSelector: Story = {
+  ...Default,
+  render: () => {
+    const orgs = Array.from({ length: 5000 }).map(() => {
+      const slug = faker.lorem.slug({ min: 1, max: 3 })
+      return {
+        id: faker.string.uuid(),
+        label: slug,
+        slug,
+        workspaces: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    })
+    return <WorkspaceSelectorWithState showCreateWorkspaceView orgs={orgs} />
+  },
 }
 
 export const InteractiveNoOrgs: Story = {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
@@ -49,6 +49,11 @@ export function CreateWorkspace({
       }, 300)
     }
   }, [open])
+
+  useEffect(() => {
+    // Focus the input when the org changes
+    focusInput()
+  }, [currentOrg])
 
   const focusInput = () => {
     createInputRef.current?.focus()
