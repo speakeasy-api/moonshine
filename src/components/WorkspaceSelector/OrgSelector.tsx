@@ -69,7 +69,6 @@ export function OrgSelector({
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
     if (open) {
-      console.log('activeIndex', activeIndex)
       virtuosoRef.current?.scrollToIndex({ index: activeIndex, align: 'start' })
     }
   }
@@ -139,7 +138,7 @@ export function OrgSelector({
         >
           <div
             className={cn(
-              'w-fit max-w-48 flex-1 truncate text-left text-lg font-semibold',
+              'w-fit min-w-20 max-w-48 flex-1 truncate text-left text-lg font-semibold',
               open ? 'text-white' : 'text-white/80'
             )}
           >
