@@ -44,7 +44,7 @@ export function OrgSelector({
   error = false,
   errorText = 'An error occurred',
   emptyText = 'No organizations found',
-  searchPlaceholder = 'Search organizations...',
+  searchPlaceholder = 'Search...',
 }: OrgSelectorProps) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
@@ -100,14 +100,13 @@ export function OrgSelector({
   }
 
   const VirtuosoItem = React.memo(
-    ({ index, org, width }: { index: number; org: Org; width: number }) => {
+    ({ index, org }: { index: number; org: Org }) => {
       return (
         <CommandItem
           key={org.slug}
           value={org.slug}
           onSelect={() => handleSelect(org, index)}
-          style={{ width }}
-          className="relative block max-w-full cursor-pointer select-none items-center gap-2 truncate rounded-sm px-2 py-1.5 text-sm outline-none"
+          className="relative block w-full cursor-pointer select-none items-center gap-2 truncate rounded-sm px-2 py-1.5 text-sm outline-none"
         >
           {org.label}
         </CommandItem>
@@ -166,7 +165,7 @@ export function OrgSelector({
         >
           <div
             className={cn(
-              'min-w-0 flex-1 truncate text-left text-lg font-semibold',
+              'min-w-0 flex-1 truncate text-left text-lg font-semibold lowercase',
               open ? 'text-white' : 'text-white/80'
             )}
             style={{ width: getSelectorMedianWidth }}
@@ -179,12 +178,7 @@ export function OrgSelector({
           />
         </button>
       </PopoverTrigger>
-      <PopoverContent
-        className="w-fit p-0"
-        align="start"
-        sideOffset={10}
-        style={{ width: triggerRef.current?.clientWidth }}
-      >
+      <PopoverContent className="w-fit p-0" align="start" sideOffset={10}>
         <Command shouldFilter={false} onKeyDown={handleKeyDown}>
           {searchable && (
             <CommandInput
@@ -206,11 +200,7 @@ export function OrgSelector({
                 initialTopMostItemIndex={activeIndex}
                 totalCount={filteredItems.length}
                 itemContent={(index, org) => (
-                  <VirtuosoItem
-                    index={index}
-                    org={org}
-                    width={triggerRef.current?.clientWidth ?? 0}
-                  />
+                  <VirtuosoItem index={index} org={org} />
                 )}
               />
             )}
