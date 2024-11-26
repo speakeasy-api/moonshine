@@ -6,14 +6,10 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/Command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
 import { Org } from '.'
 import { Icon } from '@/components/Icon'
-import { Virtuoso } from 'react-virtuoso'
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
 import { cn } from '@/lib/utils'
 
 interface OrgSelectorProps {
@@ -52,10 +48,12 @@ export function OrgSelector({
 }: OrgSelectorProps) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
+  const [activeIndex, setActiveIndex] = React.useState(0)
 
-  const handleSelect = (org: Org) => {
+  const handleSelect = (org: Org, index: number) => {
     onSelect(org)
     setOpen(false)
+    setActiveIndex(index)
   }
 
   const filteredItems = React.useMemo(() => {
@@ -92,6 +90,45 @@ export function OrgSelector({
     return Math.round(medianLength * baseCharWidth)
   }, [orgs])
 
+  const virtuosoRef = React.useRef<VirtuosoHandle>(null)
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open)
+    if (open) {
+      console.log('activeIndex', activeIndex)
+      virtuosoRef.current?.scrollToIndex({ index: activeIndex, align: 'start' })
+    }
+  }
+
+  // When the search changes, reset the active index and scroll to the top
+  React.useEffect(() => {
+    setActiveIndex(0)
+    virtuosoRef.current?.scrollToIndex({ index: 0, align: 'start' })
+  }, [search])
+
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return
+      if (!virtuosoRef.current) return
+
+      let newIndex = activeIndex
+      switch (e.key) {
+        case 'ArrowDown':
+          newIndex = Math.min(activeIndex + 1, filteredItems.length - 1)
+          break
+        case 'ArrowUp':
+          newIndex = Math.max(activeIndex - 1, 0)
+          break
+        case 'Home':
+          newIndex = 0
+          break
+      }
+      setActiveIndex(newIndex)
+      virtuosoRef.current?.scrollToIndex({ index: newIndex, align: 'start' })
+    },
+    [activeIndex, filteredItems.length]
+  )
+
   const virtuosoHeight = React.useMemo(() => {
     const { row, header, padding, max } = COMBOBOX_CONFIG.heights
     const shouldShowHeaders = filteredItems.some((group) => group.label)
@@ -102,7 +139,7 @@ export function OrgSelector({
   }, [filteredItems])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild className="flex flex-row items-center">
         <button
           type="button"
@@ -127,7 +164,7 @@ export function OrgSelector({
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <Command shouldFilter={false}>
+        <Command shouldFilter={false} onKeyDown={handleKeyDown}>
           {searchable && (
             <CommandInput
               value={search}
@@ -144,12 +181,14 @@ export function OrgSelector({
               <Virtuoso
                 style={{ height: virtuosoHeight }}
                 data={filteredItems}
+                ref={virtuosoRef}
+                initialTopMostItemIndex={activeIndex}
                 totalCount={filteredItems.length}
-                itemContent={(_, org) => (
+                itemContent={(index, org) => (
                   <CommandItem
                     key={org.slug}
                     value={org.slug}
-                    onSelect={() => handleSelect(org)}
+                    onSelect={() => handleSelect(org, index)}
                     className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none"
                   >
                     {org.label}

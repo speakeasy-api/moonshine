@@ -5,6 +5,7 @@ import { Container } from '@/index'
 import { CreateResult } from './CreateWorkspace'
 import { expect, userEvent, within } from '@storybook/test'
 import { faker } from '@faker-js/faker'
+
 const meta = {
   title: 'Components/WorkspaceSelector',
   component: WorkspaceSelector,
