@@ -64,32 +64,6 @@ export function OrgSelector({
     )
   }, [search, orgs])
 
-  const getSelectorMedianWidth = React.useMemo(() => {
-    if (!orgs.length) return 0
-
-    // Get lengths of all slugs
-    const lengths = orgs.map((org) => org.slug.length)
-
-    // Sort lengths to find the middle value(s)
-    const sortedLengths = [...lengths].sort((a, b) => a - b)
-    const mid = Math.floor(sortedLengths.length / 2)
-
-    // Get median length (average of two middle values for even-length arrays)
-    const medianLength =
-      sortedLengths.length % 2 === 0
-        ? (sortedLengths[mid - 1] + sortedLengths[mid]) / 2
-        : sortedLengths[mid]
-
-    // Base width calculation:
-    // - Average lowercase letter: ~8px at 16px font size
-    // - Average uppercase letter: ~10px at 16px font size
-    // - Numbers: ~8px at 16px font size
-    // - Font size adjustment (text-lg = 1.125rem = 18px): 18/16 = 1.125
-    const baseCharWidth = 8 * 1.125
-
-    return Math.round(medianLength * baseCharWidth)
-  }, [orgs])
-
   const virtuosoRef = React.useRef<VirtuosoHandle>(null)
 
   const handleOpenChange = (open: boolean) => {
@@ -165,10 +139,9 @@ export function OrgSelector({
         >
           <div
             className={cn(
-              'min-w-0 flex-1 truncate text-left text-lg font-semibold',
+              'w-fit max-w-48 flex-1 truncate text-left text-lg font-semibold',
               open ? 'text-white' : 'text-white/80'
             )}
-            style={{ width: getSelectorMedianWidth }}
           >
             {selectedOrg ? selectedOrg.slug : 'Select organization...'}
           </div>
