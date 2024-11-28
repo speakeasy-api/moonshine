@@ -117,7 +117,7 @@ Then run `pnpm link ../path/to/moonshine` within the app that will use the libra
 pnpm link ../../../../moonshine
 ```
 
-The package.json file within your app should referenced the linked copy within the lockfile:
+The lockfile file within your app should referenced the linked copy:
 
 ```yaml
 '@speakeasy-api/moonshine':
