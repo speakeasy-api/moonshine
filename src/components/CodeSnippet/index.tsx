@@ -130,7 +130,7 @@ export function CodeSnippet({
           '--gradient':
             theme === 'dark'
               ? 'linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(102, 102, 102, 0.4) 50%, rgba(255, 255, 255, 0) 100%)'
-              : 'linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0) 100%)',
+              : 'linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0) 100%)',
         } as React.CSSProperties
       }
     >

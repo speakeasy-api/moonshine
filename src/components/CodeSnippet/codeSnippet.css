@@ -43,5 +43,5 @@
 }
 
 .highlighted-code {
-  transition: background-color ease-in-out 400ms;
+  transition: background-color cubic-bezier(0.25, 0.1, 0.25, 1) 400ms;
 }
