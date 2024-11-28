@@ -135,7 +135,10 @@ export function CodeSnippet({
       }
     >
       <div
-        className={cn('snippet-inner flex flex-row rounded-lg p-4', bgColor)}
+        className={cn(
+          'snippet-inner flex w-full flex-row rounded-lg p-4',
+          bgColor
+        )}
       >
         {language === 'bash' && (
           <div className="text-muted-foreground ml-1 self-center font-mono font-light">
@@ -146,7 +149,7 @@ export function CodeSnippet({
           <Pre
             code={highlightedCodeState}
             className={cn(
-              'text-foreground highlighted-code ml-1 mr-2 self-center font-mono outline-none',
+              'text-foreground highlighted-code ml-1 mr-2 w-full self-center font-mono outline-none',
               highlighted && theme === 'dark' && '!bg-zinc-500/40',
               highlighted && theme === 'light' && '!bg-zinc-200/40',
               fontSizeMap[fontSize],
