@@ -1,0 +1,47 @@
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    rotate: 0deg;
+  }
+
+  to {
+    transform: scale(2.5);
+    rotate: 360deg;
+  }
+}
+
+.snippet-inner {
+  z-index: 2;
+}
+
+.snippet {
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+.snippet::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.copied::before {
+  content: '';
+  display: block;
+  visibility: visible;
+  background: var(--gradient);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform: translate(0);
+  animation: pulse 2.5s ease;
+  z-index: 1;
+}
+
+.highlighted-code {
+  transition: background-color ease-in-out 400ms;
+}

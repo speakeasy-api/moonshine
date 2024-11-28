@@ -6,6 +6,9 @@ import { Meta, StoryObj } from '@storybook/react'
 const meta: Meta<typeof CodeSnippet> = {
   component: CodeSnippet,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
 }
 
 export default meta
@@ -33,6 +36,16 @@ export const TypescriptMultiline: Story = {
     code: `type User = {
   name: string
   age: number
+}`,
+    language: 'typescript',
+    copyable: true,
+  },
+}
+
+export const TypescriptFunctionMultiline: Story = {
+  args: {
+    code: `function greet(name: string) {
+  return \`Hello, \${name}!\`
 }`,
     language: 'typescript',
     copyable: true,
@@ -104,6 +117,24 @@ export const NonCopyable: Story = {
     code: 'console.log("Hello, world!")',
     language: 'javascript',
     copyable: false,
+  },
+}
+
+export const FontSizeXL: Story = {
+  args: {
+    code: 'console.log("Hello, world!")',
+    language: 'javascript',
+    copyable: true,
+    fontSize: 'xl',
+  },
+}
+
+export const FontSize2XL: Story = {
+  args: {
+    code: 'console.log("Hello, world!")',
+    language: 'javascript',
+    copyable: true,
+    fontSize: '2xl',
   },
 }
 

@@ -1,9 +1,11 @@
-import { Icon } from '@/components/Icon'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { highlightText, ShjLanguage } from '@speed-highlight/core'
+import { useCallback, useState, useEffect, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
 import useTailwindTheme from '@/hooks/useTailwindTheme'
+import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
+import { AnimatePresence, motion } from 'framer-motion'
+import './codeSnippet.css'
+import { Icon } from '../Icon'
 
 type Theme = 'dark' | 'light'
 
@@ -20,13 +22,18 @@ interface CodeSnippetProps {
 
 const fontSizeMap: Record<Size, string> = {
   small: 'text-sm',
-  medium: 'text-base',
+  medium: 'text-sm',
   large: 'text-base',
   xl: 'text-lg',
   '2xl': 'text-xl',
 }
 
-function getLanguage(language: ProgrammingLanguage): ShjLanguage | undefined {
+const copyIconVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: { opacity: 1, scale: 1 },
+}
+
+function getLanguage(language: ProgrammingLanguage): string {
   switch (language) {
     case 'javascript':
       return 'js'
@@ -47,6 +54,14 @@ function getLanguage(language: ProgrammingLanguage): ShjLanguage | undefined {
   }
 }
 
+type CodehikeTheme =
+  | 'min-light'
+  | 'min-dark'
+  | 'github-dark'
+  | 'github-light'
+  | 'dracula-soft'
+  | 'light-plus'
+
 export function CodeSnippet({
   code,
   copyable = false,
@@ -55,112 +70,136 @@ export function CodeSnippet({
   inline = false,
   fontSize = 'medium',
 }: CodeSnippetProps) {
-  const [copied, setCopied] = useState(false)
+  const [copying, setCopying] = useState(false)
   const [highlighted, setHighlighted] = useState(false)
-  const [highlightedCode, setHighlightedCode] = useState(code)
+  const [highlightedCodeState, setHighlightedCodeState] = useState<
+    HighlightedCode | undefined
+  >(undefined)
   const isMultiline = code.split('\n').length > 1
   const theme = useTailwindTheme()
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      import('@speed-highlight/core/themes/dark.css')
-    } else {
-      import('@speed-highlight/core/themes/github-light.css')
-    }
+  const codehikeTheme = useMemo<CodehikeTheme>(() => {
+    if (theme === 'light') return 'min-light'
+    return 'dracula-soft'
   }, [theme])
-  const codeRef = useRef<HTMLPreElement>(null)
+
   useEffect(() => {
-    const highlight = async () => {
-      if (codeRef.current) {
-        const lang = getLanguage(language)
-        if (lang) {
-          const highlightedCode = await highlightText(code, lang, false)
-          setHighlightedCode(highlightedCode)
-          setHighlighted(true)
-        }
+    if (!language) return
+    async function highlightCode() {
+      const rawCode: RawCode = {
+        value: code,
+        lang: getLanguage(language),
+        meta: '',
       }
+      const highlighted = await highlight(rawCode, codehikeTheme)
+      setHighlightedCodeState(highlighted)
     }
-    highlight()
-  }, [])
+    highlightCode()
+  }, [code, language, codehikeTheme])
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
-
-    if (codeRef.current) {
-      codeRef.current.focus()
-      const range = document.createRange()
-
-      range.selectNodeContents(codeRef.current)
-      const selection = window.getSelection()
-      selection?.removeAllRanges()
-      selection?.addRange(range)
-    }
+    setCopying(true)
+    setHighlighted(true)
 
     setTimeout(() => {
-      setCopied(false)
-      setHighlighted(false)
-      const selection = window.getSelection()
-      selection?.removeAllRanges()
-    }, 1000)
+      navigator.clipboard.writeText(code)
+      setTimeout(() => {
+        setCopying(false)
+        setHighlighted(false)
+      }, 750)
+    }, 750)
   }, [code])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
 
+  const bgColor = useMemo(() => {
+    return theme === 'dark' ? 'bg-zinc-900' : 'bg-neutral-100'
+  }, [highlighted, theme])
+
   return (
     <div
       data-theme={theme}
       className={cn(
-        'flex w-full flex-row items-start rounded-lg border border-neutral-200/5 p-4',
+        `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
         inline && 'inline-flex',
-        theme === 'dark' && 'bg-zinc-900',
-        theme === 'light' && 'bg-zinc-50'
+        copying && 'copied'
       )}
+      style={
+        {
+          '--gradient':
+            theme === 'dark'
+              ? 'linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(102, 102, 102, 0.4) 50%, rgba(255, 255, 255, 0) 100%)'
+              : 'linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0) 100%)',
+        } as React.CSSProperties
+      }
     >
-      {language === 'bash' && (
-        <div className="ml-1 mr-0.5 self-center font-mono font-light">
-          {promptSymbol ?? '$'}
-        </div>
-      )}
-      <pre
-        ref={codeRef}
-        onBeforeInput={handleBeforeInput}
-        className={cn(
-          '!my-0 w-fit self-center !bg-transparent !py-0 px-3 font-mono outline-none',
-          highlighted && theme === 'dark' && 'selection:bg-zinc-800',
-          highlighted && theme === 'light' && 'selection:bg-zinc-200',
-          fontSizeMap[fontSize]
+      <div
+        className={cn('snippet-inner flex flex-row rounded-lg p-4', bgColor)}
+      >
+        {language === 'bash' && (
+          <div className="text-muted-foreground ml-1 self-center font-mono font-light">
+            {promptSymbol ?? '$'}
+          </div>
         )}
-        dangerouslySetInnerHTML={{
-          __html: highlightedCode,
-        }}
-      ></pre>
-
-      {copyable && (
-        <div
-          className={cn(
-            'ml-auto mr-2 flex self-center text-white',
-            isMultiline && 'self-start'
-          )}
-        >
-          <button
-            role="button"
+        {highlightedCodeState && (
+          <Pre
+            code={highlightedCodeState}
             className={cn(
-              'relative ml-2 border-none bg-transparent',
-              theme === 'dark' && 'text-white',
-              theme === 'light' && 'text-black'
+              'text-foreground highlighted-code ml-1 mr-2 self-center font-mono outline-none',
+              highlighted && theme === 'dark' && '!bg-zinc-500/40',
+              highlighted && theme === 'light' && '!bg-zinc-200/40',
+              fontSizeMap[fontSize],
+              isMultiline && 'min-w-32'
             )}
-            onClick={handleCopy}
+            onBeforeInput={handleBeforeInput}
+          />
+        )}
+
+        {copyable && (
+          <div
+            className={cn(
+              'ml-3 mr-1 flex self-center text-white',
+              isMultiline && 'mt-1 self-start'
+            )}
           >
-            {copied ? (
-              <Icon fill="green" name="circle-check-big" />
-            ) : (
-              <Icon name="copy" stroke="currentColor" />
-            )}
-          </button>
-        </div>
-      )}
+            <button
+              role="button"
+              className={cn(
+                'relative ml-2 border-none bg-transparent outline-none',
+                theme === 'dark' && 'text-white',
+                theme === 'light' && 'text-black'
+              )}
+              onClick={handleCopy}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {copying ? (
+                  <motion.span
+                    key="checkmark"
+                    variants={copyIconVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-foreground"
+                  >
+                    <Icon name="check" stroke="currentColor" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="copy"
+                    variants={copyIconVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-foreground"
+                    exit="hidden"
+                  >
+                    <Icon name="copy" stroke="currentColor" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
