@@ -40,13 +40,13 @@ export function OrgList({
   }, [selectedOrg, orgs])
 
   return (
-    <div className="border-border flex w-1/3 flex-col border-r">
+    <div className="border-border flex w-[40%] flex-col">
       {enableRecents && (
-        <div className="bg-background border-y">
+        <div className="bg-background">
           <CommandItem
             onSelect={onSelectRecent}
             className={cn(
-              'bg-background text-foreground/80 sticky top-0 z-10 flex cursor-pointer items-center p-4 text-base',
+              'sticky top-0 z-10 flex cursor-pointer items-center p-4 text-base',
               showRecents && 'bg-accent text-accent-foreground font-semibold'
             )}
           >

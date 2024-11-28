@@ -10,7 +10,7 @@ interface SearchBoxProps {
 
 export function SearchBox({ inputRef, search, setSearch }: SearchBoxProps) {
   return (
-    <div className="relative flex items-center gap-2 border-b p-3">
+    <div className="relative flex items-center gap-2 p-3">
       <CommandInput
         ref={inputRef}
         placeholder="Search workspaces..."

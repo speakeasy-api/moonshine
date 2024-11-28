@@ -1,7 +1,4 @@
-import { CommandItem } from '../Command'
-import { Icon } from '../Icon'
 import { Org, Workspace } from '.'
-import { cn } from '@/lib/utils'
 import { WorkspaceItem } from './WorkspaceItem'
 import { useEffect, useRef } from 'react'
 import { ScrollingList } from './ScrollingList'
@@ -65,7 +62,7 @@ export function WorkspaceList({
           )}
         />
       )}
-      {enableCreate && (
+      {/* {enableCreate && (
         <div className="bg-background border-t">
           <CommandItem
             onSelect={handleCreateViewOpen}
@@ -75,7 +72,7 @@ export function WorkspaceList({
             Create workspace
           </CommandItem>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

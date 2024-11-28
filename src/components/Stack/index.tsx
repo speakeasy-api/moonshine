@@ -1,50 +1,38 @@
 import React from 'react'
 import { cn, getResponsiveClasses } from '@/lib/utils'
+import { Direction, Gap, Padding, ResponsiveValue } from '@/types'
 import {
-  Alignment,
-  Direction,
-  Gap,
-  Pack,
-  Padding,
-  ResponsiveValue,
-  Spacing,
-  Wrap,
-} from '@/types'
-import {
-  alignmentMapper,
   directionMapper,
   gapMapper,
   paddingMapper,
-  packMapper,
   wrapMapper,
 } from '@/lib/responsiveMappers'
 
 interface StackProps {
   children: React.ReactNode
 
-  /** @figma Orientation in Auto Layout */
+  /** Layout direction */
   direction?: ResponsiveValue<Direction>
 
-  /** @figma Spacing between items in Auto Layout */
+  /** Space between items */
   gap?: ResponsiveValue<Gap>
 
-  /** @figma Space between items in Auto Layout */
-  spacing?: ResponsiveValue<Spacing>
-
-  /** @figma Alignment in Auto Layout */
-  align?: ResponsiveValue<Alignment>
-
-  /** @figma Alignment in Auto Layout when items are packed */
-  mainAxisAlign?: ResponsiveValue<Pack>
-
-  /** @figma Padding in Auto Layout */
+  /** Container padding */
   padding?: ResponsiveValue<Padding>
 
-  /** @figma Fill container in Auto Layout */
-  stretch?: boolean
+  /** Controls flex-grow behavior */
+  flex?: number | boolean
 
-  /** Controls item wrapping behavior */
-  wrap?: ResponsiveValue<Wrap>
+  /** Aligns items along the cross axis (align-items) */
+  align?: ResponsiveValue<'start' | 'center' | 'end' | 'stretch'>
+
+  /** Aligns items along the main axis (justify-content) */
+  justify?: ResponsiveValue<
+    'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+  >
+
+  /** Whether items should wrap */
+  wrap?: ResponsiveValue<'wrap' | 'nowrap'>
 }
 
 export function Stack({
@@ -52,28 +40,35 @@ export function Stack({
   direction = 'column',
   gap = 0,
   padding = 0,
-  align,
-  spacing = 'packed',
-  mainAxisAlign = 'start',
-  stretch = false,
+  flex,
+  align = 'stretch',
+  justify = 'start',
   wrap = 'nowrap',
 }: StackProps) {
+  const alignMapper = (val: 'start' | 'center' | 'end' | 'stretch') => {
+    return val === 'stretch' ? 'items-stretch' : `items-${val}`
+  }
+
+  const justifyMapper = (
+    val: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+  ) => {
+    return `justify-${val}`
+  }
+
   return (
     <div
       className={cn(
         'flex',
-        stretch && direction === 'row' && 'h-full',
-        stretch && direction === 'column' && 'w-full',
+        // Handle flex values with Tailwind classes
+        typeof flex === 'number' && flex === 1 && 'flex-1',
+        typeof flex === 'number' && flex === 2 && 'flex-2',
+        typeof flex === 'boolean' && flex && 'flex-1',
         getResponsiveClasses(direction, directionMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),
         getResponsiveClasses(wrap, wrapMapper),
-        align && getResponsiveClasses(align, alignmentMapper),
-        spacing === 'packed' && getResponsiveClasses(mainAxisAlign, packMapper),
-        spacing === 'spaceBetween' && 'justify-between',
-        spacing === 'spaceAround' && 'justify-around',
-        spacing === 'spaceEvenly' && 'justify-evenly',
-        stretch && 'items-stretch'
+        getResponsiveClasses(align, alignMapper),
+        getResponsiveClasses(justify, justifyMapper)
       )}
     >
       {children}

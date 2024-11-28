@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils'
 import { CommandItem } from '../Command'
-import { GradientCircle } from '../GradientCircle'
 import { Org, Workspace } from '.'
 import { Icon } from '../Icon'
 import { forwardRef } from 'react'
@@ -29,7 +28,7 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
           !workspace.active && 'opacity-50'
         )}
       >
-        <GradientCircle name={workspace.label} />
+        {/* <GradientCircle name={workspace.label} /> */}
         <span className="truncate">{workspace.label}</span>
 
         {isSelected && (

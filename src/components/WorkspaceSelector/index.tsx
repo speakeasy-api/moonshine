@@ -8,11 +8,11 @@ import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
 import { FilteredWorkspaces } from './FilteredWorkspaces'
 import { SearchBox } from './SearchBox'
-import { Text } from '../Text'
 import { Separator } from '../Separator'
 import { Logo } from '../Logo'
 import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
+import { Button } from '../Button'
 
 export interface Org {
   id: string
@@ -98,7 +98,7 @@ export function WorkspaceSelector({
   onCreate,
   emptyText = 'No workspaces found.',
   recents = [],
-  height = '500px',
+  height = '600px',
   onCreateOrg,
   filterFn = defaultFilterFn,
   createTriggersSelection = false,
@@ -362,32 +362,44 @@ function WorkspaceViewContents({
   )
   return (
     <>
-      <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
-        <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
-          <Stack align="center" gap={4}>
-            <div className="flex h-16 w-16 items-center justify-center">
-              <Logo variant="icon" />
-            </div>
-            <Stack align="center" gap={2}>
-              <Text variant="h3">Select your workspace</Text>
-              <Text variant="muted">
-                Select or create the workspace you want to use for this project.
-              </Text>
-            </Stack>
+      <div className="bg-popover flex h-full w-[40%] flex-col">
+        <Stack padding={16} flex={1} justify="between">
+          <Logo variant="icon" className="h-16 w-8" />
+
+          <Stack align="start" gap={6}>
+            {/* <Text variant="h1">Select your workspace</Text> */}
+            {/* TODO: update to use the Text component */}
+            <h1 className="max-w-[300px] whitespace-pre-wrap font-semibold sm:text-3xl md:text-4xl">
+              Select your workspace
+            </h1>
+            {/* <Text variant="muted">
+              Select the workspace you want to use for this project.
+              Alternatively, you can create your own.
+            </Text> */}
+            {/* TODO: update to use the Text component */}
+            <p className="text-lg text-zinc-400 sm:text-base md:text-lg">
+              Select the workspace you want to use for this project.
+              Alternatively, you can create your own.
+            </p>
           </Stack>
-        </div>
+        </Stack>
       </div>
 
       <Separator orientation="vertical" />
 
-      <div className="w-2/3">
+      <div className="relative w-[60%]">
         <Command shouldFilter={false}>
           {requiresSearch(orgs) && (
-            <SearchBox
-              inputRef={inputRef}
-              search={search}
-              setSearch={setSearch}
-            />
+            <>
+              <SearchBox
+                inputRef={inputRef}
+                search={search}
+                setSearch={setSearch}
+              />
+              <Stack padding={{ bottom: 3, top: 0, left: 3, right: 3 }}>
+                <Separator orientation="horizontal" />
+              </Stack>
+            </>
           )}
           {showFilteredView ? (
             <FilteredWorkspaces
@@ -399,41 +411,51 @@ function WorkspaceViewContents({
             />
           ) : showRecentsView ? (
             <div className="flex w-full flex-grow flex-row">
-              <OrgList
-                orgs={orgs}
-                selectedOrg={selectedOrg}
-                setSelectedOrg={handleSelectOrg}
-                onSelectRecent={() => setShowRecents(true)}
-                showRecents={showRecents}
-                enableRecents={recents.length > 0}
-              />
-              <FilteredWorkspaces
-                onSelect={(org, workspace) =>
-                  handleSelect(org, workspace, false)
-                }
-                orgsWithFilteredWorkspaces={recents}
-                selectedOrg={selectedOrg}
-                selectedWorkspace={selectedWorkspace}
-              />
+              <Stack gap={3} direction="row" flex={1} padding={{ x: 3, y: 0 }}>
+                <OrgList
+                  orgs={orgs}
+                  selectedOrg={selectedOrg}
+                  setSelectedOrg={handleSelectOrg}
+                  onSelectRecent={() => setShowRecents(true)}
+                  showRecents={showRecents}
+                  enableRecents={recents.length > 0}
+                />
+                <Stack padding={{ left: 0, right: 0, top: 0, bottom: 3 }}>
+                  <Separator orientation="vertical" />
+                </Stack>
+                <FilteredWorkspaces
+                  onSelect={(org, workspace) =>
+                    handleSelect(org, workspace, false)
+                  }
+                  orgsWithFilteredWorkspaces={recents}
+                  selectedOrg={selectedOrg}
+                  selectedWorkspace={selectedWorkspace}
+                />
+              </Stack>
             </div>
           ) : showDefaultView ? (
             <div className="flex h-full flex-row">
-              <OrgList
-                orgs={orgs}
-                selectedOrg={selectedOrg}
-                setSelectedOrg={handleSelectOrg}
-                onSelectRecent={() => setShowRecents(true)}
-                showRecents={showRecents}
-                enableRecents={recents.length > 0}
-              />
-              <WorkspaceList
-                selectedOrg={selectedOrg!}
-                handleCreateViewOpen={handleCreateWorkspaceViewOpen}
-                handleSelect={(org, workspace) =>
-                  handleSelect(org, workspace, false)
-                }
-                selectedWorkspace={selectedWorkspace}
-              />
+              <Stack gap={3} direction="row" flex={1} padding={{ x: 3, y: 0 }}>
+                <OrgList
+                  orgs={orgs}
+                  selectedOrg={selectedOrg}
+                  setSelectedOrg={handleSelectOrg}
+                  onSelectRecent={() => setShowRecents(true)}
+                  showRecents={showRecents}
+                  enableRecents={recents.length > 0}
+                />
+                <Stack padding={{ left: 0, right: 0, top: 0, bottom: 3 }}>
+                  <Separator orientation="vertical" />
+                </Stack>
+                <WorkspaceList
+                  selectedOrg={selectedOrg!}
+                  handleCreateViewOpen={handleCreateWorkspaceViewOpen}
+                  handleSelect={(org, workspace) =>
+                    handleSelect(org, workspace, false)
+                  }
+                  selectedWorkspace={selectedWorkspace}
+                />
+              </Stack>
             </div>
           ) : (
             <CommandEmpty
@@ -443,6 +465,27 @@ function WorkspaceViewContents({
               {emptyText}
             </CommandEmpty>
           )}
+          <div className="bg-popover">
+            <Separator orientation="horizontal" />
+            <Stack
+              justify="between"
+              padding={{ y: 8, x: 6 }}
+              direction="row"
+              align="center"
+              gap={4}
+            >
+              {/* TODO: update to use the Text component */}
+              <p className="text-sm text-zinc-400">
+                Not found the workspace you are looking for?
+              </p>
+              <Button
+                variant="secondary"
+                onClick={handleCreateWorkspaceViewOpen}
+              >
+                Create workspace
+              </Button>
+            </Stack>
+          </div>
         </Command>
       </div>
     </>
