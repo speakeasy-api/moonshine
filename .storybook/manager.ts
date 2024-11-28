@@ -11,7 +11,7 @@ export const speakeasyTheme = create({
 
   // UI elements
   appBg: 'hsl(54, 20%, 10%)',
-  appContentBg: 'hsl(54, 20%, 10%)',
+  appContentBg: 'hsl(0, 0%, 7%)',
   appBorderColor: 'hsl(0, 0%, 20%)',
   appBorderRadius: 4,
 

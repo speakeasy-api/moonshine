@@ -25,7 +25,7 @@ const preview: Preview = {
     backgrounds: {
       values: [
         { name: 'light', value: '#fff' },
-        { name: 'dark', value: 'hsl(54, 20%, 10%)' },
+        { name: 'dark', value: 'hsl(0, 0%, 7%)' },
       ],
     },
 
@@ -36,7 +36,7 @@ const preview: Preview = {
     // Tells Chromatic to test each story in both light and dark modes
     chromatic: {
       modes: {
-        'light mobile': allModes['light mobile'],
+        'light desktop': allModes['light desktop'],
         'dark desktop': allModes['dark desktop'],
       },
     },

@@ -6,6 +6,7 @@ import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
+import { useConfig } from '@/hooks/useConfig'
 
 type Theme = 'dark' | 'light'
 
@@ -54,13 +55,35 @@ function getLanguage(language: ProgrammingLanguage): string {
   }
 }
 
-type CodehikeTheme =
-  | 'min-light'
-  | 'min-dark'
-  | 'github-dark'
-  | 'github-light'
-  | 'dracula-soft'
-  | 'light-plus'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+const codehikeThemeNames = [
+  'dark-plus',
+  'dracula-soft',
+  'dracula',
+  'github-dark',
+  'github-dark-dimmed',
+  'github-from-css',
+  'github-light',
+  'light-plus',
+  'material-darker',
+  'material-default',
+  'material-from-css',
+  'material-lighter',
+  'material-ocean',
+  'material-palenight',
+  'min-dark',
+  'min-light',
+  'monokai',
+  'nord',
+  'one-dark-pro',
+  'poimandres',
+  'slack-dark',
+  'slack-ochin',
+  'solarized-dark',
+  'solarized-light',
+] as const
+
+type CodehikeTheme = (typeof codehikeThemeNames)[number]
 
 export function CodeSnippet({
   code,
@@ -76,11 +99,12 @@ export function CodeSnippet({
     HighlightedCode | undefined
   >(undefined)
   const isMultiline = code.split('\n').length > 1
-  const theme = useTailwindTheme()
+  const { themeElement } = useConfig()
+  const theme = useTailwindTheme(themeElement)
 
   const codehikeTheme = useMemo<CodehikeTheme>(() => {
-    if (theme === 'light') return 'min-light'
-    return 'dracula-soft'
+    if (theme === 'light') return 'solarized-light'
+    return 'nord'
   }, [theme])
 
   useEffect(() => {

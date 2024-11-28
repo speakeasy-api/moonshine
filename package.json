@@ -27,6 +27,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "pnpm clean && vite build",
+    "build:watch": "pnpm clean && vite build --watch",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "prepack": "pnpm build",
     "storybook": "storybook dev -p 6006",

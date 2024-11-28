@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CodeSnippet } from '@/index'
 import { ProgrammingLanguage } from '@/types'
+import { useMemo } from 'react'
 
 export interface AccordionCommand {
   code: string
@@ -33,10 +27,6 @@ interface AccordionProps {
     completedSteps: number[],
     steps: AccordionStep[]
   ) => React.ReactNode
-  footerContent: (
-    completedSteps: number[],
-    steps: AccordionStep[]
-  ) => React.ReactNode
 }
 
 export function Accordion({
@@ -46,28 +36,59 @@ export function Accordion({
   onStepComplete,
   onStepChange,
   headerContent,
-  footerContent,
 }: AccordionProps) {
-  const [isOpen, setIsOpen] = React.useState(true)
-  const [openSteps, setOpenSteps] = React.useState<number[]>([currentStep])
+  const [stepHeights, setStepHeights] = React.useState<Map<number, number>>(
+    new Map()
+  )
+  const stepRefs = React.useRef<Map<number, HTMLDivElement | null>>(new Map())
+
+  React.useEffect(() => {
+    const currentElement = stepRefs.current.get(currentStep)
+    if (currentElement) {
+      setStepHeights((prev) => {
+        const newMap = new Map(prev)
+        newMap.set(currentStep, currentElement.clientHeight)
+        return newMap
+      })
+    }
+  }, [currentStep, completedSteps])
+
+  // Add ResizeObserver to monitor size changes
+  React.useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        const stepNumber = Array.from(stepRefs.current.entries()).find(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ([_, el]) => el === entry.target
+        )?.[0]
+
+        if (stepNumber) {
+          setStepHeights((prev) => {
+            const newMap = new Map(prev)
+            newMap.set(stepNumber, entry.target.clientHeight)
+            return newMap
+          })
+        }
+      })
+    })
+
+    // Observe all step elements
+    stepRefs.current.forEach((element) => {
+      if (element) {
+        resizeObserver.observe(element)
+      }
+    })
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, []) // Empty dependency array since we want to set up the observer once
 
   const getStepStatus = (index: number) => {
     if (completedSteps.includes(index + 1)) return 'completed'
     if (index + 1 === currentStep) return 'current'
     return 'upcoming'
   }
-
-  const toggleStep = (stepNumber: number) => {
-    setOpenSteps((prev) =>
-      prev.includes(stepNumber)
-        ? prev.filter((step) => step !== stepNumber)
-        : [...prev, stepNumber]
-    )
-  }
-
-  React.useEffect(() => {
-    setOpenSteps([currentStep])
-  }, [currentStep])
 
   const handleNextStep = () => {
     if (currentStep < 3) {
@@ -78,120 +99,119 @@ export function Accordion({
     }
   }
 
+  const trackHeight = useMemo(() => {
+    return Array.from(
+      {
+        length:
+          completedSteps.length === steps.length
+            ? currentStep
+            : currentStep - 1,
+      },
+      (_, i) => i + 1
+    )
+      .map((step) => {
+        const height = stepHeights.get(step) || 0
+        // Add the top and bottom padding (py-4 = 1rem * 2 = 32px total)
+        return height + 16
+      })
+      .reduce((acc, curr) => acc + curr, 0)
+  }, [currentStep, stepHeights])
+
   return (
     <div className="max-w-screen-x flex flex-col gap-2">
-      <Card className="mx-autol">
-        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CardHeader className={cn(isOpen && 'border-b')}>
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                {headerContent(completedSteps, steps)}
-              </div>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  {isOpen ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">
-                    {isOpen ? 'Collapse' : 'Expand'} get started guide
-                  </span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-          </CardHeader>
-          <CollapsibleContent>
-            <CardContent className="pt-6">
-              <div className="relative">
-                <div className="bg-border absolute bottom-0 left-4 top-0 w-px">
+      <div className="border-b p-6">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            {headerContent(completedSteps, steps)}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <div className="relative">
+          <div className="bg-border absolute bottom-0 left-4 top-0 w-px overflow-y-hidden">
+            <div
+              className="bg-primary absolute left-0 top-0 w-full transition-all duration-500"
+              style={{
+                height: trackHeight,
+              }}
+            />
+          </div>
+
+          <div>
+            {steps.map((step, index) => {
+              const status = getStepStatus(index)
+              const stepNumber = index + 1
+
+              return (
+                <div
+                  key={index}
+                  className="py-4"
+                  ref={(el) => stepRefs.current.set(stepNumber, el)}
+                >
                   <div
-                    className="bg-primary absolute left-0 top-0 w-full transition-all duration-500"
-                    style={{
-                      height: `${(completedSteps.length / steps.length) * 100}%`,
-                    }}
-                  />
-                </div>
-
-                <div className="space-y-8">
-                  {steps.map((step, index) => {
-                    const status = getStepStatus(index)
-                    const stepNumber = index + 1
-                    const isStepOpen = openSteps.includes(stepNumber)
-
-                    return (
-                      <Collapsible
-                        key={index}
-                        open={isStepOpen}
-                        onOpenChange={() => toggleStep(stepNumber)}
+                    className={cn(
+                      'relative pl-16',
+                      status === 'completed' && 'text-muted-foreground'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={cn(
+                          'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold',
+                          status === 'completed' &&
+                            'bg-primary text-foreground dark:text-background',
+                          status === 'current' &&
+                            'scale-125 bg-blue-500 text-white',
+                          status === 'upcoming' && 'bg-zinc-400 text-white'
+                        )}
                       >
-                        <div
-                          className={cn(
-                            'relative pl-12',
-                            status === 'completed' && 'text-muted-foreground'
-                          )}
-                        >
-                          <CollapsibleTrigger asChild>
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <div
-                                className={cn(
-                                  'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full border text-sm font-medium',
-                                  status === 'completed' &&
-                                    'bg-background text-foreground border',
-                                  status === 'current' &&
-                                    'border-blue-500 bg-blue-50 text-blue-700',
-                                  status === 'upcoming' &&
-                                    'border-border bg-background text-foreground'
-                                )}
-                              >
-                                {status === 'completed' ? (
-                                  <CheckCircle className="h-4 w-4" />
-                                ) : (
-                                  stepNumber
-                                )}
-                              </div>
+                        {stepNumber}
+                      </div>
 
-                              <h3 className="font-semibold tracking-tight">
-                                {step.title}
-                              </h3>
-                              <ChevronDown
-                                className={cn(
-                                  'h-4 w-4 transition-transform',
-                                  isStepOpen && 'rotate-180 transform'
-                                )}
-                              />
-                            </div>
-                          </CollapsibleTrigger>
+                      <h3
+                        className={cn(
+                          'font-semibold tracking-tight',
+                          status === 'upcoming' && 'opacity-50'
+                        )}
+                      >
+                        {step.title}
+                      </h3>
+                    </div>
 
-                          <CollapsibleContent>
-                            <p className="text-muted-foreground mb-4 mt-2 text-sm">
-                              {step.description}
-                            </p>
+                    <p
+                      className={cn(
+                        'mb-4 mt-2 text-sm',
+                        status === 'upcoming' && 'opacity-50'
+                      )}
+                    >
+                      {step.description}
+                    </p>
 
-                            <div className="flex w-max flex-col gap-5">
-                              {step.commands?.map((command, cmdIndex) => (
-                                <CodeSnippet
-                                  key={cmdIndex}
-                                  code={command.code}
-                                  language={command.language}
-                                  copyable
-                                  fontSize="small"
-                                />
-                              ))}
-                            </div>
-                          </CollapsibleContent>
-                        </div>
-                      </Collapsible>
-                    )
-                  })}
+                    <div
+                      className={cn(
+                        'flex w-max flex-col gap-5',
+                        status === 'upcoming' && 'opacity-50'
+                      )}
+                    >
+                      {status === 'current' &&
+                        step.commands?.map((command, cmdIndex) => (
+                          <CodeSnippet
+                            key={cmdIndex}
+                            code={command.code}
+                            language={command.language}
+                            copyable
+                            fontSize="small"
+                          />
+                        ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
-
-        {footerContent(completedSteps, steps)}
-      </Card>
+              )
+            })}
+          </div>
+        </div>
+      </div>
 
       {currentStep <= steps.length &&
         completedSteps.length !== steps.length && (

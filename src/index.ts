@@ -15,16 +15,16 @@ export { Container } from '@/components/Container'
 export { Combobox } from '@/components/Combobox'
 export { TargetLanguageIcon } from '@/components/TargetLanguageIcon'
 export { UserAvatar } from '@/components/UserAvatar'
-
-// TODO: Shall we keep sidebar?
 export { Sidebar } from '@/components/Sidebar'
 export { Subnav } from '@/components/Subnav'
 export { Breadcrumb } from '@/components/Breadcrumb'
 export { CodeSnippet } from '@/components/CodeSnippet'
-// export * from '@/components/AvatarStack'
 export { LoggedInUserMenu } from '@/components/LoggedInUserMenu'
 export {
   WorkspaceSelector,
   type Org,
   type Workspace,
 } from '@/components/WorkspaceSelector'
+export { Accordion } from '@/components/Accordion'
+export { MoonshineConfigProvider } from '@/context/ConfigContext'
+export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'

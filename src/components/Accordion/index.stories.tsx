@@ -3,7 +3,7 @@ import { Accordion, AccordionStep } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 import { Badge } from '@/index'
 import { CardTitle } from '../ui/card'
-import { CheckCircle } from 'lucide-react'
+import { Text } from '@/components/Text'
 
 const meta: Meta<typeof Accordion> = {
   component: Accordion,
@@ -72,16 +72,11 @@ interface AccordionWithStateProps {
     completedSteps: number[],
     steps: AccordionStep[]
   ) => React.ReactNode
-  footerContent: (
-    completedSteps: number[],
-    steps: AccordionStep[]
-  ) => React.ReactNode
 }
 
 const AccordionWithState = ({
   steps,
   headerContent,
-  footerContent,
 }: AccordionWithStateProps) => {
   const [currentStep, setCurrentStep] = React.useState(1)
   const [completedSteps, setCompletedSteps] = React.useState<number[]>([])
@@ -89,7 +84,6 @@ const AccordionWithState = ({
     <Accordion
       steps={steps}
       headerContent={headerContent}
-      footerContent={footerContent}
       currentStep={currentStep}
       completedSteps={completedSteps}
       onStepComplete={(step) => setCompletedSteps([...completedSteps, step])}
@@ -104,8 +98,8 @@ const GetStartedHeaderContent = (
 ) => (
   <>
     <div className="flex items-center gap-2">
-      <CardTitle>Get Started</CardTitle>
-      <Badge variant="secondary">
+      <Text variant="h3">Get Started</Text>
+      <Badge variant="default">
         {completedSteps.length === steps.length
           ? 'Completed'
           : `${completedSteps.length} of ${steps.length} steps`}
@@ -119,25 +113,6 @@ const GetStartedHeaderContent = (
   </>
 )
 
-const GetStartedFooterContent = (
-  completedSteps: number[],
-  steps: AccordionStep[]
-) => {
-  if (completedSteps.length === steps.length) {
-    return (
-      <div className="rounded-b-lg border-t border-green-100 bg-green-50 p-4 text-sm">
-        <div className="flex items-center">
-          <CheckCircle className="mr-2 h-6 w-6 text-green-500" />
-          <p className="text-green-700">
-            Congratulations! You've completed all steps. Your SDK is now set up,
-            automated, and ready for use.
-          </p>
-        </div>
-      </div>
-    )
-  }
-}
-
 export const GetStarted: Story = {
   args: {
     steps,
@@ -146,7 +121,6 @@ export const GetStarted: Story = {
     onStepComplete: () => {},
     onStepChange: () => {},
     headerContent: GetStartedHeaderContent,
-    footerContent: GetStartedFooterContent,
   },
   render: (args) => <AccordionWithState {...args} />,
 }
@@ -212,17 +186,6 @@ export const FizzBuzz: Story = {
         </p>
       </>
     ),
-    footerContent: (completedSteps, steps) =>
-      completedSteps.length === steps.length ? (
-        <div className="rounded-b-lg border-t border-green-100 bg-green-50 p-4 text-sm">
-          <div className="flex items-center">
-            <CheckCircle className="mr-2 h-6 w-6 text-green-500" />
-            <p className="text-green-700">
-              Congratulations! You've completed the FizzBuzz tutorial.
-            </p>
-          </div>
-        </div>
-      ) : null,
   },
   render: (args) => <AccordionWithState {...args} />,
 }
