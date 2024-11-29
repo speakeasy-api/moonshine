@@ -28,3 +28,4 @@ export {
 export { Accordion } from '@/components/Accordion'
 export { MoonshineConfigProvider } from '@/context/ConfigContext'
 export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
+export { GradientCircle } from '@/components/WorkspaceSelector/'

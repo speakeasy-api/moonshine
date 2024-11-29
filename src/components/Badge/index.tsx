@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority'
 type BadgeVariants =
   | 'default'
   | 'secondary'
+  | 'tertiary'
   | 'destructive'
   | 'outline'
   | 'success'
@@ -29,6 +30,7 @@ const badgeVariants = cva<BadgeVariantsCva>(
       variant: {
         default: 'bg-primary text-primary-foreground',
         secondary: 'bg-secondary text-secondary-foreground',
+        tertiary: 'bg-primary/10 text-primary',
         destructive: 'bg-destructive text-destructive-foreground',
         outline: 'text-foreground',
         success: 'bg-green-600 text-green-100',

@@ -6,6 +6,8 @@ interface SubnavItem {
   label: string
   href: string
   active?: boolean
+
+  [key: string]: unknown
 }
 
 interface SubnavProps {
@@ -82,20 +84,20 @@ export function Subnav({ items, renderItem }: SubnavProps) {
           key={item.href}
           data-href={item.href}
           className={cn(
-            'text-muted-foreground relative z-10 cursor-pointer select-none px-4 py-2',
+            'text-muted-foreground relative z-10 cursor-pointer select-none',
             activeItem === item.href && 'text-foreground font-semibold'
           )}
           onClick={() => handleItemClick(item.href)}
           onMouseEnter={() => handleItemHover(item.href)}
           onMouseLeave={() => handleItemHover(null)}
         >
-          {renderItem(item)}
+          {renderItem({ ...item, hovered: hoveredItem === item.href })}
         </div>
       ))}
 
       {indicatorProps && (
         <motion.div
-          className="bg-primary absolute bottom-[-9px] h-[2.75px]"
+          className="bg-primary absolute bottom-0 h-[2.75px]"
           initial={false}
           animate={animateProps}
           transition={transitionProps}
