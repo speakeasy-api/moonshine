@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/Button'
 import { cn } from '@/lib/utils'
 import { CodeSnippet } from '@/index'
 import { ProgrammingLanguage } from '@/types'
