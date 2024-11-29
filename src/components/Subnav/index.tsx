@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { motion, TargetAndTransition, Transition } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 
-interface SubnavItem {
+export interface SubnavItem {
   label: string
   href: string
   active?: boolean
