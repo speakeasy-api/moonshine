@@ -8,6 +8,7 @@ interface GradientCircleProps {
   size?: Size
   transition?: boolean
   showInitial?: boolean
+  inactive?: boolean
 }
 
 const sizeMap: Record<Size, number> = {
@@ -39,6 +40,7 @@ export function GradientCircle({
   size = 'small',
   transition = false,
   showInitial = false,
+  inactive = false,
 }: GradientCircleProps) {
   const initial = useMemo<string | undefined>(
     () => (name.length > 0 ? name[0].toUpperCase() : undefined),
@@ -63,17 +65,18 @@ export function GradientCircle({
     return (acc * 31 + charCode * (i + 1)) >>> 0
   }, 5381)
 
-  // Select two different base colors
-  const colorIndex1 = hash % baseColors.length
-  const colorIndex2 =
-    (colorIndex1 + 1 + (hash % (baseColors.length - 1))) % baseColors.length
+  // Select base color from hash
+  const baseColorIndex = hash % baseColors.length
+  const baseHue = baseColors[baseColorIndex]
 
-  const hue1 = baseColors[colorIndex1]
-  const hue2 = baseColors[colorIndex2]
+  // Create harmonious color pair using analogous colors (30° apart)
+  const hue1 = baseHue
+  const hue2 = (baseHue + 30) % 360 // Wrap around 360 degrees
 
-  // High saturation and balanced lightness for bold colors
+  // Adjust saturation and lightness for better blending
+  // First color is more saturated, second is slightly lighter
   const fromColor = `hsl(${hue1}, 85%, 60%)`
-  const toColor = `hsl(${hue2}, 85%, 55%)`
+  const toColor = `hsl(${hue2}, 75%, 65%)`
 
   const sizeValue = sizeMap[size]
   const borderSize = borderSizeMap[size]
@@ -83,7 +86,8 @@ export function GradientCircle({
       className={cn(
         'gradient-circle relative min-h-6 min-w-6 rounded-full border-white',
         sizeValue && `h-${sizeValue} w-${sizeValue}`,
-        borderSize && `border-${borderSize}`
+        borderSize && `border-${borderSize}`,
+        inactive && 'opacity-50'
       )}
       style={
         {
