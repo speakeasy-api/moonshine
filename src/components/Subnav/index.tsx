@@ -49,23 +49,34 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     : undefined
 
   useEffect(() => {
-    if (!containerRef.current) return
+    const updateIndicator = () => {
+      if (!containerRef.current) return
 
-    const currentHref = hoveredItem || activeItem
-    if (currentHref) {
-      const itemElement = containerRef.current.querySelector<HTMLDivElement>(
-        `[data-href="${currentHref}"]`
-      )
-      if (itemElement) {
-        const { offsetWidth: width, offsetLeft: left } = itemElement
-        setIndicatorProps({
-          width,
-          left,
-        })
+      const currentHref = hoveredItem || activeItem
+      if (currentHref) {
+        const itemElement = containerRef.current.querySelector<HTMLDivElement>(
+          `[data-href="${currentHref}"]`
+        )
+        if (itemElement) {
+          const { offsetWidth: width, offsetLeft: left } = itemElement
+          setIndicatorProps({
+            width,
+            left,
+          })
+        }
+      } else {
+        setIndicatorProps(null)
       }
-    } else {
-      setIndicatorProps(null)
     }
+
+    // Initial update
+    updateIndicator()
+
+    // Add resize listener
+    window.addEventListener('resize', updateIndicator)
+
+    // Cleanup
+    return () => window.removeEventListener('resize', updateIndicator)
   }, [hoveredItem, activeItem])
 
   return (
