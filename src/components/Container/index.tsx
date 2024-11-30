@@ -8,9 +8,7 @@ interface ContainerProps {
 
 export function Container({ children, flex = false }: ContainerProps) {
   return (
-    <div
-      className={cn('h-full w-full md:container md:mx-auto', flex && 'flex')}
-    >
+    <div className={cn('container h-full w-full md:mx-auto', flex && 'flex')}>
       {children}
     </div>
   )
