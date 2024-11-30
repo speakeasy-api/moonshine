@@ -11,15 +11,21 @@ type BadgeVariants =
   | 'warning'
   | 'danger'
 
+type BadgeSizes = 'sm' | 'md' | 'lg'
+
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   as?: React.ElementType
   variant?: BadgeVariants
+  size?: BadgeSizes
 }
 
 type BadgeVariantsCva = {
   variant: {
     [key in BadgeVariants]: string
+  }
+  size: {
+    [key in BadgeSizes]: string
   }
 }
 
@@ -37,6 +43,11 @@ const badgeVariants = cva<BadgeVariantsCva>(
         warning: 'bg-yellow-600 text-yellow-100',
         danger: 'bg-red-600 text-red-100',
       },
+      size: {
+        sm: 'text-xs',
+        md: 'text-sm',
+        lg: 'text-base',
+      },
     },
   }
 )
@@ -44,9 +55,11 @@ const badgeVariants = cva<BadgeVariantsCva>(
 export function Badge({
   children,
   variant = 'default',
+  size = 'md',
   as = 'span',
+  className,
 }: BadgeProps) {
-  const variantClass = badgeVariants({ variant })
+  const variantClass = badgeVariants({ variant, size })
   const Comp = as
-  return <Comp className={cn(variantClass)}>{children}</Comp>
+  return <Comp className={cn(variantClass, className)}>{children}</Comp>
 }
