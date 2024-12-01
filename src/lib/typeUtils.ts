@@ -52,7 +52,10 @@ export function isPaddingHorizontalOrVerticalAxis(
   value: unknown
 ): value is { x: PaddingValue; y: PaddingValue } {
   return (
-    typeof value === 'object' && value !== null && 'x' in value && 'y' in value
+    typeof value === 'object' &&
+    value !== null &&
+    // x or y must be present
+    ('x' in value || 'y' in value)
   )
 }
 
