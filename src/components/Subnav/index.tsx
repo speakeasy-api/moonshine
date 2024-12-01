@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { motion, TargetAndTransition, Transition } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 export interface SubnavItem {
   label: string
@@ -32,14 +32,62 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     left: number
   } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const containerMouseEnterTime = useRef<number | null>(null)
+  const isContainerHovered = useRef(false)
 
   const handleItemClick = (href: string) => {
     setActiveItem(href)
   }
 
-  const handleItemHover = (href: string | null) => {
-    setHoveredItem(href)
-  }
+  const handleContainerMouseEnter = useCallback(() => {
+    containerMouseEnterTime.current = Date.now()
+    isContainerHovered.current = true
+  }, [])
+
+  const handleContainerMouseLeave = useCallback(() => {
+    containerMouseEnterTime.current = null
+    isContainerHovered.current = false
+    setHoveredItem(null)
+  }, [])
+
+  const handleItemHover = useCallback((href: string | null) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current)
+      hoverTimerRef.current = null
+    }
+
+    if (href === null) {
+      setHoveredItem(null)
+    } else {
+      const timeInContainer = containerMouseEnterTime.current
+        ? Date.now() - containerMouseEnterTime.current
+        : 0
+
+      if (timeInContainer < 100) {
+        hoverTimerRef.current = setTimeout(() => {
+          if (isContainerHovered.current) {
+            setHoveredItem(href)
+          }
+        }, 50)
+      } else {
+        hoverTimerRef.current = setTimeout(() => {
+          if (isContainerHovered.current) {
+            setHoveredItem(href)
+          }
+        }, 100)
+      }
+    }
+  }, [])
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current)
+      }
+    }
+  }, [])
 
   const animateProps: TargetAndTransition | undefined = indicatorProps
     ? {
@@ -80,7 +128,12 @@ export function Subnav({ items, renderItem }: SubnavProps) {
   }, [hoveredItem, activeItem])
 
   return (
-    <div ref={containerRef} className="relative flex">
+    <div
+      ref={containerRef}
+      className="relative flex"
+      onMouseEnter={handleContainerMouseEnter}
+      onMouseLeave={handleContainerMouseLeave}
+    >
       {indicatorProps && (
         <motion.div
           className="bg-muted absolute h-full rounded-md"
