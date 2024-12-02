@@ -60,6 +60,22 @@ export default {
       pattern: /^border-\d+$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^flex-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^justify-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^items-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
+    {
+      pattern: /^flex-(nowrap|wrap|wrap-reverse)$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

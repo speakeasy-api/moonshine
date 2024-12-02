@@ -1,81 +1,125 @@
 import React from 'react'
 import { cn, getResponsiveClasses } from '@/lib/utils'
-import {
-  Alignment,
-  Direction,
-  Gap,
-  Pack,
-  Padding,
-  ResponsiveValue,
-  Spacing,
-  Wrap,
-} from '@/types'
-import {
-  alignmentMapper,
-  directionMapper,
-  gapMapper,
-  paddingMapper,
-  packMapper,
-  wrapMapper,
-} from '@/lib/responsiveMappers'
+import { Gap, Padding, ResponsiveValue } from '@/types'
+import { gapMapper, paddingMapper, wrapMapper } from '@/lib/responsiveMappers'
+
+type StackDirection = 'horizontal' | 'vertical'
+type StackAlign = 'stretch' | 'start' | 'center' | 'end' | 'baseline'
+type StackJustify =
+  | 'start'
+  | 'center'
+  | 'end'
+  | 'space-between'
+  | 'space-evenly'
+type StackWrap = 'wrap' | 'nowrap'
+type TailwindJustify =
+  | 'justify-start'
+  | 'justify-center'
+  | 'justify-end'
+  | 'justify-between'
+  | 'justify-evenly'
+type TailwindAlign =
+  | 'items-start'
+  | 'items-center'
+  | 'items-end'
+  | 'items-baseline'
+  | 'items-stretch'
+type TailwindDirection = 'flex-row' | 'flex-col'
 
 interface StackProps {
   children: React.ReactNode
 
-  /** @figma Orientation in Auto Layout */
-  direction?: ResponsiveValue<Direction>
+  /** Specify the orientation for the stack container */
+  direction?: ResponsiveValue<StackDirection>
 
-  /** @figma Spacing between items in Auto Layout */
+  /** Specify the gap between children elements in the stack */
   gap?: ResponsiveValue<Gap>
 
-  /** @figma Space between items in Auto Layout */
-  spacing?: ResponsiveValue<Spacing>
-
-  /** @figma Alignment in Auto Layout */
-  align?: ResponsiveValue<Alignment>
-
-  /** @figma Alignment in Auto Layout when items are packed */
-  mainAxisAlign?: ResponsiveValue<Pack>
-
-  /** @figma Padding in Auto Layout */
+  /** Specify the padding of the stack container */
   padding?: ResponsiveValue<Padding>
 
-  /** @figma Fill container in Auto Layout */
-  stretch?: boolean
+  /** Specify the alignment between items in the cross-axis of the orientation */
+  align?: ResponsiveValue<StackAlign>
 
-  /** Controls item wrapping behavior */
-  wrap?: ResponsiveValue<Wrap>
+  /** Specify how items will be distributed in the stacking direction */
+  justify?: ResponsiveValue<StackJustify>
+
+  /** Specify whether items are forced onto one line or can wrap */
+  wrap?: ResponsiveValue<StackWrap>
 }
 
 export function Stack({
   children,
-  direction = 'column',
+  direction = 'vertical',
   gap = 0,
   padding = 0,
-  align,
-  spacing = 'packed',
-  mainAxisAlign = 'start',
-  stretch = false,
+  align = 'stretch',
+  justify = 'start',
   wrap = 'nowrap',
 }: StackProps) {
+  const alignMapper = (val: StackAlign): TailwindAlign => {
+    switch (val) {
+      case 'start':
+        return 'items-start'
+      case 'center':
+        return 'items-center'
+      case 'end':
+        return 'items-end'
+      case 'baseline':
+        return 'items-baseline'
+      default:
+        return 'items-stretch'
+    }
+  }
+
+  const justifyMapper = (val: StackJustify): TailwindJustify => {
+    switch (val) {
+      case 'start':
+        return 'justify-start'
+      case 'center':
+        return 'justify-center'
+      case 'end':
+        return 'justify-end'
+      case 'space-between':
+        return 'justify-between'
+      case 'space-evenly':
+        return 'justify-evenly'
+      default:
+        return 'justify-start'
+    }
+  }
+
+  const directionToFlexMapper = (val: StackDirection): TailwindDirection => {
+    return val === 'horizontal' ? 'flex-row' : 'flex-col'
+  }
+
   return (
     <div
       className={cn(
         'flex',
-        stretch && direction === 'row' && 'w-full',
-        stretch && direction === 'column' && 'h-full',
-        getResponsiveClasses(direction, directionMapper),
+        getResponsiveClasses(direction, directionToFlexMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),
         getResponsiveClasses(wrap, wrapMapper),
-        align && getResponsiveClasses(align, alignmentMapper),
-        spacing === 'packed' && getResponsiveClasses(mainAxisAlign, packMapper),
-        spacing === 'spaceBetween' && 'justify-between',
-        spacing === 'spaceAround' && 'justify-around',
-        spacing === 'spaceEvenly' && 'justify-evenly',
-        stretch && 'items-stretch'
+        getResponsiveClasses(align, alignMapper),
+        getResponsiveClasses(justify, justifyMapper)
       )}
     >
+      {children}
+    </div>
+  )
+}
+
+interface StackItemProps {
+  children: React.ReactNode
+  /** Allow item to keep size or expand to fill the available space */
+  grow?: ResponsiveValue<boolean>
+}
+
+Stack.Item = function StackItem({ children, grow }: StackItemProps) {
+  const growMapper = (val: boolean) => (val ? 'flex-1' : 'flex-initial')
+  return (
+    <div className={cn(getResponsiveClasses(grow ?? false, growMapper))}>
       {children}
     </div>
   )

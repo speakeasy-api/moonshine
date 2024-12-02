@@ -28,7 +28,7 @@ export const Default: Story = {
       </DropdownMenuTrigger>,
       <DropdownMenuContent align="start" className="max-w-64">
         <DropdownMenuLabel>
-          <Stack direction="column" gap={1}>
+          <Stack direction="vertical" gap={1}>
             <div>Jane Smith</div>
             <div className="text-muted-foreground text-sm font-normal">
               jane@example.com
@@ -37,7 +37,7 @@ export const Default: Story = {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="my-2" />
         <DropdownMenuItem className="cursor-pointer">
-          <Stack direction="row" gap={2} align="center">
+          <Stack direction="horizontal" gap={2} align="center">
             <Icon name="log-out" />
             <span>Log out</span>
           </Stack>

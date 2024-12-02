@@ -46,7 +46,7 @@ function LoggedInMenuContent({
 }: LoggedInMenuContentProps) {
   return (
     <>
-      <Stack padding={3} direction="column">
+      <Stack padding={3}>
         <div className="truncate text-sm font-semibold">{name}</div>
         <div className="text-muted-foreground truncate text-sm" title={email}>
           {email}
