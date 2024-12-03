@@ -62,8 +62,8 @@ export function Stack({
     <div
       className={cn(
         'flex',
-        stretch && direction === 'row' && 'h-full',
-        stretch && direction === 'column' && 'w-full',
+        stretch && direction === 'row' && 'w-full',
+        stretch && direction === 'column' && 'h-full',
         getResponsiveClasses(direction, directionMapper),
         getResponsiveClasses(gap, gapMapper),
         getResponsiveClasses(padding, paddingMapper),

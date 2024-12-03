@@ -1,20 +1,19 @@
 import React from 'react'
-import { Accordion, AccordionStep } from '.'
+import { Wizard, WizardStep } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 import { Badge } from '@/index'
-import { CardTitle } from '../ui/card'
 import { Text } from '@/components/Text'
 
-const meta: Meta<typeof Accordion> = {
-  component: Accordion,
+const meta: Meta<typeof Wizard> = {
+  component: Wizard,
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof Accordion>
+type Story = StoryObj<typeof Wizard>
 
-const steps: AccordionStep[] = [
+const steps: WizardStep[] = [
   {
     title: 'Create your first SDK',
     description:
@@ -66,35 +65,28 @@ const steps: AccordionStep[] = [
   },
 ]
 
-interface AccordionWithStateProps {
-  steps: AccordionStep[]
+interface WizardWithStateProps {
+  steps: WizardStep[]
   headerContent: (
     completedSteps: number[],
-    steps: AccordionStep[]
+    steps: WizardStep[]
   ) => React.ReactNode
 }
 
-const AccordionWithState = ({
-  steps,
-  headerContent,
-}: AccordionWithStateProps) => {
-  const [currentStep, setCurrentStep] = React.useState(1)
-  const [completedSteps, setCompletedSteps] = React.useState<number[]>([])
+const WizardWithState = ({ steps, headerContent }: WizardWithStateProps) => {
   return (
-    <Accordion
+    <Wizard
       steps={steps}
       headerContent={headerContent}
-      currentStep={currentStep}
-      completedSteps={completedSteps}
-      onStepComplete={(step) => setCompletedSteps([...completedSteps, step])}
-      onStepChange={(step) => setCurrentStep(step)}
+      currentStep={1}
+      completedSteps={[]}
     />
   )
 }
 
 const GetStartedHeaderContent = (
   completedSteps: number[],
-  steps: AccordionStep[]
+  steps: WizardStep[]
 ) => (
   <>
     <div className="flex items-center gap-2">
@@ -118,11 +110,9 @@ export const GetStarted: Story = {
     steps,
     currentStep: 1,
     completedSteps: [],
-    onStepComplete: () => {},
-    onStepChange: () => {},
     headerContent: GetStartedHeaderContent,
   },
-  render: (args) => <AccordionWithState {...args} />,
+  render: (args) => <WizardWithState {...args} />,
 }
 
 export const FizzBuzz: Story = {
@@ -177,7 +167,6 @@ export const FizzBuzz: Story = {
     ],
     headerContent: () => (
       <>
-        <CardTitle>FizzBuzz</CardTitle>
         <p className="text-muted-foreground text-sm">
           Write a function that prints the numbers 1 to 100, but for multiples
           of 3 print "Fizz" instead of the number, for multiples of 5 print
@@ -187,5 +176,5 @@ export const FizzBuzz: Story = {
       </>
     ),
   },
-  render: (args) => <AccordionWithState {...args} />,
+  render: (args) => <WizardWithState {...args} />,
 }

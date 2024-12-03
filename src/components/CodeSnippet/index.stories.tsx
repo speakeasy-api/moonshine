@@ -2,6 +2,7 @@ import { expect, within } from '@storybook/test'
 import { userEvent } from '@storybook/test'
 import { CodeSnippet } from '.'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof CodeSnippet> = {
   component: CodeSnippet,
@@ -151,5 +152,14 @@ export const Interactive: Story = {
     expect(navigator.clipboard.readText()).resolves.toBe(
       'console.log("Hello, world!")'
     )
+  },
+}
+
+export const WithOnSelectOrCopy: Story = {
+  args: {
+    code: 'console.log("Hello, world!")',
+    language: 'javascript',
+    copyable: true,
+    onSelectOrCopy: fn(),
   },
 }

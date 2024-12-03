@@ -25,7 +25,12 @@ export {
   type Org,
   type Workspace,
 } from '@/components/WorkspaceSelector'
-export { Accordion } from '@/components/Accordion'
+export {
+  Wizard,
+  type WizardStep,
+  type WizardCommand,
+} from '@/components/Wizard'
 export { MoonshineConfigProvider } from '@/context/ConfigContext'
 export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
 export { GradientCircle } from '@/components/GradientCircle'
+export { Alert } from '@/components/Alert'

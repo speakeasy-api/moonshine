@@ -7,6 +7,9 @@ export function Wordmark({ fill }: SvgProps) {
     <svg
       aria-label="Speakeasy Logo"
       xmlns="http://www.w3.org/2000/svg"
+      width={166}
+      height={20}
+      viewBox="0 0 166 20"
       fill="none"
     >
       <g opacity="1">

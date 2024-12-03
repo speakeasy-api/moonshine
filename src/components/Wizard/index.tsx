@@ -1,42 +1,50 @@
 import * as React from 'react'
-import { Button } from '@/components/Button'
 import { cn } from '@/lib/utils'
 import { CodeSnippet } from '@/index'
 import { ProgrammingLanguage } from '@/types'
 import { useMemo } from 'react'
 
-export interface AccordionCommand {
+export interface WizardCommand {
   code: string
   language: ProgrammingLanguage
   label: string
 }
 
-export interface AccordionStep {
+export interface WizardStep {
   title: string
   description: string
-  commands?: AccordionCommand[]
+  commands?: WizardCommand[]
+  onSelectOrCopy?: () => void
 }
 
-interface AccordionProps {
-  steps: AccordionStep[]
+interface WizardProps {
+  /**
+   * The steps to display in the wizard
+   */
+  steps: WizardStep[]
+
+  /**
+   * The current step number, starting from 1
+   */
   currentStep: number
+
+  /**
+   * The steps that have been completed, starting from 1
+   */
   completedSteps: number[]
-  onStepComplete: (step: number) => void
-  onStepChange: (step: number) => void
+
   headerContent: (
     completedSteps: number[],
-    steps: AccordionStep[]
+    steps: WizardStep[]
   ) => React.ReactNode
 }
 
-export function Accordion({
+export function Wizard({
   steps,
   currentStep,
   completedSteps,
-  onStepComplete,
-  onStepChange,
   headerContent,
-}: AccordionProps) {
+}: WizardProps) {
   const [stepHeights, setStepHeights] = React.useState<Map<number, number>>(
     new Map()
   )
@@ -88,15 +96,6 @@ export function Accordion({
     if (completedSteps.includes(index + 1)) return 'completed'
     if (index + 1 === currentStep) return 'current'
     return 'upcoming'
-  }
-
-  const handleNextStep = () => {
-    if (currentStep < 3) {
-      onStepComplete(currentStep)
-      onStepChange(currentStep + 1)
-    } else if (currentStep === 3 && !completedSteps.includes(3)) {
-      onStepComplete(currentStep)
-    }
   }
 
   const trackHeight = useMemo(() => {
@@ -163,7 +162,7 @@ export function Accordion({
                             'bg-primary text-foreground dark:text-background',
                           status === 'current' &&
                             'scale-125 bg-blue-500 text-white',
-                          status === 'upcoming' && 'bg-zinc-400 text-white'
+                          status === 'upcoming' && 'bg-muted text-white'
                         )}
                       >
                         {stepNumber}
@@ -200,6 +199,7 @@ export function Accordion({
                             key={cmdIndex}
                             code={command.code}
                             language={command.language}
+                            onSelectOrCopy={step.onSelectOrCopy}
                             copyable
                             fontSize="small"
                           />
@@ -212,15 +212,6 @@ export function Accordion({
           </div>
         </div>
       </div>
-
-      {currentStep <= steps.length &&
-        completedSteps.length !== steps.length && (
-          <div className="mx-auto mt-4">
-            <Button variant="secondary" onClick={handleNextStep}>
-              {currentStep === steps.length ? 'Finish' : 'Next'}
-            </Button>
-          </div>
-        )}
     </div>
   )
 }

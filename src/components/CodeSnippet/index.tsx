@@ -19,6 +19,7 @@ interface CodeSnippetProps {
   fontSize?: Size
   minWidth?: string
   theme?: Theme
+  onSelectOrCopy?: () => void
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -92,6 +93,7 @@ export function CodeSnippet({
   promptSymbol,
   inline = false,
   fontSize = 'medium',
+  onSelectOrCopy,
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [highlighted, setHighlighted] = useState(false)
@@ -127,6 +129,7 @@ export function CodeSnippet({
 
     setTimeout(() => {
       navigator.clipboard.writeText(code)
+      onSelectOrCopy?.()
       setTimeout(() => {
         setCopying(false)
         setHighlighted(false)
@@ -160,20 +163,21 @@ export function CodeSnippet({
     >
       <div
         className={cn(
-          'snippet-inner flex w-full flex-row rounded-lg p-4',
+          'snippet-inner flex w-full flex-row gap-2 rounded-lg p-4',
           bgColor
         )}
       >
         {language === 'bash' && (
-          <div className="text-muted-foreground ml-1 self-center font-mono font-light">
+          <div className="text-muted-foreground self-center font-mono font-light">
             {promptSymbol ?? '$'}
           </div>
         )}
         {highlightedCodeState && (
           <Pre
             code={highlightedCodeState}
+            onClick={onSelectOrCopy}
             className={cn(
-              'text-foreground highlighted-code ml-1 mr-2 w-full self-center font-mono outline-none',
+              'text-foreground highlighted-code inline-flex w-fit self-center font-mono outline-none',
               highlighted && theme === 'dark' && '!bg-zinc-500/40',
               highlighted && theme === 'light' && '!bg-zinc-200/40',
               fontSizeMap[fontSize],
@@ -186,7 +190,7 @@ export function CodeSnippet({
         {copyable && (
           <div
             className={cn(
-              'ml-3 mr-1 flex self-center text-white',
+              'ml-auto mr-1 flex self-center text-white',
               isMultiline && 'mt-1 self-start'
             )}
           >
