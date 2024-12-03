@@ -11,6 +11,10 @@ export default meta
 
 type Story = StoryObj<typeof Subnav>
 
+const defaultRenderItem = (item: { label: string; href: string }) => (
+  <div className="px-4 py-2 text-sm">{item.label}</div>
+)
+
 export const Default: Story = {
   args: {
     items: [
@@ -18,13 +22,13 @@ export const Default: Story = {
       { label: 'About', href: '/about' },
       { label: 'Contact', href: '/contact' },
     ],
-    renderItem: (item) => item.label,
+    renderItem: defaultRenderItem,
   },
 }
 
 export const ManyItems: Story = {
   args: {
-    renderItem: (item) => item.label,
+    renderItem: defaultRenderItem,
     items: Array.from({ length: 12 }, (_, index) => ({
       label: `Item ${index + 1}`,
       href: `/item-${index + 1}`,
