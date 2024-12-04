@@ -32,7 +32,7 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     left: number
   } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerMouseEnterTime = useRef<number | null>(null)
   const isContainerHovered = useRef(false)
 
