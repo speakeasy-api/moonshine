@@ -127,6 +127,11 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     return () => window.removeEventListener('resize', updateIndicator)
   }, [hoveredItem, activeItem])
 
+  useEffect(() => {
+    const newActiveItem = items.find((item) => item.active)?.href ?? null
+    setActiveItem(newActiveItem)
+  }, [items])
+
   return (
     <div
       ref={containerRef}
