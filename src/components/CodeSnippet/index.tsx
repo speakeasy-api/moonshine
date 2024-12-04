@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useMemo } from 'react'
+import { useCallback, useState, useEffect, useMemo, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
 import useTailwindTheme from '@/hooks/useTailwindTheme'
@@ -98,6 +98,33 @@ export function CodeSnippet({
   shimmer = false,
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
+  const [containerWidth, setContainerWidth] = useState(0)
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.getBoundingClientRect().width
+        // Only update if we have a non-zero width
+        if (width > 0) {
+          setContainerWidth(width)
+        }
+      }
+    }
+
+    // Initial measurement
+    updateWidth()
+
+    // Create ResizeObserver for more reliable width tracking
+    const resizeObserver = new ResizeObserver(updateWidth)
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current)
+    }
+
+    return () => resizeObserver.disconnect()
+  }, [])
+
   const [highlighted, setHighlighted] = useState(false)
   const [highlightedCodeState, setHighlightedCodeState] = useState<
     HighlightedCode | undefined
@@ -151,6 +178,8 @@ export function CodeSnippet({
         inline && 'inline-flex',
         shimmer && 'shimmer'
       )}
+      style={{ '--width': `${containerWidth}px` } as React.CSSProperties}
+      ref={containerRef}
     >
       <div
         className={cn(

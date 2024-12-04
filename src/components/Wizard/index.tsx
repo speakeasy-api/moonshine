@@ -5,16 +5,18 @@ import { ProgrammingLanguage } from '@/types'
 import { useMemo } from 'react'
 
 export interface WizardCommand {
+  id: string
   code: string
   language: ProgrammingLanguage
   label: string
+  active?: boolean
+  onSelectOrCopy?: (id: string) => void
 }
 
 export interface WizardStep {
   title: string
   description: string
   commands?: WizardCommand[]
-  onSelectOrCopy?: () => void
 }
 
 interface WizardProps {
@@ -126,90 +128,90 @@ export function Wizard({
         </div>
       </div>
 
-      <div className="p-6">
-        <div className="relative">
-          <div className="bg-border absolute bottom-0 left-4 top-0 w-px overflow-y-hidden">
-            <div
-              className="bg-primary absolute left-0 top-0 w-full transition-all duration-500"
-              style={{
-                height: trackHeight,
-              }}
-            />
-          </div>
+      <div className="relative mt-8 pl-3">
+        <div className="bg-border absolute bottom-0 left-7 top-0 w-px overflow-y-hidden">
+          <div
+            className="bg-primary absolute left-0 top-0 w-full transition-all duration-500"
+            style={{
+              height: trackHeight,
+            }}
+          />
+        </div>
 
-          <div>
-            {steps.map((step, index) => {
-              const status = getStepStatus(index)
-              const stepNumber = index + 1
+        <div className="flex flex-col gap-8">
+          {steps.map((step, index) => {
+            const status = getStepStatus(index)
+            const stepNumber = index + 1
 
-              return (
+            return (
+              <div
+                key={index}
+                ref={(el) => stepRefs.current.set(stepNumber, el)}
+              >
                 <div
-                  key={index}
-                  className="py-4"
-                  ref={(el) => stepRefs.current.set(stepNumber, el)}
+                  className={cn(
+                    'relative pl-16',
+                    status === 'completed' && 'text-muted-foreground'
+                  )}
                 >
-                  <div
-                    className={cn(
-                      'relative pl-16',
-                      status === 'completed' && 'text-muted-foreground'
-                    )}
-                  >
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={cn(
-                          'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold',
-                          status === 'completed' &&
-                            'bg-primary text-foreground dark:text-background',
-                          status === 'current' &&
-                            'scale-125 bg-blue-500 text-white',
-                          status === 'upcoming' && 'bg-muted text-white'
-                        )}
-                      >
-                        {stepNumber}
-                      </div>
-
-                      <h3
-                        className={cn(
-                          'font-semibold tracking-tight',
-                          status === 'upcoming' && 'opacity-50'
-                        )}
-                      >
-                        {step.title}
-                      </h3>
-                    </div>
-
-                    <p
-                      className={cn(
-                        'mb-4 mt-2 text-sm',
-                        status === 'upcoming' && 'opacity-50'
-                      )}
-                    >
-                      {step.description}
-                    </p>
-
+                  <div className="flex items-center gap-2">
                     <div
                       className={cn(
-                        'flex w-max flex-col gap-5',
+                        'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold',
+                        // TODO: update these to use new color tokens
+                        status === 'completed' && 'bg-emerald-500 text-black',
+                        status === 'current' &&
+                          'scale-110 bg-zinc-400 text-zinc-800',
+                        status === 'upcoming' && 'bg-zinc-900 text-zinc-400'
+                      )}
+                    >
+                      {stepNumber}
+                    </div>
+
+                    <h3
+                      className={cn(
+                        'text-2xl font-semibold tracking-tight',
                         status === 'upcoming' && 'opacity-50'
                       )}
                     >
-                      {status === 'current' &&
-                        step.commands?.map((command, cmdIndex) => (
-                          <CodeSnippet
-                            key={cmdIndex}
-                            code={command.code}
-                            language={command.language}
-                            onSelectOrCopy={step.onSelectOrCopy}
-                            copyable
-                            fontSize="small"
-                          />
-                        ))}
-                    </div>
+                      {step.title}
+                    </h3>
+                  </div>
+
+                  <p
+                    className={cn(
+                      'mb-4 mt-2',
+                      status === 'upcoming' && 'opacity-50'
+                    )}
+                  >
+                    {step.description}
+                  </p>
+
+                  <div
+                    className={cn(
+                      'mt-8 flex w-full flex-col gap-5',
+                      status === 'upcoming' && 'opacity-50'
+                    )}
+                  >
+                    {status === 'current' &&
+                      step.commands?.map((command, cmdIndex) => (
+                        <CodeSnippet
+                          key={cmdIndex}
+                          code={command.code}
+                          language={command.language}
+                          onSelectOrCopy={() =>
+                            command.onSelectOrCopy?.(command.id)
+                          }
+                          copyable
+                          fontSize="small"
+                          shimmer={command.active}
+                        />
+                      ))}
                   </div>
                 </div>
-              )
-            })}
-          </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
