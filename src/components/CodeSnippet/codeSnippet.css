@@ -87,8 +87,8 @@
   right: 0;
   bottom: 0;
   animation:
-    rotate -0.64s linear 4s infinite,
-    shimmer -0.64s linear 4s infinite;
+    rotate -0.64s linear 5s infinite,
+    shimmer -0.64s linear 5s infinite;
   z-index: 1;
 }
 
