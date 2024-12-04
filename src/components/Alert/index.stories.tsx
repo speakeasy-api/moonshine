@@ -101,15 +101,6 @@ export const Multiline: Story = {
   decorators: defaultDecorators,
 }
 
-export const CustomIcon: Story = {
-  args: {
-    variant: 'custom',
-    iconName: 'alarm-clock',
-    children: 'This is an alert',
-  },
-  decorators: defaultDecorators,
-}
-
 export const WithContainer: Story = {
   args: {
     variant: 'default',
