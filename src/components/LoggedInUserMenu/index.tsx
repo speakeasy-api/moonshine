@@ -20,11 +20,12 @@ export function LoggedInUserMenu({
   name,
   onSignOut,
   imageUrl,
+  size = 'small',
 }: LoggedInUserProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer outline-none">
-        <UserAvatar name={name} imageUrl={imageUrl} />
+        <UserAvatar name={name} imageUrl={imageUrl} size={size} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-2 max-w-64 p-0">
         <LoggedInMenuContent name={name} email={email} onSignOut={onSignOut} />

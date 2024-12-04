@@ -1,27 +1,42 @@
-import { Button, Icon } from '@/index'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { highlightText, ShjLanguage } from '@speed-highlight/core'
-import '@speed-highlight/core/themes/dark.css'
+import { useCallback, useState, useEffect, useMemo, useRef } from 'react'
 import { cn } from '@/lib/utils'
+import { ProgrammingLanguage, Size } from '@/types'
+import useTailwindTheme from '@/hooks/useTailwindTheme'
+import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
+import { AnimatePresence, motion } from 'framer-motion'
+import './codeSnippet.css'
+import { Icon } from '../Icon'
+import { useConfig } from '@/hooks/useConfig'
 
-type ProgrammingLanguage =
-  | 'javascript'
-  | 'typescript'
-  | 'python'
-  | 'bash'
-  | 'json'
-  | 'go'
-  | 'dotnet'
-  | 'java'
+type Theme = 'dark' | 'light'
 
 interface CodeSnippetProps {
   code: string
   copyable?: boolean
   language: ProgrammingLanguage
   promptSymbol?: React.ReactNode
+  inline?: boolean
+  fontSize?: Size
+  minWidth?: string
+  theme?: Theme
+  onSelectOrCopy?: () => void
+  shimmer?: boolean
 }
 
-function getLanguage(language: ProgrammingLanguage): ShjLanguage | undefined {
+const fontSizeMap: Record<Size, string> = {
+  small: 'text-sm',
+  medium: 'text-sm',
+  large: 'text-base',
+  xl: 'text-lg',
+  '2xl': 'text-xl',
+}
+
+const copyIconVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: { opacity: 1, scale: 1 },
+}
+
+function getLanguage(language: ProgrammingLanguage): string {
   switch (language) {
     case 'javascript':
       return 'js'
@@ -42,90 +57,200 @@ function getLanguage(language: ProgrammingLanguage): ShjLanguage | undefined {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+const codehikeThemeNames = [
+  'dark-plus',
+  'dracula-soft',
+  'dracula',
+  'github-dark',
+  'github-dark-dimmed',
+  'github-from-css',
+  'github-light',
+  'light-plus',
+  'material-darker',
+  'material-default',
+  'material-from-css',
+  'material-lighter',
+  'material-ocean',
+  'material-palenight',
+  'min-dark',
+  'min-light',
+  'monokai',
+  'nord',
+  'one-dark-pro',
+  'poimandres',
+  'slack-dark',
+  'slack-ochin',
+  'solarized-dark',
+  'solarized-light',
+] as const
+
+type CodehikeTheme = (typeof codehikeThemeNames)[number]
+
 export function CodeSnippet({
   code,
   copyable = false,
   language,
   promptSymbol,
+  inline = false,
+  fontSize = 'medium',
+  onSelectOrCopy,
+  shimmer = false,
 }: CodeSnippetProps) {
-  const [copied, setCopied] = useState(false)
-  const [highlighted, setHighlighted] = useState(false)
-  const [highlightedCode, setHighlightedCode] = useState(code)
+  const [copying, setCopying] = useState(false)
+  const [containerWidth, setContainerWidth] = useState(0)
 
-  const codeRef = useRef<HTMLPreElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    const highlight = async () => {
-      if (codeRef.current) {
-        const lang = getLanguage(language)
-        if (lang) {
-          const highlightedCode = await highlightText(code, lang, false)
-          setHighlightedCode(highlightedCode)
-          setHighlighted(true)
+    const updateWidth = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.getBoundingClientRect().width
+        // Only update if we have a non-zero width
+        if (width > 0) {
+          setContainerWidth(width)
         }
       }
     }
-    highlight()
-  }, [])
 
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
+    // Initial measurement
+    updateWidth()
 
-    if (codeRef.current) {
-      codeRef.current.focus()
-      const range = document.createRange()
-
-      range.selectNodeContents(codeRef.current)
-      const selection = window.getSelection()
-      selection?.removeAllRanges()
-      selection?.addRange(range)
+    // Create ResizeObserver for more reliable width tracking
+    const resizeObserver = new ResizeObserver(updateWidth)
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current)
     }
 
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  const [highlighted, setHighlighted] = useState(false)
+  const [highlightedCodeState, setHighlightedCodeState] = useState<
+    HighlightedCode | undefined
+  >(undefined)
+  const isMultiline = code.split('\n').length > 1
+  const { themeElement } = useConfig()
+  const theme = useTailwindTheme(themeElement)
+
+  const codehikeTheme = useMemo<CodehikeTheme>(() => {
+    if (theme === 'light') return 'solarized-light'
+    return 'nord'
+  }, [theme])
+
+  useEffect(() => {
+    if (!language) return
+    async function highlightCode() {
+      const rawCode: RawCode = {
+        value: code,
+        lang: getLanguage(language),
+        meta: '',
+      }
+      const highlighted = await highlight(rawCode, codehikeTheme)
+      setHighlightedCodeState(highlighted)
+    }
+    highlightCode()
+  }, [code, language, codehikeTheme])
+
+  const handleCopy = useCallback(() => {
+    setHighlighted(true)
+    setCopying(true)
+    navigator.clipboard.writeText(code)
     setTimeout(() => {
-      setCopied(false)
       setHighlighted(false)
-      const selection = window.getSelection()
-      selection?.removeAllRanges()
-    }, 1000)
+      setCopying(false)
+      onSelectOrCopy?.()
+    }, 750)
   }, [code])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
 
+  const bgColor = useMemo(() => {
+    return theme === 'dark' ? 'bg-card' : 'bg-neutral-100'
+  }, [highlighted, theme])
+
   return (
-    <div className="inline-flex flex-row items-start rounded-lg bg-zinc-900 p-2">
-      {language === 'bash' && (
-        <div className="text-muted-foreground ml-1 mr-0.5 self-center font-mono font-light">
-          {promptSymbol ?? '$'}
-        </div>
+    <div
+      data-theme={theme}
+      className={cn(
+        `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
+        inline && 'inline-flex',
+        shimmer && 'shimmer'
       )}
-      <pre
-        ref={codeRef}
-        onBeforeInput={handleBeforeInput}
+      style={{ '--width': `${containerWidth}px` } as React.CSSProperties}
+      ref={containerRef}
+    >
+      <div
         className={cn(
-          '!my-0 self-center !bg-transparent !py-0 px-2 font-mono !text-sm font-normal text-white outline-none',
-          highlighted && 'selection:bg-zinc-800'
+          'snippet-inner flex w-full flex-row gap-2 rounded-lg p-4',
+          bgColor
         )}
-        dangerouslySetInnerHTML={{
-          __html: highlightedCode,
-        }}
-      ></pre>
-      {copyable && (
-        <div className="ml-1">
-          <Button
-            role="button"
-            variant="ghost"
-            size="icon"
-            onClick={handleCopy}
-          >
-            {copied ? (
-              <Icon fill="green" name="circle-check-big" />
-            ) : (
-              <Icon name="copy" />
+      >
+        {language === 'bash' && (
+          <div className="text-muted-foreground self-center font-mono font-light">
+            {promptSymbol ?? '$'}
+          </div>
+        )}
+        {highlightedCodeState && (
+          <Pre
+            code={highlightedCodeState}
+            onClick={onSelectOrCopy}
+            className={cn(
+              'text-foreground highlighted-code inline-flex w-fit self-center font-mono outline-none',
+              highlighted && theme === 'dark' && '!bg-zinc-500/40',
+              highlighted && theme === 'light' && '!bg-zinc-200/40',
+              fontSizeMap[fontSize],
+              isMultiline && 'min-w-32'
             )}
-          </Button>
-        </div>
-      )}
+            onBeforeInput={handleBeforeInput}
+          />
+        )}
+
+        {copyable && (
+          <div
+            className={cn(
+              'ml-auto mr-1 flex self-center text-white',
+              isMultiline && 'mt-1 self-start'
+            )}
+          >
+            <button
+              role="button"
+              className={cn(
+                'relative ml-2 border-none bg-transparent outline-none',
+                theme === 'dark' && 'text-white',
+                theme === 'light' && 'text-black'
+              )}
+              onClick={handleCopy}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {copying ? (
+                  <motion.span
+                    key="checkmark"
+                    variants={copyIconVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-foreground"
+                  >
+                    <Icon name="check" stroke="currentColor" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="copy"
+                    variants={copyIconVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-foreground"
+                    exit="hidden"
+                  >
+                    <Icon name="copy" stroke="currentColor" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

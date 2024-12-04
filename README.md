@@ -24,13 +24,23 @@ pnpm add @speakeasy-api/moonshine
 Reference the CSS file in your project:
 
 ```ts
-import "@speakeasy-api/moonshine/moonshine.css";
+import '@speakeasy-api/moonshine/moonshine.css'
+```
+
+Wrap your application in the `MoonshineConfigProvider` component, passing in the HTML element where the tailwind dark/light class is applied:
+
+```tsx
+import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
+
+<MoonshineConfigProvider themeElement={document.documentElement}>
+  <App />
+</MoonshineConfigProvider>
 ```
 
 Then you can import components from the package:
 
 ```tsx
-import { Grid } from "@speakeasy-api/moonshine";
+import { Grid } from '@speakeasy-api/moonshine'
 ```
 
 The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
@@ -44,12 +54,15 @@ The package is built with [vite](https://vitejs.dev/), and is distributed in bot
 3. Run `pnpm build` to build the package
 4. Run `pnpm storybook` to start the storybook server
 
+If you'd like to develop Moonshine in tandem with another app, you can follow the steps outlined below in the **Linking the library locally** section.
+
 ### Guidelines
 
 - We're using [Storybook](https://storybook.js.org/) to develop the components.
 - Components should be added to the `src/components` directory.
 - Each component should have its own directory. e.g `src/components/Box`, `src/components/Button` etc.
 - Each component should have a corresponding Storybook story file located at `src/components/{Your Component}/index.stories.tsx`, with several stories for different use cases.
+- Shadcn components **should not** be exported directly from `src/index.ts`.
 
 ### Workflow
 
@@ -94,14 +107,20 @@ We're using [Vitest](https://vitest.dev/) and [@testing-library/react](https://t
 
 Run `pnpm test` to run the tests.
 
-### Packing the library locally
+### Linking the library locally
 
-If you want to test that the library is being packaged correctly and can be used from a client app, run `pnpm pack` to pack the library into a tarball.
+Run `pnpm build:watch` within Moonshine to build the library and watch for changes.
 
-Then install the package from the tarball in another application:
+Then run `pnpm link ../path/to/moonshine` within the app that will use the library. For the registry `webapp` directory (assuming a standard cloning setup where `moonshine` is a sibling of the registry repo), it would be:
 
 ```bash
-pnpm install ../moonshine/speakeasy-api-moonshine-0.0.1.tgz 
+pnpm link ../../../../moonshine
 ```
 
-This will add a `file:` entry to your `package.json` for the local moonshine package.
+The lockfile file within your app should referenced the linked copy:
+
+```yaml
+'@speakeasy-api/moonshine':
+  specifier: ^0.43.1
+  version: link:../../../../moonshine
+```

@@ -21,3 +21,17 @@ export const Icon: Story = {
     variant: 'icon',
   },
 }
+
+export const MutedIcon: Story = {
+  args: {
+    variant: 'icon',
+    muted: true,
+  },
+}
+
+export const MutedWordmark: Story = {
+  args: {
+    variant: 'wordmark',
+    muted: true,
+  },
+}
