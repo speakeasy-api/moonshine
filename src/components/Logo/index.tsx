@@ -10,7 +10,7 @@ interface LogoProps {
 // aspect
 // todo: move to design system
 const defaultFill = '#fbe331'
-const mutedFill = 'rgba(255, 255, 255, 0.5)'
+const mutedFill = 'rgba(255, 255, 255, 1)'
 
 export function Logo({ variant, muted }: LogoProps) {
   switch (variant) {
