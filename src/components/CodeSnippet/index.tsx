@@ -20,6 +20,7 @@ interface CodeSnippetProps {
   minWidth?: string
   theme?: Theme
   onSelectOrCopy?: () => void
+  shimmer?: boolean
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -94,6 +95,7 @@ export function CodeSnippet({
   inline = false,
   fontSize = 'medium',
   onSelectOrCopy,
+  shimmer = false,
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [highlighted, setHighlighted] = useState(false)
@@ -124,16 +126,13 @@ export function CodeSnippet({
   }, [code, language, codehikeTheme])
 
   const handleCopy = useCallback(() => {
-    setCopying(true)
     setHighlighted(true)
-
+    setCopying(true)
+    navigator.clipboard.writeText(code)
     setTimeout(() => {
-      navigator.clipboard.writeText(code)
+      setHighlighted(false)
+      setCopying(false)
       onSelectOrCopy?.()
-      setTimeout(() => {
-        setCopying(false)
-        setHighlighted(false)
-      }, 750)
     }, 750)
   }, [code])
 
@@ -141,7 +140,7 @@ export function CodeSnippet({
     event.preventDefault()
 
   const bgColor = useMemo(() => {
-    return theme === 'dark' ? 'bg-zinc-900' : 'bg-neutral-100'
+    return theme === 'dark' ? 'bg-card' : 'bg-neutral-100'
   }, [highlighted, theme])
 
   return (
@@ -150,16 +149,8 @@ export function CodeSnippet({
       className={cn(
         `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
         inline && 'inline-flex',
-        copying && 'copied'
+        shimmer && 'shimmer'
       )}
-      style={
-        {
-          '--gradient':
-            theme === 'dark'
-              ? 'linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(102, 102, 102, 0.4) 50%, rgba(255, 255, 255, 0) 100%)'
-              : 'linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0) 100%)',
-        } as React.CSSProperties
-      }
     >
       <div
         className={cn(
