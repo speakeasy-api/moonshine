@@ -1,12 +1,50 @@
-@keyframes pulse {
-  from {
-    transform: scale(1);
-    rotate: 0deg;
+@property --rotation {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --x {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes rotate {
+  0% {
+    --rotation: 0deg;
   }
 
-  to {
-    transform: scale(2.5);
-    rotate: 360deg;
+  32.8228% {
+    --rotation: 0deg;
+  }
+  50% {
+    --rotation: 180deg;
+  }
+  82.8228% {
+    --rotation: 180deg;
+  }
+  100% {
+    --rotation: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    --x: 20px;
+  }
+
+  32.8228% {
+    --x: 246px;
+  }
+  50% {
+    --x: 246px;
+  }
+  82.8228% {
+    --x: 20px;
+  }
+  100% {
+    --x: 20px;
   }
 }
 
@@ -29,16 +67,28 @@
   visibility: hidden;
 }
 
-.copied::before {
+.shimmer::before {
   content: '';
   display: block;
+  padding: 1px;
+  background: conic-gradient(
+      from calc(var(--rotation) - 80deg) at var(--x) 30px,
+      transparent 0,
+      rgba(255, 255, 255, 0.4) 20%,
+      transparent 25%
+    ),
+    transparent;
+  transition: all 0.2s ease;
+  transform: translateZ(0);
   visibility: visible;
-  background: var(--gradient);
-  height: 100%;
-  width: 100%;
   position: absolute;
-  transform: translate(0);
-  animation: pulse 2.5s ease;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation:
+    rotate -0.64s linear 4s infinite,
+    shimmer -0.64s linear 4s infinite;
   z-index: 1;
 }
 

@@ -163,3 +163,12 @@ export const WithOnSelectOrCopy: Story = {
     onSelectOrCopy: fn(),
   },
 }
+
+export const Shimmer: Story = {
+  args: {
+    code: 'console.log("Hello, world!")',
+    language: 'javascript',
+    copyable: true,
+    shimmer: true,
+  },
+}
