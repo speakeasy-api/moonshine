@@ -18,8 +18,6 @@
     --muted-foreground: 240 4% 46%;
     --accent: 240 6% 90%;
     --accent-foreground: 240 6% 10%;
-    --destructive: 345 83% 41%;
-    --destructive-foreground: 356 100% 97%;
     --border: 240 6% 90%;
     --input: 240 5% 84%;
     --ring: 217 91% 60%;
@@ -37,14 +35,16 @@
     --sidebar-accent-foreground: 240 6% 10%;
     --sidebar-border: 240 6% 90%;
     --sidebar-ring: 240 5% 65%;
-    --success: 163 94% 24%;
-    --success-foreground: 152 81% 96%;
-    --warning: 26 90% 37%;
-    --warning-foreground: 48 100% 96%;
-    --info: 201 96% 32%;
-    --info-foreground: 214 100% 97%;
+    --success: 161 76% 27%;
+    --success-foreground: 0 0% 98%;
+    --destructive: 345 83% 41%;
+    --destructive-foreground: 0 0% 98%;
+    --warning: 26 89% 37%;
+    --warning-foreground: 0 0% 98%;
+    --info: 206 67% 38%;
+    --info-foreground: 0 0% 98%;
     --feature: 263 70% 50%;
-    --feature-foreground: 250 100% 98%;
+    --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
     --score-red: 10 78% 54%;
@@ -90,8 +90,6 @@
     --muted-foreground: 240 5% 65%;
     --accent: 240 6% 10%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 350 89% 60%;
-    --destructive-foreground: 356 100% 97%;
     --border: 240 4% 16%;
     --input: 240 4% 16%;
     --ring: 217 91% 60%;
@@ -109,14 +107,16 @@
     --sidebar-accent-foreground: 240 5% 96%;
     --sidebar-border: 240 4% 16%;
     --sidebar-ring: 240 5% 84%;
-    --success: 160 84% 39%;
-    --success-foreground: 152 81% 96%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 48 100% 96%;
-    --info: 199 89% 48%;
-    --info-foreground: 214 100% 97%;
-    --feature: 258 90% 66%;
-    --feature-foreground: 250 100% 98%;
+    --success: 161 76% 27%;
+    --success-foreground: 0 0% 98%;
+    --destructive: 345 83% 41%;
+    --destructive-foreground: 0 0% 98%;
+    --warning: 26 89% 37%;
+    --warning-foreground: 0 0% 98%;
+    --info: 206 67% 38%;
+    --info-foreground: 0 0% 98%;
+    --feature: 263 70% 50%;
+    --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
     --score-red: 10 78% 54%;

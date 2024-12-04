@@ -14,21 +14,24 @@ const alertVariants = cva<{
   modifiers: {
     [k in Modifier]: string
   }
-}>(`min-w-48 flex flex-row items-center px-3 pr-2 py-2 w-full`, {
-  variants: {
-    variant: {
-      default: 'bg-card',
-      success: 'bg-green-700',
-      error: 'bg-red-900',
-      warning: 'bg-yellow-600/90',
-      info: 'bg-blue-900',
-      custom: '',
+}>(
+  `min-w-48 flex flex-row subpixel-antialiased font-light items-center px-3 pr-2 py-2 w-full`,
+  {
+    variants: {
+      variant: {
+        default: 'bg-card',
+        success: 'bg-success text-success-foreground',
+        error: 'bg-destructive text-destructive-foreground',
+        warning: 'bg-warning text-warning-foreground',
+        info: 'bg-info text-info-foreground',
+        feature: 'bg-feature text-feature-foreground',
+      },
+      modifiers: {
+        inline: 'inline-flex',
+      },
     },
-    modifiers: {
-      inline: 'inline-flex',
-    },
-  },
-})
+  }
+)
 
 type AlertProps = {
   variant: NonNullable<VariantProps<typeof alertVariants>['variant']>
@@ -47,7 +50,7 @@ const iconForVariant: Record<Variant, (typeof iconNames)[number] | undefined> =
     error: 'circle-alert',
     warning: 'circle-alert',
     info: 'info',
-    custom: undefined,
+    feature: 'star',
   }
 
 export function Alert({
@@ -64,8 +67,7 @@ export function Alert({
     setIsDismissing(true)
     onDismiss?.()
   }
-  const icon =
-    variant === 'custom' && iconName ? iconName : iconForVariant[variant]
+  const icon = iconName ?? iconForVariant[variant]
   const innerContent = (
     <div className={flexClasses}>
       <div className="flex-shrink-0">
