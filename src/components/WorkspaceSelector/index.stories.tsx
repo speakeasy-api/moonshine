@@ -345,6 +345,27 @@ export const WithAnExtremeAmountOfOrgs: Story = {
   },
 }
 
+export const WithManyWorkspaces: Story = {
+  ...Default,
+  render: () => {
+    const org: Org = {
+      id: '1',
+      label: 'my-org',
+      slug: 'my-org',
+      workspaces: Array.from({ length: 100 }, (_, i) => ({
+        id: `workspace-${i}`,
+        label: `workspace-${i}`,
+        slug: `workspace-${i}`,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })),
+    }
+
+    return <WorkspaceSelectorWithState orgs={[org]} />
+  },
+}
+
 export const NoOrgs: Story = {
   ...Default,
   render: () => <WorkspaceSelectorWithState orgs={[]} />,
