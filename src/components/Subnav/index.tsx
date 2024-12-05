@@ -17,9 +17,16 @@ interface SubnavProps {
 
 const transitionProps: Transition = {
   type: 'spring',
-  stiffness: 200,
-  damping: 30,
-  duration: 0.05,
+  stiffness: 150,
+  damping: 20,
+  duration: 0.1,
+}
+
+const returnTransitionProps: Transition = {
+  type: 'spring',
+  stiffness: 100,
+  damping: 25,
+  duration: 0.3,
 }
 
 export function Subnav({ items, renderItem }: SubnavProps) {
@@ -93,6 +100,10 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     ? {
         translateX: indicatorProps.left,
         width: indicatorProps.width,
+        transition:
+          hoveredItem && hoveredItem !== activeItem
+            ? undefined
+            : returnTransitionProps,
       }
     : undefined
 
