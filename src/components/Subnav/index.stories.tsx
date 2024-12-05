@@ -12,7 +12,7 @@ export default meta
 type Story = StoryObj<typeof Subnav>
 
 const defaultRenderItem = (item: { label: string; href: string }) => (
-  <div className="px-4 py-2 text-sm">{item.label}</div>
+  <div className="px-4 py-3 text-sm">{item.label}</div>
 )
 
 export const Default: Story = {
