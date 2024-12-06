@@ -56,6 +56,14 @@ export const Warning: Story = {
   decorators: defaultDecorators,
 }
 
+export const Feature: Story = {
+  args: {
+    variant: 'feature',
+    children: 'This is an alert',
+  },
+  decorators: defaultDecorators,
+}
+
 export const Info: Story = {
   args: {
     variant: 'info',
