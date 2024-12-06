@@ -6,14 +6,20 @@ interface SearchBoxProps {
   inputRef: RefObject<HTMLInputElement>
   search: string
   setSearch: (search: string) => void
+  placeholder: string
 }
 
-export function SearchBox({ inputRef, search, setSearch }: SearchBoxProps) {
+export function SearchBox({
+  inputRef,
+  search,
+  setSearch,
+  placeholder,
+}: SearchBoxProps) {
   return (
     <div className="relative flex items-center gap-2 border-b p-3">
       <CommandInput
         ref={inputRef}
-        placeholder="Search workspaces..."
+        placeholder={placeholder}
         value={search}
         className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-base outline-none disabled:cursor-not-allowed disabled:opacity-50"
         onValueChange={setSearch}
