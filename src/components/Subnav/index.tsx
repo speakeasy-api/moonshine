@@ -1,6 +1,14 @@
 import { cn } from '@/lib/utils'
-import { motion, TargetAndTransition, Transition } from 'framer-motion'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { motion, Transition, AnimatePresence } from 'framer-motion'
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+  memo,
+} from 'react'
 
 export interface SubnavItem {
   label: string
@@ -15,11 +23,41 @@ interface SubnavProps {
   renderItem: (item: SubnavItem) => React.ReactNode
 }
 
-const transitionProps: Transition = {
+const POSITION_TRANSITION: Transition = {
   type: 'spring',
-  stiffness: 200,
-  damping: 30,
-  duration: 0.05,
+  bounce: 0.15,
+  duration: 0.4,
+}
+
+const SCALE_TRANSITION: Transition = {
+  type: 'tween',
+  ease: 'easeOut',
+  duration: 0.3,
+}
+
+const FADE_TRANSITION: Transition = {
+  type: 'tween',
+  ease: 'easeOut',
+  duration: 0.15,
+}
+
+const useDebounce = (callback: () => void, delay: number) => {
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  return useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(callback, delay)
+  }, [callback, delay])
 }
 
 export function Subnav({ items, renderItem }: SubnavProps) {
@@ -27,149 +65,189 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     items.find((item) => item.active)?.href ?? null
   )
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
-  const [indicatorProps, setIndicatorProps] = useState<{
-    width: number
-    left: number
-  } | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const containerMouseEnterTime = useRef<number | null>(null)
+  const [baseWidth, setBaseWidth] = useState<number>(0)
+  const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map())
+  const previousHoveredItem = useRef<string | null>(null)
   const isContainerHovered = useRef(false)
 
-  const handleItemClick = (href: string) => {
+  const debouncedResize = useDebounce(
+    () => setHoveredItem((current) => current),
+    100
+  )
+
+  useLayoutEffect(() => {
+    const newActiveItem: string =
+      items.find((item) => item.active)?.href ?? items[0]?.href
+    setActiveItem(newActiveItem)
+
+    const element = itemRefs.current.get(newActiveItem)
+    if (element) {
+      setBaseWidth(element.offsetWidth)
+    }
+  }, [items])
+
+  const indicatorProps: {
+    scaleX: number
+    left: number
+  } | null = useMemo(() => {
+    if (!hoveredItem || !baseWidth) return null
+
+    const itemElement = itemRefs.current.get(hoveredItem)
+    if (!itemElement) return null
+
+    return {
+      scaleX: itemElement.offsetWidth / baseWidth,
+      left: itemElement.offsetLeft,
+    }
+  }, [hoveredItem, baseWidth])
+
+  const activeIndicatorProps: {
+    scaleX: number
+    left: number
+  } | null = useMemo(() => {
+    if (!activeItem || !baseWidth) return null
+
+    const itemElement = itemRefs.current.get(activeItem)
+    if (!itemElement) return null
+
+    return {
+      scaleX: itemElement.offsetWidth / baseWidth,
+      left: itemElement.offsetLeft,
+    }
+  }, [activeItem, baseWidth])
+
+  const handleItemClick = useCallback((href: string) => {
     setActiveItem(href)
-  }
+  }, [])
 
   const handleContainerMouseEnter = useCallback(() => {
-    containerMouseEnterTime.current = Date.now()
     isContainerHovered.current = true
   }, [])
 
   const handleContainerMouseLeave = useCallback(() => {
-    containerMouseEnterTime.current = null
     isContainerHovered.current = false
+    previousHoveredItem.current = null
     setHoveredItem(null)
   }, [])
 
-  const handleItemHover = useCallback((href: string | null) => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current)
-      hoverTimerRef.current = null
-    }
-
-    if (href === null) {
-      setHoveredItem(null)
-    } else {
-      const timeInContainer = containerMouseEnterTime.current
-        ? Date.now() - containerMouseEnterTime.current
-        : 0
-
-      if (timeInContainer < 100) {
-        hoverTimerRef.current = setTimeout(() => {
-          if (isContainerHovered.current) {
-            setHoveredItem(href)
-          }
-        }, 50)
-      } else {
-        hoverTimerRef.current = setTimeout(() => {
-          if (isContainerHovered.current) {
-            setHoveredItem(href)
-          }
-        }, 100)
+  const handleItemHover = useCallback(
+    (href: string | null) => {
+      if (href !== null) {
+        previousHoveredItem.current = hoveredItem
       }
-    }
-  }, [])
-
-  // Clean up timer on unmount
-  useEffect(() => {
-    return () => {
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current)
-      }
-    }
-  }, [])
-
-  const animateProps: TargetAndTransition | undefined = indicatorProps
-    ? {
-        translateX: indicatorProps.left,
-        width: indicatorProps.width,
-      }
-    : undefined
+      setHoveredItem(href)
+    },
+    [hoveredItem]
+  )
 
   useEffect(() => {
-    const updateIndicator = () => {
-      if (!containerRef.current) return
+    window.addEventListener('resize', debouncedResize)
+    return () => window.removeEventListener('resize', debouncedResize)
+  }, [debouncedResize])
 
-      const currentHref = hoveredItem || activeItem
-      if (currentHref) {
-        const itemElement = containerRef.current.querySelector<HTMLDivElement>(
-          `[data-href="${currentHref}"]`
-        )
-        if (itemElement) {
-          const { offsetWidth: width, offsetLeft: left } = itemElement
-          setIndicatorProps({
-            width,
-            left,
-          })
-        }
-      } else {
-        setIndicatorProps(null)
+  const shouldSlide =
+    previousHoveredItem.current !== null && isContainerHovered.current
+
+  const getItemHandlers = useCallback(
+    (href: string) => {
+      return {
+        onClick: () => handleItemClick(href),
+        onMouseEnter: () => handleItemHover(href),
+        onMouseLeave: () => handleItemHover(null),
       }
-    }
+    },
+    [handleItemClick, handleItemHover]
+  )
 
-    // Initial update
-    updateIndicator()
-
-    // Add resize listener
-    window.addEventListener('resize', updateIndicator)
-
-    // Cleanup
-    return () => window.removeEventListener('resize', updateIndicator)
-  }, [hoveredItem, activeItem])
-
-  useEffect(() => {
-    const newActiveItem = items.find((item) => item.active)?.href ?? null
-    setActiveItem(newActiveItem)
-  }, [items])
+  const SubnavItem = memo(function SubnavItem({
+    item,
+    isActive,
+    isHovered,
+    handlers,
+    itemRef,
+    renderItem,
+  }: {
+    item: SubnavItem
+    isActive: boolean
+    isHovered: boolean
+    handlers: ReturnType<typeof getItemHandlers>
+    itemRef: (el: HTMLDivElement | null) => void
+    renderItem: (item: SubnavItem & { hovered: boolean }) => React.ReactNode
+  }) {
+    return (
+      <div
+        ref={itemRef}
+        className={cn(
+          'text-muted-foreground relative z-10 cursor-pointer select-none',
+          isActive && 'text-foreground font-semibold'
+        )}
+        {...handlers}
+      >
+        {renderItem({ ...item, hovered: isHovered })}
+      </div>
+    )
+  })
 
   return (
     <div
-      ref={containerRef}
       className="relative flex"
       onMouseEnter={handleContainerMouseEnter}
       onMouseLeave={handleContainerMouseLeave}
     >
-      {indicatorProps && (
-        <motion.div
-          className="bg-muted absolute h-full rounded-md"
-          initial={false}
-          animate={animateProps}
-          transition={transitionProps}
-        />
-      )}
+      <AnimatePresence>
+        {indicatorProps && baseWidth > 0 && (
+          <motion.div
+            className="bg-secondary absolute inset-y-0 my-auto h-[calc(100%-10px)] origin-left rounded-md"
+            style={{ width: baseWidth }}
+            initial={shouldSlide ? false : { opacity: 0 }}
+            animate={{
+              translateX: indicatorProps.left,
+              scaleX: indicatorProps.scaleX,
+              opacity: 1,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: FADE_TRANSITION,
+              translateX: shouldSlide ? POSITION_TRANSITION : { duration: 0 },
+              scaleX: shouldSlide ? SCALE_TRANSITION : { duration: 0 },
+            }}
+            layoutDependency={indicatorProps}
+          />
+        )}
+      </AnimatePresence>
 
       {items.map((item) => (
-        <div
+        <SubnavItem
           key={item.href}
-          data-href={item.href}
-          className={cn(
-            'text-muted-foreground relative z-10 cursor-pointer select-none',
-            activeItem === item.href && 'text-foreground font-semibold'
-          )}
-          onClick={() => handleItemClick(item.href)}
-          onMouseEnter={() => handleItemHover(item.href)}
-          onMouseLeave={() => handleItemHover(null)}
-        >
-          {renderItem({ ...item, hovered: hoveredItem === item.href })}
-        </div>
+          item={item}
+          isActive={activeItem === item.href}
+          isHovered={hoveredItem === item.href}
+          handlers={getItemHandlers(item.href)}
+          itemRef={(el) => {
+            if (el) {
+              itemRefs.current.set(item.href, el)
+            } else {
+              itemRefs.current.delete(item.href)
+            }
+          }}
+          renderItem={renderItem}
+        />
       ))}
 
-      {indicatorProps && (
+      {activeIndicatorProps && baseWidth > 0 && (
         <motion.div
-          className="bg-primary absolute bottom-0 h-[2.75px]"
+          className="bg-primary absolute bottom-0 h-[2px] origin-left"
+          style={{ width: baseWidth }}
           initial={false}
-          animate={animateProps}
-          transition={transitionProps}
+          animate={{
+            translateX: activeIndicatorProps.left,
+            scaleX: activeIndicatorProps.scaleX,
+          }}
+          transition={{
+            translateX: POSITION_TRANSITION,
+            scaleX: SCALE_TRANSITION,
+          }}
+          layoutDependency={activeIndicatorProps}
         />
       )}
     </div>
