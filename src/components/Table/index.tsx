@@ -3,8 +3,20 @@ import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 
 export type Column<T> = {
+  /**
+   * The key of the column.
+   */
   key: keyof T
+
+  /**
+   * The header of the column.
+   */
   header: ReactNode
+
+  /**
+   * The render function for the column.
+   * If not provided, then the column will default to the value of the key.
+   */
   render?: (value: T[keyof T], row: T) => ReactNode
 
   /**
@@ -15,11 +27,34 @@ export type Column<T> = {
 }
 
 export type TableProps<T> = {
+  /**
+   * The columns of the table.
+   */
   columns: Column<T>[]
+
+  /**
+   * The data of the table.
+   */
   data: T[]
+
+  /**
+   * A function that returns a unique key for the row.
+   */
   rowKey: (row: T) => string | number
+
+  /**
+   * The function to call when a row is clicked.
+   */
   onRowClick?: (row: T) => void
+
+  /**
+   * The function to call when the load more button is clicked.
+   */
   onLoadMore?: () => void
+
+  /**
+   * Whether there are more rows to load.
+   */
   hasMore?: boolean
 }
 
