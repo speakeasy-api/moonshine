@@ -6,8 +6,7 @@ import { CreateWorkspace, CreateResult } from './CreateWorkspace'
 import { OrgList } from './OrgList'
 import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
-import { FilteredWorkspaces } from './FilteredWorkspaces'
-import { SearchBox } from './SearchBox'
+import { RecentWorkspaces } from './RecentWorkspaces'
 import { Text } from '../Text'
 import { Separator } from '../Separator'
 import { Logo } from '../Logo'
@@ -30,12 +29,6 @@ export interface Workspace {
   updatedAt: Date
 }
 
-function requiresSearch(orgs: Org[]) {
-  // if there is only one org, then no search
-  // if there is one org with multiple workspaces, then no search
-  return orgs.length > 1 || (orgs.length === 1 && orgs[0].workspaces.length > 5)
-}
-
 export interface WorkspaceSelectorProps {
   orgs: Org[]
   value?: string
@@ -51,7 +44,6 @@ export interface WorkspaceSelectorProps {
   emptyText?: string
   recents?: Org[]
   height?: string | number
-  filterFn?: (workspace: Workspace, search: string) => boolean
 
   /**
    * If true, creating a new workspace will trigger the onSelect callback.
@@ -62,9 +54,6 @@ export interface WorkspaceSelectorProps {
 
   defaultSelectedOrg?: Org
 }
-
-const defaultFilterFn = (workspace: Workspace, search: string) =>
-  workspace.label.toLowerCase().startsWith(search.toLowerCase())
 
 const useViewTransition = () => {
   const [isTransitioning, setIsTransitioning] = React.useState(false)
@@ -100,12 +89,10 @@ export function WorkspaceSelector({
   recents = [],
   height = '500px',
   onCreateOrg,
-  filterFn = defaultFilterFn,
   createTriggersSelection = false,
   showCreateWorkspaceView = false,
   defaultSelectedOrg,
 }: WorkspaceSelectorProps) {
-  const [search, setSearch] = React.useState('')
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
   const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(
@@ -117,7 +104,6 @@ export function WorkspaceSelector({
   const [createOrgViewOpen, setCreateOrgViewOpen] = React.useState(
     orgs.length === 0
   )
-  const inputRef = React.useRef<HTMLInputElement>(null)
   const [newWorkspaceName, setNewWorkspaceName] = React.useState('')
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [showRecents, setShowRecents] = React.useState(recents.length > 0)
@@ -134,25 +120,9 @@ export function WorkspaceSelector({
     }
   }, [createOrgViewOpen])
 
-  const filteredOrgs = React.useMemo(
-    () =>
-      search
-        ? orgs
-            .map((org) => ({
-              ...org,
-              workspaces: org.workspaces.filter((workspace) =>
-                filterFn(workspace, search)
-              ),
-            }))
-            .filter((org) => org.workspaces.length > 0)
-        : undefined,
-    [orgs, search, filterFn]
-  )
-
   const handleSelect = React.useCallback(
-    (org: Org, workspace: Workspace, clearSearch: boolean = true) => {
+    (org: Org, workspace: Workspace) => {
       onSelect(org, workspace)
-      if (clearSearch) setSearch('')
       setSelectedOrg(org)
       setSelectedWorkspace(workspace)
     },
@@ -200,6 +170,7 @@ export function WorkspaceSelector({
           setCreateWorkspaceViewOpen(false)
           setSelectedWorkspace(workspace)
           setPreviousView(null)
+          setShowRecents(false)
         })
 
         return { success: true }
@@ -292,19 +263,15 @@ export function WorkspaceSelector({
         >
           <WorkspaceViewContents
             orgs={orgs}
-            search={search}
-            filteredOrgs={filteredOrgs}
             selectedOrg={selectedOrg}
             selectedWorkspace={selectedWorkspace}
             handleSelect={handleSelect}
             showRecents={showRecents}
             setShowRecents={setShowRecents}
-            inputRef={inputRef}
             emptyText={emptyText}
             height={height}
             recents={recents}
             handleCreateWorkspaceViewOpen={handleCreateWorkspaceViewOpen}
-            setSearch={setSearch}
             handleSelectOrg={handleSelectOrg}
           />
         </div>
@@ -315,50 +282,34 @@ export function WorkspaceSelector({
 
 interface WorkspaceViewContentsProps {
   orgs: Org[]
-  search: string
-  filteredOrgs: Org[] | undefined
   selectedOrg: Org | null
   selectedWorkspace: Workspace | null
   handleSelect: (org: Org, workspace: Workspace, clearSearch: boolean) => void
   showRecents: boolean
   setShowRecents: (show: boolean) => void
-  inputRef: React.RefObject<HTMLInputElement>
   emptyText: string
   height: string | number
   recents: Org[]
   handleCreateWorkspaceViewOpen: () => void
-  setSearch: (search: string) => void
   handleSelectOrg: (org: Org) => void
 }
 
 function WorkspaceViewContents({
   orgs,
-  search,
-  filteredOrgs,
   selectedOrg,
   selectedWorkspace,
   handleSelect,
   showRecents,
   setShowRecents,
-  inputRef,
   emptyText,
   height,
   recents,
   handleCreateWorkspaceViewOpen,
-  setSearch,
   handleSelectOrg,
 }: WorkspaceViewContentsProps) {
-  const showDefaultView = React.useMemo(
-    () => orgs.length > 0 && filteredOrgs === undefined,
-    [orgs, filteredOrgs]
-  )
-  const showFilteredView = React.useMemo(
-    () => filteredOrgs !== undefined && filteredOrgs.length > 0,
-    [filteredOrgs]
-  )
   const showRecentsView = React.useMemo(
-    () => filteredOrgs === undefined && recents.length > 0 && showRecents,
-    [filteredOrgs, recents, showRecents]
+    () => recents.length > 0 && showRecents,
+    [recents, showRecents]
   )
   return (
     <>
@@ -382,22 +333,7 @@ function WorkspaceViewContents({
 
       <div className="w-2/3">
         <Command shouldFilter={false}>
-          {requiresSearch(orgs) && (
-            <SearchBox
-              inputRef={inputRef}
-              search={search}
-              setSearch={setSearch}
-            />
-          )}
-          {showFilteredView ? (
-            <FilteredWorkspaces
-              onSelect={(org, workspace) => handleSelect(org, workspace, false)}
-              orgsWithFilteredWorkspaces={filteredOrgs ?? []}
-              fullWidth
-              selectedOrg={selectedOrg}
-              selectedWorkspace={selectedWorkspace}
-            />
-          ) : showRecentsView ? (
+          {showRecentsView ? (
             <div className="flex w-full flex-grow flex-row">
               <OrgList
                 orgs={orgs}
@@ -407,16 +343,17 @@ function WorkspaceViewContents({
                 showRecents={showRecents}
                 enableRecents={recents.length > 0}
               />
-              <FilteredWorkspaces
+              <RecentWorkspaces
                 onSelect={(org, workspace) =>
                   handleSelect(org, workspace, false)
                 }
+                handleCreateViewOpen={handleCreateWorkspaceViewOpen}
                 orgsWithFilteredWorkspaces={recents}
                 selectedOrg={selectedOrg}
                 selectedWorkspace={selectedWorkspace}
               />
             </div>
-          ) : showDefaultView ? (
+          ) : orgs.length > 0 ? (
             <div className="flex h-full flex-row">
               <OrgList
                 orgs={orgs}
