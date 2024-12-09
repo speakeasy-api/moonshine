@@ -51,7 +51,7 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'language',
       header: undefined,
-      width: '6%',
+      width: '0.5fr',
       render: (language) => (
         <TargetLanguageIcon language={language as SupportedLanguage} />
       ),
@@ -59,7 +59,7 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'name',
       header: 'SDK',
-      width: '24%',
+      width: '1fr',
       render: (_, row) => (
         <div className="text-muted-foreground flex flex-row items-center gap-1">
           <span>
@@ -71,7 +71,7 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'version',
       header: 'Version',
-      width: '10%',
+      width: '1fr',
       render: (version) => (
         <div className="text-muted-foreground">{version.toString()}</div>
       ),
@@ -79,7 +79,7 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'lastGeneratedAt',
       header: 'Last Generated',
-      width: '20%',
+      width: '1fr',
       render: (lastGeneratedAt) => (
         <div className="text-muted-foreground">
           {formatDistance(lastGeneratedAt, new Date(), { addSuffix: true })}
@@ -89,10 +89,10 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'githubRepoUrl',
       header: 'GitHub Repo',
-      width: '50%',
+      width: '4fr',
       render: (_, row) => (
         <div>
-          <a href={row.githubRepoUrl} className="text-muted-foreground">
+          <a href="#" className="text-muted-foreground">
             github.com/{row.name}/{row.org}
           </a>
         </div>
@@ -111,7 +111,7 @@ const TableWithState = (args: TableProps<SDK>) => {
       {...args}
       data={data}
       onLoadMore={() => {
-        setData(generateSDKs(data.length + 5))
+        setData((prev) => [...prev, ...generateSDKs(2)])
       }}
     />
   )

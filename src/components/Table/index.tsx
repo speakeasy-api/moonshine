@@ -6,7 +6,12 @@ export type Column<T> = {
   key: keyof T
   header: ReactNode
   render?: (value: T[keyof T], row: T) => ReactNode
-  width: `${number}%`
+
+  /**
+   * The fractional width of the column.
+   * If not provided, then the column will default to 1fr.
+   */
+  width?: `${number}fr` | undefined
 }
 
 export type TableProps<T> = {
@@ -18,6 +23,29 @@ export type TableProps<T> = {
   hasMore?: boolean
 }
 
+function SkeletonRow<T>({
+  columns,
+  isLoading,
+}: {
+  columns: Array<Column<T>>
+  isLoading: boolean
+}) {
+  return (
+    <div
+      className={cn(
+        'absolute bottom-0 left-0 right-0 grid w-full select-none grid-flow-col py-4 opacity-20 [grid-column:1/-1] [grid-template-columns:inherit]',
+        isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
+      )}
+    >
+      {columns.map((column) => (
+        <div className="w-auto px-4 py-2" key={String(column.key)}>
+          <div className="bg-muted h-4 rounded" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export function Table<T>({
   columns,
   data,
@@ -27,9 +55,10 @@ export function Table<T>({
   hasMore,
 }: TableProps<T>) {
   const colWidths = useMemo(() => {
-    return columns.map((column) => column.width).join(' ')
+    return columns.map((column) => column.width ?? '1fr').join(' ')
   }, [columns])
   const tableBodyRef = useRef<HTMLTableSectionElement>(null)
+  const tableRef = useRef<HTMLTableElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const handleLoadMore = () => {
     setIsLoading(true)
@@ -37,11 +66,6 @@ export function Table<T>({
     setTimeout(() => {
       setIsLoading(false)
       onLoadMore?.()
-      if (tableBodyRef.current) {
-        tableBodyRef.current.scrollIntoView({
-          behavior: 'auto',
-        })
-      }
     }, 1000)
   }
 
@@ -52,13 +76,14 @@ export function Table<T>({
           '--grid-template-columns': `${colWidths}`,
         } as React.CSSProperties
       }
+      ref={tableRef}
       className="relative grid w-full caption-bottom overflow-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]"
     >
-      <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+      <thead className="grid h-14 [grid-column:1/-1] [grid-template-columns:subgrid]">
         <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
           {columns.map((column) => (
             <th
-              className="text-muted-foreground flex h-14 select-none items-center px-4 align-middle font-medium"
+              className="text-muted-foreground flex select-none items-center whitespace-nowrap px-4 align-middle font-medium"
               key={String(column.key)}
             >
               {column.header}
@@ -68,12 +93,12 @@ export function Table<T>({
       </thead>
       <tbody
         ref={tableBodyRef}
-        className="relative mb-14 grid [grid-column:1/-1] [grid-template-columns:subgrid] [&_tr:last-child]:border-0"
+        className="relative mb-16 grid [grid-column:1/-1] [grid-template-columns:subgrid]"
       >
         {data.map((row) => (
           <tr
             className={cn(
-              'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid cursor-pointer border-b py-3 transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
+              'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b py-3 transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
               onRowClick && 'cursor-pointer'
             )}
             key={rowKey(row)}
@@ -81,7 +106,7 @@ export function Table<T>({
           >
             {columns.map((column) => (
               <td
-                className="flex w-fit items-center px-4 py-2"
+                className="flex w-fit items-center whitespace-nowrap px-4 py-2"
                 key={String(column.key)}
               >
                 {column.render
@@ -92,11 +117,9 @@ export function Table<T>({
           </tr>
         ))}
       </tbody>
+      {hasMore && <SkeletonRow isLoading={isLoading} columns={columns} />}
       {hasMore && (
-        <div className="from-background pointer-events-none absolute bottom-0 left-0 right-0 z-[5] h-14 bg-gradient-to-t to-transparent" />
-      )}
-      {hasMore && (
-        <div className="bg-background absolute bottom-0 left-0 right-0 z-10 flex h-14 items-center justify-center border-t">
+        <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
           <button
             className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             onClick={handleLoadMore}
