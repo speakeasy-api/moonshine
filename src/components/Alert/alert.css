@@ -1,0 +1,26 @@
+@keyframes wobble {
+  0% {
+    transform: rotate(0deg);
+    filter: saturate(1);
+  }
+  25% {
+    transform: rotate(0.35deg);
+    filter: saturate(1.2);
+  }
+  50% {
+    transform: rotate(-0.35deg);
+    filter: saturate(1.4);
+  }
+  75% {
+    transform: rotate(0.35deg);
+    filter: saturate(1.2);
+  }
+  100% {
+    transform: rotate(0deg);
+    filter: saturate(1);
+  }
+}
+
+.wobble-effect {
+  animation: wobble 1s ease-in-out infinite;
+}
