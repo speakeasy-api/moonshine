@@ -1,23 +1,16 @@
-import {
-  Alignment,
-  Direction,
-  Gap,
-  Justify,
-  Padding,
-  PaddingPerSide,
-} from '@/types'
+import { Alignment, Gap, Padding, PaddingPerSide } from '@/types'
 import {
   isPaddingHorizontalOrVerticalAxis,
   isPaddingPerSide,
   isPaddingPerSideValue,
 } from './typeUtils'
 
-const directionClasses: Record<Direction, string> = {
-  row: 'flex-row',
-  column: 'flex-col',
+const directionClasses: Record<'horizontal' | 'vertical', string> = {
+  horizontal: 'flex-row',
+  vertical: 'flex-col',
 }
 
-export const directionMapper = (direction: Direction) =>
+export const directionToFlexMapper = (direction: 'horizontal' | 'vertical') =>
   directionClasses[direction]
 export const gapMapper = (gap: Gap) => `gap-${gap}`
 
@@ -52,25 +45,19 @@ const alignmentClasses: Record<Alignment, string> = {
 export const alignmentMapper = (alignment: Alignment) =>
   alignmentClasses[alignment]
 
-const justifyClasses: Record<Justify, string> = {
+const justifyClasses: Record<
+  'start' | 'center' | 'end' | 'space-between' | 'space-evenly',
+  string
+> = {
   start: 'justify-start',
   center: 'justify-center',
   end: 'justify-end',
-  spaceBetween: 'justify-between',
-  spaceAround: 'justify-around',
-  spaceEvenly: 'justify-evenly',
+  'space-between': 'justify-between',
+  'space-evenly': 'justify-evenly',
 }
 
-export const justifyMapper = (justify: Justify) => justifyClasses[justify]
-
-const packClasses: Record<'start' | 'center' | 'end', string> = {
-  start: 'justify-start',
-  center: 'justify-center',
-  end: 'justify-end',
-}
-
-export const packMapper = (pack: 'start' | 'center' | 'end') =>
-  packClasses[pack]
+export const justifyMapper = (justify: keyof typeof justifyClasses) =>
+  justifyClasses[justify]
 
 const wrapClasses: Record<'nowrap' | 'wrap' | 'wrap-reverse', string> = {
   nowrap: 'flex-nowrap',
