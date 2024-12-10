@@ -25,20 +25,24 @@ interface SubnavProps {
 
 const POSITION_TRANSITION: Transition = {
   type: 'spring',
-  bounce: 0.15,
-  duration: 0.4,
+  stiffness: 300,
+  damping: 30,
+  mass: 0.8,
+  duration: 0.35,
 }
 
 const SCALE_TRANSITION: Transition = {
-  type: 'tween',
-  ease: 'easeOut',
-  duration: 0.3,
+  type: 'spring',
+  stiffness: 400,
+  damping: 40,
+  mass: 0.7,
+  duration: 0.25,
 }
 
 const FADE_TRANSITION: Transition = {
   type: 'tween',
-  ease: 'easeOut',
-  duration: 0.15,
+  ease: [0.215, 0.61, 0.355, 1],
+  duration: 0.2,
 }
 
 const useDebounce = (callback: () => void, delay: number) => {
@@ -69,22 +73,37 @@ export function Subnav({ items, renderItem }: SubnavProps) {
   const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map())
   const previousHoveredItem = useRef<string | null>(null)
   const isContainerHovered = useRef(false)
-
-  const debouncedResize = useDebounce(
-    () => setHoveredItem((current) => current),
-    100
-  )
+  const hasInitialized = useRef(false)
 
   useLayoutEffect(() => {
     const newActiveItem: string =
       items.find((item) => item.active)?.href ?? items[0]?.href
     setActiveItem(newActiveItem)
-
-    const element = itemRefs.current.get(newActiveItem)
-    if (element) {
-      setBaseWidth(element.offsetWidth)
-    }
   }, [items])
+
+  useLayoutEffect(() => {
+    if (!hasInitialized.current && activeItem) {
+      const element = itemRefs.current.get(activeItem)
+      if (element) {
+        setBaseWidth(element.offsetWidth)
+        hasInitialized.current = true
+      }
+    }
+  }, [activeItem])
+
+  const debouncedResize = useDebounce(() => {
+    if (activeItem) {
+      const element = itemRefs.current.get(activeItem)
+      if (element) {
+        setBaseWidth(element.offsetWidth)
+      }
+    }
+  }, 100)
+
+  useEffect(() => {
+    window.addEventListener('resize', debouncedResize)
+    return () => window.removeEventListener('resize', debouncedResize)
+  }, [debouncedResize])
 
   const indicatorProps: {
     scaleX: number
@@ -95,9 +114,13 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     const itemElement = itemRefs.current.get(hoveredItem)
     if (!itemElement) return null
 
+    const itemWidth = itemElement.offsetWidth
+    const itemLeft = itemElement.offsetLeft
+    const centerOffset = (itemWidth - baseWidth) / 2
+
     return {
-      scaleX: itemElement.offsetWidth / baseWidth,
-      left: itemElement.offsetLeft,
+      scaleX: itemWidth / baseWidth,
+      left: itemLeft + centerOffset,
     }
   }, [hoveredItem, baseWidth])
 
@@ -110,9 +133,13 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     const itemElement = itemRefs.current.get(activeItem)
     if (!itemElement) return null
 
+    const itemWidth = itemElement.offsetWidth
+    const itemLeft = itemElement.offsetLeft
+    const centerOffset = (itemWidth - baseWidth) / 2
+
     return {
-      scaleX: itemElement.offsetWidth / baseWidth,
-      left: itemElement.offsetLeft,
+      scaleX: itemWidth / baseWidth,
+      left: itemLeft + centerOffset,
     }
   }, [activeItem, baseWidth])
 
@@ -139,11 +166,6 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     },
     [hoveredItem]
   )
-
-  useEffect(() => {
-    window.addEventListener('resize', debouncedResize)
-    return () => window.removeEventListener('resize', debouncedResize)
-  }, [debouncedResize])
 
   const shouldSlide =
     previousHoveredItem.current !== null && isContainerHovered.current
@@ -197,8 +219,11 @@ export function Subnav({ items, renderItem }: SubnavProps) {
       <AnimatePresence>
         {indicatorProps && baseWidth > 0 && (
           <motion.div
-            className="bg-secondary absolute inset-y-0 my-auto h-[calc(100%-10px)] origin-left rounded-md"
-            style={{ width: baseWidth }}
+            className="bg-secondary absolute inset-y-0 my-auto h-[calc(100%-10px)] rounded-md"
+            style={{
+              width: baseWidth,
+              transformOrigin: '50% 50% 0px',
+            }}
             initial={shouldSlide ? false : { opacity: 0 }}
             animate={{
               translateX: indicatorProps.left,
@@ -236,8 +261,11 @@ export function Subnav({ items, renderItem }: SubnavProps) {
 
       {activeIndicatorProps && baseWidth > 0 && (
         <motion.div
-          className="bg-primary absolute bottom-0 h-[2px] origin-left"
-          style={{ width: baseWidth }}
+          className="bg-primary absolute bottom-0 h-[2px]"
+          style={{
+            width: baseWidth,
+            transformOrigin: '50% 50% 0px',
+          }}
           initial={false}
           animate={{
             translateX: activeIndicatorProps.left,
