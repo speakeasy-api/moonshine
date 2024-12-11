@@ -77,7 +77,7 @@ export function Input({
       className={cn(
         'border-input text-muted-foreground flex items-center gap-3 rounded-md border px-4 py-0.5 transition-colors duration-500',
         icon && 'px-3',
-        isFocused && 'text-foreground border-primary'
+        isFocused && 'text-foreground border-indigo-700'
       )}
     >
       {icon && <Icon name={icon} size="small" />}

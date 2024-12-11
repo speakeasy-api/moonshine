@@ -11,7 +11,7 @@ const sizeMap: Record<Size, number> = {
 
 export interface UserAvatarProps {
   name: string
-  imageUrl: string | undefined
+  imageUrl?: string
   size?: Size
 }
 

@@ -2,11 +2,11 @@ import { useMemo, type ReactNode, useState, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 
-export type Column<T> = {
+export type Column<T extends object> = {
   /**
    * The key of the column.
    */
-  key: keyof T
+  key: keyof T | string
 
   /**
    * The header of the column.
@@ -17,7 +17,7 @@ export type Column<T> = {
    * The render function for the column.
    * If not provided, then the column will default to the value of the key.
    */
-  render?: (value: T[keyof T], row: T) => ReactNode
+  render?: (row: T) => ReactNode
 
   /**
    * The fractional width of the column.
@@ -26,7 +26,7 @@ export type Column<T> = {
   width?: `${number}fr` | undefined
 }
 
-export type TableProps<T> = {
+export type TableProps<T extends object> = {
   /**
    * The columns of the table.
    */
@@ -58,30 +58,7 @@ export type TableProps<T> = {
   hasMore?: boolean
 }
 
-function SkeletonRow<T>({
-  columns,
-  isLoading,
-}: {
-  columns: Array<Column<T>>
-  isLoading: boolean
-}) {
-  return (
-    <div
-      className={cn(
-        'absolute bottom-0 left-0 right-0 grid w-full select-none grid-flow-col py-4 opacity-20 [grid-column:1/-1] [grid-template-columns:inherit]',
-        isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
-      )}
-    >
-      {columns.map((column) => (
-        <div className="w-auto px-4 py-2" key={String(column.key)}>
-          <div className="bg-muted h-4 rounded" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
-export function Table<T>({
+export function Table<T extends object>({
   columns,
   data,
   rowKey,
@@ -128,7 +105,12 @@ export function Table<T>({
       </thead>
       <tbody
         ref={tableBodyRef}
-        className="relative mb-16 grid [grid-column:1/-1] [grid-template-columns:subgrid]"
+        className={cn(
+          'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+
+          // Account for the load more button
+          hasMore && 'pb-16'
+        )}
       >
         {data.map((row) => (
           <tr
@@ -145,18 +127,38 @@ export function Table<T>({
                 key={String(column.key)}
               >
                 {column.render
-                  ? column.render(row[column.key], row)
-                  : String(row[column.key])}
+                  ? column.render(row)
+                  : isKeyOfT<T>(column.key, row)
+                    ? String(row[column.key])
+                    : ''}
               </td>
             ))}
           </tr>
         ))}
+        {hasMore && (
+          <tr
+            style={
+              {
+                '--grid-template-columns': `${colWidths}`,
+              } as React.CSSProperties
+            }
+            className={cn(
+              'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b py-3 opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
+              isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
+            )}
+          >
+            {columns.map((column) => (
+              <td className="w-auto px-4" key={String(column.key)}>
+                <div className="bg-muted h-4 rounded" />
+              </td>
+            ))}
+          </tr>
+        )}
       </tbody>
-      {hasMore && <SkeletonRow isLoading={isLoading} columns={columns} />}
       {hasMore && (
         <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
           <button
-            className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+            className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium normal-case transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             onClick={handleLoadMore}
           >
             {isLoading ? (
@@ -172,4 +174,8 @@ export function Table<T>({
       )}
     </table>
   )
+}
+
+function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
+  return typeof key === 'string' && Object.keys(data).includes(key)
 }

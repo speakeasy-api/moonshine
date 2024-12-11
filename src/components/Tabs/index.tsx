@@ -1,13 +1,18 @@
 import { cn } from '@/lib/utils'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 
-interface TabProps {
+export interface TabProps<I extends string> {
   children: React.ReactNode
   active?: boolean
+  id: I
   onClick?: () => void
 }
 
-const Tab = function Tab({ children, active, onClick }: TabProps) {
+const Tab = function Tab<I extends string>({
+  children,
+  active,
+  onClick,
+}: TabProps<I>) {
   return (
     <div
       className={cn(
@@ -22,33 +27,45 @@ const Tab = function Tab({ children, active, onClick }: TabProps) {
   )
 }
 
-interface TabsProps {
-  children: Array<ReactElement<TabProps>>
-  activeTabIndex?: number
+export interface TabsProps<I extends string> {
+  children: Array<ReactElement<TabProps<I>>>
+  selectedTab?: I
+  onTabChange?: (identifier: I) => void
 }
 
 type TypeWithDisplayName = {
   displayName?: string
 }
 
-export function Tabs({ children, activeTabIndex }: TabsProps) {
-  const [activeTab, setActiveTab] = useState(activeTabIndex || 0)
+export function Tabs<I extends string>({
+  children,
+  selectedTab,
+  onTabChange,
+}: TabsProps<I>) {
+  const [activeTab, setActiveTab] = useState<I>(
+    selectedTab || children[0].props.id
+  )
+
+  useEffect(() => {
+    setActiveTab(selectedTab || children[0].props.id)
+  }, [selectedTab])
 
   const validChildren = React.Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
       (child.type as TypeWithDisplayName).displayName === 'Tabs.Tab'
-  ) as Array<React.ReactElement<TabProps>>
+  ) as Array<React.ReactElement<TabProps<I>>>
 
   return (
     <div className="border-border flex select-none flex-row justify-start gap-2 border-b">
-      {React.Children.map(validChildren, (child, index) => {
+      {React.Children.map(validChildren, (child) => {
         return React.cloneElement(child, {
           ...child.props,
-          active: index === activeTab,
+          active: child.props.id === activeTab,
           onClick: () => {
-            setActiveTab(index)
+            setActiveTab(child.props.id)
             child.props.onClick?.()
+            onTabChange?.(child.props.id)
           },
         })
       })}
