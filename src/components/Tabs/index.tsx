@@ -29,8 +29,8 @@ const Tab = function Tab<I extends string>({
 
 export interface TabsProps<I extends string> {
   children: Array<ReactElement<TabProps<I>>>
-  selectedTab?: I
-  onTabChange?: (identifier: I) => void
+  selectedTab: I
+  onTabChange: (identifier: I) => void
 }
 
 type TypeWithDisplayName = {

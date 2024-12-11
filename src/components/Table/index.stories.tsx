@@ -52,15 +52,13 @@ const defaultArgs: TableProps<SDK> = {
       key: 'language',
       header: undefined,
       width: '0.5fr',
-      render: (language) => (
-        <TargetLanguageIcon language={language as SupportedLanguage} />
-      ),
+      render: (row) => <TargetLanguageIcon language={row.language} />,
     },
     {
       key: 'name',
       header: 'SDK',
       width: '1fr',
-      render: (_, row) => (
+      render: (row) => (
         <div className="text-muted-foreground flex flex-row items-center gap-1">
           <span>
             {row.org}/{row.name}
@@ -80,9 +78,9 @@ const defaultArgs: TableProps<SDK> = {
       key: 'lastGeneratedAt',
       header: 'Last Generated',
       width: '1fr',
-      render: (lastGeneratedAt) => (
+      render: (row) => (
         <div className="text-muted-foreground">
-          {formatDistance(lastGeneratedAt, new Date(), { addSuffix: true })}
+          {formatDistance(row.lastGeneratedAt, new Date(), { addSuffix: true })}
         </div>
       ),
     },
@@ -90,7 +88,7 @@ const defaultArgs: TableProps<SDK> = {
       key: 'githubRepoUrl',
       header: 'GitHub Repo',
       width: '4fr',
-      render: (_, row) => (
+      render: (row) => (
         <div>
           <a href="#" className="text-muted-foreground">
             github.com/{row.name}/{row.org}
