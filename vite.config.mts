@@ -29,6 +29,7 @@ export default defineConfig({
   define: process.env.VITEST ? {} : { global: 'window' },
   build: {
     outDir: 'dist',
+    emptyOutDir: process.env.CI ? true : false,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: packageName,

@@ -86,7 +86,7 @@ const Grid = ({
   children,
   columns = 1,
   gap = 0,
-  wrap = false,
+  wrap = true,
   padding = 0,
 }: GridProps) => {
   const validGridChildren = children.filter(isValidGridChild)

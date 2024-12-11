@@ -62,7 +62,7 @@ const CardHeader: FC<CardHeaderProps> = ({
     {rightElement && (
       <div className="flex flex-shrink-0 justify-end gap-2">
         {rightElement.type === 'button' && (
-          <Button onClick={rightElement.onClick} variant="outline">
+          <Button onClick={rightElement.onClick} variant="secondary">
             {rightElement.label}
           </Button>
         )}
