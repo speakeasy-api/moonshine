@@ -185,6 +185,63 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      fontSize: {
+        // TODO: Add token for text colors
+        'heading-xl': [
+          '2.0625rem',
+          {
+            lineHeight: '1.515',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#FAFAFA',
+          },
+        ],
+        'heading-lg': [
+          '1.8125rem',
+          {
+            lineHeight: '1.517',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#FAFAFA',
+          },
+        ],
+        'heading-md': [
+          '1.625rem',
+          {
+            lineHeight: '1.615',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#FAFAFA',
+          },
+        ],
+        'heading-sm': [
+          '1.4375rem',
+          {
+            lineHeight: '1.609',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#F4F4F5',
+          },
+        ],
+        'heading-xs': [
+          '1.25rem',
+          {
+            lineHeight: '1.75',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#F4F4F5',
+          },
+        ],
+        'heading-xxs': [
+          '1.125rem',
+          {
+            lineHeight: '1.778',
+            letterSpacing: '0.0015em',
+            fontWeight: '300',
+            color: '#F4F4F5',
+          },
+        ],
+      },
     },
   },
   plugins: [animate],
