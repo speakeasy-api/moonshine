@@ -10,7 +10,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './setup.js',
   },
-  define: import.meta.env.VITEST ? {} : { global: 'window' },
+  define: process.env.VITEST ? {} : { global: 'window' },
   resolve: {
     alias: {
       react: path.resolve(__dirname, 'node_modules/react'),
