@@ -1,5 +1,7 @@
 # 🥃 Moonshine 🥃
 
+[![NPM](https://img.shields.io/badge/npm-moonshine@latest-blue)](https://www.npmjs.com/package/@speakeasy-api/moonshine)
+
 Speakeasy's design system.
 
 ## Installing the NPM package
