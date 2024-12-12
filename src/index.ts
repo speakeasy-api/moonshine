@@ -41,3 +41,15 @@ export { type SupportedLanguage, supportedLanguages } from '@/types'
 export { PageHeader } from '@/components/PageHeader'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export { ExternalPill } from '@/components/ExternalPill'
+export { LanguageIndicator } from '@/components/LanguageIndicator'
+export {
+  Select,
+  SelectGroup,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+} from '@/components/Select'

@@ -47,8 +47,9 @@ export default defineConfig({
     },
     sourcemap: true,
     target: 'esnext',
-    minify: 'esbuild',
-    cssMinify: true,
+    minify: process.env.CI ? 'esbuild' : false,
+    reportCompressedSize: process.env.CI ? true : false,
+    cssMinify: process.env.CI ? true : false,
   },
 
   resolve: {
