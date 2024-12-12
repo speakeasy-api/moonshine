@@ -4,19 +4,6 @@ Speakeasy's design system.
 
 ## Installing the NPM package
 
-The NPM package is published to GitHub Packages rather than the public NPM registry.
-
-First add a new `.npmrc` file to your project with the following:
-
-```
-@speakeasy-api:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken={YOUR_PERSONAL_TOKEN}
-```
-
-You should generate your personal access token [here](https://github.com/settings/tokens). It should have the `repo` and `read:packages` scopes at a minimum.
-
-Then install the package:
-
 ```bash
 pnpm add @speakeasy-api/moonshine
 ```
@@ -31,8 +18,7 @@ Wrap your application in the `MoonshineConfigProvider` component, passing in the
 
 ```tsx
 import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
-
-<MoonshineConfigProvider themeElement={document.documentElement}>
+;<MoonshineConfigProvider themeElement={document.documentElement}>
   <App />
 </MoonshineConfigProvider>
 ```
