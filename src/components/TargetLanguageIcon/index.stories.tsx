@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { TargetLanguageIcon } from './index'
-import { sizes, supportedLanguages } from '@/types'
+import { sizes, supportedLanguages } from '#types'
 
 const meta: Meta<typeof TargetLanguageIcon> = {
   title: 'Components/TargetLanguageIcon',

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Wizard, WizardStep } from '.'
 import { StoryObj, Meta } from '@storybook/react'
-import { Badge } from '@/index'
-import { Text } from '@/components/Text'
+import { Badge } from '#index'
+import { Text } from '#@components/Text'
 
 const meta: Meta<typeof Wizard> = {
   component: Wizard,

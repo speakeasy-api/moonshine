@@ -1,4 +1,4 @@
-import { Grid } from '@/components/Grid'
+import { Grid } from '#@components/Grid'
 
 /**
  * Create a list of sample children for testing and rendering in storybook

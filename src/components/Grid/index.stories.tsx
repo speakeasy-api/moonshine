@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Grid } from '.'
-import { createSampleGridChildren } from '@/lib/storybookUtils'
+import { createSampleGridChildren } from '#lib/storybookUtils'
 
 const meta: Meta<typeof Grid> = {
   component: Grid,

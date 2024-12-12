@@ -1,7 +1,7 @@
 import { CommandItem } from '../Command'
 import { Icon } from '../Icon'
 import { Org, Workspace } from '.'
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 import { WorkspaceItem } from './WorkspaceItem'
 import { useEffect, useRef, useState } from 'react'
 import { ScrollingList } from './ScrollingList'

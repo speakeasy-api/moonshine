@@ -1,4 +1,4 @@
-import { sizes } from '@/types'
+import { sizes } from '#types'
 import { UserAvatar } from '.'
 import { Meta, StoryObj } from '@storybook/react'
 

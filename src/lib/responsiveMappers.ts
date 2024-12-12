@@ -1,4 +1,4 @@
-import { Alignment, Gap, Padding, PaddingPerSide } from '@/types'
+import { Alignment, Gap, Padding, PaddingPerSide } from '#types'
 import {
   isPaddingHorizontalOrVerticalAxis,
   isPaddingPerSide,

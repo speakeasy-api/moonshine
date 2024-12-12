@@ -1,8 +1,8 @@
 import { useState, useLayoutEffect } from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
-import { Breakpoint } from '@/types.js'
-import debounce from '@/lib/debounce'
+import { Breakpoint } from '#types'
+import debounce from '#lib/debounce'
 
 const fullConfig = resolveConfig(tailwindConfig)
 

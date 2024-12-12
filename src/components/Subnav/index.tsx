@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 import { motion, Transition, AnimatePresence } from 'framer-motion'
 import {
   useState,

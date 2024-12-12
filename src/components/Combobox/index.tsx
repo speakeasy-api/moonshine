@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { Virtuoso } from 'react-virtuoso'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/Button'
+import { cn } from '#lib/utils'
+import { Button } from '#@components/Button'
 import {
   Command,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
-import { ButtonProps } from '@/components/Button'
+} from '#@components/Command'
+import { Popover, PopoverContent, PopoverTrigger } from '#@components/Popover'
+import { ButtonProps } from '#@components/Button'
 import { Icon } from '../Icon'
 
 // I don't like that these aren't based on REM but I'm not sure how to fix it right now
@@ -41,7 +41,7 @@ type ComboboxDataProps<T extends string = string> =
 interface ComboboxBaseProps<T extends string = string> {
   value: T
   onValueChange: (value: T | undefined) => void
-  variant?: Extract<ButtonProps['variant'], 'outline' | 'ghost'>
+  variant?: Extract<ButtonProps['variant'], 'outline'>
   size?: ButtonProps['size']
   disabled?: boolean
   loading?: boolean

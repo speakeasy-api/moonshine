@@ -1,10 +1,6 @@
-import {
-  colSpanMapper,
-  gapMapper,
-  paddingMapper,
-} from '@/lib/responsiveMappers'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
+import { colSpanMapper, gapMapper, paddingMapper } from '#lib/responsiveMappers'
+import { cn, getResponsiveClasses } from '#lib/utils'
+import { Columns, Gap, Padding, ResponsiveValue } from '#types'
 import { isValidElement, ReactElement } from 'react'
 
 interface GridProps {

@@ -8,7 +8,7 @@ import {
   ResponsiveValue,
   Size,
   sizes,
-} from '@/types'
+} from '#types'
 
 /**
  * Create a range of numbers from 0 to N

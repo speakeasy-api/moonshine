@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 import React, { FC, PropsWithChildren, ReactNode } from 'react'
 import { Icon } from '../Icon'
 import { Stack } from '../Stack'
@@ -6,7 +6,7 @@ import { Button } from '../Button'
 import { Score } from '../Score'
 import { iconNames } from '../Icon/names'
 import { Children } from 'react'
-import { Range } from '@/lib/typeUtils'
+import { Range } from '#lib/typeUtils'
 
 type RightElement =
   | {

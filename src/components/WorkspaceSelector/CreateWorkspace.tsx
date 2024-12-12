@@ -3,11 +3,11 @@ import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
 import { Icon } from '../Icon'
-import { Button, Stack } from '@/index'
+import { Button, Stack } from '#index'
 import { Separator } from '../Separator'
 import { GradientCircle } from '../GradientCircle'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 import { OrgSelector } from './OrgSelector'
 
 export interface CreateResult {

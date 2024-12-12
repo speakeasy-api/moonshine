@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 import { isValidElement, ReactElement, ReactNode, Children } from 'react'
 
 interface BreadcrumbProps {

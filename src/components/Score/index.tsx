@@ -1,5 +1,5 @@
-import { Size } from '@/types'
-import type { Range } from '@/lib/typeUtils'
+import { Size } from '#types'
+import type { Range } from '#lib/typeUtils'
 import { useMemo, type CSSProperties } from 'react'
 import styles from './index.module.css'
 

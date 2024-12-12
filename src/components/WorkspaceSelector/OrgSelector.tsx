@@ -5,12 +5,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
+} from '#@components/Command'
+import { Popover, PopoverContent, PopoverTrigger } from '#@components/Popover'
 import { Org } from '.'
-import { Icon } from '@/components/Icon'
+import { Icon } from '#@components/Icon'
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
-import { cn } from '@/lib/utils'
+import { cn } from '#lib/utils'
 
 interface OrgSelectorProps {
   orgs: Org[]

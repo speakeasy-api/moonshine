@@ -1,12 +1,12 @@
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react'
-import { cn } from '@/lib/utils'
-import { ProgrammingLanguage, Size } from '@/types'
-import useTailwindTheme from '@/hooks/useTailwindTheme'
+import { cn } from '#lib/utils'
+import { ProgrammingLanguage, Size } from '#types'
+import useTailwindTheme from '#hooks/useTailwindTheme'
 import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
-import { useConfig } from '@/hooks/useConfig'
+import { useConfig } from '#hooks/useConfig'
 
 type Theme = 'dark' | 'light'
 

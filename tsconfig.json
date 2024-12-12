@@ -1,25 +1,21 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "target": "es2019",
-    "declaration": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "./dist",
     "strict": true,
     "allowJs": true,
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "rootDir": "./src",
+    "outDir": "./dist",
+    "sourceRoot": "../src",
+    "sourceMap": true,
     "incremental": true,
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-    },
     "baseUrl": ".",
     "types": [
       "@testing-library/jest-dom",
@@ -28,9 +24,7 @@
       "@types/dom-view-transitions"
     ]
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "dist",

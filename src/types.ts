@@ -1,4 +1,4 @@
-import { Range } from '@/lib/typeUtils'
+import { Range } from '#lib/typeUtils'
 
 // Button variants
 export const buttonVariants = [

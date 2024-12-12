@@ -1,4 +1,4 @@
-import { Breakpoint, ResponsiveValue } from '@/types'
+import { Breakpoint, ResponsiveValue } from '#types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { isResponsiveValueObject } from './typeUtils'

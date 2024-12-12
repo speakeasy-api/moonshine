@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { Orientation } from '@/types'
+import { cn } from '#lib/utils'
+import { Orientation } from '#types'
 
 interface SeparatorProps {
   orientation?: Orientation

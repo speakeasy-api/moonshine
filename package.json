@@ -1,14 +1,19 @@
 {
+  "type": "module",
   "name": "@speakeasy-api/moonshine",
   "version": "0.0.1",
   "packageManager": "pnpm@9.0.0",
   "description": "Speakeasy's design system Moonshine",
   "main": "dist/moonshine.cjs.js",
   "module": "dist/moonshine.es.js",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
+  "imports": {
+    "#*": "./src/*.js",
+    "#@*": "./src/*/index.js"
+  },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "require": "./dist/moonshine.cjs.js",
       "import": "./dist/moonshine.es.js"
     },
@@ -68,6 +73,8 @@
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
     "chromatic": "^11.16.3",
+    "esbuild": "^0.24.0",
+    "esbuild-plugin-svgr": "^3.1.0",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

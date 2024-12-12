@@ -1,3 +1,3 @@
-import { Gap } from '@/types'
+import { Gap } from '#types'
 
 export const gapMapper = (gap: Gap) => `gap-${gap}`

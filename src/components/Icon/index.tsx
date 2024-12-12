@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { LucideProps } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
-import { ResponsiveValue, Size } from '@/types'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { isResponsiveValueObject, isSize } from '@/lib/typeUtils'
+import { ResponsiveValue, Size } from '#types'
+import useTailwindBreakpoint from '#hooks/useTailwindBreakpoint'
+import { isResponsiveValueObject, isSize } from '#lib/typeUtils'
 
 // TODO: Use skeleton
 function Skeleton() {

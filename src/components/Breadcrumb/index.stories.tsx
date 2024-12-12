@@ -1,4 +1,4 @@
-import { Icon } from '@/index'
+import { Icon } from '#index'
 import { Breadcrumb } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 

@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { Size } from '@/types'
+import { cn } from '#lib/utils'
+import { Size } from '#types'
 
 const sizeMap: Record<Size, number> = {
   small: 8,

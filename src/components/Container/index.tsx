@@ -1,6 +1,6 @@
-import { paddingMapper } from '@/lib/responsiveMappers'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Padding, ResponsiveValue } from '@/types'
+import { paddingMapper } from '#lib/responsiveMappers'
+import { cn, getResponsiveClasses } from '#lib/utils'
+import { Padding, ResponsiveValue } from '#types'
 import { ReactNode } from 'react'
 
 interface ContainerProps {
