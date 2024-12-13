@@ -26,6 +26,12 @@ export type Column<T extends object> = {
   width?: `${number}fr` | undefined
 }
 
+export type Group<T extends object> = {
+  key: string
+  items: T[]
+  [k: string]: unknown
+}
+
 export type TableProps<T extends object> = {
   /**
    * The columns of the table.
@@ -35,7 +41,7 @@ export type TableProps<T extends object> = {
   /**
    * The data of the table.
    */
-  data: T[]
+  data: T[] | Group<T>[]
 
   /**
    * A function that returns a unique key for the row.
@@ -46,6 +52,11 @@ export type TableProps<T extends object> = {
    * The function to call when a row is clicked.
    */
   onRowClick?: (row: T) => void
+
+  /**
+   * The function to render the group header.
+   */
+  renderGroupHeader?: (group: Group<T>) => ReactNode
 
   /**
    * The function to call when the load more button is clicked.
@@ -65,6 +76,7 @@ export function Table<T extends object>({
   onRowClick,
   onLoadMore,
   hasMore,
+  renderGroupHeader,
 }: TableProps<T>) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
@@ -79,6 +91,32 @@ export function Table<T extends object>({
       setIsLoading(false)
       onLoadMore?.()
     }, 1000)
+  }
+
+  const renderRow = (row: T) => {
+    return (
+      <tr
+        className={cn(
+          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b py-3 transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
+          onRowClick && 'cursor-pointer'
+        )}
+        key={rowKey(row)}
+        onClick={() => onRowClick?.(row)}
+      >
+        {columns.map((column) => (
+          <td
+            className="flex max-w-full items-center px-4 py-2"
+            key={String(column.key)}
+          >
+            {column.render
+              ? column.render(row)
+              : isKeyOfT<T>(column.key, row)
+                ? String(row[column.key])
+                : ''}
+          </td>
+        ))}
+      </tr>
+    )
   }
 
   return (
@@ -112,29 +150,16 @@ export function Table<T extends object>({
           hasMore && 'pb-16'
         )}
       >
-        {data.map((row) => (
-          <tr
-            className={cn(
-              'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b py-3 transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
-              onRowClick && 'cursor-pointer'
-            )}
-            key={rowKey(row)}
-            onClick={() => onRowClick?.(row)}
-          >
-            {columns.map((column) => (
-              <td
-                className="flex w-fit items-center whitespace-nowrap px-4 py-2"
-                key={String(column.key)}
-              >
-                {column.render
-                  ? column.render(row)
-                  : isKeyOfT<T>(column.key, row)
-                    ? String(row[column.key])
-                    : ''}
-              </td>
-            ))}
-          </tr>
-        ))}
+        {data.map((d) =>
+          isGroupOf<T>(d) ? (
+            <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+              <div className="[grid-column:1/-1]">{renderGroupHeader?.(d)}</div>
+              {d.items.map(renderRow)}
+            </div>
+          ) : (
+            renderRow(d)
+          )
+        )}
         {hasMore && (
           <tr
             style={
@@ -178,4 +203,14 @@ export function Table<T extends object>({
 
 function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
   return typeof key === 'string' && Object.keys(data).includes(key)
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function isGroupOf<T extends object>(data: unknown): data is Group<T> {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'key' in data &&
+    'items' in data
+  )
 }

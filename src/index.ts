@@ -35,7 +35,13 @@ export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
 export { GradientCircle } from '@/components/GradientCircle'
 export { Alert } from '@/components/Alert'
 export { Tabs, type TabProps, type TabsProps } from '@/components/Tabs'
-export { Table, type TableProps, type Column } from '@/components/Table'
+export {
+  Table,
+  type TableProps,
+  type Column,
+  type Group,
+  isGroupOf,
+} from '@/components/Table'
 export { Input, type InputProps } from '@/components/Input'
 export { type SupportedLanguage, supportedLanguages } from '@/types'
 export { PageHeader } from '@/components/PageHeader'
@@ -53,3 +59,9 @@ export {
   SelectScrollUpButton,
   SelectSeparator,
 } from '@/components/Select'
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from '@/components/Tooltip'

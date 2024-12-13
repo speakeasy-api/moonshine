@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Column, Table, TableProps } from '.'
+import { Column, Group, Table, TableProps } from '.'
 import { faker } from '@faker-js/faker'
 import { useState } from 'react'
 import { SupportedLanguage, supportedLanguages } from '@/types'
 import { TargetLanguageIcon } from '../TargetLanguageIcon'
 import { formatDistance } from 'date-fns'
+import { Icon } from '../Icon'
 
 const meta: Meta<typeof Table> = {
   component: Table,
@@ -46,7 +47,7 @@ function generateSDKs(count: number): SDK[] {
 
 const sdk: SDK[] = generateSDKs(5)
 
-const defaultArgs: TableProps<SDK> = {
+const defaultArgs: ListTableProps = {
   columns: [
     {
       key: 'language',
@@ -69,15 +70,15 @@ const defaultArgs: TableProps<SDK> = {
     {
       key: 'version',
       header: 'Version',
-      width: '1fr',
-      render: (version) => (
-        <div className="text-muted-foreground">{version.toString()}</div>
+      width: '0.75fr',
+      render: (row) => (
+        <div className="text-muted-foreground">{row.version.toString()}</div>
       ),
     },
     {
       key: 'lastGeneratedAt',
       header: 'Last Generated',
-      width: '1fr',
+      width: '1.25fr',
       render: (row) => (
         <div className="text-muted-foreground">
           {formatDistance(row.lastGeneratedAt, new Date(), { addSuffix: true })}
@@ -102,8 +103,10 @@ const defaultArgs: TableProps<SDK> = {
   hasMore: true,
 }
 
-const TableWithState = (args: TableProps<SDK>) => {
-  const [data, setData] = useState(args.data)
+type ListTableProps = TableProps<SDK> & { data: SDK[] }
+
+const TableWithState = (args: ListTableProps) => {
+  const [data, setData] = useState<SDK[]>(args.data)
   return (
     <Table
       {...args}
@@ -115,7 +118,42 @@ const TableWithState = (args: TableProps<SDK>) => {
   )
 }
 
-export const Default: StoryObj<typeof Table<SDK>> = {
+export const Default: StoryObj<ListTableProps> = {
   args: defaultArgs,
   render: (args) => <TableWithState {...args} />,
+}
+
+type GroupedTableProps = TableProps<SDK> & { data: Group<SDK>[] }
+
+const GroupedTableWithState = (args: GroupedTableProps) => {
+  const [data, setData] = useState<Group<SDK>[]>(args.data)
+  return (
+    <Table
+      {...args}
+      data={data}
+      onLoadMore={() => {
+        setData((prev) => [
+          ...prev,
+          { key: 'my-new-source', items: generateSDKs(2), count: 2 },
+        ])
+      }}
+    />
+  )
+}
+
+export const Grouped: StoryObj<GroupedTableProps> = {
+  args: {
+    ...defaultArgs,
+    data: [
+      { key: 'my-source', items: sdk.slice(0, 2), count: 2 },
+      { key: 'my-other-source', items: sdk.slice(2, 4), count: 2 },
+    ],
+    renderGroupHeader: (group) => (
+      <div className="text-muted-foreground flex w-full flex-row items-center gap-2 border-b bg-zinc-50 px-4 py-2 font-semibold dark:bg-zinc-900">
+        <Icon name="code" />
+        {group.key} ({group.count as number} SDKs total)
+      </div>
+    ),
+  },
+  render: (args) => <GroupedTableWithState {...args} />,
 }
