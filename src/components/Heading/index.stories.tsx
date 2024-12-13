@@ -11,30 +11,57 @@ export default meta
 
 type Story = StoryObj<typeof Heading>
 
-export const Heading1: Story = {
+export const ExtraLarge: Story = {
   args: {
-    level: 1,
-    children: 'Heading level 1',
+    variant: 'xl',
+    children: 'CLI not connected',
   },
 }
 
-export const Heading2: Story = {
+export const Large: Story = {
   args: {
-    level: 2,
-    children: 'Heading level 2',
+    variant: 'lg',
+    children: 'Creating a new target',
   },
 }
 
-export const Heading3: Story = {
+export const Medium: Story = {
   args: {
-    level: 3,
-    children: 'Heading level 3',
+    variant: 'md',
+    children: 'Select SDKs',
   },
 }
 
-export const Heading4: Story = {
+export const Small: Story = {
   args: {
-    level: 4,
-    children: 'Heading level 4',
+    variant: 'sm',
+    children: 'Run your first GitHub Action',
   },
+}
+
+export const ExtraSmall: Story = {
+  args: {
+    variant: 'xs',
+    children: "Let's get you setup with a new target!",
+  },
+}
+
+export const AsH6: Story = {
+  args: {
+    as: 'h6',
+    variant: 'xl',
+    children: 'CLI not connected',
+  },
+}
+
+export const AllVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Heading variant="xl">CLI not connected</Heading>
+      <Heading variant="lg">Creating a new target</Heading>
+      <Heading variant="md">Select SDKs</Heading>
+      <Heading variant="sm">Run your first GitHub Action</Heading>
+      <Heading variant="xs">Let's get you setup with a new target!</Heading>
+    </div>
+  ),
 }

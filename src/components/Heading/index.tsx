@@ -1,20 +1,34 @@
-import { Text } from '../Text'
 import { ReactNode } from 'react'
 
-type Level = 1 | 2 | 3 | 4
+type HeadingVariant = 'xl' | 'lg' | 'md' | 'sm' | 'xs'
+type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
 export interface HeadingProps {
   children: ReactNode
-  level: Level
+  variant?: HeadingVariant
+  as?: HeadingElement
 }
 
-export function Heading({ children, level }: HeadingProps) {
-  const variant = `h${level}` as const
-  const tag = `h${level}` as const
+const variantStyles: Record<HeadingVariant, string> = {
+  xl: 'text-heading-lg md:text-heading-xl',
+  lg: 'text-heading-md md:text-heading-lg',
+  md: 'text-heading-sm md:text-heading-md',
+  sm: 'text-heading-xs md:text-heading-sm',
+  xs: 'text-heading-xxs md:text-heading-xs',
+}
 
-  return (
-    <Text variant={variant} as={tag}>
-      {children}
-    </Text>
-  )
+const variantToElement: Record<HeadingVariant, HeadingElement> = {
+  xl: 'h1',
+  lg: 'h2',
+  md: 'h3',
+  sm: 'h4',
+  xs: 'h5',
+}
+
+export function Heading({
+  children,
+  variant = 'md',
+  as: Component = variantToElement[variant],
+}: HeadingProps) {
+  return <Component className={variantStyles[variant]}>{children}</Component>
 }
