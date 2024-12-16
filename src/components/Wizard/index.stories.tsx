@@ -1,8 +1,7 @@
 import React from 'react'
 import { Wizard, WizardStep } from '.'
 import { StoryObj, Meta } from '@storybook/react'
-import { Badge } from '@/index'
-import { Text } from '@/components/Text'
+import { Badge, Heading } from '@/index'
 
 const meta: Meta<typeof Wizard> = {
   component: Wizard,
@@ -96,7 +95,7 @@ const GetStartedHeaderContent = (
 ) => (
   <>
     <div className="flex items-center gap-2">
-      <Text variant="h3">Get Started</Text>
+      <Heading variant="xl">Get Started</Heading>
       <Badge variant="default">
         {completedSteps.length === steps.length
           ? 'Completed'

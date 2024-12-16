@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
-import { CodeSnippet } from '@/index'
+import { CodeSnippet, Heading, Text } from '@/index'
 import { ProgrammingLanguage } from '@/types'
 import { useMemo } from 'react'
 
@@ -168,24 +168,23 @@ export function Wizard({
                       {stepNumber}
                     </div>
 
-                    <h3
-                      className={cn(
-                        'text-2xl font-semibold tracking-tight',
-                        status === 'upcoming' && 'opacity-50'
-                      )}
-                    >
-                      {step.title}
-                    </h3>
+                    {/* TODO: is this the best way to handle the opacity? */}
+                    <div className={cn(status === 'upcoming' && 'opacity-50')}>
+                      <Heading variant="md" as="h2">
+                        {step.title}
+                      </Heading>
+                    </div>
                   </div>
 
-                  <p
+                  {/* TODO: is this the best way to handle the opacity? */}
+                  <div
                     className={cn(
                       'mb-4 mt-2',
                       status === 'upcoming' && 'opacity-50'
                     )}
                   >
-                    {step.description}
-                  </p>
+                    <Text muted>{step.description}</Text>
+                  </div>
 
                   <div
                     className={cn(
@@ -193,6 +192,7 @@ export function Wizard({
                       status === 'upcoming' && 'opacity-50'
                     )}
                   >
+                    {/* TODO: update this to CodeBlock component */}
                     {status === 'current' &&
                       step.commands?.map((command, cmdIndex) => (
                         <CodeSnippet
