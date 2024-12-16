@@ -36,7 +36,7 @@ export function LanguageIndicator({ language }: LanguageIndicatorProps) {
   return (
     <div className="gap flex select-none items-center gap-1.5">
       <div className={`h-2 w-2 rounded-full ${languageColorMap[language]}`} />
-      <span className="text-muted-foreground text-xs font-medium">
+      <span className="text-muted-foreground font-medium">
         {languageLabelMap[language]}
       </span>
     </div>
