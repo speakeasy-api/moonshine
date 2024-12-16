@@ -3,6 +3,8 @@ import type { Range } from '@/lib/typeUtils'
 import { useMemo, type CSSProperties } from 'react'
 import styles from './index.module.css'
 
+export type ScoreValue = Range<100>
+
 interface ThresholdStyles {
   /**
    * The color of the track when the score is greater than the threshold.
@@ -14,7 +16,7 @@ export interface ScoreProps {
   /**
    * The score to display. Must be between 0 and 100.
    */
-  score: Range<100>
+  score: ScoreValue
   /**
    * The size of the score component e.g small, medium, large, xl, 2xl
    */
