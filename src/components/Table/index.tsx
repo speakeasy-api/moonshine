@@ -67,6 +67,11 @@ export type TableProps<T extends object> = {
    * Whether there are more rows to load.
    */
   hasMore?: boolean
+
+  /**
+   * No results message
+   */
+  noResultsMessage?: ReactNode
 }
 
 export function Table<T extends object>({
@@ -76,6 +81,7 @@ export function Table<T extends object>({
   onRowClick,
   onLoadMore,
   hasMore,
+  noResultsMessage,
   renderGroupHeader,
 }: TableProps<T>) {
   const colWidths = useMemo(() => {
@@ -150,14 +156,22 @@ export function Table<T extends object>({
           hasMore && 'pb-16'
         )}
       >
-        {data.map((d) =>
-          isGroupOf<T>(d) ? (
-            <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-              <div className="[grid-column:1/-1]">{renderGroupHeader?.(d)}</div>
-              {d.items.map(renderRow)}
-            </div>
-          ) : (
-            renderRow(d)
+        {data.length === 0 ? (
+          <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+            <div className="[grid-column:1/-1]">{noResultsMessage}</div>
+          </div>
+        ) : (
+          data.map((d) =>
+            isGroupOf<T>(d) ? (
+              <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+                <div className="[grid-column:1/-1]">
+                  {renderGroupHeader?.(d)}
+                </div>
+                {d.items.map(renderRow)}
+              </div>
+            ) : (
+              renderRow(d)
+            )
           )
         )}
         {hasMore && (
