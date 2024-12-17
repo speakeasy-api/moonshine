@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Icon } from '../Icon'
 import { IconName } from '../Icon/names'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
@@ -20,22 +20,24 @@ export function Input({
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false)
 
-  const handleFocus = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (props.onFocus) {
-      props.onFocus(event)
-    }
-    setIsFocused(true)
-  }
-  const handleBlur = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (props.onBlur) {
-      props.onBlur(event)
-    }
-    setIsFocused(false)
-  }
+  const handleFocus = useCallback(
+    (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (props.onFocus) {
+        props.onFocus(event)
+      }
+      setIsFocused(true)
+    },
+    [props.onFocus]
+  )
+  const handleBlur = useCallback(
+    (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (props.onBlur) {
+        props.onBlur(event)
+      }
+      setIsFocused(false)
+    },
+    [props.onBlur]
+  )
 
   const commonProps = {
     value,

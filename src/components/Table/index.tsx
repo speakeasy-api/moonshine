@@ -61,7 +61,7 @@ export type TableProps<T extends object> = {
   /**
    * The function to call when the load more button is clicked.
    */
-  onLoadMore?: () => void
+  onLoadMore?: () => Promise<void> | (() => void)
 
   /**
    * Whether there are more rows to load.
@@ -90,13 +90,10 @@ export function Table<T extends object>({
   const tableBodyRef = useRef<HTMLTableSectionElement>(null)
   const tableRef = useRef<HTMLTableElement>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     setIsLoading(true)
-
-    setTimeout(() => {
-      setIsLoading(false)
-      onLoadMore?.()
-    }, 1000)
+    await onLoadMore?.()
+    setIsLoading(false)
   }
 
   const renderRow = (row: T) => {
