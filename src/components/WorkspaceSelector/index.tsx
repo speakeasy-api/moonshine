@@ -12,6 +12,7 @@ import { Separator } from '../Separator'
 import { Logo } from '../Logo'
 import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
+import { Heading } from '../Heading'
 
 export interface Org {
   id: string
@@ -320,8 +321,8 @@ function WorkspaceViewContents({
               <Logo variant="icon" />
             </div>
             <Stack align="center" gap={2}>
-              <Text variant="h3">Select your workspace</Text>
-              <Text variant="muted">
+              <Heading variant="xl">Select your workspace</Heading>
+              <Text muted>
                 Select or create the workspace you want to use for this project.
               </Text>
             </Stack>

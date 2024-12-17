@@ -33,7 +33,11 @@ const SidebarMenuItem = React.forwardRef<HTMLLIElement, SidebarMenuItemProps>(
           {iconName && (
             <Icon name={iconName} stroke="currentColor" aria-hidden="true" />
           )}
-          <Text variant={isSelected ? 'small' : 'muted'} truncate>
+          <Text
+            variant="sm"
+            muted={isSelected ? false : true}
+            whiteSpace="nowrap"
+          >
             {label}
           </Text>
           {badge && (

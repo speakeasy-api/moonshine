@@ -190,7 +190,7 @@ export default {
         'heading-xl': [
           '2.0625rem',
           {
-            lineHeight: '1.515',
+            lineHeight: '1.375',
             letterSpacing: '0.0015em',
             fontWeight: '300',
             color: '#FAFAFA',
@@ -239,6 +239,42 @@ export default {
             letterSpacing: '0.0015em',
             fontWeight: '300',
             color: '#F4F4F5',
+          },
+        ],
+        'body-lg': [
+          '1.125rem',
+          {
+            lineHeight: '1.75',
+            letterSpacing: '0.0025em',
+            fontWeight: '400',
+            color: '#E4E4E7',
+          },
+        ],
+        'body-md': [
+          '1rem',
+          {
+            lineHeight: '1.75',
+            letterSpacing: '0.0025em',
+            fontWeight: '400',
+            color: '#E4E4E7',
+          },
+        ],
+        'body-sm': [
+          '0.875rem',
+          {
+            lineHeight: '1.75',
+            letterSpacing: '0.0025em',
+            fontWeight: '400',
+            color: '#E4E4E7',
+          },
+        ],
+        'body-xs': [
+          '0.75rem',
+          {
+            lineHeight: '1.75',
+            letterSpacing: '0.0025em',
+            fontWeight: '400',
+            color: '#E4E4E7',
           },
         ],
       },

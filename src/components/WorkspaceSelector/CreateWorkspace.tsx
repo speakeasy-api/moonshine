@@ -3,7 +3,7 @@ import { Org } from '.'
 import { Command } from '../Command'
 import { Text } from '../Text'
 import { Icon } from '../Icon'
-import { Button, Stack } from '@/index'
+import { Button, Heading, Stack } from '@/index'
 import { Separator } from '../Separator'
 import { GradientCircle } from '../GradientCircle'
 
@@ -83,9 +83,9 @@ export function CreateWorkspace({
           <div className="flex flex-col items-center justify-center gap-4">
             <GradientCircle name={currentOrg.label} size="2xl" showInitial />
             <Stack align="center" gap={2}>
-              <Text variant="h3">Create new workspace</Text>
+              <Heading variant="xl">Create new workspace</Heading>
               <div className="max-w-64">
-                <Text variant="muted">
+                <Text muted>
                   Workspaces are used to organize your SDK targets into logical
                   groups.
                 </Text>
@@ -100,8 +100,8 @@ export function CreateWorkspace({
           <div className="flex max-w-lg flex-col">
             <div className="flex flex-col gap-4">
               <Stack align="start" gap={2}>
-                <Text variant="h4">Choose your workspace name</Text>
-                <Text variant="muted">
+                <Text variant="lg">Choose your workspace name</Text>
+                <Text muted>
                   Enter a name for your new workspace. Names must be in slug
                   format; only lowercase letters, numbers, and hyphens are
                   allowed.

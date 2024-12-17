@@ -6,6 +6,7 @@ import { GradientCircle } from '../GradientCircle'
 import { Separator } from '../Separator'
 import { Text } from '../Text'
 import { Button } from '../Button'
+import { Heading } from '@/index'
 
 interface CreateOrgProps {
   onSubmit: (name: string) => Promise<Org>
@@ -33,9 +34,9 @@ export function CreateOrg({ onSubmit }: CreateOrgProps) {
               showInitial
             />
             <Stack align="center" gap={2}>
-              <Text variant="h3">Create new company</Text>
+              <Heading variant="xl">Create new company</Heading>
               <div className="max-w-64">
-                <Text variant="muted">
+                <Text muted>
                   Once you have created your company, we'll take you through
                   some onboarding steps to get you started with Speakeasy.
                 </Text>
@@ -50,8 +51,8 @@ export function CreateOrg({ onSubmit }: CreateOrgProps) {
           <div className="flex max-w-lg flex-col">
             <div className="flex flex-col gap-4">
               <Stack align="start" gap={2}>
-                <Text variant="h4">Enter your company name</Text>
-                <Text variant="muted">
+                <Text variant="lg">Enter your company name</Text>
+                <Text muted>
                   We will automatically generate a unique, URL-friendly slug
                   based off your company name.
                 </Text>
