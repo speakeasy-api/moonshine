@@ -111,7 +111,7 @@ const TableWithState = (args: ListTableProps) => {
     <Table
       {...args}
       data={data}
-      onLoadMore={() => {
+      onLoadMore={async () => {
         setData((prev) => [...prev, ...generateSDKs(2)])
       }}
     />
@@ -131,7 +131,7 @@ const GroupedTableWithState = (args: GroupedTableProps) => {
     <Table
       {...args}
       data={data}
-      onLoadMore={() => {
+      onLoadMore={async () => {
         setData((prev) => [
           ...prev,
           { key: 'my-new-source', items: generateSDKs(2), count: 2 },
