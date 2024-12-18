@@ -96,7 +96,7 @@ export function Score({
       }, 40) // Reduced interval time for smoother animation
       return () => clearInterval(interval)
     }
-  }, [animate, score])
+  }, [])
 
   const progressColour = useMemo(() => {
     for (const [threshold, color] of Object.entries(thresholds).reverse()) {

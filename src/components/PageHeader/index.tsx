@@ -1,25 +1,29 @@
 interface PageHeaderProps {
   title: React.ReactNode
   subtitle?: React.ReactNode
-  imageUrl?: string | React.ReactNode
+
+  /**
+   * Either an image URL or a React component
+   */
+  image?: string | React.ReactNode
   children?: React.ReactNode
 }
 
 export function PageHeader({
   title,
   subtitle,
-  imageUrl,
+  image,
   children,
 }: PageHeaderProps) {
   return (
     <div className="flex flex-col gap-2 border-b pb-6">
-      <div className="flex flex-row gap-6">
-        {imageUrl && (
+      <div className="flex flex-row items-center gap-4">
+        {image && (
           <div className="max-w-24">
-            {typeof imageUrl === 'string' ? (
-              <img src={imageUrl} className="rounded-lg" />
+            {typeof image === 'string' ? (
+              <img src={image} className="rounded-lg" />
             ) : (
-              imageUrl
+              image
             )}
           </div>
         )}
@@ -28,8 +32,8 @@ export function PageHeader({
           {subtitle && (
             <p className="text-muted-foreground max-w-lg text-sm">{subtitle}</p>
           )}
-          <div>{children}</div>
         </div>
+        <div className="ml-auto">{children}</div>
       </div>
     </div>
   )

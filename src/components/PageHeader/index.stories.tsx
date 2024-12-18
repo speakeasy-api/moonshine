@@ -22,10 +22,22 @@ export const Default: Story = {
     title: 'Speakeasy',
     subtitle:
       'Best in class API tooling for robust SDKs, Terraform Providers and End to End Testing. OpenAPI Native.',
-    imageUrl: 'https://avatars.githubusercontent.com/u/91446104?s=200&v=4',
+    image: 'https://avatars.githubusercontent.com/u/91446104?s=200&v=4',
     children: [
       <div className="mt-2">
-        <Badge variant="success">1m+ followers</Badge>
+        <Badge variant="success">1.5m followers</Badge>
+      </div>,
+    ],
+  },
+}
+
+export const WithoutSubtitle: Story = {
+  args: {
+    title: 'Speakeasy',
+    image: 'https://avatars.githubusercontent.com/u/91446104?s=200&v=4',
+    children: [
+      <div className="mt-2">
+        <Badge variant="success">1.5m followers</Badge>
       </div>,
     ],
   },
