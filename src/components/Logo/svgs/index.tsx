@@ -13,7 +13,7 @@ export function Wordmark({ fill, width = 166, height = 20 }: SvgProps) {
       height={height}
       viewBox={`0 0 166 20`}
       fill="none"
-      preserveAspectRatio="xMidYMid"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g opacity="1">
         <path
@@ -78,7 +78,7 @@ export function Logo({ fill, width = 28, height = 48 }: SvgProps) {
       viewBox={`0 0 28 48`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g clipPath="url(#clip0)">
         <path
