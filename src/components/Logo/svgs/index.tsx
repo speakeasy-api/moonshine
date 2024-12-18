@@ -1,16 +1,19 @@
 interface SvgProps {
   fill: string
+  width?: number
+  height?: number
 }
 
-export function Wordmark({ fill }: SvgProps) {
+export function Wordmark({ fill, width = 166, height = 20 }: SvgProps) {
   return (
     <svg
       aria-label="Speakeasy Logo"
       xmlns="http://www.w3.org/2000/svg"
-      width={166}
-      height={20}
-      viewBox="0 0 166 20"
+      width={width}
+      height={height}
+      viewBox={`0 0 166 20`}
       fill="none"
+      preserveAspectRatio="xMidYMid"
     >
       <g opacity="1">
         <path
@@ -67,14 +70,15 @@ export function Wordmark({ fill }: SvgProps) {
   )
 }
 
-export function Logo({ fill }: SvgProps) {
+export function Logo({ fill, width = 28, height = 48 }: SvgProps) {
   return (
     <svg
-      width={28}
-      height={48}
-      viewBox="0 0 28 48"
+      width={width}
+      height={height}
+      viewBox={`0 0 28 48`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid"
     >
       <g clipPath="url(#clip0)">
         <path
