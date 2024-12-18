@@ -11,7 +11,7 @@ type BadgeVariants =
   | 'warning'
   | 'danger'
 
-type BadgeSizes = 'sm' | 'md' | 'lg'
+type BadgeSizes = 'xs' | 'sm' | 'md' | 'lg'
 
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -30,7 +30,7 @@ type BadgeVariantsCva = {
 }
 
 const badgeVariants = cva<BadgeVariantsCva>(
-  'inline-flex text-xs rounded-full px-3 py-1',
+  'inline-flex text-xs select-none rounded-full px-3 py-1',
   {
     variants: {
       variant: {
@@ -44,6 +44,7 @@ const badgeVariants = cva<BadgeVariantsCva>(
         danger: 'bg-red-600 text-red-100',
       },
       size: {
+        xs: 'text-[11px]',
         sm: 'text-xs',
         md: 'text-sm',
         lg: 'text-base',

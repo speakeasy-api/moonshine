@@ -1,7 +1,9 @@
 import { Size } from '@/types'
 import type { Range } from '@/lib/typeUtils'
-import { useMemo, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import styles from './index.module.css'
+
+export type ScoreValue = Range<100>
 
 interface ThresholdStyles {
   /**
@@ -14,7 +16,7 @@ export interface ScoreProps {
   /**
    * The score to display. Must be between 0 and 100.
    */
-  score: Range<100>
+  score: ScoreValue
   /**
    * The size of the score component e.g small, medium, large, xl, 2xl
    */
@@ -32,6 +34,8 @@ export interface ScoreProps {
    * e.g [50, 75] will change color to green at 75%, orange at 50%. Otherwise red.
    */
   thresholds?: ThresholdStyles
+
+  animate?: boolean
 }
 
 const transition = {
@@ -71,13 +75,34 @@ export function Score({
   showLabel = true,
   trackColor = defaultTrackColor,
   thresholds = defaultThresholds,
+  animate = false,
 }: ScoreProps) {
-  const strokePercent = score // %
+  const [scoreInternal, setScoreInternal] = useState<ScoreValue>(
+    animate ? 0 : score
+  )
+  const strokePercent = scoreInternal // %
+
+  useEffect(() => {
+    if (animate) {
+      const stepSize = Math.max(1, Math.floor(score / 20)) // Increase by 5% of total at minimum
+      const interval = setInterval(() => {
+        setScoreInternal((prevScore) => {
+          if (prevScore >= score) {
+            clearInterval(interval)
+            return score
+          }
+          return Math.min(prevScore + stepSize, score) as ScoreValue
+        })
+      }, 40) // Reduced interval time for smoother animation
+      return () => clearInterval(interval)
+    }
+  }, [])
+
   const progressColour = useMemo(() => {
     for (const [threshold, color] of Object.entries(thresholds).reverse()) {
-      if (score >= Number(threshold)) return color
+      if (scoreInternal >= Number(threshold)) return color
     }
-  }, [score, thresholds])
+  }, [scoreInternal, thresholds])
 
   const primaryStrokeDasharray = () => {
     if (

@@ -23,7 +23,7 @@ const initialSizeMap: Record<Size, number> = {
   small: 16,
   medium: 24,
   large: 24,
-  xl: 32,
+  xl: 36,
   '2xl': 48,
 }
 

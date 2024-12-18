@@ -62,7 +62,7 @@ const CardHeader: FC<CardHeaderProps> = ({
     {rightElement && (
       <div className="flex flex-shrink-0 justify-end gap-2">
         {rightElement.type === 'button' && (
-          <Button onClick={rightElement.onClick} variant="outline">
+          <Button onClick={rightElement.onClick} variant="secondary">
             {rightElement.label}
           </Button>
         )}
@@ -150,7 +150,7 @@ const Card: FC<CardProps> = ({ children, onClick, href }) => {
   return (
     <Wrapper
       className={cn(
-        'bg-card text-card-foreground relative flex w-full flex-col rounded-[8px] border shadow',
+        'bg-card text-card-foreground relative flex h-full w-full flex-col rounded-[8px] border shadow',
         isInteractive && 'hover:bg-card/70 cursor-pointer'
       )}
       {...wrapperProps}
