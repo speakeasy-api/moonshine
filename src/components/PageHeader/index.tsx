@@ -1,3 +1,5 @@
+import { Heading } from '../Heading'
+// TODO: https://linear.app/speakeasy/issue/SXF-169/page-header-component
 interface PageHeaderProps {
   title: React.ReactNode
   subtitle?: React.ReactNode
@@ -28,7 +30,8 @@ export function PageHeader({
           </div>
         )}
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <Heading variant="xl">{title}</Heading>
+          {/* TODO: update this to use our own Text component */}
           {subtitle && (
             <p className="text-muted-foreground max-w-lg text-sm">{subtitle}</p>
           )}

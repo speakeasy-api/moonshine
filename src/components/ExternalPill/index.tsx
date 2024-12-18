@@ -1,3 +1,4 @@
+// TODO: https://linear.app/speakeasy/issue/SXF-173/external-pill-component
 import React, { useState, useEffect } from 'react'
 import { Icon as FallbackIcon } from '../Icon'
 

@@ -1,3 +1,4 @@
+// TODO: https://linear.app/speakeasy/issue/SXF-170/table-component
 import { useMemo, type ReactNode, useState, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
