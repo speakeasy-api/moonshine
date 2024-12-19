@@ -6,6 +6,7 @@ export interface UserAvatarProps {
   name: string
   imageUrl?: string
   size?: Size
+  border?: boolean
 }
 
 const fallbackColors = [
@@ -31,6 +32,7 @@ export function UserAvatar({
   name,
   imageUrl,
   size = 'medium',
+  border = false,
 }: UserAvatarProps) {
   const sizeValue = sizeMap[size]
   const hasImage = !!imageUrl
@@ -40,7 +42,8 @@ export function UserAvatar({
       className={cn(
         'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
         `size-${sizeValue}`,
-        !hasImage && getFallbackColor(name)
+        !hasImage && getFallbackColor(name),
+        border && 'border-background border-2'
       )}
     >
       {hasImage ? (

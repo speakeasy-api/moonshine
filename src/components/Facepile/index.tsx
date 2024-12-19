@@ -263,7 +263,7 @@ function AvatarWrapper({
       onMouseEnter={() => handleMouseEnter(index)}
       {...motionProps}
     >
-      <UserAvatar {...avatar} size={avatarSize} />
+      <UserAvatar {...avatar} size={avatarSize} border />
     </motion.div>
   )
 }
