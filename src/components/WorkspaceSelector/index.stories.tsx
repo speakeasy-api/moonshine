@@ -468,6 +468,8 @@ export const WithSearchableOrgSelector: Story = {
   ...Default,
   render: () => {
     const orgs = Array.from({ length: 5000 }).map(() => {
+      // Set seed to ensure consistent data
+      faker.seed(42)
       const slug = faker.lorem.slug({ min: 1, max: 3 })
       return {
         id: faker.string.uuid(),
