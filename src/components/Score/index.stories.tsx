@@ -39,6 +39,24 @@ export const Default: Story = {
   },
 }
 
+export const Low: Story = {
+  args: {
+    score: 25,
+  },
+}
+
+export const Mid: Story = {
+  args: {
+    score: 50,
+  },
+}
+
+export const High: Story = {
+  args: {
+    score: 75,
+  },
+}
+
 export const Small: Story = {
   args: {
     score: 50,
@@ -88,5 +106,6 @@ export const Animate: Story = {
     score: 75,
     animate: true,
     size: '2xl',
+    animationDuration: 150,
   },
 }

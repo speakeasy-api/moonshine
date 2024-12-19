@@ -47,10 +47,10 @@
     --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-red: 10 78% 54%;
-    --score-orange: 25 95% 53%;
-    --score-green: 163 75% 26%;
-    --score-track: 48 4% 70%;
+    --score-low: 350 89% 60%;
+    --score-mid: 38 92% 50%;
+    --score-high: 160 84% 39%;
+    --score-track: 48 4% 28%;
 
     /* Custom easing functions */
     --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -119,9 +119,9 @@
     --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-red: 10 78% 54%;
-    --score-orange: 53 100% 58%;
-    --score-green: 163 75% 48%;
+    --score-low: 350 89% 60%;
+    --score-mid: 38 92% 50%;
+    --score-high: 160 84% 39%;
     --score-track: 48 4% 28%;
   }
 }
