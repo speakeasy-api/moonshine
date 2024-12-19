@@ -1,43 +1,34 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-
-interface Face {
-  id: string
-  name: string
-  image?: string
-}
+import { Size } from '@/types'
+import { UserAvatar, UserAvatarProps } from '@/components/UserAvatar'
+import { sizeMap as avatarSizeMap } from '@/components/UserAvatar/sizeMap'
+import { cn } from '@/lib/utils'
 
 interface FacepileProps {
-  faces: Face[]
+  avatars: Omit<UserAvatarProps, 'size'>[]
   maxFaces?: number
-  size?: number
+  avatarSize?: Size
   overlap?: number
 }
 
-const gradients = [
-  'linear-gradient(135deg, #6366f1, #a5b4fc)', // Indigo
-  'linear-gradient(135deg, #8b5cf6, #c4b5fd)', // Purple
-  'linear-gradient(135deg, #ec4899, #f9a8d4)', // Pink
-  'linear-gradient(135deg, #f43f5e, #fda4af)', // Rose
-  'linear-gradient(135deg, #f97316, #fdba74)', // Orange
-]
-
-function Facepile({
-  faces = [],
+export function Facepile({
+  avatars = [],
   maxFaces = 5,
-  size = 40,
+  avatarSize = 'medium',
   overlap = 0.6,
 }: FacepileProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null)
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const size = avatarSizeMap[avatarSize] * 4 // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
   const offsetX = size * overlap // How much each avatar overlaps
 
-  const visibleFaces = faces.slice(0, maxFaces)
-  const hiddenFaces = faces.slice(maxFaces)
-  const extraFaces = Math.max(0, faces.length - maxFaces)
+  const visibleFaces = avatars.slice(0, maxFaces)
+  const hiddenFaces = avatars.slice(maxFaces)
+  const extraFaces = Math.max(0, avatars.length - maxFaces)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
@@ -46,7 +37,9 @@ function Facepile({
   useEffect(() => {
     if (tooltipRef.current) {
       const updateTooltipWidth = () => {
-        setTooltipWidth(tooltipRef.current!.offsetWidth)
+        if (tooltipRef.current?.offsetWidth) {
+          setTooltipWidth(tooltipRef.current!.offsetWidth)
+        }
       }
       updateTooltipWidth()
       const resizeObserver = new ResizeObserver(updateTooltipWidth)
@@ -84,7 +77,7 @@ function Facepile({
   }
 
   const containerWidth = isExpanded
-    ? faces.length * offsetX + size - offsetX
+    ? avatars.length * offsetX + size - offsetX
     : visibleFaces.length * offsetX +
       size -
       offsetX +
@@ -94,7 +87,7 @@ function Facepile({
     if (prevHoveredIndex === null || index === null) return {}
     const direction = index > prevHoveredIndex ? 1 : -1
     return {
-      initial: { opacity: 0, x: -20 * direction },
+      initial: { opacity: 0, x: -15 * direction },
       animate: { opacity: 1, x: 0 },
       exit: { opacity: 0, x: 20 * direction },
       transition: { duration: 0.2 },
@@ -112,13 +105,13 @@ function Facepile({
     >
       {visibleFaces.map((face, index) => (
         <AvatarWrapper
-          key={face.id}
-          face={face}
+          key={face.name}
+          avatar={face}
+          avatarSize={avatarSize}
           index={index}
           size={size}
           offsetX={offsetX}
           hoveredIndex={hoveredIndex}
-          setHoveredIndex={setHoveredIndex}
           handleMouseEnter={handleMouseEnter}
           totalFaces={visibleFaces.length}
           isExpanded={isExpanded}
@@ -130,15 +123,15 @@ function Facepile({
         {isExpanded &&
           hiddenFaces.map((face, index) => (
             <AvatarWrapper
-              key={face.id}
-              face={face}
+              key={face.name}
+              avatar={face}
+              avatarSize={avatarSize}
               index={index + maxFaces}
               size={size}
               offsetX={offsetX}
               hoveredIndex={hoveredIndex}
-              setHoveredIndex={setHoveredIndex}
               handleMouseEnter={handleMouseEnter}
-              totalFaces={faces.length}
+              totalFaces={avatars.length}
               isExpanded={isExpanded}
               maxFaces={maxFaces}
               initial={{ opacity: 0, scale: 0.5, x: -size / 2 }}
@@ -178,14 +171,15 @@ function Facepile({
               fontWeight: 'medium',
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
+              zIndex: 10,
             }}
           >
             <AnimatePresence mode="wait">
               <motion.span
-                key={faces[hoveredIndex].id}
+                key={avatars[hoveredIndex].name}
                 {...getTooltipAnimation(hoveredIndex)}
               >
-                {faces[hoveredIndex].name}
+                {avatars[hoveredIndex].name}
               </motion.span>
             </AnimatePresence>
           </motion.div>
@@ -203,8 +197,10 @@ function Facepile({
           whileHover={{ scale: 1.1 }}
         >
           <div
-            className="border-background flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600"
-            style={{ width: size, height: size }}
+            className={cn(
+              'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
+              `size-${avatarSizeMap[avatarSize]}`
+            )}
           >
             +{extraFaces}
           </div>
@@ -215,24 +211,24 @@ function Facepile({
 }
 
 function AvatarWrapper({
-  face,
+  avatar,
+  avatarSize,
   index,
   size,
   offsetX,
   hoveredIndex,
-  setHoveredIndex,
   handleMouseEnter,
   totalFaces,
   isExpanded,
   maxFaces,
   ...motionProps
 }: {
-  face: Face
+  avatar: Omit<UserAvatarProps, 'size'>
+  avatarSize?: Size
   index: number
   size: number
   offsetX: number
   hoveredIndex: number | null
-  setHoveredIndex: (index: number | null) => void
   handleMouseEnter: (index: number) => void
   totalFaces: number
   isExpanded: boolean
@@ -264,38 +260,10 @@ function AvatarWrapper({
                 : -size * 0.2,
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      onMouseEnter={() => handleMouseEnter(index)}
       {...motionProps}
     >
-      <Avatar
-        className="border-background cursor-pointer border-2"
-        style={{ width: size, height: size }}
-        onMouseEnter={() => handleMouseEnter(index)}
-      >
-        <AvatarFallback
-          style={{ background: gradients[index % gradients.length] }}
-          className="font-medium text-white"
-        >
-          {face.name.charAt(0)}
-        </AvatarFallback>
-      </Avatar>
+      <UserAvatar {...avatar} size={avatarSize} />
     </motion.div>
-  )
-}
-
-export default function Component() {
-  const sampleFaces: Face[] = [
-    { id: '1', name: 'Alice Johnson' },
-    { id: '2', name: 'Bob Smith' },
-    { id: '3', name: 'Charlie Brown' },
-    { id: '4', name: 'Diana Ross' },
-    { id: '5', name: 'Edward Norton' },
-    { id: '6', name: 'Fiona Apple' },
-    { id: '7', name: 'George Clooney' },
-  ]
-
-  return (
-    <div className="flex h-[100vh] w-full items-center justify-center">
-      <Facepile faces={sampleFaces} />
-    </div>
   )
 }

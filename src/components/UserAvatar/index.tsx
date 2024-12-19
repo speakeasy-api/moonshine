@@ -1,17 +1,10 @@
 import { cn } from '@/lib/utils'
 import { Size } from '@/types'
-
-const sizeMap: Record<Size, number> = {
-  small: 8,
-  medium: 12,
-  large: 16,
-  xl: 24,
-  '2xl': 32,
-}
+import { sizeMap } from './sizeMap'
 
 export interface UserAvatarProps {
   name: string
-  imageUrl: string | undefined
+  imageUrl?: string
   size?: Size
 }
 
