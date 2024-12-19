@@ -14,7 +14,7 @@ interface FacepileProps {
 
 export function Facepile({
   avatars = [],
-  maxFaces = 5,
+  maxFaces = 3,
   avatarSize = 'medium',
   overlap = 0.6,
 }: FacepileProps) {
