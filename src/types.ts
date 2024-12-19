@@ -100,12 +100,14 @@ export type ViewTransition = {
 export const wrapOptions = ['nowrap', 'wrap', 'wrap-reverse'] as const
 export type Wrap = (typeof wrapOptions)[number]
 
-export type ProgrammingLanguage =
-  | 'javascript'
-  | 'typescript'
-  | 'python'
-  | 'bash'
-  | 'json'
-  | 'go'
-  | 'dotnet'
-  | 'java'
+export const programmingLanguages = [
+  'javascript',
+  'typescript',
+  'python',
+  'bash',
+  'json',
+  'go',
+  'dotnet',
+  'java',
+] as const
+export type ProgrammingLanguage = (typeof programmingLanguages)[number]

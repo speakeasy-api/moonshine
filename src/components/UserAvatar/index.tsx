@@ -47,11 +47,11 @@ export function UserAvatar({
         <img
           src={imageUrl}
           alt={name}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full select-none object-cover object-center"
         />
       ) : (
         <svg
-          className="h-full w-full"
+          className="h-full w-full select-none"
           viewBox={`0 0 ${sizeValue} ${sizeValue}`}
           preserveAspectRatio="xMidYMid meet"
         >

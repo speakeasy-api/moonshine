@@ -29,6 +29,7 @@ export default defineConfig({
   define: process.env.VITEST ? {} : { global: 'window' },
   build: {
     outDir: 'dist',
+    emptyOutDir: process.env.CI ? true : false,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: packageName,
@@ -46,8 +47,9 @@ export default defineConfig({
     },
     sourcemap: true,
     target: 'esnext',
-    minify: 'esbuild',
-    cssMinify: true,
+    minify: process.env.CI ? 'esbuild' : false,
+    reportCompressedSize: process.env.CI ? true : false,
+    cssMinify: process.env.CI ? true : false,
   },
 
   resolve: {

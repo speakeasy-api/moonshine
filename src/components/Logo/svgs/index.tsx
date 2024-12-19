@@ -7,10 +7,11 @@ export function Wordmark({ fill }: SvgProps) {
     <svg
       aria-label="Speakeasy Logo"
       xmlns="http://www.w3.org/2000/svg"
-      width={166}
+      width={112}
       height={20}
-      viewBox="0 0 166 20"
+      viewBox={`0 0 166 20`}
       fill="none"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g opacity="1">
         <path
@@ -72,9 +73,10 @@ export function Logo({ fill }: SvgProps) {
     <svg
       width={28}
       height={48}
-      viewBox="0 0 28 48"
+      viewBox={`0 0 28 48`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g clipPath="url(#clip0)">
         <path

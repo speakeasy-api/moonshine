@@ -82,3 +82,11 @@ export const WithCustomTrackColour: Story = {
     trackColor: 'darkblue',
   },
 }
+
+export const Animate: Story = {
+  args: {
+    score: 75,
+    animate: true,
+    size: '2xl',
+  },
+}
