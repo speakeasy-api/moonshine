@@ -63,3 +63,53 @@ export const ResponsveSizes: Story = {
     },
   },
 }
+
+export const Static: Story = {
+  args: {
+    avatars: [
+      { name: 'Alice Johnson' },
+      { name: 'Bob Smith' },
+      { name: 'Charlie Brown' },
+      { name: 'Diana Ross' },
+      { name: 'Edward Norton' },
+      { name: 'Fiona Apple' },
+      { name: 'George Clooney' },
+    ],
+    interactive: false,
+  },
+}
+
+export const StaticWithImages: Story = {
+  args: {
+    avatars: [
+      { name: 'Alice Johnson', imageUrl: 'https://picsum.photos/id/10/200' },
+      { name: 'Bob Smith', imageUrl: 'https://picsum.photos/id/20/200' },
+      { name: 'Charlie Brown', imageUrl: 'https://picsum.photos/id/30/200' },
+      { name: 'Diana Ross', imageUrl: 'https://picsum.photos/id/40/200' },
+      { name: 'Edward Norton', imageUrl: 'https://picsum.photos/id/50/200' },
+      { name: 'Fiona Apple', imageUrl: 'https://picsum.photos/id/60/200' },
+      { name: 'George Clooney', imageUrl: 'https://picsum.photos/id/70/200' },
+    ],
+    interactive: false,
+  },
+}
+
+export const StaticWithResponsiveImages: Story = {
+  args: {
+    avatars: [
+      { name: 'Alice Johnson', imageUrl: 'https://picsum.photos/id/10/200' },
+      { name: 'Bob Smith', imageUrl: 'https://picsum.photos/id/20/200' },
+      { name: 'Charlie Brown', imageUrl: 'https://picsum.photos/id/30/200' },
+      { name: 'Diana Ross', imageUrl: 'https://picsum.photos/id/40/200' },
+      { name: 'Edward Norton', imageUrl: 'https://picsum.photos/id/50/200' },
+      { name: 'Fiona Apple', imageUrl: 'https://picsum.photos/id/60/200' },
+      { name: 'George Clooney', imageUrl: 'https://picsum.photos/id/70/200' },
+    ],
+    avatarSize: {
+      sm: 'small',
+      md: 'medium',
+      lg: 'large',
+    },
+    interactive: false,
+  },
+}
