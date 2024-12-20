@@ -52,3 +52,30 @@ export const Large: Story = {
     size: 'large',
   },
 }
+
+export const ResponsiveWithImage: Story = {
+  ...Default.parameters,
+  args: {
+    ...Default.args,
+    size: {
+      sm: 'small',
+      md: 'medium',
+      lg: 'large',
+      xl: 'xl',
+    },
+  },
+}
+
+export const ResponsiveNoImage: Story = {
+  ...Default.parameters,
+  args: {
+    name: 'John Doe',
+    size: {
+      sm: 'small',
+      md: 'medium',
+      lg: 'large',
+      xl: 'xl',
+    },
+    imageUrl: undefined,
+  },
+}

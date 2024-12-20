@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Size } from '@/types'
+import { ResponsiveValue, Size } from '@/types'
 import { UserAvatar, UserAvatarProps } from '@/components/UserAvatar'
 import { sizeMap as avatarSizeMap } from '@/components/UserAvatar/sizeMap'
-import { cn } from '@/lib/utils'
+import { cn, getResponsiveClasses } from '@/lib/utils'
+import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
+import { sizeMapper } from '@/lib/responsiveMappers'
+import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
 interface FacepileProps {
   avatars: Omit<UserAvatarProps, 'size'>[]
   maxFaces?: number
-  avatarSize?: Size
+  avatarSize?: ResponsiveValue<Size>
   overlap?: number
 }
 
@@ -23,7 +26,14 @@ export function Facepile({
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const size = avatarSizeMap[avatarSize] * 4 // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
+  const breakpoint = useTailwindBreakpoint()
+  const resolvedSize = resolveSizeForBreakpoint(
+    breakpoint,
+    avatarSize,
+    'medium'
+  )
+
+  const size = avatarSizeMap[resolvedSize] * 4 // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
   const offsetX = size * overlap // How much each avatar overlaps
 
   const visibleFaces = avatars.slice(0, maxFaces)
@@ -199,7 +209,7 @@ export function Facepile({
           <div
             className={cn(
               'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-              `size-${avatarSizeMap[avatarSize]}`
+              getResponsiveClasses(avatarSize, sizeMapper)
             )}
           >
             +{extraFaces}
@@ -224,7 +234,7 @@ function AvatarWrapper({
   ...motionProps
 }: {
   avatar: Omit<UserAvatarProps, 'size'>
-  avatarSize?: Size
+  avatarSize?: ResponsiveValue<Size>
   index: number
   size: number
   offsetX: number

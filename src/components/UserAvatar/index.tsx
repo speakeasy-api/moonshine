@@ -1,11 +1,14 @@
-import { cn } from '@/lib/utils'
-import { Size } from '@/types'
+import { cn, getResponsiveClasses } from '@/lib/utils'
+import { ResponsiveValue, Size } from '@/types'
 import { sizeMap } from './sizeMap'
+import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
+import { sizeMapper } from '@/lib/responsiveMappers'
+import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
 export interface UserAvatarProps {
   name: string
   imageUrl?: string
-  size?: Size
+  size?: ResponsiveValue<Size>
   border?: boolean
 }
 
@@ -34,14 +37,18 @@ export function UserAvatar({
   size = 'medium',
   border = false,
 }: UserAvatarProps) {
-  const sizeValue = sizeMap[size]
+  const breakpoint = useTailwindBreakpoint()
+
+  const resolvedSize = resolveSizeForBreakpoint(breakpoint, size, 'medium')
+  const sizeValue = sizeMap[resolvedSize]
+
   const hasImage = !!imageUrl
 
   return (
     <div
       className={cn(
         'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
-        `size-${sizeValue}`,
+        getResponsiveClasses(size, sizeMapper),
         !hasImage && getFallbackColor(name),
         border && 'border-background border-2'
       )}

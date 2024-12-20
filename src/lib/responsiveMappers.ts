@@ -1,9 +1,10 @@
-import { Alignment, Gap, Padding, PaddingPerSide } from '@/types'
+import { Alignment, Gap, Padding, PaddingPerSide, Size } from '@/types'
 import {
   isPaddingHorizontalOrVerticalAxis,
   isPaddingPerSide,
   isPaddingPerSideValue,
 } from './typeUtils'
+import { sizeMap } from '@/components/UserAvatar/sizeMap'
 
 const directionClasses: Record<'horizontal' | 'vertical', string> = {
   horizontal: 'flex-row',
@@ -67,3 +68,5 @@ const wrapClasses: Record<'nowrap' | 'wrap' | 'wrap-reverse', string> = {
 
 export const wrapMapper = (wrap: 'nowrap' | 'wrap' | 'wrap-reverse') =>
   wrapClasses[wrap]
+
+export const sizeMapper = (size: Size) => `size-${sizeMap[size]}`
