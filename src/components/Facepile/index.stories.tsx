@@ -75,7 +75,7 @@ export const Static: Story = {
       { name: 'Fiona Apple' },
       { name: 'George Clooney' },
     ],
-    interactive: false,
+    variant: 'static',
   },
 }
 
@@ -90,7 +90,7 @@ export const StaticWithImages: Story = {
       { name: 'Fiona Apple', imageUrl: 'https://picsum.photos/id/60/200' },
       { name: 'George Clooney', imageUrl: 'https://picsum.photos/id/70/200' },
     ],
-    interactive: false,
+    variant: 'static',
   },
 }
 
@@ -110,6 +110,6 @@ export const StaticWithResponsiveImages: Story = {
       md: 'medium',
       lg: 'large',
     },
-    interactive: false,
+    variant: 'static',
   },
 }
