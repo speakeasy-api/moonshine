@@ -36,6 +36,8 @@ export interface ScoreProps {
   thresholds?: ThresholdStyles
 
   animate?: boolean
+
+  animationDuration?: number
 }
 
 const transition = {
@@ -62,9 +64,9 @@ const sizeMap: Record<Size, number> = {
 }
 
 const defaultThresholds: ThresholdStyles = {
-  0: 'var(--score-red)',
-  40: 'var(--score-orange)',
-  60: 'var(--score-green)',
+  0: 'var(--score-low)',
+  40: 'var(--score-mid)',
+  60: 'var(--score-high)',
 }
 
 const defaultTrackColor = 'var(--score-track)'
@@ -76,6 +78,7 @@ export function Score({
   trackColor = defaultTrackColor,
   thresholds = defaultThresholds,
   animate = false,
+  animationDuration = 40,
 }: ScoreProps) {
   const [scoreInternal, setScoreInternal] = useState<ScoreValue>(
     animate ? 0 : score
@@ -93,7 +96,7 @@ export function Score({
           }
           return Math.min(prevScore + stepSize, score) as ScoreValue
         })
-      }, 40) // Reduced interval time for smoother animation
+      }, animationDuration) // Reduced interval time for smoother animation
       return () => clearInterval(interval)
     }
   }, [])

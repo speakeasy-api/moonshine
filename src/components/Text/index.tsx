@@ -14,10 +14,10 @@ export interface TextProps {
 }
 
 const variantStyles: Record<TextVariant, string> = {
-  lg: 'text-body-lg',
-  md: 'text-body-md',
-  sm: 'text-body-sm',
-  xs: 'text-body-xs',
+  lg: 'typography-body-lg',
+  md: 'typography-body-md',
+  sm: 'typography-body-sm',
+  xs: 'typography-body-xs',
 }
 
 const whitespaceStyles: Record<TextWhitespace, string> = {
@@ -36,9 +36,8 @@ export function Text({
     <Component
       className={cn(
         variantStyles[variant],
-        // TODO: update this to use one of our own variables
-        muted && 'text-muted-foreground',
-        whiteSpace && whitespaceStyles[whiteSpace]
+        whitespaceStyles[whiteSpace],
+        muted ? 'text-muted' : 'text-body'
       )}
     >
       {children}

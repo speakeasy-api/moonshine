@@ -188,98 +188,14 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
-      fontSize: {
-        // TODO: Add token for text colors
-        'heading-xl': [
-          '2.0625rem',
-          {
-            lineHeight: '1.375',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#FAFAFA',
-          },
-        ],
-        'heading-lg': [
-          '1.8125rem',
-          {
-            lineHeight: '1.517',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#FAFAFA',
-          },
-        ],
-        'heading-md': [
-          '1.625rem',
-          {
-            lineHeight: '1.615',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#FAFAFA',
-          },
-        ],
-        'heading-sm': [
-          '1.4375rem',
-          {
-            lineHeight: '1.609',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#F4F4F5',
-          },
-        ],
-        'heading-xs': [
-          '1.25rem',
-          {
-            lineHeight: '1.75',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#F4F4F5',
-          },
-        ],
-        'heading-xxs': [
-          '1.125rem',
-          {
-            lineHeight: '1.778',
-            letterSpacing: '0.0015em',
-            fontWeight: '300',
-            color: '#F4F4F5',
-          },
-        ],
-        'body-lg': [
-          '1.125rem',
-          {
-            lineHeight: '1.75',
-            letterSpacing: '0.0025em',
-            fontWeight: '400',
-            color: '#E4E4E7',
-          },
-        ],
-        'body-md': [
-          '1rem',
-          {
-            lineHeight: '1.75',
-            letterSpacing: '0.0025em',
-            fontWeight: '400',
-            color: '#E4E4E7',
-          },
-        ],
-        'body-sm': [
-          '0.875rem',
-          {
-            lineHeight: '1.75',
-            letterSpacing: '0.0025em',
-            fontWeight: '400',
-            color: '#E4E4E7',
-          },
-        ],
-        'body-xs': [
-          '0.75rem',
-          {
-            lineHeight: '1.75',
-            letterSpacing: '0.0025em',
-            fontWeight: '400',
-            color: '#E4E4E7',
-          },
-        ],
+      textColor: {
+        'heading-xl': 'hsl(var(--color-neutral-50))',
+        'heading-lg': 'hsl(var(--color-neutral-50))',
+        'heading-md': 'hsl(var(--color-neutral-50))',
+        'heading-sm': 'hsl(var(--color-neutral-100))',
+        'heading-xs': 'hsl(var(--color-neutral-100))',
+        body: 'hsl(var(--color-neutral-200))',
+        muted: 'hsl(var(--color-neutral-400))',
       },
     },
   },

@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Shadcn theme */
     --background: 0 0% 100%;
     --foreground: 24 10% 10%;
     --card: 0 0% 98%;
@@ -47,10 +48,10 @@
     --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-red: 10 78% 54%;
-    --score-orange: 25 95% 53%;
-    --score-green: 163 75% 26%;
-    --score-track: 48 4% 70%;
+    --score-low: 350 89% 60%;
+    --score-mid: 38 92% 50%;
+    --score-high: 160 84% 39%;
+    --score-track: 48 4% 28%;
 
     /* Custom easing functions */
     --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -73,9 +74,16 @@
     --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
     --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
     --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+    /* Moonshine tokens */
+    --color-neutral-50: 0 0% 98%;
+    --color-neutral-100: 240 5% 96%;
+    --color-neutral-200: 229 5% 90%;
+    --color-neutral-400: 161 6% 65%;
   }
 
   .dark {
+    /* Shadcn theme */
     --background: 240 10% 4%;
     --foreground: 0 0% 98%;
     --card: 240 6% 10%;
@@ -119,9 +127,9 @@
     --feature-foreground: 0 0% 98%;
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-red: 10 78% 54%;
-    --score-orange: 53 100% 58%;
-    --score-green: 163 75% 48%;
+    --score-low: 350 89% 60%;
+    --score-mid: 38 92% 50%;
+    --score-high: 160 84% 39%;
     --score-track: 48 4% 28%;
   }
 }
@@ -164,5 +172,108 @@
   to {
     opacity: 0;
     transform: translateX(-100%);
+  }
+}
+
+/* TODO: Find a better place for these styles we don't want this file to baloon */
+@layer components {
+  .typography-heading-xl {
+    font-size: 1.8125rem;
+    font-weight: 300;
+    line-height: 1.517;
+    letter-spacing: 0.0015em;
+  }
+  @screen md {
+    .typography-heading-xl {
+      font-size: 2.0625rem;
+      line-height: 1.375;
+    }
+  }
+
+  .typography-heading-lg {
+    font-size: 1.625rem;
+    font-weight: 300;
+    line-height: 1.615;
+    letter-spacing: 0.0015em;
+  }
+  @screen md {
+    .typography-heading-lg {
+      font-size: 1.8125rem;
+      line-height: 1.517;
+    }
+  }
+
+  .typography-heading-md {
+    font-size: 1.4375rem;
+    font-weight: 300;
+    line-height: 1.609;
+    letter-spacing: 0.0015em;
+  }
+  @screen md {
+    .typography-heading-md {
+      font-size: 1.625rem;
+      line-height: 1.615;
+    }
+  }
+
+  .typography-heading-sm {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.0015em;
+  }
+  @screen md {
+    .typography-heading-sm {
+      font-size: 1.4375rem;
+      line-height: 1.609;
+    }
+  }
+
+  .typography-heading-xs {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.778;
+    letter-spacing: 0.0015em;
+  }
+  @screen md {
+    .typography-heading-xs {
+      font-size: 1.25rem;
+      line-height: 1.75;
+    }
+  }
+
+  .typography-heading-xxs {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.778;
+    letter-spacing: 0.0015em;
+  }
+
+  .typography-body-lg {
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.0025em;
+  }
+
+  .typography-body-md {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.0025em;
+  }
+
+  .typography-body-sm {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.0025em;
+  }
+
+  .typography-body-xs {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.0025em;
   }
 }
