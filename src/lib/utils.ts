@@ -31,11 +31,11 @@ export function getResponsiveClasses<T>(
 
         return classFragments
           .map((fragment) => {
-            return breakpoint === 'sm' ? fragment : `${breakpoint}:${fragment}`
+            return breakpoint === 'xs' ? fragment : `${breakpoint}:${fragment}`
           })
           .join(' ')
       })
       .join(' ')
   }
-  return mapper(value as T, 'sm')
+  return mapper(value as T, 'xs')
 }
