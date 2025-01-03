@@ -66,3 +66,4 @@ export {
   TooltipContent,
   TooltipProvider,
 } from '@/components/Tooltip'
+export { Facepile, type FacepileProps } from '@/components/Facepile'

@@ -12,7 +12,7 @@ import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
 type FacepileVariant = 'interactive' | 'static'
 
-interface FacepileProps {
+export interface FacepileProps {
   avatars: Omit<UserAvatarProps, 'size'>[]
   maxFaces?: number
   avatarSize?: ResponsiveValue<Size>
