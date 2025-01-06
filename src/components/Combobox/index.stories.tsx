@@ -12,7 +12,7 @@ type Story = StoryObj<typeof Combobox>
 
 // Example data
 const frameworks = [
-  { value: 'next.js', label: 'Next.js' },
+  { value: 'Next.js', label: 'Next.js' },
   { value: 'sveltekit', label: 'SvelteKit' },
   { value: 'nuxt.js', label: 'Nuxt.js' },
   { value: 'remix', label: 'Remix', disabled: true },
@@ -23,7 +23,7 @@ const groupedFrameworks = [
   {
     label: 'React Based',
     options: [
-      { value: 'next.js', label: 'Next.js' },
+      { value: 'Next.js', label: 'Next.js' },
       { value: 'remix', label: 'Remix', disabled: true },
       { value: 'gatsby', label: 'Gatsby' },
     ],
