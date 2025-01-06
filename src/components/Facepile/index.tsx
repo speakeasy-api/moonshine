@@ -16,7 +16,6 @@ export interface FacepileProps {
   avatars: Omit<UserAvatarProps, 'size'>[]
   maxFaces?: number
   avatarSize?: ResponsiveValue<Size>
-  overlap?: number
   variant?: FacepileVariant
 }
 
@@ -24,7 +23,6 @@ export function Facepile({
   avatars = [],
   maxFaces = 3,
   avatarSize = 'medium',
-  overlap = 0.6,
   variant = 'interactive',
 }: FacepileProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
@@ -39,6 +37,7 @@ export function Facepile({
     'medium'
   )
 
+  const overlap = 0.6
   const size = userAvatarSizeMap[resolvedSize] * 4 // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
   const offsetX = size * overlap // How much each avatar overlaps
 
@@ -110,118 +109,33 @@ export function Facepile({
     }
   }
 
-  if (variant === 'static') {
-    return (
-      <div
-        className="relative"
-        style={{ height: size, width: containerWidth }}
-        onMouseLeave={handleMouseLeave}
-      >
-        {visibleFaces.map((face, index) => (
-          <AvatarWrapper
-            key={face.name}
-            avatar={face}
-            avatarSize={avatarSize}
-            index={index}
-            size={size}
-            offsetX={offsetX}
-            hoveredIndex={null}
-            handleMouseEnter={handleMouseEnter}
-            totalFaces={visibleFaces.length}
-            isExpanded={isExpanded}
-            maxFaces={maxFaces}
-            interactive={false}
-          />
-        ))}
-        <AnimatePresence>
-          {tooltipVisible && hoveredIndex !== null && (
-            <motion.div
-              ref={tooltipRef}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                x: getTooltipPosition(hoveredIndex ?? 0, tooltipWidth),
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: 'easeOut' }}
-              style={{
-                position: 'absolute',
-                top: size + 4,
-                left: 0,
-                height: 20,
-                background: 'black',
-                borderRadius: 10,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingLeft: 8,
-                paddingRight: 8,
-                color: 'white',
-                fontSize: 12,
-                fontWeight: 'medium',
-                whiteSpace: 'nowrap',
-                pointerEvents: 'none',
-                zIndex: 10,
-              }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.span key={avatars[hoveredIndex].name}>
-                  {avatars[hoveredIndex].name}
-                </motion.span>
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {extraFaces > 0 && (
-          <div
-            className="absolute"
-            style={{
-              left: visibleFaces.length * offsetX,
-              zIndex: 0,
-            }}
-          >
-            <div
-              className={cn(
-                'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-                getResponsiveClasses(avatarSize, userAvatarSizeMapper)
-              )}
-            >
-              +{extraFaces}
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
+  return (
+    <motion.div
+      ref={containerRef}
+      className="relative"
+      style={{ height: size }}
+      animate={{ width: containerWidth }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      onMouseLeave={handleMouseLeave}
+    >
+      {visibleFaces.map((face, index) => (
+        <AvatarWrapper
+          key={face.name}
+          avatar={face}
+          avatarSize={avatarSize}
+          index={index}
+          size={size}
+          offsetX={offsetX}
+          hoveredIndex={variant === 'interactive' ? hoveredIndex : null}
+          handleMouseEnter={handleMouseEnter}
+          totalFaces={visibleFaces.length}
+          isExpanded={isExpanded}
+          maxFaces={maxFaces}
+          interactive={variant === 'static' ? false : true}
+        />
+      ))}
 
-  if (variant === 'interactive') {
-    return (
-      <motion.div
-        ref={containerRef}
-        className="relative"
-        style={{ height: size }}
-        animate={{ width: containerWidth }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onMouseLeave={handleMouseLeave}
-      >
-        {visibleFaces.map((face, index) => (
-          <AvatarWrapper
-            key={face.name}
-            avatar={face}
-            avatarSize={avatarSize}
-            index={index}
-            size={size}
-            offsetX={offsetX}
-            hoveredIndex={hoveredIndex}
-            handleMouseEnter={handleMouseEnter}
-            totalFaces={visibleFaces.length}
-            isExpanded={isExpanded}
-            maxFaces={maxFaces}
-            interactive={true}
-          />
-        ))}
-
+      {variant === 'interactive' && (
         <AnimatePresence>
           {isExpanded &&
             hiddenFaces.map((face, index) => (
@@ -245,76 +159,58 @@ export function Facepile({
               />
             ))}
         </AnimatePresence>
+      )}
 
-        <AnimatePresence>
-          {tooltipVisible && hoveredIndex !== null && (
-            <motion.div
-              ref={tooltipRef}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                x: getTooltipPosition(hoveredIndex ?? 0, tooltipWidth),
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: 'easeOut' }}
-              style={{
-                position: 'absolute',
-                top: size + 4,
-                left: 0,
-                height: 20,
-                background: 'black',
-                borderRadius: 10,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingLeft: 8,
-                paddingRight: 8,
-                color: 'white',
-                fontSize: 12,
-                fontWeight: 'medium',
-                whiteSpace: 'nowrap',
-                pointerEvents: 'none',
-                zIndex: 10,
-              }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={avatars[hoveredIndex].name}
-                  {...getTooltipAnimation(hoveredIndex)}
-                >
-                  {avatars[hoveredIndex].name}
-                </motion.span>
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {extraFaces > 0 && !isExpanded && (
+      <AnimatePresence>
+        {tooltipVisible && hoveredIndex !== null && (
           <motion.div
-            className="absolute cursor-pointer"
-            style={{
-              left: visibleFaces.length * offsetX,
-              zIndex: 0,
+            ref={tooltipRef}
+            layout
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              x: getTooltipPosition(hoveredIndex ?? 0, tooltipWidth),
             }}
-            onMouseEnter={() => setIsExpanded(true)}
-            whileHover={{ scale: 1.1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className={`pointer-events-none absolute left-0 z-10 flex h-5 items-center justify-center whitespace-nowrap rounded-full bg-black px-2 text-xs font-medium text-white`}
+            style={{
+              top: size + 4,
+            }}
           >
-            <div
-              className={cn(
-                'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-                getResponsiveClasses(avatarSize, userAvatarSizeMapper)
-              )}
-            >
-              +{extraFaces}
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={avatars[hoveredIndex].name}
+                {...getTooltipAnimation(hoveredIndex)}
+              >
+                {avatars[hoveredIndex].name}
+              </motion.span>
+            </AnimatePresence>
           </motion.div>
         )}
-      </motion.div>
-    )
-  }
+      </AnimatePresence>
 
-  return null
+      {extraFaces > 0 && !isExpanded && (
+        <motion.div
+          className="absolute z-0"
+          style={{
+            left: visibleFaces.length * offsetX,
+          }}
+          onMouseEnter={() => variant === 'interactive' && setIsExpanded(true)}
+          whileHover={{ scale: variant === 'interactive' ? 1.1 : 1 }}
+        >
+          <div
+            className={cn(
+              'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
+              getResponsiveClasses(avatarSize, userAvatarSizeMapper)
+            )}
+          >
+            +{extraFaces}
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
+  )
 }
 
 function AvatarWrapper({
