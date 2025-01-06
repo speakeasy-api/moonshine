@@ -11,9 +11,10 @@ import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
 type FacepileVariant = 'interactive' | 'static'
+type AvatarProps = Omit<UserAvatarProps, 'size'> & { href?: string }
 
 export interface FacepileProps {
-  avatars: Omit<UserAvatarProps, 'size'>[]
+  avatars: AvatarProps[]
   maxFaces?: number
   avatarSize?: ResponsiveValue<Size>
   variant?: FacepileVariant
@@ -227,7 +228,7 @@ function AvatarWrapper({
   interactive,
   ...motionProps
 }: {
-  avatar: Omit<UserAvatarProps, 'size'>
+  avatar: AvatarProps
   avatarSize?: ResponsiveValue<Size>
   index: number
   size: number
@@ -268,7 +269,23 @@ function AvatarWrapper({
       onMouseEnter={() => handleMouseEnter(index)}
       {...motionProps}
     >
-      <UserAvatar {...avatar} size={avatarSize} border />
+      {avatar.href ? (
+        <a href={avatar.href}>
+          <UserAvatar
+            name={avatar.name}
+            imageUrl={avatar.imageUrl}
+            size={avatarSize}
+            border
+          />
+        </a>
+      ) : (
+        <UserAvatar
+          name={avatar.name}
+          imageUrl={avatar.imageUrl}
+          size={avatarSize}
+          border
+        />
+      )}
     </motion.div>
   )
 }

@@ -64,6 +64,48 @@ export const ResponsveSizes: Story = {
   },
 }
 
+export const WithLinks: Story = {
+  args: {
+    avatars: [
+      {
+        name: 'Alice Johnson',
+        imageUrl: 'https://picsum.photos/id/10/200',
+        href: '/',
+      },
+      {
+        name: 'Bob Smith',
+        imageUrl: 'https://picsum.photos/id/20/200',
+        href: '/',
+      },
+      {
+        name: 'Charlie Brown',
+        imageUrl: 'https://picsum.photos/id/30/200',
+        href: '/',
+      },
+      {
+        name: 'Diana Ross',
+        imageUrl: 'https://picsum.photos/id/40/200',
+        href: '/',
+      },
+      {
+        name: 'Edward Norton',
+        imageUrl: 'https://picsum.photos/id/50/200',
+        href: '/',
+      },
+      {
+        name: 'Fiona Apple',
+        imageUrl: 'https://picsum.photos/id/60/200',
+        href: '/',
+      },
+      {
+        name: 'George Clooney',
+        imageUrl: 'https://picsum.photos/id/70/200',
+        href: '/',
+      },
+    ],
+  },
+}
+
 export const Static: Story = {
   args: {
     avatars: [
