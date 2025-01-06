@@ -18,6 +18,7 @@ export interface FacepileProps {
   maxFaces?: number
   avatarSize?: ResponsiveValue<Size>
   variant?: FacepileVariant
+  tooltips?: boolean
 }
 
 export function Facepile({
@@ -25,6 +26,7 @@ export function Facepile({
   maxFaces = 3,
   avatarSize = 'medium',
   variant = 'interactive',
+  tooltips = true,
 }: FacepileProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null)
@@ -180,7 +182,7 @@ export function Facepile({
       )}
 
       <AnimatePresence>
-        {tooltipVisible && hoveredIndex !== null && (
+        {tooltips && tooltipVisible && hoveredIndex !== null && (
           <motion.div
             ref={tooltipRef}
             layout
