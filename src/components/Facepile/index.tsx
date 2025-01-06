@@ -30,6 +30,7 @@ export function Facepile({
   const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null)
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+  const isHovered = useRef(false)
 
   const breakpoint = useTailwindBreakpoint()
   const resolvedSize = resolveSizeForBreakpoint(
@@ -78,9 +79,14 @@ export function Facepile({
     return avatarCenter - tooltipWidth / 2
   }
 
-  const handleMouseLeave = () => {
+  const handleContainerMouseLeave = () => {
     setHoveredIndex(null)
     setIsExpanded(false)
+    isHovered.current = false
+  }
+
+  const handleContainerMouseEnter = () => {
+    isHovered.current = true
   }
 
   const handleMouseEnter = (index: number) => {
@@ -89,6 +95,16 @@ export function Facepile({
       setIsExpanded(false)
     } else {
       setIsExpanded(true)
+    }
+  }
+
+  const handleHoverExpand = () => {
+    if (variant === 'interactive') {
+      setTimeout(() => {
+        if (isHovered.current) {
+          setIsExpanded(true)
+        }
+      }, 400)
     }
   }
 
@@ -117,7 +133,8 @@ export function Facepile({
       style={{ height: size }}
       animate={{ width: containerWidth }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleContainerMouseEnter}
+      onMouseLeave={handleContainerMouseLeave}
     >
       {visibleFaces.map((face, index) => (
         <AvatarWrapper
@@ -197,7 +214,7 @@ export function Facepile({
           style={{
             left: visibleFaces.length * offsetX,
           }}
-          onMouseEnter={() => variant === 'interactive' && setIsExpanded(true)}
+          onMouseEnter={handleHoverExpand}
           whileHover={{ scale: variant === 'interactive' ? 1.1 : 1 }}
         >
           <div
