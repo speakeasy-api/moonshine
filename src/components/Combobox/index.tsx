@@ -1,10 +1,17 @@
 import * as React from 'react'
-import {Virtuoso} from 'react-virtuoso'
-import {cn} from '@/lib/utils'
-import {Button, ButtonProps} from '@/components/Button'
-import {Command, CommandGroup, CommandInput, CommandItem, CommandList,} from '@/components/Command'
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/Popover'
-import {Icon} from '../Icon' // I don't like that these aren't based on REM but I'm not sure how to fix it right now
+import { Virtuoso } from 'react-virtuoso'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/Button'
+import {
+  Command,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/Command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
+import { ButtonProps } from '@/components/Button'
+import { Icon } from '../Icon'
 
 // I don't like that these aren't based on REM but I'm not sure how to fix it right now
 const COMBOBOX_CONFIG = {
