@@ -25,6 +25,7 @@ export function getResponsiveClasses<T>(
 ): string {
   if (isResponsiveValueObject(value)) {
     return Object.entries(value)
+      .filter(([, val]) => val !== undefined)
       .map(([breakpoint, val]) => {
         const resolvedClasses = mapper(val as T, breakpoint as Breakpoint)
         const classFragments = resolvedClasses.split(' ')

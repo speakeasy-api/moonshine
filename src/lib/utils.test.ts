@@ -22,6 +22,23 @@ describe('lib/utils', () => {
       )
     })
 
+    test('filters out undefined values', () => {
+      const responsiveClasses = getResponsiveClasses(
+        {
+          xs: 0,
+          sm: 1,
+          md: 2,
+          lg: undefined,
+          xl: 4,
+          '2xl': 5,
+        },
+        gapMapper
+      )
+      expect(responsiveClasses).toEqual(
+        'gap-0 sm:gap-1 md:gap-2 xl:gap-4 2xl:gap-5'
+      )
+    })
+
     test('return single class for single value', () => {
       const responsiveClasses = getResponsiveClasses(5, gapMapper)
       expect(responsiveClasses).toEqual('gap-5')
