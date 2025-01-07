@@ -3,7 +3,7 @@ import { LucideProps } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { ResponsiveValue, Size } from '@/types'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { isResponsiveValueObject, isSize } from '@/lib/typeUtils'
+import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
 // TODO: Use skeleton
 function Skeleton() {
@@ -62,11 +62,7 @@ function tryGetIcon(
 export function Icon({ name, size = 'small', ...props }: IconProps) {
   const LucideIcon = tryGetIcon(name)
   const breakpoint = useTailwindBreakpoint()
-  const resolvedSize = isResponsiveValueObject<Size>(size)
-    ? size[breakpoint]
-    : isSize(size)
-      ? size
-      : 'small'
+  const resolvedSize = resolveSizeForBreakpoint(breakpoint, size, 'small')
   const sizeNumber = sizeMap[resolvedSize]
 
   return (
