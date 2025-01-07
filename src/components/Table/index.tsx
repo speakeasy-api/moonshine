@@ -131,7 +131,7 @@ export function Table<T extends object>({
         } as React.CSSProperties
       }
       ref={tableRef}
-      className="relative grid w-full caption-bottom overflow-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]"
+      className="relative grid w-full caption-bottom overflow-y-hidden overflow-x-scroll rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]"
     >
       <thead className="grid h-14 [grid-column:1/-1] [grid-template-columns:subgrid]">
         <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
