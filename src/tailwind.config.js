@@ -49,12 +49,15 @@ export default {
     },
     {
       pattern: /^size-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
       pattern: /^h-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
       pattern: /^w-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
       pattern: /^border-\d+$/,
