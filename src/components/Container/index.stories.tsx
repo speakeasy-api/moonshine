@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Container>
 export const Default: Story = {
   args: {
     children: [
-      <Grid columns={{ sm: 1, md: 2 }} gap={4}>
+      <Grid columns={{ xs: 1, md: 2 }} gap={4}>
         <Grid.Item>
           <Card>
             <Card.Header>Card 1</Card.Header>

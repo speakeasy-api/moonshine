@@ -30,7 +30,7 @@ export const WithCustomGap: Story = {
 export const WithResponsiveColumns: Story = {
   args: {
     ...Default.args,
-    columns: { sm: 1, md: 2, lg: 3 },
+    columns: { xs: 1, md: 2, lg: 3 },
   },
 }
 
@@ -56,7 +56,7 @@ export const WithResponsiveColspan: Story = {
     children: createSampleGridChildren(columnCount - 1).map((child, index) => (
       <Grid.Item
         key={child.key}
-        colSpan={index === 0 ? { sm: 2, md: 3, lg: 4 } : undefined}
+        colSpan={index === 0 ? { xs: 2, md: 3, lg: 4 } : undefined}
         {...child.props}
       >
         {index === 0 ? 'Colspan 2' : 'Colspan 1'}
@@ -85,7 +85,7 @@ export const WithPadding: Story = {
 export const WithResponsivePadding: Story = {
   args: {
     ...Default.args,
-    padding: { sm: 0, md: 10, lg: 16 },
+    padding: { xs: 0, md: 10, lg: 16 },
   },
 }
 
@@ -93,7 +93,7 @@ export const WithResponsivePaddingPerSide: Story = {
   args: {
     ...WithResponsivePadding.args,
     padding: {
-      sm: 0,
+      xs: 0,
       md: 10,
       lg: { top: 16, right: 0, bottom: 16, left: 0 },
     },
@@ -103,7 +103,7 @@ export const WithResponsivePaddingPerSide: Story = {
 export const WithResponsivePaddingPerAxis: Story = {
   args: {
     ...WithResponsivePaddingPerSide.args,
-    padding: { sm: 0, md: { x: 10, y: 0 }, lg: { x: 16, y: 0 } },
+    padding: { xs: 0, md: { x: 10, y: 0 }, lg: { x: 16, y: 0 } },
   },
 }
 

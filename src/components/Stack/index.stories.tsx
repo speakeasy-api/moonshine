@@ -72,14 +72,14 @@ export const HorizontalDirection: Story = {
 export const ResponsiveDirection: Story = {
   args: {
     ...Default.args,
-    direction: { sm: 'vertical', md: 'horizontal' },
+    direction: { xs: 'vertical', md: 'horizontal' },
   },
 }
 
 export const ResponsiveGap: Story = {
   args: {
     ...Default.args,
-    gap: { sm: 2, md: 5, lg: 10, xl: 12 },
+    gap: { xs: 2, md: 5, lg: 10, xl: 12 },
   },
 }
 
@@ -93,7 +93,7 @@ export const Padding: Story = {
 export const ResponsivePadding: Story = {
   args: {
     ...Default.args,
-    padding: { sm: 2, md: 4, lg: 6, xl: 8 },
+    padding: { xs: 2, md: 4, lg: 6, xl: 8 },
   },
 }
 
@@ -107,7 +107,7 @@ export const PaddingPerSide: Story = {
 export const ResponsivePaddingPerSide: Story = {
   args: {
     ...Default.args,
-    padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } },
+    padding: { xs: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } },
   },
 }
 
@@ -259,7 +259,7 @@ export const ResponsiveJustify = {
     ...Default.args,
     direction: 'horizontal',
     justify: {
-      sm: 'start',
+      xs: 'start',
       md: 'center',
       lg: 'space-evenly',
     },
@@ -271,7 +271,7 @@ export const ResponsiveAlign: Story = {
   args: {
     ...Default.args,
     direction: 'vertical',
-    align: { sm: 'start', md: 'center', lg: 'end' },
+    align: { xs: 'start', md: 'center', lg: 'end' },
   },
 }
 
@@ -397,8 +397,8 @@ export const MediaWithContent: Story = {
 
 export const NestedResponsiveLayout: Story = {
   args: {
-    direction: { sm: 'vertical', md: 'horizontal' },
-    gap: { sm: 2, md: 4 },
+    direction: { xs: 'vertical', md: 'horizontal' },
+    gap: { xs: 2, md: 4 },
     align: 'stretch',
     children: [
       <Stack key="sidebar" direction="vertical" gap={2} padding={2}>
@@ -443,8 +443,8 @@ export const WrapReverse: Story = {
 export const ResponsiveWrap: Story = {
   args: {
     direction: 'horizontal',
-    wrap: { sm: 'wrap', md: 'nowrap' },
-    gap: { sm: 2, md: 4 },
+    wrap: { xs: 'wrap', md: 'nowrap' },
+    gap: { xs: 2, md: 4 },
     children: Array.from({ length: 6 }, (_, i) => (
       <div
         key={i}
@@ -532,10 +532,10 @@ export const Pagination: Story = {
 
 export const FooterLayout: Story = {
   args: {
-    direction: { sm: 'vertical', md: 'horizontal' },
+    direction: { xs: 'vertical', md: 'horizontal' },
     justify: 'space-between',
     padding: { x: 6, y: 8 },
-    gap: { sm: 8, md: 4 },
+    gap: { xs: 8, md: 4 },
     children: [
       <Stack key="company" direction="vertical" gap={4}>
         <div className="text-2xl font-bold">Company</div>
@@ -651,17 +651,17 @@ export const SidebarNavigation: Story = {
 
 export const ResponsiveStack: Story = {
   args: {
-    direction: { sm: 'vertical', md: 'horizontal' },
-    gap: { sm: 2, md: 4 },
-    align: { sm: 'stretch', md: 'center' },
-    justify: { sm: 'start', md: 'space-between' },
+    direction: { xs: 'vertical', md: 'horizontal' },
+    gap: { xs: 2, md: 4 },
+    align: { xs: 'stretch', md: 'center' },
+    justify: { xs: 'start', md: 'space-between' },
     children: [
-      <Stack.Item key="1" grow={{ sm: false, md: true }}>
+      <Stack.Item key="1" grow={{ xs: false, md: true }}>
         <div className="bg-muted text-muted-foreground rounded-md p-4">
           First
         </div>
       </Stack.Item>,
-      <Stack.Item key="2" grow={{ sm: false, md: true }}>
+      <Stack.Item key="2" grow={{ xs: false, md: true }}>
         <div className="bg-muted text-muted-foreground rounded-md p-4">
           Second
         </div>
@@ -738,12 +738,12 @@ export const ResponsiveStackItem: Story = {
     direction: 'horizontal',
     gap: 2,
     children: [
-      <Stack.Item key="1" grow={{ sm: true, md: false }}>
+      <Stack.Item key="1" grow={{ xs: true, md: false }}>
         <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Grows on small screens
+          Grows on xsall screens
         </div>
       </Stack.Item>,
-      <Stack.Item key="2" grow={{ sm: false, md: true }}>
+      <Stack.Item key="2" grow={{ xs: false, md: true }}>
         <div className="bg-muted text-muted-foreground rounded-md p-4">
           Grows on medium+ screens
         </div>
@@ -859,8 +859,8 @@ export const NestedStacksDemo: Story = {
 
 export const CommonResponsivePatterns: Story = {
   args: {
-    direction: { sm: 'vertical', md: 'horizontal' },
-    gap: { sm: 2, md: 4 },
+    direction: { xs: 'vertical', md: 'horizontal' },
+    gap: { xs: 2, md: 4 },
     children: [
       <Stack.Item key="main" grow>
         <div className="bg-muted text-muted-foreground rounded-md p-4">

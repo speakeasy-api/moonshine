@@ -25,17 +25,18 @@ export function getResponsiveClasses<T>(
 ): string {
   if (isResponsiveValueObject(value)) {
     return Object.entries(value)
+      .filter(([, val]) => val !== undefined)
       .map(([breakpoint, val]) => {
         const resolvedClasses = mapper(val as T, breakpoint as Breakpoint)
         const classFragments = resolvedClasses.split(' ')
 
         return classFragments
           .map((fragment) => {
-            return breakpoint === 'sm' ? fragment : `${breakpoint}:${fragment}`
+            return breakpoint === 'xs' ? fragment : `${breakpoint}:${fragment}`
           })
           .join(' ')
       })
       .join(' ')
   }
-  return mapper(value as T, 'sm')
+  return mapper(value as T, 'xs')
 }
