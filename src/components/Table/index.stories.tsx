@@ -11,7 +11,7 @@ const meta: Meta<typeof Table> = {
   component: Table,
   decorators: [
     (Story) => (
-      <div className="mx-auto my-10 max-w-screen-lg">
+      <div className="mx-auto my-10">
         <Story />
       </div>
     ),
@@ -156,4 +156,12 @@ export const Grouped: StoryObj<GroupedTableProps> = {
     ),
   },
   render: (args) => <GroupedTableWithState {...args} />,
+}
+
+export const WithLotsOfColumns: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    columns: defaultArgs.columns.concat(defaultArgs.columns),
+  },
+  render: (args) => <TableWithState {...args} />,
 }
