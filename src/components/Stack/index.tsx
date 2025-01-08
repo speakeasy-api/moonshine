@@ -46,6 +46,8 @@ interface StackProps {
 
   /** Specify whether items are forced onto one line or can wrap */
   wrap?: ResponsiveValue<StackWrap>
+
+  className?: string
 }
 
 export function Stack({
@@ -56,6 +58,7 @@ export function Stack({
   align = 'stretch',
   justify = 'start',
   wrap = 'nowrap',
+  className,
 }: StackProps) {
   const alignMapper = (val: StackAlign): TailwindAlign => {
     switch (val) {
@@ -102,7 +105,8 @@ export function Stack({
         getResponsiveClasses(padding, paddingMapper),
         getResponsiveClasses(wrap, wrapMapper),
         getResponsiveClasses(align, alignMapper),
-        getResponsiveClasses(justify, justifyMapper)
+        getResponsiveClasses(justify, justifyMapper),
+        className
       )}
     >
       {children}

@@ -75,6 +75,8 @@ interface GridProps {
    * padding: { xs: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
    */
   padding?: ResponsiveValue<Padding>
+
+  className?: string
 }
 
 const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
@@ -88,6 +90,7 @@ const Grid = ({
   gap = 0,
   wrap = true,
   padding = 0,
+  className,
 }: GridProps) => {
   const validGridChildren = children.filter(isValidGridChild)
   return (
@@ -97,7 +100,8 @@ const Grid = ({
         getResponsiveClasses(columns, columnsMapper),
         getResponsiveClasses(gap, gapMapper),
         !wrap && 'grid-flow-col',
-        getResponsiveClasses(padding, paddingMapper)
+        getResponsiveClasses(padding, paddingMapper),
+        className
       )}
     >
       {validGridChildren}
