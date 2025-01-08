@@ -7,15 +7,22 @@ interface ContainerProps {
   children: ReactNode
   flex?: boolean
   padding?: ResponsiveValue<Padding>
+  className?: string
 }
 
-export function Container({ children, flex = false, padding }: ContainerProps) {
+export function Container({
+  children,
+  flex = false,
+  padding,
+  className,
+}: ContainerProps) {
   return (
     <div
       className={cn(
         'container h-full w-full md:mx-auto',
         flex && 'flex',
-        padding && getResponsiveClasses(padding, paddingMapper)
+        padding && getResponsiveClasses(padding, paddingMapper),
+        className
       )}
     >
       {children}
