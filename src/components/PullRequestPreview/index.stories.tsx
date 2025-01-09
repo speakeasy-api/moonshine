@@ -4,6 +4,7 @@ import { ExternalPill } from '../ExternalPill'
 
 const meta: Meta<typeof PullRequestPreview> = {
   component: PullRequestPreview,
+  tags: ['autodocs'],
 }
 
 export default meta
