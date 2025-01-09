@@ -118,12 +118,15 @@ interface StackItemProps {
   children: React.ReactNode
   /** Allow item to keep size or expand to fill the available space */
   grow?: ResponsiveValue<boolean>
+  className?: string
 }
 
-Stack.Item = function StackItem({ children, grow }: StackItemProps) {
+Stack.Item = function StackItem({ children, grow, className }: StackItemProps) {
   const growMapper = (val: boolean) => (val ? 'flex-1' : 'flex-initial')
   return (
-    <div className={cn(getResponsiveClasses(grow ?? false, growMapper))}>
+    <div
+      className={cn(getResponsiveClasses(grow ?? false, growMapper), className)}
+    >
       {children}
     </div>
   )
