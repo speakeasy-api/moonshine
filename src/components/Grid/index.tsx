@@ -118,15 +118,23 @@ interface GridItemProps extends PermittedHTMLAttributes {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
   padding?: ResponsiveValue<Padding>
+  className?: string
 }
 
-const GridItem = ({ children, colSpan, padding, ...props }: GridItemProps) => {
+const GridItem = ({
+  children,
+  colSpan,
+  padding,
+  className,
+  ...props
+}: GridItemProps) => {
   return (
     <div
       className={cn(
         'grid-item',
         colSpan && getResponsiveClasses(colSpan, colSpanMapper),
-        padding && getResponsiveClasses(padding, paddingMapper)
+        padding && getResponsiveClasses(padding, paddingMapper),
+        className
       )}
       {...props}
     >
