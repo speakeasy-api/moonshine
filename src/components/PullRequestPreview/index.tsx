@@ -128,7 +128,7 @@ export function PullRequestPreview({
             </div>
           </div>
           {status === 'open' && (
-            <div className="flex flex-row items-center gap-3 border-t px-4 py-3">
+            <div className="flex flex-row items-center gap-1.5 border-t px-4 py-3">
               <Icon
                 name={canMerge ? 'check' : 'circle'}
                 className={cn(
