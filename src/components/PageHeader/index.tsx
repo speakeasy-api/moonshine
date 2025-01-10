@@ -1,13 +1,22 @@
-import { PropsWithChildren } from 'react'
+import { Children, PropsWithChildren } from 'react'
 import { Heading } from '../Heading'
+import { Separator } from '../Separator'
+
+import styles from './styles.module.css'
+import { cn } from '@/lib/utils'
 
 const Root: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="flex flex-col">{children}</div>
+  return <div className={styles.pageHeader}>{children}</div>
 }
 
 const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="flex flex-row items-start justify-between gap-4 border-b pb-10 pt-4">
+    <div
+      className={cn(
+        styles.titleBar,
+        'flex flex-row items-center justify-between gap-4 border-b py-10'
+      )}
+    >
       {children}
     </div>
   )
@@ -15,7 +24,11 @@ const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
 TitleBar.displayName = 'PageHeader.TitleBar'
 
 const TitleArea: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="order-1 flex flex-row items-start">{children}</div>
+  return (
+    <div className={cn(styles.titleArea, 'flex flex-row items-start')}>
+      {children}
+    </div>
+  )
 }
 TitleArea.displayName = 'PageHeader.TitleArea'
 
@@ -26,7 +39,12 @@ Title.displayName = 'PageHeader.Title'
 
 const Actions: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="order-2 flex min-w-max flex-row items-start justify-end gap-2">
+    <div
+      className={cn(
+        styles.actions,
+        'flex min-w-max flex-row items-start justify-end gap-2'
+      )}
+    >
       {children}
     </div>
   )
@@ -34,18 +52,32 @@ const Actions: React.FC<PropsWithChildren> = ({ children }) => {
 Actions.displayName = 'PageHeader.Actions'
 
 const Footer: React.FC<PropsWithChildren> = ({ children }) => {
+  const childCount = Children.count(children)
+
   return (
-    <div className="order-2 flex w-full flex-row items-center justify-start gap-3 divide-x border-b py-6">
-      {children}
+    <div
+      className={cn(
+        styles.footer,
+        'flex w-full flex-row items-stretch justify-start border-b py-6'
+      )}
+    >
+      {Children.map(children, (child, index) => (
+        <>
+          {child}
+          {index < childCount - 1 && (
+            <PageHeader.FooterItem>
+              <Separator orientation="vertical" className="mx-6" />
+            </PageHeader.FooterItem>
+          )}
+        </>
+      ))}
     </div>
   )
 }
 Footer.displayName = 'PageHeader.Footer'
 
 const FooterItem: React.FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <div className="flex flex-row items-center pl-6 first:pl-0">{children}</div>
-  )
+  return <div className="flex flex-row items-center">{children}</div>
 }
 FooterItem.displayName = 'PageHeader.FooterItem'
 
