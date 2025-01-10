@@ -1,4 +1,4 @@
-import { Children, PropsWithChildren } from 'react'
+import { Children, Fragment, PropsWithChildren } from 'react'
 import { Heading } from '../Heading'
 import { Separator } from '../Separator'
 
@@ -62,14 +62,14 @@ const Footer: React.FC<PropsWithChildren> = ({ children }) => {
       )}
     >
       {Children.map(children, (child, index) => (
-        <>
+        <Fragment key={index}>
           {child}
           {index < childCount - 1 && (
             <PageHeader.FooterItem>
               <Separator orientation="vertical" className="mx-6" />
             </PageHeader.FooterItem>
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   )

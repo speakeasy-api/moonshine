@@ -20,7 +20,7 @@ type Story = StoryObj<typeof PageHeader>
 export const Default: Story = {
   args: {
     children: [
-      <PageHeader.TitleBar>
+      <PageHeader.TitleBar key="title-bar">
         <PageHeader.TitleArea>
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
         </PageHeader.TitleArea>
@@ -30,7 +30,7 @@ export const Default: Story = {
         </PageHeader.Actions>
       </PageHeader.TitleBar>,
 
-      <PageHeader.Footer>
+      <PageHeader.Footer key="footer">
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
