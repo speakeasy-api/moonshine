@@ -7,7 +7,7 @@ const Root: React.FC<PropsWithChildren> = ({ children }) => {
 
 const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="flex flex-row items-center justify-between gap-4 border-b pb-10 pt-4">
+    <div className="flex flex-row items-start justify-between gap-4 border-b pb-10 pt-4">
       {children}
     </div>
   )
