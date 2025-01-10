@@ -1,13 +1,13 @@
 import { PageHeader } from '.'
 import { StoryObj, Meta } from '@storybook/react'
-import { Badge } from '../Badge'
+import { Button } from '../Button'
 
 const meta: Meta<typeof PageHeader> = {
   component: PageHeader,
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div className="m-auto max-w-full p-16">
+      <div className="m-auto max-w-full px-4">
         <Story />
       </div>
     ),
@@ -18,27 +18,51 @@ export default meta
 type Story = StoryObj<typeof PageHeader>
 
 export const Default: Story = {
-  args: {
-    title: 'Speakeasy',
-    subtitle:
-      'Best in class API tooling for robust SDKs, Terraform Providers and End to End Testing. OpenAPI Native.',
-    image: 'https://avatars.githubusercontent.com/u/91446104?s=200&v=4',
-    children: [
-      <div className="mt-2">
-        <Badge variant="success">1.5m followers</Badge>
-      </div>,
-    ],
-  },
+  render: () => (
+    <PageHeader>
+      <PageHeader.TitleBar>
+        <PageHeader.TitleArea>
+          <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
+        </PageHeader.TitleArea>
+        <PageHeader.Actions>
+          <Button variant="outline">Regenerate</Button>
+          <Button variant="secondary">Action</Button>
+        </PageHeader.Actions>
+      </PageHeader.TitleBar>
+
+      <PageHeader.Footer>
+        <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
+        <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
+        <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
+      </PageHeader.Footer>
+    </PageHeader>
+  ),
 }
 
-export const WithoutSubtitle: Story = {
-  args: {
-    title: 'Speakeasy',
-    image: 'https://avatars.githubusercontent.com/u/91446104?s=200&v=4',
-    children: [
-      <div className="mt-2">
-        <Badge variant="success">1.5m followers</Badge>
-      </div>,
-    ],
-  },
+export const TileOnly: Story = {
+  render: () => (
+    <PageHeader>
+      <PageHeader.TitleBar>
+        <PageHeader.TitleArea>
+          <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
+        </PageHeader.TitleArea>
+      </PageHeader.TitleBar>
+    </PageHeader>
+  ),
+}
+
+export const WithActions: Story = {
+  render: () => (
+    <PageHeader>
+      <PageHeader.TitleBar>
+        <PageHeader.TitleArea>
+          <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
+        </PageHeader.TitleArea>
+        <PageHeader.Actions>
+          <Button variant="outline">Regenerate</Button>
+          <Button variant="secondary">Action</Button>
+        </PageHeader.Actions>
+      </PageHeader.TitleBar>
+    </PageHeader>
+  ),
 }

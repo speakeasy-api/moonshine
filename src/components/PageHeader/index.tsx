@@ -1,43 +1,61 @@
+import { PropsWithChildren } from 'react'
 import { Heading } from '../Heading'
-// TODO: https://linear.app/speakeasy/issue/SXF-169/page-header-component
-interface PageHeaderProps {
-  title: React.ReactNode
-  subtitle?: React.ReactNode
 
-  /**
-   * Either an image URL or a React component
-   */
-  image?: string | React.ReactNode
-  children?: React.ReactNode
+const Root = ({ children }: PropsWithChildren) => {
+  return <div className="flex flex-col">{children}</div>
 }
 
-export function PageHeader({
-  title,
-  subtitle,
-  image,
-  children,
-}: PageHeaderProps) {
+const TitleBar = ({ children }: PropsWithChildren) => {
+  /**
+   * Using grid template areas to give us more control over the layout of the header
+   * grid-cols-page-header is defined in tailwind.config as col widths are not even. If we add more sections to the header we need to update this
+   */
   return (
-    <div className="flex flex-col gap-2 border-b pb-6">
-      <div className="flex flex-row items-center gap-4">
-        {image && (
-          <div className="max-w-24">
-            {typeof image === 'string' ? (
-              <img src={image} className="rounded-lg" />
-            ) : (
-              image
-            )}
-          </div>
-        )}
-        <div className="flex flex-col gap-2">
-          <Heading variant="xl">{title}</Heading>
-          {/* TODO: update this to use our own Text component */}
-          {subtitle && (
-            <p className="text-muted-foreground max-w-lg text-sm">{subtitle}</p>
-          )}
-        </div>
-        <div className="ml-auto">{children}</div>
-      </div>
+    <div className="grid-cols-page-header grid items-center gap-4 border-b pb-10 pt-4 [grid-template-areas:'title-area_actions']">
+      {children}
     </div>
   )
 }
+
+const TitleArea = ({ children }: PropsWithChildren) => {
+  return (
+    <div className="[grid-area: title-area] flex flex-row items-start">
+      {children}
+    </div>
+  )
+}
+
+const Title = ({ children }: PropsWithChildren) => {
+  return <Heading variant="xl">{children}</Heading>
+}
+
+const Actions = ({ children }: PropsWithChildren) => {
+  return (
+    <div className="[grid-area: actions] flex min-w-max flex-row items-start justify-end gap-2">
+      {children}
+    </div>
+  )
+}
+
+const Footer = ({ children }: PropsWithChildren) => {
+  return (
+    <div className="flex w-full flex-row items-center justify-start gap-3 divide-x border-b py-6">
+      {children}
+    </div>
+  )
+}
+
+const FooterItem = ({ children }: PropsWithChildren) => {
+  return (
+    <div className="flex flex-row items-center pl-6 first:pl-0">{children}</div>
+  )
+}
+
+export const PageHeader = Object.assign(Root, {
+  TitleBar,
+  TitleArea,
+  Title,
+  Actions,
+  Footer,
+  FooterItem,
+})
