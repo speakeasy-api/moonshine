@@ -18,8 +18,8 @@ export default meta
 type Story = StoryObj<typeof PageHeader>
 
 export const Default: Story = {
-  render: () => (
-    <PageHeader>
+  args: {
+    children: [
       <PageHeader.TitleBar>
         <PageHeader.TitleArea>
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
@@ -28,32 +28,32 @@ export const Default: Story = {
           <Button variant="outline">Regenerate</Button>
           <Button variant="secondary">Action</Button>
         </PageHeader.Actions>
-      </PageHeader.TitleBar>
+      </PageHeader.TitleBar>,
 
       <PageHeader.Footer>
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
         <PageHeader.FooterItem>Footer item</PageHeader.FooterItem>
-      </PageHeader.Footer>
-    </PageHeader>
-  ),
+      </PageHeader.Footer>,
+    ],
+  },
 }
 
-export const TileOnly: Story = {
-  render: () => (
-    <PageHeader>
+export const TitleOnly: Story = {
+  args: {
+    children: [
       <PageHeader.TitleBar>
         <PageHeader.TitleArea>
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
         </PageHeader.TitleArea>
-      </PageHeader.TitleBar>
-    </PageHeader>
-  ),
+      </PageHeader.TitleBar>,
+    ],
+  },
 }
 
 export const WithActions: Story = {
-  render: () => (
-    <PageHeader>
+  args: {
+    children: [
       <PageHeader.TitleBar>
         <PageHeader.TitleArea>
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
@@ -62,7 +62,7 @@ export const WithActions: Story = {
           <Button variant="outline">Regenerate</Button>
           <Button variant="secondary">Action</Button>
         </PageHeader.Actions>
-      </PageHeader.TitleBar>
-    </PageHeader>
-  ),
+      </PageHeader.TitleBar>,
+    ],
+  },
 }
