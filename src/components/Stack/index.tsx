@@ -46,6 +46,8 @@ interface StackProps {
 
   /** Specify whether items are forced onto one line or can wrap */
   wrap?: ResponsiveValue<StackWrap>
+
+  className?: string
 }
 
 export function Stack({
@@ -56,6 +58,7 @@ export function Stack({
   align = 'stretch',
   justify = 'start',
   wrap = 'nowrap',
+  className,
 }: StackProps) {
   const alignMapper = (val: StackAlign): TailwindAlign => {
     switch (val) {
@@ -102,7 +105,8 @@ export function Stack({
         getResponsiveClasses(padding, paddingMapper),
         getResponsiveClasses(wrap, wrapMapper),
         getResponsiveClasses(align, alignMapper),
-        getResponsiveClasses(justify, justifyMapper)
+        getResponsiveClasses(justify, justifyMapper),
+        className
       )}
     >
       {children}
@@ -114,12 +118,15 @@ interface StackItemProps {
   children: React.ReactNode
   /** Allow item to keep size or expand to fill the available space */
   grow?: ResponsiveValue<boolean>
+  className?: string
 }
 
-Stack.Item = function StackItem({ children, grow }: StackItemProps) {
+Stack.Item = function StackItem({ children, grow, className }: StackItemProps) {
   const growMapper = (val: boolean) => (val ? 'flex-1' : 'flex-initial')
   return (
-    <div className={cn(getResponsiveClasses(grow ?? false, growMapper))}>
+    <div
+      className={cn(getResponsiveClasses(grow ?? false, growMapper), className)}
+    >
       {children}
     </div>
   )

@@ -16,7 +16,6 @@ export { Container } from '@/components/Container'
 export { Combobox } from '@/components/Combobox'
 export { TargetLanguageIcon } from '@/components/TargetLanguageIcon'
 export { UserAvatar } from '@/components/UserAvatar'
-export { Sidebar } from '@/components/Sidebar'
 export { Subnav, type SubnavItem } from '@/components/Subnav'
 export { Breadcrumb } from '@/components/Breadcrumb'
 export { CodeSnippet } from '@/components/CodeSnippet'
@@ -66,3 +65,4 @@ export {
   TooltipContent,
   TooltipProvider,
 } from '@/components/Tooltip'
+export { Facepile, type FacepileProps } from '@/components/Facepile'

@@ -3,15 +3,20 @@ import { Orientation } from '@/types'
 
 interface SeparatorProps {
   orientation?: Orientation
+  className?: string
 }
 
-export function Separator({ orientation = 'horizontal' }: SeparatorProps) {
+export function Separator({
+  orientation = 'horizontal',
+  className,
+}: SeparatorProps) {
   return (
     <div
       className={cn(
         orientation === 'horizontal'
           ? 'bg-border h-[1px] w-full'
-          : 'bg-border h-full w-[1px]'
+          : 'bg-border h-full w-[1px]',
+        className
       )}
     />
   )

@@ -167,7 +167,7 @@ export function Combobox<T extends string = string>({
                       <CommandItem
                         key={option.value}
                         value={option.value}
-                        onSelect={handleSelect}
+                        onSelect={() => handleSelect(option.value)}
                         disabled={option.disabled}
                       >
                         <div

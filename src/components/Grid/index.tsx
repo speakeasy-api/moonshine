@@ -17,7 +17,7 @@ interface GridProps {
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
    * @example With responsive columns
-   * <Grid columns={{ sm: 1, md: 2 }}>
+   * <Grid columns={{ xs: 1, md: 2 }}>
    *   <Grid.Item>Item 1</Grid.Item>
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
@@ -33,7 +33,7 @@ interface GridProps {
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
    * @example With responsive gap
-   * <Grid gap={{ sm: 2, md: 4 }}>
+   * <Grid gap={{ xs: 2, md: 4 }}>
    *   <Grid.Item>Item 1</Grid.Item>
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
@@ -63,18 +63,20 @@ interface GridProps {
    * padding: 10
    *
    * @example Responsive Padding
-   * padding: { sm: 10, md: 20, lg: 30, xl: 40 }
+   * padding: { xs: 10, md: 20, lg: 30, xl: 40 }
    *
    * @example Padding per side
    * padding: { top: 10, right: 0, bottom: 10, left: 0 }
    *
    * @example Responsive Padding per side (just x and y axis)
-   * padding: { sm: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } }
+   * padding: { xs: 0, md: 0, lg: 0, xl: { x: 10, y: 12 } }
    *
    * @example Responsive Padding per side with different values for each side
-   * padding: { sm: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
+   * padding: { xs: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
    */
   padding?: ResponsiveValue<Padding>
+
+  className?: string
 }
 
 const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
@@ -88,6 +90,7 @@ const Grid = ({
   gap = 0,
   wrap = true,
   padding = 0,
+  className,
 }: GridProps) => {
   const validGridChildren = children.filter(isValidGridChild)
   return (
@@ -97,7 +100,8 @@ const Grid = ({
         getResponsiveClasses(columns, columnsMapper),
         getResponsiveClasses(gap, gapMapper),
         !wrap && 'grid-flow-col',
-        getResponsiveClasses(padding, paddingMapper)
+        getResponsiveClasses(padding, paddingMapper),
+        className
       )}
     >
       {validGridChildren}
@@ -114,15 +118,23 @@ interface GridItemProps extends PermittedHTMLAttributes {
   children: React.ReactNode
   colSpan?: ResponsiveValue<number>
   padding?: ResponsiveValue<Padding>
+  className?: string
 }
 
-const GridItem = ({ children, colSpan, padding, ...props }: GridItemProps) => {
+const GridItem = ({
+  children,
+  colSpan,
+  padding,
+  className,
+  ...props
+}: GridItemProps) => {
   return (
     <div
       className={cn(
         'grid-item',
         colSpan && getResponsiveClasses(colSpan, colSpanMapper),
-        padding && getResponsiveClasses(padding, paddingMapper)
+        padding && getResponsiveClasses(padding, paddingMapper),
+        className
       )}
       {...props}
     >
