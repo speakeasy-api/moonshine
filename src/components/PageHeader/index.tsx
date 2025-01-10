@@ -6,23 +6,15 @@ const Root = ({ children }: PropsWithChildren) => {
 }
 
 const TitleBar = ({ children }: PropsWithChildren) => {
-  /**
-   * Using grid template areas to give us more control over the layout of the header
-   * grid-cols-page-header is defined in tailwind.config as col widths are not even. If we add more sections to the header we need to update this
-   */
   return (
-    <div className="grid-cols-page-header grid items-center gap-4 border-b pb-10 pt-4 [grid-template-areas:'title-area_actions']">
+    <div className="flex flex-row items-center justify-between gap-4 border-b pb-10 pt-4">
       {children}
     </div>
   )
 }
 
 const TitleArea = ({ children }: PropsWithChildren) => {
-  return (
-    <div className="[grid-area: title-area] flex flex-row items-start">
-      {children}
-    </div>
-  )
+  return <div className="order-1 flex flex-row items-start">{children}</div>
 }
 
 const Title = ({ children }: PropsWithChildren) => {
@@ -31,7 +23,7 @@ const Title = ({ children }: PropsWithChildren) => {
 
 const Actions = ({ children }: PropsWithChildren) => {
   return (
-    <div className="[grid-area: actions] flex min-w-max flex-row items-start justify-end gap-2">
+    <div className="order-2 flex min-w-max flex-row items-start justify-end gap-2">
       {children}
     </div>
   )
@@ -39,7 +31,7 @@ const Actions = ({ children }: PropsWithChildren) => {
 
 const Footer = ({ children }: PropsWithChildren) => {
   return (
-    <div className="flex w-full flex-row items-center justify-start gap-3 divide-x border-b py-6">
+    <div className="order-2 flex w-full flex-row items-center justify-start gap-3 divide-x border-b py-6">
       {children}
     </div>
   )
