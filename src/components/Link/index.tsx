@@ -55,6 +55,7 @@ export interface LinkProps {
   variant?: LinkVariant
   size?: LinkSize
   silent?: boolean
+  target?: '_blank' | '_self'
 }
 
 type ChildProps = Pick<LinkProps, 'variant' | 'size' | 'silent'>
@@ -65,9 +66,10 @@ const Root: React.FC<LinkProps> = ({
   variant = 'primary',
   size = 'md',
   silent = false,
+  target = '_blank',
 }) => {
   /**
-   * If the Link only contains text there is no need to require wrapping it a `Link.Text` component.
+   * If the Link only contains text there is no need to require wrapping it with a `Link.Text` component.
    * It will be added automatically in the render function
    */
   const isTextOnly = typeof children === 'string'
@@ -89,6 +91,7 @@ const Root: React.FC<LinkProps> = ({
   return (
     <a
       href={href}
+      target={target}
       className={cn(
         linkVariants({ variant, size }),
         'align-center inline-flex flex-row'
@@ -106,14 +109,12 @@ Root.displayName = 'Link'
 
 interface TextProps {
   /**
-   * @internal
-   * This prop will be set by the parent `Link` component
+   * @internal This prop will be set by the parent `Link` component
    * */
   silent?: boolean
 
   /**
-   * @internal
-   * This prop will be set by the parent `Link` component
+   * @internal This prop will be set by the parent `Link` component
    * */
   variant?: LinkVariant
 }
@@ -133,8 +134,7 @@ Text.displayName = 'Link.Text'
 
 interface VisualProps {
   /**
-   * @ignore
-   * This prop will be set by the parent `Link` component
+   * @internal - This prop will be set by the parent `Link` component
    * */
   size?: LinkSize
 }
@@ -149,8 +149,7 @@ Visual.displayName = 'Link.Visual'
 
 interface IconProps {
   /**
-   * @ignore
-   * This prop will be set by the parent `Link` component
+   * @internal -This prop will be set by the parent `Link` component
    * */
   size?: LinkSize
 

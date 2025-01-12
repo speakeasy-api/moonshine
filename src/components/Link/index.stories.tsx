@@ -14,9 +14,9 @@ export const Primary: Story = {
     href: '/target',
     size: 'md',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -27,9 +27,9 @@ export const PrimarySilent: Story = {
     size: 'md',
     silent: true,
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -40,9 +40,9 @@ export const Secondary: Story = {
     size: 'md',
     variant: 'secondary',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -54,9 +54,9 @@ export const SecondarySilent: Story = {
     variant: 'secondary',
     silent: true,
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -66,9 +66,9 @@ export const ExtraSmall: Story = {
     href: '/target',
     size: 'xs',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -78,9 +78,9 @@ export const Small: Story = {
     href: '/target',
     size: 'sm',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -90,9 +90,9 @@ export const Medium: Story = {
     href: '/target',
     size: 'md',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -102,9 +102,9 @@ export const Large: Story = {
     href: '/target',
     size: 'lg',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
@@ -122,7 +122,7 @@ export const WithLeadingIcon: Story = {
     href: '/target',
     size: 'md',
     children: [
-      <Link.Icon key="leading-visual" name="github" />,
+      <Link.Icon key="leading-icon" name="github" />,
       <Link.Text key="text">Link</Link.Text>,
     ],
   },
@@ -134,7 +134,7 @@ export const WithTrailingIcon: Story = {
     size: 'md',
     children: [
       <Link.Text key="text">Link</Link.Text>,
-      <Link.Icon key="trailing-visual" name="external-link" />,
+      <Link.Icon key="trailing-icon" name="external-link" />,
     ],
   },
 }
