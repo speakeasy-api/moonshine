@@ -8,7 +8,7 @@ type LinkVariant = 'primary' | 'secondary'
 type LinkSize = 'lg' | 'md' | 'sm' | 'xs'
 
 const linkVariants = cva(
-  'group visited:text-link-visited visited:hover:text-link-visited  items-center inline-flex flex-row',
+  'group visited:text-link-visited visited:hover:text-link-visited items-center inline-flex flex-row',
   {
     variants: {
       variant: {
