@@ -17,11 +17,11 @@ export const Primary: Story = {
   },
 }
 
-export const PrimarySilent: Story = {
+export const PrimaryNoUnderline: Story = {
   args: {
     href: '/target',
     size: 'md',
-    silent: true,
+    underline: false,
     children: 'Link',
   },
 }
@@ -35,12 +35,12 @@ export const Secondary: Story = {
   },
 }
 
-export const SecondarySilent: Story = {
+export const SecondaryNoUnderline: Story = {
   args: {
     href: '/target',
     size: 'md',
     variant: 'secondary',
-    silent: true,
+    underline: false,
     children: 'Link',
   },
 }

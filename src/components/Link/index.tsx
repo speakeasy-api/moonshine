@@ -3,9 +3,9 @@ import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 import { IconName } from '../Icon/names'
 import { Icon as IconComponent } from '../Icon'
+import { TextVariant } from '../Text'
 
 type LinkVariant = 'primary' | 'secondary'
-type LinkSize = 'lg' | 'md' | 'sm' | 'xs'
 
 const linkVariants = cva(
   'group visited:text-link-visited visited:hover:text-link-visited items-center inline-flex flex-row',
@@ -31,9 +31,9 @@ const linkTextVariants = cva('underline-offset-4 decoration-1', {
       primary: '',
       secondary: 'decoration-white/40',
     },
-    silent: {
-      true: 'no-underline group-hover:underline',
-      false: 'underline group-hover:no-underline',
+    underline: {
+      false: 'no-underline group-hover:underline',
+      true: 'underline group-hover:no-underline',
     },
   },
 })
@@ -53,8 +53,8 @@ export interface LinkProps {
   href: string
   children: ReactNode
   variant?: LinkVariant
-  size?: LinkSize
-  silent?: boolean
+  size?: TextVariant
+  underline?: boolean
   target?: '_blank' | '_self'
   iconPrefixName?: IconName
   iconSuffixName?: IconName
@@ -65,7 +65,7 @@ export const Link: React.FC<LinkProps> = ({
   children,
   variant = 'primary',
   size = 'md',
-  silent = false,
+  underline = true,
   target = '_blank',
   iconPrefixName,
   iconSuffixName,
@@ -82,7 +82,7 @@ export const Link: React.FC<LinkProps> = ({
         </IconWrapper>
       )}
 
-      <Text silent={silent} variant={variant}>
+      <Text underline={underline} variant={variant}>
         {children}
       </Text>
 
@@ -97,24 +97,24 @@ export const Link: React.FC<LinkProps> = ({
 Link.displayName = 'Link'
 
 interface TextProps {
-  silent?: boolean
+  underline?: boolean
   variant?: LinkVariant
 }
 
 const Text = ({
   children,
-  silent,
+  underline,
   variant,
 }: React.PropsWithChildren<TextProps>) => {
   return (
-    <span className={cn(linkTextVariants({ silent, variant }))}>
+    <span className={cn(linkTextVariants({ underline, variant }))}>
       {children}
     </span>
   )
 }
 
 interface IconWrapperProps {
-  size?: LinkSize
+  size?: TextVariant
 }
 
 const IconWrapper = ({
