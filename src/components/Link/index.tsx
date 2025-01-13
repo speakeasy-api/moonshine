@@ -8,11 +8,11 @@ type LinkVariant = 'primary' | 'secondary'
 type LinkSize = 'lg' | 'md' | 'sm' | 'xs'
 
 const linkVariants = cva(
-  'group visited:text-violet-400 visited:hover:text-violet-400  items-center inline-flex flex-row',
+  'group visited:text-link-visited visited:hover:text-link-visited  items-center inline-flex flex-row',
   {
     variants: {
       variant: {
-        primary: 'text-sky-500',
+        primary: 'text-link-default',
         secondary: 'text-white',
       },
       size: {
@@ -92,10 +92,7 @@ const Root: React.FC<LinkProps> = ({
     <a
       href={href}
       target={target}
-      className={cn(
-        linkVariants({ variant, size }),
-        'align-center inline-flex flex-row'
-      )}
+      className={cn(linkVariants({ variant, size }))}
     >
       {isTextOnly ? (
         <Link.Text silent={silent}>{children}</Link.Text>
@@ -161,7 +158,7 @@ interface IconProps {
 
 const Icon: React.FC<IconProps> = ({ size, name }) => {
   /**
-   * The `Icon` component doesn't have a 12px x 12px size so the size here is fixed and
+   * The Icon component doesn't have a 12px x 12px size so the size here is fixed and
    * the size is controlled by the css
    */
   return (

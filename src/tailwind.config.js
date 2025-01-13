@@ -187,6 +187,10 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        link: {
+          default: 'hsl(var(--link-default))',
+          visited: 'hsl(var(--link-visited))',
+        },
       },
       textColor: {
         'heading-xl': 'hsl(var(--color-neutral-50))',
