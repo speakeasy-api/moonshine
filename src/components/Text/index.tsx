@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { ReactNode } from 'react'
 
-type TextVariant = 'lg' | 'md' | 'sm' | 'xs'
+export type TextVariant = 'lg' | 'md' | 'sm' | 'xs'
 type TextElement = 'p' | 'span' | 'div' | 'label'
 type TextWhitespace = 'normal' | 'nowrap'
 

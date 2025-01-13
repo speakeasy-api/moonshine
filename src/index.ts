@@ -66,3 +66,4 @@ export {
   TooltipProvider,
 } from '@/components/Tooltip'
 export { Facepile, type FacepileProps } from '@/components/Facepile'
+export { Link, type LinkProps } from '@/components/Link'
