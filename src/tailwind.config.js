@@ -187,6 +187,7 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        // TODO: move these to better place - used in Link component
         link: {
           default: 'hsl(var(--link-default))',
           visited: 'hsl(var(--link-visited))',

@@ -13,8 +13,6 @@ export const Primary: Story = {
   args: {
     href: '/target',
     size: 'md',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -24,8 +22,6 @@ export const PrimarySilent: Story = {
     href: '/target',
     size: 'md',
     silent: true,
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -35,8 +31,6 @@ export const Secondary: Story = {
     href: '/target',
     size: 'md',
     variant: 'secondary',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -47,8 +41,6 @@ export const SecondarySilent: Story = {
     size: 'md',
     variant: 'secondary',
     silent: true,
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -57,8 +49,6 @@ export const ExtraSmall: Story = {
   args: {
     href: '/target',
     size: 'xs',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -67,8 +57,6 @@ export const Small: Story = {
   args: {
     href: '/target',
     size: 'sm',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -77,8 +65,6 @@ export const Medium: Story = {
   args: {
     href: '/target',
     size: 'md',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
@@ -87,16 +73,16 @@ export const Large: Story = {
   args: {
     href: '/target',
     size: 'lg',
-    iconPrefixName: 'github',
-    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
 
-export const TextOnly: Story = {
+export const WithLeadingAndTrailingIcons: Story = {
   args: {
     href: '/target',
     size: 'md',
+    iconPrefixName: 'github',
+    iconSuffixName: 'external-link',
     children: 'Link',
   },
 }
