@@ -1,0 +1,23 @@
+.pageHeader {
+    display: grid;
+    grid-template-areas: "title-bar" "footer";
+}
+
+.titleBar {
+    display: grid;
+    grid-area: title-bar;
+    grid-template-areas: "title-area actions";
+    grid-template-columns: auto 1fr;
+}
+
+.titleArea {
+    grid-area: title-area;
+}
+
+.actions {
+    grid-area: actions;
+}
+
+.footer {
+    grid-area: footer;
+}

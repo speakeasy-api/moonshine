@@ -1,43 +1,93 @@
+import { Children, Fragment, PropsWithChildren } from 'react'
 import { Heading } from '../Heading'
-// TODO: https://linear.app/speakeasy/issue/SXF-169/page-header-component
-interface PageHeaderProps {
-  title: React.ReactNode
-  subtitle?: React.ReactNode
+import { Separator } from '../Separator'
 
-  /**
-   * Either an image URL or a React component
-   */
-  image?: string | React.ReactNode
-  children?: React.ReactNode
+import styles from './styles.module.css'
+import { cn } from '@/lib/utils'
+
+const Root: React.FC<PropsWithChildren> = ({ children }) => {
+  return <div className={styles.pageHeader}>{children}</div>
 }
 
-export function PageHeader({
-  title,
-  subtitle,
-  image,
-  children,
-}: PageHeaderProps) {
+const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="flex flex-col gap-2 border-b pb-6">
-      <div className="flex flex-row items-center gap-4">
-        {image && (
-          <div className="max-w-24">
-            {typeof image === 'string' ? (
-              <img src={image} className="rounded-lg" />
-            ) : (
-              image
-            )}
-          </div>
-        )}
-        <div className="flex flex-col gap-2">
-          <Heading variant="xl">{title}</Heading>
-          {/* TODO: update this to use our own Text component */}
-          {subtitle && (
-            <p className="text-muted-foreground max-w-lg text-sm">{subtitle}</p>
-          )}
-        </div>
-        <div className="ml-auto">{children}</div>
-      </div>
+    <div
+      className={cn(
+        styles.titleBar,
+        'flex flex-row items-center justify-between gap-4 border-b py-10'
+      )}
+    >
+      {children}
     </div>
   )
 }
+TitleBar.displayName = 'PageHeader.TitleBar'
+
+const TitleArea: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div className={cn(styles.titleArea, 'flex flex-row items-start')}>
+      {children}
+    </div>
+  )
+}
+TitleArea.displayName = 'PageHeader.TitleArea'
+
+const Title: React.FC<PropsWithChildren> = ({ children }) => {
+  return <Heading variant="xl">{children}</Heading>
+}
+Title.displayName = 'PageHeader.Title'
+
+const Actions: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div
+      className={cn(
+        styles.actions,
+        'flex min-w-max flex-row items-start justify-end gap-2'
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+Actions.displayName = 'PageHeader.Actions'
+
+const Footer: React.FC<PropsWithChildren> = ({ children }) => {
+  const childCount = Children.count(children)
+
+  return (
+    <div
+      className={cn(
+        styles.footer,
+        'flex w-full flex-row items-stretch justify-start border-b py-6'
+      )}
+    >
+      {Children.map(children, (child, index) => (
+        <Fragment key={index}>
+          {child}
+          {index < childCount - 1 && (
+            <PageHeader.FooterItem>
+              <Separator orientation="vertical" className="mx-6" />
+            </PageHeader.FooterItem>
+          )}
+        </Fragment>
+      ))}
+    </div>
+  )
+}
+Footer.displayName = 'PageHeader.Footer'
+
+const FooterItem: React.FC<PropsWithChildren> = ({ children }) => {
+  return <div className="flex flex-row items-center">{children}</div>
+}
+FooterItem.displayName = 'PageHeader.FooterItem'
+
+export const PageHeader = Object.assign(Root, {
+  TitleBar,
+  TitleArea,
+  Title,
+  Actions,
+  Footer,
+  FooterItem,
+})
+
+PageHeader.displayName = 'PageHeader'
