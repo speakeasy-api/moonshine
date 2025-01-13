@@ -1,3 +1,5 @@
+// TODO: Optimize the paths of this SVG as it currently sits at 16KB
+
 function brush({ color }: { color: string }) {
   return `
 <svg viewBox="0 0 304 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" color="${color}" preserveAspectRatio="none" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
