@@ -38,7 +38,7 @@ const linkTextVariants = cva('underline-offset-4 decoration-1', {
   },
 })
 
-const linkVisualVariants = cva('inline-block', {
+const iconWrapperVariants = cva('inline-block', {
   variants: {
     size: {
       xs: 'size-3 [&>svg]:size-3',
@@ -56,120 +56,70 @@ export interface LinkProps {
   size?: LinkSize
   silent?: boolean
   target?: '_blank' | '_self'
+  iconPrefixName?: IconName
+  iconSuffixName?: IconName
 }
 
-type ChildProps = Pick<LinkProps, 'variant' | 'size' | 'silent'>
-
-const Root: React.FC<LinkProps> = ({
+export const Link: React.FC<LinkProps> = ({
   href,
   children,
   variant = 'primary',
   size = 'md',
   silent = false,
   target = '_blank',
+  iconPrefixName,
+  iconSuffixName,
 }) => {
-  /**
-   * If the Link only contains text there is no need to require wrapping it with a `Link.Text` component.
-   * It will be added automatically in the render function
-   */
-  const isTextOnly = typeof children === 'string'
-
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (
-      !isTextOnly &&
-      React.isValidElement(child) &&
-      (child.type === Visual || child.type === Text || child.type === Icon)
-    ) {
-      return React.cloneElement(
-        child as React.ReactElement<React.PropsWithChildren<ChildProps>>,
-        { variant, size, silent }
-      )
-    }
-    return child
-  })
-
   return (
     <a
       href={href}
       target={target}
       className={cn(linkVariants({ variant, size }))}
     >
-      {isTextOnly ? (
-        <Link.Text silent={silent}>{children}</Link.Text>
-      ) : (
-        childrenWithProps
+      {iconPrefixName && (
+        <IconWrapper size={size}>
+          <IconComponent name={iconPrefixName} size="small" />
+        </IconWrapper>
+      )}
+
+      <Text silent={silent} variant={variant}>
+        {children}
+      </Text>
+
+      {iconSuffixName && (
+        <IconWrapper size={size}>
+          <IconComponent name={iconSuffixName} size="small" />
+        </IconWrapper>
       )}
     </a>
   )
 }
-Root.displayName = 'Link'
+Link.displayName = 'Link'
 
 interface TextProps {
-  /**
-   * @internal This prop will be set by the parent `Link` component
-   * */
   silent?: boolean
-
-  /**
-   * @internal This prop will be set by the parent `Link` component
-   * */
   variant?: LinkVariant
 }
 
-const Text: React.FC<React.PropsWithChildren<TextProps>> = ({
+const Text = ({
   children,
   silent,
   variant,
-}) => {
+}: React.PropsWithChildren<TextProps>) => {
   return (
     <span className={cn(linkTextVariants({ silent, variant }))}>
       {children}
     </span>
   )
 }
-Text.displayName = 'Link.Text'
 
-interface VisualProps {
-  /**
-   * @internal - This prop will be set by the parent `Link` component
-   * */
+interface IconWrapperProps {
   size?: LinkSize
 }
 
-const Visual: React.FC<React.PropsWithChildren<VisualProps>> = ({
+const IconWrapper = ({
   children,
   size,
-}) => {
-  return <span className={cn(linkVisualVariants({ size }))}>{children}</span>
+}: React.PropsWithChildren<IconWrapperProps>) => {
+  return <span className={cn(iconWrapperVariants({ size }))}>{children}</span>
 }
-Visual.displayName = 'Link.Visual'
-
-interface IconProps {
-  /**
-   * @internal -This prop will be set by the parent `Link` component
-   * */
-  size?: LinkSize
-
-  /**
-   * Name of the Lucide icon to render
-   */
-  name: IconName
-}
-
-const Icon: React.FC<IconProps> = ({ size, name }) => {
-  /**
-   * The Icon component doesn't have a 12px x 12px size so the size here is fixed and
-   * the size is controlled by the css
-   */
-  return (
-    <Visual size={size}>
-      <IconComponent name={name} size="small" />
-    </Visual>
-  )
-}
-Icon.displayName = 'Link.Icon'
-
-export const Link = Object.assign(Root, {
-  Text,
-  Icon,
-})
