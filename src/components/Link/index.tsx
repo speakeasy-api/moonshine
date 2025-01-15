@@ -13,7 +13,7 @@ const linkVariants = cva(
     variants: {
       variant: {
         primary: 'text-link-default',
-        secondary: 'text-white',
+        secondary: 'text-body',
       },
       size: {
         xs: 'typography-body-xs gap-1',
@@ -25,18 +25,21 @@ const linkVariants = cva(
   }
 )
 
-const linkTextVariants = cva('underline-offset-4 decoration-1', {
-  variants: {
-    variant: {
-      primary: '',
-      secondary: 'decoration-white/40',
+const linkTextVariants = cva(
+  'underline-offset-4 decoration-1 inline-flex flex-row items-center',
+  {
+    variants: {
+      variant: {
+        primary: '',
+        secondary: '[&:not(:group-visited)]:decoration-white/40',
+      },
+      underline: {
+        false: 'no-underline group-hover:underline',
+        true: 'underline group-hover:no-underline',
+      },
     },
-    underline: {
-      false: 'no-underline group-hover:underline',
-      true: 'underline group-hover:no-underline',
-    },
-  },
-})
+  }
+)
 
 const iconWrapperVariants = cva('inline-block', {
   variants: {

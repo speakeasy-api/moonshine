@@ -1,9 +1,10 @@
-import { Children, Fragment, PropsWithChildren } from 'react'
+import React, { Children, Fragment, PropsWithChildren } from 'react'
 import { Heading } from '../Heading'
 import { Separator } from '../Separator'
 
 import styles from './styles.module.css'
 import { cn } from '@/lib/utils'
+import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 
 const Root: React.FC<PropsWithChildren> = ({ children }) => {
   return <div className={styles.pageHeader}>{children}</div>
@@ -52,21 +53,30 @@ const Actions: React.FC<PropsWithChildren> = ({ children }) => {
 Actions.displayName = 'PageHeader.Actions'
 
 const Footer: React.FC<PropsWithChildren> = ({ children }) => {
-  const childCount = Children.count(children)
+  const breakpoint = useTailwindBreakpoint()
+  const validChildren = Children.toArray(children).filter(
+    (child) => React.isValidElement(child) && child.type === FooterItem
+  )
+  const childCount = Children.count(validChildren)
+
+  const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm'
 
   return (
     <div
       className={cn(
         styles.footer,
-        'flex w-full flex-row items-stretch justify-start border-b py-6'
+        'flex w-full flex-col flex-wrap items-stretch justify-start gap-y-2 border-b py-6 md:flex-row md:gap-y-4'
       )}
     >
-      {Children.map(children, (child, index) => (
+      {Children.map(validChildren, (child, index) => (
         <Fragment key={index}>
           {child}
           {index < childCount - 1 && (
             <PageHeader.FooterItem>
-              <Separator orientation="vertical" className="mx-6" />
+              <Separator
+                orientation={isSmallScreen ? 'horizontal' : 'vertical'}
+                className="footer-item-separator md:mx-6"
+              />
             </PageHeader.FooterItem>
           )}
         </Fragment>
@@ -77,7 +87,11 @@ const Footer: React.FC<PropsWithChildren> = ({ children }) => {
 Footer.displayName = 'PageHeader.Footer'
 
 const FooterItem: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="flex flex-row items-center">{children}</div>
+  return (
+    <div className="flex-row items-center [&:has(.footer-item-separator)]:hidden [&:has(.footer-item-separator)]:md:flex">
+      {children}
+    </div>
+  )
 }
 FooterItem.displayName = 'PageHeader.FooterItem'
 
