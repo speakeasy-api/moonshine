@@ -78,7 +78,7 @@
     /* Moonshine tokens */
     --color-neutral-50: 0 0% 98%;
     --color-neutral-100: 240 5% 96%;
-    --color-neutral-200: 229 5% 90%;
+    --color-neutral-200: 0 100% 0%;
     --color-neutral-400: 161 6% 65%;
 
     --link-default: 199 89% 48%;
@@ -134,6 +134,12 @@
     --score-mid: 38 92% 50%;
     --score-high: 160 84% 39%;
     --score-track: 48 4% 28%;
+
+    /* Moonshine tokens */
+    --color-neutral-50: 0 0% 98%;
+    --color-neutral-100: 240 5% 96%;
+    --color-neutral-200: 229 5% 90%;
+    --color-neutral-400: 161 6% 65%;
   }
 }
 
