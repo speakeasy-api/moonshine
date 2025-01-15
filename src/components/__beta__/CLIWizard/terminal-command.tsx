@@ -60,7 +60,7 @@ export function TerminalCommand({
               <span className="select-none text-emerald-500">$</span>
               <span
                 className={cn(
-                  'flex-1 font-medium text-[#e4e4e7]',
+                  'flex-1 font-mono font-medium text-[#e4e4e7]',
                   fontSize === 'small' && 'text-sm',
                   fontSize === 'medium' && 'text-base',
                   fontSize === 'large' && 'text-lg'
