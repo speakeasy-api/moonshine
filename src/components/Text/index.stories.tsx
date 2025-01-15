@@ -61,7 +61,7 @@ export const CombinedExample: Story = {
   render: () => (
     <Stack gap={4}>
       <div>
-        <Text variant="lg">Regular large text</Text>
+        <Text variant="lg">Regular large text</Text>{' '}
         <Text variant="lg" muted>
           Muted large text
         </Text>
@@ -84,15 +84,18 @@ export const WhitespaceHandling: Story = {
     <Stack gap={4}>
       <div>
         <Text variant="sm">Normal whitespace (default):</Text>
-        <Text>
-          This is normal text that will wrap naturally when it reaches the end
-          of its container.
-        </Text>
+
+        <div className="border-border max-w-[300px] border">
+          <Text>
+            This is normal text that will wrap naturally when it reaches the end
+            of its container.
+          </Text>
+        </div>
       </div>
 
       <div>
         <Text variant="sm">Nowrap:</Text>
-        <div className="border-border max-w-[200px] border">
+        <div className="border-border max-w-[300px] border">
           <Text whiteSpace="nowrap">
             This text will not wrap and will overflow its container
           </Text>
