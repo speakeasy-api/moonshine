@@ -88,7 +88,7 @@ Footer.displayName = 'PageHeader.Footer'
 
 const FooterItem: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="flex-row items-center [&:has(.footer-item-separator)]:hidden [&:has(.footer-item-separator)]:md:flex">
+    <div className="flex flex-row items-center [&:has(.footer-item-separator)]:hidden [&:has(.footer-item-separator)]:md:flex">
       {children}
     </div>
   )
