@@ -81,8 +81,9 @@
     --color-neutral-200: 0 100% 0%;
     --color-neutral-400: 161 6% 65%;
 
-    --link-default: 199 89% 48%;
-    --link-visited: 255 92% 76%;
+    --link-default: 198 93% 60%;
+    --link-visited-primary: 200 98% 39%;
+    --link-visited-secondary: 240 5% 65%;
   }
 
   .dark {

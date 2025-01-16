@@ -189,8 +189,10 @@ export default {
         },
         // TODO: move these to better place - used in Link component
         link: {
-          default: 'hsl(var(--link-default))',
-          visited: 'hsl(var(--link-visited))',
+          DEFAULT: 'hsl(var(--link-default))',
+          secondary: 'hsl(var(--color-neutral-200))',
+          'visited-primary': 'hsl(var(--link-visited-primary))',
+          'visited-secondary': 'hsl(var(--link-visited-secondary))',
         },
       },
       textColor: {
