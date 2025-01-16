@@ -46,7 +46,7 @@ export function TerminalCommand({
       <TerminalPrompt path={path} branch="main">
         <button
           onClick={handleCopy}
-          className="w-full text-left"
+          className="w-full select-text text-left"
           aria-label={copied ? 'Copied' : 'Copy command'}
         >
           <div
@@ -60,7 +60,7 @@ export function TerminalCommand({
               <span className="select-none text-emerald-500">$</span>
               <span
                 className={cn(
-                  'flex-1 font-mono font-medium text-[#e4e4e7]',
+                  'mt-0.5 flex-1 font-mono font-medium tracking-normal text-[#e4e4e7]',
                   fontSize === 'small' && 'text-sm',
                   fontSize === 'medium' && 'text-base',
                   fontSize === 'large' && 'text-lg'
@@ -70,7 +70,7 @@ export function TerminalCommand({
               </span>
               {copyable && (
                 <span
-                  className={cn('mt-0.5 shrink-0', isActive && 'opacity-100')}
+                  className={cn('mt-1.5 shrink-0', isActive && 'opacity-100')}
                 >
                   {copied ? (
                     <motion.div
