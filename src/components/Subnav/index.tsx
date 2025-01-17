@@ -5,7 +5,6 @@ import {
   useRef,
   useEffect,
   useCallback,
-  useMemo,
   useLayoutEffect,
   memo,
 } from 'react'
@@ -70,6 +69,15 @@ export function Subnav({ items, renderItem }: SubnavProps) {
   )
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [baseWidth, setBaseWidth] = useState<number>(0)
+  const [activeIndicatorProps, setActiveIndicatorProps] = useState<{
+    scaleX: number
+    left: number
+  } | null>(null)
+  const [indicatorProps, setIndicatorProps] = useState<{
+    scaleX: number
+    left: number
+  } | null>(null)
+
   const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map())
   const previousHoveredItem = useRef<string | null>(null)
   const isContainerHovered = useRef(false)
@@ -91,6 +99,62 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     }
   }, [activeItem])
 
+  useLayoutEffect(() => {
+    if (!activeItem || !baseWidth) {
+      setActiveIndicatorProps(null)
+      return
+    }
+
+    const itemElement = itemRefs.current.get(activeItem)
+    if (!itemElement) {
+      setActiveIndicatorProps(null)
+      return
+    }
+
+    const itemWidth = itemElement.offsetWidth
+    const itemLeft = itemElement.offsetLeft
+    const centerOffset = (itemWidth - baseWidth) / 2
+
+    setActiveIndicatorProps({
+      scaleX: itemWidth / baseWidth,
+      left: itemLeft + centerOffset,
+    })
+
+    /**
+     * Subnav can be contextual to a page and therefore items can change.
+     * items needs to be in the dependancy array even though it's not used in the effect
+     * so the position of the indicator is accurate when the menu items change between pages
+     */
+  }, [activeItem, baseWidth, items])
+
+  useLayoutEffect(() => {
+    if (!hoveredItem || !baseWidth) {
+      setIndicatorProps(null)
+      return
+    }
+
+    const itemElement = itemRefs.current.get(hoveredItem)
+    if (!itemElement) {
+      setIndicatorProps(null)
+      return
+    }
+
+    const itemWidth = itemElement.offsetWidth
+    const itemLeft = itemElement.offsetLeft
+    const centerOffset = (itemWidth - baseWidth) / 2
+
+    setIndicatorProps({
+      scaleX: itemWidth / baseWidth,
+      left: itemLeft + centerOffset,
+    })
+
+    /**
+     * Subnav can be contextual to a page and therefore items can change.
+     * items needs to be in the dependancy array even though it's not used in the effect
+     * so the position of the indicator is accurate when the menu items change between pages
+     */
+  }, [hoveredItem, baseWidth, items])
+
   const debouncedResize = useDebounce(() => {
     if (activeItem) {
       const element = itemRefs.current.get(activeItem)
@@ -104,44 +168,6 @@ export function Subnav({ items, renderItem }: SubnavProps) {
     window.addEventListener('resize', debouncedResize)
     return () => window.removeEventListener('resize', debouncedResize)
   }, [debouncedResize])
-
-  const indicatorProps: {
-    scaleX: number
-    left: number
-  } | null = useMemo(() => {
-    if (!hoveredItem || !baseWidth) return null
-
-    const itemElement = itemRefs.current.get(hoveredItem)
-    if (!itemElement) return null
-
-    const itemWidth = itemElement.offsetWidth
-    const itemLeft = itemElement.offsetLeft
-    const centerOffset = (itemWidth - baseWidth) / 2
-
-    return {
-      scaleX: itemWidth / baseWidth,
-      left: itemLeft + centerOffset,
-    }
-  }, [hoveredItem, baseWidth])
-
-  const activeIndicatorProps: {
-    scaleX: number
-    left: number
-  } | null = useMemo(() => {
-    if (!activeItem || !baseWidth) return null
-
-    const itemElement = itemRefs.current.get(activeItem)
-    if (!itemElement) return null
-
-    const itemWidth = itemElement.offsetWidth
-    const itemLeft = itemElement.offsetLeft
-    const centerOffset = (itemWidth - baseWidth) / 2
-
-    return {
-      scaleX: itemWidth / baseWidth,
-      left: itemLeft + centerOffset,
-    }
-  }, [activeItem, baseWidth])
 
   const handleItemClick = useCallback((href: string) => {
     setActiveItem(href)
