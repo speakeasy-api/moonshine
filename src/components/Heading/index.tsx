@@ -8,6 +8,7 @@ export interface HeadingProps {
   children: ReactNode
   variant?: HeadingVariant
   as?: HeadingElement
+  className?: string
 }
 
 const variantStyles: Record<HeadingVariant, string> = {
@@ -30,6 +31,11 @@ export function Heading({
   children,
   variant = 'md',
   as: Component = variantToElement[variant],
+  className,
 }: HeadingProps) {
-  return <Component className={variantStyles[variant]}>{children}</Component>
+  return (
+    <Component className={cn(variantStyles[variant], className)}>
+      {children}
+    </Component>
+  )
 }

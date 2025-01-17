@@ -1,8 +1,10 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-172/language-indicator-component
+import { cn } from '@/lib/utils'
 import { SupportedLanguage } from '@/types'
 
 interface LanguageIndicatorProps {
   language: SupportedLanguage
+  className?: string
 }
 
 const languageLabelMap: Record<SupportedLanguage, string> = {
@@ -33,9 +35,12 @@ const languageColorMap: Record<SupportedLanguage, string> = {
   postman: 'bg-pink-500',
 }
 
-export function LanguageIndicator({ language }: LanguageIndicatorProps) {
+export function LanguageIndicator({
+  language,
+  className,
+}: LanguageIndicatorProps) {
   return (
-    <div className="gap flex select-none items-center gap-2">
+    <div className={cn('gap flex select-none items-center gap-2', className)}>
       <div
         className={`mx-1 h-2 w-2 rounded-full ${languageColorMap[language]}`}
       />

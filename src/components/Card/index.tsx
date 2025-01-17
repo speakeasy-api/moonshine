@@ -28,6 +28,7 @@ type CardHeaderProps = PropsWithChildren & {
   subheader?: React.ReactNode
   icon?: IconProps
   rightElement?: RightElement
+  className?: string
 }
 
 const CardHeader: FC<CardHeaderProps> = ({
@@ -35,11 +36,13 @@ const CardHeader: FC<CardHeaderProps> = ({
   subheader,
   icon,
   rightElement,
+  className,
 }) => (
   <div
     className={cn(
       'flex w-full flex-row gap-4',
-      subheader ? 'items-start' : 'items-center'
+      subheader ? 'items-start' : 'items-center',
+      className
     )}
   >
     {icon && (
@@ -73,9 +76,14 @@ const CardHeader: FC<CardHeaderProps> = ({
     )}
   </div>
 )
+CardHeader.displayName = 'CardHeader'
 
-const CardContent: FC<PropsWithChildren> = ({ children }) => (
-  <div className="text-sm">{children}</div>
+interface CardContentProps extends PropsWithChildren {
+  className?: string
+}
+
+const CardContent: FC<CardContentProps> = ({ children, className }) => (
+  <div className={cn('text-sm', className)}>{children}</div>
 )
 CardContent.displayName = 'CardContent'
 
@@ -89,10 +97,11 @@ type FooterContent = {
 
 type CardFooterProps = {
   content: FooterContent
+  className?: string
 }
 
-const CardFooter: FC<CardFooterProps> = ({ content }) => (
-  <div className="border-t px-6 py-4">
+const CardFooter: FC<CardFooterProps> = ({ content, className }) => (
+  <div className={cn('border-t px-6 py-4', className)}>
     <div className="text-muted-foreground flex items-center text-sm">
       {content.text}
       {content.link && (
@@ -112,9 +121,10 @@ type CardProps = {
   children: ReactNode[]
   onClick?: () => void
   href?: string
+  className?: string
 }
 
-const Card: FC<CardProps> = ({ children, onClick, href }) => {
+const Card: FC<CardProps> = ({ children, onClick, href, className }) => {
   const validChildren = Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
@@ -151,7 +161,8 @@ const Card: FC<CardProps> = ({ children, onClick, href }) => {
     <Wrapper
       className={cn(
         'bg-card text-card-foreground relative flex h-full w-full flex-col rounded-[8px] border shadow',
-        isInteractive && 'hover:bg-card/70 cursor-pointer'
+        isInteractive && 'hover:bg-card/70 cursor-pointer',
+        className
       )}
       {...wrapperProps}
     >

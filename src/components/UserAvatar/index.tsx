@@ -10,6 +10,7 @@ export interface UserAvatarProps {
   imageUrl?: string
   size?: ResponsiveValue<Size>
   border?: boolean
+  className?: string
 }
 
 const fallbackColors = [
@@ -36,6 +37,7 @@ export function UserAvatar({
   imageUrl,
   size = 'medium',
   border = false,
+  className,
 }: UserAvatarProps) {
   const breakpoint = useTailwindBreakpoint()
 
@@ -50,7 +52,8 @@ export function UserAvatar({
         'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
         getResponsiveClasses(size, userAvatarSizeMapper),
         !hasImage && getFallbackColor(name),
-        border && 'border-background border-2'
+        border && 'border-background border-2',
+        className
       )}
     >
       {hasImage ? (

@@ -12,6 +12,7 @@ import PhpIcon from '@/assets/icons/languages/php.svg?react'
 import SwiftIcon from '@/assets/icons/languages/swift.svg?react'
 import RubyIcon from '@/assets/icons/languages/ruby.svg?react'
 import PostmanIcon from '@/assets/icons/languages/postman.svg?react'
+import { cn } from '@/lib/utils'
 
 const sizeMap: Record<Size, number> = {
   small: 32,
@@ -49,17 +50,22 @@ const icons: Record<
 export interface TargetLanguageIconProps {
   language: SupportedLanguage
   size?: Size
+  className?: string
 }
 
 export function TargetLanguageIcon({
   language,
   size = 'medium',
+  className,
 }: TargetLanguageIconProps) {
   const IconComponent = icons[language]
 
   return (
     <div
-      className="bg-background/50 flex items-center justify-center rounded-lg border p-2"
+      className={cn(
+        'bg-background/50 flex items-center justify-center rounded-lg border p-2',
+        className
+      )}
       style={{
         width: sizeMap[size],
         height: sizeMap[size],

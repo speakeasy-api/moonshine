@@ -1,5 +1,6 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-174/pull-request-link-component
 import { assertNever } from '@/lib/assert'
+import { cn } from '@/lib/utils'
 import { GitPullRequest, GitPullRequestClosed, Merge } from 'lucide-react'
 
 type Status = 'open' | 'closed' | 'merged'
@@ -9,6 +10,7 @@ interface PullRequestLinkProps {
   prNumber: number
   status?: Status
   target?: '_blank' | '_self' | '_parent' | '_top'
+  className?: string
 }
 
 export function PullRequestLink({
@@ -16,10 +18,14 @@ export function PullRequestLink({
   prNumber,
   status = 'open',
   target = '_blank',
+  className,
 }: PullRequestLinkProps) {
   return (
     <a
-      className="hover:bg-muted-foreground/5 inline-flex flex-row items-center gap-1 rounded-lg border px-1.5 py-1 text-sm transition-colors duration-500"
+      className={cn(
+        'hover:bg-muted-foreground/5 inline-flex flex-row items-center gap-1 rounded-lg border px-1.5 py-1 text-sm transition-colors duration-500',
+        className
+      )}
       href={href}
       target={target}
     >

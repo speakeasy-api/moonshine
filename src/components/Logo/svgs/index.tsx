@@ -1,8 +1,9 @@
 interface SvgProps {
   fill: string
+  className?: string
 }
 
-export function Wordmark({ fill }: SvgProps) {
+export function Wordmark({ fill, className }: SvgProps) {
   return (
     <svg
       aria-label="Speakeasy Logo"
@@ -12,6 +13,7 @@ export function Wordmark({ fill }: SvgProps) {
       viewBox={`0 0 166 20`}
       fill="none"
       preserveAspectRatio="xMidYMid meet"
+      className={className}
     >
       <g opacity="1">
         <path
@@ -68,7 +70,7 @@ export function Wordmark({ fill }: SvgProps) {
   )
 }
 
-export function Logo({ fill }: SvgProps) {
+export function Logo({ fill, className }: SvgProps) {
   return (
     <svg
       width={28}
@@ -77,6 +79,7 @@ export function Logo({ fill }: SvgProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid meet"
+      className={className}
     >
       <g clipPath="url(#clip0)">
         <path

@@ -6,19 +6,22 @@ export interface TabProps<I extends string> {
   active?: boolean
   id: I
   onClick?: () => void
+  className?: string
 }
 
 const Tab = function Tab<I extends string>({
   children,
   active,
   onClick,
+  className,
 }: TabProps<I>) {
   return (
     <div
       className={cn(
         'text-muted-foreground mb-[-1px] cursor-pointer px-4 py-2 text-sm',
         active &&
-          'bg-background text-foreground rounded-t-lg border-l border-r border-t'
+          'bg-background text-foreground rounded-t-lg border-l border-r border-t',
+        className
       )}
       onClick={onClick}
     >
@@ -31,6 +34,7 @@ export interface TabsProps<I extends string> {
   children: Array<ReactElement<TabProps<I>>>
   selectedTab: I
   onTabChange: (identifier: I) => void
+  className?: string
 }
 
 type TypeWithDisplayName = {
@@ -41,6 +45,7 @@ export function Tabs<I extends string>({
   children,
   selectedTab,
   onTabChange,
+  className,
 }: TabsProps<I>) {
   const [activeTab, setActiveTab] = useState<I>(
     selectedTab || children[0].props.id
@@ -57,7 +62,12 @@ export function Tabs<I extends string>({
   ) as Array<React.ReactElement<TabProps<I>>>
 
   return (
-    <div className="border-border flex select-none flex-row justify-start gap-2 border-b">
+    <div
+      className={cn(
+        'border-border flex select-none flex-row justify-start gap-2 border-b',
+        className
+      )}
+    >
       {React.Children.map(validChildren, (child) => {
         return React.cloneElement(child, {
           ...child.props,

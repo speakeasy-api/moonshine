@@ -21,6 +21,7 @@ interface CodeSnippetProps {
   theme?: Theme
   onSelectOrCopy?: () => void
   shimmer?: boolean
+  className?: string
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -96,6 +97,7 @@ export function CodeSnippet({
   fontSize = 'medium',
   onSelectOrCopy,
   shimmer = false,
+  className,
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
@@ -176,7 +178,8 @@ export function CodeSnippet({
       className={cn(
         `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
         inline && 'inline-flex',
-        shimmer && 'shimmer'
+        shimmer && 'shimmer',
+        className
       )}
       style={{ '--width': `${containerWidth}px` } as React.CSSProperties}
       ref={containerRef}

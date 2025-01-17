@@ -9,6 +9,7 @@ interface GradientCircleProps {
   transition?: boolean
   showInitial?: boolean
   inactive?: boolean
+  className?: string
 }
 
 const sizeMap: Record<Size, number> = {
@@ -41,6 +42,7 @@ export function GradientCircle({
   transition = false,
   showInitial = false,
   inactive = false,
+  className,
 }: GradientCircleProps) {
   const initial = useMemo<string | undefined>(
     () => (name.length > 0 ? name[0].toUpperCase() : undefined),
@@ -87,7 +89,8 @@ export function GradientCircle({
         'gradient-circle relative min-h-6 min-w-6 rounded-full border-white',
         sizeValue && `h-${sizeValue} w-${sizeValue}`,
         borderSize && `border-${borderSize}`,
-        inactive && 'opacity-50'
+        inactive && 'opacity-50',
+        className
       )}
       style={
         {

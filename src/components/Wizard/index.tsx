@@ -39,6 +39,8 @@ interface WizardProps {
     completedSteps: number[],
     steps: WizardStep[]
   ) => React.ReactNode
+
+  className?: string
 }
 
 export function Wizard({
@@ -46,6 +48,7 @@ export function Wizard({
   currentStep,
   completedSteps,
   headerContent,
+  className,
 }: WizardProps) {
   const [stepHeights, setStepHeights] = React.useState<Map<number, number>>(
     new Map()
@@ -119,7 +122,7 @@ export function Wizard({
   }, [currentStep, stepHeights])
 
   return (
-    <div className="max-w-screen-x flex flex-col gap-2">
+    <div className={cn('max-w-screen-x flex flex-col gap-2', className)}>
       <div className="border-b p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">

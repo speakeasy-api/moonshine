@@ -1,6 +1,7 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-173/external-pill-component
 import React, { useState, useEffect } from 'react'
 import { Icon as FallbackIcon } from '../Icon'
+import { cn } from '@/lib/utils'
 
 type AllExternalIcons =
   | 'github'
@@ -19,6 +20,7 @@ interface ExternalPillProps {
   text: React.ReactNode
   title?: string
   target?: '_blank' | '_self' | '_parent' | '_top'
+  className?: string
 }
 
 export function ExternalPill({
@@ -27,6 +29,7 @@ export function ExternalPill({
   text,
   target = '_blank',
   title,
+  className,
 }: ExternalPillProps) {
   const [Icon, setIcon] = useState<React.ComponentType | null>(null)
 
@@ -43,7 +46,10 @@ export function ExternalPill({
       href={href}
       target={target}
       title={title}
-      className="inline-flex flex-row items-center gap-1.5 rounded-xl border px-3.5 py-2 text-zinc-700 transition-colors duration-500 hover:border-zinc-300 hover:bg-zinc-50 hover:text-black dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 hover:dark:text-white"
+      className={cn(
+        'inline-flex flex-row items-center gap-1.5 rounded-xl border px-3.5 py-2 text-zinc-700 transition-colors duration-500 hover:border-zinc-300 hover:bg-zinc-50 hover:text-black dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 hover:dark:text-white',
+        className
+      )}
     >
       {Icon ? <Icon /> : <FallbackIcon name="external-link" />}
       <p className="text-xs font-normal">{text}</p>

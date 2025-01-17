@@ -4,6 +4,7 @@ import { isValidElement, ReactElement, ReactNode, Children } from 'react'
 interface BreadcrumbProps {
   children: ReactElement<typeof BreadcrumbItem>[]
   separator?: ReactNode
+  className?: string
 }
 
 const defaultSeparator = '/'
@@ -14,11 +15,12 @@ const isValidBreadcrumbChild = (child: ReactElement) =>
 const Breadcrumb = ({
   children,
   separator = defaultSeparator,
+  className,
 }: BreadcrumbProps) => {
   const validChildren = children.filter(isValidBreadcrumbChild)
 
   return (
-    <div className={cn('flex items-center gap-4')}>
+    <div className={cn('flex items-center gap-4', className)}>
       {Children.map(validChildren, (child, index) => {
         return (
           <>
@@ -35,10 +37,11 @@ const Breadcrumb = ({
 
 interface BreadcrumbItemProps {
   children: ReactNode
+  className?: string
 }
 
-const BreadcrumbItem = ({ children }: BreadcrumbItemProps) => {
-  return <div>{children}</div>
+const BreadcrumbItem = ({ children, className }: BreadcrumbItemProps) => {
+  return <div className={className}>{children}</div>
 }
 
 Breadcrumb.Item = BreadcrumbItem

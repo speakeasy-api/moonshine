@@ -8,6 +8,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   icon?: IconName
   multiline?: boolean
+  className?: string
 }
 
 export function Input({
@@ -17,6 +18,7 @@ export function Input({
   disabled,
   icon,
   multiline,
+  className,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false)
@@ -80,7 +82,8 @@ export function Input({
       className={cn(
         'border-input text-muted-foreground flex items-center gap-3 rounded-md border px-4 py-0.5 transition-colors duration-500',
         icon && 'px-3',
-        isFocused && 'text-foreground border-indigo-700'
+        isFocused && 'text-foreground border-indigo-700',
+        className
       )}
     >
       {icon && <Icon name={icon} size="small" />}
