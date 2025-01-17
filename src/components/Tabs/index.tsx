@@ -14,7 +14,7 @@ const Tab = function Tab<I extends string>({
   active,
   onClick,
   className,
-}: TabProps<I> & { className?: string }) {
+}: TabProps<I>) {
   return (
     <div
       className={cn(
