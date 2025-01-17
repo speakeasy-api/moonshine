@@ -11,6 +11,7 @@ export interface TextProps {
   as?: TextElement
   muted?: boolean
   whiteSpace?: TextWhitespace
+  className?: string
 }
 
 const variantStyles: Record<TextVariant, string> = {
@@ -31,13 +32,15 @@ export function Text({
   as: Component = 'span',
   muted = false,
   whiteSpace = 'normal',
+  className,
 }: TextProps) {
   return (
     <Component
       className={cn(
         variantStyles[variant],
         whitespaceStyles[whiteSpace],
-        muted ? 'text-muted' : 'text-body'
+        muted ? 'text-muted' : 'text-body',
+        className
       )}
     >
       {children}

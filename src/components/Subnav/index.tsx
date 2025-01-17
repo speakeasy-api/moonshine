@@ -21,6 +21,7 @@ export interface SubnavItem {
 interface SubnavProps {
   items: SubnavItem[]
   renderItem: (item: SubnavItem) => React.ReactNode
+  className?: string
 }
 
 const POSITION_TRANSITION: Transition = {
@@ -64,7 +65,11 @@ const useDebounce = (callback: () => void, delay: number) => {
   }, [callback, delay])
 }
 
-export function Subnav({ items, renderItem }: SubnavProps) {
+export function Subnav({
+  items,
+  renderItem,
+  className,
+}: SubnavProps & { className?: string }) {
   const [activeItem, setActiveItem] = useState<string | null>(
     items.find((item) => item.active)?.href ?? null
   )
@@ -212,7 +217,7 @@ export function Subnav({ items, renderItem }: SubnavProps) {
 
   return (
     <div
-      className="relative flex"
+      className={cn('relative flex', className)}
       onMouseEnter={handleContainerMouseEnter}
       onMouseLeave={handleContainerMouseLeave}
     >

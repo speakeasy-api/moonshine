@@ -6,16 +6,24 @@ import styles from './styles.module.css'
 import { cn } from '@/lib/utils'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 
-const Root: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className={styles.pageHeader}>{children}</div>
+interface PageHeaderProps extends PropsWithChildren {
+  className?: string
 }
 
-const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
+const Root: React.FC<PageHeaderProps> = ({ children, className }) => {
+  return <div className={cn(styles.pageHeader, className)}>{children}</div>
+}
+
+interface TitleBarProps extends PropsWithChildren {
+  className?: string
+}
+const TitleBar: React.FC<TitleBarProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
         styles.titleBar,
-        'flex flex-row items-center justify-between gap-4 border-b py-10'
+        'flex flex-row items-center justify-between gap-4 border-b py-10',
+        className
       )}
     >
       {children}
@@ -24,26 +32,42 @@ const TitleBar: React.FC<PropsWithChildren> = ({ children }) => {
 }
 TitleBar.displayName = 'PageHeader.TitleBar'
 
-const TitleArea: React.FC<PropsWithChildren> = ({ children }) => {
+interface TitleAreaProps extends PropsWithChildren {
+  className?: string
+}
+const TitleArea: React.FC<TitleAreaProps> = ({ children, className }) => {
   return (
-    <div className={cn(styles.titleArea, 'flex flex-row items-start')}>
+    <div
+      className={cn(styles.titleArea, 'flex flex-row items-start', className)}
+    >
       {children}
     </div>
   )
 }
 TitleArea.displayName = 'PageHeader.TitleArea'
 
-const Title: React.FC<PropsWithChildren> = ({ children }) => {
-  return <Heading variant="xl">{children}</Heading>
+interface TitleProps extends PropsWithChildren {
+  className?: string
+}
+const Title: React.FC<TitleProps> = ({ children, className }) => {
+  return (
+    <Heading variant="xl" className={cn('flex-1', className)}>
+      {children}
+    </Heading>
+  )
 }
 Title.displayName = 'PageHeader.Title'
 
-const Actions: React.FC<PropsWithChildren> = ({ children }) => {
+interface ActionsProps extends PropsWithChildren {
+  className?: string
+}
+const Actions: React.FC<ActionsProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
         styles.actions,
-        'flex min-w-max flex-row items-start justify-end gap-2'
+        'flex min-w-max flex-row items-start justify-end gap-2',
+        className
       )}
     >
       {children}
@@ -52,7 +76,10 @@ const Actions: React.FC<PropsWithChildren> = ({ children }) => {
 }
 Actions.displayName = 'PageHeader.Actions'
 
-const Footer: React.FC<PropsWithChildren> = ({ children }) => {
+interface FooterProps extends PropsWithChildren {
+  className?: string
+}
+const Footer: React.FC<FooterProps> = ({ children, className }) => {
   const breakpoint = useTailwindBreakpoint()
   const validChildren = Children.toArray(children).filter(
     (child) => React.isValidElement(child) && child.type === FooterItem
@@ -65,7 +92,8 @@ const Footer: React.FC<PropsWithChildren> = ({ children }) => {
     <div
       className={cn(
         styles.footer,
-        'flex w-full flex-col flex-wrap items-stretch justify-start gap-y-2 border-b py-6 md:flex-row md:gap-y-4'
+        'flex w-full flex-col flex-wrap items-stretch justify-start gap-y-2 border-b py-6 md:flex-row md:gap-y-4',
+        className
       )}
     >
       {Children.map(validChildren, (child, index) => (
@@ -86,9 +114,17 @@ const Footer: React.FC<PropsWithChildren> = ({ children }) => {
 }
 Footer.displayName = 'PageHeader.Footer'
 
-const FooterItem: React.FC<PropsWithChildren> = ({ children }) => {
+interface FooterItemProps extends PropsWithChildren {
+  className?: string
+}
+const FooterItem: React.FC<FooterItemProps> = ({ children, className }) => {
   return (
-    <div className="flex flex-row items-center [&:has(.footer-item-separator)]:hidden [&:has(.footer-item-separator)]:md:flex">
+    <div
+      className={cn(
+        'flex flex-row items-center [&:has(.footer-item-separator)]:hidden [&:has(.footer-item-separator)]:md:flex',
+        className
+      )}
+    >
       {children}
     </div>
   )

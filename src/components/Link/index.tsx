@@ -60,6 +60,7 @@ export interface LinkProps {
   target?: '_blank' | '_self'
   iconPrefixName?: IconName
   iconSuffixName?: IconName
+  className?: string
 }
 
 export const Link: React.FC<LinkProps> = ({
@@ -71,12 +72,13 @@ export const Link: React.FC<LinkProps> = ({
   target = '_blank',
   iconPrefixName,
   iconSuffixName,
+  className,
 }) => {
   return (
     <a
       href={href}
       target={target}
-      className={cn(linkVariants({ variant, size }))}
+      className={cn(linkVariants({ variant, size }), className)}
     >
       {iconPrefixName && (
         <IconWrapper size={size}>

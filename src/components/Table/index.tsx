@@ -73,6 +73,11 @@ export type TableProps<T extends object> = {
    * No results message
    */
   noResultsMessage?: ReactNode
+
+  /**
+   * The class name to apply to the table.
+   */
+  className?: string
 }
 
 export function Table<T extends object>({
@@ -84,6 +89,7 @@ export function Table<T extends object>({
   hasMore,
   noResultsMessage,
   renderGroupHeader,
+  className,
 }: TableProps<T>) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
@@ -131,7 +137,10 @@ export function Table<T extends object>({
         } as React.CSSProperties
       }
       ref={tableRef}
-      className="relative grid w-full caption-bottom overflow-y-hidden overflow-x-scroll rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]"
+      className={cn(
+        'relative grid w-full caption-bottom overflow-y-hidden overflow-x-scroll rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+        className
+      )}
     >
       <thead className="grid h-14 [grid-column:1/-1] [grid-template-columns:subgrid]">
         <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">

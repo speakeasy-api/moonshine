@@ -2,6 +2,7 @@ import { Size } from '@/types'
 import type { Range } from '@/lib/typeUtils'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import styles from './index.module.css'
+import { cn } from '@/lib/utils'
 
 export type ScoreValue = Range<100>
 
@@ -38,6 +39,7 @@ export interface ScoreProps {
   animate?: boolean
 
   animationDuration?: number
+  className?: string
 }
 
 const transition = {
@@ -79,6 +81,7 @@ export function Score({
   thresholds = defaultThresholds,
   animate = false,
   animationDuration = 40,
+  className,
 }: ScoreProps) {
   const [scoreInternal, setScoreInternal] = useState<ScoreValue>(
     animate ? 0 : score
@@ -199,7 +202,7 @@ export function Score({
       shapeRendering="crispEdges"
       width={sizeMap[size]}
       height={sizeMap[size]}
-      className={styles.svg}
+      className={cn(styles.svg, className)}
       style={
         {
           '--stroke-width': strokeWidth,

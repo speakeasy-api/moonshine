@@ -19,6 +19,7 @@ export interface FacepileProps {
   avatarSize?: ResponsiveValue<Size>
   variant?: FacepileVariant
   tooltips?: boolean
+  className?: string
 }
 
 export function Facepile({
@@ -27,6 +28,7 @@ export function Facepile({
   avatarSize = 'medium',
   variant = 'interactive',
   tooltips = true,
+  className,
 }: FacepileProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null)
@@ -131,7 +133,7 @@ export function Facepile({
   return (
     <motion.div
       ref={containerRef}
-      className="relative"
+      className={cn('relative', className)}
       style={{ height: size }}
       animate={{ width: containerWidth }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}

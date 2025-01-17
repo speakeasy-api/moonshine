@@ -41,6 +41,7 @@ type AlertProps = {
   onDismiss?: () => void
   iconName?: (typeof iconNames)[number]
   useContainer?: boolean
+  className?: string
 }
 
 const iconForVariant: Record<Variant, (typeof iconNames)[number] | undefined> =
@@ -61,6 +62,7 @@ export function Alert({
   onDismiss,
   iconName,
   useContainer = false,
+  className,
 }: AlertProps) {
   const [isDismissing, setIsDismissing] = useState(false)
   const handleDismiss = () => {
@@ -92,7 +94,8 @@ export function Alert({
     <div
       className={cn(
         alertVariants({ variant, modifiers: inline ? 'inline' : undefined }),
-        isDismissing && 'opacity-0 transition-opacity duration-500'
+        isDismissing && 'opacity-0 transition-opacity duration-500',
+        className
       )}
     >
       {useContainer ? (
