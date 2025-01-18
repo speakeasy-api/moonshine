@@ -62,10 +62,11 @@ const Item: React.FC<ItemProps> = ({
   return (
     <div
       style={{
-        top: ((position.y - scrollY) / window.innerHeight) * window.innerHeight,
+        top:
+          ((position.y - scrollY) / window.innerHeight) * window.innerHeight -
+          scrollY / 2.5,
         ...style,
       }}
-      title={`${((position.y - scrollY) / window.innerHeight) * 100}`}
       onMouseOver={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
