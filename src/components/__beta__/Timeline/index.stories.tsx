@@ -104,8 +104,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
               className="text-primary cursor-pointer hover:scale-150"
               data-y={wordRefs.current[index]?.offsetTop}
             >
-              {words.slice(range.start, range.end).join(' ')} (
-              {wordRefs.current[index]?.offsetTop})
+              {words.slice(range.start, range.end).join(' ')}
             </HighlightedText>
           </span>
 
@@ -123,60 +122,33 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   useEffect(() => {
     if (!pageContent.length) return
 
-    const updatePositions = () => {
-      setItems((prev) =>
-        prev.map((item, index) => {
-          const ref = wordRefs.current[index]
-          if (!ref) return item
-
-          return {
-            ...item,
-            position: { y: ref.offsetTop },
-          }
-        })
-      )
-    }
-
-    // Initial positions
-    const newHighlightedItems = pageContent.map((content, index) => {
-      const words = content.split(' ')
-      const randomWord = words[randomIndices.current[index].start]
-      return {
-        id: `highlight-${index}`,
-        title: randomWord,
-        description: `Highlighted word from paragraph ${index + 1}`,
-        position: { y: 0 },
-        iconName: 'message-square' as IconName,
-        color: highlightColors[colorIndices.current[index]],
-      }
-    })
+    const newHighlightedItems = pageContent
+      .map((content, index) => {
+        const words = content.split(' ')
+        const randomWord = words[randomIndices.current[index].start]
+        const ref = wordRefs.current[index]
+        if (!ref) return null
+        const rect = ref.getBoundingClientRect()
+        const offsetTop = rect.top
+        const height = rect.height
+        if (!offsetTop || !height) return null
+        return {
+          id: `highlight-${index}`,
+          title: randomWord,
+          description: `Highlighted word from paragraph ${index + 1}`,
+          position: { y: rect.y - rect.height / 2 - 10 },
+          iconName: 'message-square' as IconName,
+          color: highlightColors[colorIndices.current[index]],
+        }
+      })
+      .filter((item): item is TimelineItem => item !== null)
 
     setItems(newHighlightedItems)
-
-    // Update positions after items are rendered
-    requestAnimationFrame(() => {
-      updatePositions()
-      // Run it again after a short delay to ensure all content is properly laid out
-      setTimeout(updatePositions, 100)
-    })
-
-    // Add scroll listener with debounce
-    let timeoutId: NodeJS.Timeout
-    const handleScroll = () => {
-      if (timeoutId) clearTimeout(timeoutId)
-      timeoutId = setTimeout(updatePositions, 10)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (timeoutId) clearTimeout(timeoutId)
-    }
   }, [pageContent])
 
   return (
     <div
-      className="bg-background mx-auto max-h-dvh w-screen"
+      className="bg-background relative mx-auto h-full w-screen p-8"
       ref={containerRef}
     >
       <div className="m-auto flex max-w-screen-md flex-col">
@@ -188,25 +160,25 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
             {annotateRandomWordInSentence(content, index)}
           </p>
         ))}
-        <Timeline>
-          {items.map((item) => (
-            <Timeline.Item
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              position={item.position}
-              iconName={item.iconName}
-              data-y={item.position.y}
-              style={{
-                backgroundColor: highlightBgMap[item.color],
-                color: highlightFgMap[item.color],
-              }}
-            >
-              {item.title}
-            </Timeline.Item>
-          ))}
-        </Timeline>
       </div>
+      <Timeline>
+        {items.map((item) => (
+          <Timeline.Item
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            position={item.position}
+            iconName={item.iconName}
+            data-y={item.position.y}
+            style={{
+              backgroundColor: highlightBgMap[item.color],
+              color: highlightFgMap[item.color],
+            }}
+          >
+            {item.title}
+          </Timeline.Item>
+        ))}
+      </Timeline>
     </div>
   )
 }
