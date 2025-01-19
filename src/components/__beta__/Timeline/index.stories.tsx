@@ -58,7 +58,6 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
   const randomIndices = useRef<RangeIndices[]>([])
   const colorIndices = useRef<number[]>([])
-  const containerRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     setPageContent(
       Array.from({ length: 15 }).map(() =>
@@ -101,6 +100,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           <span ref={(el) => (wordRefs.current[index] = el)}>
             <HighlightedText
               color={highlightColors[colorIndices.current[index]]}
+              muted
               className="text-primary cursor-pointer hover:scale-150"
               data-y={wordRefs.current[index]?.offsetTop}
             >
@@ -136,8 +136,11 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           id: `highlight-${index}`,
           title: randomWord,
           description: `Highlighted word from paragraph ${index + 1}`,
-          position: { y: rect.y - rect.height / 2 - 10 },
-          iconName: 'message-square' as IconName,
+          position: { y: rect.y - rect.height },
+          iconName:
+            index % 2 === 0
+              ? 'message-square'
+              : ('message-circle-code' as IconName),
           color: highlightColors[colorIndices.current[index]],
         }
       })
@@ -147,39 +150,36 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   }, [pageContent])
 
   return (
-    <div
-      className="bg-background relative mx-auto h-full w-screen p-8"
-      ref={containerRef}
-    >
-      <div className="m-auto flex max-w-screen-md flex-col">
-        {pageContent.map((content, index) => (
-          <p
-            key={index}
-            className="text-muted-foreground mb-6 max-w-screen-lg overflow-hidden text-base leading-normal"
-          >
-            {annotateRandomWordInSentence(content, index)}
-          </p>
-        ))}
-      </div>
-      <Timeline>
-        {items.map((item) => (
-          <Timeline.Item
-            key={item.id}
-            title={item.title}
-            description={item.description}
-            position={item.position}
-            iconName={item.iconName}
-            data-y={item.position.y}
-            style={{
-              backgroundColor: highlightBgMap[item.color],
-              color: highlightFgMap[item.color],
-            }}
-          >
-            {item.title}
-          </Timeline.Item>
-        ))}
-      </Timeline>
-    </div>
+    <Timeline>
+      <Timeline.Content>
+        <>
+          {pageContent.map((content, index) => (
+            <p
+              key={index}
+              className="text-muted-foreground mb-6 text-base leading-normal"
+            >
+              {annotateRandomWordInSentence(content, index)}
+            </p>
+          ))}
+        </>
+      </Timeline.Content>
+      {items.map((item) => (
+        <Timeline.Item
+          key={item.id}
+          title={item.title}
+          description={item.description}
+          // TODO: use forwardRef so we can remeasure on window resize.
+          position={item.position}
+          iconName={item.iconName}
+          style={{
+            backgroundColor: highlightBgMap[item.color],
+            color: highlightFgMap[item.color],
+          }}
+        >
+          {item.title}
+        </Timeline.Item>
+      ))}
+    </Timeline>
   )
 }
 
