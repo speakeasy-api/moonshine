@@ -33,7 +33,7 @@ const Item: React.FC<ItemProps> = ({
         className
       )}
     >
-      <Icon name={iconName} />
+      <Icon name={iconName} size="medium" />
     </div>
   )
 }
@@ -44,33 +44,49 @@ interface RootProps extends PropsWithChildren {
 }
 
 const Root: React.FC<RootProps> = ({ children, className }) => {
-  const validChildren = Children.toArray(children).filter((child) => {
+  const timelineItems = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
     return type.displayName === 'Timeline.Item'
   })
 
+  const timelineContent = Children.toArray(children).find((child) => {
+    if (!isValidElement(child)) return false
+    const type = child.type as { displayName?: string }
+    return type.displayName === 'Timeline.Content'
+  })
+
   return (
-    <div
-      className={cn(
-        'absolute bottom-0 right-20 top-0 min-h-svh w-auto min-w-12 rounded-2xl',
-        className
-      )}
-    >
+    <div className="flex h-svh">
+      <div className="min-h-full flex-grow">{timelineContent}</div>
       <div
-        className="fixed bottom-0 top-0 z-10 h-full min-w-12"
-        style={{
-          backgroundImage:
-            'linear-gradient(to bottom, black 0%, transparent 7%, transparent 93%, black 100%)',
-        }}
-      ></div>
-      <div className="h-full before:absolute before:left-1/2 before:-z-0 before:h-full before:w-[1px] before:-translate-x-1/2 before:bg-gradient-to-b before:from-transparent before:via-zinc-600 before:to-transparent">
-        {validChildren}
+        className={cn(
+          'absolute bottom-0 right-10 top-0 min-h-svh w-auto min-w-12 rounded-2xl',
+          className
+        )}
+      >
+        <div
+          className="fixed bottom-0 top-0 z-10 h-full w-12"
+          style={{
+            backgroundImage:
+              'linear-gradient(to bottom, black 0%, transparent 5%, transparent 95%, black 100%)',
+          }}
+        ></div>
+        <div className="h-full before:fixed before:right-16 before:-z-0 before:h-full before:w-[1px] before:-translate-x-1/2 before:bg-gradient-to-b before:from-transparent before:via-zinc-700 before:to-transparent">
+          {timelineItems}
+        </div>
       </div>
     </div>
   )
 }
 
+const TimelineContent = ({ children }: PropsWithChildren) => {
+  return <div className="mr-36 h-full">{children}</div>
+}
+
+TimelineContent.displayName = 'Timeline.Content'
+
 export const Timeline = Object.assign(Root, {
   Item,
+  Content: TimelineContent,
 })

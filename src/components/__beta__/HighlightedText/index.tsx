@@ -5,11 +5,13 @@ import styles from './styles.module.css'
 interface HighlightedTextProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
   color?: Color
+  muted?: boolean
 }
 
 export function HighlightedText({
   children,
   color = 'green',
+  muted = false,
   className,
   ...props
 }: HighlightedTextProps) {
@@ -17,8 +19,10 @@ export function HighlightedText({
     <mark
       className={cn(styles.highlightedText, className)}
       style={{
-        background: createBrushBackground(highlightBgMap[color]),
-        color: highlightFgMap[color],
+        background: createBrushBackground(
+          muted ? mutedBgMap[color] : highlightBgMap[color]
+        ),
+        color: muted ? mutedFgMap[color] : highlightFgMap[color],
       }}
       {...props}
     >
@@ -44,6 +48,22 @@ export const highlightBgMap: Record<Color, string> = {
   purple: 'hsl(300,100%,72%)',
   orange: 'hsl(400,100%,65%)',
   emerald: 'hsl(150, 100%, 65%)',
+}
+
+const mutedBgMap: Record<Color, string> = {
+  green: 'hsl(500,100%,90%)',
+  blue: 'hsl(200,100%,90%)',
+  purple: 'hsl(300,100%,90%)',
+  orange: 'hsl(400,100%,90%)',
+  emerald: 'hsl(150, 100%, 90%)',
+}
+
+const mutedFgMap: Record<Color, string> = {
+  green: 'hsl(0, 0%, 10%)',
+  blue: 'hsl(0, 0%, 10%)',
+  purple: 'hsl(0, 0%, 10%)',
+  orange: 'hsl(0, 0%, 10%)',
+  emerald: 'hsl(0, 0%, 10%)',
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
