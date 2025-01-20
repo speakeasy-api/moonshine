@@ -41,6 +41,8 @@ export const highlightColors = [
 ] as const
 export type Color = (typeof highlightColors)[number]
 
+// TODO: replace these colors with new ones, and improve api for selecting/retrieving colors for consumers
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const highlightBgMap: Record<Color, string> = {
   green: 'hsl(500,100%,75%)',

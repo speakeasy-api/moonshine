@@ -25,7 +25,7 @@ interface TimelineItem {
   id: string
   title: string
   description: string
-  position: { y: number }
+  anchorElement: HTMLElement
   iconName: IconName
   color: Color
 }
@@ -40,7 +40,7 @@ function stateFromChildren(children: React.ReactNode) {
         id: child.key as string,
         title: child.props.title,
         description: child.props.description,
-        position: child.props.position,
+        anchorElement: child.props.anchorElement,
         iconName: child.props.iconName,
       }
     })
@@ -130,15 +130,12 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
         const randomWord = words[randomIndices.current[index].start]
         const ref = wordRefs.current[index]
         if (!ref) return null
-        const rect = ref.getBoundingClientRect()
-        const offsetTop = rect.top
-        const height = rect.height
-        if (!offsetTop || !height) return null
+
         return {
           id: `highlight-${index}`,
           title: randomWord,
           description: `Highlighted word from paragraph ${index + 1}`,
-          position: { y: rect.y - rect.height / 2 },
+          anchorElement: ref,
           iconName:
             index % 2 === 0
               ? 'message-square'
@@ -170,9 +167,8 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           key={item.id}
           title={item.title}
           description={item.description}
-          // TODO: use forwardRef so we can remeasure on window resize.
-          position={item.position}
           iconName={item.iconName}
+          anchorElement={item.anchorElement}
           onMouseEnter={() => {
             setHoveredItem(item.id)
           }}
