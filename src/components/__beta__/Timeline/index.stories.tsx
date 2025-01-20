@@ -20,6 +20,8 @@ import {
   mutedBgMap,
   mutedFgMap,
 } from '../HighlightedText'
+import { ActionBar } from '../ActionBar'
+import { DndContext } from '@dnd-kit/core'
 
 interface TimelineItem {
   id: string
@@ -61,6 +63,8 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   const randomIndices = useRef<RangeIndices[]>([])
   const colorIndices = useRef<number[]>([])
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+
+  const currentAnchorIndex = useRef<number>(0)
   useEffect(() => {
     setPageContent(
       Array.from({ length: 15 }).map(() =>
@@ -93,7 +97,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
       const range = randomIndices.current[index]
 
       return (
-        <>
+        <p className="text-muted mb-6 text-sm leading-normal">
           {/* Words before the range */}
           {words.slice(0, range.start).map((word, i) => (
             <span key={`before-${i}`}>{word} </span>
@@ -114,7 +118,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           {words.slice(range.end).map((word, i) => (
             <span key={`after-${i}`}> {word}</span>
           ))}
-        </>
+        </p>
       )
     },
     [hoveredItem]
@@ -149,47 +153,79 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   }, [pageContent])
 
   return (
-    <Timeline>
-      <Timeline.Content>
-        <>
-          {pageContent.map((content, index) => (
-            <p
-              key={index}
-              className="text-muted-foreground mb-6 text-base leading-normal"
+    <DndContext>
+      <Timeline>
+        <Timeline.Content>
+          <>
+            {pageContent.map((content, index) => (
+              <p
+                key={index}
+                className="text-muted-foreground mb-6 text-base leading-normal"
+              >
+                {annotateRandomWordInSentence(content, index)}
+              </p>
+            ))}
+
+            <ActionBar
+              id="action-bar-1"
+              initialPosition={{ x: 50, y: 50 }}
+              draggable
             >
-              {annotateRandomWordInSentence(content, index)}
-            </p>
-          ))}
-        </>
-      </Timeline.Content>
-      {items.map((item) => (
-        <Timeline.Item
-          key={item.id}
-          title={item.title}
-          description={item.description}
-          iconName={item.iconName}
-          anchorElement={item.anchorElement}
-          onMouseEnter={() => {
-            setHoveredItem(item.id)
-          }}
-          onMouseLeave={() => {
-            setHoveredItem(null)
-          }}
-          style={{
-            backgroundColor:
-              hoveredItem === item.id
-                ? highlightBgMap[item.color]
-                : mutedBgMap[item.color],
-            color:
-              hoveredItem === item.id
-                ? highlightFgMap[item.color]
-                : mutedFgMap[item.color],
-          }}
-        >
-          {item.title}
-        </Timeline.Item>
-      ))}
-    </Timeline>
+              <ActionBar.Item
+                onClick={() => {
+                  currentAnchorIndex.current++
+                  const anchorElement =
+                    items[currentAnchorIndex.current].anchorElement
+                  if (anchorElement) {
+                    anchorElement.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+                iconName="arrow-down"
+              >
+                Next
+              </ActionBar.Item>
+              <ActionBar.Item disabled iconName="arrow-up">
+                Previous
+              </ActionBar.Item>
+              <ActionBar.Separator />
+              <ActionBar.Item iconName="undo-2">Undo</ActionBar.Item>
+              <ActionBar.Item disabled iconName="redo-2">
+                Redo
+              </ActionBar.Item>
+              <ActionBar.Separator />
+              <ActionBar.Item iconName="activity">Activity</ActionBar.Item>
+            </ActionBar>
+          </>
+        </Timeline.Content>
+        {items.map((item) => (
+          <Timeline.Item
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            iconName={item.iconName}
+            anchorElement={item.anchorElement}
+            onMouseEnter={() => {
+              setHoveredItem(item.id)
+            }}
+            onMouseLeave={() => {
+              setHoveredItem(null)
+            }}
+            style={{
+              backgroundColor:
+                hoveredItem === item.id
+                  ? highlightBgMap[item.color]
+                  : mutedBgMap[item.color],
+              color:
+                hoveredItem === item.id
+                  ? highlightFgMap[item.color]
+                  : mutedFgMap[item.color],
+            }}
+          >
+            {item.title}
+          </Timeline.Item>
+        ))}
+      </Timeline>
+    </DndContext>
   )
 }
 
