@@ -1,10 +1,5 @@
 import { cn } from '@/lib/utils'
-import {
-  motion,
-  Transition,
-  AnimatePresence,
-  useIsPresent,
-} from 'framer-motion'
+import { motion, Transition, AnimatePresence } from 'framer-motion'
 import {
   useState,
   useRef,
@@ -256,14 +251,14 @@ export function Subnav({
 
       <AnimatePresence
         mode="wait"
+        initial={false}
         presenceAffectsLayout
         onExitComplete={forceUpdate}
       >
-        {items.map((item, index) => (
+        {items.map((item) => (
           <SubnavItem
             key={item.href}
             item={item}
-            index={index}
             isActive={activeItem === item.href}
             isHovered={hoveredItem === item.href}
             handlers={getItemHandlers(item.href)}
@@ -307,7 +302,6 @@ const SubnavItem = memo(
     HTMLDivElement,
     {
       item: SubnavItem
-      index: number
       isActive: boolean
       isHovered: boolean
       handlers: {
@@ -318,11 +312,9 @@ const SubnavItem = memo(
       renderItem: (item: SubnavItem & { hovered: boolean }) => React.ReactNode
     }
   >(function SubnavItem(
-    { item, index, isActive, isHovered, handlers, renderItem },
+    { item, isActive, isHovered, handlers, renderItem },
     ref
   ) {
-    const isPresent = useIsPresent()
-
     return (
       <motion.div
         ref={ref}
@@ -333,7 +325,7 @@ const SubnavItem = memo(
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: isPresent ? index * 0.05 : 0, duration: 0.2 }}
+        transition={{ delay: 0.05, duration: 0.2 }}
         {...handlers}
       >
         {renderItem({ ...item, hovered: isHovered })}
