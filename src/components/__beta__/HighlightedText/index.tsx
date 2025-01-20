@@ -50,7 +50,8 @@ export const highlightBgMap: Record<Color, string> = {
   emerald: 'hsl(150, 100%, 65%)',
 }
 
-const mutedBgMap: Record<Color, string> = {
+// eslint-disable-next-line react-refresh/only-export-components
+export const mutedBgMap: Record<Color, string> = {
   green: 'hsl(500,100%,90%)',
   blue: 'hsl(200,100%,90%)',
   purple: 'hsl(300,100%,90%)',
@@ -58,7 +59,8 @@ const mutedBgMap: Record<Color, string> = {
   emerald: 'hsl(150, 100%, 90%)',
 }
 
-const mutedFgMap: Record<Color, string> = {
+// eslint-disable-next-line react-refresh/only-export-components
+export const mutedFgMap: Record<Color, string> = {
   green: 'hsl(0, 0%, 10%)',
   blue: 'hsl(0, 0%, 10%)',
   purple: 'hsl(0, 0%, 10%)',

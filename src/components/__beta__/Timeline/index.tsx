@@ -7,7 +7,7 @@ interface Position {
   y: number // pixels from top of page
 }
 
-interface ItemProps extends PropsWithChildren {
+interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   description: string
   position: Position
@@ -21,6 +21,7 @@ const Item: React.FC<ItemProps> = ({
   iconName,
   className,
   style,
+  ...props
 }) => {
   return (
     <div
@@ -28,6 +29,7 @@ const Item: React.FC<ItemProps> = ({
         top: `${position.y}px`,
         ...style,
       }}
+      {...props}
       className={cn(
         'bg-background absolute flex size-auto min-h-12 min-w-12 scale-[0.85] cursor-pointer items-center justify-center rounded-full border px-2 transition-transform duration-500',
         className
@@ -65,14 +67,8 @@ const Root: React.FC<RootProps> = ({ children, className }) => {
           className
         )}
       >
-        <div
-          className="fixed bottom-0 top-0 z-10 h-full w-12"
-          style={{
-            backgroundImage:
-              'linear-gradient(to bottom, black 0%, transparent 5%, transparent 95%, black 100%)',
-          }}
-        ></div>
-        <div className="h-full before:fixed before:right-16 before:-z-0 before:h-full before:w-[1px] before:-translate-x-1/2 before:bg-gradient-to-b before:from-transparent before:via-zinc-700 before:to-transparent">
+        <div className="bg-mask pointer-events-none fixed bottom-0 top-0 z-10 h-full w-12"></div>
+        <div className="h-full before:fixed before:right-16 before:-z-0 before:h-full before:w-[1px] before:-translate-x-1/2 before:bg-gradient-to-b before:from-transparent before:via-zinc-200 before:to-transparent dark:before:via-zinc-700">
           {timelineItems}
         </div>
       </div>
