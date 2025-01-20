@@ -17,6 +17,8 @@ import {
   highlightColors,
   HighlightedText,
   highlightFgMap,
+  mutedBgMap,
+  mutedFgMap,
 } from '../HighlightedText'
 
 interface TimelineItem {
@@ -58,6 +60,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
   const randomIndices = useRef<RangeIndices[]>([])
   const colorIndices = useRef<number[]>([])
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   useEffect(() => {
     setPageContent(
       Array.from({ length: 15 }).map(() =>
@@ -100,9 +103,8 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           <span ref={(el) => (wordRefs.current[index] = el)}>
             <HighlightedText
               color={highlightColors[colorIndices.current[index]]}
-              muted
+              muted={hoveredItem !== `highlight-${index}`}
               className="text-primary cursor-pointer hover:scale-150"
-              data-y={wordRefs.current[index]?.offsetTop}
             >
               {words.slice(range.start, range.end).join(' ')}
             </HighlightedText>
@@ -115,7 +117,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
         </>
       )
     },
-    []
+    [hoveredItem]
   )
 
   // Update positions based on refs
@@ -136,7 +138,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           id: `highlight-${index}`,
           title: randomWord,
           description: `Highlighted word from paragraph ${index + 1}`,
-          position: { y: rect.y - rect.height },
+          position: { y: rect.y - rect.height / 2 },
           iconName:
             index % 2 === 0
               ? 'message-square'
@@ -171,9 +173,21 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
           // TODO: use forwardRef so we can remeasure on window resize.
           position={item.position}
           iconName={item.iconName}
+          onMouseEnter={() => {
+            setHoveredItem(item.id)
+          }}
+          onMouseLeave={() => {
+            setHoveredItem(null)
+          }}
           style={{
-            backgroundColor: highlightBgMap[item.color],
-            color: highlightFgMap[item.color],
+            backgroundColor:
+              hoveredItem === item.id
+                ? highlightBgMap[item.color]
+                : mutedBgMap[item.color],
+            color:
+              hoveredItem === item.id
+                ? highlightFgMap[item.color]
+                : mutedFgMap[item.color],
           }}
         >
           {item.title}
