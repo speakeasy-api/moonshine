@@ -1,32 +1,56 @@
 import { Icon } from '@/components/Icon'
 import { IconName } from '@/components/Icon/names'
+import debounce from '@/lib/debounce'
 import { cn } from '@/lib/utils'
-import { PropsWithChildren, Children, isValidElement } from 'react'
-
-interface Position {
-  y: number // pixels from top of page
-}
+import {
+  PropsWithChildren,
+  Children,
+  isValidElement,
+  useEffect,
+  useState,
+} from 'react'
 
 interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   description: string
-  position: Position
   iconName: IconName
   className?: string
   style?: React.CSSProperties
+  anchorElement: HTMLElement
+}
+
+function calculateNormalisedOffset(anchorElement: HTMLElement) {
+  const { top, height } = anchorElement.getBoundingClientRect()
+  return top - height / 2
 }
 
 const Item: React.FC<ItemProps> = ({
-  position,
+  anchorElement,
   iconName,
   className,
   style,
   ...props
 }) => {
+  const [top, setTop] = useState(0)
+
+  const updateTop = debounce(() => {
+    if (anchorElement) {
+      const normalisedOffset = calculateNormalisedOffset(anchorElement)
+      setTop(normalisedOffset)
+    }
+  }, 10)
+
+  useEffect(() => {
+    updateTop()
+
+    window.addEventListener('resize', updateTop)
+    return () => window.removeEventListener('resize', updateTop)
+  }, [anchorElement])
+
   return (
     <div
       style={{
-        top: `${position.y}px`,
+        top: `${top}px`,
         ...style,
       }}
       {...props}
