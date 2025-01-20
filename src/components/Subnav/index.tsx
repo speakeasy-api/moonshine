@@ -116,25 +116,18 @@ export function Subnav({
   useLayoutEffect(() => {
     if (!activeItem || !baseWidth) {
       setActiveIndicatorProps(null)
-      console.log('no active item')
       return
     }
 
     const itemElement = itemRefs.current.get(activeItem)
     if (!itemElement) {
       setActiveIndicatorProps(null)
-      console.log('no active item')
       return
     }
 
     const itemWidth = itemElement.offsetWidth
     const itemLeft = itemElement.offsetLeft
     const centerOffset = (itemWidth - baseWidth) / 2
-
-    console.dir({
-      scaleX: itemWidth / baseWidth,
-      left: itemLeft + centerOffset,
-    })
 
     setActiveIndicatorProps({
       scaleX: itemWidth / baseWidth,
