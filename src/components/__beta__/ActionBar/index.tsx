@@ -65,7 +65,7 @@ const Root = ({
         left: state.x,
         ...transformStyle,
       }}
-      className="bg-card fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border py-2 pl-2 pr-2 shadow-sm shadow-white/5"
+      className="bg-card fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border py-2 pl-2 pr-2 shadow-lg shadow-white/5"
     >
       {draggable && (
         <>
