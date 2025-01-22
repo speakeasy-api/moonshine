@@ -13,6 +13,7 @@ import {
   useDndMonitor,
   Translate,
   DragEndEvent,
+  DragStartEvent,
 } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { useState } from 'react'
@@ -22,6 +23,8 @@ interface ActionBarProps {
   id: string
   initialPosition: Translate
   onChangePosition?: (position: Translate) => void
+  onDragStart?: (event: DragStartEvent) => void
+  onDragEnd?: (event: DragEndEvent) => void
   draggable?: boolean
 }
 
@@ -31,6 +34,8 @@ const Root = ({
   initialPosition = { x: 0, y: 0 },
   onChangePosition,
   draggable = true,
+  onDragStart,
+  onDragEnd,
 }: ActionBarProps) => {
   const { setNodeRef, attributes, listeners, transform } = useDraggable({
     id,
@@ -48,6 +53,10 @@ const Root = ({
         x: state.x + event.delta.x,
         y: state.y + event.delta.y,
       })
+      onDragEnd?.(event)
+    },
+    onDragStart: (event: DragStartEvent) => {
+      onDragStart?.(event)
     },
   })
 
