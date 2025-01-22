@@ -138,7 +138,7 @@ export function Table<T extends object>({
       }
       ref={tableRef}
       className={cn(
-        'relative grid w-full caption-bottom overflow-y-hidden overflow-x-scroll rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+        'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
         className
       )}
     >

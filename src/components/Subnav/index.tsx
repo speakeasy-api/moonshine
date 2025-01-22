@@ -8,7 +8,6 @@ import {
   useLayoutEffect,
   memo,
   forwardRef,
-  useReducer,
 } from 'react'
 
 export interface SubnavItem {
@@ -90,8 +89,6 @@ export function Subnav({
   const isContainerHovered = useRef(false)
   const hasInitialized = useRef(false)
 
-  const [forceUpdateSet, forceUpdate] = useReducer((x) => x + 1, 0)
-
   useLayoutEffect(() => {
     const newActiveItem: string =
       items.find((item) => item.active)?.href ?? items[0]?.href
@@ -133,10 +130,8 @@ export function Subnav({
      * Subnav can be contextual to a page and therefore items can change.
      * items needs to be in the dependancy array even though it's not used in the effect
      * so the position of the indicator is accurate when the menu items change between pages
-     *
-     * We also need to force an update after animating item changes to get the correct position for the indicator
      */
-  }, [activeItem, baseWidth, items, forceUpdateSet])
+  }, [activeItem, baseWidth, items])
 
   useLayoutEffect(() => {
     if (!hoveredItem || !baseWidth) {
@@ -249,30 +244,23 @@ export function Subnav({
         )}
       </AnimatePresence>
 
-      <AnimatePresence
-        mode="wait"
-        initial={false}
-        presenceAffectsLayout
-        onExitComplete={forceUpdate}
-      >
-        {items.map((item) => (
-          <SubnavItem
-            key={item.href}
-            item={item}
-            isActive={activeItem === item.href}
-            isHovered={hoveredItem === item.href}
-            handlers={getItemHandlers(item.href)}
-            ref={(el) => {
-              if (el) {
-                itemRefs.current.set(item.href, el)
-              } else {
-                itemRefs.current.delete(item.href)
-              }
-            }}
-            renderItem={renderItem}
-          />
-        ))}
-      </AnimatePresence>
+      {items.map((item) => (
+        <SubnavItem
+          key={item.href}
+          item={item}
+          isActive={activeItem === item.href}
+          isHovered={hoveredItem === item.href}
+          handlers={getItemHandlers(item.href)}
+          ref={(el) => {
+            if (el) {
+              itemRefs.current.set(item.href, el)
+            } else {
+              itemRefs.current.delete(item.href)
+            }
+          }}
+          renderItem={renderItem}
+        />
+      ))}
 
       {activeIndicatorProps && baseWidth > 0 && (
         <motion.div
@@ -322,10 +310,6 @@ const SubnavItem = memo(
           'text-muted-foreground relative z-10 cursor-pointer select-none',
           isActive && 'text-foreground font-semibold'
         )}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
         {...handlers}
       >
         {renderItem({ ...item, hovered: isHovered })}
