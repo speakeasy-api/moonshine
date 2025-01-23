@@ -59,7 +59,7 @@ const Item: React.FC<ItemProps> = ({
         className
       )}
     >
-      <Icon name={iconName} size="medium" />
+      <Icon name={iconName} size="medium" className="h-4 w-4" />
     </div>
   )
 }

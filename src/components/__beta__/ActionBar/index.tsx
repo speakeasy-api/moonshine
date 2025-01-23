@@ -14,8 +14,11 @@ import {
   Translate,
   DragEndEvent,
   DragStartEvent,
+  DndContext,
+  Modifier,
 } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 import { useState } from 'react'
 
 interface ActionBarProps {
@@ -26,7 +29,26 @@ interface ActionBarProps {
   onDragStart?: (event: DragStartEvent) => void
   onDragEnd?: (event: DragEndEvent) => void
   draggable?: boolean
+
+  /**
+   * dnd-kit modifiers (https://docs.dndkit.com/api-documentation/modifiers)
+   */
+  modifiers?: Modifier[]
 }
+
+const ActionBarInternal = ({
+  children,
+  modifiers = [restrictToWindowEdges],
+  ...props
+}: ActionBarProps) => {
+  return (
+    <DndContext modifiers={modifiers}>
+      <Root {...props}>{children}</Root>
+    </DndContext>
+  )
+}
+
+ActionBarInternal.displayName = 'ActionBar'
 
 const Root = ({
   children,
@@ -87,7 +109,7 @@ const Root = ({
   )
 }
 
-Root.displayName = 'ActionBar'
+Root.displayName = 'ActionBar.Root'
 
 interface ActionBarItemProps {
   children: React.ReactNode
@@ -155,7 +177,7 @@ const ActionBarHandle = ({
   )
 }
 
-export const ActionBar = Object.assign(Root, {
+export const ActionBar = Object.assign(ActionBarInternal, {
   Item: ActionBarItem,
   Separator: ActionBarSeparator,
 })
