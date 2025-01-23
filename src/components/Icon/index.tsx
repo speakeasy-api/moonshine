@@ -27,10 +27,10 @@ type SvgProps = Pick<
 
 const sizeMap: Record<Size, number> = {
   small: 16,
-  medium: 20,
-  large: 28,
-  xl: 36,
-  '2xl': 48,
+  medium: 24,
+  large: 32,
+  xl: 48,
+  '2xl': 64,
 }
 
 export interface IconProps extends Omit<SvgProps, 'size'> {
