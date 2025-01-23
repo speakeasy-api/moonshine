@@ -86,3 +86,10 @@ export const AllIcons: Story = {
     </div>
   ),
 }
+
+export const IndicatorOnly: Story = {
+  args: {
+    language: 'typescript',
+    indicatorOnly: true,
+  },
+}

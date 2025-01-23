@@ -67,5 +67,13 @@ export {
 } from '@/components/Tooltip'
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
+
+/** START BETA COMPONENTS */
+
 // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
 export { CLIWizard } from '@/components/__beta__/CLIWizard'
+export { ActionBar } from '@/components/__beta__/ActionBar'
+export { Timeline } from '@/components/__beta__/Timeline'
+export { KeyHint } from '@/components/__beta__/KeyHint'
+export { HighlightedText } from '@/components/__beta__/HighlightedText'
+/** END BETA COMPONENTS */

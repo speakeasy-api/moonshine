@@ -5,9 +5,10 @@ import { SupportedLanguage } from '@/types'
 interface LanguageIndicatorProps {
   language: SupportedLanguage
   className?: string
+  indicatorOnly?: boolean
 }
 
-const languageLabelMap: Record<SupportedLanguage, string> = {
+const languageLabelMap: Record<string, string> = {
   typescript: 'TypeScript',
   go: 'Go',
   java: 'Java',
@@ -19,9 +20,15 @@ const languageLabelMap: Record<SupportedLanguage, string> = {
   swift: 'Swift',
   ruby: 'Ruby',
   postman: 'Postman',
+
+  // Unsupported languages but used elsewhere
+  bash: 'Bash',
+  json: 'JSON',
+  dotnet: 'C#',
+  javascript: 'JavaScript',
 }
 
-const languageColorMap: Record<SupportedLanguage, string> = {
+const languageColorMap: Record<string, string> = {
   typescript: 'bg-yellow-500',
   go: 'bg-green-600',
   java: 'bg-orange-500',
@@ -33,20 +40,29 @@ const languageColorMap: Record<SupportedLanguage, string> = {
   swift: 'bg-sky-300',
   ruby: 'bg-red-500',
   postman: 'bg-pink-500',
+
+  // Unsupported languages but used elsewhere
+  bash: 'bg-gray-500',
+  json: 'bg-gray-500',
+  dotnet: 'bg-gray-500',
+  javascript: 'bg-yellow-500',
 }
 
 export function LanguageIndicator({
   language,
   className,
+  indicatorOnly = false,
 }: LanguageIndicatorProps) {
   return (
     <div className={cn('gap flex select-none items-center gap-2', className)}>
       <div
         className={`mx-1 h-2 w-2 rounded-full ${languageColorMap[language]}`}
       />
-      <span className="text-muted-foreground font-medium">
-        {languageLabelMap[language]}
-      </span>
+      {!indicatorOnly && (
+        <span className="text-muted-foreground font-medium">
+          {languageLabelMap[language]}
+        </span>
+      )}
     </div>
   )
 }

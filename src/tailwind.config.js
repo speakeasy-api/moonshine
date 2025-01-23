@@ -94,6 +94,9 @@ export default {
       },
     },
     extend: {
+      backgroundImage: ({ theme }) => ({
+        mask: `linear-gradient(to bottom, ${theme('colors.background')} 0%, ${theme('colors.transparent')} 5%,${theme('colors.transparent')} 95%,${theme('colors.background')} 100%)`,
+      }),
       transitionTimingFunction: {
         'ease-in-out-quad': 'var(--ease-in-out-quad)',
         'ease-in-out-cubic': 'var(--ease-in-out-cubic)',
