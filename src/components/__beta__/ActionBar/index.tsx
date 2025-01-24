@@ -14,12 +14,11 @@ import {
   Translate,
   DragEndEvent,
   DragStartEvent,
-  DndContext,
   Modifier,
 } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 import { useState } from 'react'
+import { DragNDropArea } from '../DragNDrop/DragNDropArea'
 
 interface ActionBarProps {
   children: React.ReactNode
@@ -38,13 +37,13 @@ interface ActionBarProps {
 
 const ActionBarInternal = ({
   children,
-  modifiers = [restrictToWindowEdges],
+  modifiers,
   ...props
 }: ActionBarProps) => {
   return (
-    <DndContext modifiers={modifiers}>
+    <DragNDropArea modifiers={modifiers}>
       <Root {...props}>{children}</Root>
-    </DndContext>
+    </DragNDropArea>
   )
 }
 
