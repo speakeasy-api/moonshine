@@ -180,3 +180,5 @@ export const ActionBar = Object.assign(ActionBarInternal, {
   Item: ActionBarItem,
   Separator: ActionBarSeparator,
 })
+
+export type { ActionBarProps, ActionBarItemProps }

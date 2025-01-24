@@ -69,6 +69,8 @@ interface RootProps extends PropsWithChildren {
   className?: string
 }
 
+export type { RootProps, ItemProps }
+
 const Root: React.FC<RootProps> = ({ children, className }) => {
   const timelineItems = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
