@@ -14,9 +14,11 @@ import {
   Translate,
   DragEndEvent,
   DragStartEvent,
+  Modifier,
 } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { useState } from 'react'
+import { DragNDropArea } from '../DragNDrop/DragNDropArea'
 
 interface ActionBarProps {
   children: React.ReactNode
@@ -26,7 +28,26 @@ interface ActionBarProps {
   onDragStart?: (event: DragStartEvent) => void
   onDragEnd?: (event: DragEndEvent) => void
   draggable?: boolean
+
+  /**
+   * dnd-kit modifiers (https://docs.dndkit.com/api-documentation/modifiers)
+   */
+  modifiers?: Modifier[]
 }
+
+const ActionBarInternal = ({
+  children,
+  modifiers,
+  ...props
+}: ActionBarProps) => {
+  return (
+    <DragNDropArea modifiers={modifiers}>
+      <Root {...props}>{children}</Root>
+    </DragNDropArea>
+  )
+}
+
+ActionBarInternal.displayName = 'ActionBar'
 
 const Root = ({
   children,
@@ -87,7 +108,7 @@ const Root = ({
   )
 }
 
-Root.displayName = 'ActionBar'
+Root.displayName = 'ActionBar.Root'
 
 interface ActionBarItemProps {
   children: React.ReactNode
@@ -155,7 +176,9 @@ const ActionBarHandle = ({
   )
 }
 
-export const ActionBar = Object.assign(Root, {
+export const ActionBar = Object.assign(ActionBarInternal, {
   Item: ActionBarItem,
   Separator: ActionBarSeparator,
 })
+
+export type { ActionBarProps, ActionBarItemProps }

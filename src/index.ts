@@ -69,11 +69,31 @@ export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 
 /** START BETA COMPONENTS */
+import { CLIWizard } from '@/components/__beta__/CLIWizard'
+import { ActionBar } from '@/components/__beta__/ActionBar'
+import { Timeline } from '@/components/__beta__/Timeline'
+import { KeyHint } from '@/components/__beta__/KeyHint'
+import { HighlightedText } from '@/components/__beta__/HighlightedText'
+import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
+import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
+import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
+import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
 
-// TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
-export { CLIWizard } from '@/components/__beta__/CLIWizard'
-export { ActionBar } from '@/components/__beta__/ActionBar'
-export { Timeline } from '@/components/__beta__/Timeline'
-export { KeyHint } from '@/components/__beta__/KeyHint'
-export { HighlightedText } from '@/components/__beta__/HighlightedText'
+export const beta = {
+  // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
+  CLIWizard,
+
+  // Readme editor components
+  ActionBar,
+  Timeline,
+  KeyHint,
+  HighlightedText,
+
+  // Drag & Drop primitives
+  DragNDropArea,
+  DragOverlay,
+  Draggable,
+  Droppable,
+}
+
 /** END BETA COMPONENTS */
