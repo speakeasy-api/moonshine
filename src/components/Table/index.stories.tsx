@@ -182,62 +182,28 @@ export const WithLotsOfColumns: StoryObj<ListTableProps> = {
   render: (args) => <TableWithState {...args} />,
 }
 
-export const WithAutoColumnWidths: StoryObj<ListTableProps> = {
+export const AllAutoColumnWidths: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
-    columns: [
-      {
-        key: 'language',
-        header: 'Language',
+    columns: defaultArgs.columns.map((col) => {
+      return {
+        ...col,
         width: 'auto',
-        render: (row) => <TargetLanguageIcon language={row.language} />,
-      },
-      {
-        key: 'name',
-        header: 'SDK',
-        width: 'auto',
-        render: (row) => (
-          <div className="text-muted-foreground flex flex-row items-center gap-1">
-            <span>
-              {row.org}/{row.name}
-            </span>
-          </div>
-        ),
-      },
-      {
-        key: 'version',
-        header: 'Version',
-        width: 'auto',
-        render: (row) => (
-          <div className="text-muted-foreground">{row.version.toString()}</div>
-        ),
-      },
-      {
-        key: 'lastGeneratedAt',
-        header: 'Last Generated',
-        width: 'auto',
-        render: (row) => (
-          <div className="text-muted-foreground">
-            {formatDistance(row.lastGeneratedAt, new Date(), {
-              addSuffix: true,
-            })}
-          </div>
-        ),
-      },
-      {
-        key: 'githubRepoUrl',
-        header: 'GitHub Repo',
-        width: '1fr',
-        render: (row) => (
-          <div>
-            <a href="#" className="text-muted-foreground">
-              github.com/{row.name}/{row.org}
-            </a>
-          </div>
-        ),
-      },
-    ],
-    data: sdk,
+      }
+    }),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const MixedAutoColumnWidths: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    columns: defaultArgs.columns.map((col, index) => {
+      return {
+        ...col,
+        width: index == defaultArgs.columns.length - 1 ? '1fr' : 'auto',
+      }
+    }),
   },
   render: (args) => <TableWithState {...args} />,
 }
