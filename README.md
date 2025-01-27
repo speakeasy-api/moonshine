@@ -20,7 +20,8 @@ Wrap your application in the `MoonshineConfigProvider` component, passing in the
 
 ```tsx
 import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
-;<MoonshineConfigProvider themeElement={document.documentElement}>
+
+<MoonshineConfigProvider themeElement={document.documentElement}>
   <App />
 </MoonshineConfigProvider>
 ```
