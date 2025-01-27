@@ -123,6 +123,22 @@ export const Default: StoryObj<ListTableProps> = {
   render: (args) => <TableWithState {...args} />,
 }
 
+export const Condensed: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    cellPadding: 'condensed',
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const Spacious: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    cellPadding: 'spacious',
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
 type GroupedTableProps = TableProps<SDK> & { data: Group<SDK>[] }
 
 const GroupedTableWithState = (args: GroupedTableProps) => {
@@ -162,6 +178,32 @@ export const WithLotsOfColumns: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
     columns: defaultArgs.columns.concat(defaultArgs.columns),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const AllAutoColumnWidths: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    columns: defaultArgs.columns.map((col) => {
+      return {
+        ...col,
+        width: 'auto',
+      }
+    }),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const MixedAutoColumnWidths: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    columns: defaultArgs.columns.map((col, index) => {
+      return {
+        ...col,
+        width: index == defaultArgs.columns.length - 1 ? '1fr' : 'auto',
+      }
+    }),
   },
   render: (args) => <TableWithState {...args} />,
 }
