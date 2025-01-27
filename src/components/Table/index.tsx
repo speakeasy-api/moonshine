@@ -2,6 +2,7 @@
 import { useMemo, type ReactNode, useState, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
+import styles from './styles.module.css'
 
 export type Column<T extends object> = {
   /**
@@ -24,7 +25,7 @@ export type Column<T extends object> = {
    * The fractional width of the column.
    * If not provided, then the column will default to 1fr.
    */
-  width?: `${number}fr` | undefined
+  width?: `${number}fr` | 'auto' | undefined
 }
 
 export type Group<T extends object> = {
@@ -78,6 +79,12 @@ export type TableProps<T extends object> = {
    * The class name to apply to the table.
    */
   className?: string
+
+  /**
+   * Specify the amount of space that should be available around the contents of
+   * a cell
+   */
+  cellPadding?: 'condensed' | 'normal' | 'spacious'
 }
 
 export function Table<T extends object>({
@@ -90,6 +97,7 @@ export function Table<T extends object>({
   noResultsMessage,
   renderGroupHeader,
   className,
+  cellPadding = 'normal',
 }: TableProps<T>) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
@@ -107,7 +115,7 @@ export function Table<T extends object>({
     return (
       <tr
         className={cn(
-          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b py-3 transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
+          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
           onRowClick && 'cursor-pointer'
         )}
         key={rowKey(row)}
@@ -115,7 +123,7 @@ export function Table<T extends object>({
       >
         {columns.map((column) => (
           <td
-            className="flex max-w-full items-center px-4 py-2"
+            className={cn(styles.tableCell, 'flex max-w-full items-center')}
             key={String(column.key)}
           >
             {column.render
@@ -138,15 +146,20 @@ export function Table<T extends object>({
       }
       ref={tableRef}
       className={cn(
+        styles.table,
         'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
         className
       )}
+      data-cell-padding={cellPadding}
     >
-      <thead className="grid h-14 [grid-column:1/-1] [grid-template-columns:subgrid]">
+      <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
         <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
           {columns.map((column) => (
             <th
-              className="text-muted-foreground flex select-none items-center whitespace-nowrap px-4 align-middle font-medium"
+              className={cn(
+                styles.tableHeader,
+                'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium'
+              )}
               key={String(column.key)}
             >
               {column.header}
@@ -189,12 +202,15 @@ export function Table<T extends object>({
               } as React.CSSProperties
             }
             className={cn(
-              'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b py-3 opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
+              'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
               isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
             )}
           >
             {columns.map((column) => (
-              <td className="w-auto px-4" key={String(column.key)}>
+              <td
+                className={cn(styles.tableCell, 'w-auto')}
+                key={String(column.key)}
+              >
                 <div className="bg-muted h-4 rounded" />
               </td>
             ))}

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { forwardRef, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 import { IconName } from '../Icon/names'
@@ -61,43 +61,57 @@ export interface LinkProps {
   iconPrefixName?: IconName
   iconSuffixName?: IconName
   className?: string
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
-export const Link: React.FC<LinkProps> = ({
-  href,
-  children,
-  variant = 'primary',
-  size = 'md',
-  underline = true,
-  target = '_blank',
-  iconPrefixName,
-  iconSuffixName,
-  className,
-}) => {
-  return (
-    <a
-      href={href}
-      target={target}
-      className={cn(linkVariants({ variant, size }), className)}
-    >
-      {iconPrefixName && (
-        <IconWrapper size={size}>
-          <IconComponent name={iconPrefixName} size="small" />
-        </IconWrapper>
-      )}
+export const Link: React.FC<LinkProps> = forwardRef<
+  HTMLAnchorElement,
+  LinkProps
+>(
+  (
+    {
+      href,
+      children,
+      variant = 'primary',
+      size = 'md',
+      underline = true,
+      target = '_blank',
+      iconPrefixName,
+      iconSuffixName,
+      className,
+      onClick,
+      ...rest // ...rest is needed so that we can use Link with <TooltipTrigger asChild>
+    },
+    ref
+  ) => {
+    return (
+      <a
+        href={href}
+        ref={ref}
+        target={target}
+        className={cn(linkVariants({ variant, size }), className)}
+        onClick={onClick}
+        {...rest}
+      >
+        {iconPrefixName && (
+          <IconWrapper size={size}>
+            <IconComponent name={iconPrefixName} size="small" />
+          </IconWrapper>
+        )}
 
-      <Text underline={underline} variant={variant}>
-        {children}
-      </Text>
+        <Text underline={underline} variant={variant}>
+          {children}
+        </Text>
 
-      {iconSuffixName && (
-        <IconWrapper size={size}>
-          <IconComponent name={iconSuffixName} size="small" />
-        </IconWrapper>
-      )}
-    </a>
-  )
-}
+        {iconSuffixName && (
+          <IconWrapper size={size}>
+            <IconComponent name={iconSuffixName} size="small" />
+          </IconWrapper>
+        )}
+      </a>
+    )
+  }
+)
 Link.displayName = 'Link'
 
 interface TextProps {

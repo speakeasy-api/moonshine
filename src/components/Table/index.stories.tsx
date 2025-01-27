@@ -123,6 +123,22 @@ export const Default: StoryObj<ListTableProps> = {
   render: (args) => <TableWithState {...args} />,
 }
 
+export const Condensed: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    cellPadding: 'condensed',
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const Spacious: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    cellPadding: 'spacious',
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
 type GroupedTableProps = TableProps<SDK> & { data: Group<SDK>[] }
 
 const GroupedTableWithState = (args: GroupedTableProps) => {
