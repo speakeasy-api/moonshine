@@ -59,7 +59,7 @@ const Item: React.FC<ItemProps> = ({
         className
       )}
     >
-      <Icon name={iconName} size="medium" />
+      <Icon name={iconName} size="medium" className="h-4 w-4" />
     </div>
   )
 }
@@ -68,6 +68,8 @@ Item.displayName = 'Timeline.Item'
 interface RootProps extends PropsWithChildren {
   className?: string
 }
+
+export type { RootProps, ItemProps }
 
 const Root: React.FC<RootProps> = ({ children, className }) => {
   const timelineItems = Children.toArray(children).filter((child) => {
