@@ -79,6 +79,10 @@ export default {
       pattern: /^flex-(nowrap|wrap|wrap-reverse)$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /^[max|min]-[h|w]-\d+$/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
