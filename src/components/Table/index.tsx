@@ -115,7 +115,7 @@ export function Table<T extends object>({
     return (
       <tr
         className={cn(
-          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full cursor-pointer border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid]',
+          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
           onRowClick && 'cursor-pointer'
         )}
         key={rowKey(row)}
