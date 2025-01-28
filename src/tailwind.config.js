@@ -80,7 +80,7 @@ export default {
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
     {
-      pattern: /^[max|min]-[h|w]-\d+$/,
+      pattern: /bg-/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
   ],

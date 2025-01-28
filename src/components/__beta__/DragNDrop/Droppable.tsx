@@ -1,4 +1,4 @@
-import { Over, useDroppable } from '@dnd-kit/core'
+import { Over, UniqueIdentifier, useDroppable } from '@dnd-kit/core'
 import { ClientRect } from '@dnd-kit/core/dist/types/rect'
 
 interface DroppableData {
@@ -17,7 +17,7 @@ interface DroppableProps<TData extends Record<string, unknown>> {
   /**
    * The unique identifier for the droppable container.
    */
-  id: string
+  id: UniqueIdentifier
 
   /**
    * The data to pass to the droppable container.
