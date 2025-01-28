@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 interface DraggableProps<TData extends Record<string, unknown>>
   extends DndMonitorListener {
-  children: React.ReactNode
+  children: React.ReactNode | ((props: { over: boolean }) => React.ReactNode)
   id: string
   className?: string
   data?: TData
@@ -19,7 +19,7 @@ export function Draggable<TData extends Record<string, unknown>>({
   className,
   data,
 }: DraggableProps<TData>) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, over, transform } = useDraggable({
     id,
     data,
   })
@@ -42,7 +42,7 @@ export function Draggable<TData extends Record<string, unknown>>({
       {...listeners}
       className={className}
     >
-      {children}
+      {typeof children === 'function' ? children({ over: !!over }) : children}
     </div>
   )
 }

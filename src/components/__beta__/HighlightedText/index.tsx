@@ -16,11 +16,6 @@ interface HighlightedTextProps extends React.HTMLAttributes<HTMLSpanElement> {
   animationTrigger?: 'inView' | 'instant'
 
   className?: string
-
-  /**
-   * Whether to show a selection box around the text.
-   */
-  showSelectionBox?: boolean
 }
 
 export function HighlightedText({
@@ -30,7 +25,6 @@ export function HighlightedText({
   animate = true,
   className,
   animationTrigger = 'inView',
-  showSelectionBox = false,
   animationDuration = 1,
 }: HighlightedTextProps) {
   const chars = useMemo(() => children.split(''), [children])
@@ -93,14 +87,7 @@ export function HighlightedText({
 
   return (
     <div ref={ref} className={cn('relative inline', className)}>
-      {showSelectionBox ? (
-        <span className="relative w-fit rounded-sm border border-blue-500 box-decoration-clone py-0.5 dark:border-blue-50">
-          {highlightedChars}{' '}
-          <span className="absolute bottom-[-5px] right-[-5px] z-10 h-2.5 w-2.5 touch-none select-none rounded-full border-blue-500 bg-blue-500 content-[''] dark:border-blue-50 dark:bg-blue-50" />
-        </span>
-      ) : (
-        highlightedChars
-      )}
+      {highlightedChars}
 
       {chars.slice(highlightedIndex).length > 0 && (
         <span className="border border-transparent box-decoration-clone">

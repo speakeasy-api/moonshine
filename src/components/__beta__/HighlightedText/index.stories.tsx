@@ -30,6 +30,14 @@ export const Default: Story = {
   ),
 }
 
+export const Muted: Story = {
+  args: {
+    children: 'highlighted text',
+    muted: true,
+    color: 'orange',
+  },
+}
+
 export const Multiline: Story = {
   args: {
     children:
@@ -66,31 +74,5 @@ export const NoAnimation: Story = {
   args: {
     children: 'highlighted text',
     animate: false,
-  },
-}
-
-export const WithSelectionBox: Story = {
-  args: {
-    children: 'highlighted text with a selection box and handle',
-    showSelectionBox: true,
-    animate: true,
-  },
-}
-
-export const WithSelectionBoxMultiline: Story = {
-  args: {
-    children:
-      'highlighted text with a selection box and handle for solving complex problems but it also has the potential to cause harm if not used properly.',
-    showSelectionBox: true,
-    animate: false,
-  },
-}
-
-export const WithSelectionBoxMultilineAnimated: Story = {
-  args: {
-    children:
-      'highlighted text with a selection box and handle for solving complex problems but it also has the potential to cause harm if not used properly.',
-    showSelectionBox: true,
-    animate: true,
   },
 }
