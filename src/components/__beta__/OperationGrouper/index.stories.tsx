@@ -20,23 +20,21 @@ const OperationGrouperWithState = ({
     originalGroup: Group,
     newGroup: Group
   ) => {
-    console.log('originalGroup', originalGroup)
-    console.log('newGroup', newGroup)
-
+    const hasMoved = originalGroup.id !== newGroup.id
     setGroups(
       groups.map((group) => {
-        if (group.id === originalGroup.id) {
-          if (group.id === newGroup.id) {
-            return group
-          }
-
+        if (hasMoved && group.id === originalGroup.id) {
           return {
             ...group,
             operations: group.operations.filter((o) => o.id !== operation.id),
           }
+        } else if (hasMoved && group.id === newGroup.id) {
+          return {
+            ...group,
+            operations: [...group.operations, operation],
+          }
         }
-
-        return { ...group, operations: [...group.operations, operation] }
+        return group
       })
     )
   }
@@ -48,7 +46,7 @@ const initialGroups: Group[] = [
   {
     id: '1',
     name: 'orders',
-    color: 'red',
+    color: 'rgba(229, 180, 42, 0.9)',
     operations: [
       {
         id: 'a',
@@ -71,7 +69,7 @@ const initialGroups: Group[] = [
   {
     id: '2',
     name: 'fulfillments',
-    color: 'blue',
+    color: 'rgba(79, 59, 195, 0.9)',
     operations: [
       {
         id: 'd',
@@ -80,6 +78,19 @@ const initialGroups: Group[] = [
       },
     ],
     path: '$.paths.fulfillments',
+  },
+  {
+    id: '3',
+    name: 'products',
+    color: 'rgba(100, 80, 95, 0.9)',
+    operations: [
+      {
+        id: 'e',
+        name: 'getProducts',
+        path: '$.paths.products.get',
+      },
+    ],
+    path: '$.paths.products',
   },
 ]
 

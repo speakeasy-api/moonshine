@@ -1,10 +1,12 @@
 import { Over, UniqueIdentifier, useDroppable } from '@dnd-kit/core'
-import { ClientRect } from '@dnd-kit/core/dist/types/rect'
+import type { ClientRect } from '@dnd-kit/core/dist/types/rect'
+import type { MutableRefObject, ReactNode } from 'react'
 
 interface DroppableData {
   isOver: boolean
   over: Over | null
-  rect: React.MutableRefObject<ClientRect | null>
+  rect: MutableRefObject<ClientRect | null>
+  node: MutableRefObject<HTMLElement | null>
 }
 
 interface DroppableProps<TData extends Record<string, unknown>> {
@@ -12,7 +14,7 @@ interface DroppableProps<TData extends Record<string, unknown>> {
    * A function that returns a React node or a React node.
    * If a function is provided, it will be called with the droppable data.
    */
-  children: React.ReactNode | ((props: DroppableData) => React.ReactNode)
+  children: ReactNode | ((props: DroppableData) => ReactNode)
 
   /**
    * The unique identifier for the droppable container.
@@ -34,7 +36,7 @@ export function Droppable<TData extends Record<string, unknown>>({
   data,
   className,
 }: DroppableProps<TData>) {
-  const { setNodeRef, isOver, over, rect } = useDroppable({
+  const { setNodeRef, isOver, over, rect, node } = useDroppable({
     id,
     data,
   })
@@ -42,7 +44,7 @@ export function Droppable<TData extends Record<string, unknown>>({
   return (
     <div ref={setNodeRef} className={className}>
       {typeof children === 'function'
-        ? children({ isOver, over, rect })
+        ? children({ isOver, over, rect, node })
         : children}
     </div>
   )

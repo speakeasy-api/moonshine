@@ -69,36 +69,48 @@ export function OperationGrouper({
       const activeRect = active.rect.current
       const initialRect = activeRect?.initial
       const translatedRect = activeRect?.translated
+      const nextGroupRect =
+        over.data.current?.groupId !== active.data.current?.groupId
+          ? over.rect
+          : undefined
 
       if (!initialRect || !translatedRect) {
         return 'transparent'
       }
 
-      // console.log('--------------------------------')
-      // console.log('over-id', overGroup.id)
-      // console.log('over', over.rect.top)
-      // console.log('over-bottom', over.rect.bottom)
-      // console.log('active', translatedRect.top)
-      // console.log('active-id', active.id)
-      // console.log('initial', initialRect.top)
-
-      // console.log('--------------------------------')
-
+      const withinOriginalGroup = originalGroup.id === targetGroup.id
       const firstColor = originalGroup.color
-      const secondColor =
-        originalGroup.id === targetGroup.id
-          ? nextGroup?.color
-          : targetGroup.color
+      const secondColor = withinOriginalGroup
+        ? nextGroup?.color
+        : targetGroup.color
 
-      // console.log('originalGroup', originalGroup.color)
-      // console.log('targetGroup', targetGroup.color)
-      // console.log('nextGroup', nextGroup?.color)
-      // // Create a gradient that transitions from oldGroupColor to newGroupColor
-      return `linear-gradient(
+      if (!nextGroupRect) {
+        return `linear-gradient(
       to bottom,
       ${firstColor},
-      ${secondColor}
+      ${firstColor}
         )`
+      }
+
+      // calculate how much the translatedRect is overlapping the nextGroupRect
+      const overlay = translatedRect.bottom - nextGroupRect.top
+
+      // take into account height of translatedRect
+      const translatedHeight = translatedRect.bottom - translatedRect.top
+      const overlayPercentage = Math.round(
+        Math.max(0, Math.min(1, overlay / translatedHeight)) * 100
+      )
+
+      console.log('overlayPercentage', overlayPercentage)
+
+      // Create a gradient that transitions from oldGroupColor to newGroupColor
+      return `linear-gradient(
+        to bottom,
+        ${firstColor} 0%,
+        ${firstColor} ${100 - overlayPercentage}%,
+        ${secondColor} ${100 - overlayPercentage}%,
+        ${secondColor} 100%
+      )`
     },
     [groups, onItemMove]
   )
@@ -124,7 +136,7 @@ export function OperationGrouper({
           >
             <div className="flex flex-col gap-2 rounded-md border border-gray-200 p-2">
               <h2 className="text-lg font-semibold">
-                {group.name} ({group.id})
+                {group.name} ({group.color})
               </h2>
 
               <div className="flex flex-col gap-2">
@@ -141,7 +153,9 @@ export function OperationGrouper({
                   >
                     {(props) => (
                       <div
-                        className={cn('inline-flex items-center rounded-md')}
+                        className={cn(
+                          'inline-flex items-center rounded-md px-4 py-2'
+                        )}
                         style={{
                           backgroundImage:
                             calculateDragPreviewBackgroundGradient(props),
