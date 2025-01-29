@@ -4,7 +4,11 @@ import { DragNDropArea } from '../DragNDrop/DragNDropArea'
 import { cn } from '@/lib/utils'
 import { Droppable } from '../DragNDrop/Droppable'
 import { DragEndEvent, UniqueIdentifier } from '@dnd-kit/core'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { KeyHint } from '../KeyHint'
+import { Icon } from '@/components/Icon'
+import { motion } from 'framer-motion'
+
 // TODO: move these types
 export interface Group {
   id: UniqueIdentifier
@@ -29,6 +33,7 @@ export function OperationGrouper({
   groups,
   onItemMove,
 }: OperationGrouperProps) {
+  const [showManualMode, setShowManualMode] = useState(false)
   const handleDragEnd = useCallback(
     (event: DragEndEvent, operation: Operation, originalGroup: Group) => {
       const { over } = event
@@ -46,11 +51,26 @@ export function OperationGrouper({
     [groups, onItemMove]
   )
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault()
+      if (event.key === 'g' && (event.metaKey || event.ctrlKey)) {
+        setShowManualMode(true)
+      } else if (event.key === 'Escape') {
+        setShowManualMode(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   const calculateDragPreviewBackgroundGradient = useCallback(
     (props: DraggableChildrenProps) => {
       const { activeNodeRect, over, active, node, isDragging } = props
 
-      if (!isDragging || !activeNodeRect || !over || !active || !node) {
+      if (!isDragging) return 'transparent'
+
+      if (!activeNodeRect || !over || !active || !node) {
         return 'transparent'
       }
 
@@ -92,8 +112,12 @@ export function OperationGrouper({
         )`
       }
 
-      // calculate how much the translatedRect is overlapping the nextGroupRect
-      const overlay = translatedRect.bottom - nextGroupRect.top
+      const centerY = nextGroupRect.top + nextGroupRect.height / 2
+      const isAboveCenter = translatedRect.bottom <= centerY
+
+      const overlay = isAboveCenter
+        ? translatedRect.bottom - nextGroupRect.top
+        : nextGroupRect.bottom - translatedRect.top
 
       // take into account height of translatedRect
       const translatedHeight = translatedRect.bottom - translatedRect.top
@@ -102,14 +126,22 @@ export function OperationGrouper({
       )
 
       console.log('overlayPercentage', overlayPercentage)
+      let stops = `${firstColor} 0%,
+      ${firstColor} ${100 - overlayPercentage}%,
+      ${secondColor} ${100 - overlayPercentage}%,
+      ${secondColor} 100%`
+
+      if (!isAboveCenter) {
+        stops = `${secondColor} 0%,
+        ${secondColor} ${overlayPercentage}%,
+        ${firstColor} ${overlayPercentage}%,
+        ${firstColor} 100%`
+      }
 
       // Create a gradient that transitions from oldGroupColor to newGroupColor
       return `linear-gradient(
         to bottom,
-        ${firstColor} 0%,
-        ${firstColor} ${100 - overlayPercentage}%,
-        ${secondColor} ${100 - overlayPercentage}%,
-        ${secondColor} 100%
+        ${stops}
       )`
     },
     [groups, onItemMove]
@@ -124,7 +156,17 @@ export function OperationGrouper({
 
   return (
     <DragNDropArea modifiers={[restrictToFirstScrollableAncestor]}>
-      <div className="flex flex-col gap-14 overflow-y-auto">
+      <KeyHint
+        modifiers={!showManualMode ? ['ctrlorcommand'] : ['esc']}
+        keys={!showManualMode ? ['g'] : []}
+        className="mb-10"
+        actionText={
+          showManualMode
+            ? 'to exit manual grouping'
+            : 'to enter manual grouping'
+        }
+      />
+      <div className="flex max-w-screen-lg flex-col gap-8 overflow-y-auto">
         {groups.map((group, index) => (
           <Droppable
             key={group.id}
@@ -134,16 +176,18 @@ export function OperationGrouper({
               nextGroupId: groups[index + 1]?.id,
             }}
           >
-            <div className="flex flex-col gap-2 rounded-md border border-gray-200 p-2">
-              <h2 className="text-lg font-semibold">
-                {group.name} ({group.color})
-              </h2>
+            <div
+              className="flex flex-col gap-2 rounded-md border px-2 py-4 shadow-lg shadow-white/10"
+              style={{ borderColor: group.color }}
+            >
+              <h2 className="text-lg font-semibold">{group.name}</h2>
 
               <div className="flex flex-col gap-2">
                 {group.operations.map((operation) => (
                   <Draggable
                     key={operation.id}
                     id={operation.id}
+                    disabled={!showManualMode}
                     onDragEnd={(event) => {
                       handleDragEnd(event, operation, group)
                     }}
@@ -152,17 +196,31 @@ export function OperationGrouper({
                     }}
                   >
                     {(props) => (
-                      <div
+                      <motion.div
                         className={cn(
-                          'inline-flex items-center rounded-md px-4 py-2'
+                          'inline-flex items-center gap-1.5 rounded-md px-2.5 py-1',
+                          showManualMode &&
+                            !props.isDragging &&
+                            'animate-wiggle border bg-gradient-to-br duration-500',
+                          props.isDragging && 'z-10',
+                          !props.isDragging && '-z-10'
                         )}
                         style={{
                           backgroundImage:
                             calculateDragPreviewBackgroundGradient(props),
                         }}
                       >
+                        {showManualMode && (
+                          <Icon
+                            name="grip-vertical"
+                            className={cn(
+                              'text-muted size-4',
+                              props.isDragging && 'text-foreground'
+                            )}
+                          />
+                        )}
                         <div>{operation.name}</div>
-                      </div>
+                      </motion.div>
                     )}
                   </Draggable>
                 ))}

@@ -4,6 +4,9 @@ import { StoryObj, Meta } from '@storybook/react'
 
 const meta: Meta<typeof OperationGrouper> = {
   component: OperationGrouper,
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export default meta

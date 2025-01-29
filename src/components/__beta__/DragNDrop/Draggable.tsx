@@ -36,6 +36,8 @@ interface DraggableProps<TData> extends DndMonitorListener {
 
   className?: string
 
+  disabled?: boolean
+
   /**
    * The data to pass to the draggable of generic type TData.
    */
@@ -50,6 +52,7 @@ export function Draggable<TData extends Data>({
   onDragCancel,
   onDragOver,
   className,
+  disabled,
   data,
 }: DraggableProps<TData>) {
   const {
@@ -65,6 +68,7 @@ export function Draggable<TData extends Data>({
   } = useDraggable({
     id,
     data,
+    disabled,
   })
   useDndMonitor({
     onDragEnd,
