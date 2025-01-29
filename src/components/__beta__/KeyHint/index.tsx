@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/Icon'
 
-type Modifier = 'shift' | 'ctrlorcommand' | 'alt' | 'meta'
+type Modifier = 'shift' | 'ctrlorcommand' | 'alt' | 'meta' | 'esc'
 
 const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
 
@@ -10,6 +10,7 @@ const modifierMap: Record<Modifier, string> = {
   ctrlorcommand: isMac ? '⌘' : 'Ctrl',
   alt: isMac ? '⌥' : 'Alt',
   meta: isMac ? '⌘' : 'Win',
+  esc: 'Esc',
 }
 
 function Key({ value }: { value: string }) {

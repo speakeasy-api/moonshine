@@ -1,33 +1,104 @@
 import { cn } from '@/lib/utils'
-import { createBrushBackground } from './brush'
-import styles from './styles.module.css'
+import { motion, useInView } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface HighlightedTextProps extends React.HTMLAttributes<HTMLSpanElement> {
-  children: React.ReactNode
+  children: string
   color?: Color
   muted?: boolean
+  animate?: boolean
+
+  animationDuration?: number
+
+  /**
+   * Whether the animation should trigger when the element is in view or immediately.
+   */
+  animationTrigger?: 'inView' | 'instant'
+
+  className?: string
 }
 
 export function HighlightedText({
   children,
   color = 'green',
   muted = false,
+  animate = true,
   className,
-  ...props
+  animationTrigger = 'inView',
+  animationDuration = 1,
 }: HighlightedTextProps) {
+  const chars = useMemo(() => children.split(''), [children])
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: animationTrigger === 'inView' })
+  useEffect(() => {
+    if (!animate) {
+      setHighlightedIndex(chars.length)
+      return
+    }
+    if (isInView || animationTrigger === 'instant') {
+      setInterval(() => {
+        if (highlightedIndex < chars.length) {
+          setHighlightedIndex((prev) => prev + 1)
+        }
+      }, animationDuration)
+    }
+  }, [animate, isInView, animationTrigger, chars])
+
+  const highlightedChars = useMemo(
+    () =>
+      chars.slice(0, highlightedIndex).map((char, index) => (
+        <motion.span
+          key={index}
+          className={cn(
+            'py-0.5 leading-7 first:pl-0.5',
+            index === chars.length - 1 && 'pr-0.5'
+          )}
+          initial={{
+            background: animate
+              ? 'transparent'
+              : muted
+                ? mutedBgMap[color]
+                : highlightBgMap[color],
+            color: animate
+              ? 'inherit'
+              : muted
+                ? mutedFgMap[color]
+                : highlightFgMap[color],
+          }}
+          animate={
+            animate
+              ? {
+                  background: muted ? mutedBgMap[color] : highlightBgMap[color],
+                  color: muted ? mutedFgMap[color] : highlightFgMap[color],
+                }
+              : {}
+          }
+          transition={{
+            background: { duration: animationDuration },
+            color: { duration: animationDuration },
+          }}
+        >
+          {char}
+        </motion.span>
+      )),
+    [chars, highlightedIndex, animate, animationTrigger, isInView, muted, color]
+  )
+
   return (
-    <mark
-      className={cn(styles.highlightedText, className)}
-      style={{
-        background: createBrushBackground(
-          muted ? mutedBgMap[color] : highlightBgMap[color]
-        ),
-        color: muted ? mutedFgMap[color] : highlightFgMap[color],
-      }}
-      {...props}
-    >
-      {children}
-    </mark>
+    <div ref={ref} className={cn('relative inline', className)}>
+      {highlightedChars}
+
+      {chars.slice(highlightedIndex).length > 0 && (
+        <span className="border border-transparent box-decoration-clone">
+          {chars.slice(highlightedIndex).map((char, index) => (
+            <span key={index} className="py-0.5 leading-7">
+              {char}
+            </span>
+          ))}
+        </span>
+      )}
+    </div>
   )
 }
 
@@ -74,7 +145,7 @@ export const mutedFgMap: Record<Color, string> = {
 export const highlightFgMap: Record<Color, string> = {
   green: 'hsl(0, 0%, 20%)',
   blue: 'hsl(0, 0%, 20%)',
-  purple: 'hsl(300, 100%, 100%)',
+  purple: 'hsl(0, 0%, 100%)',
   orange: 'hsl(0, 0%, 20%)',
   emerald: 'hsl(0, 0%, 20%)',
 }
