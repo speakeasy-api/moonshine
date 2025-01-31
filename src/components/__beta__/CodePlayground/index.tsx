@@ -64,6 +64,7 @@ export function CodePlayground({
   className,
 }: CodePlaygroundProps) {
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
+    // @ts-expect-error ignore this
     snippets.keys().next().value
   )
   const selectedCode = useMemo<string>(
