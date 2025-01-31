@@ -1,6 +1,6 @@
 import { Icon } from '@/components/Icon'
 import { cn } from '@/lib/utils'
-import React, { Children, isValidElement, useMemo } from 'react'
+import React, { Children, isValidElement, useMemo, useState } from 'react'
 import { ComponentProps, ReactNode } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 interface ResizeHandleProps extends ComponentProps<typeof PanelResizeHandle> {
@@ -77,15 +77,20 @@ const DefaultResizeHandle = ({
 }: {
   direction: 'horizontal' | 'vertical'
 }) => {
+  const [isResizing, setIsResizing] = useState(false)
   return (
-    <PanelResizeHandle className="bg-border relative w-px">
+    <PanelResizeHandle
+      onDragging={(dragging) => setIsResizing(dragging)}
+      className="relative border-[0.5px] border-dashed"
+    >
       <div
         className={cn(
-          'bg-card text-muted hover:text-foreground absolute top-[50%] flex h-6 w-4 translate-x-[-50%] items-center justify-center rounded-md',
-          direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize'
+          'bg-card text-muted hover:text-foreground absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border',
+          direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize',
+          isResizing && 'text-foreground'
         )}
       >
-        <Icon name="grip-vertical" size="small" />
+        <Icon name="grip-vertical" className="h-6" />
       </div>
     </PanelResizeHandle>
   )
