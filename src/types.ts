@@ -1,4 +1,5 @@
 import { Range } from '@/lib/typeUtils'
+import { assertNever } from './lib/assert'
 
 // Button variants
 export const buttonVariants = [
@@ -89,6 +90,35 @@ export const supportedLanguages = [
 ] as const
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]
+
+export function prettyLanguageName(language: SupportedLanguage) {
+  switch (language) {
+    case 'typescript':
+      return 'TypeScript'
+    case 'go':
+      return 'Go'
+    case 'ruby':
+      return 'Ruby'
+    case 'python':
+      return 'Python'
+    case 'csharp':
+      return 'C#'
+    case 'php':
+      return 'PHP'
+    case 'java':
+      return 'Java'
+    case 'swift':
+      return 'Swift'
+    case 'postman':
+      return 'Postman'
+    case 'terraform':
+      return 'Terraform'
+    case 'unity':
+      return 'Unity'
+    default:
+      assertNever(language)
+  }
+}
 
 export type ViewTransition = {
   ready: Promise<void>
