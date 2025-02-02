@@ -1,5 +1,4 @@
-import { SupportedLanguage } from '@/types'
-import { CodePlayground } from '.'
+import { CodePlayground, CodePlaygroundSnippets } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 
 const meta: Meta<typeof CodePlayground> = {
@@ -18,33 +17,24 @@ export default meta
 
 type Story = StoryObj<typeof CodePlayground>
 
-const snippets: Map<SupportedLanguage, string> = new Map([
-  [
-    'typescript',
-    `const sdk = new SDK()
+const snippets: CodePlaygroundSnippets = {
+  typescript: `const sdk = new SDK()
 const users = await sdk.getUsers()
 console.log(users)`,
-  ],
-  [
-    'python',
-    `import sdk
+  python: `import sdk
 users = sdk.getUsers()
 print(users)`,
-  ],
-  [
-    'go',
-    `package main
+  go: `package main
 import "sdk"
 users := sdk.getUsers()
 fmt.Println(users)`,
-  ],
-  [
-    'ruby',
-    `require 'sdk'
+  ruby: `require 'sdk'
 users = sdk.getUsers()
 puts users`,
-  ],
-])
+  postman: `const sdk = new SDK()
+const users = sdk.getUsers()
+console.log(users)`,
+}
 
 export const Default: Story = {
   args: {
@@ -85,7 +75,7 @@ for (const foo of fooBar) {
 export const KitchenSink: Story = {
   args: {
     ...Default.args,
-    snippets: new Map([['typescript', kitchenSink]]),
+    snippets: { typescript: kitchenSink },
   },
 }
 
@@ -114,10 +104,8 @@ export const WithReallyLongCode: Story = {
   args: {
     ...Default.args,
     maxHeight: 400,
-    snippets: new Map([
-      [
-        'typescript',
-        `const foo = 'bar';
+    snippets: {
+      typescript: `const foo = 'bar';
 const bar = 'foo';
 const baz = 'qux';
 const qux = 'baz';
@@ -147,7 +135,6 @@ const fooBar = [
 for (const foo of fooBar) {
   console.log(foo)
 }`,
-      ],
-    ]),
+    },
   },
 }

@@ -21,11 +21,13 @@ interface CodePlaygroundChildrenProps {
   selectedCode: string
 }
 
+export type CodePlaygroundSnippets = Partial<Record<SupportedLanguage, string>>
+
 interface CodePlaygroundProps {
   /**
    * An array of snippets to display in the playground.
    */
-  snippets: Map<SupportedLanguage, string>
+  snippets: CodePlaygroundSnippets
   /**
    * A heading to display above the playground.
    */
@@ -71,10 +73,10 @@ export function CodePlayground({
 }: CodePlaygroundProps) {
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
     // @ts-expect-error ignore this
-    snippets.keys().next().value
+    Object.keys(snippets)[0]
   )
   const selectedCode = useMemo<string>(
-    () => snippets.get(selectedLang)!,
+    () => snippets[selectedLang]!,
     [selectedLang, snippets]
   )
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
@@ -98,7 +100,7 @@ export function CodePlayground({
 
   const longestCodeHeight = useMemo(() => {
     const largestLines = Math.max(
-      ...Array.from(snippets.values()).map((code) => code.split('\n').length)
+      ...Object.values(snippets).map((code) => code.split('\n').length)
     )
     const lineHeight = 24
     const padding = 12
@@ -139,9 +141,9 @@ export function CodePlayground({
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="bottom" align="start" alignOffset={-30}>
-              {Array.from(snippets.keys()).map((language) => (
+              {Object.keys(snippets).map((language) => (
                 <SelectItem key={language} value={language}>
-                  {prettyLanguageName(language)}
+                  {prettyLanguageName(language as SupportedLanguage)}
                 </SelectItem>
               ))}
             </SelectContent>
