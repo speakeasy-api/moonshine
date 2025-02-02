@@ -45,6 +45,11 @@ interface CodePlaygroundProps {
 
   /** Custom class name to apply to the container */
   className?: string
+
+  /**
+   * The maximum height of the code playground.
+   */
+  maxHeight?: number
 }
 
 async function highlightCode(code: string, language: SupportedLanguage) {
@@ -62,6 +67,7 @@ export function CodePlayground({
   footer,
   copyable = true,
   className,
+  maxHeight,
 }: CodePlaygroundProps) {
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
     // @ts-expect-error ignore this
@@ -90,7 +96,7 @@ export function CodePlayground({
     }, 1000)
   }, [])
 
-  const maxHeight = useMemo(() => {
+  const longestCodeHeight = useMemo(() => {
     const largestLines = Math.max(
       ...Array.from(snippets.values()).map((code) => code.split('\n').length)
     )
@@ -143,21 +149,24 @@ export function CodePlayground({
         </div>
       </div>
 
-      <div className="bg-background relative">
-        <Pre
-          code={highlighted}
-          handlers={[lineNumbers, tokenTransitions]}
-          className="bg-muted/15 dark:bg-background m-0 px-4 py-3 text-sm"
-          style={{ height: `${maxHeight}px` }}
-        />
+      <div className="relative">
+        <div
+          className="bg-background overflow-x-hidden overflow-y-scroll"
+          style={{ maxHeight: `${maxHeight}px` }}
+        >
+          <Pre
+            code={highlighted}
+            handlers={[lineNumbers, tokenTransitions]}
+            className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
+            style={{ height: `${longestCodeHeight}px` }}
+          />
+        </div>
 
         {copyable && (
-          <div className="absolute right-4 top-4">
+          <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
             <button
               role="button"
-              className={cn(
-                'relative ml-2 border-none bg-transparent outline-none'
-              )}
+              className={cn('ml-2 border-none bg-transparent outline-none')}
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -189,7 +198,6 @@ export function CodePlayground({
           </div>
         )}
       </div>
-
       {footer && (
         <div className="bg-card flex select-none items-center border-t p-2">
           {typeof footer === 'function'

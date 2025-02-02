@@ -109,3 +109,45 @@ export const NoFooter: Story = {
     footer: null,
   },
 }
+
+export const WithReallyLongCode: Story = {
+  args: {
+    ...Default.args,
+    maxHeight: 400,
+    snippets: new Map([
+      [
+        'typescript',
+        `const foo = 'bar';
+const bar = 'foo';
+const baz = 'qux';
+const qux = 'baz';
+const quux = 'corge';
+const grault = 'garply';
+const waldo = 'fred';
+const plugh = 'xyzzy';
+const corge = 'thud';
+const fooBar = [
+  { foo: 'foo', bar: 'bar' },
+  { foo: 'foo', bar: 'bar' },
+  { foo: 'foo', bar: 'bar' },
+]
+for (const foo of fooBar) {
+  console.log(foo)
+}
+const quux = 'corge';
+const grault = 'garply';
+const waldo = 'fred';
+const plugh = 'xyzzy';
+const corge = 'thud';
+const fooBar = [
+  { foo: 'foo', bar: 'bar' },
+  { foo: 'foo', bar: 'bar' },
+  { foo: 'foo', bar: 'bar' },
+]
+for (const foo of fooBar) {
+  console.log(foo)
+}`,
+      ],
+    ]),
+  },
+}

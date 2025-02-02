@@ -3,7 +3,9 @@ import { cn } from '@/lib/utils'
 import React, { Children, isValidElement, useMemo, useState } from 'react'
 import { ComponentProps, ReactNode } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
-interface ResizeHandleProps extends ComponentProps<typeof PanelResizeHandle> {
+
+export interface ResizeHandleProps
+  extends ComponentProps<typeof PanelResizeHandle> {
   children?: ReactNode
 }
 
@@ -57,7 +59,7 @@ const ResizablePanel = ({
   )
 }
 
-interface PaneProps extends ComponentProps<typeof Panel> {
+export interface PaneProps extends ComponentProps<typeof Panel> {
   children: ReactNode
   className?: string
 }
@@ -81,16 +83,23 @@ const DefaultResizeHandle = ({
   return (
     <PanelResizeHandle
       onDragging={(dragging) => setIsResizing(dragging)}
-      className="relative border-[0.5px] border-dashed"
+      hitAreaMargins={{
+        coarse: 10,
+        fine: 10,
+      }}
+      className={cn(
+        'relative border-[1.25px] border-zinc-900/50',
+        isResizing && 'border-foreground/10'
+      )}
     >
       <div
         className={cn(
-          'bg-card text-muted hover:text-foreground absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border',
+          'bg-card text-muted absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border shadow-sm shadow-zinc-400/5',
           direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize',
           isResizing && 'text-foreground'
         )}
       >
-        <Icon name="grip-vertical" className="h-6" />
+        <Icon name="grip-vertical" className="h-8 w-5" />
       </div>
     </PanelResizeHandle>
   )
