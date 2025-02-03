@@ -9,6 +9,7 @@ import { Heading } from '../../Heading'
 import { TerminalCommand } from './terminal-command'
 import { Terminal } from './terminal'
 import { Stack } from '../../Stack'
+import { WizardStep } from '@/components/Wizard/types'
 
 /**
  * TODO before moving out of beta:
@@ -18,27 +19,13 @@ import { Stack } from '../../Stack'
  * - Move the step circle sizes into our design tokens
  */
 
-interface Command {
-  id: string
-  code: string
-  language: string
-  active?: boolean
-  onSelectOrCopy?: (id: string) => void
-  path?: string
-  comment?: string
-}
-
-interface WizardStep {
-  title: string
-  description: string
-  commands: Command[]
-}
-
 export interface CLIWizardProps {
   steps: WizardStep[]
   currentStep: number
   completedSteps: number[]
-  onStepComplete: (stepIndex: number) => void
+  initiallyCollapsed?: boolean
+  hideStepCount?: boolean
+  onStepComplete?: (stepIndex: number) => void
 }
 
 const fadeUp = (i: number) => ({
@@ -57,6 +44,8 @@ export function CLIWizard({
   steps,
   currentStep,
   completedSteps,
+  initiallyCollapsed = false,
+  hideStepCount = false,
   onStepComplete,
 }: CLIWizardProps) {
   const [activeStep, setActiveStep] = React.useState(
@@ -66,7 +55,7 @@ export function CLIWizard({
     setActiveStep(Math.min(currentStep - 1, steps.length - 1))
   }, [currentStep, steps.length])
 
-  const [isCollapsed, setIsCollapsed] = React.useState(false)
+  const [isCollapsed, setIsCollapsed] = React.useState(initiallyCollapsed)
   const [copiedCommands, setCopiedCommands] = React.useState<Set<string>>(
     new Set()
   )
@@ -102,9 +91,11 @@ export function CLIWizard({
             <Heading variant="md" as="h2">
               Getting Started
             </Heading>
-            <Text muted variant="xs">
-              {completedSteps.length} / {steps.length}
-            </Text>
+            {!hideStepCount && (
+              <Text muted variant="xs">
+                {completedSteps.length} / {steps.length}
+              </Text>
+            )}
           </Stack>
           <motion.div
             initial="up"
@@ -187,7 +178,7 @@ export function CLIWizard({
                                   allCommandsCopied &&
                                   !isStepComplete(activeStep)
                                 ) {
-                                  onStepComplete(activeStep + 1)
+                                  onStepComplete?.(activeStep + 1)
                                 }
                               }}
                             />
