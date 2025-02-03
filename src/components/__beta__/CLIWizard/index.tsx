@@ -92,9 +92,9 @@ export function CLIWizard({
           </Heading>
           <Stack direction="horizontal" align="center" gap={3}>
             {!hideStepCount && (
-            <Text muted variant="xs">
-              {completedSteps.length} / {steps.length} steps completed
-            </Text>
+              <Text muted variant="xs">
+                {completedSteps.length} / {steps.length} steps completed
+              </Text>
             )}
             <motion.div
               initial="up"

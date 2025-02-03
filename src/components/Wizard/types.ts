@@ -4,7 +4,7 @@ export interface WizardCommand {
   id: string
   code: string
   language: ProgrammingLanguage
-  comment: string
+  comment?: string
   active?: boolean
   path?: string
   onSelectOrCopy?: (id: string) => void
