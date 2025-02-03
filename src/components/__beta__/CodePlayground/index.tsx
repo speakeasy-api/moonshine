@@ -21,11 +21,13 @@ interface CodePlaygroundChildrenProps {
   selectedCode: string
 }
 
+export type CodePlaygroundSnippets = Partial<Record<SupportedLanguage, string>>
+
 interface CodePlaygroundProps {
   /**
    * An array of snippets to display in the playground.
    */
-  snippets: Map<SupportedLanguage, string>
+  snippets: CodePlaygroundSnippets
   /**
    * A heading to display above the playground.
    */
@@ -45,6 +47,11 @@ interface CodePlaygroundProps {
 
   /** Custom class name to apply to the container */
   className?: string
+
+  /**
+   * The maximum height of the code playground.
+   */
+  maxHeight?: number
 }
 
 async function highlightCode(code: string, language: SupportedLanguage) {
@@ -62,13 +69,14 @@ export function CodePlayground({
   footer,
   copyable = true,
   className,
+  maxHeight,
 }: CodePlaygroundProps) {
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
     // @ts-expect-error ignore this
-    snippets.keys().next().value
+    Object.keys(snippets)[0]
   )
   const selectedCode = useMemo<string>(
-    () => snippets.get(selectedLang)!,
+    () => snippets[selectedLang]!,
     [selectedLang, snippets]
   )
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
@@ -90,9 +98,9 @@ export function CodePlayground({
     }, 1000)
   }, [])
 
-  const maxHeight = useMemo(() => {
+  const longestCodeHeight = useMemo(() => {
     const largestLines = Math.max(
-      ...Array.from(snippets.values()).map((code) => code.split('\n').length)
+      ...Object.values(snippets).map((code) => code.split('\n').length)
     )
     const lineHeight = 24
     const padding = 12
@@ -133,9 +141,9 @@ export function CodePlayground({
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="bottom" align="start" alignOffset={-30}>
-              {Array.from(snippets.keys()).map((language) => (
+              {Object.keys(snippets).map((language) => (
                 <SelectItem key={language} value={language}>
-                  {prettyLanguageName(language)}
+                  {prettyLanguageName(language as SupportedLanguage)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -143,21 +151,24 @@ export function CodePlayground({
         </div>
       </div>
 
-      <div className="bg-background relative">
-        <Pre
-          code={highlighted}
-          handlers={[lineNumbers, tokenTransitions]}
-          className="bg-muted/15 dark:bg-background m-0 px-4 py-3 text-sm"
-          style={{ height: `${maxHeight}px` }}
-        />
+      <div className="relative">
+        <div
+          className="bg-background overflow-x-hidden overflow-y-scroll"
+          style={{ maxHeight: `${maxHeight}px` }}
+        >
+          <Pre
+            code={highlighted}
+            handlers={[lineNumbers, tokenTransitions]}
+            className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
+            style={{ height: `${longestCodeHeight}px` }}
+          />
+        </div>
 
         {copyable && (
-          <div className="absolute right-4 top-4">
+          <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
             <button
               role="button"
-              className={cn(
-                'relative ml-2 border-none bg-transparent outline-none'
-              )}
+              className={cn('ml-2 border-none bg-transparent outline-none')}
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -189,7 +200,6 @@ export function CodePlayground({
           </div>
         )}
       </div>
-
       {footer && (
         <div className="bg-card flex select-none items-center border-t p-2">
           {typeof footer === 'function'

@@ -78,6 +78,8 @@ import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
 import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
 import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
 import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
+import { ResizablePanel } from './components/__beta__/ResizablePanel'
+import { CodePlayground } from './components/__beta__/CodePlayground'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
@@ -94,6 +96,9 @@ export const beta = {
   DragOverlay,
   Draggable,
   Droppable,
+
+  ResizablePanel,
+  CodePlayground,
 }
 
 /** END BETA COMPONENTS */
