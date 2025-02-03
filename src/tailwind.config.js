@@ -79,6 +79,10 @@ export default {
       pattern: /^flex-(nowrap|wrap|wrap-reverse)$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
+    {
+      pattern: /bg-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+    },
   ],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -94,6 +98,19 @@ export default {
       },
     },
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': {
+            transform: 'rotate(-1.5deg)',
+          },
+          '50%': {
+            transform: 'rotate(1.5deg)',
+          },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+      },
       backgroundImage: ({ theme }) => ({
         mask: `linear-gradient(to bottom, ${theme('colors.background')} 0%, ${theme('colors.transparent')} 5%,${theme('colors.transparent')} 95%,${theme('colors.background')} 100%)`,
       }),

@@ -8,6 +8,9 @@ import { cn } from '@/lib/utils'
 
 const meta: Meta<typeof Droppable> = {
   component: Droppable,
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export default meta

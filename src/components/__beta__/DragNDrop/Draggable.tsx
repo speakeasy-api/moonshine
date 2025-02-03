@@ -1,15 +1,50 @@
-import { DndMonitorListener, useDndMonitor, useDraggable } from '@dnd-kit/core'
+import {
+  Active,
+  DndMonitorListener,
+  useDndMonitor,
+  useDraggable,
+  Over,
+  Data,
+  UniqueIdentifier,
+} from '@dnd-kit/core'
+import type { ClientRect } from '@dnd-kit/core/dist/types/rect'
 import { CSS } from '@dnd-kit/utilities'
+import { MutableRefObject } from 'react'
 
-interface DraggableProps<TData extends Record<string, unknown>>
-  extends DndMonitorListener {
-  children: React.ReactNode
-  id: string
+export interface DraggableChildrenProps {
+  over: Over | null
+  active: Active | null
+  activeNodeRect: ClientRect | null
+  isDragging: boolean
+  node: MutableRefObject<HTMLElement | null> | null
+}
+
+interface DraggableProps<TData> extends DndMonitorListener {
+  /**
+   * The children to render.
+   *
+   * If a function is provided, it will be called with the current state of the draggable.
+   */
+  children:
+    | React.ReactNode
+    | ((props: DraggableChildrenProps) => React.ReactNode)
+
+  /**
+   * The unique identifier for the draggable.
+   */
+  id: UniqueIdentifier
+
   className?: string
+
+  disabled?: boolean
+
+  /**
+   * The data to pass to the draggable of generic type TData.
+   */
   data?: TData
 }
 
-export function Draggable<TData extends Record<string, unknown>>({
+export function Draggable<TData extends Data>({
   children,
   id,
   onDragEnd,
@@ -17,11 +52,23 @@ export function Draggable<TData extends Record<string, unknown>>({
   onDragCancel,
   onDragOver,
   className,
+  disabled,
   data,
 }: DraggableProps<TData>) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    over,
+    transform,
+    active,
+    isDragging,
+    activeNodeRect,
+    node,
+  } = useDraggable({
     id,
     data,
+    disabled,
   })
   useDndMonitor({
     onDragEnd,
@@ -30,7 +77,7 @@ export function Draggable<TData extends Record<string, unknown>>({
     onDragOver,
   })
 
-  const style = {
+  const style: React.CSSProperties = {
     transform: CSS.Translate.toString(transform),
   }
 
@@ -42,7 +89,9 @@ export function Draggable<TData extends Record<string, unknown>>({
       {...listeners}
       className={className}
     >
-      {children}
+      {typeof children === 'function'
+        ? children({ over, active, activeNodeRect, isDragging, node })
+        : children}
     </div>
   )
 }

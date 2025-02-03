@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Check, ChevronRight, ChevronUp } from 'lucide-react'
+import { Check, ChevronUp } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Text } from '../../Text'
@@ -87,27 +87,27 @@ export function CLIWizard({
         }
       >
         <div className="flex items-center justify-between">
+          <Heading variant="md" as="h2">
+            Getting Started
+          </Heading>
           <Stack direction="horizontal" align="center" gap={3}>
-            <Heading variant="md" as="h2">
-              Getting Started
-            </Heading>
             {!hideStepCount && (
-              <Text muted variant="xs">
-                {completedSteps.length} / {steps.length}
-              </Text>
+            <Text muted variant="xs">
+              {completedSteps.length} / {steps.length} steps completed
+            </Text>
             )}
+            <motion.div
+              initial="up"
+              animate={isCollapsed ? 'down' : 'up'}
+              variants={chevronVariants}
+              transition={{
+                duration: 0.2,
+                ease: [0.215, 0.61, 0.355, 1],
+              }}
+            >
+              <ChevronUp className="h-4 w-4 text-zinc-400" />
+            </motion.div>
           </Stack>
-          <motion.div
-            initial="up"
-            animate={isCollapsed ? 'down' : 'up'}
-            variants={chevronVariants}
-            transition={{
-              duration: 0.2,
-              ease: [0.215, 0.61, 0.355, 1],
-            }}
-          >
-            <ChevronUp className="h-4 w-4 text-zinc-400" />
-          </motion.div>
         </div>
       </button>
 
@@ -248,9 +248,6 @@ function SidebarSteps({
                   >
                     <div className="flex h-6 items-center justify-between">
                       <Heading variant="xs">{step.title}</Heading>
-                      {active && (
-                        <ChevronRight className="h-4 w-4 text-zinc-400" />
-                      )}
                     </div>
                   </button>
 
