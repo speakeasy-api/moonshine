@@ -64,6 +64,7 @@ export {
 } from '@/components/Tooltip'
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
+export { Dialog } from '@/components/Dialog'
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
