@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import CLIWizard from './index'
 import { Container } from '@/components/Container'
+import { WizardStep } from '@/components/Wizard/types'
 
-const steps = [
+const steps: WizardStep[] = [
   {
     title: 'Create your first SDK',
     description:
@@ -31,14 +32,14 @@ const steps = [
       {
         id: 'navigate-to-sdk-directory',
         code: 'cd your_sdk_directory',
-        label: 'Navigate to SDK directory',
+        comment: 'Navigate to SDK directory',
         language: 'bash',
         path: '~',
       },
       {
         id: 'configure-github',
         code: 'speakeasy configure github',
-        label: 'Configure GitHub',
+        comment: 'Configure GitHub',
         language: 'bash',
         path: '~/your_sdk_directory',
       },
@@ -51,7 +52,7 @@ const steps = [
       {
         id: 'configure-publishing',
         code: 'speakeasy configure publishing',
-        label: 'Configure publishing',
+        comment: 'Configure publishing',
         language: 'bash',
         path: '~/your_sdk_directory',
       },
