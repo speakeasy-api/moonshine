@@ -16,7 +16,7 @@
 }
 
 .gradient-circle-initial {
-  @apply text-5xl;
+  font-size: 3rem;
   position: absolute;
   top: 50%;
   left: 50%;

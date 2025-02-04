@@ -28,8 +28,8 @@
 .create-dialog-select-trigger > span {
   text-overflow: ellipsis;
   white-space: pre-wrap;
-  @apply max-w-32;
-  @apply min-w-16;
+  max-width: 8rem;
+  min-width: 4rem;
 }
 
 .workspace-selector div[cmdk-input-wrapper] {

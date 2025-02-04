@@ -213,7 +213,7 @@ export function CodeSnippet({
         {copyable && (
           <div
             className={cn(
-              'ml-auto mr-1 flex self-center text-white',
+              'mr-1 ml-auto flex self-center text-white',
               isMultiline && 'mt-1 self-start'
             )}
           >

@@ -83,7 +83,7 @@ export const SelectionBox = <T extends HTMLElement>({
       )}
       style={{ ...basePositionProps, ...bgColorProps }}
     >
-      <span className="absolute bottom-[-5px] right-[-5px] z-10 h-4 w-4 touch-none select-none rounded-full border-blue-500 bg-blue-500 content-[''] dark:border-blue-50 dark:bg-zinc-100">
+      <span className="absolute right-[-5px] bottom-[-5px] z-10 h-4 w-4 touch-none rounded-full border-blue-500 bg-blue-500 content-[''] select-none dark:border-blue-50 dark:bg-zinc-100">
         <span className="flex h-full w-full items-center justify-center">
           <Icon
             name="loader-circle"

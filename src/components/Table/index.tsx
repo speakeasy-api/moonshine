@@ -115,7 +115,7 @@ export function Table<T extends object>({
     return (
       <tr
         className={cn(
-          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
+          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none',
           onRowClick && 'cursor-pointer'
         )}
         key={rowKey(row)}
@@ -147,18 +147,18 @@ export function Table<T extends object>({
       ref={tableRef}
       className={cn(
         styles.table,
-        'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+        'relative grid w-full caption-bottom [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)] overflow-x-auto overflow-y-hidden rounded-lg border text-sm',
         className
       )}
       data-cell-padding={cellPadding}
     >
-      <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-        <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
+      <thead className="[grid-column:1/-1] grid [grid-template-columns:subgrid]">
+        <tr className="table-header [grid-column:1/-1] grid [grid-template-columns:subgrid] border-b">
           {columns.map((column) => (
             <th
               className={cn(
                 styles.tableHeader,
-                'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium'
+                'text-muted-foreground flex items-center align-middle font-medium whitespace-nowrap select-none'
               )}
               key={String(column.key)}
             >
@@ -170,20 +170,20 @@ export function Table<T extends object>({
       <tbody
         ref={tableBodyRef}
         className={cn(
-          'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+          'relative [grid-column:1/-1] grid [grid-template-columns:subgrid]',
 
           // Account for the load more button
           hasMore && 'pb-16'
         )}
       >
         {data.length === 0 ? (
-          <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+          <div className="[grid-column:1/-1] grid [grid-template-columns:subgrid]">
             <div className="[grid-column:1/-1]">{noResultsMessage}</div>
           </div>
         ) : (
           data.map((d) =>
             isGroupOf<T>(d) ? (
-              <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+              <div className="[grid-column:1/-1] grid [grid-template-columns:subgrid]">
                 <div className="[grid-column:1/-1]">
                   {renderGroupHeader?.(d)}
                 </div>
@@ -202,7 +202,7 @@ export function Table<T extends object>({
               } as React.CSSProperties
             }
             className={cn(
-              'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
+              'absolute right-0 bottom-0 left-0 -z-0 [grid-column:1/-1] grid min-h-16 max-w-full cursor-pointer [grid-template-columns:var(--grid-template-columns)] items-center border-b opacity-30 transition-colors',
               isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
             )}
           >
@@ -218,9 +218,9 @@ export function Table<T extends object>({
         )}
       </tbody>
       {hasMore && (
-        <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
+        <div className="absolute right-0 bottom-0 left-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
           <button
-            className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium normal-case transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+            className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium whitespace-nowrap normal-case transition-colors select-none focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             onClick={handleLoadMore}
           >
             {isLoading ? (

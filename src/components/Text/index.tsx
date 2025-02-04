@@ -39,7 +39,7 @@ export function Text({
       className={cn(
         variantStyles[variant],
         whitespaceStyles[whiteSpace],
-        muted ? 'text-muted' : 'text-body',
+        muted && 'text-[var(--color-text-muted)]',
         className
       )}
     >

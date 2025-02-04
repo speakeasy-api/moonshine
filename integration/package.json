@@ -11,7 +11,7 @@
   "type": "module",
   "license": "ISC",
   "dependencies": {
-    "@speakeasy-api/moonshine": "*",
+    "@speakeasy-api/moonshine": "file:..",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
     "react": "^18.3.1",

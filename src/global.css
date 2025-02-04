@@ -1,57 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Tailwind */
+@import 'tailwindcss';
 
+/* Configure plugins and variants */
+@config './tailwind.config.js';
+@plugin "tailwindcss-animate";
+@variant dark (&:where(.dark, .dark *));
+
+/* Base styles */
 @layer base {
   :root {
     /* Shadcn theme */
-    --background: 0 0% 100%;
-    --foreground: 24 10% 10%;
-    --card: 0 0% 98%;
-    --card-foreground: 240 10% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 4%;
-    --primary: 48 92% 47%;
-    --primary-foreground: 240 6% 10%;
-    --secondary: 240 6% 90%;
-    --secondary-foreground: 240 6% 10%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 5% 65;
-    --accent: 240 6% 90%;
-    --accent-foreground: 240 6% 10%;
-    --border: 240 6% 90%;
-    --input: 240 5% 84%;
-    --ring: 217 91% 60%;
+    --color-background: hsl(0 0% 100%);
+    --color-foreground: hsl(24 10% 10%);
+    --color-card: hsl(0 0% 98%);
+    --color-card-foreground: hsl(240 10% 4%);
+    --color-popover: hsl(0 0% 100%);
+    --color-popover-foreground: hsl(240 10% 4%);
+    --color-primary: hsl(48 92% 47%);
+    --color-primary-foreground: hsl(240 6% 10%);
+    --color-secondary: hsl(240 6% 90%);
+    --color-secondary-foreground: hsl(240 6% 10%);
+    --color-muted: hsl(240 5% 96%);
+    --color-muted-foreground: hsl(240 5% 65%);
+    --color-accent: hsl(240 6% 90%);
+    --color-accent-foreground: hsl(240 6% 10%);
+    --color-success: hsl(161 76% 27%);
+    --color-success-foreground: hsl(0 0% 98%);
+    --color-destructive: hsl(345 83% 41%);
+    --color-destructive-foreground: hsl(0 0% 98%);
+    --color-warning: hsl(26 89% 37%);
+    --color-warning-foreground: hsl(0 0% 98%);
+    --color-info: hsl(206 67% 38%);
+    --color-info-foreground: hsl(0 0% 98%);
+    --color-feature: hsl(263 70% 50%);
+    --color-feature-foreground: hsl(0 0% 98%);
+    --color-border: hsl(240 6% 90%);
+    --color-input: hsl(240 5% 84%);
+    --color-ring: hsl(217 91% 60%);
     --radius: 0.375rem;
-    --chart-1: 173 58% 39%;
-    --chart-2: 12 76% 61%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --sidebar-foreground: 240 5% 26%;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-primary: 48 92% 47%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 6% 10%;
-    --sidebar-border: 240 6% 90%;
-    --sidebar-ring: 240 5% 65%;
-    --success: 161 76% 27%;
-    --success-foreground: 0 0% 98%;
-    --destructive: 345 83% 41%;
-    --destructive-foreground: 0 0% 98%;
-    --warning: 26 89% 37%;
-    --warning-foreground: 0 0% 98%;
-    --info: 206 67% 38%;
-    --info-foreground: 0 0% 98%;
-    --feature: 263 70% 50%;
-    --feature-foreground: 0 0% 98%;
+    --chart-1: hsl(173 58% 39%);
+    --chart-2: hsl(12 76% 61%);
+    --chart-3: hsl(197 37% 24%);
+    --chart-4: hsl(43 74% 66%);
+    --chart-5: hsl(27 87% 67%);
+    --sidebar-foreground: hsl(240 5% 26%);
+    --sidebar-background: hsl(0 0% 98%);
+    --sidebar-primary: hsl(48 92% 47%);
+    --sidebar-primary-foreground: hsl(0 0% 98%);
+    --sidebar-accent: hsl(240 5% 96%);
+    --sidebar-accent-foreground: hsl(240 6% 10%);
+    --sidebar-border: hsl(240 6% 90%);
+    --sidebar-ring: hsl(240 5% 65%);
 
-    /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-low: 350 89% 60%;
-    --score-mid: 38 92% 50%;
-    --score-high: 160 84% 39%;
-    --score-track: 48 4% 28%;
+    --score-low: hsl(350 89% 60%);
+    --score-mid: hsl(38 92% 50%);
+    --score-high: hsl(160 84% 39%);
+    --score-track: hsl(48 4% 28%);
 
     /* Custom easing functions */
     --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -76,214 +80,287 @@
     --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
     /* Moonshine tokens */
-    --color-neutral-50: 0 0% 98%;
-    --color-neutral-100: 240 5% 96%;
-    --color-neutral-200: 0 100% 0%;
-    --color-neutral-400: 161 6% 65%;
+    --color-neutral-50: hsl(0 0% 98%);
+    --color-neutral-100: hsl(240 5% 96%);
+    --color-neutral-200: hsl(0 100% 0%);
+    --color-neutral-400: hsl(161 6% 65%);
 
-    --link-default: 198 93% 60%;
-    --link-visited-primary: 200 98% 39%;
-    --link-visited-secondary: 240 5% 65%;
+    --link-default: hsl(198 93% 60%);
+    --link-visited-primary: hsl(200 98% 39%);
+    --link-visited-secondary: hsl(240 5% 65%);
   }
 
   .dark {
     /* Shadcn theme */
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 6% 10%;
-    --card-foreground: 60 9% 98%;
-    --popover: 240 10% 4%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 53 96% 59%;
-    --primary-foreground: 240 6% 10%;
-    --secondary: 240 4% 16%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 6% 10%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 6% 10%;
-    --accent-foreground: 0 0% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 217 91% 60%;
-    --radius: 0.375rem;
-    --chart-1: 220 70% 50%;
-    --chart-2: 340 75% 55%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 160 60% 45%;
-    --sidebar-background: 240 10% 4%;
-    --sidebar-foreground: 240 5% 96%;
-    --sidebar-primary: 53 96% 59%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 6% 10%;
-    --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 240 4% 16%;
-    --sidebar-ring: 240 5% 84%;
-    --success: 161 76% 27%;
-    --success-foreground: 0 0% 98%;
-    --destructive: 345 83% 41%;
-    --destructive-foreground: 0 0% 98%;
-    --warning: 26 89% 37%;
-    --warning-foreground: 0 0% 98%;
-    --info: 206 67% 38%;
-    --info-foreground: 0 0% 98%;
-    --feature: 263 70% 50%;
-    --feature-foreground: 0 0% 98%;
+    --color-background: hsl(240 10% 4%);
+    --color-foreground: hsl(0 0% 98%);
+    --color-card: hsl(240 6% 10%);
+    --color-card-foreground: hsl(60 9% 98%);
+    --color-popover: hsl(240 10% 4%);
+    --color-popover-foreground: hsl(0 0% 98%);
+    --color-primary: hsl(53 96% 59%);
+    --color-primary-foreground: hsl(240 6% 10%);
+    --color-secondary: hsl(240 4% 16%);
+    --color-secondary-foreground: hsl(0 0% 98%);
+    --color-muted: hsl(240 6% 10%);
+    --color-muted-foreground: hsl(240 5% 65%);
+    --color-accent: hsl(240 6% 10%);
+    --color-accent-foreground: hsl(0 0% 98%);
+    --color-success: hsl(161 76% 27%);
+    --color-success-foreground: hsl(0 0% 98%);
+    --color-destructive: hsl(345 83% 41%);
+    --color-destructive-foreground: hsl(0 0% 98%);
+    --color-warning: hsl(26 89% 37%);
+    --color-warning-foreground: hsl(0 0% 98%);
+    --color-info: hsl(206 67% 38%);
+    --color-info-foreground: hsl(0 0% 98%);
+    --color-feature: hsl(263 70% 50%);
+    --color-feature-foreground: hsl(0 0% 98%);
 
     /* TODO: Update these once we know what these map to in terms of generic tokens */
-    --score-low: 350 89% 60%;
-    --score-mid: 38 92% 50%;
-    --score-high: 160 84% 39%;
-    --score-track: 48 4% 28%;
+    --score-low: hsl(350 89% 60%);
+    --score-mid: hsl(38 92% 50%);
+    --score-high: hsl(160 84% 39%);
+    --score-track: hsl(48 4% 28%);
 
     /* Moonshine tokens */
-    --color-neutral-50: 0 0% 98%;
-    --color-neutral-100: 240 5% 96%;
-    --color-neutral-200: 229 5% 90%;
-    --color-neutral-400: 161 6% 65%;
+    --color-neutral-50: hsl(0 0% 98%);
+    --color-neutral-100: hsl(240 5% 96%);
+    --color-neutral-200: hsl(229 5% 90%);
+    --color-neutral-400: hsl(161 6% 65%);
   }
-}
 
-@layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--color-border));
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--color-background));
+    color: hsl(var(--color-foreground));
   }
 }
 
-.devicon-devicon-plain {
-  max-width: 2em;
+/* Theme configuration */
+@theme {
+  /* Colors */
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-card: var(--color-card);
+  --color-card-foreground: var(--color-card-foreground);
+  --color-popover: var(--color-popover);
+  --color-popover-foreground: var(--color-popover-foreground);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-success: var(--color-success);
+  --color-success-foreground: var(--color-success-foreground);
+  --color-warning: var(--color-warning);
+  --color-warning-foreground: var(--color-warning-foreground);
+  --color-destructive: var(--color-destructive);
+  --color-destructive-foreground: var(--color-destructive-foreground);
+  --color-info: var(--color-info);
+  --color-info-foreground: var(--color-info-foreground);
+  --color-feature: var(--color-feature);
+  --color-feature-foreground: var(--color-feature-foreground);
+  --color-border: var(--color-border);
+  --color-input: var(--color-input);
+  --color-ring: var(--color-ring);
+
+  /* Text Colors */
+  --color-text-heading-xl: var(--color-neutral-50);
+  --color-text-heading-lg: var(--color-neutral-50);
+  --color-text-heading-md: var(--color-neutral-50);
+  --color-text-heading-sm: var(--color-neutral-100);
+  --color-text-heading-xs: var(--color-neutral-100);
+  --color-text-body: var(--color-neutral-200);
+  --color-text-muted: var(--color-neutral-400);
+
+  /* Chart Colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar Colors */
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Link Colors */
+  --color-link: var(--link-default);
+  --color-link-secondary: var(--color-neutral-200);
+  --color-link-visited-primary: var(--link-visited-primary);
+  --color-link-visited-secondary: var(--link-visited-secondary);
+
+  /* Border Radius */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Animation */
+  --keyframes-wiggle: {
+    0%,
+    100% {
+      transform: rotate(-1.5deg);
+    }
+    50% {
+      transform: rotate(1.5deg);
+    }
+  };
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  /* Transition Timing Functions */
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-/* if you want to change the original color */
-.devicon-devicon-plain path {
-  fill: var(--primary);
+/* Utilities */
+@layer utilities {
+  .devicon-devicon-plain {
+    max-width: 2em;
+  }
+
+  .devicon-devicon-plain path {
+    fill: var(--primary);
+  }
+
+  @keyframes slide-fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-fade-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
 }
 
-@keyframes slide-fade-in {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
+@utility typography-heading-xl {
+  font-size: 1.8125rem;
+  font-weight: 300;
+  line-height: 1.517;
+  letter-spacing: 0.0015em;
+  @media (width >= theme(--breakpoint-md)) {
+    font-size: 2.0625rem;
+    line-height: 1.375;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  color: var(--color-text-heading-xl);
 }
-
-@keyframes slide-fade-out {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-}
-
-/* TODO: Find a better place for these styles we don't want this file to baloon */
-@layer components {
-  .typography-heading-xl {
+@utility typography-heading-lg {
+  font-size: 1.625rem;
+  font-weight: 300;
+  line-height: 1.615;
+  letter-spacing: 0.0015em;
+  @media (width >= theme(--breakpoint-md)) {
     font-size: 1.8125rem;
-    font-weight: 300;
     line-height: 1.517;
-    letter-spacing: 0.0015em;
   }
-  @screen md {
-    .typography-heading-xl {
-      font-size: 2.0625rem;
-      line-height: 1.375;
-    }
-  }
-
-  .typography-heading-lg {
+  color: var(--color-text-heading-lg);
+}
+@utility typography-heading-md {
+  font-size: 1.4375rem;
+  font-weight: 300;
+  line-height: 1.609;
+  letter-spacing: 0.0015em;
+  @media (width >= theme(--breakpoint-md)) {
     font-size: 1.625rem;
-    font-weight: 300;
     line-height: 1.615;
-    letter-spacing: 0.0015em;
   }
-  @screen md {
-    .typography-heading-lg {
-      font-size: 1.8125rem;
-      line-height: 1.517;
-    }
-  }
-
-  .typography-heading-md {
+  color: var(--color-text-heading-md);
+}
+@utility typography-heading-sm {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.0015em;
+  @media (width >= theme(--breakpoint-md)) {
     font-size: 1.4375rem;
-    font-weight: 300;
     line-height: 1.609;
-    letter-spacing: 0.0015em;
   }
-  @screen md {
-    .typography-heading-md {
-      font-size: 1.625rem;
-      line-height: 1.615;
-    }
-  }
-
-  .typography-heading-sm {
+  color: var(--color-text-heading-sm);
+}
+@utility typography-heading-xs {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.778;
+  letter-spacing: 0.0015em;
+  @media (width >= theme(--breakpoint-md)) {
     font-size: 1.25rem;
-    font-weight: 300;
     line-height: 1.75;
-    letter-spacing: 0.0015em;
   }
-  @screen md {
-    .typography-heading-sm {
-      font-size: 1.4375rem;
-      line-height: 1.609;
-    }
-  }
-
-  .typography-heading-xs {
-    font-size: 1.125rem;
-    font-weight: 300;
-    line-height: 1.778;
-    letter-spacing: 0.0015em;
-  }
-  @screen md {
-    .typography-heading-xs {
-      font-size: 1.25rem;
-      line-height: 1.75;
-    }
-  }
-
-  .typography-heading-xxs {
-    font-size: 1.125rem;
-    font-weight: 300;
-    line-height: 1.778;
-    letter-spacing: 0.0015em;
-  }
-
-  .typography-body-lg {
-    font-size: 1.125rem;
-    font-weight: 400;
-    line-height: 1.75;
-    letter-spacing: 0.0025em;
-  }
-
-  .typography-body-md {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.75;
-    letter-spacing: 0.0025em;
-  }
-
-  .typography-body-sm {
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.75;
-    letter-spacing: 0.0025em;
-  }
-
-  .typography-body-xs {
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1.75;
-    letter-spacing: 0.0025em;
-  }
+  color: var(--color-text-heading-xs);
+}
+@utility typography-heading-xxs {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.778;
+  letter-spacing: 0.0015em;
+  color: var(--color-text-heading-xxs);
+}
+@utility typography-body-lg {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  color: var(--color-text-body);
+}
+@utility typography-body-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  color: var(--color-text-body);
+}
+@utility typography-body-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  color: var(--color-text-body);
+}
+@utility typography-body-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  color: var(--color-text-body);
 }

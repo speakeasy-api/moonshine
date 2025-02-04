@@ -6,7 +6,7 @@ import animate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
+  darkMode: ['class', '&:where(.dark, .dark *)'],
   // Tailwind purges classnames that are not "used" in the codebase. This includes
   // any classnames that are interpolated such as: const className =
   // `grid-cols-${index + 1}` so we need to whitelist them here.
@@ -98,132 +98,9 @@ export default {
       },
     },
     extend: {
-      keyframes: {
-        wiggle: {
-          '0%, 100%': {
-            transform: 'rotate(-1.5deg)',
-          },
-          '50%': {
-            transform: 'rotate(1.5deg)',
-          },
-        },
-      },
-      animation: {
-        wiggle: 'wiggle 1s ease-in-out infinite',
-      },
       backgroundImage: ({ theme }) => ({
         mask: `linear-gradient(to bottom, ${theme('colors.background')} 0%, ${theme('colors.transparent')} 5%,${theme('colors.transparent')} 95%,${theme('colors.background')} 100%)`,
       }),
-      transitionTimingFunction: {
-        'ease-in-out-quad': 'var(--ease-in-out-quad)',
-        'ease-in-out-cubic': 'var(--ease-in-out-cubic)',
-        'ease-in-out-quart': 'var(--ease-in-out-quart)',
-        'ease-in-out-quint': 'var(--ease-in-out-quint)',
-        'ease-in-out-expo': 'var(--ease-in-out-expo)',
-        'ease-in-out-circ': 'var(--ease-in-out-circ)',
-        'ease-in-quad': 'var(--ease-in-quad)',
-        'ease-in-cubic': 'var(--ease-in-cubic)',
-        'ease-in-quart': 'var(--ease-in-quart)',
-        'ease-in-quint': 'var(--ease-in-quint)',
-        'ease-in-expo': 'var(--ease-in-expo)',
-        'ease-in-circ': 'var(--ease-in-circ)',
-        'ease-out-quad': 'var(--ease-out-quad)',
-        'ease-out-cubic': 'var(--ease-out-cubic)',
-        'ease-out-quart': 'var(--ease-out-quart)',
-        'ease-out-quint': 'var(--ease-out-quint)',
-        'ease-out-expo': 'var(--ease-out-expo)',
-        'ease-out-circ': 'var(--ease-out-circ)',
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        // TODO: update success, info, warning, danger to use the new color tokens
-        success: {
-          DEFAULT: 'hsl(var(--success))',
-          foreground: 'hsl(var(--success-foreground))',
-        },
-        info: {
-          DEFAULT: 'hsl(var(--info))',
-          foreground: 'hsl(var(--info-foreground))',
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          foreground: 'hsl(var(--warning-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        feature: {
-          DEFAULT: 'hsl(var(--feature))',
-          foreground: 'hsl(var(--feature-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        chart: {
-          1: 'hsl(var(--chart-1))',
-          2: 'hsl(var(--chart-2))',
-          3: 'hsl(var(--chart-3))',
-          4: 'hsl(var(--chart-4))',
-          5: 'hsl(var(--chart-5))',
-        },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
-        // TODO: move these to better place - used in Link component
-        link: {
-          DEFAULT: 'hsl(var(--link-default))',
-          secondary: 'hsl(var(--color-neutral-200))',
-          'visited-primary': 'hsl(var(--link-visited-primary))',
-          'visited-secondary': 'hsl(var(--link-visited-secondary))',
-        },
-      },
-      textColor: {
-        'heading-xl': 'hsl(var(--color-neutral-50))',
-        'heading-lg': 'hsl(var(--color-neutral-50))',
-        'heading-md': 'hsl(var(--color-neutral-50))',
-        'heading-sm': 'hsl(var(--color-neutral-100))',
-        'heading-xs': 'hsl(var(--color-neutral-100))',
-        body: 'hsl(var(--color-neutral-200))',
-        muted: 'hsl(var(--color-neutral-400))',
-      },
     },
   },
   plugins: [animate],

@@ -137,7 +137,7 @@ export function CodePlayground({
               setSelectedLang(value as SupportedLanguage)
             }
           >
-            <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 leading-none !shadow-none !ring-0">
+            <SelectTrigger className="text-muted gap-1.5 !border-none !bg-transparent !p-0 leading-none !ring-0 !shadow-none select-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="bottom" align="start" alignOffset={-30}>
@@ -165,7 +165,7 @@ export function CodePlayground({
         </div>
 
         {copyable && (
-          <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
+          <div className="pointer-events-auto absolute top-5 right-6 bg-transparent">
             <button
               role="button"
               className={cn('ml-2 border-none bg-transparent outline-none')}
@@ -201,7 +201,7 @@ export function CodePlayground({
         )}
       </div>
       {footer && (
-        <div className="bg-card flex select-none items-center border-t p-2">
+        <div className="bg-card flex items-center border-t p-2 select-none">
           {typeof footer === 'function'
             ? footer({ selectedLang, selectedCode })
             : footer}

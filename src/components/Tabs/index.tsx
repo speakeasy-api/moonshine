@@ -20,7 +20,7 @@ const Tab = function Tab<I extends string>({
       className={cn(
         'text-muted-foreground mb-[-1px] cursor-pointer px-4 py-2 text-sm',
         active &&
-          'bg-background text-foreground rounded-t-lg border-l border-r border-t',
+          'bg-background text-foreground rounded-t-lg border-t border-r border-l',
         className
       )}
       onClick={onClick}
@@ -64,7 +64,7 @@ export function Tabs<I extends string>({
   return (
     <div
       className={cn(
-        'border-border flex select-none flex-row justify-start gap-2 border-b',
+        'border-border flex flex-row justify-start gap-2 border-b select-none',
         className
       )}
     >
