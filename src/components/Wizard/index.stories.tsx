@@ -1,5 +1,6 @@
 import React from 'react'
-import { Wizard, WizardStep } from '.'
+import { Wizard } from '.'
+import { type WizardStep } from './types'
 import { StoryObj, Meta } from '@storybook/react'
 import { Badge, Heading } from '@/index'
 
@@ -20,13 +21,13 @@ const steps: WizardStep[] = [
     commands: [
       {
         code: 'brew install speakeasy-api/homebrew-tap/speakeasy',
-        label: 'Install Speakeasy',
+        comment: 'Install Speakeasy',
         language: 'bash',
         id: 'install-speakeasy',
       },
       {
         code: 'speakeasy quickstart',
-        label: 'Run quickstart',
+        comment: 'Run quickstart',
         language: 'bash',
         id: 'run-quickstart',
       },
@@ -38,13 +39,13 @@ const steps: WizardStep[] = [
     commands: [
       {
         code: 'cd your_sdk_directory',
-        label: 'Navigate to SDK directory',
+        comment: 'Navigate to SDK directory',
         language: 'bash',
         id: 'navigate-to-sdk-directory',
       },
       {
         code: 'speakeasy configure github',
-        label: 'Configure GitHub',
+        comment: 'Configure GitHub',
         language: 'bash',
         id: 'configure-github',
       },
@@ -56,13 +57,13 @@ const steps: WizardStep[] = [
     commands: [
       {
         code: 'cd your_sdk_directory',
-        label: 'Navigate to SDK directory',
+        comment: 'Navigate to SDK directory',
         language: 'bash',
         id: 'navigate-to-sdk-directory',
       },
       {
         code: 'speakeasy configure publishing',
-        label: 'Configure publishing',
+        comment: 'Configure publishing',
         language: 'bash',
         id: 'configure-publishing',
       },
@@ -135,7 +136,7 @@ export const FizzBuzz: Story = {
     console.log(i);
   }
 }`,
-            label: 'Basic loop structure',
+            comment: 'Basic loop structure',
             language: 'javascript',
             id: 'basic-loop-structure',
           },
@@ -154,7 +155,7 @@ export const FizzBuzz: Story = {
     console.log(output || i);
   }
 }`,
-            label: 'Complete FizzBuzz solution',
+            comment: 'Complete FizzBuzz solution',
             language: 'javascript',
             id: 'complete-fizzbuzz-solution',
           },
@@ -166,7 +167,7 @@ export const FizzBuzz: Story = {
         commands: [
           {
             code: 'fizzBuzz()',
-            label: 'Run the function',
+            comment: 'Run the function',
             language: 'javascript',
             id: 'run-the-function',
           },

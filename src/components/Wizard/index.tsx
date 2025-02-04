@@ -1,23 +1,8 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { CodeSnippet, Heading, Text } from '@/index'
-import { ProgrammingLanguage } from '@/types'
 import { useMemo } from 'react'
-
-export interface WizardCommand {
-  id: string
-  code: string
-  language: ProgrammingLanguage
-  label: string
-  active?: boolean
-  onSelectOrCopy?: (id: string) => void
-}
-
-export interface WizardStep {
-  title: string
-  description: string
-  commands?: WizardCommand[]
-}
+import { WizardStep } from './types'
 
 interface WizardProps {
   /**
