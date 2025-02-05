@@ -53,6 +53,7 @@ export function RecentWorkspaces({
             <CommandGroup key={org.id} heading={org.slug}>
               {org.workspaces.map((workspace) => (
                 <WorkspaceItem
+                  key={workspace.id}
                   workspace={workspace}
                   isSelected={
                     selectedOrg?.id === org.id &&
