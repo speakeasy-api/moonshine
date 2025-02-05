@@ -1,9 +1,7 @@
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { ResponsiveValue, Size } from '@/types'
+import { cn } from '@/lib/utils'
+import { ResponsiveValue, Size, Breakpoint } from '@/types'
 import { userAvatarSizeMap } from './sizeMap'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
-import { userAvatarSizeMapper } from './sizeMap'
+import styles from './userAvatar.module.css'
 
 export interface UserAvatarProps {
   name: string
@@ -14,22 +12,45 @@ export interface UserAvatarProps {
 }
 
 const fallbackColors = [
-  'bg-red-500',
-  'bg-orange-500',
-  'bg-yellow-500',
-  'bg-green-500',
-  'bg-blue-500',
-  'bg-purple-500',
-  'bg-pink-500',
+  styles.fallbackRed,
+  styles.fallbackOrange,
+  styles.fallbackYellow,
+  styles.fallbackGreen,
+  styles.fallbackBlue,
+  styles.fallbackPurple,
+  styles.fallbackPink,
 ]
 
 // deterministically returns a color based on the first letter of the name
 function getFallbackColor(name: string | undefined) {
-  if (!name) return 'bg-gray-900'
+  if (!name) return styles.fallbackGray
   const firstLetter = name[0].toLowerCase()
 
   const index = firstLetter.charCodeAt(0) - 'a'.charCodeAt(0)
   return fallbackColors[index % fallbackColors.length]
+}
+
+const mapSize = (size: Size) => `${userAvatarSizeMap[size] * 0.25}rem`
+
+const createResponsiveVars = <T extends string | number | boolean | object>(
+  value: ResponsiveValue<T>,
+  prefix: string,
+  mapper: (val: T) => string
+): React.CSSProperties => {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return (Object.entries(value) as [Breakpoint, T][]).reduce(
+      (acc, [breakpoint, val]) => {
+        if (val === undefined) return acc
+        const cssVar =
+          breakpoint === 'xs'
+            ? `--avatar-${prefix}`
+            : `--${breakpoint}-avatar-${prefix}`
+        return { ...acc, [cssVar]: mapper(val) }
+      },
+      {}
+    )
+  }
+  return value ? { [`--avatar-${prefix}`]: mapper(value as T) } : {}
 }
 
 export function UserAvatar({
@@ -39,32 +60,26 @@ export function UserAvatar({
   border = false,
   className,
 }: UserAvatarProps) {
-  const breakpoint = useTailwindBreakpoint()
-
-  const resolvedSize = resolveSizeForBreakpoint(breakpoint, size, 'medium')
-  const sizeValue = userAvatarSizeMap[resolvedSize]
-
+  const style = size ? createResponsiveVars(size, 'size', mapSize) : undefined
   const hasImage = !!imageUrl
+  const sizeValue =
+    userAvatarSizeMap[typeof size === 'string' ? size : 'medium']
 
   return (
     <div
       className={cn(
-        'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
-        getResponsiveClasses(size, userAvatarSizeMapper),
+        styles.avatar,
         !hasImage && getFallbackColor(name),
-        border && 'border-background border-2',
+        border && styles.border,
         className
       )}
+      style={style}
     >
       {hasImage ? (
-        <img
-          src={imageUrl}
-          alt={name}
-          className="h-full w-full object-cover object-center select-none"
-        />
+        <img src={imageUrl} alt={name} className={styles.image} />
       ) : (
         <svg
-          className="h-full w-full select-none"
+          className={styles.svg}
           viewBox={`0 0 ${sizeValue} ${sizeValue}`}
           preserveAspectRatio="xMidYMid meet"
         >

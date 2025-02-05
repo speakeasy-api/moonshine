@@ -1,0 +1,96 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 1), minmax(0, 1fr));
+  gap: var(--grid-gap, 0);
+  padding: var(--grid-padding, 0);
+}
+
+.flow-col {
+  grid-auto-flow: column;
+}
+
+.item {
+  grid-column: span var(--grid-item-col-span, 1);
+  padding: var(--grid-item-padding, 0);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--sm-grid-columns, var(--grid-columns, 1)),
+      minmax(0, 1fr)
+    );
+    gap: var(--sm-grid-gap, var(--grid-gap, 0));
+    padding: var(--sm-grid-padding, var(--grid-padding, 0));
+  }
+
+  .item {
+    grid-column: span var(--sm-grid-item-col-span, var(--grid-item-col-span, 1));
+    padding: var(--sm-grid-item-padding, var(--grid-item-padding, 0));
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--md-grid-columns, var(--grid-columns, 1)),
+      minmax(0, 1fr)
+    );
+    gap: var(--md-grid-gap, var(--grid-gap, 0));
+    padding: var(--md-grid-padding, var(--grid-padding, 0));
+  }
+
+  .item {
+    grid-column: span var(--md-grid-item-col-span, var(--grid-item-col-span, 1));
+    padding: var(--md-grid-item-padding, var(--grid-item-padding, 0));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--lg-grid-columns, var(--grid-columns, 1)),
+      minmax(0, 1fr)
+    );
+    gap: var(--lg-grid-gap, var(--grid-gap, 0));
+    padding: var(--lg-grid-padding, var(--grid-padding, 0));
+  }
+
+  .item {
+    grid-column: span var(--lg-grid-item-col-span, var(--grid-item-col-span, 1));
+    padding: var(--lg-grid-item-padding, var(--grid-item-padding, 0));
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--xl-grid-columns, var(--grid-columns, 1)),
+      minmax(0, 1fr)
+    );
+    gap: var(--xl-grid-gap, var(--grid-gap, 0));
+    padding: var(--xl-grid-padding, var(--grid-padding, 0));
+  }
+
+  .item {
+    grid-column: span var(--xl-grid-item-col-span, var(--grid-item-col-span, 1));
+    padding: var(--xl-grid-item-padding, var(--grid-item-padding, 0));
+  }
+}
+
+@media (min-width: 1536px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--2xl-grid-columns, var(--grid-columns, 1)),
+      minmax(0, 1fr)
+    );
+    gap: var(--2xl-grid-gap, var(--grid-gap, 0));
+    padding: var(--2xl-grid-padding, var(--grid-padding, 0));
+  }
+
+  .item {
+    grid-column: span
+      var(--2xl-grid-item-col-span, var(--grid-item-col-span, 1));
+    padding: var(--2xl-grid-item-padding, var(--grid-item-padding, 0));
+  }
+}

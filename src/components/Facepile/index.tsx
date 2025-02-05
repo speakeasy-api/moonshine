@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ResponsiveValue, Size } from '@/types'
+import { ResponsiveValue, Size, Breakpoint } from '@/types'
 import { UserAvatar, UserAvatarProps } from '@/components/UserAvatar'
-import {
-  userAvatarSizeMap,
-  userAvatarSizeMapper,
-} from '@/components/UserAvatar/sizeMap'
-import { cn, getResponsiveClasses } from '@/lib/utils'
+import { userAvatarSizeMap } from '@/components/UserAvatar/sizeMap'
+import { cn } from '@/lib/utils'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
+import styles from './facepile.module.css'
 
 type FacepileVariant = 'interactive' | 'static'
 type AvatarProps = Omit<UserAvatarProps, 'size'> & { href?: string }
@@ -133,7 +131,7 @@ export function Facepile({
   return (
     <motion.div
       ref={containerRef}
-      className={cn('relative', className)}
+      className={cn(styles.container, className)}
       style={{ height: size }}
       animate={{ width: containerWidth }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -195,7 +193,7 @@ export function Facepile({
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className={`pointer-events-none absolute left-0 z-10 flex h-5 items-center justify-center rounded-full bg-black px-2 text-xs font-medium whitespace-nowrap text-white`}
+            className={styles.tooltip}
             style={{
               top: size + 4,
             }}
@@ -214,7 +212,7 @@ export function Facepile({
 
       {extraFaces > 0 && !isExpanded && (
         <motion.div
-          className="absolute z-0"
+          className={styles.extraFacesContainer}
           style={{
             left: visibleFaces.length * offsetX,
           }}
@@ -223,8 +221,8 @@ export function Facepile({
         >
           <div
             className={cn(
-              'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-              getResponsiveClasses(avatarSize, userAvatarSizeMapper)
+              styles.extraFaces,
+              createResponsiveVars(avatarSize, 'size', mapSize)
             )}
           >
             +{extraFaces}
@@ -309,4 +307,27 @@ function AvatarWrapper({
       )}
     </motion.div>
   )
+}
+
+const mapSize = (size: Size) => `${userAvatarSizeMap[size] * 0.25}rem`
+
+const createResponsiveVars = <T extends string | number | boolean | object>(
+  value: ResponsiveValue<T>,
+  prefix: string,
+  mapper: (val: T) => string
+): React.CSSProperties => {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return (Object.entries(value) as [Breakpoint, T][]).reduce(
+      (acc, [breakpoint, val]) => {
+        if (val === undefined) return acc
+        const cssVar =
+          breakpoint === 'xs'
+            ? `--facepile-${prefix}`
+            : `--${breakpoint}-facepile-${prefix}`
+        return { ...acc, [cssVar]: mapper(val) }
+      },
+      {}
+    )
+  }
+  return value ? { [`--facepile-${prefix}`]: mapper(value as T) } : {}
 }

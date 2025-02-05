@@ -1,0 +1,79 @@
+.container {
+  position: relative;
+}
+
+.tooltip {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: black;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: white;
+}
+
+.extraFacesContainer {
+  position: absolute;
+  z-index: 0;
+}
+
+.extraFaces {
+  margin-left: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid white;
+  background-color: rgb(229 231 235);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(75 85 99);
+  width: var(--facepile-size, 2.5rem);
+  height: var(--facepile-size, 2.5rem);
+}
+
+@media (min-width: 640px) {
+  .extraFaces {
+    width: var(--sm-facepile-size, var(--facepile-size, 2.5rem));
+    height: var(--sm-facepile-size, var(--facepile-size, 2.5rem));
+  }
+}
+
+@media (min-width: 768px) {
+  .extraFaces {
+    width: var(--md-facepile-size, var(--facepile-size, 2.5rem));
+    height: var(--md-facepile-size, var(--facepile-size, 2.5rem));
+  }
+}
+
+@media (min-width: 1024px) {
+  .extraFaces {
+    width: var(--lg-facepile-size, var(--facepile-size, 2.5rem));
+    height: var(--lg-facepile-size, var(--facepile-size, 2.5rem));
+  }
+}
+
+@media (min-width: 1280px) {
+  .extraFaces {
+    width: var(--xl-facepile-size, var(--facepile-size, 2.5rem));
+    height: var(--xl-facepile-size, var(--facepile-size, 2.5rem));
+  }
+}
+
+@media (min-width: 1536px) {
+  .extraFaces {
+    width: var(--2xl-facepile-size, var(--facepile-size, 2.5rem));
+    height: var(--2xl-facepile-size, var(--facepile-size, 2.5rem));
+  }
+}

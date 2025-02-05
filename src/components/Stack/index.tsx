@@ -1,7 +1,11 @@
 import React from 'react'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Gap, Padding, ResponsiveValue } from '@/types'
-import { gapMapper, paddingMapper, wrapMapper } from '@/lib/responsiveMappers'
+import { cn } from '@/lib/utils'
+import { Gap, Padding, ResponsiveValue, Breakpoint } from '@/types'
+import styles from './stack.module.css'
+import {
+  isPaddingHorizontalOrVerticalAxis,
+  isPaddingPerSideValue,
+} from '@/lib/typeUtils'
 
 type StackDirection = 'horizontal' | 'vertical'
 type StackAlign = 'stretch' | 'start' | 'center' | 'end' | 'baseline'
@@ -12,42 +16,60 @@ type StackJustify =
   | 'space-between'
   | 'space-evenly'
 type StackWrap = 'wrap' | 'nowrap'
-type TailwindJustify =
-  | 'justify-start'
-  | 'justify-center'
-  | 'justify-end'
-  | 'justify-between'
-  | 'justify-evenly'
-type TailwindAlign =
-  | 'items-start'
-  | 'items-center'
-  | 'items-end'
-  | 'items-baseline'
-  | 'items-stretch'
-type TailwindDirection = 'flex-row' | 'flex-col'
 
 interface StackProps {
   children: React.ReactNode
-
-  /** Specify the orientation for the stack container */
   direction?: ResponsiveValue<StackDirection>
-
-  /** Specify the gap between children elements in the stack */
   gap?: ResponsiveValue<Gap>
-
-  /** Specify the padding of the stack container */
   padding?: ResponsiveValue<Padding>
-
-  /** Specify the alignment between items in the cross-axis of the orientation */
   align?: ResponsiveValue<StackAlign>
-
-  /** Specify how items will be distributed in the stacking direction */
   justify?: ResponsiveValue<StackJustify>
-
-  /** Specify whether items are forced onto one line or can wrap */
   wrap?: ResponsiveValue<StackWrap>
-
   className?: string
+}
+
+const mapDirection = (direction: StackDirection) =>
+  direction === 'horizontal' ? 'row' : 'column'
+const mapAlign = (align: StackAlign) => align
+const mapJustify = (justify: StackJustify) => justify
+const mapGap = (gap: Gap) => `${Number(gap) * 4}px` // Ensure gap is treated as a number
+const mapWrap = (wrap: StackWrap) => wrap
+
+const mapPadding = (padding: Padding): string => {
+  if (isPaddingHorizontalOrVerticalAxis(padding)) {
+    const { x, y } = padding
+    return `${Number(y) * 4}px ${Number(x) * 4}px`
+  }
+  if (isPaddingPerSideValue(padding)) {
+    const { top, right, bottom, left } = padding
+    return `${Number(top) * 4}px ${Number(right) * 4}px ${Number(bottom) * 4}px ${Number(left) * 4}px`
+  }
+  return `${Number(padding) * 4}px`
+}
+
+const createResponsiveVars = <T extends string | number | boolean | object>(
+  value: ResponsiveValue<T>,
+  prefix: string,
+  mapper: (val: T) => string
+): React.CSSProperties => {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if ('x' in value || 'y' in value || 'top' in value) {
+      // Handle padding object directly
+      return { [`--stack-${prefix}`]: mapper(value as T) }
+    }
+    return (Object.entries(value) as [Breakpoint, T][]).reduce(
+      (acc, [breakpoint, val]) => {
+        if (val === undefined) return acc
+        const cssVar =
+          breakpoint === 'xs'
+            ? `--stack-${prefix}`
+            : `--${breakpoint}-stack-${prefix}`
+        return { ...acc, [cssVar]: mapper(val) }
+      },
+      {}
+    )
+  }
+  return value ? { [`--stack-${prefix}`]: mapper(value as T) } : {}
 }
 
 export function Stack({
@@ -60,55 +82,17 @@ export function Stack({
   wrap = 'nowrap',
   className,
 }: StackProps) {
-  const alignMapper = (val: StackAlign): TailwindAlign => {
-    switch (val) {
-      case 'start':
-        return 'items-start'
-      case 'center':
-        return 'items-center'
-      case 'end':
-        return 'items-end'
-      case 'baseline':
-        return 'items-baseline'
-      default:
-        return 'items-stretch'
-    }
-  }
-
-  const justifyMapper = (val: StackJustify): TailwindJustify => {
-    switch (val) {
-      case 'start':
-        return 'justify-start'
-      case 'center':
-        return 'justify-center'
-      case 'end':
-        return 'justify-end'
-      case 'space-between':
-        return 'justify-between'
-      case 'space-evenly':
-        return 'justify-evenly'
-      default:
-        return 'justify-start'
-    }
-  }
-
-  const directionToFlexMapper = (val: StackDirection): TailwindDirection => {
-    return val === 'horizontal' ? 'flex-row' : 'flex-col'
+  const style = {
+    ...createResponsiveVars(direction, 'direction', mapDirection),
+    ...createResponsiveVars(gap, 'gap', mapGap),
+    ...createResponsiveVars(padding, 'padding', mapPadding),
+    ...createResponsiveVars(align, 'align', mapAlign),
+    ...createResponsiveVars(justify, 'justify', mapJustify),
+    ...createResponsiveVars(wrap, 'wrap', mapWrap),
   }
 
   return (
-    <div
-      className={cn(
-        'flex',
-        getResponsiveClasses(direction, directionToFlexMapper),
-        getResponsiveClasses(gap, gapMapper),
-        getResponsiveClasses(padding, paddingMapper),
-        getResponsiveClasses(wrap, wrapMapper),
-        getResponsiveClasses(align, alignMapper),
-        getResponsiveClasses(justify, justifyMapper),
-        className
-      )}
-    >
+    <div className={cn(styles.stack, className)} style={style}>
       {children}
     </div>
   )
@@ -116,17 +100,17 @@ export function Stack({
 
 interface StackItemProps {
   children: React.ReactNode
-  /** Allow item to keep size or expand to fill the available space */
   grow?: ResponsiveValue<boolean>
   className?: string
 }
 
 Stack.Item = function StackItem({ children, grow, className }: StackItemProps) {
-  const growMapper = (val: boolean) => (val ? 'flex-1' : 'flex-initial')
+  const style = grow
+    ? createResponsiveVars(grow, 'flex', (val) => (val ? '1' : 'initial'))
+    : undefined
+
   return (
-    <div
-      className={cn(getResponsiveClasses(grow ?? false, growMapper), className)}
-    >
+    <div className={cn(className)} style={style}>
       {children}
     </div>
   )

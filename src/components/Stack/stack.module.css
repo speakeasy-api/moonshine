@@ -1,0 +1,195 @@
+.stack {
+  display: flex;
+  flex-direction: var(--stack-direction, column);
+  align-items: var(--stack-align, stretch);
+  justify-content: var(--stack-justify, flex-start);
+  flex: var(--stack-flex, initial);
+  gap: var(--stack-gap, 0);
+  padding: var(--stack-padding, 0);
+  flex-wrap: var(--stack-wrap, nowrap);
+}
+
+/* Breakpoint-specific variables will be set inline via style prop */
+@media (min-width: 640px) {
+  .stack {
+    flex-direction: var(--sm-stack-direction, var(--stack-direction));
+    align-items: var(--sm-stack-align, var(--stack-align));
+    justify-content: var(--sm-stack-justify, var(--stack-justify));
+    gap: var(--sm-stack-gap, var(--stack-gap));
+    padding: var(--sm-stack-padding, var(--stack-padding));
+    flex-wrap: var(--sm-stack-wrap, var(--stack-wrap));
+  }
+}
+
+@media (min-width: 768px) {
+  .stack {
+    flex-direction: var(
+      --md-stack-direction,
+      var(--sm-stack-direction, var(--stack-direction))
+    );
+    align-items: var(
+      --md-stack-align,
+      var(--sm-stack-align, var(--stack-align))
+    );
+    justify-content: var(
+      --md-stack-justify,
+      var(--sm-stack-justify, var(--stack-justify))
+    );
+    gap: var(--md-stack-gap, var(--sm-stack-gap, var(--stack-gap)));
+    padding: var(
+      --md-stack-padding,
+      var(--sm-stack-padding, var(--stack-padding))
+    );
+    flex-wrap: var(--md-stack-wrap, var(--sm-stack-wrap, var(--stack-wrap)));
+  }
+}
+
+@media (min-width: 1024px) {
+  .stack {
+    flex-direction: var(
+      --lg-stack-direction,
+      var(
+        --md-stack-direction,
+        var(--sm-stack-direction, var(--stack-direction))
+      )
+    );
+    align-items: var(
+      --lg-stack-align,
+      var(--md-stack-align, var(--sm-stack-align, var(--stack-align)))
+    );
+    justify-content: var(
+      --lg-stack-justify,
+      var(--md-stack-justify, var(--sm-stack-justify, var(--stack-justify)))
+    );
+    gap: var(
+      --lg-stack-gap,
+      var(--md-stack-gap, var(--sm-stack-gap, var(--stack-gap)))
+    );
+    padding: var(
+      --lg-stack-padding,
+      var(--md-stack-padding, var(--sm-stack-padding, var(--stack-padding)))
+    );
+    flex-wrap: var(
+      --lg-stack-wrap,
+      var(--md-stack-wrap, var(--sm-stack-wrap, var(--stack-wrap)))
+    );
+  }
+}
+
+@media (min-width: 1280px) {
+  .stack {
+    flex-direction: var(
+      --xl-stack-direction,
+      var(
+        --lg-stack-direction,
+        var(
+          --md-stack-direction,
+          var(--sm-stack-direction, var(--stack-direction))
+        )
+      )
+    );
+    align-items: var(
+      --xl-stack-align,
+      var(
+        --lg-stack-align,
+        var(--md-stack-align, var(--sm-stack-align, var(--stack-align)))
+      )
+    );
+    justify-content: var(
+      --xl-stack-justify,
+      var(
+        --lg-stack-justify,
+        var(--md-stack-justify, var(--sm-stack-justify, var(--stack-justify)))
+      )
+    );
+    gap: var(
+      --xl-stack-gap,
+      var(
+        --lg-stack-gap,
+        var(--md-stack-gap, var(--sm-stack-gap, var(--stack-gap)))
+      )
+    );
+    padding: var(
+      --xl-stack-padding,
+      var(
+        --lg-stack-padding,
+        var(--md-stack-padding, var(--sm-stack-padding, var(--stack-padding)))
+      )
+    );
+    flex-wrap: var(
+      --xl-stack-wrap,
+      var(
+        --lg-stack-wrap,
+        var(--md-stack-wrap, var(--sm-stack-wrap, var(--stack-wrap)))
+      )
+    );
+  }
+}
+
+@media (min-width: 1536px) {
+  .stack {
+    flex-direction: var(
+      --2xl-stack-direction,
+      var(
+        --xl-stack-direction,
+        var(
+          --lg-stack-direction,
+          var(
+            --md-stack-direction,
+            var(--sm-stack-direction, var(--stack-direction))
+          )
+        )
+      )
+    );
+    align-items: var(
+      --2xl-stack-align,
+      var(
+        --xl-stack-align,
+        var(
+          --lg-stack-align,
+          var(--md-stack-align, var(--sm-stack-align, var(--stack-align)))
+        )
+      )
+    );
+    justify-content: var(
+      --2xl-stack-justify,
+      var(
+        --xl-stack-justify,
+        var(
+          --lg-stack-justify,
+          var(--md-stack-justify, var(--sm-stack-justify, var(--stack-justify)))
+        )
+      )
+    );
+    gap: var(
+      --2xl-stack-gap,
+      var(
+        --xl-stack-gap,
+        var(
+          --lg-stack-gap,
+          var(--md-stack-gap, var(--sm-stack-gap, var(--stack-gap)))
+        )
+      )
+    );
+    padding: var(
+      --2xl-stack-padding,
+      var(
+        --xl-stack-padding,
+        var(
+          --lg-stack-padding,
+          var(--md-stack-padding, var(--sm-stack-padding, var(--stack-padding)))
+        )
+      )
+    );
+    flex-wrap: var(
+      --2xl-stack-wrap,
+      var(
+        --xl-stack-wrap,
+        var(
+          --lg-stack-wrap,
+          var(--md-stack-wrap, var(--sm-stack-wrap, var(--stack-wrap)))
+        )
+      )
+    );
+  }
+}

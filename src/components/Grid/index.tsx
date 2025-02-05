@@ -1,11 +1,11 @@
-import {
-  colSpanMapper,
-  gapMapper,
-  paddingMapper,
-} from '@/lib/responsiveMappers'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
+import { cn } from '@/lib/utils'
+import { Columns, Gap, Padding, ResponsiveValue, Breakpoint } from '@/types'
 import { isValidElement, ReactElement } from 'react'
+import styles from './grid.module.css'
+import {
+  isPaddingHorizontalOrVerticalAxis,
+  isPaddingPerSideValue,
+} from '@/lib/typeUtils'
 
 interface GridProps {
   /**
@@ -79,7 +79,45 @@ interface GridProps {
   className?: string
 }
 
-const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
+const mapColumns = (columns: Columns) => columns
+const mapGap = (gap: Gap) => `${Number(gap) * 4}px`
+
+const mapPadding = (padding: Padding): string => {
+  if (isPaddingHorizontalOrVerticalAxis(padding)) {
+    const { x, y } = padding
+    return `${Number(y) * 4}px ${Number(x) * 4}px`
+  }
+  if (isPaddingPerSideValue(padding)) {
+    const { top, right, bottom, left } = padding
+    return `${Number(top) * 4}px ${Number(right) * 4}px ${Number(bottom) * 4}px ${Number(left) * 4}px`
+  }
+  return `${Number(padding) * 4}px`
+}
+
+const createResponsiveVars = <T extends string | number | boolean | object>(
+  value: ResponsiveValue<T>,
+  prefix: string,
+  mapper: (val: T) => string | number
+): React.CSSProperties => {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if ('x' in value || 'y' in value || 'top' in value) {
+      // Handle padding object directly
+      return { [`--grid-${prefix}`]: mapper(value as T) }
+    }
+    return (Object.entries(value) as [Breakpoint, T][]).reduce(
+      (acc, [breakpoint, val]) => {
+        if (val === undefined) return acc
+        const cssVar =
+          breakpoint === 'xs'
+            ? `--grid-${prefix}`
+            : `--${breakpoint}-grid-${prefix}`
+        return { ...acc, [cssVar]: mapper(val) }
+      },
+      {}
+    )
+  }
+  return value ? { [`--grid-${prefix}`]: mapper(value as T) } : {}
+}
 
 const isValidGridChild = (child: ReactElement) =>
   isValidElement(child) && child.type === GridItem
@@ -92,17 +130,17 @@ const Grid = ({
   padding = 0,
   className,
 }: GridProps) => {
+  const style = {
+    ...createResponsiveVars(columns, 'columns', mapColumns),
+    ...createResponsiveVars(gap, 'gap', mapGap),
+    ...createResponsiveVars(padding, 'padding', mapPadding),
+  }
+
   const validGridChildren = children.filter(isValidGridChild)
   return (
     <div
-      className={cn(
-        'grid',
-        getResponsiveClasses(columns, columnsMapper),
-        getResponsiveClasses(gap, gapMapper),
-        !wrap && 'grid-flow-col',
-        getResponsiveClasses(padding, paddingMapper),
-        className
-      )}
+      className={cn(styles.grid, !wrap && styles['flow-col'], className)}
+      style={style}
     >
       {validGridChildren}
     </div>
@@ -128,16 +166,17 @@ const GridItem = ({
   className,
   ...props
 }: GridItemProps) => {
+  const style = {
+    ...(colSpan
+      ? createResponsiveVars(colSpan, 'item-col-span', (val) => val)
+      : {}),
+    ...(padding
+      ? createResponsiveVars(padding, 'item-padding', mapPadding)
+      : {}),
+  }
+
   return (
-    <div
-      className={cn(
-        'grid-item',
-        colSpan && getResponsiveClasses(colSpan, colSpanMapper),
-        padding && getResponsiveClasses(padding, paddingMapper),
-        className
-      )}
-      {...props}
-    >
+    <div className={cn(styles.item, className)} style={style} {...props}>
       {children}
     </div>
   )
