@@ -15,7 +15,7 @@ const alertVariants = cva<{
     [k in Modifier]: string
   }
 }>(
-  `min-w-48 flex flex-row subpixel-antialiased font-light items-center px-3 pr-2 py-2 w-full`,
+  `min-w-48 max-h-fit flex flex-row subpixel-antialiased font-light items-center px-3 pr-2 py-2 w-full`,
   {
     variants: {
       variant: {
