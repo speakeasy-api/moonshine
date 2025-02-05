@@ -1,7 +1,14 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-170/table-component
-import React, {PropsWithChildren, type ReactNode, RefObject, useMemo, useRef, useState} from 'react'
-import {cn} from '@/lib/utils'
-import {Loader2} from 'lucide-react'
+import React, {
+  PropsWithChildren,
+  type ReactNode,
+  RefObject,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { cn } from '@/lib/utils'
+import { Loader2 } from 'lucide-react'
 import styles from './styles.module.css'
 
 export type Column<T extends object> = {
@@ -88,18 +95,17 @@ export type TableProps<T extends object> = {
 }
 
 function TableRoot<T extends object>({
-                                       columns,
-                                       data,
-                                       rowKey,
-                                       onRowClick,
-                                       onLoadMore,
-                                       hasMore,
-                                       noResultsMessage,
-                                       renderGroupHeader,
-                                       className,
-                                       cellPadding = 'normal',
-                                     }: TableProps<T>) {
-
+  columns,
+  data,
+  rowKey,
+  onRowClick,
+  onLoadMore,
+  hasMore,
+  noResultsMessage,
+  renderGroupHeader,
+  className,
+  cellPadding = 'normal',
+}: TableProps<T>) {
   const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
   const tableRef = useRef<HTMLTableElement | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -110,8 +116,13 @@ function TableRoot<T extends object>({
   }
 
   return (
-    <Table.Wrapper ref={tableRef} className={className} columns={columns} cellPadding={cellPadding}>
-      <Table.Header columns={columns}/>
+    <Table.Wrapper
+      ref={tableRef}
+      className={className}
+      columns={columns}
+      cellPadding={cellPadding}
+    >
+      <Table.Header columns={columns} />
       <Table.Body
         ref={tableBodyRef}
         data={data}
@@ -135,7 +146,13 @@ interface TableWrapperProps<T extends object> extends PropsWithChildren {
   cellPadding?: TableProps<T>['cellPadding']
 }
 
-function TableWrapper<T extends object>({ref, columns, className, cellPadding, children}: TableWrapperProps<T>) {
+function TableWrapper<T extends object>({
+  ref,
+  columns,
+  className,
+  cellPadding,
+  children,
+}: TableWrapperProps<T>) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
   }, [columns])
@@ -164,31 +181,31 @@ interface HeaderRowProps<T extends object> {
   columns: Column<T>[]
 }
 
-function HeaderRowRoot<T extends object>({columns}: HeaderRowProps<T>) {
+function HeaderRowRoot<T extends object>({ columns }: HeaderRowProps<T>) {
   return (
     <Header.Wrapper>
-      {columns.map((column) => <Header.Cell key={column.key}>{column.header}</Header.Cell>)}
+      {columns.map((column) => (
+        <Header.Cell key={column.key}>{column.header}</Header.Cell>
+      ))}
     </Header.Wrapper>
   )
 }
 
-interface HeaderRowWrapperProps extends PropsWithChildren {
-}
+interface HeaderRowWrapperProps extends PropsWithChildren {}
 
-function HeaderRowWrapper({children}: HeaderRowWrapperProps) {
+function HeaderRowWrapper({ children }: HeaderRowWrapperProps) {
   return (
     <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-    <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
-      {children}
-    </tr>
+      <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
+        {children}
+      </tr>
     </thead>
   )
 }
 
-interface HeaderCellProps extends PropsWithChildren {
-}
+interface HeaderCellProps extends PropsWithChildren {}
 
-function HeaderCell({children}: HeaderCellProps) {
+function HeaderCell({ children }: HeaderCellProps) {
   return (
     <th
       className={cn(
@@ -222,48 +239,59 @@ interface BodyProps<T extends object> {
 }
 
 function BodyRoot<T extends object>({
-                                      ref,
-                                      data,
-                                      columns,
-                                      rowKey,
-                                      hasMore,
-                                      onRowClick,
-                                      noResultsMessage,
-                                      renderGroupHeader,
-                                      handleLoadMore,
-                                      isLoading,
-                                      className,
-                                    }: BodyProps<T>) {
-  return (<Body.Wrapper
-    ref={ref}
-    className={cn(
-      // Account for the load more button
-      hasMore ? 'pb-16' : '',
-      className ?? ''
-    )}
-  >
-    {data.length === 0 ? (
-      <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
-    ) : (
-      data.map((d) =>
-        isGroupOf<T>(d) ? (
-          <RowGroup
-            group={d}
-            columns={columns}
-            rowKey={rowKey}
-            renderGroupHeader={renderGroupHeader}
-            key={rowKey(d)}
-            onRowClick={onRowClick}
-          />
-        ) : (
-          <Row row={d} key={rowKey(d)} columns={columns} onClick={onRowClick}/>
+  ref,
+  data,
+  columns,
+  rowKey,
+  hasMore,
+  onRowClick,
+  noResultsMessage,
+  renderGroupHeader,
+  handleLoadMore,
+  isLoading,
+  className,
+}: BodyProps<T>) {
+  return (
+    <Body.Wrapper
+      ref={ref}
+      className={cn(
+        // Account for the load more button
+        hasMore ? 'pb-16' : '',
+        className ?? ''
+      )}
+    >
+      {data.length === 0 ? (
+        <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
+      ) : (
+        data.map((d) =>
+          isGroupOf<T>(d) ? (
+            <RowGroup
+              group={d}
+              columns={columns}
+              rowKey={rowKey}
+              renderGroupHeader={renderGroupHeader}
+              key={rowKey(d)}
+              onRowClick={onRowClick}
+            />
+          ) : (
+            <Row
+              row={d}
+              key={rowKey(d)}
+              columns={columns}
+              onClick={onRowClick}
+            />
+          )
         )
-      )
-    )}
-    {hasMore && handleLoadMore && (
-      <LoadMore columns={columns} handleLoadMore={handleLoadMore} isLoading={isLoading ?? false}/>
-    )}
-  </Body.Wrapper>)
+      )}
+      {hasMore && handleLoadMore && (
+        <LoadMore
+          columns={columns}
+          handleLoadMore={handleLoadMore}
+          isLoading={isLoading ?? false}
+        />
+      )}
+    </Body.Wrapper>
+  )
 }
 
 interface BodyWrapperProps extends PropsWithChildren {
@@ -271,16 +299,18 @@ interface BodyWrapperProps extends PropsWithChildren {
   className?: string
 }
 
-function BodyWrapper({ref, className, children}: BodyWrapperProps) {
-  return <tbody
-    ref={ref}
-    className={cn(
-      'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-      className ?? ''
-    )}
-  >
-  {children}
-  </tbody>
+function BodyWrapper({ ref, className, children }: BodyWrapperProps) {
+  return (
+    <tbody
+      ref={ref}
+      className={cn(
+        'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className ?? ''
+      )}
+    >
+      {children}
+    </tbody>
+  )
 }
 
 export const Body = Object.assign(BodyRoot, {
@@ -296,13 +326,18 @@ interface RowProps<T extends object> {
   className?: string
 }
 
-function RowRoot<T extends object>({row, key, onClick, columns, className}: RowProps<T>) {
+function RowRoot<T extends object>({
+  row,
+  key,
+  onClick,
+  columns,
+  className,
+}: RowProps<T>) {
   return (
     <Row.Wrapper onClick={() => onClick?.(row)} className={className}>
       {columns.map((column) => (
-          <Cell key={column.key} column={column} row={row}/>
-        )
-      )}
+        <Cell key={column.key} column={column} row={row} />
+      ))}
     </Row.Wrapper>
   )
 }
@@ -312,7 +347,7 @@ interface RowWrapperProps extends PropsWithChildren {
   className?: string
 }
 
-function RowWrapper({onClick, className, children}: RowWrapperProps) {
+function RowWrapper({ onClick, className, children }: RowWrapperProps) {
   return (
     <tr
       className={cn(
@@ -342,17 +377,24 @@ interface RowGroupProps<T extends object> {
 }
 
 function RowGroupRoot<T extends object>({
-                                          group,
-                                          columns,
-                                          renderGroupHeader,
-                                          rowKey,
-                                          className,
-                                          onRowClick
-                                        }: RowGroupProps<T>) {
+  group,
+  columns,
+  renderGroupHeader,
+  rowKey,
+  className,
+  onRowClick,
+}: RowGroupProps<T>) {
   return (
     <RowGroup.Wrapper className={className}>
       <RowGroup.Header>{renderGroupHeader?.(group)}</RowGroup.Header>
-      {group.items.map((row) => <Row row={row} key={rowKey(row)} columns={columns} onClick={onRowClick}/>)}
+      {group.items.map((row) => (
+        <Row
+          row={row}
+          key={rowKey(row)}
+          columns={columns}
+          onClick={onRowClick}
+        />
+      ))}
     </RowGroup.Wrapper>
   )
 }
@@ -361,23 +403,23 @@ interface RowGroupWrapperProps extends PropsWithChildren {
   className?: string
 }
 
-function RowGroupWrapper({className, children}: RowGroupWrapperProps) {
+function RowGroupWrapper({ className, children }: RowGroupWrapperProps) {
   return (
-    <div className={cn('grid [grid-column:1/-1] [grid-template-columns:subgrid]', className ?? '')}>
+    <div
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className ?? ''
+      )}
+    >
       {children}
     </div>
   )
 }
 
-interface RowGroupHeaderProps extends PropsWithChildren {
-}
+interface RowGroupHeaderProps extends PropsWithChildren {}
 
-function RowGroupHeader({children}: RowGroupHeaderProps) {
-  return (
-    <div className="[grid-column:1/-1]">
-      {children}
-    </div>
-  )
+function RowGroupHeader({ children }: RowGroupHeaderProps) {
+  return <div className="[grid-column:1/-1]">{children}</div>
 }
 
 export const RowGroup = Object.assign(RowGroupRoot, {
@@ -392,7 +434,7 @@ interface CellProps<T extends object> {
   className?: string
 }
 
-function CellRoot<T extends object>({row, column, className}: CellProps<T>) {
+function CellRoot<T extends object>({ row, column, className }: CellProps<T>) {
   return (
     <Cell.Wrapper className={className}>
       {column.render
@@ -408,10 +450,14 @@ interface CellWrapperProps extends PropsWithChildren {
   className?: string
 }
 
-export function CellWrapper({className, children}: CellWrapperProps) {
+export function CellWrapper({ className, children }: CellWrapperProps) {
   return (
     <td
-      className={cn(styles.tableCell, 'flex max-w-full items-center', className ?? '')}
+      className={cn(
+        styles.tableCell,
+        'flex max-w-full items-center',
+        className ?? ''
+      )}
     >
       {children}
     </td>
@@ -423,10 +469,9 @@ export const Cell = Object.assign(CellRoot, {
   Wrapper: CellWrapper,
 })
 
-interface NoResultsMessageProps extends PropsWithChildren {
-}
+interface NoResultsMessageProps extends PropsWithChildren {}
 
-function NoResultsMessage({children}: NoResultsMessageProps) {
+function NoResultsMessage({ children }: NoResultsMessageProps) {
   return (
     <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
       <div className="[grid-column:1/-1]">{children}</div>
@@ -440,7 +485,11 @@ interface HasMoreProps<T extends object> {
   isLoading: boolean
 }
 
-function LoadMore<T extends object>({columns, handleLoadMore, isLoading}: HasMoreProps<T>) {
+function LoadMore<T extends object>({
+  columns,
+  handleLoadMore,
+  isLoading,
+}: HasMoreProps<T>) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
   }, [columns])
@@ -460,7 +509,7 @@ function LoadMore<T extends object>({columns, handleLoadMore, isLoading}: HasMor
       >
         {columns.map((column) => (
           <Cell.Wrapper key={column.key}>
-            <div className="bg-muted h-4 rounded w-full"/>
+            <div className="bg-muted h-4 w-full rounded" />
           </Cell.Wrapper>
         ))}
       </tr>
@@ -472,7 +521,7 @@ function LoadMore<T extends object>({columns, handleLoadMore, isLoading}: HasMor
           {isLoading ? (
             <>
               Loading
-              <Loader2 className="animate-spin"/>
+              <Loader2 className="animate-spin" />
             </>
           ) : (
             'Load more'
