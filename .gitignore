@@ -6,3 +6,4 @@ node_modules/
 *.tsbuildinfo
 *.tgz
 storybook-static/
+.idea

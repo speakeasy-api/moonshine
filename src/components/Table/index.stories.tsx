@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Column, Group, Table, TableProps } from '.'
-import { faker } from '@faker-js/faker'
-import { useState } from 'react'
-import { SupportedLanguage, supportedLanguages } from '@/types'
-import { TargetLanguageIcon } from '../TargetLanguageIcon'
-import { formatDistance } from 'date-fns'
-import { Icon } from '../Icon'
+import type {Meta, StoryObj} from '@storybook/react'
+import {Column, Group, Table, TableProps} from '.'
+import {faker} from '@faker-js/faker'
+import {useState} from 'react'
+import {SupportedLanguage, supportedLanguages} from '@/types'
+import {TargetLanguageIcon} from '../TargetLanguageIcon'
+import {formatDistance} from 'date-fns'
+import {Icon} from '../Icon'
 
 const meta: Meta<typeof Table> = {
   component: Table,
   decorators: [
     (Story) => (
       <div className="mx-auto my-10">
-        <Story />
+        <Story/>
       </div>
     ),
   ],
@@ -31,14 +31,14 @@ interface SDK {
 }
 
 function generateSDKs(count: number): SDK[] {
-  return Array.from({ length: count }, (_, i) => ({
-    name: faker.lorem.slug({ min: 1, max: 1 }),
-    org: faker.lorem.slug({ min: 1, max: 1 }),
-    version: `v${faker.number.int({ min: 1, max: 10 })}.${faker.number.int({
+  return Array.from({length: count}, (_, i) => ({
+    name: faker.lorem.slug({min: 1, max: 1}),
+    org: faker.lorem.slug({min: 1, max: 1}),
+    version: `v${faker.number.int({min: 1, max: 10})}.${faker.number.int({
       min: 0,
       max: 9,
-    })}.${faker.number.int({ min: 0, max: 9 })}`,
-    lastGeneratedAt: faker.date.recent({ days: i + 1 }),
+    })}.${faker.number.int({min: 0, max: 9})}`,
+    lastGeneratedAt: faker.date.recent({days: i + 1}),
     description: faker.commerce.productDescription(),
     language: faker.helpers.arrayElement(supportedLanguages),
     githubRepoUrl: faker.internet.url(),
@@ -53,7 +53,7 @@ const defaultArgs: ListTableProps = {
       key: 'language',
       header: undefined,
       width: '0.5fr',
-      render: (row) => <TargetLanguageIcon language={row.language} />,
+      render: (row) => <TargetLanguageIcon language={row.language}/>,
     },
     {
       key: 'name',
@@ -81,7 +81,7 @@ const defaultArgs: ListTableProps = {
       width: '1.25fr',
       render: (row) => (
         <div className="text-muted-foreground">
-          {formatDistance(row.lastGeneratedAt, new Date(), { addSuffix: true })}
+          {formatDistance(row.lastGeneratedAt, new Date(), {addSuffix: true})}
         </div>
       ),
     },
@@ -100,6 +100,7 @@ const defaultArgs: ListTableProps = {
   ] as Column<SDK>[],
   data: sdk,
   rowKey: (row: SDK) => row.name,
+  onRowClick: (row: SDK) => alert("Clicked on " + row.name),
   hasMore: true,
 }
 
@@ -150,7 +151,7 @@ const GroupedTableWithState = (args: GroupedTableProps) => {
       onLoadMore={async () => {
         setData((prev) => [
           ...prev,
-          { key: 'my-new-source', items: generateSDKs(2), count: 2 },
+          {key: 'my-new-source', items: generateSDKs(2), count: 2},
         ])
       }}
     />
@@ -161,12 +162,13 @@ export const Grouped: StoryObj<GroupedTableProps> = {
   args: {
     ...defaultArgs,
     data: [
-      { key: 'my-source', items: sdk.slice(0, 2), count: 2 },
-      { key: 'my-other-source', items: sdk.slice(2, 4), count: 2 },
+      {key: 'my-source', items: sdk.slice(0, 2), count: 2},
+      {key: 'my-other-source', items: sdk.slice(2, 4), count: 2},
     ],
     renderGroupHeader: (group) => (
-      <div className="text-muted-foreground flex w-full flex-row items-center gap-2 border-b bg-zinc-50 px-4 py-2 font-semibold dark:bg-zinc-900">
-        <Icon name="code" />
+      <div
+        className="text-muted-foreground flex w-full flex-row items-center gap-2 border-b bg-zinc-50 px-4 py-2 font-semibold dark:bg-zinc-900">
+        <Icon name="code"/>
         {group.key} ({group.count as number} SDKs total)
       </div>
     ),
