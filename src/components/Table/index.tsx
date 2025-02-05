@@ -485,11 +485,18 @@ export const Cell = Object.assign(CellRoot, {
   Wrapper: CellWrapper,
 })
 
-interface NoResultsMessageProps extends PropsWithChildren {}
+interface NoResultsMessageProps extends PropsWithChildren {
+  className?: string
+}
 
-function NoResultsMessage({ children }: NoResultsMessageProps) {
+function NoResultsMessage({ className, children }: NoResultsMessageProps) {
   return (
-    <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+    <div
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className ?? ''
+      )}
+    >
       <div className="[grid-column:1/-1]">{children}</div>
     </div>
   )
