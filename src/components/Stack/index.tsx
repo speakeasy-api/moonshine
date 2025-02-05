@@ -32,19 +32,19 @@ const mapDirection = (direction: StackDirection) =>
   direction === 'horizontal' ? 'row' : 'column'
 const mapAlign = (align: StackAlign) => align
 const mapJustify = (justify: StackJustify) => justify
-const mapGap = (gap: Gap) => `${Number(gap) * 4}px` // Ensure gap is treated as a number
+const mapGap = (gap: Gap) => `calc(var(--spacing) * ${Number(gap)})`
 const mapWrap = (wrap: StackWrap) => wrap
 
 const mapPadding = (padding: Padding): string => {
   if (isPaddingHorizontalOrVerticalAxis(padding)) {
     const { x, y } = padding
-    return `${Number(y) * 4}px ${Number(x) * 4}px`
+    return `calc(var(--spacing) * ${Number(y)}) calc(var(--spacing) * ${Number(x)})`
   }
   if (isPaddingPerSideValue(padding)) {
     const { top, right, bottom, left } = padding
-    return `${Number(top) * 4}px ${Number(right) * 4}px ${Number(bottom) * 4}px ${Number(left) * 4}px`
+    return `calc(var(--spacing) * ${Number(top)}) calc(var(--spacing) * ${Number(right)}) calc(var(--spacing) * ${Number(bottom)}) calc(var(--spacing) * ${Number(left)})`
   }
-  return `${Number(padding) * 4}px`
+  return `calc(var(--spacing) * ${Number(padding)})`
 }
 
 const createResponsiveVars = <T extends string | number | boolean | object>(

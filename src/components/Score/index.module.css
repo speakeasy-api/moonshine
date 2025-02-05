@@ -3,7 +3,7 @@
 }
 
 .text {
-  fill: hsl(var(--progress-colour));
+  fill: var(--progress-colour);
   transition: fill var(--transition-length) ease var(--delay);
   font-weight: bold;
   font-size: 36px;
@@ -21,12 +21,12 @@
 
 .progress {
   composes: circleBase;
-  stroke: hsl(var(--progress-colour));
+  stroke: var(--progress-colour);
   stroke-dasharray: var(--progress-stroke-dasharray);
 }
 
 .track {
   composes: circleBase;
-  stroke: hsl(var(--track-colour));
+  stroke: var(--track-colour);
   stroke-dasharray: var(--track-stroke-dasharray);
 }

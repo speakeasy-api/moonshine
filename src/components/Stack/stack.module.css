@@ -1,3 +1,8 @@
+/* Note: Media queries use static values that match Tailwind's theme breakpoints
+ * (--breakpoint-sm: 640px, --breakpoint-md: 768px, etc.) because CSS variables
+ * cannot be used in media query definitions
+ */
+
 .stack {
   display: flex;
   flex-direction: var(--stack-direction, column);
@@ -9,7 +14,6 @@
   flex-wrap: var(--stack-wrap, nowrap);
 }
 
-/* Breakpoint-specific variables will be set inline via style prop */
 @media (min-width: 640px) {
   .stack {
     flex-direction: var(--sm-stack-direction, var(--stack-direction));

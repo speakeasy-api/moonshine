@@ -1,3 +1,8 @@
+/* Note: Media queries use static values that match Tailwind's theme breakpoints
+ * (--breakpoint-sm: 640px, --breakpoint-md: 768px, etc.) because CSS variables
+ * cannot be used in media query definitions
+ */
+
 .container {
   position: relative;
 }
@@ -8,18 +13,18 @@
   left: 0;
   z-index: 10;
   display: flex;
-  height: 1.25rem;
+  height: calc(var(--spacing) * 5);
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: black;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 500;
+  background-color: var(--color-black);
+  padding-left: calc(var(--spacing) * 2);
+  padding-right: calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
-  color: white;
+  color: var(--color-white);
 }
 
 .extraFacesContainer {
@@ -28,17 +33,17 @@
 }
 
 .extraFaces {
-  margin-left: 0.375rem;
+  margin-left: calc(var(--spacing) * 1.5);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 2px solid white;
-  background-color: rgb(229 231 235);
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  color: rgb(75 85 99);
+  border: 2px solid var(--color-white);
+  background-color: var(--color-gray-200);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-600);
   width: var(--facepile-size, 2.5rem);
   height: var(--facepile-size, 2.5rem);
 }
