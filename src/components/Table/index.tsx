@@ -179,11 +179,15 @@ function TableWrapper<T extends object>({
 
 interface HeaderRowProps<T extends object> {
   columns: Column<T>[]
+  className?: string
 }
 
-function HeaderRowRoot<T extends object>({ columns }: HeaderRowProps<T>) {
+function HeaderRowRoot<T extends object>({
+  columns,
+  className,
+}: HeaderRowProps<T>) {
   return (
-    <Header.Wrapper>
+    <Header.Wrapper className={className}>
       {columns.map((column) => (
         <Header.Cell key={column.key}>{column.header}</Header.Cell>
       ))}
@@ -191,11 +195,18 @@ function HeaderRowRoot<T extends object>({ columns }: HeaderRowProps<T>) {
   )
 }
 
-interface HeaderRowWrapperProps extends PropsWithChildren {}
+interface HeaderRowWrapperProps extends PropsWithChildren {
+  className?: string
+}
 
-function HeaderRowWrapper({ children }: HeaderRowWrapperProps) {
+function HeaderRowWrapper({ className, children }: HeaderRowWrapperProps) {
   return (
-    <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
+    <thead
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className ?? ''
+      )}
+    >
       <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
         {children}
       </tr>
@@ -203,14 +214,17 @@ function HeaderRowWrapper({ children }: HeaderRowWrapperProps) {
   )
 }
 
-interface HeaderCellProps extends PropsWithChildren {}
+interface HeaderCellProps extends PropsWithChildren {
+  className?: string
+}
 
-function HeaderCell({ children }: HeaderCellProps) {
+function HeaderCell({ className, children }: HeaderCellProps) {
   return (
     <th
       className={cn(
         styles.tableHeader,
-        'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium'
+        'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium',
+        className ?? ''
       )}
     >
       {children}
@@ -320,7 +334,6 @@ export const Body = Object.assign(BodyRoot, {
 
 interface RowProps<T extends object> {
   row: T
-  key: string | number
   onClick?: (row: T) => void
   columns: Column<T>[]
   className?: string
@@ -328,7 +341,6 @@ interface RowProps<T extends object> {
 
 function RowRoot<T extends object>({
   row,
-  key,
   onClick,
   columns,
   className,
@@ -416,10 +428,14 @@ function RowGroupWrapper({ className, children }: RowGroupWrapperProps) {
   )
 }
 
-interface RowGroupHeaderProps extends PropsWithChildren {}
+interface RowGroupHeaderProps extends PropsWithChildren {
+  className?: string
+}
 
-function RowGroupHeader({ children }: RowGroupHeaderProps) {
-  return <div className="[grid-column:1/-1]">{children}</div>
+function RowGroupHeader({ className, children }: RowGroupHeaderProps) {
+  return (
+    <div className={cn('[grid-column:1/-1]', className ?? '')}>{children}</div>
+  )
 }
 
 export const RowGroup = Object.assign(RowGroupRoot, {
