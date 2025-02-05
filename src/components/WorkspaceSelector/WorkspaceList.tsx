@@ -76,13 +76,13 @@ export function WorkspaceList({
           items={filteredWorkspaces}
           renderItem={(workspace) => (
             <WorkspaceItem
-              key={workspace.slug}
+              key={workspace.id}
               workspace={workspace}
               selectedOrg={selectedOrg}
               handleSelect={handleSelect}
               isSelected={
-                selectedOrg.slug === selectedOrg.slug &&
-                selectedWorkspace?.slug === workspace.slug
+                selectedOrg.id === selectedOrg.id &&
+                selectedWorkspace?.id === workspace.id
               }
             />
           )}
