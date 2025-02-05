@@ -50,22 +50,18 @@ export function RecentWorkspaces({
         items={filteredRecents}
         renderItem={(org) => {
           return (
-            <CommandGroup key={org.slug} heading={org.label}>
+            <CommandGroup key={org.id} heading={org.slug}>
               {org.workspaces.map((workspace) => (
-                <CommandItem
-                  key={workspace.slug}
-                  onSelect={() => onSelect(org, workspace)}
-                >
-                  <WorkspaceItem
-                    workspace={workspace}
-                    isSelected={
-                      selectedOrg?.slug === org.slug &&
-                      selectedWorkspace?.slug === workspace.slug
-                    }
-                    selectedOrg={org}
-                    handleSelect={onSelect}
-                  />
-                </CommandItem>
+                <WorkspaceItem
+                  key={workspace.id}
+                  workspace={workspace}
+                  isSelected={
+                    selectedOrg?.id === org.id &&
+                    selectedWorkspace?.id === workspace.id
+                  }
+                  selectedOrg={org}
+                  handleSelect={onSelect}
+                />
               ))}
             </CommandGroup>
           )
