@@ -1,5 +1,4 @@
-import { Icon, IconName, Logo } from '@/index'
-import { NavbarProps } from './types'
+import { Button, Icon, IconName, Logo } from '@/index'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -14,13 +13,17 @@ import {
   ImperativePanelHandle,
   disableGlobalCursorStyles,
 } from 'react-resizable-panels'
+import { Key } from '../__beta__/KeyHint'
 
-export interface SlimProps extends NavbarProps {
-  orientation?: 'horizontal' | 'vertical'
+export interface SlimProps {
   navItems?: NavItems[]
   className?: string
   children?: React.ReactNode
   defaultExpanded?: boolean
+  /**
+   * Called when the user clicks the home button.
+   */
+  onHomeNavigation?: () => void
 }
 
 export interface NavItems {
@@ -37,21 +40,17 @@ disableGlobalCursorStyles()
  *
  */
 export const Slim = ({
-  orgs,
-  onSelect,
   onHomeNavigation,
-  orientation = 'horizontal',
   navItems = [],
   className,
   children,
   defaultExpanded = true,
 }: SlimProps) => {
   const containerClasses: string =
-    orientation === 'vertical'
-      ? 'flex-col min-h-svh border-r items-center p-4'
-      : 'min-w-svw flex-row border-b items-center py-3 px-4'
+    'flex-col min-h-full border-r items-center p-4'
   const sidebarRef = useRef<ImperativePanelHandle>(null)
   const [expanded, setExpanded] = useState(defaultExpanded)
+  const transitionRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (defaultExpanded) {
@@ -61,6 +60,27 @@ export const Slim = ({
     } else {
       sidebarRef.current?.collapse()
       setExpanded(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (transitionRef.current) {
+      // Apply the transition after the component has mounted
+      transitionRef.current.style.transition = '0.15s ease-in-out'
+      transitionRef.current.style.transitionProperty = 'flex'
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      e.preventDefault()
+      if (e.metaKey && e.key === 'b') {
+        onCollapse()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
 
@@ -83,60 +103,98 @@ export const Slim = ({
       direction="horizontal"
     >
       <ResizablePanel.Pane
-        className="relative min-h-screen"
+        className="relative max-h-screen"
         panelRef={sidebarRef}
+        style={{
+          transition: 'none', // Initially set to none
+          transitionProperty: 'none', // Initially set to none
+        }}
         id="1"
         key="1"
         collapsible
-        collapsedSize={8}
-        minSize={8}
+        collapsedSize={5}
+        minSize={5}
         maxSize={20}
       >
         <div
+          ref={transitionRef}
           className={cn(
             'bg-background relative flex gap-5 px-2 py-4',
             containerClasses,
             className
           )}
         >
-          <div id="brand" className="flex w-full place-self-start">
-            <button onClick={onHomeNavigation}>
+          <div className="mt-1 flex w-full flex-row items-center justify-center">
+            <button
+              id="brand"
+              onClick={onHomeNavigation}
+              className={cn(expanded ? 'self-center' : 'self-center')}
+            >
               <Logo variant="icon" className="h-5 w-6" />
             </button>
+
+            {expanded && (
+              <div className="ml-auto">
+                <TooltipProvider>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger asChild>
+                      <Button
+                        className="self-start"
+                        variant="ghost"
+                        size="sm"
+                        onClick={onCollapse}
+                      >
+                        <Icon name="panel-left" className="text-muted" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="right"
+                      className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+                    >
+                      <TooltipArrow className="fill-foreground" />
+                      Collapse sidebar <Key
+                        className="invert"
+                        value="⌘"
+                      /> + <Key className="invert" value="B" />
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
           </div>
           <div className="flex w-full flex-col gap-5">
             {navItems.map((item) => (
               <div
                 className={cn(
-                  'flex w-full flex-row',
+                  'flex w-full flex-row justify-center',
                   expanded ? 'justify-start' : 'justify-center'
                 )}
                 key={item.label}
               >
                 <TooltipProvider>
                   <Tooltip delayDuration={0}>
-                    <TooltipTrigger asChild>
-                      <button className="w-full" onClick={item.onClick}>
-                        {item.icon ? (
-                          <div className="flex items-start gap-2">
-                            <Icon
-                              name={item.icon}
-                              className="text-foreground hover:text-foreground size-6 self-center"
-                            />
-                            {expanded && item.label}
-                          </div>
-                        ) : item.render ? (
-                          item.render({
-                            expanded,
-                          })
-                        ) : (
-                          item.label
-                        )}
-                      </button>
-                    </TooltipTrigger>
+                    {item.icon ? (
+                      <TooltipTrigger>
+                        <div className="flex items-start gap-2">
+                          <Icon
+                            name={item.icon}
+                            strokeWidth={0.9}
+                            className="text-muted hover:text-foreground size-6 self-center"
+                          />
+                          {expanded && item.label}
+                        </div>
+                      </TooltipTrigger>
+                    ) : item.render ? (
+                      item.render({
+                        expanded,
+                      })
+                    ) : (
+                      <TooltipTrigger>{item.label}</TooltipTrigger>
+                    )}
 
                     <TooltipContent
                       side="right"
+                      hidden={item.render !== undefined}
                       className="bg-foreground text-background border-foreground"
                     >
                       <TooltipArrow className="fill-foreground" />
@@ -147,10 +205,38 @@ export const Slim = ({
               </div>
             ))}
           </div>
+
+          {!expanded && (
+            <div className="mt-auto cursor-pointer">
+              <TooltipProvider>
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger>
+                    <Button variant="ghost" size="sm" onClick={onCollapse}>
+                      <Icon name="panel-left" className="text-muted" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="top"
+                    align="start"
+                    className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+                  >
+                    <TooltipArrow className="fill-foreground" />
+                    Expand sidebar <Key className="invert" value="⌘" /> +{' '}
+                    <Key className="invert" value="B" />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
           <ResizablePanel.ResizeHandle
+            disabled
+            hitAreaMargins={{
+              coarse: 10,
+              fine: 10,
+            }}
             data-state={expanded ? 'expanded' : 'collapsed'}
             className={cn(
-              'pointer-events-auto absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-800 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize'
+              'pointer-events-auto absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize'
             )}
             onClick={onCollapse}
           ></ResizablePanel.ResizeHandle>
