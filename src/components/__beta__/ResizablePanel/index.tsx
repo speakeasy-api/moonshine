@@ -2,7 +2,12 @@ import { Icon } from '@/components/Icon'
 import { cn } from '@/lib/utils'
 import React, { Children, isValidElement, useMemo, useState } from 'react'
 import { ComponentProps, ReactNode } from 'react'
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
+import {
+  ImperativePanelHandle,
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
+} from 'react-resizable-panels'
 
 export interface ResizeHandleProps
   extends ComponentProps<typeof PanelResizeHandle> {
@@ -62,11 +67,12 @@ const ResizablePanel = ({
 export interface PaneProps extends ComponentProps<typeof Panel> {
   children: ReactNode
   className?: string
+  panelRef?: React.LegacyRef<ImperativePanelHandle>
 }
 
-const Pane = ({ children, className, ...props }: PaneProps) => {
+const Pane = ({ children, className, panelRef, ...props }: PaneProps) => {
   return (
-    <Panel className={className} {...props}>
+    <Panel className={className} {...props} ref={panelRef}>
       {children}
     </Panel>
   )

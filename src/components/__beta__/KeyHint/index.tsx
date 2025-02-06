@@ -13,9 +13,20 @@ const modifierMap: Record<Modifier, string> = {
   esc: 'Esc',
 }
 
-function Key({ value }: { value: string }) {
+export function Key({
+  value,
+  className,
+}: {
+  value: string
+  className?: string
+}) {
   return (
-    <span className="from-background to-card text-foreground/70 dark:text-foreground rounded-lg border bg-gradient-to-br px-2 py-0.5 text-sm">
+    <span
+      className={cn(
+        'from-background to-card text-foreground/70 dark:text-foreground rounded-lg border bg-gradient-to-br px-2 py-0.5 text-sm',
+        className
+      )}
+    >
       {value}
     </span>
   )
