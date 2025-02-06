@@ -102,7 +102,7 @@ const DefaultResizeHandle = ({
         className={cn(
           'bg-card text-muted absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border shadow-sm shadow-zinc-400/5',
           direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize',
-          isResizing && 'text-foreground mask-'
+          isResizing && 'text-foreground'
         )}
       >
         <Icon name="grip-vertical" className="h-8 w-5" />

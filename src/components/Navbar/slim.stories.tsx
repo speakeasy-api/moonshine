@@ -5,6 +5,8 @@ import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { faker } from '@faker-js/faker'
 
+faker.seed(123)
+
 const meta: Meta<typeof Navbar.Slim> = {
   title: 'Navbar/Slim',
   component: Navbar.Slim,

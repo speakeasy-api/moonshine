@@ -54,7 +54,6 @@ export const Slim = ({
 
   useEffect(() => {
     if (defaultExpanded) {
-      console.log('expanding')
       sidebarRef.current?.expand()
       setExpanded(true)
     } else {
