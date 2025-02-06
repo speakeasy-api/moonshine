@@ -215,13 +215,13 @@ export const Customized: StoryObj<ListTableProps> = {
     cellPadding: 'condensed',
   },
   render: (args) => (
-    <Table.Wrapper {...args}>
+    <Table {...args}>
       <Table.Header columns={args.columns} />
       <p className={'bg-green-500 p-4 [grid-column:1/-1]'}>
         MY CUSTOM COMPONENT
       </p>
       <Table.Body {...args} hasMore={false} />
-    </Table.Wrapper>
+    </Table>
   ),
 }
 
@@ -231,26 +231,26 @@ export const CustomizedEvenMore: StoryObj<ListTableProps> = {
     cellPadding: 'condensed',
   },
   render: (args) => (
-    <Table.Wrapper {...args}>
+    <Table {...args}>
       <Table.Header columns={args.columns} />
       <p className={'bg-green-700 p-4 [grid-column:1/-1]'}>
         MY CUSTOM COMPONENT
       </p>
-      <Table.Body.Wrapper>
+      <Table.Body>
         <Table.Row row={args.data[0]} columns={args.columns} />
         <p className={'bg-yellow-700 p-4 [grid-column:1/-1]'}>
           ANOTHER CUSTOM COMPONENT
         </p>
         <Table.Row row={args.data[1]} columns={args.columns} />
-        <Table.Row.Wrapper>
+        <Table.Row>
           <Table.Cell row={args.data[2]} column={args.columns[0]} />
           <Table.Cell row={args.data[2]} column={args.columns[1]} />
-          <Table.Cell.Wrapper>
+          <Table.Cell>
             <p className={'bg-cyan-700 p-1'}>CUSTOM CELL</p>
-          </Table.Cell.Wrapper>
+          </Table.Cell>
           <Table.Cell row={args.data[2]} column={args.columns[3]} />
-        </Table.Row.Wrapper>
-      </Table.Body.Wrapper>
-    </Table.Wrapper>
+        </Table.Row>
+      </Table.Body>
+    </Table>
   ),
 }
