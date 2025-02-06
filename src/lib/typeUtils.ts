@@ -1,6 +1,6 @@
 import {
-  breakpoints,
   Breakpoint,
+  breakpoints,
   Direction,
   PaddingPerSide,
   PaddingPerSides,
@@ -9,6 +9,7 @@ import {
   Size,
   sizes,
 } from '@/types'
+import { Group } from '@/components/Table'
 
 /**
  * Create a range of numbers from 0 to N
@@ -93,6 +94,16 @@ export function assert(condition: boolean, message: string): asserts condition {
     throw new Error(message)
   }
 }
+
 function isBreakpoint(key: string): key is Breakpoint {
   return (breakpoints as readonly string[]).includes(key)
+}
+
+export function isGroupOf<T extends object>(data: unknown): data is Group<T> {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'key' in data &&
+    'items' in data
+  )
 }

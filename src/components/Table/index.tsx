@@ -9,6 +9,7 @@ import React, {
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import styles from './styles.module.css'
+import { isGroupOf } from '@/lib/typeUtils'
 
 export type Column<T extends object> = {
   key: keyof T | string
@@ -83,7 +84,6 @@ function TableRoot<T extends object>(
     noResultsMessage,
     renderGroupHeader,
     className,
-    cellPadding = 'normal',
   } = props
 
   const [isLoading, setIsLoading] = useState(false)
@@ -483,15 +483,6 @@ function propsHasChildren<P extends PropsWithChildren, Q extends object>(
 
 function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
   return typeof key === 'string' && Object.keys(data).includes(key)
-}
-
-export function isGroupOf<T extends object>(data: unknown): data is Group<T> {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    'key' in data &&
-    'items' in data
-  )
 }
 
 export const Table = Object.assign(TableRoot, {
