@@ -2,7 +2,6 @@
 import React, {
   PropsWithChildren,
   type ReactNode,
-  RefObject,
   useMemo,
   useRef,
   useState,
@@ -140,19 +139,15 @@ function TableRoot<T extends object>({
 }
 
 interface TableWrapperProps<T extends object> extends PropsWithChildren {
-  ref: RefObject<HTMLTableElement | null>
   columns: Column<T>[]
   className?: string
   cellPadding?: TableProps<T>['cellPadding']
 }
 
-function TableWrapper<T extends object>({
-  ref,
-  columns,
-  className,
-  cellPadding,
-  children,
-}: TableWrapperProps<T>) {
+const TableWrapper = React.forwardRef(function TableWrapper<T extends object>(
+  { columns, className, cellPadding, children }: TableWrapperProps<T>,
+  ref: React.ForwardedRef<HTMLTableElement>
+) {
   const colWidths = useMemo(() => {
     return columns.map((column) => column.width ?? '1fr').join(' ')
   }, [columns])
@@ -168,14 +163,14 @@ function TableWrapper<T extends object>({
       className={cn(
         styles.table,
         'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
-        className ?? ''
+        className
       )}
       data-cell-padding={cellPadding}
     >
       {children}
     </table>
   )
-}
+})
 
 interface HeaderRowProps<T extends object> {
   columns: Column<T>[]
@@ -204,7 +199,7 @@ function HeaderRowWrapper({ className, children }: HeaderRowWrapperProps) {
     <thead
       className={cn(
         'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-        className ?? ''
+        className
       )}
     >
       <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
@@ -224,7 +219,7 @@ function HeaderCell({ className, children }: HeaderCellProps) {
       className={cn(
         styles.tableHeader,
         'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium',
-        className ?? ''
+        className
       )}
     >
       {children}
@@ -239,9 +234,8 @@ export const Header = Object.assign(HeaderRowRoot, {
 })
 
 interface BodyProps<T extends object> {
-  ref: RefObject<HTMLTableSectionElement | null>
-  data: T[]
   columns: Column<T>[]
+  data: T[]
   rowKey: (row: T) => string | number
   onRowClick?: (row: T) => void
   noResultsMessage?: ReactNode
@@ -252,26 +246,28 @@ interface BodyProps<T extends object> {
   className?: string
 }
 
-function BodyRoot<T extends object>({
-  ref,
-  data,
-  columns,
-  rowKey,
-  hasMore,
-  onRowClick,
-  noResultsMessage,
-  renderGroupHeader,
-  handleLoadMore,
-  isLoading,
-  className,
-}: BodyProps<T>) {
+const BodyRoot = React.forwardRef(function BodyRoot<T extends object>(
+  {
+    data,
+    columns,
+    rowKey,
+    hasMore,
+    onRowClick,
+    noResultsMessage,
+    renderGroupHeader,
+    handleLoadMore,
+    isLoading,
+    className,
+  }: BodyProps<T>,
+  ref: React.ForwardedRef<HTMLTableSectionElement>
+) {
   return (
     <Body.Wrapper
       ref={ref}
       className={cn(
         // Account for the load more button
-        hasMore ? 'pb-16' : '',
-        className ?? ''
+        hasMore && 'pb-16',
+        className
       )}
     >
       {data.length === 0 ? (
@@ -306,26 +302,27 @@ function BodyRoot<T extends object>({
       )}
     </Body.Wrapper>
   )
-}
+})
 
 interface BodyWrapperProps extends PropsWithChildren {
-  ref: RefObject<HTMLTableSectionElement | null>
   className?: string
 }
 
-function BodyWrapper({ ref, className, children }: BodyWrapperProps) {
-  return (
-    <tbody
-      ref={ref}
-      className={cn(
-        'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-        className ?? ''
-      )}
-    >
-      {children}
-    </tbody>
-  )
-}
+const BodyWrapper = React.forwardRef<HTMLTableSectionElement, BodyWrapperProps>(
+  function BodyWrapper({ className, children }: BodyWrapperProps, ref) {
+    return (
+      <tbody
+        ref={ref}
+        className={cn(
+          'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+          className
+        )}
+      >
+        {children}
+      </tbody>
+    )
+  }
+)
 
 export const Body = Object.assign(BodyRoot, {
   displayName: 'Table.Body',
@@ -364,8 +361,8 @@ function RowWrapper({ onClick, className, children }: RowWrapperProps) {
     <tr
       className={cn(
         'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
-        onClick ? 'cursor-pointer' : '',
-        className ?? ''
+        onClick && 'cursor-pointer',
+        className
       )}
       onClick={onClick}
     >
@@ -420,7 +417,7 @@ function RowGroupWrapper({ className, children }: RowGroupWrapperProps) {
     <div
       className={cn(
         'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-        className ?? ''
+        className
       )}
     >
       {children}
@@ -433,9 +430,7 @@ interface RowGroupHeaderProps extends PropsWithChildren {
 }
 
 function RowGroupHeader({ className, children }: RowGroupHeaderProps) {
-  return (
-    <div className={cn('[grid-column:1/-1]', className ?? '')}>{children}</div>
-  )
+  return <div className={cn('[grid-column:1/-1]', className)}>{children}</div>
 }
 
 export const RowGroup = Object.assign(RowGroupRoot, {
@@ -472,7 +467,7 @@ export function CellWrapper({ className, children }: CellWrapperProps) {
       className={cn(
         styles.tableCell,
         'flex max-w-full items-center',
-        className ?? ''
+        className
       )}
     >
       {children}
@@ -494,7 +489,7 @@ function NoResultsMessage({ className, children }: NoResultsMessageProps) {
     <div
       className={cn(
         'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-        className ?? ''
+        className
       )}
     >
       <div className="[grid-column:1/-1]">{children}</div>
@@ -562,6 +557,7 @@ export const Table = Object.assign(TableRoot, {
   RowGroup,
   Header,
   Body,
+  Cell,
 })
 
 function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
