@@ -7,6 +7,12 @@ import { Badge, Heading } from '@/index'
 const meta: Meta<typeof Wizard> = {
   component: Wizard,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+    chromatic: {
+      delay: 1000,
+    },
+  },
 }
 
 export default meta
