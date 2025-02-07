@@ -8,8 +8,8 @@ import React, {
 } from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
-import styles from './styles.module.css'
 import { isGroupOf } from '@/lib/typeUtils'
+import styles from './styles.module.css'
 
 export type Column<T extends object> = {
   key: keyof T | string
