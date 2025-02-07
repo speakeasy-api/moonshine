@@ -141,3 +141,26 @@ export const programmingLanguages = [
   'java',
 ] as const
 export type ProgrammingLanguage = (typeof programmingLanguages)[number]
+
+// Workspace selector - shared by Navbar and WorkspaceSelector
+export interface Org {
+  id: string
+  label: string
+  slug: string
+  workspaces: Workspace[]
+}
+
+export interface Workspace {
+  id: string
+  slug: string
+  label: string
+  active: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface GlobalWorkspaceSelectorProps {
+  orgs: Org[]
+  value?: string
+  onSelect: (org: Org, workspace: Workspace) => void
+}

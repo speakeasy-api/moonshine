@@ -7,6 +7,8 @@ import { TargetLanguageIcon } from '../TargetLanguageIcon'
 import { formatDistance } from 'date-fns'
 import { Icon } from '../Icon'
 
+faker.seed(123)
+
 const meta: Meta<typeof Table> = {
   component: Table,
   decorators: [

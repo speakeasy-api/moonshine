@@ -53,6 +53,8 @@ interface RangeIndices {
   end: number
 }
 
+faker.seed(123)
+
 function TimelineWithState({ children }: TimelineWithStateProps) {
   const [items, setItems] = useState<TimelineItem[]>(() =>
     stateFromChildren(children)

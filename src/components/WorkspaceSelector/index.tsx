@@ -13,6 +13,7 @@ import { Logo } from '../Logo'
 import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
 import { Heading } from '../Heading'
+import { GlobalWorkspaceSelectorProps } from '@/types'
 
 export interface Org {
   id: string
@@ -30,11 +31,7 @@ export interface Workspace {
   updatedAt: Date
 }
 
-export interface WorkspaceSelectorProps {
-  orgs: Org[]
-  value?: string
-  onSelect: (org: Org, workspace: Workspace) => void
-
+export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
   onCreateOrg: (newOrgName: string) => Promise<Org>
 
   /**

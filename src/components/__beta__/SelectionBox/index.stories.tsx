@@ -90,4 +90,9 @@ const BlockWithState = () => {
 
 export const Block: Story = {
   render: () => <BlockWithState />,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 }

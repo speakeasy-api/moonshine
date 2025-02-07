@@ -9,6 +9,9 @@ const meta: Meta<typeof CodeSnippet> = {
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+    chromatic: {
+      delay: 1000,
+    },
   },
 }
 
