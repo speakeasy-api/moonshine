@@ -1,5 +1,6 @@
 import './global.css'
 
+export { isGroupOf } from '@/lib/typeUtils'
 export { Grid } from '@/components/Grid'
 export { Stack } from '@/components/Stack'
 export { Button } from '@/components/Button'
@@ -37,7 +38,6 @@ export {
   type TableProps,
   type Column,
   type Group,
-  isGroupOf,
 } from '@/components/Table'
 export { Input, type InputProps } from '@/components/Input'
 export { type SupportedLanguage, supportedLanguages } from '@/types'

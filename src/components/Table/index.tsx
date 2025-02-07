@@ -1,30 +1,20 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-170/table-component
-import { useMemo, type ReactNode, useState, useRef } from 'react'
+import React, {
+  PropsWithChildren,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import styles from './styles.module.css'
+import { isGroupOf } from '@/lib/typeUtils'
 
 export type Column<T extends object> = {
-  /**
-   * The key of the column.
-   */
   key: keyof T | string
-
-  /**
-   * The header of the column.
-   */
   header: ReactNode
-
-  /**
-   * The render function for the column.
-   * If not provided, then the column will default to the value of the key.
-   */
   render?: (row: T) => ReactNode
-
-  /**
-   * The fractional width of the column.
-   * If not provided, then the column will default to 1fr.
-   */
   width?: `${number}fr` | 'auto' | undefined
 }
 
@@ -34,76 +24,68 @@ export type Group<T extends object> = {
   [k: string]: unknown
 }
 
+type PropsWithChildrenAndClassName = PropsWithChildren<{ className?: string }>
+
 export type TableProps<T extends object> = {
-  /**
-   * The columns of the table.
-   */
   columns: Column<T>[]
-
-  /**
-   * The data of the table.
-   */
   data: T[] | Group<T>[]
-
-  /**
-   * A function that returns a unique key for the row.
-   */
   rowKey: (row: T) => string | number
-
-  /**
-   * The function to call when a row is clicked.
-   */
   onRowClick?: (row: T) => void
-
-  /**
-   * The function to render the group header.
-   */
   renderGroupHeader?: (group: Group<T>) => ReactNode
-
-  /**
-   * The function to call when the load more button is clicked.
-   */
   onLoadMore?: () => Promise<void> | (() => void)
-
-  /**
-   * Whether there are more rows to load.
-   */
   hasMore?: boolean
-
-  /**
-   * No results message
-   */
   noResultsMessage?: ReactNode
-
-  /**
-   * The class name to apply to the table.
-   */
   className?: string
-
-  /**
-   * Specify the amount of space that should be available around the contents of
-   * a cell
-   */
   cellPadding?: 'condensed' | 'normal' | 'spacious'
 }
 
-export function Table<T extends object>({
-  columns,
-  data,
-  rowKey,
-  onRowClick,
-  onLoadMore,
-  hasMore,
-  noResultsMessage,
-  renderGroupHeader,
-  className,
-  cellPadding = 'normal',
-}: TableProps<T>) {
+export type TableWrapperProps<T extends object> =
+  PropsWithChildrenAndClassName & {
+    columns: Column<T>[]
+    cellPadding?: TableProps<T>['cellPadding']
+  }
+
+function TableRoot<T extends object>(
+  props: TableProps<T> | TableWrapperProps<T>
+) {
+  const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
+    <table
+      style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
+      ref={tableRef}
+      className={cn(
+        styles.table,
+        'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+        className
+      )}
+      data-cell-padding={props.cellPadding}
+    >
+      {children}
+    </table>
+  )
+
+  const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
+  const tableRef = useRef<HTMLTableElement | null>(null)
+
   const colWidths = useMemo(() => {
-    return columns.map((column) => column.width ?? '1fr').join(' ')
-  }, [columns])
-  const tableBodyRef = useRef<HTMLTableSectionElement>(null)
-  const tableRef = useRef<HTMLTableElement>(null)
+    return props.columns.map((column) => column.width ?? '1fr').join(' ')
+  }, [props.columns])
+
+  if (propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props)) {
+    return <Wrapper className={props.className}>{props.children}</Wrapper>
+  }
+
+  const {
+    columns,
+    data,
+    rowKey,
+    onRowClick,
+    onLoadMore,
+    hasMore,
+    noResultsMessage,
+    renderGroupHeader,
+    className,
+  } = props
+
   const [isLoading, setIsLoading] = useState(false)
   const handleLoadMore = async () => {
     setIsLoading(true)
@@ -111,143 +93,403 @@ export function Table<T extends object>({
     setIsLoading(false)
   }
 
-  const renderRow = (row: T) => {
+  return (
+    <Wrapper className={className}>
+      <Table.Header columns={columns} />
+      <Table.Body
+        data={data}
+        ref={tableBodyRef}
+        columns={columns}
+        rowKey={rowKey}
+        hasMore={hasMore}
+        noResultsMessage={noResultsMessage}
+        renderGroupHeader={renderGroupHeader}
+        handleLoadMore={handleLoadMore}
+        isLoading={isLoading}
+        onRowClick={onRowClick}
+      />
+    </Wrapper>
+  )
+}
+
+type HeaderProps<T extends object> = {
+  columns: Column<T>[]
+  className?: string
+}
+
+function Header<T extends object>(
+  props: HeaderProps<T> | PropsWithChildrenAndClassName
+) {
+  const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
+    <thead
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className
+      )}
+    >
+      {children}
+    </thead>
+  )
+
+  const RowWrapper = ({ children }: PropsWithChildren) => (
+    <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
+      {children}
+    </tr>
+  )
+
+  if (propsHasChildren<PropsWithChildrenAndClassName, HeaderProps<T>>(props)) {
+    return <Wrapper className={props.className}>{props.children}</Wrapper>
+  }
+
+  return (
+    <Wrapper className={props.className}>
+      <RowWrapper>
+        {props.columns.map((column) => (
+          <HeaderCell key={column.key.toString()}>{column.header}</HeaderCell>
+        ))}
+      </RowWrapper>
+    </Wrapper>
+  )
+}
+
+type BodyProps<T extends object> = {
+  columns: Column<T>[]
+  data: T[] | Group<T>[]
+  rowKey: (row: T) => string | number
+  onRowClick?: (row: T) => void
+  noResultsMessage?: ReactNode
+  renderGroupHeader?: (group: Group<T>) => ReactNode
+  hasMore?: boolean
+  handleLoadMore?: () => void
+  isLoading?: boolean
+  className?: string
+}
+
+const Body = React.forwardRef(function Body<T extends object>(
+  props: BodyProps<T> | PropsWithChildrenAndClassName,
+  ref: React.ForwardedRef<HTMLTableSectionElement>
+) {
+  const Wrapper = ({
+    children,
+    className,
+  }: PropsWithChildren<{ className?: string }>) => (
+    <tbody
+      ref={ref}
+      className={cn(
+        'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className
+      )}
+    >
+      {children}
+    </tbody>
+  )
+
+  if (propsHasChildren<PropsWithChildrenAndClassName, BodyProps<T>>(props)) {
+    return <Wrapper className={props.className}>{props.children}</Wrapper>
+  }
+
+  const {
+    data,
+    columns,
+    rowKey,
+    hasMore,
+    onRowClick,
+    noResultsMessage,
+    renderGroupHeader,
+    handleLoadMore,
+    isLoading,
+    className,
+  } = props
+
+  return (
+    <Wrapper className={cn(hasMore && 'pb-16', className)}>
+      {data.length === 0 ? (
+        <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
+      ) : (
+        data.map((d) =>
+          isGroupOf<T>(d) ? (
+            <RowGroup
+              group={d}
+              columns={columns}
+              rowKey={rowKey}
+              renderGroupHeader={renderGroupHeader}
+              key={d.key}
+              onRowClick={onRowClick}
+            />
+          ) : (
+            <Row
+              row={d}
+              key={rowKey(d)}
+              columns={columns}
+              onClick={onRowClick}
+            />
+          )
+        )
+      )}
+      {hasMore && handleLoadMore && (
+        <LoadMore
+          columns={columns}
+          handleLoadMore={handleLoadMore}
+          isLoading={isLoading}
+        />
+      )}
+    </Wrapper>
+  )
+}) as <T extends object>(
+  props: {
+    ref?: React.ForwardedRef<HTMLTableSectionElement>
+  } & (BodyProps<T> | PropsWithChildrenAndClassName)
+) => JSX.Element
+
+type RowProps<T extends object> = {
+  row: T
+  onClick?: (row: T) => void
+  columns: Column<T>[]
+  className?: string
+}
+
+type RowWrapperProps = {
+  onClick?: () => void
+} & PropsWithChildrenAndClassName
+
+function Row<T extends object>(props: RowProps<T> | RowWrapperProps) {
+  const Wrapper = ({ children, className, onClick }: RowWrapperProps) => (
+    <tr
+      className={cn(
+        'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
+        onClick && 'cursor-pointer',
+        className
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </tr>
+  )
+
+  if (propsHasChildren<RowWrapperProps, RowProps<T>>(props)) {
+    return (
+      <Wrapper className={props.className} onClick={props.onClick}>
+        {props.children}
+      </Wrapper>
+    )
+  }
+
+  const { row, onClick, columns, className } = props
+  return (
+    <Wrapper className={className} onClick={() => onClick?.(row)}>
+      {columns.map((column) => (
+        <Cell key={column.key.toString()} column={column} row={row} />
+      ))}
+    </Wrapper>
+  )
+}
+
+function RowGroup<T extends object>({
+  group,
+  columns,
+  rowKey,
+  renderGroupHeader,
+  className,
+  onRowClick,
+}: {
+  group: Group<T>
+  columns: Column<T>[]
+  rowKey: (row: T) => string | number
+  renderGroupHeader?: (group: Group<T>) => ReactNode
+  className?: string
+  onRowClick?: (row: T) => void
+}) {
+  const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
+    <div
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+
+  const HeaderWrapper = ({ children }: PropsWithChildren) => (
+    <div className="[grid-column:1/-1]">{children}</div>
+  )
+
+  return (
+    <Wrapper className={className}>
+      <HeaderWrapper>{renderGroupHeader?.(group)}</HeaderWrapper>
+      {group.items.map((row) => (
+        <Row
+          row={row}
+          key={rowKey(row)}
+          columns={columns}
+          onClick={onRowClick}
+        />
+      ))}
+    </Wrapper>
+  )
+}
+
+type CellProps<T extends object> = {
+  row: T
+  column: Column<T>
+  className?: string
+}
+
+function Cell<T extends object>(
+  props: CellProps<T> | PropsWithChildrenAndClassName
+) {
+  const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
+    <td
+      className={cn(
+        styles.tableCell,
+        'flex max-w-full items-center',
+        className
+      )}
+    >
+      {children}
+    </td>
+  )
+
+  if (propsHasChildren<PropsWithChildrenAndClassName, CellProps<T>>(props)) {
+    return <Wrapper className={props.className}>{props.children}</Wrapper>
+  }
+
+  const { row, column, className } = props
+  const content = column.render
+    ? column.render(row)
+    : isKeyOfT<T>(column.key, row)
+      ? String(row[column.key])
+      : ''
+
+  return <Wrapper className={className}>{content}</Wrapper>
+}
+
+function NoResultsMessage({
+  className,
+  children,
+}: PropsWithChildrenAndClassName) {
+  const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
+    <div
+      className={cn(
+        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+
+  const ContentWrapper = ({ children }: PropsWithChildren) => (
+    <div className="[grid-column:1/-1]">{children}</div>
+  )
+
+  return (
+    <Wrapper className={className}>
+      <ContentWrapper>{children}</ContentWrapper>
+    </Wrapper>
+  )
+}
+
+function LoadMore<T extends object>({
+  columns,
+  handleLoadMore,
+  isLoading,
+}: {
+  columns: Column<T>[]
+  handleLoadMore: () => void
+  isLoading?: boolean
+}) {
+  const RowWrapper = ({
+    children,
+    className,
+  }: PropsWithChildren<{ className?: string }>) => {
+    const colWidths = columns.map((column) => column.width ?? '1fr').join(' ')
     return (
       <tr
+        style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
         className={cn(
-          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
-          onRowClick && 'cursor-pointer'
+          'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
+          className
         )}
-        key={rowKey(row)}
-        onClick={() => onRowClick?.(row)}
       >
-        {columns.map((column) => (
-          <td
-            className={cn(styles.tableCell, 'flex max-w-full items-center')}
-            key={String(column.key)}
-          >
-            {column.render
-              ? column.render(row)
-              : isKeyOfT<T>(column.key, row)
-                ? String(row[column.key])
-                : ''}
-          </td>
-        ))}
+        {children}
       </tr>
     )
   }
 
+  const ButtonWrapper = ({ children }: PropsWithChildren) => (
+    <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
+      {children}
+    </div>
+  )
+
   return (
-    <table
-      style={
-        {
-          '--grid-template-columns': `${colWidths}`,
-        } as React.CSSProperties
-      }
-      ref={tableRef}
+    <>
+      <RowWrapper
+        className={cn(isLoading && 'animate-pulse opacity-100 duration-[2.5s]')}
+      >
+        {columns.map((column) => (
+          <Cell key={column.key.toString()}>
+            <div className="bg-muted h-4 w-full rounded" />
+          </Cell>
+        ))}
+      </RowWrapper>
+      <ButtonWrapper>
+        <button
+          className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium normal-case transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+          onClick={handleLoadMore}
+        >
+          {isLoading ? (
+            <>
+              Loading
+              <Loader2 className="animate-spin" />
+            </>
+          ) : (
+            'Load more'
+          )}
+        </button>
+      </ButtonWrapper>
+    </>
+  )
+}
+
+function HeaderCell({
+  className,
+  children,
+}: PropsWithChildren<{ className?: string }>) {
+  const Wrapper = ({
+    children,
+    className,
+  }: PropsWithChildren<{ className?: string }>) => (
+    <th
       className={cn(
-        styles.table,
-        'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+        styles.tableHeader,
+        'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium',
         className
       )}
-      data-cell-padding={cellPadding}
     >
-      <thead className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-        <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
-          {columns.map((column) => (
-            <th
-              className={cn(
-                styles.tableHeader,
-                'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium'
-              )}
-              key={String(column.key)}
-            >
-              {column.header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody
-        ref={tableBodyRef}
-        className={cn(
-          'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
-
-          // Account for the load more button
-          hasMore && 'pb-16'
-        )}
-      >
-        {data.length === 0 ? (
-          <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-            <div className="[grid-column:1/-1]">{noResultsMessage}</div>
-          </div>
-        ) : (
-          data.map((d) =>
-            isGroupOf<T>(d) ? (
-              <div className="grid [grid-column:1/-1] [grid-template-columns:subgrid]">
-                <div className="[grid-column:1/-1]">
-                  {renderGroupHeader?.(d)}
-                </div>
-                {d.items.map(renderRow)}
-              </div>
-            ) : (
-              renderRow(d)
-            )
-          )
-        )}
-        {hasMore && (
-          <tr
-            style={
-              {
-                '--grid-template-columns': `${colWidths}`,
-              } as React.CSSProperties
-            }
-            className={cn(
-              'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
-              isLoading && 'animate-pulse opacity-100 duration-[2.5s]'
-            )}
-          >
-            {columns.map((column) => (
-              <td
-                className={cn(styles.tableCell, 'w-auto')}
-                key={String(column.key)}
-              >
-                <div className="bg-muted h-4 rounded" />
-              </td>
-            ))}
-          </tr>
-        )}
-      </tbody>
-      {hasMore && (
-        <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
-          <button
-            className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium normal-case transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-            onClick={handleLoadMore}
-          >
-            {isLoading ? (
-              <>
-                Loading
-                <Loader2 className="animate-spin" />
-              </>
-            ) : (
-              'Load more'
-            )}
-          </button>
-        </div>
-      )}
-    </table>
+      {children}
+    </th>
   )
+
+  return <Wrapper className={className}>{children}</Wrapper>
+}
+
+function propsHasChildren<P extends PropsWithChildren, Q extends object>(
+  props: P | Q
+): props is P {
+  return 'children' in props && props.children !== undefined
 }
 
 function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
   return typeof key === 'string' && Object.keys(data).includes(key)
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export function isGroupOf<T extends object>(data: unknown): data is Group<T> {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    'key' in data &&
-    'items' in data
-  )
-}
+export const Table = Object.assign(TableRoot, {
+  Header: Object.assign(Header, { Cell: HeaderCell }),
+  Body,
+  Row,
+  Cell,
+  RowGroup,
+  NoResultsMessage,
+})
