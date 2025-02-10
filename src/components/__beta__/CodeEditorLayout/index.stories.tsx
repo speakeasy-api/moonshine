@@ -85,3 +85,10 @@ export const Default: Story = {
     ],
   },
 }
+
+export const SidebarLast: Story = {
+  args: {
+    ...Default.args,
+    order: 'sidebar-last',
+  },
+}
