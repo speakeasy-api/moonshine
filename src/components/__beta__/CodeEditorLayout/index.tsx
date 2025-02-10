@@ -37,7 +37,7 @@ const CodeEditorLayout = ({
     return type.displayName === 'CodeEditor.Sidebar'
   })
 
-  const contentPanes = validChildren.filter((child) => {
+  const contentPanes = validChildren.find((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
     return type.displayName === 'CodeEditor.Content'
