@@ -10,7 +10,7 @@ import {
 } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
-interface CodeEditorLayoutProps {
+export interface CodeEditorLayoutProps {
   children: ReactNode[]
   className?: string
   order?: 'sidebar-first' | 'sidebar-last'
@@ -153,7 +153,7 @@ const CodeEditorLayout = ({
 
 CodeEditorLayout.displayName = 'CodeEditor'
 
-interface CodeEditorSidebarProps
+export interface CodeEditorSidebarProps
   extends PropsWithChildren,
     ResizablePanelProps {
   className?: string
@@ -180,13 +180,13 @@ const CodeEditorSidebar = ({
 }
 CodeEditorSidebar.displayName = 'CodeEditor.Sidebar'
 
-interface ResizablePanelProps {
+export interface ResizablePanelProps {
   className?: string
   minWidth: number
   maxWidth?: number
 }
 
-interface CodeEditorContentProps
+export interface CodeEditorContentProps
   extends PropsWithChildren,
     ResizablePanelProps {
   className?: string
@@ -213,7 +213,7 @@ const CodeEditorContent = ({
 }
 CodeEditorContent.displayName = 'CodeEditor.Content'
 
-interface CodeEditorTabsProps extends PropsWithChildren {
+export interface CodeEditorTabsProps extends PropsWithChildren {
   className?: string
 }
 
@@ -237,7 +237,7 @@ const CodeEditorTabs = ({ children, className }: CodeEditorTabsProps) => {
 }
 CodeEditorTabs.displayName = 'CodeEditor.Tabs'
 
-interface CodeEditorTabProps {
+export interface CodeEditorTabProps {
   id: string
   title?: string
   className?: string
@@ -311,7 +311,7 @@ const CodeEditorTab = ({
 }
 CodeEditorTab.displayName = 'CodeEditor.Tab'
 
-interface CodeEditorCommandBarProps extends PropsWithChildren {
+export interface CodeEditorCommandBarProps extends PropsWithChildren {
   className?: string
 }
 
@@ -332,7 +332,7 @@ const CodeEditorCommandBar = ({
 }
 CodeEditorCommandBar.displayName = 'CodeEditor.CommandBar'
 
-interface CodeEditorEmptyProps extends PropsWithChildren {
+export interface CodeEditorEmptyProps extends PropsWithChildren {
   className?: string
 }
 

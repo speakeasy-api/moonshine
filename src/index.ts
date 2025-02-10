@@ -78,6 +78,7 @@ import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
 import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
 import { ResizablePanel } from './components/__beta__/ResizablePanel'
 import { CodePlayground } from './components/__beta__/CodePlayground'
+import { CodeEditor } from './components/__beta__/CodeEditorLayout'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
@@ -97,6 +98,7 @@ export const beta = {
 
   ResizablePanel,
   CodePlayground,
+  CodeEditor,
 }
 
 /** END BETA COMPONENTS */
