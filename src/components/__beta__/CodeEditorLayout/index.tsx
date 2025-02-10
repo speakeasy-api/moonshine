@@ -24,12 +24,19 @@ const CodeEditorLayout = ({
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
-    return (
+    const isValidSubType =
       type.displayName === 'CodeEditor.Sidebar' ||
       type.displayName === 'CodeEditor.Content' ||
       type.displayName === 'CodeEditor.Tabs' ||
       type.displayName === 'CodeEditor.CommandBar'
-    )
+
+    if (!isValidSubType) {
+      console.warn(
+        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar`
+      )
+    }
+
+    return isValidSubType
   })
 
   const sidebar = validChildren.find((child) => {

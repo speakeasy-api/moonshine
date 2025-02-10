@@ -152,3 +152,10 @@ export const SidebarLast: Story = {
     order: 'sidebar-last',
   },
 }
+
+export const WithInvalidChild: Story = {
+  // Check the console.warn for the invalid child
+  args: {
+    children: [<div>Invalid child</div>],
+  },
+}
