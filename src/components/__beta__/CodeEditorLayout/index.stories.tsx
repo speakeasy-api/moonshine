@@ -115,7 +115,7 @@ export const SidebarLast: Story = {
           </div>
         </div>
       </CodeEditor.CommandBar>,
-      <CodeEditor.Sidebar minWidth={20} maxWidth={30}>
+      <CodeEditor.Sidebar minWidth={20} maxWidth={50}>
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-semibold">README Outline</h2>
 
