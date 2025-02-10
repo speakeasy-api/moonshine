@@ -141,6 +141,7 @@ interface CodeEditorTabProps {
   grow?: boolean
   dirty?: boolean
   onClick?: (id: string) => void
+  onClose?: (id: string) => void
 }
 
 const CodeEditorTab = ({
@@ -152,6 +153,7 @@ const CodeEditorTab = ({
   grow,
   dirty,
   onClick,
+  onClose,
 }: CodeEditorTabProps) => {
   const [hoveredCloseIntent, setHoveredCloseIntent] = useState(false)
   const closeButton = useMemo(
@@ -163,11 +165,12 @@ const CodeEditorTab = ({
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
         onMouseLeave={() => setHoveredCloseIntent(false)}
+        onClick={() => onClose?.(id)}
       >
         <Icon name="x" className="h-3.5 w-3.5" />
       </button>
     ),
-    [active, hoveredCloseIntent]
+    [hoveredCloseIntent, onClose, id]
   )
   return (
     <div
