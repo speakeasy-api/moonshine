@@ -55,10 +55,10 @@ export const Default: Story = {
           </div>
         </div>
       </CodeEditor.CommandBar>,
-      <CodeEditor.Sidebar>
+      <CodeEditor.Sidebar minWidth={15} maxWidth={30}>
         <div>Sidebar</div>
       </CodeEditor.Sidebar>,
-      <CodeEditor.Content>
+      <CodeEditor.Content minWidth={40}>
         {Array.from({ length: 40 }).map((_, index) => (
           <div key={index} className="mb-4">
             {faker.lorem.paragraph()}
@@ -115,7 +115,7 @@ export const SidebarLast: Story = {
           </div>
         </div>
       </CodeEditor.CommandBar>,
-      <CodeEditor.Sidebar className="min-w-96">
+      <CodeEditor.Sidebar minWidth={20} maxWidth={30}>
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-semibold">README Outline</h2>
 
@@ -138,7 +138,7 @@ export const SidebarLast: Story = {
           </ul>
         </div>
       </CodeEditor.Sidebar>,
-      <CodeEditor.Content>
+      <CodeEditor.Content minWidth={40}>
         {Array.from({ length: 40 }).map((_, index) => (
           <div key={index} className="mb-4">
             {faker.lorem.paragraph()}

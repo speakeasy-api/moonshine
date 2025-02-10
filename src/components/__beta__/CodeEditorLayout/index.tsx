@@ -8,6 +8,7 @@ import {
   useState,
   useMemo,
 } from 'react'
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
 interface CodeEditorLayoutProps {
   children: ReactNode[]
@@ -37,11 +38,39 @@ const CodeEditorLayout = ({
     return type.displayName === 'CodeEditor.Sidebar'
   })
 
-  const contentPanes = validChildren.find((child) => {
+  const contentPane = validChildren.find((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
     return type.displayName === 'CodeEditor.Content'
   })
+
+  const minContentWidth = useMemo(() => {
+    if (!contentPane) return undefined
+    if (!isValidElement(contentPane)) return undefined
+    const minWidth = contentPane.props.minWidth
+    return minWidth ? minWidth : undefined
+  }, [contentPane])
+
+  const maxContentWidth = useMemo(() => {
+    if (!contentPane) return undefined
+    if (!isValidElement(contentPane)) return undefined
+    const maxWidth = contentPane.props.maxWidth
+    return maxWidth ? maxWidth : undefined
+  }, [contentPane])
+
+  const sidebarMinWidth = useMemo(() => {
+    if (!sidebar) return undefined
+    if (!isValidElement(sidebar)) return undefined
+    const minWidth = sidebar.props.minWidth
+    return minWidth ? minWidth : undefined
+  }, [sidebar])
+
+  const sidebarMaxWidth = useMemo(() => {
+    if (!sidebar) return undefined
+    if (!isValidElement(sidebar)) return undefined
+    const maxWidth = sidebar.props.maxWidth
+    return maxWidth ? maxWidth : undefined
+  }, [sidebar])
 
   const tabs = validChildren.find((child) => {
     if (!isValidElement(child)) return false
@@ -58,29 +87,66 @@ const CodeEditorLayout = ({
   return (
     <div className="flex h-full w-full flex-col rounded-lg">
       {commandBar}
-      <div className={cn('flex min-h-0 flex-row border', className)}>
-        {order === 'sidebar-first' && sidebar}
-        <div className="flex w-full min-w-0 flex-col">
+      <PanelGroup
+        className={cn('flex min-h-0 flex-row border', className)}
+        direction="horizontal"
+      >
+        {order === 'sidebar-first' && (
+          <Panel
+            order={1}
+            minSize={sidebarMinWidth}
+            defaultSize={sidebarMinWidth}
+            maxSize={sidebarMaxWidth}
+          >
+            {sidebar}
+          </Panel>
+        )}
+        {order === 'sidebar-first' && <PanelResizeHandle className="h-full" />}
+        <Panel
+          defaultSize={minContentWidth}
+          maxSize={maxContentWidth}
+          className="flex w-full min-w-0 flex-col"
+          order={order === 'sidebar-first' ? 1 : 2}
+        >
           {tabs}
-          {contentPanes}
-        </div>
-        {order === 'sidebar-last' && sidebar}
-      </div>
+          {contentPane}
+        </Panel>
+        {order === 'sidebar-last' && <PanelResizeHandle />}
+        {order === 'sidebar-last' && (
+          <Panel
+            order={2}
+            minSize={sidebarMinWidth}
+            defaultSize={sidebarMinWidth}
+            maxSize={sidebarMaxWidth}
+          >
+            {sidebar}
+          </Panel>
+        )}
+      </PanelGroup>
     </div>
   )
 }
 
 CodeEditorLayout.displayName = 'CodeEditor'
 
-interface CodeEditorSidebarProps extends PropsWithChildren {
+interface CodeEditorSidebarProps
+  extends PropsWithChildren,
+    ResizablePanelProps {
   className?: string
 }
 
-const CodeEditorSidebar = ({ children, className }: CodeEditorSidebarProps) => {
+const CodeEditorSidebar = ({
+  children,
+  className,
+  minWidth = 20,
+  maxWidth,
+}: CodeEditorSidebarProps) => {
   return (
     <div
+      data-min-width={minWidth}
+      data-max-width={maxWidth}
       className={cn(
-        'code-editor-sidebar bg-background min-w-52 max-w-60 flex-none border-l border-r p-3',
+        'code-editor-sidebar bg-background h-full w-full flex-none border-l border-r p-3',
         className
       )}
     >
@@ -90,13 +156,28 @@ const CodeEditorSidebar = ({ children, className }: CodeEditorSidebarProps) => {
 }
 CodeEditorSidebar.displayName = 'CodeEditor.Sidebar'
 
-interface CodeEditorContentProps extends PropsWithChildren {
+interface ResizablePanelProps {
+  className?: string
+  minWidth: number
+  maxWidth?: number
+}
+
+interface CodeEditorContentProps
+  extends PropsWithChildren,
+    ResizablePanelProps {
   className?: string
 }
 
-const CodeEditorContent = ({ children, className }: CodeEditorContentProps) => {
+const CodeEditorContent = ({
+  children,
+  className,
+  minWidth,
+  maxWidth,
+}: CodeEditorContentProps) => {
   return (
     <div
+      data-min-width={minWidth}
+      data-max-width={maxWidth}
       className={cn(
         'code-editor-content bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card flex-1 overflow-x-hidden overflow-y-scroll px-3 [&::-webkit-scrollbar]:w-2',
         className
@@ -122,7 +203,7 @@ const CodeEditorTabs = ({ children, className }: CodeEditorTabsProps) => {
   return (
     <div
       className={cn(
-        'code-editor-tabs bg-background flex max-w-full flex-row overflow-y-hidden overflow-x-scroll border-b [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        'code-editor-tabs bg-background flex max-w-full flex-row overflow-y-hidden overflow-x-scroll border-b [&::-webkit-scrollbar]:hidden',
         className
       )}
     >
