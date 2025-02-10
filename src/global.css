@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  ._moonshine, ._moonshine :root {
     /* Shadcn theme */
     --background: 0 0% 100%;
     --foreground: 24 10% 10%;
@@ -86,7 +86,7 @@
     --link-visited-secondary: 240 5% 65%;
   }
 
-  .dark {
+  ._moonshine .dark, .dark ._moonshine {
     /* Shadcn theme */
     --background: 240 10% 4%;
     --foreground: 0 0% 98%;
@@ -145,21 +145,21 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  /** ._moonshine {*/
+  /*  @apply border-border;*/
+  /*}*/
 
-  body {
-    @apply bg-background text-foreground;
-  }
+  /*body ._moonshine {*/
+  /*  @apply bg-background text-foreground;*/
+  /*}*/
 }
 
-.devicon-devicon-plain {
+._moonshine .devicon-devicon-plain {
   max-width: 2em;
 }
 
 /* if you want to change the original color */
-.devicon-devicon-plain path {
+._moonshine .devicon-devicon-plain path {
   fill: var(--primary);
 }
 
@@ -187,20 +187,20 @@
 
 /* TODO: Find a better place for these styles we don't want this file to baloon */
 @layer components {
-  .typography-heading-xl {
+  ._moonshine .typography-heading-xl {
     font-size: 1.8125rem;
     font-weight: 300;
     line-height: 1.517;
     letter-spacing: 0.0015em;
   }
   @screen md {
-    .typography-heading-xl {
+    ._moonshine .typography-heading-xl {
       font-size: 2.0625rem;
       line-height: 1.375;
     }
   }
 
-  .typography-heading-lg {
+    ._moonshine .typography-heading-lg {
     font-size: 1.625rem;
     font-weight: 300;
     line-height: 1.615;
@@ -213,7 +213,7 @@
     }
   }
 
-  .typography-heading-md {
+  ._moonshine .typography-heading-md {
     font-size: 1.4375rem;
     font-weight: 300;
     line-height: 1.609;
@@ -226,7 +226,7 @@
     }
   }
 
-  .typography-heading-sm {
+  ._moonshine .typography-heading-sm {
     font-size: 1.25rem;
     font-weight: 300;
     line-height: 1.75;
@@ -239,7 +239,7 @@
     }
   }
 
-  .typography-heading-xs {
+  ._moonshine .typography-heading-xs {
     font-size: 1.125rem;
     font-weight: 300;
     line-height: 1.778;
@@ -252,35 +252,35 @@
     }
   }
 
-  .typography-heading-xxs {
+  ._moonshine .typography-heading-xxs {
     font-size: 1.125rem;
     font-weight: 300;
     line-height: 1.778;
     letter-spacing: 0.0015em;
   }
 
-  .typography-body-lg {
+  ._moonshine .typography-body-lg {
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.75;
     letter-spacing: 0.0025em;
   }
 
-  .typography-body-md {
+  ._moonshine .typography-body-md {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.75;
     letter-spacing: 0.0025em;
   }
 
-  .typography-body-sm {
+  ._moonshine .typography-body-sm {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.75;
     letter-spacing: 0.0025em;
   }
 
-  .typography-body-xs {
+  ._moonshine .typography-body-xs {
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 1.75;

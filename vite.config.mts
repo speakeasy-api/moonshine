@@ -3,12 +3,15 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import moonshinePrefix from './src/vite/vite-moonshine-prefix'
 
 const packageName = 'moonshine'
 
 export default defineConfig({
   plugins: [
     react(),
+    // @ts-expect-error expecting an error... duh...
+    moonshinePrefix(),
     dts(),
     svgr({
       svgrOptions: {
