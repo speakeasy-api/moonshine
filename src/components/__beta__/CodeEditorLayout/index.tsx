@@ -28,7 +28,8 @@ const CodeEditorLayout = ({
       type.displayName === 'CodeEditor.Sidebar' ||
       type.displayName === 'CodeEditor.Content' ||
       type.displayName === 'CodeEditor.Tabs' ||
-      type.displayName === 'CodeEditor.CommandBar'
+      type.displayName === 'CodeEditor.CommandBar' ||
+      type.displayName === 'CodeEditor.Empty'
 
     if (!isValidSubType) {
       console.warn(
@@ -85,6 +86,22 @@ const CodeEditorLayout = ({
     return type.displayName === 'CodeEditor.Tabs'
   })
 
+  const hasActiveTab = useMemo(() => {
+    if (!tabs) return false
+    if (!isValidElement(tabs)) return false
+
+    if (!Array.isArray(tabs.props.children)) return false
+    return tabs.props.children.some(
+      (child: { props: { active: boolean } }) => child.props.active
+    )
+  }, [tabs])
+
+  const empty = validChildren.find((child) => {
+    if (!isValidElement(child)) return false
+    const type = child.type as { displayName?: string }
+    return type.displayName === 'CodeEditor.Empty'
+  })
+
   const commandBar = validChildren.find((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
@@ -115,8 +132,8 @@ const CodeEditorLayout = ({
           className="flex w-full min-w-0 flex-col"
           order={order === 'sidebar-first' ? 1 : 2}
         >
-          {tabs}
-          {contentPane}
+          {hasActiveTab && tabs}
+          {hasActiveTab ? contentPane : empty}
         </Panel>
         {order === 'sidebar-last' && <PanelResizeHandle />}
         {order === 'sidebar-last' && (
@@ -315,12 +332,23 @@ const CodeEditorCommandBar = ({
 }
 CodeEditorCommandBar.displayName = 'CodeEditor.CommandBar'
 
+interface CodeEditorEmptyProps extends PropsWithChildren {
+  className?: string
+}
+
+const Empty = ({ children, className }: CodeEditorEmptyProps) => {
+  return <div className={cn('h-full w-full', className)}>{children}</div>
+}
+
+Empty.displayName = 'CodeEditor.Empty'
+
 const CodeEditor = Object.assign(CodeEditorLayout, {
   Sidebar: CodeEditorSidebar,
   Content: CodeEditorContent,
   Tabs: CodeEditorTabs,
   Tab: CodeEditorTab,
   CommandBar: CodeEditorCommandBar,
+  Empty: Empty,
 })
 
 export { CodeEditor }
