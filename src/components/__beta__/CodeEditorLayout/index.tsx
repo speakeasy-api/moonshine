@@ -12,9 +12,14 @@ import {
 interface CodeEditorLayoutProps {
   children: ReactNode[]
   className?: string
+  order?: 'sidebar-first' | 'sidebar-last'
 }
 
-const CodeEditorLayout = ({ children, className }: CodeEditorLayoutProps) => {
+const CodeEditorLayout = ({
+  children,
+  className,
+  order = 'sidebar-first',
+}: CodeEditorLayoutProps) => {
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
@@ -54,11 +59,12 @@ const CodeEditorLayout = ({ children, className }: CodeEditorLayoutProps) => {
     <div className="flex h-full w-full flex-col rounded-lg">
       {commandBar}
       <div className={cn('flex min-h-0 flex-row border', className)}>
-        {sidebar}
+        {order === 'sidebar-first' && sidebar}
         <div className="flex w-full min-w-0 flex-col">
           {tabs}
           {contentPanes}
         </div>
+        {order === 'sidebar-last' && sidebar}
       </div>
     </div>
   )
@@ -74,7 +80,7 @@ const CodeEditorSidebar = ({ children, className }: CodeEditorSidebarProps) => {
   return (
     <div
       className={cn(
-        'code-editor-sidebar bg-background min-w-52 max-w-60 flex-none border-r p-3',
+        'code-editor-sidebar bg-background min-w-52 max-w-60 flex-none border-l border-r p-3',
         className
       )}
     >
