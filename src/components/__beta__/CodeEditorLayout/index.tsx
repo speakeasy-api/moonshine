@@ -90,10 +90,13 @@ const CodeEditorLayout = ({
     if (!tabs) return false
     if (!isValidElement(tabs)) return false
 
-    if (!Array.isArray(tabs.props.children)) return false
-    return tabs.props.children.some(
-      (child: { props: { active: boolean } }) => child.props.active
-    )
+    const arr = Children.toArray(tabs.props.children)
+    if (!Array.isArray(arr)) return false
+    return arr.some((child) => {
+      if (!isValidElement(child)) return false
+      const type = child.type as { displayName?: string }
+      return type.displayName === 'CodeEditor.Tab' && child.props.active
+    })
   }, [tabs])
 
   const empty = validChildren.find((child) => {
@@ -244,6 +247,7 @@ export interface CodeEditorTabProps {
   active?: boolean
   closable?: boolean
   grow?: boolean
+  icon?: ReactNode
   dirty?: boolean
   onClick?: (id: string) => void
   onClose?: (id: string) => void
@@ -259,6 +263,7 @@ const CodeEditorTab = ({
   dirty,
   onClick,
   onClose,
+  icon,
 }: CodeEditorTabProps) => {
   const [hoveredCloseIntent, setHoveredCloseIntent] = useState(false)
   const closeButton = useMemo(
@@ -266,7 +271,7 @@ const CodeEditorTab = ({
       <button
         className={cn(
           'text-muted hover:text-foreground ml-auto h-full rounded-sm px-0.5',
-          hoveredCloseIntent && 'bg-background/50'
+          hoveredCloseIntent && 'bg-background/80'
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
         onMouseLeave={() => setHoveredCloseIntent(false)}
@@ -290,9 +295,12 @@ const CodeEditorTab = ({
       key={id}
       onClick={() => onClick?.(id)}
     >
-      <span title={title} className="max-w-44 truncate">
-        {title}
-      </span>
+      <div className="flex items-center gap-1.5">
+        {icon && <span className="flex items-center">{icon}</span>}
+        <span title={title} className="max-w-44 truncate">
+          {title}
+        </span>
+      </div>
       {closable && !dirty && closeButton}
       {dirty && (
         <span

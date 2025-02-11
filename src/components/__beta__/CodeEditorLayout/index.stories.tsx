@@ -87,7 +87,7 @@ export const Default: Story = {
   },
 }
 
-export const SidebarLast: Story = {
+export const SidebarRightAligned: Story = {
   args: {
     children: [
       <CodeEditor.CommandBar className="py-2">
@@ -200,7 +200,7 @@ export const Empty: Story = {
           </div>
         ))}
       </CodeEditor.Content>,
-      <CodeEditor.Tabs></CodeEditor.Tabs>,
+      <CodeEditor.Tabs>{/* Empty tabs */}</CodeEditor.Tabs>,
       <CodeEditor.Empty>
         <div className="bg-muted flex h-full flex-col items-center justify-center p-3">
           <div className="flex flex-col items-center gap-3">
@@ -218,6 +218,126 @@ export const Empty: Story = {
           </div>
         </div>
       </CodeEditor.Empty>,
+    ],
+  },
+}
+
+export const SplitScreen: Story = {
+  args: {
+    children: [
+      <CodeEditor.CommandBar className="py-2">
+        <div className="flex flex-row items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-red-500 stroke-red-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-yellow-500 stroke-yellow-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
+            />
+          </div>
+          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+            <Icon name="search" className="h-3 w-3" />
+            <input
+              type="text"
+              className="w-full flex-1 bg-transparent text-sm outline-none"
+              placeholder="picz of cats"
+            />
+          </div>
+        </div>
+      </CodeEditor.CommandBar>,
+      <CodeEditor.Sidebar minWidth={50} maxWidth={50}>
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: 'url(https://placecats.com/600/800)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      </CodeEditor.Sidebar>,
+      <CodeEditor.Content minWidth={50} maxWidth={50}>
+        <ul className="list-inside list-disc">
+          {Array.from({ length: 40 }).map((_, index) => (
+            <li key={index} className="mb-2">
+              {faker.animal.cat()}
+            </li>
+          ))}
+        </ul>
+      </CodeEditor.Content>,
+      <CodeEditor.Tabs>
+        <CodeEditor.Tab
+          id="cat-breeds"
+          active
+          title="Cat Breeds"
+          closable
+          dirty
+        />
+      </CodeEditor.Tabs>,
+    ],
+  },
+}
+
+export const WithTabIcons: Story = {
+  args: {
+    children: [
+      <CodeEditor.CommandBar className="py-2">
+        <div className="flex flex-row items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-red-500 stroke-red-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-yellow-500 stroke-yellow-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
+            />
+          </div>
+          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+            <Icon name="search" className="h-3 w-3" />
+            <input
+              type="text"
+              className="w-full flex-1 bg-transparent text-sm outline-none"
+              placeholder="moonshine"
+            />
+          </div>
+        </div>
+      </CodeEditor.CommandBar>,
+      <CodeEditor.Sidebar minWidth={15} maxWidth={30}>
+        <div>Sidebar</div>
+      </CodeEditor.Sidebar>,
+      <CodeEditor.Content minWidth={40}>
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div key={index} className="mb-4">
+            {faker.lorem.paragraph()}
+          </div>
+        ))}
+      </CodeEditor.Content>,
+      <CodeEditor.Tabs>
+        <CodeEditor.Tab
+          id="openapi.yml"
+          active
+          title="openapi.yml"
+          closable
+          icon={<Icon name="file" className="h-3 w-3" />}
+          dirty
+        />
+        <CodeEditor.Tab
+          id="README.md"
+          title="README.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable
+        />
+      </CodeEditor.Tabs>,
     ],
   },
 }
