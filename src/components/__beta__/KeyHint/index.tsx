@@ -3,13 +3,18 @@ import { Icon } from '@/components/Icon'
 
 type Modifier = 'shift' | 'ctrlorcommand' | 'alt' | 'meta' | 'esc'
 
-const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+function checkIsMac(): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+}
 
 const modifierMap: Record<Modifier, string> = {
   shift: '⇧',
-  ctrlorcommand: isMac ? '⌘' : 'Ctrl',
-  alt: isMac ? '⌥' : 'Alt',
-  meta: isMac ? '⌘' : 'Win',
+  ctrlorcommand: checkIsMac() ? '⌘' : 'Ctrl',
+  alt: checkIsMac() ? '⌥' : 'Alt',
+  meta: checkIsMac() ? '⌘' : 'Win',
   esc: 'Esc',
 }
 
