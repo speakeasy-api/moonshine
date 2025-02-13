@@ -5,6 +5,9 @@ import { ResponsiveValue, Size } from '@/types'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
 
+import customDynamicIconImports from './customIcons'
+import { IconName } from './names'
+
 // TODO: Use skeleton
 function Skeleton() {
   return <div />
@@ -34,7 +37,7 @@ const sizeMap: Record<Size, number> = {
 }
 
 export interface IconProps extends Omit<SvgProps, 'size'> {
-  name: keyof typeof dynamicIconImports
+  name: IconName
   size?: ResponsiveValue<Size>
 }
 
@@ -52,9 +55,14 @@ function tryGetIcon(
     >
   }
 
-  const LucideIcon = lazy(
-    dynamicIconImports[name as keyof typeof dynamicIconImports]
-  )
+  const LucideIcon = customDynamicIconImports[
+    name as keyof typeof customDynamicIconImports
+  ]
+    ? lazy(
+        customDynamicIconImports[name as keyof typeof customDynamicIconImports]
+      )
+    : lazy(dynamicIconImports[name as keyof typeof dynamicIconImports])
+
   iconCache.set(name, LucideIcon)
   return LucideIcon
 }
