@@ -12,7 +12,7 @@ const iconNode: IconNode = [
 ]
 
 const icon = createCustomLucideIcon('npm', iconNode, {
-  viewBox: '0 0 128 110',
+  viewBox: '0 0 128 128',
   fill: 'currentColor',
 })
 

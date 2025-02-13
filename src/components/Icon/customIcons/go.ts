@@ -19,7 +19,7 @@ const iconNode: IconNode = [
 ]
 
 const icon = createCustomLucideIcon('go', iconNode, {
-  viewBox: '0 0 128 110',
+  viewBox: '0 0 128 128',
   fill: 'currentColor',
 })
 

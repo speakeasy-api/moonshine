@@ -4,6 +4,8 @@ const dynamicIconImports = {
   nuget: () => import('./nuget'),
   go: () => import('./go'),
   gems: () => import('./gems'),
+  maven: () => import('./maven'),
+  packagist: () => import('./packagist'),
 }
 
 export { dynamicIconImports as default }
