@@ -62,6 +62,13 @@ export {
   TooltipContent,
   TooltipProvider,
 } from '@/components/Tooltip'
+export {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverAnchor,
+  PopoverPortal,
+} from '@/components/Popover'
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
