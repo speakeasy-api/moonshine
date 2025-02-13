@@ -351,7 +351,7 @@ const CodeEditorTab = ({
 }
 CodeEditorTab.displayName = 'CodeEditor.Tab'
 
-interface CodeEditorCustomElementProps
+export interface CodeEditorCustomElementProps
   extends PropsWithChildren,
     HTMLAttributes<HTMLDivElement> {
   className?: string
