@@ -227,7 +227,11 @@ export const ExpandableWithSubtable: StoryObj<ListTableProps> = {
     ...defaultArgs,
     onRowClick: undefined,
     renderExpandedContent: () => (
-      <TableWithState {...Expandable.args as ListTableProps} hideHeader={true} hasMore={false} />
+      <TableWithState
+        {...(Expandable.args as ListTableProps)}
+        hideHeader={true}
+        hasMore={false}
+      />
     ),
   },
   render: (args) => <TableWithState {...args} />,
