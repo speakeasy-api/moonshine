@@ -7,6 +7,7 @@ import {
   PropsWithChildren,
   useState,
   useMemo,
+  HTMLAttributes,
 } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
@@ -91,7 +92,11 @@ const CodeEditorLayout = ({
     if (!isValidElement(tabs)) return false
 
     const arr = Children.toArray(tabs.props.children)
-    if (!Array.isArray(arr)) return false
+    if (!Array.isArray(arr)) {
+      console.log('tabs.props.children is not an array', arr)
+
+      return false
+    }
     return arr.some((child) => {
       if (!isValidElement(child)) return false
       const type = child.type as { displayName?: string }
@@ -158,7 +163,8 @@ CodeEditorLayout.displayName = 'CodeEditor'
 
 export interface CodeEditorSidebarProps
   extends PropsWithChildren,
-    ResizablePanelProps {
+    ResizablePanelProps,
+    HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
@@ -167,9 +173,11 @@ const CodeEditorSidebar = ({
   className,
   minWidth = 20,
   maxWidth,
+  ...props
 }: CodeEditorSidebarProps) => {
   return (
     <div
+      {...props}
       data-min-width={minWidth}
       data-max-width={maxWidth}
       className={cn(
@@ -190,9 +198,10 @@ export interface ResizablePanelProps {
 }
 
 export interface CodeEditorContentProps
-  extends PropsWithChildren,
+  extends React.HTMLAttributes<HTMLDivElement>,
     ResizablePanelProps {
   className?: string
+  containerRef?: React.RefObject<HTMLDivElement>
 }
 
 const CodeEditorContent = ({
@@ -200,15 +209,19 @@ const CodeEditorContent = ({
   className,
   minWidth,
   maxWidth,
+  containerRef,
+  ...props
 }: CodeEditorContentProps) => {
   return (
     <div
+      {...props}
       data-min-width={minWidth}
       data-max-width={maxWidth}
       className={cn(
         'code-editor-content bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card flex-1 overflow-x-hidden overflow-y-scroll px-3 [&::-webkit-scrollbar]:w-2',
         className
       )}
+      ref={containerRef}
     >
       {children}
     </div>
@@ -216,19 +229,29 @@ const CodeEditorContent = ({
 }
 CodeEditorContent.displayName = 'CodeEditor.Content'
 
-export interface CodeEditorTabsProps extends PropsWithChildren {
+export interface CodeEditorTabsProps
+  extends PropsWithChildren,
+    HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
-const CodeEditorTabs = ({ children, className }: CodeEditorTabsProps) => {
+const CodeEditorTabs = ({
+  children,
+  className,
+  ...props
+}: CodeEditorTabsProps) => {
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
-    return type.displayName === 'CodeEditor.Tab'
+    return (
+      type.displayName === 'CodeEditor.Tab' ||
+      type.displayName === 'CodeEditor.CustomElement'
+    )
   })
 
   return (
     <div
+      {...props}
       className={cn(
         'code-editor-tabs bg-background flex max-w-full flex-row overflow-y-hidden overflow-x-scroll border-b [&::-webkit-scrollbar]:hidden',
         className
@@ -240,7 +263,8 @@ const CodeEditorTabs = ({ children, className }: CodeEditorTabsProps) => {
 }
 CodeEditorTabs.displayName = 'CodeEditor.Tabs'
 
-export interface CodeEditorTabProps {
+export interface CodeEditorTabProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
   id: string
   title?: string
   className?: string
@@ -264,8 +288,15 @@ const CodeEditorTab = ({
   onClick,
   onClose,
   icon,
+  ...props
 }: CodeEditorTabProps) => {
   const [hoveredCloseIntent, setHoveredCloseIntent] = useState(false)
+  const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // stop the event from bubbling up to the parent tab click handler
+    e.stopPropagation()
+    onClose?.(id)
+    setHoveredCloseIntent(false)
+  }
   const closeButton = useMemo(
     () => (
       <button
@@ -275,7 +306,7 @@ const CodeEditorTab = ({
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
         onMouseLeave={() => setHoveredCloseIntent(false)}
-        onClick={() => onClose?.(id)}
+        onClick={handleClose}
       >
         <Icon name="x" className="h-3.5 w-3.5" />
       </button>
@@ -284,8 +315,9 @@ const CodeEditorTab = ({
   )
   return (
     <div
+      {...props}
       className={cn(
-        'code-editor-tab bg-background flex flex-shrink cursor-pointer select-none items-center justify-center gap-2.5 rounded-sm rounded-t-none border border-b-0 border-t-0 py-2 pl-3 pr-2 text-sm first-of-type:border-l-0 [&:not(:last-child)]:border-r-0',
+        'code-editor-tab bg-background flex flex-shrink cursor-pointer select-none items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pl-3 pr-2 text-sm first-of-type:border-l-0',
         active && 'text-foreground bg-foreground/10',
         !active && 'hover:bg-muted/75',
         grow && 'flex-1',
@@ -319,16 +351,39 @@ const CodeEditorTab = ({
 }
 CodeEditorTab.displayName = 'CodeEditor.Tab'
 
-export interface CodeEditorCommandBarProps extends PropsWithChildren {
+export interface CodeEditorCustomElementProps
+  extends PropsWithChildren,
+    HTMLAttributes<HTMLDivElement> {
+  className?: string
+}
+
+const CodeEditorCustomElement = ({
+  children,
+  className,
+  ...props
+}: CodeEditorCustomElementProps) => {
+  return (
+    <div className={cn('code-editor-custom-element', className)} {...props}>
+      {children}
+    </div>
+  )
+}
+CodeEditorCustomElement.displayName = 'CodeEditor.CustomElement'
+
+export interface CodeEditorCommandBarProps
+  extends PropsWithChildren,
+    HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
 const CodeEditorCommandBar = ({
   children,
   className,
+  ...props
 }: CodeEditorCommandBarProps) => {
   return (
     <div
+      {...props}
       className={cn(
         'code-editor-command-bar bg-muted rounded-sm rounded-b-none border-l border-r border-t px-3 py-1',
         className
@@ -340,12 +395,18 @@ const CodeEditorCommandBar = ({
 }
 CodeEditorCommandBar.displayName = 'CodeEditor.CommandBar'
 
-export interface CodeEditorEmptyProps extends PropsWithChildren {
+export interface CodeEditorEmptyProps
+  extends PropsWithChildren,
+    HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
-const Empty = ({ children, className }: CodeEditorEmptyProps) => {
-  return <div className={cn('h-full w-full', className)}>{children}</div>
+const Empty = ({ children, className, ...props }: CodeEditorEmptyProps) => {
+  return (
+    <div className={cn('h-full w-full', className)} {...props}>
+      {children}
+    </div>
+  )
 }
 
 Empty.displayName = 'CodeEditor.Empty'
@@ -357,6 +418,7 @@ const CodeEditor = Object.assign(CodeEditorLayout, {
   Tab: CodeEditorTab,
   CommandBar: CodeEditorCommandBar,
   Empty: Empty,
+  CustomElement: CodeEditorCustomElement,
 })
 
 export { CodeEditor }
