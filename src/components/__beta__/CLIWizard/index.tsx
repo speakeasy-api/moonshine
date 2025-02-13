@@ -1,15 +1,15 @@
 'use client'
 
 import * as React from 'react'
-import {Check, ChevronUp} from 'lucide-react'
-import {AnimatePresence, motion} from 'framer-motion'
-import {cn} from '@/lib/utils'
-import {Text} from '../../Text'
-import {Heading} from '../../Heading'
-import {TerminalCommand} from './terminal-command'
-import {Terminal} from './terminal'
-import {Stack} from '../../Stack'
-import {WizardStep} from '@/components/Wizard/types'
+import { Check, ChevronUp } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
+import { Text } from '../../Text'
+import { Heading } from '../../Heading'
+import { TerminalCommand } from './terminal-command'
+import { Terminal } from './terminal'
+import { Stack } from '../../Stack'
+import { WizardStep } from '@/components/Wizard/types'
 
 /**
  * TODO before moving out of beta:

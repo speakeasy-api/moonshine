@@ -86,7 +86,7 @@ function TableRoot<T extends object>(
         className={cn(
           styles.table,
           'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
-          tableDepth > 1 && 'border-none rounded-none',
+          tableDepth > 1 && 'rounded-none border-none',
           className
         )}
         data-cell-padding={props.cellPadding}
@@ -102,7 +102,10 @@ function TableRoot<T extends object>(
   let columns = props.columns
 
   // We add the expand column here so that all parts of the table know about it, particularly needed for widths
-  if (props.renderExpandedContent) {
+  if (
+    !propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props) &&
+    props.renderExpandedContent
+  ) {
     columns = [expandColumn(tableDepth), ...columns]
   }
 
@@ -110,8 +113,6 @@ function TableRoot<T extends object>(
     () => columns.map((column) => column.width ?? '1fr').join(' '),
     [columns]
   )
-
-  console.log(colWidths)
 
   if (propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props)) {
     return <Wrapper className={props.className}>{props.children}</Wrapper>
@@ -248,7 +249,7 @@ const Body = React.forwardRef(function Body<T extends object>(
     renderExpandedContent,
   } = props
 
-  const renderRow = (row: T) => {
+  const renderRow = (row: T | Group<T>) => {
     if (isGroupOf<T>(row)) {
       return (
         <RowGroup
@@ -383,7 +384,7 @@ function RowExpandable<T extends object>({
       <TooltipProvider>
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
-            <div className="flex justify-end w-full">
+            <div className="flex w-full justify-end">
               <Button onClick={expand} variant={'ghost'} className={`w-6`}>
                 <ExpandChevron isCollapsed={!isExpanded} />
               </Button>

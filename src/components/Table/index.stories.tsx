@@ -215,7 +215,7 @@ export const Expandable: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
     onRowClick: undefined,
-    renderExpandedContent: (row) => (
+    renderExpandedContent: () => (
       <div className="bg-green-500 p-4">MY CUSTOM COMPONENT</div>
     ),
   },
@@ -226,8 +226,8 @@ export const ExpandableWithSubtable: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
     onRowClick: undefined,
-    renderExpandedContent: (row) => (
-      <TableWithState {...Expandable.args} hideHeader={true} hasMore={false} />
+    renderExpandedContent: () => (
+      <TableWithState {...Expandable.args as ListTableProps} hideHeader={true} hasMore={false} />
     ),
   },
   render: (args) => <TableWithState {...args} />,
