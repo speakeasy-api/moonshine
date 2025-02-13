@@ -405,3 +405,66 @@ export const WithCustomTabs: Story = {
     ],
   },
 }
+
+export const TabStates: Story = {
+  args: {
+    children: [
+      <CodeEditor.Content minWidth={100}>
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div key={index} className="mb-4">
+            {faker.lorem.paragraph()}
+          </div>
+        ))}
+      </CodeEditor.Content>,
+      <CodeEditor.Tabs>
+        <CodeEditor.Tab
+          id="active-not-dirty-and-invalid"
+          active
+          invalid
+          title="openapi.yml"
+          closable
+          icon={<Icon name="file" className="h-3 w-3" />}
+        />
+        <CodeEditor.Tab
+          id="dirty-not-active-and-invalid"
+          dirty
+          title="README.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable
+        />
+        <CodeEditor.Tab
+          id="active-not-dirty-and-valid"
+          title="README.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable
+          invalid
+          dirty
+        />
+        <CodeEditor.Tab
+          id="dirty-not-closable"
+          title="FOO.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable={false}
+          dirty
+        />
+        <CodeEditor.Tab
+          id="disabled"
+          title="BAR.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          disabled
+        />
+        <CodeEditor.Tab
+          id="loading"
+          title={
+            <div className="flex w-full items-center gap-1">
+              <span>https://foo.com/file.json</span>
+              <Icon name="loader-circle" className="h-4 w-4 animate-spin" />
+            </div>
+          }
+          disabled
+          className="cursor-progress"
+        />
+      </CodeEditor.Tabs>,
+    ],
+  },
+}

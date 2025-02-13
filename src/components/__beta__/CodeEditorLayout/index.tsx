@@ -253,7 +253,7 @@ const CodeEditorTabs = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tabs bg-background flex max-w-full flex-row overflow-y-hidden overflow-x-scroll border-b [&::-webkit-scrollbar]:hidden',
+        'code-editor-tabs bg-background flex w-full flex-row overflow-y-hidden overflow-x-scroll border-b [&::-webkit-scrollbar]:hidden',
         className
       )}
     >
@@ -264,17 +264,24 @@ const CodeEditorTabs = ({
 CodeEditorTabs.displayName = 'CodeEditor.Tabs'
 
 export interface CodeEditorTabProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick' | 'title'> {
   id: string
-  title?: string
+  title?: string | ReactNode
   className?: string
   active?: boolean
   closable?: boolean
   grow?: boolean
   icon?: ReactNode
+  invalid?: boolean
   dirty?: boolean
   onClick?: (id: string) => void
   onClose?: (id: string) => void
+
+  /**
+   * If true, the tab will not be interactive
+   * Useful for loading states
+   */
+  disabled?: boolean
 }
 
 const CodeEditorTab = ({
@@ -285,9 +292,11 @@ const CodeEditorTab = ({
   closable,
   grow,
   dirty,
+  invalid,
   onClick,
   onClose,
   icon,
+  disabled,
   ...props
 }: CodeEditorTabProps) => {
   const [hoveredCloseIntent, setHoveredCloseIntent] = useState(false)
@@ -317,11 +326,13 @@ const CodeEditorTab = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tab bg-background flex flex-shrink cursor-pointer select-none items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pl-3 pr-2 text-sm first-of-type:border-l-0',
-        active && 'text-foreground bg-foreground/10',
-        !active && 'hover:bg-muted/75',
+        'code-editor-tab bg-background hover:bg-muted/50 flex w-fit cursor-pointer select-none items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pl-3 pr-2 text-sm first-of-type:border-l-0',
+        active && 'text-foreground bg-foreground/5 hover:bg-foreground/10',
+        !active && 'text-muted',
         grow && 'flex-1',
-        dirty && 'italic text-yellow-700 dark:text-yellow-400',
+        dirty && 'italic',
+        invalid && 'text-red-700 dark:text-red-400',
+        disabled && 'cursor-not-allowed opacity-75',
         className
       )}
       key={id}
@@ -329,7 +340,11 @@ const CodeEditorTab = ({
     >
       <div className="flex items-center gap-1.5">
         {icon && <span className="flex items-center">{icon}</span>}
-        <span title={title} className="max-w-44 truncate">
+
+        <span
+          title={typeof title === 'string' ? title : undefined}
+          className="max-w-44 truncate"
+        >
           {title}
         </span>
       </div>
@@ -341,8 +356,10 @@ const CodeEditorTab = ({
         >
           {!hoveredCloseIntent ? (
             <Icon name="circle" className="fill-foreground h-2.5 w-2.5" />
-          ) : (
+          ) : closable ? (
             closeButton
+          ) : (
+            <Icon name="circle" className="fill-foreground h-2.5 w-2.5" />
           )}
         </span>
       )}
