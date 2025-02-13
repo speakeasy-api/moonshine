@@ -211,6 +211,28 @@ export const MixedAutoColumnWidths: StoryObj<ListTableProps> = {
   render: (args) => <TableWithState {...args} />,
 }
 
+export const Expandable: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    onRowClick: undefined,
+    renderExpandedContent: (row) => (
+      <div className="bg-green-500 p-4">MY CUSTOM COMPONENT</div>
+    ),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
+export const ExpandableWithSubtable: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    onRowClick: undefined,
+    renderExpandedContent: (row) => (
+      <TableWithState {...Expandable.args} hideHeader={true} hasMore={false} />
+    ),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
 export const Customized: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
