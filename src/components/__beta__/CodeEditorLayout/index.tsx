@@ -32,8 +32,7 @@ const CodeEditorLayout = ({
       type.displayName === 'CodeEditor.Content' ||
       type.displayName === 'CodeEditor.Tabs' ||
       type.displayName === 'CodeEditor.CommandBar' ||
-      type.displayName === 'CodeEditor.Empty' ||
-      type.displayName === 'CodeEditor.CustomElement'
+      type.displayName === 'CodeEditor.Empty'
 
     if (!isValidSubType) {
       console.warn(
