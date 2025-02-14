@@ -9,6 +9,7 @@ export interface HeadingProps {
   variant?: HeadingVariant
   as?: HeadingElement
   className?: string
+  viewTransitionName?: string
 }
 
 const variantStyles: Record<HeadingVariant, string> = {
@@ -32,9 +33,13 @@ export function Heading({
   variant = 'md',
   as: Component = variantToElement[variant],
   className,
+  viewTransitionName,
 }: HeadingProps) {
   return (
-    <Component className={cn(variantStyles[variant], className)}>
+    <Component
+      className={cn(variantStyles[variant], className)}
+      style={{ viewTransitionName }}
+    >
       {children}
     </Component>
   )

@@ -7,22 +7,25 @@ import { TextVariant } from '../Text'
 
 type LinkVariant = 'primary' | 'secondary'
 
-const linkVariants = cva('group items-center inline-flex flex-row', {
-  variants: {
-    variant: {
-      primary:
-        'text-link visited:text-link-visited-primary visited:hover:text-link-visited-primary',
-      secondary:
-        'text-link-secondary visited:text-link-visited-secondary visited:hover:text-link-visited-secondary',
+const linkVariants = cva(
+  'group/link items-center inline-flex flex-row cursor-pointer',
+  {
+    variants: {
+      variant: {
+        primary:
+          'text-link visited:text-link-visited-primary visited:hover:text-link-visited-primary',
+        secondary:
+          'text-link-secondary visited:text-link-visited-secondary visited:hover:text-link-visited-secondary',
+      },
+      size: {
+        xs: 'typography-body-xs gap-1',
+        sm: 'typography-body-sm gap-1',
+        md: 'typography-body-md gap-2',
+        lg: 'typography-body-lg gap-2',
+      },
     },
-    size: {
-      xs: 'typography-body-xs gap-1',
-      sm: 'typography-body-sm gap-1',
-      md: 'typography-body-md gap-2',
-      lg: 'typography-body-lg gap-2',
-    },
-  },
-})
+  }
+)
 
 const linkTextVariants = cva(
   'underline-offset-4 decoration-1 inline-flex flex-row items-center',
@@ -33,8 +36,8 @@ const linkTextVariants = cva(
         secondary: '[&:not(:visited)]:decoration-link-secondary/40',
       },
       underline: {
-        false: 'no-underline group-hover:underline',
-        true: 'underline group-hover:no-underline',
+        false: 'no-underline group-hover/link:underline',
+        true: 'underline group-hover/link:no-underline',
       },
     },
   }
@@ -52,7 +55,7 @@ const iconWrapperVariants = cva('inline-block', {
 })
 
 export interface LinkProps {
-  href: string
+  href?: string
   children: ReactNode
   variant?: LinkVariant
   size?: TextVariant

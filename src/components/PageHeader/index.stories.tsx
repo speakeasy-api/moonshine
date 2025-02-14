@@ -1,10 +1,14 @@
 import { PageHeader } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 import { Button } from '../Button'
+import { Icon } from '../Icon'
 
 const meta: Meta<typeof PageHeader> = {
   component: PageHeader,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+  },
   decorators: [
     (Story) => (
       <div className="m-auto max-w-full px-4">
@@ -20,8 +24,14 @@ type Story = StoryObj<typeof PageHeader>
 export const Default: Story = {
   args: {
     children: [
+      <PageHeader.ContextBar key="context-area">
+        <PageHeader.ParentLink href="/">Previous Page</PageHeader.ParentLink>
+      </PageHeader.ContextBar>,
       <PageHeader.TitleBar key="title-bar">
         <PageHeader.TitleArea>
+          <PageHeader.LeadingVisual>
+            <Icon name="git-pull-request" size="large" />
+          </PageHeader.LeadingVisual>
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
         </PageHeader.TitleArea>
         <PageHeader.Actions>
