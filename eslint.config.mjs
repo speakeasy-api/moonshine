@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 import prettier from 'eslint-plugin-prettier'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import unusedImports from 'eslint-plugin-unused-imports'
-import moonshineRule from './src/lib/eslintPlugins.mjs'
+import eslintCnRule from './src/lib/eslintCnRule.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -56,7 +56,7 @@ export default tseslint.config(
     plugins: {
       moonshine: {
         rules: {
-          'cn-usage': moonshineRule,
+          'cn-usage': eslintCnRule,
         },
       },
     },

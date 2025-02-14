@@ -1,20 +1,10 @@
-/*/**
- * @typedef {import('eslint').Rule.RuleModule} RuleModule
- * @typedef {import('estree').Node} Node
- * @typedef {import('estree').CallExpression} CallExpression
- * @typedef {import('estree').Identifier} Identifier
- * @typedef {import('estree').Literal} Literal
- * @typedef {import('estree').TemplateLiteral} TemplateLiteral
- */
-
-/** @type {RuleModule} */
+/** @type {import('eslint').Rule.RuleModule} */
 const rule = {
   meta: {
     type: 'problem',
     docs: {
       description:
         'Enforce last parameter of cn function to be className string or false',
-      recommended: 'error',
     },
     hasSuggestions: true,
     schema: [], // No options needed anymore since we're using suggestions
@@ -24,10 +14,8 @@ const rule = {
     },
   },
 
-  /** @param {import('eslint').Rule.RuleContext} context */
   create(context) {
     return {
-      /** @param {CallExpression} node */
       CallExpression(node) {
         if (node.callee.type === 'Identifier' && node.callee.name === 'cn') {
           const args = node.arguments
@@ -36,15 +24,19 @@ const rule = {
           const lastArg = args[args.length - 1]
 
           let isValidLastArg = false
-          if (lastArg === undefined) {
-            isValidLastArg = true
-          }
 
-          if (lastArg.type === 'Literal' && lastArg.value === false) {
+          if (!lastArg) {
             isValidLastArg = true
-          }
-
-          if (lastArg.type === 'Identifier' && lastArg.name === 'className') {
+          } else if (
+            lastArg.type === 'Literal' &&
+            typeof lastArg.value === 'boolean' &&
+            lastArg.value === false
+          ) {
+            isValidLastArg = true
+          } else if (
+            lastArg.type === 'Identifier' &&
+            lastArg.name === 'className'
+          ) {
             isValidLastArg = true
           }
 
