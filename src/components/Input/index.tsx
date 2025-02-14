@@ -57,7 +57,8 @@ export function Input({
       {...props}
       className={cn(
         'bg-background placeholder:text-muted-foreground text-foreground w-full rounded-md py-2 text-sm shadow-sm outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
-        isFocused && 'placeholder:text-foreground'
+        isFocused && 'placeholder:text-foreground',
+        false
       )}
     />
   )
@@ -71,7 +72,8 @@ export function Input({
         rows={10}
         className={cn(
           'bg-background placeholder:text-muted-foreground text-foreground my-2 max-h-60 min-h-16 w-full rounded-md px-3 py-3 text-sm shadow-sm outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
-          isFocused && 'placeholder:text-foreground'
+          isFocused && 'placeholder:text-foreground',
+          false
         )}
       />
     )
