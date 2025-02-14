@@ -163,6 +163,7 @@ export const WithInvalidChild: Story = {
 
 export const Empty: Story = {
   args: {
+    showEmptyState: true,
     children: [
       <CodeEditor.CommandBar className="py-2">
         <div className="flex flex-row items-center justify-between text-sm">
@@ -200,7 +201,6 @@ export const Empty: Story = {
           </div>
         ))}
       </CodeEditor.Content>,
-      <CodeEditor.Tabs>{/* Empty tabs */}</CodeEditor.Tabs>,
       <CodeEditor.Empty>
         <div className="bg-muted flex h-full flex-col items-center justify-center p-3">
           <div className="flex flex-col items-center gap-3">
@@ -402,6 +402,104 @@ export const WithCustomTabs: Story = {
           </div>
         </CodeEditor.CustomElement>
       </CodeEditor.Tabs>,
+    ],
+  },
+}
+
+export const TabStates: Story = {
+  args: {
+    children: [
+      <CodeEditor.Content minWidth={100}>
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div key={index} className="mb-4">
+            {faker.lorem.paragraph()}
+          </div>
+        ))}
+      </CodeEditor.Content>,
+      <CodeEditor.Tabs>
+        <CodeEditor.Tab
+          id="active-not-dirty-and-invalid"
+          active
+          invalid
+          title="openapi.yml"
+          closable
+          icon={<Icon name="file" className="h-3 w-3" />}
+        />
+        <CodeEditor.Tab
+          id="dirty-not-active-and-invalid"
+          dirty
+          title="README.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable
+        />
+        <CodeEditor.Tab
+          id="active-not-dirty-and-valid"
+          title="README.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable
+          invalid
+          dirty
+        />
+        <CodeEditor.Tab
+          id="dirty-not-closable"
+          title="FOO.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          closable={false}
+          dirty
+        />
+        <CodeEditor.Tab
+          id="disabled"
+          title="BAR.md"
+          icon={<Icon name="file" className="h-3 w-3" />}
+          disabled
+        />
+        <CodeEditor.Tab
+          id="loading"
+          title={
+            <div className="flex w-full items-center gap-1">
+              <span>https://foo.com/file.json</span>
+              <Icon name="loader-circle" className="h-4 w-4 animate-spin" />
+            </div>
+          }
+          disabled
+          className="cursor-progress"
+        />
+      </CodeEditor.Tabs>,
+    ],
+  },
+}
+
+export const NoTabs: Story = {
+  args: {
+    children: [
+      <CodeEditor.CommandBar className="py-2">
+        <div className="flex flex-row items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-red-500 stroke-red-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-yellow-500 stroke-yellow-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
+            />
+          </div>
+        </div>
+      </CodeEditor.CommandBar>,
+      <CodeEditor.Content minWidth={100}>
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div key={index} className="mb-4">
+            {faker.lorem.paragraph()}
+          </div>
+        ))}
+      </CodeEditor.Content>,
+      <CodeEditor.Sidebar minWidth={15} maxWidth={30}>
+        <div>Sidebar</div>
+      </CodeEditor.Sidebar>,
     ],
   },
 }
