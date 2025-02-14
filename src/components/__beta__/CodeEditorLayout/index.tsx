@@ -36,7 +36,7 @@ const CodeEditorLayout = ({
 
     if (!isValidSubType) {
       console.warn(
-        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty, CodeEditor.CustomElement`
+        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
       )
     }
 
