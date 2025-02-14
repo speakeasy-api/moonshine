@@ -6,6 +6,7 @@ export { Stack } from '@/components/Stack'
 export { Button } from '@/components/Button'
 export { Card } from '@/components/Card'
 export { Icon } from '@/components/Icon'
+export { isIconName } from '@/components/Icon/isIconName'
 export { type IconName } from '@/components/Icon/names'
 export { Separator } from '@/components/Separator'
 export { Badge } from '@/components/Badge'
@@ -62,9 +63,17 @@ export {
   TooltipContent,
   TooltipProvider,
 } from '@/components/Tooltip'
+export {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverAnchor,
+  PopoverPortal,
+} from '@/components/Popover'
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
+export { Navbar } from '@/components/Navbar'
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
@@ -78,6 +87,7 @@ import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
 import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
 import { ResizablePanel } from './components/__beta__/ResizablePanel'
 import { CodePlayground } from './components/__beta__/CodePlayground'
+import { CodeEditor } from './components/__beta__/CodeEditorLayout'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
@@ -97,6 +107,7 @@ export const beta = {
 
   ResizablePanel,
   CodePlayground,
+  CodeEditor,
 }
 
 /** END BETA COMPONENTS */

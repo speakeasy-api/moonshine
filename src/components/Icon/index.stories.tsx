@@ -1,6 +1,7 @@
 import { StoryObj, Meta } from '@storybook/react'
 import { Icon } from '.'
-import dynamicIconImports from 'lucide-react/dynamicIconImports'
+import { customIconNames, iconNames } from './names'
+import { sizes } from '@/types'
 
 type Story = StoryObj<typeof Icon>
 
@@ -9,7 +10,11 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     name: {
       control: 'select',
-      options: Object.keys(dynamicIconImports),
+      options: iconNames,
+    },
+    size: {
+      control: 'select',
+      options: sizes,
     },
   },
 }
@@ -51,5 +56,18 @@ export const WithCustomSize: Story = {
   args: {
     name: 'chevron-right',
     size: '2xl',
+  },
+}
+
+export const CustomIcons: Story = {
+  argTypes: {
+    name: {
+      control: 'select',
+      options: customIconNames,
+    },
+  },
+  args: {
+    name: 'npm',
+    size: 'large',
   },
 }
