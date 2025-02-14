@@ -53,7 +53,8 @@ export function TerminalCommand({
             className={cn(
               'relative -mx-2 rounded-md px-2 py-0.5 transition-colors',
               isActive && 'bg-emerald-500/10',
-              !isActive && 'hover:bg-zinc-800'
+              !isActive && 'hover:bg-zinc-800',
+              false
             )}
           >
             <div className="flex items-start gap-2">
@@ -63,14 +64,19 @@ export function TerminalCommand({
                   'mt-0.5 flex-1 select-text font-mono font-medium tracking-normal text-[#e4e4e7]',
                   fontSize === 'small' && 'text-sm',
                   fontSize === 'medium' && 'text-base',
-                  fontSize === 'large' && 'text-lg'
+                  fontSize === 'large' && 'text-lg',
+                  false
                 )}
               >
                 {code}
               </span>
               {copyable && (
                 <span
-                  className={cn('mt-1.5 shrink-0', isActive && 'opacity-100')}
+                  className={cn(
+                    'mt-1.5 shrink-0',
+                    isActive && 'opacity-100',
+                    false
+                  )}
                 >
                   {copied ? (
                     <motion.div
@@ -88,7 +94,8 @@ export function TerminalCommand({
                     <Copy
                       className={cn(
                         'h-3.5 w-3.5 transition-colors',
-                        'text-muted group-hover:text-muted-foreground'
+                        'text-muted group-hover:text-muted-foreground',
+                        false
                       )}
                     />
                   )}

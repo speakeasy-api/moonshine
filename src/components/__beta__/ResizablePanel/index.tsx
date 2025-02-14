@@ -95,14 +95,16 @@ const DefaultResizeHandle = ({
       }}
       className={cn(
         'relative border-[1.25px] border-zinc-900/50',
-        isResizing && 'border-foreground/10'
+        isResizing && 'border-foreground/10',
+        false
       )}
     >
       <div
         className={cn(
           'bg-card text-muted absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border shadow-sm shadow-zinc-400/5',
           direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize',
-          isResizing && 'text-foreground'
+          isResizing && 'text-foreground',
+          false
         )}
       >
         <Icon name="grip-vertical" className="h-8 w-5" />

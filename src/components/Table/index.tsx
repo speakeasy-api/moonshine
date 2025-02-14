@@ -426,7 +426,10 @@ function LoadMore<T extends object>({
   return (
     <>
       <RowWrapper
-        className={cn(isLoading && 'animate-pulse opacity-100 duration-[2.5s]')}
+        className={cn(
+          isLoading && 'animate-pulse opacity-100 duration-[2.5s]',
+          false
+        )}
       >
         {columns.map((column) => (
           <Cell key={column.key.toString()}>

@@ -465,7 +465,8 @@ export const WrapWithAlignment: Story = {
         key={i}
         className={cn(
           'bg-muted text-muted-foreground flex w-[150px] items-center justify-center rounded-md p-4',
-          i % 2 === 0 ? 'h-[80px]' : 'h-[120px]'
+          i % 2 === 0 ? 'h-[80px]' : 'h-[120px]',
+          false
         )}
       >
         Item {i + 1}
@@ -513,7 +514,8 @@ export const Pagination: Story = {
               'rounded-md px-3 py-2',
               page === 1
                 ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground'
+                : 'bg-secondary text-secondary-foreground',
+              false
             )}
           >
             {page}
@@ -632,7 +634,8 @@ export const SidebarNavigation: Story = {
               'rounded-md px-4 py-2',
               item === 'Dashboard'
                 ? 'bg-accent text-accent-foreground'
-                : 'hover:bg-muted/50'
+                : 'hover:bg-muted/50',
+              false
             )}
           >
             {item}

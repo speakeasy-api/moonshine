@@ -328,14 +328,15 @@ function CircleOrCheck({
   return (
     <div className="relative z-20 flex h-6 w-6 items-center justify-center">
       <motion.div
-        className={cn('absolute inset-0 rounded-full border-2', circle)}
+        className={cn('absolute inset-0 rounded-full border-2', circle, false)}
         initial={false}
       />
       <motion.div
         className={cn(
           'relative z-20 flex h-full w-full items-center justify-center rounded-full border-2',
           circle,
-          text
+          text,
+          false
         )}
         initial={false}
       >

@@ -125,7 +125,7 @@ const Text = ({
   variant,
 }: React.PropsWithChildren<TextProps>) => {
   return (
-    <span className={cn(linkTextVariants({ underline, variant }))}>
+    <span className={cn(linkTextVariants({ underline, variant }), false)}>
       {children}
     </span>
   )
@@ -139,5 +139,7 @@ const IconWrapper = ({
   children,
   size,
 }: React.PropsWithChildren<IconWrapperProps>) => {
-  return <span className={cn(iconWrapperVariants({ size }))}>{children}</span>
+  return (
+    <span className={cn(iconWrapperVariants({ size }), false)}>{children}</span>
+  )
 }

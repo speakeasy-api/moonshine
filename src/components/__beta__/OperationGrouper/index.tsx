@@ -203,7 +203,8 @@ export function OperationGrouper({
                             !props.isDragging &&
                             'animate-wiggle border bg-gradient-to-br duration-500',
                           props.isDragging && 'z-10',
-                          !props.isDragging && '-z-10'
+                          !props.isDragging && '-z-10',
+                          false
                         )}
                         style={{
                           backgroundImage:
@@ -215,7 +216,8 @@ export function OperationGrouper({
                             name="grip-vertical"
                             className={cn(
                               'text-muted size-4',
-                              props.isDragging && 'text-foreground'
+                              props.isDragging && 'text-foreground',
+                              false
                             )}
                           />
                         )}

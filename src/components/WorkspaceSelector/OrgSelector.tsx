@@ -166,7 +166,8 @@ export function OrgSelector({
           <div
             className={cn(
               'min-w-0 flex-1 truncate text-left text-lg font-semibold lowercase',
-              open ? 'text-foreground' : 'text-foreground/80'
+              open ? 'text-foreground' : 'text-foreground/80',
+              false
             )}
             style={{ width: getSelectorMedianWidth }}
           >

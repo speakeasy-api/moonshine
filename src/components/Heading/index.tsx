@@ -12,11 +12,11 @@ export interface HeadingProps {
 }
 
 const variantStyles: Record<HeadingVariant, string> = {
-  xl: cn('typography-heading-xl text-heading-xl'),
-  lg: cn('typography-heading-lg text-heading-lg'),
-  md: cn('typography-heading-md text-heading-md'),
-  sm: cn('typography-heading-sm text-heading-sm'),
-  xs: cn('typography-heading-xs text-heading-xs'),
+  xl: cn('typography-heading-xl text-heading-xl', false),
+  lg: cn('typography-heading-lg text-heading-lg', false),
+  md: cn('typography-heading-md text-heading-md', false),
+  sm: cn('typography-heading-sm text-heading-sm', false),
+  xs: cn('typography-heading-xs text-heading-xs', false),
 }
 
 const variantToElement: Record<HeadingVariant, HeadingElement> = {

@@ -126,7 +126,8 @@ export function CreateWorkspace({
                     className={cn(
                       'text-foreground/80 select-none whitespace-pre text-lg font-semibold',
                       currentOrg.slug.length > 20 &&
-                        'max-w-40 truncate whitespace-pre'
+                        'max-w-40 truncate whitespace-pre',
+                      false
                     )}
                   >
                     {currentOrg.slug}

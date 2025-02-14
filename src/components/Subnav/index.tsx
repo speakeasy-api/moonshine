@@ -308,7 +308,8 @@ const SubnavItem = memo(
         ref={ref}
         className={cn(
           'text-muted-foreground relative z-10 cursor-pointer select-none',
-          isActive && 'text-foreground font-semibold'
+          isActive && 'text-foreground font-semibold',
+          false
         )}
         {...handlers}
       >

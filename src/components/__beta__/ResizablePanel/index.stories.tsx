@@ -95,7 +95,7 @@ const ResizerWithState = () => {
         id="1"
         key="1"
         order={1}
-        className={cn(panelClasses, 'bg-zinc-800/50')}
+        className={cn(panelClasses, 'bg-zinc-800/50', false)}
       >
         <div className="m-auto max-w-screen-2xl">
           {faker.lorem.paragraphs(20).split('\n').map(mapPara)}
@@ -112,7 +112,7 @@ const ResizerWithState = () => {
         id="2"
         key="2"
         order={2}
-        className={cn(panelClasses, 'bg-slate-800/50')}
+        className={cn(panelClasses, 'bg-slate-800/50', false)}
       >
         <div className="m-auto max-w-screen-2xl">
           {faker.lorem.paragraphs(20).split('\n').map(mapPara)}

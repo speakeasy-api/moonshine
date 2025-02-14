@@ -92,7 +92,10 @@ export function WorkspaceList({
         <div className="bg-background border-t">
           <CommandItem
             onSelect={handleCreateViewOpen}
-            className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
+            className={cn(
+              'm-1 cursor-pointer !items-center p-4 text-base',
+              false
+            )}
           >
             <Icon name="plus" />
             Create workspace

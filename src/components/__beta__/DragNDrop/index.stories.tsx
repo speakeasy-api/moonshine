@@ -77,7 +77,8 @@ const DragNDropDemo = () => {
             draggingOver && 'border-2 border-green-500',
             draggingOver &&
               !validDrop &&
-              'cursor-not-allowed border-2 border-red-500'
+              'cursor-not-allowed border-2 border-red-500',
+            false
           )}
         >
           Dropzone (accepts 🍌 and 🍎)

@@ -73,7 +73,8 @@ export function OrgList({
                 'flex max-w-lg cursor-pointer flex-row gap-3 p-4 text-base',
                 !showRecents &&
                   selectedOrg?.slug === org.slug &&
-                  'bg-accent text-accent-foreground font-semibold'
+                  'bg-accent text-accent-foreground font-semibold',
+                false
               )}
             >
               <GradientCircle name={org.label} />
@@ -98,7 +99,8 @@ export function OrgList({
             onSelect={onSelectRecent}
             className={cn(
               'bg-background text-foreground/80 sticky top-0 z-10 m-1 flex cursor-pointer items-center p-4 text-base',
-              showRecents && 'bg-accent text-accent-foreground font-semibold'
+              showRecents && 'bg-accent text-accent-foreground font-semibold',
+              false
             )}
           >
             <Icon name="history" />

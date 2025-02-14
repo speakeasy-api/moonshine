@@ -127,7 +127,7 @@ export const Slim = ({
             <button
               id="brand"
               onClick={onHomeNavigation}
-              className={cn(expanded ? 'self-center' : 'self-center')}
+              className={cn(expanded ? 'self-center' : 'self-center', false)}
             >
               <Logo variant="icon" className="h-5 w-6" />
             </button>
@@ -166,7 +166,8 @@ export const Slim = ({
               <div
                 className={cn(
                   'flex w-full flex-row justify-center',
-                  expanded ? 'justify-start' : 'justify-center'
+                  expanded ? 'justify-start' : 'justify-center',
+                  false
                 )}
                 key={item.label}
               >
@@ -235,7 +236,8 @@ export const Slim = ({
             }}
             data-state={expanded ? 'expanded' : 'collapsed'}
             className={cn(
-              'pointer-events-auto absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize'
+              'pointer-events-auto absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize',
+              false
             )}
             onClick={onCollapse}
           ></ResizablePanel.ResizeHandle>

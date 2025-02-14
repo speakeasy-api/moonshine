@@ -26,7 +26,8 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
         className={cn(
           'hover:!bg-accent data-[selected]:!bg-accent flex w-full max-w-full cursor-pointer flex-row gap-3 p-4 text-base',
           isSelected && 'font-semibold',
-          !workspace.active && 'opacity-50'
+          !workspace.active && 'opacity-50',
+          false
         )}
       >
         <GradientCircle name={workspace.label} />

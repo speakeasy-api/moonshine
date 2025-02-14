@@ -224,7 +224,8 @@ export function Facepile({
           <div
             className={cn(
               'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-              getResponsiveClasses(avatarSize, userAvatarSizeMapper)
+              getResponsiveClasses(avatarSize, userAvatarSizeMapper),
+              false
             )}
           >
             +{extraFaces}

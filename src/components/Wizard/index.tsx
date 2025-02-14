@@ -150,14 +150,15 @@ export function Wizard({
                         status === 'completed' && 'bg-emerald-500 text-black',
                         status === 'current' &&
                           'scale-110 bg-zinc-400 text-zinc-800',
-                        status === 'upcoming' && 'bg-zinc-900 text-zinc-400'
+                        status === 'upcoming' && 'bg-zinc-900 text-zinc-400',
+                        false
                       )}
                     >
                       {stepNumber}
                     </div>
 
                     {/* TODO: is this the best way to handle the opacity? */}
-                    <div className={cn(status === 'upcoming' && 'opacity-50')}>
+                    <div className={cn(status === 'upcoming' && 'opacity-50', false)}>
                       <Heading variant="md" as="h2">
                         {step.title}
                       </Heading>
@@ -168,7 +169,8 @@ export function Wizard({
                   <div
                     className={cn(
                       'mb-4 mt-2',
-                      status === 'upcoming' && 'opacity-50'
+                      status === 'upcoming' && 'opacity-50',
+                      false
                     )}
                   >
                     <Text muted>{step.description}</Text>
@@ -177,7 +179,8 @@ export function Wizard({
                   <div
                     className={cn(
                       'mt-8 flex w-full flex-col gap-5',
-                      status === 'upcoming' && 'opacity-50'
+                      status === 'upcoming' && 'opacity-50',
+                      false
                     )}
                   >
                     {/* TODO: update this to CodeBlock component */}

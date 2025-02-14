@@ -24,7 +24,8 @@ const navItems: NavItems[] = [
       <div
         className={cn(
           'bg-muted hover:bg-muted/50 flex w-full min-w-9 flex-grow cursor-pointer flex-row items-center justify-center gap-2.5 rounded-xl border px-1.5',
-          expanded && 'flex-grow-0 justify-start'
+          expanded && 'flex-grow-0 justify-start',
+          false
         )}
       >
         <Icon name="plus" className="h-full min-h-9" />
