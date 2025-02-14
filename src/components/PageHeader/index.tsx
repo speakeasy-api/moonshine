@@ -33,8 +33,8 @@ const ContextBar: React.FC<ContextBarProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
-        styles.contextArea,
-        'context-area flex flex-row items-center justify-start pt-6',
+        styles.contextBar,
+        'context-bar flex flex-row items-center justify-start pt-6',
         className
       )}
     >
@@ -78,7 +78,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ children, className }) => {
     <div
       className={cn(
         styles.titleBar,
-        'flex flex-row items-center justify-between gap-4 border-b py-10 group-has-[.context-area]/page-header:pt-8',
+        'flex flex-row items-center justify-between gap-4 border-b py-10 group-has-[.context-bar]/page-header:pt-8',
         className
       )}
     >
