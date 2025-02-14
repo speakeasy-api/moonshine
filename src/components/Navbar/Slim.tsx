@@ -70,8 +70,8 @@ export const Slim = ({
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      e.preventDefault()
       if (e.metaKey && e.key === 'b') {
+        e.preventDefault()
         onCollapse()
       }
     }
