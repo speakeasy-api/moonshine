@@ -15,12 +15,14 @@ export interface CodeEditorLayoutProps {
   children: ReactNode[]
   className?: string
   order?: 'sidebar-first' | 'sidebar-last'
+  showEmptyState?: boolean
 }
 
 const CodeEditorLayout = ({
   children,
   className,
   order = 'sidebar-first',
+  showEmptyState = false,
 }: CodeEditorLayoutProps) => {
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
@@ -34,7 +36,7 @@ const CodeEditorLayout = ({
 
     if (!isValidSubType) {
       console.warn(
-        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar`
+        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
       )
     }
 
@@ -92,11 +94,7 @@ const CodeEditorLayout = ({
     if (!isValidElement(tabs)) return false
 
     const arr = Children.toArray(tabs.props.children)
-    if (!Array.isArray(arr)) {
-      console.log('tabs.props.children is not an array', arr)
-
-      return false
-    }
+    if (!Array.isArray(arr)) return false
     return arr.some((child) => {
       if (!isValidElement(child)) return false
       const type = child.type as { displayName?: string }
@@ -141,7 +139,7 @@ const CodeEditorLayout = ({
           order={order === 'sidebar-first' ? 1 : 2}
         >
           {hasActiveTab && tabs}
-          {hasActiveTab ? contentPane : empty}
+          {!showEmptyState ? contentPane : empty}
         </Panel>
         {order === 'sidebar-last' && <PanelResizeHandle />}
         {order === 'sidebar-last' && (

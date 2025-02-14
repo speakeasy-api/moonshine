@@ -163,6 +163,7 @@ export const WithInvalidChild: Story = {
 
 export const Empty: Story = {
   args: {
+    showEmptyState: true,
     children: [
       <CodeEditor.CommandBar className="py-2">
         <div className="flex flex-row items-center justify-between text-sm">
@@ -200,7 +201,6 @@ export const Empty: Story = {
           </div>
         ))}
       </CodeEditor.Content>,
-      <CodeEditor.Tabs>{/* Empty tabs */}</CodeEditor.Tabs>,
       <CodeEditor.Empty>
         <div className="bg-muted flex h-full flex-col items-center justify-center p-3">
           <div className="flex flex-col items-center gap-3">
@@ -465,6 +465,41 @@ export const TabStates: Story = {
           className="cursor-progress"
         />
       </CodeEditor.Tabs>,
+    ],
+  },
+}
+
+export const NoTabs: Story = {
+  args: {
+    children: [
+      <CodeEditor.CommandBar className="py-2">
+        <div className="flex flex-row items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-red-500 stroke-red-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-yellow-500 stroke-yellow-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
+            />
+          </div>
+        </div>
+      </CodeEditor.CommandBar>,
+      <CodeEditor.Content minWidth={100}>
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div key={index} className="mb-4">
+            {faker.lorem.paragraph()}
+          </div>
+        ))}
+      </CodeEditor.Content>,
+      <CodeEditor.Sidebar minWidth={15} maxWidth={30}>
+        <div>Sidebar</div>
+      </CodeEditor.Sidebar>,
     ],
   },
 }
