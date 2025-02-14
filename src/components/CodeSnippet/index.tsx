@@ -188,7 +188,8 @@ export function CodeSnippet({
       <div
         className={cn(
           'snippet-inner flex w-full flex-row gap-2 rounded-lg p-4',
-          bgColor
+          bgColor,
+          false
         )}
       >
         {language === 'bash' && (
