@@ -52,7 +52,8 @@ export function HighlightedText({
           key={index}
           className={cn(
             'py-0.5 leading-7 first:pl-0.5',
-            index === chars.length - 1 && 'pr-0.5'
+            index === chars.length - 1 && 'pr-0.5',
+            false
           )}
           initial={{
             background: animate

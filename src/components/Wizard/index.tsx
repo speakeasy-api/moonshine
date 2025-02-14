@@ -139,7 +139,8 @@ export function Wizard({
                 <div
                   className={cn(
                     'relative pl-16',
-                    status === 'completed' && 'text-muted-foreground'
+                    status === 'completed' && 'text-muted-foreground',
+                    false
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -158,7 +159,12 @@ export function Wizard({
                     </div>
 
                     {/* TODO: is this the best way to handle the opacity? */}
-                    <div className={cn(status === 'upcoming' && 'opacity-50', false)}>
+                    <div
+                      className={cn(
+                        status === 'upcoming' && 'opacity-50',
+                        false
+                      )}
+                    >
                       <Heading variant="md" as="h2">
                         {step.title}
                       </Heading>

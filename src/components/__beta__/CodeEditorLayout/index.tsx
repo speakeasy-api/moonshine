@@ -311,7 +311,8 @@ const CodeEditorTab = ({
       <button
         className={cn(
           'text-muted hover:text-foreground ml-auto h-full rounded-sm px-0.5',
-          hoveredCloseIntent && 'bg-background/80'
+          hoveredCloseIntent && 'bg-background/80',
+          false
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
         onMouseLeave={() => setHoveredCloseIntent(false)}
@@ -380,7 +381,10 @@ const CodeEditorCustomElement = ({
   ...props
 }: CodeEditorCustomElementProps) => {
   return (
-    <div className={cn('code-editor-custom-element', className)} {...props}>
+    <div
+      className={cn('code-editor-custom-element', className)}
+      {...props}
+    >
       {children}
     </div>
   )

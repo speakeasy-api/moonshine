@@ -168,7 +168,10 @@ export function CodePlayground({
           <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
             <button
               role="button"
-              className={cn('ml-2 border-none bg-transparent outline-none')}
+              className={cn(
+                'ml-2 border-none bg-transparent outline-none',
+                false
+              )}
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
