@@ -36,7 +36,7 @@ const rule = {
           const lastArg = args[args.length - 1]
 
           let isValidLastArg = false
-          if (lastArg !== undefined) {
+          if (lastArg === undefined) {
             isValidLastArg = true
           }
 
