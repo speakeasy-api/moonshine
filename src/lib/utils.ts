@@ -45,7 +45,7 @@ export function cn(...inputs: ClassValue[]) {
  * const gapMapper = (gap: number) => `gap-${gap}`
  * const gap = getResponsiveClasses({ sm: 0, md: 10 }, gapMapper)
  * // => 'gap-0 md:gap-10'
- */\
+ */
 export function getResponsiveClasses<T>(
   value: ResponsiveValue<T>,
   mapper: (val: T, breakpoint: Breakpoint) => string

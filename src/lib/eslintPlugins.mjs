@@ -1,4 +1,4 @@
-/**
+/*/**
  * @typedef {import('eslint').Rule.RuleModule} RuleModule
  * @typedef {import('estree').Node} Node
  * @typedef {import('estree').CallExpression} CallExpression
@@ -14,61 +14,46 @@ const rule = {
     docs: {
       description:
         'Enforce last parameter of cn function to be className string or false',
+      recommended: 'error',
     },
-    fixable: 'code',
-    schema: [], // no options
+    hasSuggestions: true,
+    schema: [], // No options needed anymore since we're using suggestions
     messages: {
-      '@moonshine/invalid-cn-usage':
-        'Last parameter of the cn function must be named "className" and be a string type, or be false',
+      '@moonshine/cn-invalid-params':
+        'Last parameter of cn function must be named "className" and be a string type, or be false',
     },
   },
 
+  /** @param {import('eslint').Rule.RuleContext} context */
   create(context) {
     return {
-      /**
-       * @param {CallExpression} node
-       */
+      /** @param {CallExpression} node */
       CallExpression(node) {
-        // Check if the called function is named 'cn'
         if (node.callee.type === 'Identifier' && node.callee.name === 'cn') {
           const args = node.arguments
 
-          // If there are no arguments, that's a problem
-          if (args.length === 0) {
-            context.report({
-              node,
-              messageId: '@moonshine/invalid-cn-usage',
-            })
-            return
-          }
-
+          // Check if last argument is valid
           const lastArg = args[args.length - 1]
 
-          // Check if last argument is the boolean literal 'false'
+          let isValidLastArg = false
+          if (lastArg !== undefined) {
+            isValidLastArg = true
+          }
+
           if (lastArg.type === 'Literal' && lastArg.value === false) {
-            return // This is valid
+            isValidLastArg = true
           }
 
-          // Check if it's an identifier named 'className'
           if (lastArg.type === 'Identifier' && lastArg.name === 'className') {
-            return // This is valid
+            isValidLastArg = true
           }
 
-          // If it's a string literal, that's also fine
-          if (lastArg.type === 'Literal' && typeof lastArg.value === 'string') {
-            return // This is valid
+          if (!isValidLastArg) {
+            context.report({
+              node,
+              messageId: '@moonshine/cn-invalid-params',
+            })
           }
-
-          // Template literals are also acceptable
-          if (lastArg.type === 'TemplateLiteral') {
-            return // This is valid
-          }
-
-          // If we get here, the last parameter is invalid
-          context.report({
-            node,
-            messageId: '@moonshine/invalid-cn-usage',
-          })
         }
       },
     }
