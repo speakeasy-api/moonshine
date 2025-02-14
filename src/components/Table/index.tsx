@@ -58,11 +58,11 @@ export type TableWrapperProps<T extends object> =
     cellPadding?: TableProps<T>['cellPadding']
   }
 
-function expandColumn<T extends object>(depth: number): Column<T> {
+function expandColumn<T extends object>(): Column<T> {
   return {
     key: 'expand',
     header: '',
-    width: `${32 + 32 * depth}px`, // 32px is padding, 32px is the width of the expand button
+    width: `64px`, // 32px is padding, 32px is the width of the expand button
   }
 }
 
@@ -106,7 +106,7 @@ function TableRoot<T extends object>(
     !propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props) &&
     props.renderExpandedContent
   ) {
-    columns = [expandColumn(tableDepth), ...columns]
+    columns = [expandColumn(), ...columns]
   }
 
   const colWidths = useMemo(
@@ -364,7 +364,6 @@ function RowExpandable<T extends object>({
   onClick?: (row: T) => void
   className?: string
 }) {
-  const { depth } = useContext(TableContext)
   const [isExpanded, setIsExpanded] = useState(false)
 
   const expand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -383,7 +382,7 @@ function RowExpandable<T extends object>({
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
             <div className="flex w-full justify-end">
-              <Button onClick={expand} variant={'ghost'} className={`w-6`}>
+              <Button onClick={expand} variant={'ghost'} className={`h-6 w-6`}>
                 <ExpandChevron isCollapsed={!isExpanded} />
               </Button>
             </div>
@@ -394,9 +393,7 @@ function RowExpandable<T extends object>({
     ) : null
   }, [expand, isExpanded, content])
 
-  const expandCol = columns.find(
-    (column) => column.key === expandColumn(depth).key
-  )
+  const expandCol = columns.find((column) => column.key === expandColumn().key)
 
   if (expandCol) {
     expandCol.render = renderExpandCol
@@ -486,10 +483,11 @@ function Cell<T extends object>(
     <td
       className={cn(
         styles.tableCell,
-        'flex max-w-full items-center',
+        `flex max-w-full items-center`,
         className
       )}
     >
+      <SubtableIndendation />
       {children}
     </td>
   )
@@ -612,11 +610,20 @@ function HeaderCell({
         className
       )}
     >
+      <SubtableIndendation />
       {children}
     </th>
   )
 
   return <Wrapper className={className}>{children}</Wrapper>
+}
+
+// Has the effect of "indenting" subtables while still allowing them to occupy the full width of the parent table
+function SubtableIndendation() {
+  const { depth } = useContext(TableContext)
+  return depth > 1 ? (
+    <div style={{ minWidth: `${16 * (depth - 1)}px` }} />
+  ) : null
 }
 
 function propsHasChildren<P extends PropsWithChildren, Q extends object>(
