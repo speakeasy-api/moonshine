@@ -381,10 +381,7 @@ const CodeEditorCustomElement = ({
   ...props
 }: CodeEditorCustomElementProps) => {
   return (
-    <div
-      className={cn('code-editor-custom-element', className)}
-      {...props}
-    >
+    <div className={cn('code-editor-custom-element', className)} {...props}>
       {children}
     </div>
   )
