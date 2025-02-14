@@ -215,9 +215,10 @@ export const Expandable: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
     onRowClick: undefined,
-    renderExpandedContent: () => (
-      <div className="bg-green-500 p-4">MY CUSTOM COMPONENT</div>
-    ),
+    renderExpandedContent: (row) =>
+      row.language === 'python' ? null : (
+        <div className="bg-green-500 p-4">MY CUSTOM COMPONENT</div>
+      ),
   },
   render: (args) => <TableWithState {...args} />,
 }

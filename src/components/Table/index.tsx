@@ -26,7 +26,7 @@ export type Column<T extends object> = {
   key: keyof T | string
   header: ReactNode
   render?: (row: T) => ReactNode
-  width?: `${number}fr` | 'auto' | undefined
+  width?: `${number}fr` | `${number}px` | 'auto' | undefined
 }
 
 export type Group<T extends object> = {
@@ -62,7 +62,7 @@ function expandColumn<T extends object>(depth: number): Column<T> {
   return {
     key: 'expand',
     header: '',
-    width: `${0.2 * depth}fr`,
+    width: `${32 + 32 * depth}px`, // 32px is padding, 32px is the width of the expand button
   }
 }
 
@@ -340,7 +340,10 @@ function Row<T extends object>(props: RowProps<T> | RowWrapperProps) {
 
   const { row, onClick, columns, className } = props
   return (
-    <Wrapper className={className} onClick={() => onClick?.(row)}>
+    <Wrapper
+      className={className}
+      onClick={onClick ? () => onClick(row) : undefined}
+    >
       {columns.map((column) => (
         <Cell key={column.key.toString()} column={column} row={row} />
       ))}
@@ -367,11 +370,6 @@ function RowExpandable<T extends object>({
   const expand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsExpanded((prev) => !prev)
-  }
-
-  // If renderExpandedContent is provided and onClick is not, let the row expand when clicked
-  if (!onClick) {
-    onClick = () => setIsExpanded((prev) => !prev)
   }
 
   const content = useMemo(
@@ -402,6 +400,11 @@ function RowExpandable<T extends object>({
 
   if (expandCol) {
     expandCol.render = renderExpandCol
+  }
+
+  // If there's some expanded content to show and onClick is not provided, let the row expand when clicked
+  if (!onClick && content) {
+    onClick = () => setIsExpanded((prev) => !prev)
   }
 
   return (
