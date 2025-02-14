@@ -176,7 +176,8 @@ export function CodeSnippet({
     <div
       data-theme={theme}
       className={cn(
-        `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
+        'border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border',
+        bgColor,
         inline && 'inline-flex',
         shimmer && 'shimmer',
         className
@@ -204,7 +205,8 @@ export function CodeSnippet({
               highlighted && theme === 'dark' && '!bg-zinc-500/40',
               highlighted && theme === 'light' && '!bg-zinc-200/40',
               fontSizeMap[fontSize],
-              isMultiline && 'min-w-32'
+              isMultiline && 'min-w-32',
+              false
             )}
             onBeforeInput={handleBeforeInput}
           />
@@ -214,7 +216,8 @@ export function CodeSnippet({
           <div
             className={cn(
               'ml-auto mr-1 flex self-center text-white',
-              isMultiline && 'mt-1 self-start'
+              isMultiline && 'mt-1 self-start',
+              false
             )}
           >
             <button
@@ -222,7 +225,8 @@ export function CodeSnippet({
               className={cn(
                 'relative ml-2 border-none bg-transparent outline-none',
                 theme === 'dark' && 'text-white',
-                theme === 'light' && 'text-black'
+                theme === 'light' && 'text-black',
+                false
               )}
               onClick={handleCopy}
             >
