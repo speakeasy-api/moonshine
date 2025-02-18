@@ -5,14 +5,70 @@ import { Separator } from '../Separator'
 import styles from './styles.module.css'
 import { cn } from '@/lib/utils'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
+import { Link, LinkProps } from '../Link'
 
 interface PageHeaderProps extends PropsWithChildren {
   className?: string
 }
 
 const Root: React.FC<PageHeaderProps> = ({ children, className }) => {
-  return <div className={cn(styles.pageHeader, className)}>{children}</div>
+  return (
+    <div
+      className={cn(
+        'page-header group/page-header',
+        styles.pageHeader,
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
 }
+
+interface ContextBarProps extends PropsWithChildren {
+  className?: string
+}
+
+const ContextBar: React.FC<ContextBarProps> = ({ children, className }) => {
+  return (
+    <div
+      className={cn(
+        styles.contextBar,
+        'context-bar flex flex-row items-center justify-start pt-6',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+ContextBar.displayName = 'PageHeader.ContextBar'
+
+interface ParentLinkProps
+  extends PropsWithChildren<Pick<LinkProps, 'href' | 'onClick'>> {
+  className?: string
+}
+
+const ParentLink: React.FC<ParentLinkProps> = ({
+  children,
+  className,
+  onClick,
+  href,
+}) => {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={className}
+      iconPrefixName="arrow-left"
+      variant="secondary"
+      target="_self"
+    >
+      {children}
+    </Link>
+  )
+}
+ParentLink.displayName = 'PageHeader.ParentLink'
 
 interface TitleBarProps extends PropsWithChildren {
   className?: string
@@ -22,7 +78,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ children, className }) => {
     <div
       className={cn(
         styles.titleBar,
-        'flex flex-row items-center justify-between gap-4 border-b py-10',
+        'flex flex-row items-center justify-between gap-4 border-b py-10 group-has-[.context-bar]/page-header:pt-8',
         className
       )}
     >
@@ -38,7 +94,11 @@ interface TitleAreaProps extends PropsWithChildren {
 const TitleArea: React.FC<TitleAreaProps> = ({ children, className }) => {
   return (
     <div
-      className={cn(styles.titleArea, 'flex flex-row items-start', className)}
+      className={cn(
+        styles.titleArea,
+        'flex flex-row items-center gap-2',
+        className
+      )}
     >
       {children}
     </div>
@@ -46,12 +106,33 @@ const TitleArea: React.FC<TitleAreaProps> = ({ children, className }) => {
 }
 TitleArea.displayName = 'PageHeader.TitleArea'
 
-interface TitleProps extends PropsWithChildren {
+interface LeadingVisualProps extends PropsWithChildren {
   className?: string
 }
-const Title: React.FC<TitleProps> = ({ children, className }) => {
+
+const LeadingVisual: React.FC<LeadingVisualProps> = ({
+  children,
+  className,
+}) => {
+  return <div className={cn('order-1', className)}>{children}</div>
+}
+LeadingVisual.displayName = 'PageHeader.LeadingVisual'
+
+interface TitleProps extends PropsWithChildren {
+  className?: string
+  viewTransitionName?: string
+}
+const Title: React.FC<TitleProps> = ({
+  children,
+  className,
+  viewTransitionName,
+}) => {
   return (
-    <Heading variant="xl" className={cn('flex-1', className)}>
+    <Heading
+      variant="xl"
+      className={cn('order-2 flex-1', className)}
+      viewTransitionName={viewTransitionName}
+    >
       {children}
     </Heading>
   )
@@ -132,8 +213,11 @@ const FooterItem: React.FC<FooterItemProps> = ({ children, className }) => {
 FooterItem.displayName = 'PageHeader.FooterItem'
 
 export const PageHeader = Object.assign(Root, {
+  ContextBar,
+  ParentLink,
   TitleBar,
   TitleArea,
+  LeadingVisual,
   Title,
   Actions,
   Footer,

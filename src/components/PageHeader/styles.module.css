@@ -1,6 +1,10 @@
 .pageHeader {
     display: grid;
-    grid-template-areas: "title-bar" "footer";
+    grid-template-areas: "context-bar" "title-bar" "footer";
+}
+
+.contextBar {
+    grid-area: context-bar;
 }
 
 .titleBar {
