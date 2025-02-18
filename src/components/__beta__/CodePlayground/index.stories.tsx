@@ -138,3 +138,16 @@ for (const foo of fooBar) {
     },
   },
 }
+
+export const WithSmallerContainer: Story = {
+  args: {
+    ...Default.args,
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-full max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
+}

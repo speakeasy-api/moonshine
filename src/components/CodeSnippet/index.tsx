@@ -1,26 +1,68 @@
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react'
 import { cn } from '@/lib/utils'
-import { ProgrammingLanguage, Size } from '@/types'
+import { isProgrammingLanguage, ProgrammingLanguage, Size } from '@/types'
 import useTailwindTheme from '@/hooks/useTailwindTheme'
 import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
+import { lineNumbers } from '../__beta__/CodePlayground/lineNumbers'
 
 type Theme = 'dark' | 'light'
 
 interface CodeSnippetProps {
+  /**
+   * The code to display.
+   */
   code: string
+  /**
+   * Whether to show a copy button.
+   */
   copyable?: boolean
-  language: ProgrammingLanguage
+
+  /**
+   * One of the known Speakeasy target languages, or a language that Codehike supports.
+   * The full list of supported languages is available at https://codehike.org/docs/concepts/code#languages
+   */
+  language: ProgrammingLanguage | string
+  /**
+   * The symbol to display before the code.
+   */
   promptSymbol?: React.ReactNode
+  /**
+   * Whether to display the code snippet inline.
+   */
   inline?: boolean
+  /**
+   * The font size of the code snippet.
+   */
   fontSize?: Size
+  /**
+   * The minimum width of the code snippet.
+   */
   minWidth?: string
+
+  /**
+   * Whether to show line numbers.
+   */
+  showLineNumbers?: boolean
+
+  /**
+   * The theme of the code snippet.
+   */
   theme?: Theme
+  /**
+   * The callback to call when the code is selected or copied.
+   */
   onSelectOrCopy?: () => void
+  /**
+   * Whether to shimmer the code snippet.
+   */
   shimmer?: boolean
+  /**
+   * Additional CSS classes to apply to the code snippet.
+   */
   className?: string
 }
 
@@ -98,6 +140,7 @@ export function CodeSnippet({
   onSelectOrCopy,
   shimmer = false,
   className,
+  showLineNumbers = false,
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
@@ -145,7 +188,9 @@ export function CodeSnippet({
     async function highlightCode() {
       const rawCode: RawCode = {
         value: code,
-        lang: getLanguage(language),
+        lang: isProgrammingLanguage(language)
+          ? getLanguage(language)
+          : language,
         meta: '',
       }
       const highlighted = await highlight(rawCode, codehikeTheme)
@@ -207,6 +252,7 @@ export function CodeSnippet({
               isMultiline && 'min-w-32'
             )}
             onBeforeInput={handleBeforeInput}
+            handlers={showLineNumbers ? [lineNumbers] : []}
           />
         )}
 

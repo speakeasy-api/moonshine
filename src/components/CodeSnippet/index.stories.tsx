@@ -116,6 +116,31 @@ export const Json: Story = {
   },
 }
 
+export const UnsupportedLanguage: Story = {
+  args: {
+    code: 'console.log("Hello, world!")',
+    language: 'unsupported',
+    copyable: true,
+  },
+}
+
+/**
+ * Codehike supports many languages that Speakeasy does not.
+ */
+export const SemiSupportedLanguage: Story = {
+  args: {
+    code: `FROM node:20
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+`,
+    language: 'dockerfile',
+  },
+}
+
 export const NonCopyable: Story = {
   args: {
     code: 'console.log("Hello, world!")',
@@ -173,5 +198,18 @@ export const Shimmer: Story = {
     language: 'javascript',
     copyable: true,
     shimmer: true,
+  },
+}
+
+export const ShowLineNumbers: Story = {
+  args: {
+    code: `console.log("Hello, world!")
+console.log("Hello, world!")
+console.log("Hello, world!")
+console.log("Hello, world!")
+console.log("Hello, world!")
+console.log("Hello, world!")`,
+    language: 'javascript',
+    showLineNumbers: true,
   },
 }

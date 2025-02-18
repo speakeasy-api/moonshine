@@ -127,9 +127,12 @@ export const Slim = ({
             <button
               id="brand"
               onClick={onHomeNavigation}
-              className={cn(expanded ? 'self-center' : 'self-center')}
+              className={cn(
+                'dark:text-primary text-black',
+                expanded ? 'self-center' : 'self-center'
+              )}
             >
-              <Logo variant="icon" className="h-5 w-6" />
+              <Logo variant="icon" className="size-5 fill-current" />
             </button>
 
             {expanded && (
