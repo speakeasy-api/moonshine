@@ -1,16 +1,20 @@
+import { cn } from '@/lib/utils'
+
 interface SvgProps extends React.SVGProps<SVGSVGElement> {
-  fill: string
+  muted?: boolean
 }
 
-export function Wordmark({ className, fill, ...props }: SvgProps) {
+export function Wordmark({ className, muted, ...props }: SvgProps) {
   return (
     <svg
       aria-label="Speakeasy Logo"
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 166 20`}
       preserveAspectRatio="xMidYMid meet"
-      color={fill}
-      className={className}
+      className={cn(
+        muted ? 'text-foreground/80' : 'text-foreground dark:text-primary',
+        className
+      )}
       {...props}
     >
       <g opacity="1">
@@ -68,7 +72,7 @@ export function Wordmark({ className, fill, ...props }: SvgProps) {
   )
 }
 
-export function Logo({ className, fill, ...props }: SvgProps) {
+export function Logo({ className, muted, ...props }: SvgProps) {
   return (
     <svg
       width={28}
@@ -76,8 +80,12 @@ export function Logo({ className, fill, ...props }: SvgProps) {
       viewBox={`0 0 28 48`}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid meet"
-      color={fill}
-      className={className}
+      className={cn(
+        muted
+          ? 'text-foreground/80 h-[48px] w-[28px]'
+          : 'dark:text-primary text-black',
+        className
+      )}
       {...props}
     >
       <g clipPath="url(#clip0)">
