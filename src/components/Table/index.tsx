@@ -399,16 +399,18 @@ function RowExpandable<T extends object>({
     expandCol.render = renderExpandCol
   }
 
+  let onClickFn = onClick
+
   // If there's some expanded content to show and onClick is not provided, let the row expand when clicked
   if (!onClick && content) {
-    onClick = () => setIsExpanded((prev) => !prev)
+    onClickFn = () => setIsExpanded((prev) => !prev)
   }
 
   return (
     <>
       <Row
         row={row}
-        onClick={onClick}
+        onClick={onClickFn}
         columns={columns}
         className={className}
       />
