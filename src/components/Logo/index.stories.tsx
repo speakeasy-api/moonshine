@@ -14,6 +14,13 @@ export const Wordmark: Story = {
   args: {
     variant: 'wordmark',
   },
+  decorators: [
+    (Story) => (
+      <div className="w-full max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export const Icon: Story = {
@@ -33,5 +40,22 @@ export const MutedWordmark: Story = {
   args: {
     variant: 'wordmark',
     muted: true,
+  },
+}
+
+export const WordmarkWithClassName: Story = {
+  args: {
+    variant: 'wordmark',
+    className: 'text-emerald-500 h-96 w-2/3 m-auto',
+  },
+}
+
+export const IconWithClassName: Story = {
+  args: {
+    variant: 'icon',
+    className: 'text-foreground size-48',
+  },
+  parameters: {
+    layout: 'centered',
   },
 }

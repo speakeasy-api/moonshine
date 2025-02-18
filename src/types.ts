@@ -142,6 +142,12 @@ export const programmingLanguages = [
 ] as const
 export type ProgrammingLanguage = (typeof programmingLanguages)[number]
 
+export function isProgrammingLanguage(
+  language: string
+): language is ProgrammingLanguage {
+  return programmingLanguages.includes(language as ProgrammingLanguage)
+}
+
 // Workspace selector - shared by Navbar and WorkspaceSelector
 export interface Org {
   id: string
