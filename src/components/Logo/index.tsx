@@ -2,32 +2,16 @@ import * as svgs from './svgs'
 
 type LogoVariant = 'wordmark' | 'icon'
 
-interface LogoProps {
+interface LogoProps extends React.SVGProps<SVGSVGElement> {
   variant: LogoVariant
   muted?: boolean
-  className?: string
 }
 
-// aspect
-// todo: move to design system
-const defaultFill = '#fbe331'
-const mutedFill = 'rgba(255, 255, 255, 1)'
-
-export function Logo({ variant, muted, className }: LogoProps) {
+export function Logo({ variant, className, ...props }: LogoProps) {
   switch (variant) {
     case 'wordmark':
-      return (
-        <svgs.Wordmark
-          fill={muted ? mutedFill : defaultFill}
-          className={className}
-        />
-      )
+      return <svgs.Wordmark {...props} className={className} />
     case 'icon':
-      return (
-        <svgs.Logo
-          fill={muted ? mutedFill : defaultFill}
-          className={className}
-        />
-      )
+      return <svgs.Logo className={className} {...props} />
   }
 }
