@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Check, ChevronUp } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Text } from '../../Text'
 import { Heading } from '../../Heading'
@@ -38,6 +38,26 @@ const fadeUp = (i: number) => ({
 const chevronVariants = {
   up: { rotate: 0 },
   down: { rotate: 180 },
+}
+
+export const ExpandChevron = ({
+  isCollapsed,
+}: {
+  isCollapsed: boolean | undefined
+}) => {
+  return (
+    <motion.div
+      initial="up"
+      animate={isCollapsed ? 'down' : 'up'}
+      variants={chevronVariants}
+      transition={{
+        duration: 0.2,
+        ease: [0.215, 0.61, 0.355, 1],
+      }}
+    >
+      <ChevronUp className="h-4 w-4 text-zinc-400" />
+    </motion.div>
+  )
 }
 
 export function CLIWizard({
@@ -96,17 +116,7 @@ export function CLIWizard({
                 {completedSteps.length} / {steps.length} steps completed
               </Text>
             )}
-            <motion.div
-              initial="up"
-              animate={isCollapsed ? 'down' : 'up'}
-              variants={chevronVariants}
-              transition={{
-                duration: 0.2,
-                ease: [0.215, 0.61, 0.355, 1],
-              }}
-            >
-              <ChevronUp className="h-4 w-4 text-zinc-400" />
-            </motion.div>
+            <ExpandChevron isCollapsed={isCollapsed} />
           </Stack>
         </div>
       </button>
