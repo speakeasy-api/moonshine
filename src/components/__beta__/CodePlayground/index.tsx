@@ -15,13 +15,21 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { AnimatePresence } from 'framer-motion'
 import { Icon } from '@/components/Icon'
+import { Skeleton } from '@/components/Skeleton'
 
 interface CodePlaygroundChildrenProps {
   selectedLang: SupportedLanguage
-  selectedCode: string
+  selectedCode: CodePlaygroundSnippet
 }
 
-export type CodePlaygroundSnippets = Partial<Record<SupportedLanguage, string>>
+export interface CodePlaygroundSnippet {
+  code?: string
+  loading?: boolean
+}
+
+export type CodePlaygroundSnippets = Partial<
+  Record<SupportedLanguage, CodePlaygroundSnippet>
+>
 
 interface CodePlaygroundProps {
   /**
@@ -75,7 +83,7 @@ export function CodePlayground({
     // @ts-expect-error ignore this
     Object.keys(snippets)[0]
   )
-  const selectedCode = useMemo<string>(
+  const selectedCode = useMemo<CodePlaygroundSnippet>(
     () => snippets[selectedLang]!,
     [selectedLang, snippets]
   )
@@ -100,7 +108,9 @@ export function CodePlayground({
 
   const longestCodeHeight = useMemo(() => {
     const largestLines = Math.max(
-      ...Object.values(snippets).map((code) => code.split('\n').length)
+      ...Object.values(snippets)
+        .filter((snippet) => snippet.code !== undefined && !snippet.loading)
+        .map((code) => code.code!.split('\n').length)
     )
     const lineHeight = 24
     const padding = 12
@@ -108,14 +118,18 @@ export function CodePlayground({
   }, [snippets])
 
   useEffect(() => {
-    updateHighlighted(selectedCode, selectedLang)
+    if (selectedCode.code) {
+      updateHighlighted(selectedCode.code, selectedLang)
+    }
   }, [selectedCode, selectedLang])
 
   useEffect(() => {
-    updateHighlighted(selectedCode, selectedLang)
+    if (selectedCode.code) {
+      updateHighlighted(selectedCode.code, selectedLang)
+    }
   }, [selectedLang])
 
-  if (!highlighted) return null
+  if (!highlighted && !selectedCode.loading) return null
 
   return (
     <div
@@ -156,15 +170,38 @@ export function CodePlayground({
           className="bg-background overflow-x-hidden overflow-y-scroll"
           style={{ maxHeight: `${maxHeight}px` }}
         >
-          <Pre
-            code={highlighted}
-            handlers={[lineNumbers, tokenTransitions]}
-            className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
-            style={{ height: `${longestCodeHeight}px` }}
-          />
+          {selectedCode.loading ? (
+            <div className="flex items-center p-4">
+              <Skeleton>
+                <div>
+                  {
+                    'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
+                  }
+                </div>
+                <div>
+                  {
+                    "const sampleCode2 = 'sample code 2'.filter(Boolean).repeat(34).map((c) => c.toUpperCase())"
+                  }
+                </div>
+                <div>
+                  {
+                    "const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"
+                  }
+                </div>
+                <div className="min-w-40">{`}`}</div>
+              </Skeleton>
+            </div>
+          ) : (
+            <Pre
+              code={highlighted!}
+              handlers={[lineNumbers, tokenTransitions]}
+              className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
+              style={{ height: `${longestCodeHeight}px` }}
+            />
+          )}
         </div>
 
-        {copyable && (
+        {selectedCode.code && copyable && (
           <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
             <button
               role="button"
