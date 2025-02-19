@@ -46,6 +46,7 @@ export { PageHeader } from '@/components/PageHeader'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export { ExternalPill } from '@/components/ExternalPill'
 export { LanguageIndicator } from '@/components/LanguageIndicator'
+export { PullRequestLink } from '@/components/PullRequestLink'
 export {
   Select,
   SelectGroup,
@@ -79,7 +80,7 @@ export { Navbar } from '@/components/Navbar'
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
 import { ActionBar } from '@/components/__beta__/ActionBar'
 import { Timeline } from '@/components/__beta__/Timeline'
-import { KeyHint, Key } from '@/components/__beta__/KeyHint'
+import { Key, KeyHint } from '@/components/__beta__/KeyHint'
 import { HighlightedText } from '@/components/__beta__/HighlightedText'
 import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
 import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
