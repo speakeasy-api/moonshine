@@ -1,17 +1,4 @@
 import './global.css'
-/** START BETA COMPONENTS */
-import { CLIWizard } from '@/components/__beta__/CLIWizard'
-import { ActionBar } from '@/components/__beta__/ActionBar'
-import { Timeline } from '@/components/__beta__/Timeline'
-import { Key, KeyHint } from '@/components/__beta__/KeyHint'
-import { HighlightedText } from '@/components/__beta__/HighlightedText'
-import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
-import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
-import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
-import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
-import { ResizablePanel } from './components/__beta__/ResizablePanel'
-import { CodePlayground } from './components/__beta__/CodePlayground'
-import { CodeEditor } from './components/__beta__/CodeEditorLayout'
 
 export { isGroupOf } from '@/lib/typeUtils'
 export { Grid } from '@/components/Grid'
@@ -88,6 +75,20 @@ export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
 export { Navbar } from '@/components/Navbar'
+
+/** START BETA COMPONENTS */
+import { CLIWizard } from '@/components/__beta__/CLIWizard'
+import { ActionBar } from '@/components/__beta__/ActionBar'
+import { Timeline } from '@/components/__beta__/Timeline'
+import { Key, KeyHint } from '@/components/__beta__/KeyHint'
+import { HighlightedText } from '@/components/__beta__/HighlightedText'
+import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
+import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
+import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
+import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
+import { ResizablePanel } from './components/__beta__/ResizablePanel'
+import { CodePlayground } from './components/__beta__/CodePlayground'
+import { CodeEditor } from './components/__beta__/CodeEditorLayout'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
