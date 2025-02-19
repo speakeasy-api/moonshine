@@ -36,7 +36,7 @@ export function PullRequestLink({
         <PullRequestStatusIcon status={status} />
       </span>
       <span className="text-muted-foreground text-xs font-semibold">
-        {`PR #${num}`}
+        {`#${num}`}
       </span>
     </a>
   )
