@@ -187,7 +187,7 @@ export function CodePlayground({
                   const sampleCode3 =
                   '3'.filter(Boolean).repeat(34).toUpperCase()
                 </div>
-                <div>{`}`}</div>
+                <div className="min-w-40">{`}`}</div>
               </Skeleton>
             </div>
           ) : (
