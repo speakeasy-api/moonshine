@@ -18,22 +18,32 @@ export default meta
 type Story = StoryObj<typeof CodePlayground>
 
 const snippets: CodePlaygroundSnippets = {
-  typescript: `const sdk = new SDK()
+  typescript: {
+    code: `const sdk = new SDK()
 const users = await sdk.getUsers()
 console.log(users)`,
-  python: `import sdk
+  },
+  python: {
+    code: `import sdk
 users = sdk.getUsers()
 print(users)`,
-  go: `package main
+  },
+  go: {
+    code: `package main
 import "sdk"
 users := sdk.getUsers()
 fmt.Println(users)`,
-  ruby: `require 'sdk'
+  },
+  ruby: {
+    code: `require 'sdk'
 users = sdk.getUsers()
 puts users`,
-  postman: `const sdk = new SDK()
+  },
+  postman: {
+    code: `const sdk = new SDK()
 const users = sdk.getUsers()
 console.log(users)`,
+  },
 }
 
 export const Default: Story = {
@@ -75,7 +85,7 @@ for (const foo of fooBar) {
 export const KitchenSink: Story = {
   args: {
     ...Default.args,
-    snippets: { typescript: kitchenSink },
+    snippets: { typescript: { code: kitchenSink } },
   },
 }
 
@@ -105,7 +115,8 @@ export const WithReallyLongCode: Story = {
     ...Default.args,
     maxHeight: 400,
     snippets: {
-      typescript: `const foo = 'bar';
+      typescript: {
+        code: `const foo = 'bar';
 const bar = 'foo';
 const baz = 'qux';
 const qux = 'baz';
@@ -135,6 +146,7 @@ const fooBar = [
 for (const foo of fooBar) {
   console.log(foo)
 }`,
+      },
     },
   },
 }
@@ -150,4 +162,15 @@ export const WithSmallerContainer: Story = {
       </div>
     ),
   ],
+}
+
+export const Loading: Story = {
+  args: {
+    ...Default.args,
+    snippets: {
+      typescript: {
+        loading: true,
+      },
+    },
+  },
 }

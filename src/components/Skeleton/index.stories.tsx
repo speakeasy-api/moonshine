@@ -11,7 +11,19 @@ type Story = StoryObj<typeof Skeleton>
 
 export const Default: Story = {
   args: {
-    children: 'Lorem ipsum dolor sit amet',
+    children: [
+      <p>
+        Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
+        consectetur.
+      </p>,
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
+        dolor sit amet consectetur adipisicing elit.
+      </p>,
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+      </p>,
+    ],
   },
 }
 
@@ -23,18 +35,12 @@ export const WithComplexChildren: Story = {
           Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
           consectetur.
         </p>
-      </Skeleton>
-      <Skeleton {...args}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit.
-        </p>
-      </Skeleton>
-      <Skeleton {...args}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quos.
-        </p>
+
+        <div className="flex flex-row gap-2">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <span key={i}>{i}</span>
+          ))}
+        </div>
       </Skeleton>
     </div>
   ),
@@ -42,8 +48,19 @@ export const WithComplexChildren: Story = {
 
 export const WithClassName: Story = {
   args: {
-    className: 'max-w-64',
-    children:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat, duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    className: 'bg-muted/50',
+    children: [
+      <p>
+        Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
+        consectetur.
+      </p>,
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
+        dolor sit amet consectetur adipisicing elit.
+      </p>,
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+      </p>,
+    ],
   },
 }
