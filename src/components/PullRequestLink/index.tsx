@@ -21,7 +21,7 @@ export function PullRequestLink({
   className,
 }: PullRequestLinkProps) {
   // If prNumber is not provided, try to extract it from the href
-  const num = prNumber ?? href.split("/").pop() || "Unknown";
+  const num = prNumber ?? (href.split('/').pop() || 'Unknown')
 
   return (
     <a
