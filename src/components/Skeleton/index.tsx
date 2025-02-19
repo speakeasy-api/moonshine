@@ -1,6 +1,7 @@
 import { Children, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
 import './skeleton.css'
+
 interface SkeletonProps {
   /**
    * The children to display in the skeleton.
@@ -10,6 +11,15 @@ interface SkeletonProps {
    * <Skeleton>
    *   <div>foo</div>
    *   <div>bar</div>
+   * </Skeleton>
+   *
+   * You can also provide no content and use classNames to style the skeleton items:
+   *
+   * @example
+   * <Skeleton>
+   *   <div className="h-5 w-48 rounded-lg" />
+   *   <div className="h-5 w-96 rounded-lg" />
+   *   <div className="h-5 w-48 rounded-lg" />
    * </Skeleton>
    */
   children: React.ReactNode
