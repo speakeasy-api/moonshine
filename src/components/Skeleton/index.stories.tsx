@@ -46,6 +46,16 @@ export const WithComplexChildren: Story = {
   ),
 }
 
+export const WithEmptyChildren: Story = {
+  args: {
+    children: [
+      <div className="bg-muted h-5 w-60 rounded-lg" />,
+      <div className="bg-muted h-5 w-48 rounded-lg" />,
+      <div className="bg-muted h-5 w-40 rounded-lg" />,
+    ],
+  },
+}
+
 export const WithClassName: Story = {
   args: {
     className: 'bg-muted/50',
