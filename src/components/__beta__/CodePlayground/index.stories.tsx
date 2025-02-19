@@ -1,3 +1,4 @@
+import { Icon } from '@/components/Icon'
 import { CodePlayground, CodePlaygroundSnippets } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 
@@ -167,6 +168,12 @@ export const WithSmallerContainer: Story = {
 export const Loading: Story = {
   args: {
     ...Default.args,
+    heading: (
+      <div className="flex items-center gap-1.5 px-3 text-sm">
+        <Icon name="loader-circle" className="text-muted animate-spin" />
+        <span className="text-foreground">Generating...</span>
+      </div>
+    ),
     snippets: {
       typescript: {
         loading: true,

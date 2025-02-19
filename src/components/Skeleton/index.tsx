@@ -1,6 +1,6 @@
 import { Children, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
-
+import './skeleton.css'
 interface SkeletonProps {
   /**
    * The children to display in the skeleton.
@@ -25,7 +25,7 @@ export function Skeleton({ children, className }: SkeletonProps) {
       {Children.toArray(children).map((child) => {
         if (typeof child === 'string') {
           return (
-            <div className="bg-muted h-5 min-w-36 max-w-max animate-pulse rounded-lg text-transparent lg:min-w-72 xl:min-w-96">
+            <div className="skeleton h-5 min-w-36 max-w-max rounded-lg text-transparent lg:min-w-72 xl:min-w-96">
               {child}
             </div>
           )
@@ -36,7 +36,7 @@ export function Skeleton({ children, className }: SkeletonProps) {
             child as React.ReactElement<HTMLElement>,
             {
               className: cn(
-                'bg-muted animate-pulse max-w-max text-transparent h-5 min-w-36 lg:min-w-72 xl:min-w-96 rounded-lg',
+                'skeleton max-w-max text-transparent h-5 min-w-36 lg:min-w-72 xl:min-w-96 rounded-lg',
                 className,
                 child.props.className
               ),
