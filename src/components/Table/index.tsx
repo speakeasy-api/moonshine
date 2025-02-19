@@ -421,7 +421,7 @@ function RowExpandable<T extends object>({
           isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         )}
       >
-        <div className="min-h-0">{content}</div>
+        <div className="min-h-0 overflow-auto">{content}</div>
       </div>
     </>
   )
