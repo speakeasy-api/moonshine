@@ -36,17 +36,16 @@ export function PullRequestLink({
         <PullRequestStatusIcon status={status} />
       </span>
       <span className="text-muted-foreground text-xs font-semibold">
-        {'#'}
-        {num}
+        {`#${num}`}
       </span>
     </a>
   )
 }
 
 const colors: Record<Status, string> = {
-  open: 'text-green-500',
-  closed: 'text-red-500',
-  merged: 'text-purple-500',
+  open: 'text-emerald-500',
+  closed: 'text-rose-500',
+  merged: 'text-violet-500',
 }
 
 function PullRequestStatusIcon({
