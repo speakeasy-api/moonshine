@@ -23,15 +23,25 @@ interface CodePlaygroundChildrenProps {
 }
 
 export interface CodePlaygroundSnippet {
-  code?: string
-  loading?: boolean
+  /**
+   * The code to display in the playground.
+   */
+  code?: string | undefined
+  /**
+   * Whether the code is loading.
+   */
+  loading?: boolean | undefined
+  /**
+   * The error to display in the playground if the code could not be loaded.
+   */
+  error?: React.ReactNode | undefined
 }
 
 export type CodePlaygroundSnippets = Partial<
   Record<SupportedLanguage, CodePlaygroundSnippet>
 >
 
-interface CodePlaygroundProps {
+export interface CodePlaygroundProps {
   /**
    * An array of snippets to display in the playground.
    */
@@ -60,6 +70,11 @@ interface CodePlaygroundProps {
    * The maximum height of the code playground.
    */
   maxHeight?: number
+
+  /**
+   * A callback to be called when the language is changed.
+   */
+  onChangeLanguage?: (language: SupportedLanguage) => void
 }
 
 async function highlightCode(code: string, language: SupportedLanguage) {
@@ -78,6 +93,7 @@ export function CodePlayground({
   copyable = true,
   className,
   maxHeight,
+  onChangeLanguage,
 }: CodePlaygroundProps) {
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
     // @ts-expect-error ignore this
@@ -129,7 +145,15 @@ export function CodePlayground({
     }
   }, [selectedLang])
 
-  if (!highlighted && !selectedCode.loading) return null
+  const handleChangeLanguage = useCallback(
+    (language: SupportedLanguage) => {
+      setSelectedLang(language)
+      onChangeLanguage?.(language)
+    },
+    [onChangeLanguage]
+  )
+
+  if (!highlighted && !selectedCode.loading && !selectedCode.error) return null
 
   return (
     <div
@@ -145,12 +169,7 @@ export function CodePlayground({
             : heading}
         </div>
         <div className="ml-auto">
-          <Select
-            value={selectedLang}
-            onValueChange={(value) =>
-              setSelectedLang(value as SupportedLanguage)
-            }
-          >
+          <Select value={selectedLang} onValueChange={handleChangeLanguage}>
             <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 leading-none !shadow-none !ring-0">
               <SelectValue />
             </SelectTrigger>
@@ -191,6 +210,8 @@ export function CodePlayground({
                 <div className="min-w-40">{`}`}</div>
               </Skeleton>
             </div>
+          ) : selectedCode.error ? (
+            selectedCode.error
           ) : (
             <Pre
               code={highlighted!}
