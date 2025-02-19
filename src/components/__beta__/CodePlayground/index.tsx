@@ -174,9 +174,9 @@ export function CodePlayground({
             <div className="flex items-center p-4">
               <Skeleton>
                 <div>
-                  export default function
-                  fakeFunctionThatWontBeDisplayedToTheUser()
-                  {`{`}
+                  {
+                    'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
+                  }
                 </div>
                 <div>
                   {
@@ -184,8 +184,9 @@ export function CodePlayground({
                   }
                 </div>
                 <div>
-                  const sampleCode3 =
-                  '3'.filter(Boolean).repeat(34).toUpperCase()
+                  {
+                    "const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"
+                  }
                 </div>
                 <div className="min-w-40">{`}`}</div>
               </Skeleton>
