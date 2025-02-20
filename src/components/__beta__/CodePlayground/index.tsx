@@ -58,12 +58,22 @@ export interface CodePlaygroundProps {
   children: React.ReactNode
 
   /**
-   * An array of snippets to display in the playground.
+   * An object of snippets to display in the playground.
+   *
+   * @example
+   * <CodePlayground
+   *   snippets={{
+   *     javascript: { code: 'console.log("Hello, world!");' },
+   *     typescript: { code: 'console.log("Hello, world!");' },
+   *   }}
+   * />
    */
   snippets: CodePlaygroundSnippets
 
   /**
    * Whether the code should be copyable.
+   *
+   * @default true
    */
   copyable?: boolean
 
@@ -77,11 +87,15 @@ export interface CodePlaygroundProps {
 
   /**
    * Whether to animate the code when the language is changed.
+   *
+   * @default true
    */
   animateOnLanguageChange?: boolean
 
   /**
    * Whether to show line numbers.
+   *
+   * @default true
    */
   showLineNumbers?: boolean
 }
