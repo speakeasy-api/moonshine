@@ -457,8 +457,8 @@ const CodePlaygroundWithSubcomponents = Object.assign(CodePlayground, {
    * Custom loading component.
    * @example
    * <CodePlayground>
-   *  <CodePlayground.Loading>
-   *    <div className="flex items-center justify-center">Loading...</div>
+   *  <CodePlayground.Loading className="flex items-center justify-center">
+   *    Loading...
    *  </CodePlayground.Loading>
    * </CodePlayground>
    */
