@@ -292,3 +292,20 @@ export const NoAnimations: Story = {
     animateOnLanguageChange: false,
   },
 }
+
+export const WithCustomLoading: Story = {
+  args: {
+    ...Default.args,
+    snippets: {
+      typescript: {
+        loading: true,
+      },
+    },
+    children: (
+      <CodePlayground.Loading className="flex min-h-44 flex-row items-center justify-center gap-1 bg-gradient-to-r from-blue-500 to-purple-500 p-4 text-base">
+        <Icon name="loader-circle" className="size-5 animate-spin" />
+        Loading...
+      </CodePlayground.Loading>
+    ),
+  },
+}

@@ -115,7 +115,8 @@ const CodePlayground = ({
     const isValidSubType =
       type.displayName === 'CodePlayground.Header' ||
       type.displayName === 'CodePlayground.Footer' ||
-      type.displayName === 'CodePlayground.Code'
+      type.displayName === 'CodePlayground.Code' ||
+      type.displayName === 'CodePlayground.Loading'
 
     if (!isValidSubType) {
       console.warn(
@@ -157,26 +158,43 @@ const CodePlayground = ({
     return handlers
   }, [animateOnLanguageChange, showLineNumbers])
 
+  const customLoading = useMemo(
+    () =>
+      validChildren.find(
+        (child) =>
+          isValidElement(child) &&
+          (child.type as { displayName?: string }).displayName ===
+            'CodePlayground.Loading'
+      ),
+    [validChildren]
+  )
+
   const codeContents = useMemo(() => {
     return selectedCode.loading ? (
-      <div className="flex items-center p-4">
-        <Skeleton>
-          <div>
-            {
-              'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
-            }
-          </div>
-          <div>
-            {
-              "const sampleCode2 = 'sample code 2'.filter(Boolean).repeat(34).map((c) => c.toUpperCase())"
-            }
-          </div>
-          <div>
-            {"const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"}
-          </div>
-          <div className="min-w-40">{`}`}</div>
-        </Skeleton>
-      </div>
+      customLoading ? (
+        customLoading
+      ) : (
+        <div className="flex items-center p-4">
+          <Skeleton>
+            <div>
+              {
+                'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
+              }
+            </div>
+            <div>
+              {
+                "const sampleCode2 = 'sample code 2'.filter(Boolean).repeat(34).map((c) => c.toUpperCase())"
+              }
+            </div>
+            <div>
+              {
+                "const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"
+              }
+            </div>
+            <div className="min-w-40">{`}`}</div>
+          </Skeleton>
+        </div>
+      )
     ) : selectedCode.error ? (
       selectedCode.error
     ) : highlighted ? (
@@ -360,6 +378,25 @@ const CodePlaygroundCode = ({
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
+interface CodePlaygroundLoadingProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  children: React.ReactNode
+}
+
+const CodePlaygroundLoading = ({
+  children,
+  className,
+  ...props
+}: CodePlaygroundLoadingProps) => {
+  return (
+    <div className={className} {...props}>
+      {children}
+    </div>
+  )
+}
+
+CodePlaygroundLoading.displayName = 'CodePlayground.Loading'
+
 export interface CodePlaygroundHeaderProps
   extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -415,6 +452,17 @@ const CodePlaygroundWithSubcomponents = Object.assign(CodePlayground, {
    * <CodePlayground.Code className="max-h-72 overflow-y-auto" />
    */
   Code: CodePlaygroundCode,
+
+  /**
+   * Custom loading component.
+   * @example
+   * <CodePlayground>
+   *  <CodePlayground.Loading>
+   *    <div className="flex items-center justify-center">Loading...</div>
+   *  </CodePlayground.Loading>
+   * </CodePlayground>
+   */
+  Loading: CodePlaygroundLoading,
 })
 
 export { CodePlaygroundWithSubcomponents as CodePlayground }
