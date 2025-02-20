@@ -360,23 +360,43 @@ const CodePlaygroundCode = ({
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
-export interface CodePlaygroundHeaderProps {
+export interface CodePlaygroundHeaderProps
+  extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
-const CodePlaygroundHeader = ({ children }: CodePlaygroundHeaderProps) => {
-  return <div className="bg-card flex items-center">{children}</div>
+const CodePlaygroundHeader = ({
+  children,
+  className,
+  ...props
+}: CodePlaygroundHeaderProps) => {
+  return (
+    <div className={cn('bg-card flex items-center', className)} {...props}>
+      {children}
+    </div>
+  )
 }
 
 CodePlaygroundHeader.displayName = 'CodePlayground.Header'
 
-export interface CodePlaygroundFooterProps {
+export interface CodePlaygroundFooterProps
+  extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
-const CodePlaygroundFooter = ({ children }: CodePlaygroundFooterProps) => {
+const CodePlaygroundFooter = ({
+  children,
+  className,
+  ...props
+}: CodePlaygroundFooterProps) => {
   return (
-    <div className="bg-card flex select-none items-center border-t p-2">
+    <div
+      className={cn(
+        'bg-card flex select-none items-center border-t p-2',
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   )
