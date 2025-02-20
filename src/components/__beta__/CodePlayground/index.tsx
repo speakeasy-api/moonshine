@@ -316,7 +316,7 @@ const CodePlayground = ({
 
 CodePlayground.displayName = 'CodePlayground'
 
-interface CodePlaygroundCodeProps
+export interface CodePlaygroundCodeProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   className?: string
 
@@ -346,7 +346,7 @@ const CodePlaygroundCode = ({
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
-interface CodePlaygroundHeaderProps {
+export interface CodePlaygroundHeaderProps {
   children: React.ReactNode
 }
 
@@ -356,7 +356,7 @@ const CodePlaygroundHeader = ({ children }: CodePlaygroundHeaderProps) => {
 
 CodePlaygroundHeader.displayName = 'CodePlayground.Header'
 
-interface CodePlaygroundFooterProps {
+export interface CodePlaygroundFooterProps {
   children: React.ReactNode
 }
 
