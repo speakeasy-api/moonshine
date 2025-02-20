@@ -143,7 +143,7 @@ const CodePlayground = ({
     [selectedLang, snippets]
   )
 
-  const preHandlers = useMemo(() => {
+  const preHandlers = useMemo<AnnotationHandler[]>(() => {
     const handlers: AnnotationHandler[] = []
 
     if (showLineNumbers) {
