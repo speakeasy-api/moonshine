@@ -31,7 +31,7 @@ interface SkeletonProps {
 
 export function Skeleton({ children, className }: SkeletonProps) {
   return (
-    <div className="flex w-auto max-w-full select-none flex-col items-start gap-2.5">
+    <div className="flex w-full select-none flex-col items-start gap-2.5">
       {Children.toArray(children).map((child) => {
         if (typeof child === 'string') {
           return (
