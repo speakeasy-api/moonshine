@@ -233,6 +233,7 @@ const CodePlayground = ({
 
   const handleCopy = useCallback(() => {
     setCopying(true)
+    navigator.clipboard.writeText(selectedCode.code ?? '')
     setTimeout(() => {
       setCopying(false)
     }, 1000)
