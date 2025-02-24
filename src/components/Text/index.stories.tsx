@@ -33,7 +33,9 @@ export const WithDifferentElements: Story = {
       <Text as="p">As a paragraph</Text>
       <Text as="span">As a span</Text>
       <Text as="div">As a div</Text>
-      <Text as="label">As a label</Text>
+      <Text as="label" htmlFor="input1">
+        As a label
+      </Text>
     </Stack>
   ),
 }

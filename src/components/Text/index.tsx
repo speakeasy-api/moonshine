@@ -5,14 +5,22 @@ export type TextVariant = 'lg' | 'md' | 'sm' | 'xs'
 type TextElement = 'p' | 'span' | 'div' | 'label'
 type TextWhitespace = 'normal' | 'nowrap'
 
-export interface TextProps {
+export type TextProps = {
   children: ReactNode
   variant?: TextVariant
-  as?: TextElement
   muted?: boolean
   whiteSpace?: TextWhitespace
   className?: string
-}
+} & (
+  | {
+      as?: Exclude<TextElement, 'label'>
+      htmlFor?: never
+    }
+  | {
+      as: 'label'
+      htmlFor?: string
+    }
+)
 
 const variantStyles: Record<TextVariant, string> = {
   lg: 'typography-body-lg',
@@ -33,9 +41,11 @@ export function Text({
   muted = false,
   whiteSpace = 'normal',
   className,
+  htmlFor,
 }: TextProps) {
   return (
     <Component
+      htmlFor={htmlFor}
       className={cn(
         variantStyles[variant],
         whitespaceStyles[whiteSpace],
