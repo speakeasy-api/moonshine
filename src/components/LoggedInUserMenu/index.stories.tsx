@@ -1,6 +1,7 @@
 import { LoggedInUserMenu } from '.'
 import { StoryObj, Meta } from '@storybook/react'
 import { fn, userEvent, within, screen, expect } from '@storybook/test'
+import { Icon } from '../Icon'
 
 const meta: Meta<typeof LoggedInUserMenu> = {
   component: LoggedInUserMenu,
@@ -45,6 +46,36 @@ export const NoImage: Story = {
     ...Default.args,
     name: 'Trevor Smith',
     imageUrl: undefined,
+  },
+}
+
+export const ExtraMenuItem: Story = {
+  ...Default.parameters,
+  args: {
+    ...Default.args,
+    children: [
+      <LoggedInUserMenu.MenuItem onSelect={() => {}} key="billing">
+        <Icon name="wallet-cards" />
+        Billing
+      </LoggedInUserMenu.MenuItem>,
+    ],
+  },
+}
+
+export const MultipleExtraMenuItems: Story = {
+  ...Default.parameters,
+  args: {
+    ...Default.args,
+    children: [
+      <LoggedInUserMenu.MenuItem onSelect={() => {}} key="billing">
+        <Icon name="wallet-cards" />
+        Billing
+      </LoggedInUserMenu.MenuItem>,
+      <LoggedInUserMenu.MenuItem onSelect={() => {}} key="api-keys">
+        <Icon name="key-round" />
+        Api Keys
+      </LoggedInUserMenu.MenuItem>,
+    ],
   },
 }
 

@@ -9,41 +9,54 @@ import {
 import { Stack } from '../Stack'
 import { UserAvatar } from '../UserAvatar'
 import { UserAvatarProps } from '../UserAvatar'
+import React, { Children, Fragment, ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 
 interface LoggedInUserProps extends UserAvatarProps {
   email: string
+  children?: ReactNode | ReactNode[]
   onSignOut: () => void
 }
 
-export function LoggedInUserMenu({
+const Root: React.FC<LoggedInUserProps> = ({
   email,
   name,
   onSignOut,
   imageUrl,
   size = 'small',
-}: LoggedInUserProps) {
+  children,
+}) => {
+  const validChildren = Children.toArray(children).filter(
+    (child) => React.isValidElement(child) && child.type === MenuItem
+  )
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer outline-none">
         <UserAvatar name={name} imageUrl={imageUrl} size={size} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-2 max-w-64 p-0">
-        <LoggedInMenuContent name={name} email={email} onSignOut={onSignOut} />
+        <LoggedInMenuContent name={name} email={email} onSignOut={onSignOut}>
+          {validChildren}
+        </LoggedInMenuContent>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
+Root.displayName = 'LoggedInUserMenu'
 
 interface LoggedInMenuContentProps extends Omit<LoggedInUserProps, 'imageUrl'> {
   email: string
+  children?: ReactNode | ReactNode[]
   onSignOut: () => void
 }
 
-function LoggedInMenuContent({
+const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
   email,
   name,
+  children,
   onSignOut,
-}: LoggedInMenuContentProps) {
+}) => {
   return (
     <>
       <Stack padding={3}>
@@ -52,14 +65,43 @@ function LoggedInMenuContent({
           {email}
         </div>
       </Stack>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem
-        onSelect={onSignOut}
-        className="cursor-pointer px-3 py-2"
-      >
+      <DropdownMenuSeparator className="my-0" />
+      {Children.map(children, (child, index) => (
+        <Fragment key={index}>
+          {child}
+          <DropdownMenuSeparator className="my-0" />
+        </Fragment>
+      ))}
+      <DropdownMenuItem onSelect={onSignOut} className="cursor-pointer p-3">
         <Icon name="log-out" />
         Logout
       </DropdownMenuItem>
     </>
   )
 }
+
+interface LoggedInMenuItemProps {
+  onSelect: () => void
+  children?: ReactNode | ReactNode[]
+  className?: string
+}
+
+const MenuItem: React.FC<LoggedInMenuItemProps> = ({
+  onSelect,
+  children,
+  className,
+}) => {
+  return (
+    <DropdownMenuItem
+      onSelect={onSelect}
+      className={cn('cursor-pointer p-3', className)}
+    >
+      {children}
+    </DropdownMenuItem>
+  )
+}
+MenuItem.displayName = 'LoggedInUserMenu.MenuItem'
+
+export const LoggedInUserMenu = Object.assign(Root, {
+  MenuItem,
+})
