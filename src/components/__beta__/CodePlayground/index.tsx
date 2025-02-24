@@ -7,6 +7,8 @@ import {
   Children,
   isValidElement,
   HTMLAttributes,
+  forwardRef,
+  useRef,
 } from 'react'
 import {
   Select,
@@ -40,6 +42,7 @@ export interface CodePlaygroundSnippet {
    * Whether the code is loading.
    */
   loading?: boolean | undefined
+
   /**
    * The error to display in the playground if the code could not be loaded.
    */
@@ -109,6 +112,7 @@ const CodePlayground = ({
   animateOnLanguageChange = true,
   showLineNumbers = true,
 }: CodePlaygroundProps) => {
+  const codeRef = useRef<HTMLDivElement>(null)
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
@@ -157,26 +161,27 @@ const CodePlayground = ({
     return handlers
   }, [animateOnLanguageChange, showLineNumbers])
 
+  const loadingSkeleton = useMemo(() => {
+    // Try to measure the existing height of the code container if code has
+    // already been rendered. Otherwise, use a default height
+
+    // TODO: improve this logic
+    const measuredHeight =
+      codeRef.current?.getBoundingClientRect().height ?? 400
+
+    const lines = Math.ceil(measuredHeight / 40)
+    return (
+      <Skeleton className={`w-full`}>
+        {Array.from({ length: lines }).map((_, i) => (
+          <div id={`skeleton-line-${i}`} key={i} className="h-4 w-full" />
+        ))}
+      </Skeleton>
+    )
+  }, [codeRef.current])
+
   const codeContents = useMemo(() => {
     return selectedCode.loading ? (
-      <div className="flex items-center p-4">
-        <Skeleton>
-          <div>
-            {
-              'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
-            }
-          </div>
-          <div>
-            {
-              "const sampleCode2 = 'sample code 2'.filter(Boolean).repeat(34).map((c) => c.toUpperCase())"
-            }
-          </div>
-          <div>
-            {"const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"}
-          </div>
-          <div className="min-w-40">{`}`}</div>
-        </Skeleton>
-      </div>
+      <div className="flex items-center p-4">{loadingSkeleton}</div>
     ) : selectedCode.error ? (
       selectedCode.error
     ) : highlighted ? (
@@ -204,9 +209,10 @@ const CodePlayground = ({
       foundCustomCodeContainer ? (
         React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
           __children__: codeContents,
+          ref: codeRef,
         })
       ) : (
-        <CodePlaygroundCode __children__={codeContents} />
+        <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
       ),
     [foundCustomCodeContainer, codeContents]
   )
@@ -341,23 +347,22 @@ export interface CodePlaygroundCodeProps
   __children__?: React.ReactNode
 }
 
-const CodePlaygroundCode = ({
-  className,
-  __children__: children,
-  ...props
-}: CodePlaygroundCodeProps) => {
-  return (
-    <div
-      {...props}
-      className={cn(
-        'bg-background overflow-x-hidden overflow-y-scroll',
-        className
-      )}
-    >
-      {children}
-    </div>
-  )
-}
+const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
+  ({ className, __children__, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        {...props}
+        className={cn(
+          'bg-background overflow-x-hidden overflow-y-scroll',
+          className
+        )}
+      >
+        {__children__}
+      </div>
+    )
+  }
+)
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
