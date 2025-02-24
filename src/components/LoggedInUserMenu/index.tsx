@@ -65,17 +65,14 @@ const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
           {email}
         </div>
       </Stack>
-      <DropdownMenuSeparator />
+      <DropdownMenuSeparator className="my-0" />
       {Children.map(children, (child, index) => (
         <Fragment key={index}>
           {child}
-          <DropdownMenuSeparator />
+          <DropdownMenuSeparator className="my-0" />
         </Fragment>
       ))}
-      <DropdownMenuItem
-        onSelect={onSignOut}
-        className="cursor-pointer px-3 py-2"
-      >
+      <DropdownMenuItem onSelect={onSignOut} className="cursor-pointer p-3">
         <Icon name="log-out" />
         Logout
       </DropdownMenuItem>
@@ -97,7 +94,7 @@ const MenuItem: React.FC<LoggedInMenuItemProps> = ({
   return (
     <DropdownMenuItem
       onSelect={onSelect}
-      className={cn('cursor-pointer px-3 py-2', className)}
+      className={cn('cursor-pointer p-3', className)}
     >
       {children}
     </DropdownMenuItem>
