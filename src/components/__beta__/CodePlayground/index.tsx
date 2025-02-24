@@ -1,5 +1,13 @@
-import { HighlightedCode, Pre, RawCode, highlight } from 'codehike/code'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  Children,
+  isValidElement,
+  HTMLAttributes,
+} from 'react'
 import {
   Select,
   SelectContent,
@@ -15,33 +23,57 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { AnimatePresence } from 'framer-motion'
 import { Icon } from '@/components/Icon'
+import { Skeleton } from '@/components/Skeleton'
+import { highlightCode } from './utils'
+import React from 'react'
 
-interface CodePlaygroundChildrenProps {
-  selectedLang: SupportedLanguage
-  selectedCode: string
+const copyIconVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: { opacity: 1, scale: 1 },
+}
+export interface CodePlaygroundSnippet {
+  /**
+   * The code to display in the playground.
+   */
+  code?: string | undefined
+  /**
+   * Whether the code is loading.
+   */
+  loading?: boolean | undefined
+  /**
+   * The error to display in the playground if the code could not be loaded.
+   */
+  error?: React.ReactNode | undefined
 }
 
-export type CodePlaygroundSnippets = Partial<Record<SupportedLanguage, string>>
+export type CodePlaygroundSnippets = Partial<
+  Record<SupportedLanguage, CodePlaygroundSnippet>
+>
 
-interface CodePlaygroundProps {
+export interface CodePlaygroundProps {
   /**
-   * An array of snippets to display in the playground.
+   * The children of the playground.
+   * Accepts a `CodePlayground.Header` and a `CodePlayground.Footer` or a `CodePlayground.Code` component.
+   */
+  children: React.ReactNode
+
+  /**
+   * An object of snippets to display in the playground.
+   *
+   * @example
+   * <CodePlayground
+   *   snippets={{
+   *     javascript: { code: 'console.log("Hello, world!");' },
+   *     typescript: { code: 'console.log("Hello, world!");' },
+   *   }}
+   * />
    */
   snippets: CodePlaygroundSnippets
-  /**
-   * A heading to display above the playground.
-   */
-  heading?:
-    | React.ReactNode
-    | ((props: CodePlaygroundChildrenProps) => React.ReactNode)
-  /**
-   * A footer to display below the playground.
-   */
-  footer?:
-    | React.ReactNode
-    | ((props: CodePlaygroundChildrenProps) => React.ReactNode)
+
   /**
    * Whether the code should be copyable.
+   *
+   * @default true
    */
   copyable?: boolean
 
@@ -49,37 +81,145 @@ interface CodePlaygroundProps {
   className?: string
 
   /**
-   * The maximum height of the code playground.
+   * A callback to be called when the language is changed.
    */
-  maxHeight?: number
+  onChangeLanguage?: (language: SupportedLanguage) => void
+
+  /**
+   * Whether to animate the code when the language is changed.
+   *
+   * @default true
+   */
+  animateOnLanguageChange?: boolean
+
+  /**
+   * Whether to show line numbers.
+   *
+   * @default true
+   */
+  showLineNumbers?: boolean
 }
 
-async function highlightCode(code: string, language: SupportedLanguage) {
-  const rawCode: RawCode = {
-    value: code,
-    lang: language,
-    meta: '',
-  }
-  return highlight(rawCode, 'github-from-css')
-}
-
-export function CodePlayground({
+const CodePlayground = ({
+  children,
   snippets,
-  heading,
-  footer,
   copyable = true,
   className,
-  maxHeight,
-}: CodePlaygroundProps) {
+  onChangeLanguage,
+  animateOnLanguageChange = true,
+  showLineNumbers = true,
+}: CodePlaygroundProps) => {
+  const validChildren = Children.toArray(children).filter((child) => {
+    if (!isValidElement(child)) return false
+    const type = child.type as { displayName?: string }
+    const isValidSubType =
+      type.displayName === 'CodePlayground.Header' ||
+      type.displayName === 'CodePlayground.Footer' ||
+      type.displayName === 'CodePlayground.Code'
+
+    if (!isValidSubType) {
+      console.warn(
+        `Invalid child type: ${type.displayName}. Must be one of: CodePlayground.Header, CodePlayground.Footer`
+      )
+    }
+
+    return isValidSubType
+  })
+
+  const header = validChildren.find(
+    (child) =>
+      isValidElement(child) &&
+      (child.type as { displayName?: string }).displayName ===
+        'CodePlayground.Header'
+  )
+
   const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
     // @ts-expect-error ignore this
     Object.keys(snippets)[0]
   )
-  const selectedCode = useMemo<string>(
+  const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
+  const selectedCode = useMemo<CodePlaygroundSnippet>(
     () => snippets[selectedLang]!,
     [selectedLang, snippets]
   )
-  const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
+
+  const preHandlers = useMemo<AnnotationHandler[]>(() => {
+    const handlers: AnnotationHandler[] = []
+
+    if (showLineNumbers) {
+      handlers.push(lineNumbers)
+    }
+
+    if (animateOnLanguageChange) {
+      handlers.push(tokenTransitions)
+    }
+
+    return handlers
+  }, [animateOnLanguageChange, showLineNumbers])
+
+  const codeContents = useMemo(() => {
+    return selectedCode.loading ? (
+      <div className="flex items-center p-4">
+        <Skeleton>
+          <div>
+            {
+              'export default function fakeFunctionThatWontBeDisplayedToTheUser() {'
+            }
+          </div>
+          <div>
+            {
+              "const sampleCode2 = 'sample code 2'.filter(Boolean).repeat(34).map((c) => c.toUpperCase())"
+            }
+          </div>
+          <div>
+            {"const sampleCode3 = '3'.filter(Boolean).repeat(34).toUpperCase()"}
+          </div>
+          <div className="min-w-40">{`}`}</div>
+        </Skeleton>
+      </div>
+    ) : selectedCode.error ? (
+      selectedCode.error
+    ) : highlighted ? (
+      <Pre
+        code={highlighted}
+        handlers={preHandlers}
+        className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
+      />
+    ) : null
+  }, [selectedCode.loading, selectedCode.error, highlighted])
+
+  const foundCustomCodeContainer = useMemo(
+    () =>
+      validChildren.find(
+        (child) =>
+          isValidElement(child) &&
+          (child.type as { displayName?: string }).displayName ===
+            'CodePlayground.Code'
+      ),
+    [validChildren]
+  )
+
+  const code = useMemo(
+    () =>
+      foundCustomCodeContainer ? (
+        React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
+          __children__: codeContents,
+        })
+      ) : (
+        <CodePlaygroundCode __children__={codeContents} />
+      ),
+    [foundCustomCodeContainer, codeContents]
+  )
+  const footer = useMemo(
+    () =>
+      validChildren.find(
+        (child) =>
+          isValidElement(child) &&
+          (child.type as { displayName?: string }).displayName ===
+            'CodePlayground.Footer'
+      ),
+    [validChildren]
+  )
 
   const updateHighlighted = useCallback(
     async (code: string, language: SupportedLanguage) => {
@@ -98,24 +238,25 @@ export function CodePlayground({
     }, 1000)
   }, [])
 
-  const longestCodeHeight = useMemo(() => {
-    const largestLines = Math.max(
-      ...Object.values(snippets).map((code) => code.split('\n').length)
-    )
-    const lineHeight = 24
-    const padding = 12
-    return largestLines * lineHeight + padding * 2
-  }, [snippets])
-
   useEffect(() => {
-    updateHighlighted(selectedCode, selectedLang)
+    if (selectedCode.code) {
+      updateHighlighted(selectedCode.code, selectedLang)
+    }
   }, [selectedCode, selectedLang])
 
   useEffect(() => {
-    updateHighlighted(selectedCode, selectedLang)
+    if (selectedCode.code) {
+      updateHighlighted(selectedCode.code, selectedLang)
+    }
   }, [selectedLang])
 
-  if (!highlighted) return null
+  const handleChangeLanguage = useCallback(
+    (language: SupportedLanguage) => {
+      setSelectedLang(language)
+      onChangeLanguage?.(language)
+    },
+    [onChangeLanguage]
+  )
 
   return (
     <div
@@ -125,18 +266,9 @@ export function CodePlayground({
       )}
     >
       <div className="bg-card flex items-center border-b p-2">
-        <div className="select-none">
-          {typeof heading === 'function'
-            ? heading({ selectedLang, selectedCode })
-            : heading}
-        </div>
+        <div className="select-none">{header && header}</div>
         <div className="ml-auto">
-          <Select
-            value={selectedLang}
-            onValueChange={(value) =>
-              setSelectedLang(value as SupportedLanguage)
-            }
-          >
+          <Select value={selectedLang} onValueChange={handleChangeLanguage}>
             <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 leading-none !shadow-none !ring-0">
               <SelectValue />
             </SelectTrigger>
@@ -152,19 +284,9 @@ export function CodePlayground({
       </div>
 
       <div className="relative">
-        <div
-          className="bg-background overflow-x-hidden overflow-y-scroll"
-          style={{ maxHeight: `${maxHeight}px` }}
-        >
-          <Pre
-            code={highlighted}
-            handlers={[lineNumbers, tokenTransitions]}
-            className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
-            style={{ height: `${longestCodeHeight}px` }}
-          />
-        </div>
+        {code}
 
-        {copyable && (
+        {selectedCode.code && copyable && (
           <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
             <button
               role="button"
@@ -200,18 +322,99 @@ export function CodePlayground({
           </div>
         )}
       </div>
-      {footer && (
-        <div className="bg-card flex select-none items-center border-t p-2">
-          {typeof footer === 'function'
-            ? footer({ selectedLang, selectedCode })
-            : footer}
-        </div>
-      )}
+
+      {footer && footer}
     </div>
   )
 }
 
-const copyIconVariants = {
-  hidden: { opacity: 0, scale: 0.5 },
-  visible: { opacity: 1, scale: 1 },
+CodePlayground.displayName = 'CodePlayground'
+
+export interface CodePlaygroundCodeProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  className?: string
+
+  /**
+   * internal api for passing children
+   */
+  __children__?: React.ReactNode
 }
+
+const CodePlaygroundCode = ({
+  className,
+  __children__: children,
+  ...props
+}: CodePlaygroundCodeProps) => {
+  return (
+    <div
+      {...props}
+      className={cn(
+        'bg-background overflow-x-hidden overflow-y-scroll',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+CodePlaygroundCode.displayName = 'CodePlayground.Code'
+
+export interface CodePlaygroundHeaderProps
+  extends HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+const CodePlaygroundHeader = ({
+  children,
+  className,
+  ...props
+}: CodePlaygroundHeaderProps) => {
+  return (
+    <div className={cn('bg-card flex items-center', className)} {...props}>
+      {children}
+    </div>
+  )
+}
+
+CodePlaygroundHeader.displayName = 'CodePlayground.Header'
+
+export interface CodePlaygroundFooterProps
+  extends HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+const CodePlaygroundFooter = ({
+  children,
+  className,
+  ...props
+}: CodePlaygroundFooterProps) => {
+  return (
+    <div
+      className={cn(
+        'bg-card flex select-none items-center border-t p-2',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+CodePlaygroundFooter.displayName = 'CodePlayground.Footer'
+
+const CodePlaygroundWithSubcomponents = Object.assign(CodePlayground, {
+  Header: CodePlaygroundHeader,
+  Footer: CodePlaygroundFooter,
+
+  /**
+   * Can be used to manipulate the properties of the code container. You can pass a custom class name to control the maximum height of the code container for example.
+   * No children are expected as the parent component will handle that.
+   * @example
+   * <CodePlayground.Code className="max-h-72 overflow-y-auto" />
+   */
+  Code: CodePlaygroundCode,
+})
+
+export { CodePlaygroundWithSubcomponents as CodePlayground }

@@ -1,7 +1,10 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-170/table-component
 import React, {
+  createContext,
   PropsWithChildren,
   type ReactNode,
+  useCallback,
+  useContext,
   useMemo,
   useRef,
   useState,
@@ -10,12 +13,20 @@ import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { isGroupOf } from '@/lib/typeUtils'
 import styles from './styles.module.css'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/Tooltip'
+import { Button } from '@/components/Button'
+import { ExpandChevron } from '@/components/__beta__/CLIWizard'
 
 export type Column<T extends object> = {
   key: keyof T | string
   header: ReactNode
   render?: (row: T) => ReactNode
-  width?: `${number}fr` | 'auto' | undefined
+  width?: `${number}fr` | `${number}px` | 'auto' | undefined
 }
 
 export type Group<T extends object> = {
@@ -32,11 +43,13 @@ export type TableProps<T extends object> = {
   rowKey: (row: T) => string | number
   onRowClick?: (row: T) => void
   renderGroupHeader?: (group: Group<T>) => ReactNode
+  renderExpandedContent?: (row: T) => ReactNode
   onLoadMore?: () => Promise<void> | (() => void)
   hasMore?: boolean
   noResultsMessage?: ReactNode
   className?: string
   cellPadding?: 'condensed' | 'normal' | 'spacious'
+  hideHeader?: boolean
 }
 
 export type TableWrapperProps<T extends object> =
@@ -45,37 +58,67 @@ export type TableWrapperProps<T extends object> =
     cellPadding?: TableProps<T>['cellPadding']
   }
 
+function expandColumn<T extends object>(): Column<T> {
+  return {
+    key: 'expand',
+    header: '',
+    width: `64px`, // 32px is padding, 32px is the width of the expand button
+  }
+}
+
+const TableContext = createContext<{
+  depth: number
+}>({
+  depth: 0,
+})
+
 function TableRoot<T extends object>(
   props: TableProps<T> | TableWrapperProps<T>
 ) {
+  const tableContext = useContext(TableContext)
+  const tableDepth = tableContext.depth + 1
+
   const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
-    <table
-      style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
-      ref={tableRef}
-      className={cn(
-        styles.table,
-        'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
-        className
-      )}
-      data-cell-padding={props.cellPadding}
-    >
-      {children}
-    </table>
+    <TableContext.Provider value={{ depth: tableDepth }}>
+      <table
+        style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
+        ref={tableRef}
+        className={cn(
+          styles.table,
+          'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+          tableDepth > 1 && 'rounded-none border-none',
+          className
+        )}
+        data-cell-padding={props.cellPadding}
+      >
+        {children}
+      </table>
+    </TableContext.Provider>
   )
 
   const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
   const tableRef = useRef<HTMLTableElement | null>(null)
 
-  const colWidths = useMemo(() => {
-    return props.columns.map((column) => column.width ?? '1fr').join(' ')
-  }, [props.columns])
+  let columns = props.columns
+
+  // We add the expand column here so that all parts of the table know about it, particularly needed for widths
+  if (
+    !propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props) &&
+    props.renderExpandedContent
+  ) {
+    columns = [expandColumn(), ...columns]
+  }
+
+  const colWidths = useMemo(
+    () => columns.map((column) => column.width ?? '1fr').join(' '),
+    [columns]
+  )
 
   if (propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props)) {
     return <Wrapper className={props.className}>{props.children}</Wrapper>
   }
 
   const {
-    columns,
     data,
     rowKey,
     onRowClick,
@@ -83,7 +126,9 @@ function TableRoot<T extends object>(
     hasMore,
     noResultsMessage,
     renderGroupHeader,
+    renderExpandedContent,
     className,
+    hideHeader,
   } = props
 
   const [isLoading, setIsLoading] = useState(false)
@@ -95,7 +140,7 @@ function TableRoot<T extends object>(
 
   return (
     <Wrapper className={className}>
-      <Table.Header columns={columns} />
+      {!hideHeader && <Table.Header columns={columns} />}
       <Table.Body
         data={data}
         ref={tableBodyRef}
@@ -104,6 +149,7 @@ function TableRoot<T extends object>(
         hasMore={hasMore}
         noResultsMessage={noResultsMessage}
         renderGroupHeader={renderGroupHeader}
+        renderExpandedContent={renderExpandedContent}
         handleLoadMore={handleLoadMore}
         isLoading={isLoading}
         onRowClick={onRowClick}
@@ -159,6 +205,7 @@ type BodyProps<T extends object> = {
   onRowClick?: (row: T) => void
   noResultsMessage?: ReactNode
   renderGroupHeader?: (group: Group<T>) => ReactNode
+  renderExpandedContent?: (row: T) => ReactNode
   hasMore?: boolean
   handleLoadMore?: () => void
   isLoading?: boolean
@@ -199,32 +246,49 @@ const Body = React.forwardRef(function Body<T extends object>(
     handleLoadMore,
     isLoading,
     className,
+    renderExpandedContent,
   } = props
+
+  const renderRow = (row: T | Group<T>) => {
+    if (isGroupOf<T>(row)) {
+      return (
+        <RowGroup
+          group={row}
+          columns={columns}
+          rowKey={rowKey}
+          renderGroupHeader={renderGroupHeader}
+          key={row.key}
+          onRowClick={onRowClick}
+        />
+      )
+    } else if (renderExpandedContent) {
+      return (
+        <RowExpandable
+          row={row}
+          columns={columns}
+          renderExpandedContent={renderExpandedContent}
+          key={rowKey(row)}
+          onClick={onRowClick}
+        />
+      )
+    } else {
+      return (
+        <Row
+          row={row}
+          key={rowKey(row)}
+          columns={columns}
+          onClick={onRowClick}
+        />
+      )
+    }
+  }
 
   return (
     <Wrapper className={cn(hasMore && 'pb-16', className)}>
       {data.length === 0 ? (
         <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
       ) : (
-        data.map((d) =>
-          isGroupOf<T>(d) ? (
-            <RowGroup
-              group={d}
-              columns={columns}
-              rowKey={rowKey}
-              renderGroupHeader={renderGroupHeader}
-              key={d.key}
-              onRowClick={onRowClick}
-            />
-          ) : (
-            <Row
-              row={d}
-              key={rowKey(d)}
-              columns={columns}
-              onClick={onRowClick}
-            />
-          )
-        )
+        data.map(renderRow)
       )}
       {hasMore && handleLoadMore && (
         <LoadMore
@@ -276,11 +340,90 @@ function Row<T extends object>(props: RowProps<T> | RowWrapperProps) {
 
   const { row, onClick, columns, className } = props
   return (
-    <Wrapper className={className} onClick={() => onClick?.(row)}>
+    <Wrapper
+      className={className}
+      onClick={onClick ? () => onClick(row) : undefined}
+    >
       {columns.map((column) => (
         <Cell key={column.key.toString()} column={column} row={row} />
       ))}
     </Wrapper>
+  )
+}
+
+function RowExpandable<T extends object>({
+  row,
+  onClick,
+  columns,
+  renderExpandedContent,
+  className,
+}: {
+  row: T
+  columns: Column<T>[]
+  renderExpandedContent: (row: T) => ReactNode
+  onClick?: (row: T) => void
+  className?: string
+}) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  const expand = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setIsExpanded((prev) => !prev)
+  }
+
+  const content = useMemo(
+    () => renderExpandedContent(row),
+    [renderExpandedContent, row]
+  )
+
+  const renderExpandCol = useCallback(() => {
+    return content ? (
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <div className="flex w-full justify-end">
+              <Button onClick={expand} variant={'ghost'} className={`h-6 w-6`}>
+                <ExpandChevron isCollapsed={!isExpanded} />
+              </Button>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>{isExpanded ? 'Collapse' : 'Expand'}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ) : null
+  }, [expand, isExpanded, content])
+
+  const expandCol = columns.find((column) => column.key === expandColumn().key)
+
+  if (expandCol) {
+    expandCol.render = renderExpandCol
+  }
+
+  let onClickFn = onClick
+
+  // If there's some expanded content to show and onClick is not provided, let the row expand when clicked
+  if (!onClick && content) {
+    onClickFn = () => setIsExpanded((prev) => !prev)
+  }
+
+  return (
+    <>
+      <Row
+        row={row}
+        onClick={onClickFn}
+        columns={columns}
+        className={className}
+      />
+      {/* This grid stuff is a cute way to make the height animate smoothly when expanding/collapsing */}
+      <div
+        className={cn(
+          'grid overflow-hidden transition-[grid-template-rows] duration-300 [grid-column:1/-1]',
+          isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        )}
+      >
+        <div className="min-h-0 overflow-auto">{content}</div>
+      </div>
+    </>
   )
 }
 
@@ -342,10 +485,11 @@ function Cell<T extends object>(
     <td
       className={cn(
         styles.tableCell,
-        'flex max-w-full items-center',
+        `flex max-w-full items-center`,
         className
       )}
     >
+      <SubtableIndendation />
       {children}
     </td>
   )
@@ -468,11 +612,20 @@ function HeaderCell({
         className
       )}
     >
+      <SubtableIndendation />
       {children}
     </th>
   )
 
   return <Wrapper className={className}>{children}</Wrapper>
+}
+
+// Has the effect of "indenting" subtables while still allowing them to occupy the full width of the parent table
+function SubtableIndendation() {
+  const { depth } = useContext(TableContext)
+  return depth > 1 ? (
+    <div style={{ minWidth: `${16 * (depth - 1)}px` }} />
+  ) : null
 }
 
 function propsHasChildren<P extends PropsWithChildren, Q extends object>(

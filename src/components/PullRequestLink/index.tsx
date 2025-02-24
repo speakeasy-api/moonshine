@@ -7,7 +7,7 @@ type Status = 'open' | 'closed' | 'merged'
 
 interface PullRequestLinkProps {
   href: string
-  prNumber: number
+  prNumber?: number
   status?: Status
   target?: '_blank' | '_self' | '_parent' | '_top'
   className?: string
@@ -20,6 +20,9 @@ export function PullRequestLink({
   target = '_blank',
   className,
 }: PullRequestLinkProps) {
+  // If prNumber is not provided, try to extract it from the href
+  const num = prNumber ?? (href.split('/').pop() || 'Unknown')
+
   return (
     <a
       className={cn(
@@ -33,17 +36,16 @@ export function PullRequestLink({
         <PullRequestStatusIcon status={status} />
       </span>
       <span className="text-muted-foreground text-xs font-semibold">
-        {'#'}
-        {prNumber}
+        {`#${num}`}
       </span>
     </a>
   )
 }
 
 const colors: Record<Status, string> = {
-  open: 'text-green-500',
-  closed: 'text-red-500',
-  merged: 'text-purple-500',
+  open: 'text-emerald-500',
+  closed: 'text-rose-500',
+  merged: 'text-violet-500',
 }
 
 function PullRequestStatusIcon({

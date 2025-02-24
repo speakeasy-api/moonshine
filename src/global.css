@@ -81,9 +81,9 @@
     --color-neutral-200: 0 100% 0%;
     --color-neutral-400: 161 6% 65%;
 
-    --link-default: 198 93% 60%;
-    --link-visited-primary: 200 98% 39%;
-    --link-visited-secondary: 240 5% 65%;
+    --color-link-default: 198 93% 60%;
+    --color-link-visited-primary: 200 98% 39%;
+    --color-link-visited-secondary: 240 5% 65%;
   }
 
   .dark {
@@ -137,10 +137,51 @@
     --score-track: 48 4% 28%;
 
     /* Moonshine tokens */
+    --color-accessibility: 221 83% 53%;
+
+    --color-brand-yellow-50: 57 92% 95%;
+    --color-brand-yellow-100: 58 93% 88%;
+    --color-brand-yellow-200: 55 97% 77%;
+    --color-brand-yellow-300: 53 96% 59%;
+    --color-brand-yellow-400: 50 94% 53%;
+    --color-brand-yellow-500: 48 92% 47%;
+    --color-brand-yellow-600: 43 94% 40%;
+    --color-brand-yellow-700: 38 90% 33%;
+    --color-brand-yellow-800: 31 71% 26%;
+    --color-brand-yellow-900: 29 67% 23%;
+    --color-brand-yellow-950: 29 81% 14%;
+
+    --color-base-white: 0 0% 100%;
+    --color-base-black: 0 0% 0%;
+
     --color-neutral-50: 0 0% 98%;
     --color-neutral-100: 240 5% 96%;
-    --color-neutral-200: 229 5% 90%;
-    --color-neutral-400: 161 6% 65%;
+    --color-neutral-200: 240 6% 90%;
+    --color-neutral-400: 240 5% 65%;
+    --color-neutral-500: 240 4% 46%;
+    --color-neutral-600: 240 5% 34%;
+    --color-neutral-800: 240 4% 16%;
+    --color-neutral-900: 240 6% 10%;
+    --color-neutral-950: 240 10% 4%;
+
+    --color-danger-fill: 345 83% 41%;
+    --color-danger-text: 350 89% 60%;
+
+    --color-feature-fill: 263 70% 50%;
+    --color-feature-text: 258 90% 66%;
+
+    --color-information-fill: 224 76% 48%;
+    --color-information-text: 217 91% 60%;
+
+    --color-success-fill: 163 94% 24%;
+    --color-success-text: 160 84% 39%;
+
+    --color-warning-fill: 26 90% 37%;
+    --color-warning-text: 46 97% 65%;
+
+    --color-link-default: 198 93% 60%;
+    --color-link-visited-primary: 200 98% 39%;
+    --color-link-visited-secondary: 240 5% 65%;
   }
 }
 
