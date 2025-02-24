@@ -39,12 +39,12 @@
       var(--skeleton-animation-background-color-2) 60%,
       var(--skeleton-animation-background-color-end)
     );
-    animation: shimmer var(--skeleton-animation-duration) infinite;
+    animation: skeleton-shimmer var(--skeleton-animation-duration) infinite;
     content: '';
   }
 }
 
-@keyframes shimmer {
+@keyframes skeleton-shimmer {
   100% {
     transform: translateX(100%);
   }
