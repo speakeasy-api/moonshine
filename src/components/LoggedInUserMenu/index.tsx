@@ -27,7 +27,9 @@ const Root: React.FC<LoggedInUserProps> = ({
   children,
 }) => {
   const validChildren = Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && child.type === MenuItem
+    (child) =>
+      React.isValidElement(child) &&
+      (child.type === MenuItem || child.type === Seperator)
   )
 
   return (
@@ -65,17 +67,14 @@ const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
           {email}
         </div>
       </Stack>
-      <DropdownMenuSeparator className="my-0" />
+      <Seperator />
       {Children.map(children, (child, index) => (
-        <Fragment key={index}>
-          {child}
-          <DropdownMenuSeparator className="my-0" />
-        </Fragment>
+        <Fragment key={index}>{child}</Fragment>
       ))}
-      <DropdownMenuItem onSelect={onSignOut} className="cursor-pointer p-3">
+      <MenuItem onSelect={onSignOut}>
         <Icon name="log-out" />
         Logout
-      </DropdownMenuItem>
+      </MenuItem>
     </>
   )
 }
@@ -102,6 +101,13 @@ const MenuItem: React.FC<LoggedInMenuItemProps> = ({
 }
 MenuItem.displayName = 'LoggedInUserMenu.MenuItem'
 
+const Seperator: React.FC = () => {
+  return (
+    <DropdownMenuSeparator data-component="separator" className="peer my-0" />
+  )
+}
+
 export const LoggedInUserMenu = Object.assign(Root, {
   MenuItem,
+  Seperator,
 })

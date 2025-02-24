@@ -67,14 +67,23 @@ export const MultipleExtraMenuItems: Story = {
   args: {
     ...Default.args,
     children: [
-      <LoggedInUserMenu.MenuItem onSelect={() => {}} key="billing">
+      <LoggedInUserMenu.MenuItem
+        onSelect={() => {}}
+        key="billing"
+        className="py-2"
+      >
         <Icon name="wallet-cards" />
         Billing
       </LoggedInUserMenu.MenuItem>,
-      <LoggedInUserMenu.MenuItem onSelect={() => {}} key="api-keys">
+      <LoggedInUserMenu.MenuItem
+        onSelect={() => {}}
+        key="api-keys"
+        className="py-2"
+      >
         <Icon name="key-round" />
         Api Keys
       </LoggedInUserMenu.MenuItem>,
+      <LoggedInUserMenu.Seperator key="seperator" />,
     ],
   },
 }
