@@ -201,10 +201,7 @@ const CodePlayground = ({
       <Pre
         code={highlighted}
         handlers={preHandlers}
-        className={cn(
-          'bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm',
-          className
-        )}
+        className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
       />
     ) : null
   }, [selectedCode.loading, selectedCode.error, highlighted])
