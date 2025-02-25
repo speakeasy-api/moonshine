@@ -20,6 +20,7 @@ import {
 import { prettyLanguageName, SupportedLanguage } from '@/types'
 import { lineNumbers } from './lineNumbers'
 import { tokenTransitions } from './tokenTransitions'
+import { wordWrapping } from './wordWrap'
 import './index.css'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -84,6 +85,13 @@ export interface CodePlaygroundProps {
   className?: string
 
   /**
+   * Whether to wrap the code.
+   *
+   * @default true
+   */
+  wordWrap?: boolean
+
+  /**
    * A callback to be called when the language is changed.
    */
   onChangeLanguage?: (language: SupportedLanguage) => void
@@ -111,6 +119,7 @@ const CodePlayground = ({
   onChangeLanguage,
   animateOnLanguageChange = true,
   showLineNumbers = true,
+  wordWrap = true,
 }: CodePlaygroundProps) => {
   const codeRef = useRef<HTMLDivElement>(null)
   const validChildren = Children.toArray(children).filter((child) => {
@@ -158,8 +167,12 @@ const CodePlayground = ({
       handlers.push(tokenTransitions)
     }
 
+    if (wordWrap) {
+      handlers.push(wordWrapping)
+    }
+
     return handlers
-  }, [animateOnLanguageChange, showLineNumbers])
+  }, [animateOnLanguageChange, showLineNumbers, wordWrap])
 
   const loadingSkeleton = useMemo(() => {
     // Try to measure the existing height of the code container if code has
@@ -188,7 +201,7 @@ const CodePlayground = ({
       <Pre
         code={highlighted}
         handlers={preHandlers}
-        className="bg-muted/15 dark:bg-background relative m-0 px-4 py-3 text-sm"
+        className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
       />
     ) : null
   }, [selectedCode.loading, selectedCode.error, highlighted])
@@ -353,10 +366,7 @@ const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
       <div
         ref={ref}
         {...props}
-        className={cn(
-          'bg-background overflow-x-hidden overflow-y-scroll',
-          className
-        )}
+        className={cn('bg-background overflow-auto', className)}
       >
         {__children__}
       </div>

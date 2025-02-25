@@ -292,3 +292,28 @@ export const NoAnimations: Story = {
     animateOnLanguageChange: false,
   },
 }
+
+export const OverflowingCode: Story = {
+  args: {
+    ...Default.args,
+    wordWrap: false,
+    copyable: false,
+    snippets: {
+      typescript: {
+        code: `const reallyLongLine = 'this is a really long line of code that will overflow the container'`,
+      },
+    },
+  },
+}
+
+export const WordWrap: Story = {
+  args: {
+    ...Default.args,
+    wordWrap: true,
+    snippets: {
+      typescript: {
+        code: `const reallyLongLine = 'this is a really long line of code that will overflow the container and wrap'`,
+      },
+    },
+  },
+}
