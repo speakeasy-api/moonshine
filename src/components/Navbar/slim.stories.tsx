@@ -4,6 +4,7 @@ import { NavItems } from './Slim'
 import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { faker } from '@faker-js/faker'
+import { fn } from '@storybook/test'
 
 faker.seed(123)
 
@@ -25,6 +26,7 @@ const navItems: NavItems[] = [
           'bg-muted hover:bg-muted/50 flex w-full min-w-9 flex-grow cursor-pointer flex-row items-center justify-center gap-2.5 rounded-xl border px-1.5',
           expanded && 'flex-grow-0 justify-start'
         )}
+        onClick={fn()}
       >
         <Icon name="plus" className="h-full min-h-9" />
 
@@ -32,22 +34,22 @@ const navItems: NavItems[] = [
       </div>
     ),
     label: 'New',
-    onClick: () => {},
+    onClick: fn(),
   },
   {
     icon: 'box',
     label: 'Packages',
-    onClick: () => {},
+    onClick: fn(),
   },
   {
     icon: 'siren',
     label: 'Alerts',
-    onClick: () => {},
+    onClick: fn(),
   },
   {
     icon: 'settings',
     label: 'Settings',
-    onClick: () => {},
+    onClick: fn(),
   },
 ]
 
