@@ -176,8 +176,11 @@ export const Slim = ({
                 <TooltipProvider>
                   <Tooltip delayDuration={0}>
                     {item.icon ? (
-                      <TooltipTrigger>
-                        <div className="flex items-start gap-2">
+                      <TooltipTrigger asChild>
+                        <div
+                          className="flex cursor-pointer items-start gap-2"
+                          onClick={item.onClick}
+                        >
                           <Icon
                             name={item.icon}
                             strokeWidth={0.9}
@@ -191,7 +194,12 @@ export const Slim = ({
                         expanded,
                       })
                     ) : (
-                      <TooltipTrigger>{item.label}</TooltipTrigger>
+                      <TooltipTrigger
+                        onClick={item.onClick}
+                        className="cursor-pointer"
+                      >
+                        {item.label}
+                      </TooltipTrigger>
                     )}
 
                     <TooltipContent
