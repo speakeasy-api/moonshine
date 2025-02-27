@@ -75,6 +75,11 @@ export interface CodePlaygroundProps {
   snippets: CodePlaygroundSnippets
 
   /**
+   * The language that should be selected when the playground is mounted.
+   */
+  selectedLanguage: SupportedLanguage
+
+  /**
    * Whether the code should be copyable.
    *
    * @default true
@@ -115,6 +120,7 @@ const CodePlayground = ({
   children,
   snippets,
   copyable = true,
+  selectedLanguage,
   className,
   onChangeLanguage,
   animateOnLanguageChange = true,
@@ -146,14 +152,10 @@ const CodePlayground = ({
         'CodePlayground.Header'
   )
 
-  const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(
-    // @ts-expect-error ignore this
-    Object.keys(snippets)[0]
-  )
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
   const selectedCode = useMemo<CodePlaygroundSnippet>(
-    () => snippets[selectedLang]!,
-    [selectedLang, snippets]
+    () => snippets[selectedLanguage]!,
+    [selectedLanguage, snippets]
   )
 
   const preHandlers = useMemo<AnnotationHandler[]>(() => {
@@ -260,19 +262,18 @@ const CodePlayground = ({
 
   useEffect(() => {
     if (selectedCode.code) {
-      updateHighlighted(selectedCode.code, selectedLang)
+      updateHighlighted(selectedCode.code, selectedLanguage)
     }
-  }, [selectedCode, selectedLang])
+  }, [selectedCode, selectedLanguage])
 
   useEffect(() => {
     if (selectedCode.code) {
-      updateHighlighted(selectedCode.code, selectedLang)
+      updateHighlighted(selectedCode.code, selectedLanguage)
     }
-  }, [selectedLang])
+  }, [selectedCode, selectedLanguage])
 
   const handleChangeLanguage = useCallback(
     (language: SupportedLanguage) => {
-      setSelectedLang(language)
       onChangeLanguage?.(language)
     },
     [onChangeLanguage]
@@ -288,7 +289,7 @@ const CodePlayground = ({
       <div className="bg-card flex items-center border-b p-2">
         <div className="select-none">{header && header}</div>
         <div className="ml-auto">
-          <Select value={selectedLang} onValueChange={handleChangeLanguage}>
+          <Select value={selectedLanguage} onValueChange={handleChangeLanguage}>
             <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 leading-none !shadow-none !ring-0">
               <SelectValue />
             </SelectTrigger>
