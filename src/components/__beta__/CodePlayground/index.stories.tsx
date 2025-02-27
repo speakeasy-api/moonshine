@@ -1,6 +1,7 @@
 import { Icon } from '@/components/Icon'
 import { CodePlayground, CodePlaygroundSnippets } from '.'
 import { StoryObj, Meta } from '@storybook/react'
+import { useState } from 'react'
 
 const meta: Meta<typeof CodePlayground> = {
   component: CodePlayground,
@@ -48,8 +49,25 @@ console.log(users)`,
 }
 
 export const Default: Story = {
+  decorators: [
+    (Story, { args }) => {
+      const [selectedLanguage, setSelectedLanguage] = useState(
+        args.selectedLanguage
+      )
+      return (
+        <Story
+          args={{
+            ...args,
+            selectedLanguage,
+            onChangeLanguage: setSelectedLanguage,
+          }}
+        />
+      )
+    },
+  ],
   args: {
     snippets,
+    selectedLanguage: 'typescript',
     children: [
       <CodePlayground.Header>
         <div className="flex items-center gap-2.5 px-2 font-mono text-sm">
@@ -86,6 +104,7 @@ for (const foo of fooBar) {
 `
 
 export const KitchenSink: Story = {
+  ...Default,
   args: {
     ...Default.args,
     snippets: { typescript: { code: kitchenSink } },
@@ -93,6 +112,7 @@ export const KitchenSink: Story = {
 }
 
 export const NonCopyable: Story = {
+  ...Default,
   args: {
     ...Default.args,
     copyable: false,
@@ -100,6 +120,7 @@ export const NonCopyable: Story = {
 }
 
 export const NoHeading: Story = {
+  ...Default,
   args: {
     ...Default.args,
     children: [
@@ -112,6 +133,7 @@ export const NoHeading: Story = {
   },
 }
 export const NoFooter: Story = {
+  ...Default,
   args: {
     ...Default.args,
     children: [
@@ -126,6 +148,7 @@ export const NoFooter: Story = {
 }
 
 export const WithReallyLongCode: Story = {
+  ...Default,
   args: {
     ...Default.args,
     snippets: {
@@ -166,6 +189,7 @@ for (const foo of fooBar) {
 }
 
 export const WithSmallerContainer: Story = {
+  ...Default,
   args: {
     ...Default.args,
   },
@@ -179,6 +203,7 @@ export const WithSmallerContainer: Story = {
 }
 
 export const Loading: Story = {
+  ...Default,
   args: {
     ...Default.args,
     children: [
@@ -198,6 +223,7 @@ export const Loading: Story = {
 }
 
 export const ErrorState: Story = {
+  ...Default,
   args: {
     ...Default.args,
     snippets: {
@@ -280,6 +306,7 @@ fmt.Println(users)`,
 }
 
 export const NoLineNumbers: Story = {
+  ...Default,
   args: {
     ...Default.args,
     showLineNumbers: false,
@@ -287,6 +314,7 @@ export const NoLineNumbers: Story = {
 }
 
 export const NoAnimations: Story = {
+  ...Default,
   args: {
     ...Default.args,
     animateOnLanguageChange: false,
@@ -294,6 +322,7 @@ export const NoAnimations: Story = {
 }
 
 export const OverflowingCode: Story = {
+  ...Default,
   args: {
     ...Default.args,
     wordWrap: false,
@@ -307,6 +336,7 @@ export const OverflowingCode: Story = {
 }
 
 export const WordWrap: Story = {
+  ...Default,
   args: {
     ...Default.args,
     wordWrap: true,
