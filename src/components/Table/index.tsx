@@ -1,11 +1,9 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-170/table-component
 import React, {
-  createContext,
   forwardRef,
   PropsWithChildren,
   type ReactNode,
   useCallback,
-  useContext,
   useMemo,
   useRef,
   useState,
@@ -22,8 +20,8 @@ import {
 } from '@/components/Tooltip'
 import { Button } from '@/components/Button'
 import { ExpandChevron } from '@/components/__beta__/CLIWizard'
-import { useTable } from './context/useTable'
 import { TableProvider } from './context/tableProvider'
+import { useTable } from './context/context'
 
 export type Column<T extends object> = {
   key: keyof T | string
@@ -71,12 +69,6 @@ function expandColumn<T extends object>(): Column<T> {
   }
 }
 
-const TableDepthContext = createContext<{
-  depth: number
-}>({
-  depth: 0,
-})
-
 type TableContainerProps = PropsWithChildrenAndClassName & {
   tableDepth: number
   colWidths: string
@@ -86,24 +78,22 @@ type TableContainerProps = PropsWithChildrenAndClassName & {
 const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
   ({ children, className, tableDepth, colWidths, cellPadding }, ref) => {
     return (
-      <TableProvider>
-        <TableDepthContext.Provider value={{ depth: tableDepth }}>
-          <table
-            style={
-              { '--grid-template-columns': colWidths } as React.CSSProperties
-            }
-            ref={ref}
-            className={cn(
-              styles.table,
-              'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
-              tableDepth > 1 && 'rounded-none border-none',
-              className
-            )}
-            data-cell-padding={cellPadding}
-          >
-            {children}
-          </table>
-        </TableDepthContext.Provider>
+      <TableProvider depth={tableDepth}>
+        <table
+          style={
+            { '--grid-template-columns': colWidths } as React.CSSProperties
+          }
+          ref={ref}
+          className={cn(
+            styles.table,
+            'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+            tableDepth > 1 && 'rounded-none border-none',
+            className
+          )}
+          data-cell-padding={cellPadding}
+        >
+          {children}
+        </table>
       </TableProvider>
     )
   }
@@ -112,8 +102,8 @@ const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
 function TableRoot<T extends object>(
   props: TableProps<T> | TableWrapperProps<T>
 ) {
-  const tableContext = useContext(TableDepthContext)
-  const tableDepth = tableContext.depth + 1
+  const { depth } = useTable()
+  const tableDepth = depth + 1
 
   const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
   const tableRef = useRef<HTMLTableElement | null>(null)
@@ -665,7 +655,7 @@ function HeaderCell({
 
 // Has the effect of "indenting" subtables while still allowing them to occupy the full width of the parent table
 function SubtableIndendation() {
-  const { depth } = useContext(TableDepthContext)
+  const { depth } = useTable()
   return depth > 1 ? (
     <div style={{ minWidth: `${16 * (depth - 1)}px` }} />
   ) : null

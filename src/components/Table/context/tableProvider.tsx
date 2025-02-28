@@ -3,9 +3,10 @@ import { TableContext } from './context'
 
 export interface TableProviderProps {
   children: React.ReactNode
+  depth: number
 }
 
-export function TableProvider({ children }: TableProviderProps) {
+export function TableProvider({ children, depth }: TableProviderProps) {
   const [expandedRowKeys, setExpandedRowKeys] = useState<Set<string | number>>(
     new Set()
   )
@@ -26,7 +27,7 @@ export function TableProvider({ children }: TableProviderProps) {
   )
 
   return (
-    <TableContext.Provider value={{ expandedRowKeys, toggleExpanded }}>
+    <TableContext.Provider value={{ depth, expandedRowKeys, toggleExpanded }}>
       {children}
     </TableContext.Provider>
   )
