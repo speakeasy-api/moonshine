@@ -339,10 +339,7 @@ const CodeEditorTab = ({
       <div className="flex items-center gap-1.5">
         {icon && <span className="flex items-center">{icon}</span>}
 
-        <span
-          title={typeof title === 'string' ? title : undefined}
-          className="max-w-44 truncate"
-        >
+        <span title={typeof title === 'string' ? title : undefined}>
           {title}
         </span>
       </div>
