@@ -290,7 +290,7 @@ const CodePlayground = ({
         <div className="select-none">{header && header}</div>
         <div className="ml-auto">
           <Select value={selectedLanguage} onValueChange={handleChangeLanguage}>
-            <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 leading-none !shadow-none !ring-0">
+            <SelectTrigger className="text-muted select-none gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0">
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="bottom" align="start" alignOffset={-30}>
