@@ -1,10 +1,10 @@
 import { Navbar } from '.'
 import { Meta, StoryObj } from '@storybook/react'
-import { NavItems } from './Slim'
+import type { NavItem, RenderNavItemProps } from './Slim'
 import { Icon } from '../Icon'
 import { cn } from '@/lib/utils'
 import { faker } from '@faker-js/faker'
-import { fn } from '@storybook/test'
+import { useState, useMemo } from 'react'
 
 faker.seed(123)
 
@@ -14,19 +14,29 @@ const meta: Meta<typeof Navbar.Slim> = {
   parameters: {
     layout: 'fullscreen',
   },
+  decorators: [
+    (Story) => (
+      <div className="h-screen">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
 
-const navItems: NavItems[] = [
+const navItems: NavItem[] = [
   {
-    render: ({ expanded }) => (
+    id: 'new',
+    active: true,
+    render: ({ expanded, active, onClick }: RenderNavItemProps) => (
       <div
         className={cn(
-          'bg-muted hover:bg-muted/50 flex w-full min-w-9 flex-grow cursor-pointer flex-row items-center justify-center gap-2.5 rounded-xl border px-1.5',
-          expanded && 'flex-grow-0 justify-start'
+          'bg-muted hover:bg-muted/50 relative -left-2 flex w-full flex-grow cursor-pointer flex-row items-center justify-center gap-1.5 rounded-xl border px-3',
+          expanded && 'flex-grow-0 justify-start',
+          active && 'bg-muted/50'
         )}
-        onClick={fn()}
+        onClick={onClick}
       >
         <Icon name="plus" className="h-full min-h-9" />
 
@@ -34,22 +44,21 @@ const navItems: NavItems[] = [
       </div>
     ),
     label: 'New',
-    onClick: fn(),
   },
   {
+    id: 'packages',
     icon: 'box',
     label: 'Packages',
-    onClick: fn(),
   },
   {
+    id: 'alerts',
     icon: 'siren',
     label: 'Alerts',
-    onClick: fn(),
   },
   {
+    id: 'settings',
     icon: 'settings',
     label: 'Settings',
-    onClick: fn(),
   },
 ]
 
@@ -71,4 +80,40 @@ export const Default: StoryObj<typeof Navbar.Slim> = {
     ),
     defaultExpanded: false,
   },
+}
+
+const WithState = () => {
+  const [activeTab, setActiveTab] = useState<string>(navItems[0].id)
+  const clickableNavItems = useMemo(
+    () =>
+      navItems.map((item) => ({
+        ...item,
+        active: item.id === activeTab,
+        onClick: () => setActiveTab(item.id),
+      })),
+    [activeTab]
+  )
+
+  const handleItemClick = (item: NavItem) => {
+    setActiveTab(item.id)
+  }
+
+  return (
+    <Navbar.Slim
+      navItems={clickableNavItems}
+      onItemClick={handleItemClick}
+      defaultExpanded={false}
+    >
+      <div className="bg-muted min-h-screen p-6">
+        <h2 className="border-border border-b pb-4 text-2xl font-bold capitalize">
+          {activeTab}
+        </h2>
+      </div>
+    </Navbar.Slim>
+  )
+}
+
+export const SlimWithState: StoryObj<typeof Navbar.Slim> = {
+  render: () => <WithState />,
+  name: 'With state',
 }

@@ -1,6 +1,6 @@
 import { Button, Icon, IconName, Logo } from '@/index'
 import { cn } from '@/lib/utils'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import {
   Tooltip,
   TooltipArrow,
@@ -8,15 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../Tooltip'
-import { ResizablePanel } from '../__beta__/ResizablePanel'
-import {
-  ImperativePanelHandle,
-  disableGlobalCursorStyles,
-} from 'react-resizable-panels'
 import { Key } from '../__beta__/KeyHint'
 
 export interface SlimProps {
-  navItems?: NavItems[]
+  navItems?: NavItem[]
   className?: string
   children?: React.ReactNode
   defaultExpanded?: boolean
@@ -24,16 +19,24 @@ export interface SlimProps {
    * Called when the user clicks the home button.
    */
   onHomeNavigation?: () => void
+
+  onItemClick?: (item: NavItem) => void
 }
 
-export interface NavItems {
-  icon?: IconName
-  label: string
-  render?: ({ expanded }: { expanded: boolean }) => React.ReactNode
+export interface RenderNavItemProps {
+  expanded: boolean
+  active: boolean
   onClick: () => void
 }
 
-disableGlobalCursorStyles()
+export interface NavItem {
+  id: string
+  icon?: IconName
+  label: string
+  active?: boolean
+  render?: (props: RenderNavItemProps) => React.ReactNode
+}
+
 /**
  * A slim version of the Navbar.
  * To be used on full screen pages.
@@ -44,31 +47,20 @@ export const Slim = ({
   navItems = [],
   className,
   children,
-  defaultExpanded = true,
+  defaultExpanded = false,
+  onItemClick,
 }: SlimProps) => {
-  const containerClasses: string =
-    'flex-col min-h-full border-r items-center p-4'
-  const sidebarRef = useRef<ImperativePanelHandle>(null)
   const [expanded, setExpanded] = useState(defaultExpanded)
-  const transitionRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (defaultExpanded) {
-      sidebarRef.current?.expand()
       setExpanded(true)
     } else {
-      sidebarRef.current?.collapse()
       setExpanded(false)
     }
-  }, [])
+  }, [defaultExpanded])
 
-  useEffect(() => {
-    if (transitionRef.current) {
-      // Apply the transition after the component has mounted
-      transitionRef.current.style.transition = '0.15s ease-in-out'
-      transitionRef.current.style.transitionProperty = 'flex'
-    }
-
+  useLayoutEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey && e.key === 'b') {
         e.preventDefault()
@@ -83,178 +75,114 @@ export const Slim = ({
     }
   }, [])
 
-  const onCollapse = () => {
-    if (sidebarRef.current) {
-      if (sidebarRef.current.isCollapsed()) {
-        sidebarRef.current.expand()
-        setExpanded(true)
-      } else {
-        sidebarRef.current.collapse()
-        setExpanded(false)
-      }
-    }
-  }
+  const onCollapse = useCallback(() => {
+    setExpanded((prev) => !prev)
+  }, [expanded])
 
   return (
-    <ResizablePanel
-      data-panel="navsidebar"
-      useDefaultHandle={false}
-      direction="horizontal"
-    >
-      <ResizablePanel.Pane
-        className="relative max-h-screen"
-        panelRef={sidebarRef}
-        style={{
-          transition: 'none', // Initially set to none
-          transitionProperty: 'none', // Initially set to none
-        }}
-        id="1"
-        key="1"
-        collapsible
-        collapsedSize={5}
-        minSize={5}
-        maxSize={20}
+    <div className="flex h-full w-full flex-row">
+      <div
+        className={cn(
+          'bg-background relative flex flex-col gap-5 border-r px-3 py-4',
+          className
+        )}
       >
-        <div
-          ref={transitionRef}
-          className={cn(
-            'bg-background relative flex gap-5 px-2 py-4',
-            containerClasses,
-            className
-          )}
-        >
-          <div className="mt-1 flex w-full flex-row items-center justify-center">
-            <button
-              id="brand"
-              onClick={onHomeNavigation}
-              className={cn(
-                'dark:text-primary text-black',
-                expanded ? 'self-center' : 'self-center'
-              )}
-            >
-              <Logo variant="icon" className="size-5 fill-current" />
-            </button>
-
-            {expanded && (
-              <div className="ml-auto">
-                <TooltipProvider>
-                  <Tooltip delayDuration={0}>
-                    <TooltipTrigger asChild>
-                      <Button
-                        className="self-start"
-                        variant="ghost"
-                        size="sm"
-                        onClick={onCollapse}
-                      >
-                        <Icon name="panel-left" className="text-muted" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent
-                      side="right"
-                      className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
-                    >
-                      <TooltipArrow className="fill-foreground" />
-                      Collapse sidebar <Key
-                        className="invert"
-                        value="⌘"
-                      /> + <Key className="invert" value="B" />
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            )}
-          </div>
-          <div className="flex w-full flex-col gap-5">
-            {navItems.map((item) => (
-              <div
-                className={cn(
-                  'flex w-full flex-row justify-center',
-                  expanded ? 'justify-start' : 'justify-center'
-                )}
-                key={item.label}
-              >
-                <TooltipProvider>
-                  <Tooltip delayDuration={0}>
-                    {item.icon ? (
-                      <TooltipTrigger asChild>
-                        <div
-                          className="flex cursor-pointer items-start gap-2"
-                          onClick={item.onClick}
-                        >
-                          <Icon
-                            name={item.icon}
-                            strokeWidth={0.9}
-                            className="text-muted hover:text-foreground size-6 self-center"
-                          />
-                          {expanded && item.label}
-                        </div>
-                      </TooltipTrigger>
-                    ) : item.render ? (
-                      item.render({
-                        expanded,
-                      })
-                    ) : (
-                      <TooltipTrigger
-                        onClick={item.onClick}
-                        className="cursor-pointer"
-                      >
-                        {item.label}
-                      </TooltipTrigger>
-                    )}
-
-                    <TooltipContent
-                      side="right"
-                      hidden={item.render !== undefined}
-                      className="bg-foreground text-background border-foreground"
-                    >
-                      <TooltipArrow className="fill-foreground" />
-                      {item.label}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            ))}
-          </div>
-
-          {!expanded && (
-            <div className="mt-auto cursor-pointer">
+        <div className="relative left-2 mt-1 flex w-full flex-row items-center">
+          <button
+            id="brand"
+            onClick={onHomeNavigation}
+            className="dark:text-primary text-black"
+          >
+            <Logo variant="icon" className="size-5 fill-current" />
+          </button>
+        </div>
+        <div className="relative left-2 flex w-full flex-col gap-5">
+          {navItems.map((item) => (
+            <div className="flex w-full flex-row" key={item.label}>
               <TooltipProvider>
                 <Tooltip delayDuration={0}>
-                  <TooltipTrigger>
-                    <Button variant="ghost" size="sm" onClick={onCollapse}>
-                      <Icon name="panel-left" className="text-muted" />
-                    </Button>
-                  </TooltipTrigger>
+                  {item.icon ? (
+                    <TooltipTrigger asChild>
+                      <div
+                        className={cn(
+                          'flex cursor-pointer items-start gap-2',
+                          item.active ? 'text-foreground' : 'text-muted'
+                        )}
+                        onClick={() => onItemClick?.(item)}
+                      >
+                        <Icon
+                          name={item.icon}
+                          strokeWidth={0.9}
+                          className="size-6 self-center text-current"
+                        />
+                        {expanded && item.label}
+                      </div>
+                    </TooltipTrigger>
+                  ) : item.render ? (
+                    item.render({
+                      expanded,
+                      active: item.active ?? false,
+                      onClick: () => onItemClick?.(item),
+                    })
+                  ) : (
+                    <TooltipTrigger
+                      onClick={() => onItemClick?.(item)}
+                      className={cn(
+                        'cursor-pointer',
+                        item.active && 'text-foreground'
+                      )}
+                    >
+                      {item.label}
+                    </TooltipTrigger>
+                  )}
+
                   <TooltipContent
-                    side="top"
-                    align="start"
-                    className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+                    side="right"
+                    hidden={item.render !== undefined}
+                    className="bg-foreground text-background border-foreground"
                   >
                     <TooltipArrow className="fill-foreground" />
-                    Expand sidebar <Key className="invert" value="⌘" /> +{' '}
-                    <Key className="invert" value="B" />
+                    {item.label}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-          )}
-          <ResizablePanel.ResizeHandle
-            disabled
-            hitAreaMargins={{
-              coarse: 10,
-              fine: 10,
-            }}
-            data-state={expanded ? 'expanded' : 'collapsed'}
-            className={cn(
-              'pointer-events-auto absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize'
-            )}
-            onClick={onCollapse}
-          ></ResizablePanel.ResizeHandle>
+          ))}
         </div>
-      </ResizablePanel.Pane>
 
-      <ResizablePanel.Pane order={2}>{children}</ResizablePanel.Pane>
-    </ResizablePanel>
+        <div className="mt-auto cursor-pointer">
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger>
+                <Button variant="ghost" size="sm" onClick={onCollapse}>
+                  <Icon name="panel-left" className="text-muted" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="top"
+                align="start"
+                className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+              >
+                <TooltipArrow className="fill-foreground" />
+                {expanded ? 'Collapse sidebar' : 'Expand sidebar'}
+                <Key className="invert" value="⌘" /> +{' '}
+                <Key className="invert" value="B" />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
+        <div
+          className={cn(
+            'absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize',
+            expanded ? 'cursor-e-resize' : 'cursor-w-resize'
+          )}
+          data-state={expanded ? 'expanded' : 'collapsed'}
+          onClick={onCollapse}
+        />
+      </div>
+      <div className="flex-1">{children}</div>
+    </div>
   )
 }
 
