@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import * as React from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -6,11 +6,10 @@ type Theme = 'dark' | 'light'
  * Hook to get the current theme (light or dark) from the tailwind class element.
  */
 export default function useTailwindTheme(tailwindClassElement: HTMLElement) {
-  const [theme, setTheme] = useState<Theme>(() =>
-    tailwindClassElement.classList.contains('dark') ? 'dark' : 'light'
-  )
+  const [theme, setTheme] = React.useState<Theme>('light')
 
-  useEffect(() => {
+  React.useEffect(() => {
+    // Set initial theme after render
     const isDark = tailwindClassElement.classList.contains('dark')
     setTheme(isDark ? 'dark' : 'light')
 
@@ -29,7 +28,7 @@ export default function useTailwindTheme(tailwindClassElement: HTMLElement) {
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [tailwindClassElement])
 
   return theme
 }

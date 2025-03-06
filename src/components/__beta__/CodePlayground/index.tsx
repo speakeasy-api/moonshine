@@ -176,15 +176,23 @@ const CodePlayground = ({
     return handlers
   }, [animateOnLanguageChange, showLineNumbers, wordWrap])
 
+  const [skeletonHeight, setSkeletonHeight] = useState(400)
+
+  // Update skeletonHeight when codeRef changes
+  useEffect(() => {
+    if (codeRef.current) {
+      const measuredHeight = codeRef.current.getBoundingClientRect().height
+      if (measuredHeight > 0) {
+        setSkeletonHeight(measuredHeight)
+      }
+    }
+  }, [])
+
   const loadingSkeleton = useMemo(() => {
     // Try to measure the existing height of the code container if code has
     // already been rendered. Otherwise, use a default height
 
-    // TODO: improve this logic
-    const measuredHeight =
-      codeRef.current?.getBoundingClientRect().height ?? 400
-
-    const lines = Math.ceil(measuredHeight / 40)
+    const lines = Math.ceil(skeletonHeight / 40)
     return (
       <Skeleton className={`w-full`}>
         {Array.from({ length: lines }).map((_, i) => (
@@ -192,7 +200,7 @@ const CodePlayground = ({
         ))}
       </Skeleton>
     )
-  }, [codeRef.current])
+  }, [skeletonHeight])
 
   const codeContents = useMemo(() => {
     return selectedCode.loading ? (
@@ -219,18 +227,20 @@ const CodePlayground = ({
     [validChildren]
   )
 
-  const code = useMemo(
-    () =>
-      foundCustomCodeContainer ? (
-        React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
+  const code = useMemo(() => {
+    if (foundCustomCodeContainer) {
+      // Use the current React version's clone method
+      return React.cloneElement(
+        foundCustomCodeContainer as React.ReactElement,
+        {
           __children__: codeContents,
           ref: codeRef,
-        })
-      ) : (
-        <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
-      ),
-    [foundCustomCodeContainer, codeContents]
-  )
+        }
+      )
+    } else {
+      return <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
+    }
+  }, [foundCustomCodeContainer, codeContents])
   const footer = useMemo(
     () =>
       validChildren.find(
@@ -362,7 +372,7 @@ export interface CodePlaygroundCodeProps
 }
 
 const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
-  ({ className, __children__, ...props }, ref) => {
+  function CodePlaygroundCode({ className, __children__, ...props }, ref) {
     return (
       <div
         ref={ref}
@@ -373,7 +383,9 @@ const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
       </div>
     )
   }
-)
+) as React.ForwardRefExoticComponent<
+  CodePlaygroundCodeProps & React.RefAttributes<HTMLDivElement>
+> & { displayName: string }
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 

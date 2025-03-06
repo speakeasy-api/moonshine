@@ -9,6 +9,11 @@ export interface TabProps<I extends string> {
   className?: string
 }
 
+interface TabComponent {
+  <I extends string>(props: TabProps<I>): React.ReactNode
+  displayName: string
+}
+
 const Tab = function Tab<I extends string>({
   children,
   active,
@@ -28,7 +33,7 @@ const Tab = function Tab<I extends string>({
       {children}
     </div>
   )
-}
+} as TabComponent
 
 export interface TabsProps<I extends string> {
   children: Array<ReactElement<TabProps<I>>>
@@ -41,7 +46,12 @@ type TypeWithDisplayName = {
   displayName?: string
 }
 
-export function Tabs<I extends string>({
+interface TabsComponent {
+  <I extends string>(props: TabsProps<I>): React.ReactNode
+  Tab: TabComponent
+}
+
+export const Tabs = function Tabs<I extends string>({
   children,
   selectedTab,
   onTabChange,
@@ -69,6 +79,7 @@ export function Tabs<I extends string>({
       )}
     >
       {React.Children.map(validChildren, (child) => {
+        // Clone the child element with React 19 compatible approach
         return React.cloneElement(child, {
           ...child.props,
           active: child.props.id === activeTab,
@@ -81,7 +92,7 @@ export function Tabs<I extends string>({
       })}
     </div>
   )
-}
+} as TabsComponent
 
 Tab.displayName = 'Tabs.Tab'
 Tabs.Tab = Tab

@@ -36,10 +36,11 @@ export default defineConfig({
       fileName: (format) => `${packageName}.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'lucide-react'],
+      external: ['react', 'react/jsx-runtime', 'react-dom', 'lucide-react'],
       output: {
         globals: {
           react: 'React',
+          'react/jsx-runtime': 'jsxRuntime',
           'react-dom': 'ReactDOM',
           'lucide-react': 'LucideReact',
         },
