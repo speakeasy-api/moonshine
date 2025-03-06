@@ -83,8 +83,9 @@ export const Slim = ({
     <div className="flex h-full w-full flex-row">
       <div
         className={cn(
-          'bg-background relative flex flex-col gap-5 border-r px-3 py-4',
-          className
+          'bg-background relative flex flex-col gap-8 border-r px-3 py-4',
+          className,
+          expanded && 'min-w-48 px-4'
         )}
       >
         <div className="relative left-2 mt-1 flex w-full flex-row items-center">
@@ -93,7 +94,7 @@ export const Slim = ({
             onClick={onHomeNavigation}
             className="dark:text-primary text-black"
           >
-            <Logo variant="icon" className="size-5 fill-current" />
+            <Logo variant="icon" className="size-6 fill-current" />
           </button>
         </div>
         <div className="relative left-2 flex w-full flex-col gap-5">
@@ -174,7 +175,7 @@ export const Slim = ({
 
         <div
           className={cn(
-            'absolute inset-y-0 -right-px z-30 hidden w-[3px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize',
+            'absolute inset-y-0 -right-0.5 z-30 hidden w-[2px] !cursor-w-resize transition-all after:absolute after:-inset-x-1.5 after:inset-y-0 after:opacity-20 hover:bg-zinc-700 sm:flex [&[data-state="collapsed"]]:!cursor-e-resize',
             expanded ? 'cursor-e-resize' : 'cursor-w-resize'
           )}
           data-state={expanded ? 'expanded' : 'collapsed'}
