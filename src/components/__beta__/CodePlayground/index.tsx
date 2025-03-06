@@ -383,9 +383,7 @@ const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
       </div>
     )
   }
-) as React.ForwardRefExoticComponent<
-  CodePlaygroundCodeProps & React.RefAttributes<HTMLDivElement>
-> & { displayName: string }
+)
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
