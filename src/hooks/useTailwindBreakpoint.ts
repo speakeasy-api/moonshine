@@ -1,8 +1,8 @@
-import * as React from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
 import { Breakpoint } from '@/types.js'
 import debounce from '@/lib/debounce'
+import { useLayoutEffect, useState } from 'react'
 
 const fullConfig = resolveConfig(tailwindConfig)
 
@@ -19,9 +19,9 @@ const getBreakpoint = (width: number): Breakpoint => {
 }
 
 const useTailwindBreakpoint = (): Breakpoint => {
-  const [breakpoint, setBreakpoint] = React.useState<Breakpoint>('xs')
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>('xs')
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     // Set initial breakpoint after render
     setBreakpoint(getBreakpoint(window.innerWidth))
 
