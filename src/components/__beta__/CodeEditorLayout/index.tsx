@@ -121,7 +121,7 @@ const CodeEditorLayout = ({
         className={cn('flex min-h-0 flex-row border', className)}
         direction="horizontal"
       >
-        {order === 'sidebar-first' && (
+        {order === 'sidebar-first' && sidebar && (
           <Panel
             order={1}
             minSize={sidebarMinWidth}
@@ -132,17 +132,19 @@ const CodeEditorLayout = ({
           </Panel>
         )}
         {order === 'sidebar-first' && <PanelResizeHandle className="h-full" />}
-        <Panel
-          defaultSize={minContentWidth}
-          maxSize={maxContentWidth}
-          className="flex w-full min-w-0 flex-col"
-          order={order === 'sidebar-first' ? 1 : 2}
-        >
-          {hasActiveTab && tabs}
-          {!showEmptyState ? contentPane : empty}
-        </Panel>
+        {(contentPane || showEmptyState) && (
+          <Panel
+            defaultSize={minContentWidth}
+            maxSize={maxContentWidth}
+            className="flex w-full min-w-0 flex-col"
+            order={order === 'sidebar-first' ? 1 : 2}
+          >
+            {hasActiveTab && tabs}
+            {!showEmptyState ? contentPane : empty}
+          </Panel>
+        )}
         {order === 'sidebar-last' && <PanelResizeHandle />}
-        {order === 'sidebar-last' && (
+        {order === 'sidebar-last' && sidebar && (
           <Panel
             order={2}
             minSize={sidebarMinWidth}
