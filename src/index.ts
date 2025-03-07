@@ -22,6 +22,7 @@ export { Subnav, type SubnavItem } from '@/components/Subnav'
 export { Breadcrumb } from '@/components/Breadcrumb'
 export { CodeSnippet } from '@/components/CodeSnippet'
 export { LoggedInUserMenu } from '@/components/LoggedInUserMenu'
+export { PromptWindow } from '@/components/PromptWindow'
 export {
   WorkspaceSelector,
   type Org,
