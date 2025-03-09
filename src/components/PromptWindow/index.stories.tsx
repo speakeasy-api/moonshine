@@ -1,4 +1,4 @@
-import { PromptWindow, Suggestion } from '@/components/PromptWindow'
+import { Attachment, PromptWindow, Suggestion } from '@/components/PromptWindow'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import { useState, useCallback } from 'react'
@@ -24,6 +24,7 @@ type Story = StoryObj<typeof PromptWindow>
 
 const WithState = (args: Story['args']) => {
   const [prompt, setPrompt] = useState('')
+  const [attachments, setAttachments] = useState<Attachment[]>([])
 
   const handleSuggestionClick = useCallback((id: string) => {
     switch (id) {
@@ -48,11 +49,22 @@ const WithState = (args: Story['args']) => {
       onClick: handleSuggestionClick,
     })) ?? []
 
-  const handleFileUpload = useCallback(async (files: File[]) => {
-    // try to extract a prompt from the file
-    const file = files[0]
-    const text = await file.text()
-    setPrompt(text)
+  const handleAttachmentRemove = useCallback((id: string) => {
+    setAttachments((prevAttachments) =>
+      prevAttachments.filter((attachment) => attachment.id !== id)
+    )
+  }, [])
+
+  const handleFileUpload = useCallback(async (attachments: Attachment[]) => {
+    setAttachments((prevAttachments) => [
+      ...prevAttachments,
+      ...attachments.map((attachment) => {
+        return {
+          ...attachment,
+          onRemove: () => handleAttachmentRemove(attachment.id),
+        }
+      }),
+    ])
   }, [])
 
   return (
@@ -64,6 +76,7 @@ const WithState = (args: Story['args']) => {
       onSubmit={fn()}
       onFileUpload={handleFileUpload}
       suggestions={modifiedSuggestions}
+      attachments={attachments}
     />
   )
 }

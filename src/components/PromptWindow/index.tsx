@@ -3,7 +3,7 @@ import styles from './prompt-window.module.css'
 import { Icon } from '../Icon'
 import { motion } from 'framer-motion'
 import { IconName } from '../Icon/names'
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export interface Suggestion {
   id: string
@@ -14,13 +14,23 @@ export interface Suggestion {
   iconClassName?: string
 }
 
+export interface Attachment {
+  id: string
+  name: string
+  bytes: ArrayBuffer
+  type: string
+  size: number
+  onRemove?: (id: string) => void
+}
+
 interface PromptWindowProps {
   prompt?: string
   placeholder: string
   onChange: (prompt: string) => void
   onSubmit: (prompt: string) => void
-  onFileUpload?: (file: File[]) => void
-  suggestions: Suggestion[]
+  onFileUpload?: (files: Attachment[]) => void
+  suggestions?: Suggestion[]
+  attachments?: Attachment[]
 }
 
 export function PromptWindow({
@@ -30,8 +40,9 @@ export function PromptWindow({
   prompt,
   onChange,
   onFileUpload,
+  attachments = [],
 }: PromptWindowProps) {
-  const minHeight = useMemo(() => {
+  const minHeight = useMemo<string>(() => {
     const promptLines = prompt?.split('\n').length ?? 0
 
     // 1rem = 16px
@@ -44,30 +55,89 @@ export function PromptWindow({
 
     return `min-h-${height}`
   }, [prompt])
+
+  const handleDragOver = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+    },
+    []
+  )
+
+  const handleFiles = useCallback(
+    async (files: File[]) => {
+      const attachments: Attachment[] = await Promise.all(
+        files.map(async (file) => ({
+          id: crypto.randomUUID(),
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          bytes: await file.arrayBuffer(),
+        }))
+      )
+      onFileUpload?.(attachments)
+    },
+    [onFileUpload]
+  )
+
+  const handleDrop = useCallback(
+    async (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+
+      handleFiles(Array.from(event.dataTransfer.files))
+    },
+    [handleFiles]
+  )
+
+  const handleDragLeave = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+    },
+    []
+  )
+
   return (
     <div className="flex flex-col">
-      <div className="text-foreground/70 dark:text-muted bg-background flex flex-col rounded-xl border pt-2 text-sm">
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+        className="text-foreground/70 dark:text-muted bg-background flex flex-col rounded-xl border pt-2 text-sm"
+      >
+        {attachments.length > 0 && (
+          <div className="mb-2 flex flex-row gap-2 px-2">
+            {attachments.map((attachment) => (
+              <AttachmentPreview key={attachment.id} attachment={attachment} />
+            ))}
+          </div>
+        )}
         <div
           className={cn(
-            'max-h-72 overflow-y-scroll',
-            styles.growWrap,
+            'max-h-72 overflow-x-hidden overflow-y-scroll',
             minHeight
           )}
         >
-          <textarea
-            className="text-foreground h-full w-full resize-none rounded-lg border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
-            placeholder={placeholder}
-            value={prompt}
-            onChange={(e) => onChange(e.target.value)}
-            spellCheck={false}
-            onInput={(e) => {
-              if (e.currentTarget.parentNode) {
-                ;(
-                  e.currentTarget.parentNode as HTMLElement
-                ).dataset.replicatedValue = e.currentTarget.value
-              }
-            }}
-          />
+          <div className={styles.growWrap}>
+            <textarea
+              className="text-foreground h-full w-full resize-none rounded-lg border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
+              placeholder={placeholder}
+              value={prompt}
+              onChange={(e) => onChange(e.target.value)}
+              autoComplete="off"
+              data-1p-ignore="true"
+              data-dashlane-disabled-on-field="true"
+              spellCheck={false}
+              onInput={(e) => {
+                if (e.currentTarget.parentNode) {
+                  ;(
+                    e.currentTarget.parentNode as HTMLElement
+                  ).dataset.replicatedValue = e.currentTarget.value
+                }
+              }}
+            />
+          </div>
         </div>
 
         <div id="actions-bar" className="flex items-center p-2">
@@ -79,10 +149,7 @@ export function PromptWindow({
             <input
               type="file"
               className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-              onChange={(e) => {
-                const files = Array.from(e.target.files ?? [])
-                onFileUpload?.(files)
-              }}
+              onChange={(e) => handleFiles(Array.from(e.target.files ?? []))}
             />
           </div>
           <div className="ml-auto">
@@ -123,6 +190,64 @@ export function PromptWindow({
               {suggestion.label}
             </div>
           ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function AttachmentPreview({ attachment }: { attachment: Attachment }) {
+  const [img, setImg] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function readFile() {
+      if (!attachment.type.startsWith('image/')) {
+        return // Only process image files
+      }
+
+      const reader = new FileReader()
+      reader.onloadend = () => setImg(reader.result as string)
+
+      try {
+        reader.readAsDataURL(
+          new Blob([attachment.bytes], { type: attachment.type })
+        )
+      } catch (error) {
+        console.error('Error reading file:', error)
+      }
+    }
+
+    readFile()
+  }, [attachment])
+
+  return (
+    <div
+      className="bg-card flex flex-row items-center gap-2 rounded-lg border px-1.5 py-0.5 text-xs"
+      key={attachment.id}
+    >
+      <div className="bg-foreground/5 size-6 rounded-sm">
+        {img ? (
+          <img
+            src={img}
+            className="size-full rounded-lg object-cover"
+            alt={attachment.name}
+          />
+        ) : (
+          <Icon name="file" className="size-full py-1" />
+        )}
+      </div>
+      <div
+        title={attachment.name}
+        className="max-w-36 flex-1 select-none truncate text-xs"
+      >
+        {attachment.name}
+      </div>
+      {attachment.onRemove && (
+        <div
+          className="hover:text-foreground cursor-pointer"
+          onClick={() => attachment.onRemove?.(attachment.id)}
+        >
+          <Icon name="x" className="h-4 w-4" />
         </div>
       )}
     </div>
