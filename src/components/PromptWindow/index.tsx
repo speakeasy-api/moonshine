@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import styles from './prompt-window.module.css'
 import { Icon } from '../Icon'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { IconName } from '../Icon/names'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -108,9 +108,14 @@ export function PromptWindow({
       >
         {attachments.length > 0 && (
           <div className="mb-2 flex flex-row gap-2 px-2">
-            {attachments.map((attachment) => (
-              <AttachmentPreview key={attachment.id} attachment={attachment} />
-            ))}
+            <AnimatePresence mode="popLayout">
+              {attachments.map((attachment) => (
+                <AttachmentPreview
+                  key={attachment.id}
+                  attachment={attachment}
+                />
+              ))}
+            </AnimatePresence>
           </div>
         )}
         <div
@@ -235,7 +240,9 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
   }, [attachment.type])
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
       className="bg-card flex flex-row items-center gap-1 rounded-lg border px-1.5 py-0.5 text-xs"
       key={attachment.id}
     >
@@ -264,6 +271,6 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
           <Icon name="x" className="h-4 w-4" />
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
