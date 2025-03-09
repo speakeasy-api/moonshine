@@ -220,12 +220,26 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
     readFile()
   }, [attachment])
 
+  const icon = useMemo<IconName>(() => {
+    switch (attachment.type) {
+      // TODO: add more as and when
+      case 'application/x-yaml':
+      case 'application/yaml':
+      case 'application/json':
+        return 'file-code'
+      case 'text/plain':
+        return 'file-text'
+      default:
+        return 'file'
+    }
+  }, [attachment.type])
+
   return (
     <div
-      className="bg-card flex flex-row items-center gap-2 rounded-lg border px-1.5 py-0.5 text-xs"
+      className="bg-card flex flex-row items-center gap-1 rounded-lg border px-1.5 py-0.5 text-xs"
       key={attachment.id}
     >
-      <div className="bg-foreground/5 size-6 rounded-sm">
+      <div className="size-5">
         {img ? (
           <img
             src={img}
@@ -233,7 +247,7 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
             alt={attachment.name}
           />
         ) : (
-          <Icon name="file" className="size-full py-1" />
+          <Icon name={icon} className="size-full py-1" />
         )}
       </div>
       <div
