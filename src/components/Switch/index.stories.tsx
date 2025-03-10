@@ -20,11 +20,8 @@ export default meta
 type Story = StoryObj<typeof Switch>
 
 export const Default: Story = {
-  args: {},
-}
-
-export const Disabled: Story = {
   args: {
-    disabled: true,
+    disabled: false,
+    checked: false,
   },
 }
