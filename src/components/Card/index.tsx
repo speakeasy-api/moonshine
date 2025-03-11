@@ -118,7 +118,7 @@ const CardFooter: FC<CardFooterProps> = ({ content, className }) => (
 CardFooter.displayName = 'CardFooter'
 
 type CardProps = {
-  children: ReactNode[]
+  children: ReactNode
   onClick?: () => void
   href?: string
   className?: string
