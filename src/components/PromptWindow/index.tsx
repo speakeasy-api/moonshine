@@ -1,9 +1,8 @@
 import { cn } from '@/lib/utils'
-import styles from './prompt-window.module.css'
 import { Icon } from '../Icon'
 import { AnimatePresence, motion } from 'framer-motion'
 import { IconName } from '../Icon/names'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface Suggestion {
   id: string
@@ -31,6 +30,11 @@ interface PromptWindowProps {
   onFileUpload?: (files: Attachment[]) => void
   suggestions?: Suggestion[]
   attachments?: Attachment[]
+
+  /**
+   * The max height the prompt window can grow to in pixels.
+   */
+  maxHeight?: number
 }
 
 export function PromptWindow({
@@ -41,25 +45,35 @@ export function PromptWindow({
   onChange,
   onFileUpload,
   attachments = [],
+  maxHeight = 250,
 }: PromptWindowProps) {
-  const minHeight = useMemo<string>(() => {
+  const [isDraggingOver, setIsDraggingOver] = useState(false)
+
+  // This will help auto-expand the textarea on newlines
+  const minHeight = useMemo<React.CSSProperties['minHeight']>(() => {
     const promptLines = prompt?.split('\n').length ?? 0
 
-    // 1rem = 16px
     if (promptLines === 0) {
-      return 'auto'
+      return 0
     }
 
-    // scale the height by the number of lines between tailwind's min-h-0 and min-h-72
-    const height = Math.min(72, 8 * promptLines)
+    // 1 line in the textarea = height 16px (approx)
+    const totalHeight = promptLines * 16
 
-    return `min-h-${height}`
-  }, [prompt])
+    // We need to clamp the height of the textarea to the max height
+    // as min-height will override max-height
+    if (totalHeight > maxHeight) {
+      return `${maxHeight}px`
+    }
+
+    return `${totalHeight}px`
+  }, [prompt, maxHeight])
 
   const handleDragOver = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
+      setIsDraggingOver(true)
     },
     []
   )
@@ -85,6 +99,7 @@ export function PromptWindow({
       event.preventDefault()
       event.stopPropagation()
 
+      setIsDraggingOver(false)
       handleFiles(Array.from(event.dataTransfer.files))
     },
     [handleFiles]
@@ -94,9 +109,12 @@ export function PromptWindow({
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
+      setIsDraggingOver(false)
     },
     []
   )
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   return (
     <div className="flex flex-col">
@@ -104,7 +122,10 @@ export function PromptWindow({
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}
-        className="text-foreground/70 dark:text-muted bg-background flex flex-col rounded-xl border pt-2 text-sm"
+        className={cn(
+          'text-foreground/70 dark:text-muted bg-background flex flex-col rounded-xl border pt-2 text-sm',
+          isDraggingOver && 'border-dashed border-emerald-500/60'
+        )}
       >
         {attachments.length > 0 && (
           <div className="mb-2 flex flex-row gap-2 px-2">
@@ -118,42 +139,41 @@ export function PromptWindow({
             </AnimatePresence>
           </div>
         )}
+
         <div
-          className={cn(
-            'max-h-72 overflow-x-hidden overflow-y-scroll',
-            minHeight
-          )}
+          className="overflow-x-hidden overflow-y-scroll"
+          style={{ minHeight, maxHeight }}
         >
-          <div className={styles.growWrap}>
-            <textarea
-              className="text-foreground h-full w-full resize-none rounded-lg border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
-              placeholder={placeholder}
-              value={prompt}
-              onChange={(e) => onChange(e.target.value)}
-              autoComplete="off"
-              data-1p-ignore="true"
-              data-dashlane-disabled-on-field="true"
-              spellCheck={false}
-              onInput={(e) => {
-                if (e.currentTarget.parentNode) {
-                  ;(
-                    e.currentTarget.parentNode as HTMLElement
-                  ).dataset.replicatedValue = e.currentTarget.value
-                }
-              }}
-            />
-          </div>
+          <textarea
+            className="text-foreground min-h-[inherit] w-full resize-none rounded-lg border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
+            placeholder={placeholder}
+            value={prompt}
+            onChange={(e) => onChange(e.target.value)}
+            autoComplete="off"
+            data-1p-ignore="true"
+            data-dashlane-disabled-on-field="true"
+            spellCheck={false}
+            onInput={(e) => {
+              if (e.currentTarget.parentNode) {
+                ;(
+                  e.currentTarget.parentNode as HTMLElement
+                ).dataset.replicatedValue = e.currentTarget.value
+              }
+            }}
+          />
         </div>
 
         <div id="actions-bar" className="flex items-center p-2">
           <div
             id="file-upload"
-            className="text-foreground hover:bg-accent/80 relative flex items-center gap-1 rounded-lg p-1.5"
+            className="text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-lg p-1.5"
+            onClick={() => fileInputRef.current?.click()}
           >
             <Icon name="paperclip" className="h-4 w-4" />
             <input
               type="file"
-              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+              ref={fileInputRef}
+              className="absolute inset-0 hidden h-full w-full"
               onChange={(e) => handleFiles(Array.from(e.target.files ?? []))}
             />
           </div>
@@ -162,6 +182,7 @@ export function PromptWindow({
               onClick={() => onSubmit(prompt ?? '')}
               className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-xl border p-2 disabled:cursor-not-allowed"
               disabled={!prompt}
+              title={!prompt ? 'Enter a prompt to submit' : ''}
               whileHover={prompt && { scale: 1.05 }}
               whileTap={prompt && { scale: 0.95 }}
             >
@@ -172,7 +193,7 @@ export function PromptWindow({
       </div>
 
       {suggestions.length > 0 && (
-        <div className="mt-4 flex w-full flex-col gap-3 sm:flex-row">
+        <div className="mt-4 flex w-full flex-row flex-wrap gap-3">
           {suggestions.map((suggestion) => (
             <div
               key={suggestion.label}
