@@ -45,6 +45,11 @@ interface PromptWindowProps {
    * The max height the prompt window can grow to in pixels.
    */
   maxHeight?: number
+
+  /**
+   * The ref to the file input.
+   */
+  fileInputRef?: React.RefObject<HTMLInputElement>
 }
 
 export function PromptWindow({
@@ -58,6 +63,7 @@ export function PromptWindow({
   maxHeight = 250,
   isSubmitting = false,
   submittingIcon = 'loader',
+  fileInputRef,
 }: PromptWindowProps) {
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
@@ -126,7 +132,10 @@ export function PromptWindow({
     []
   )
 
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRefInternal = useMemo(
+    () => fileInputRef || useRef<HTMLInputElement>(null),
+    [fileInputRef]
+  )
 
   return (
     <div className="flex flex-col">
@@ -179,12 +188,12 @@ export function PromptWindow({
           <div
             id="file-upload"
             className="text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-lg p-1.5"
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => fileInputRefInternal.current?.click()}
           >
             <Icon name="paperclip" className="h-4 w-4" />
             <input
               type="file"
-              ref={fileInputRef}
+              ref={fileInputRefInternal}
               className="absolute inset-0 hidden h-full w-full"
               onChange={(e) => handleFiles(Array.from(e.target.files ?? []))}
             />
@@ -192,7 +201,7 @@ export function PromptWindow({
           <div className="ml-auto">
             <motion.button
               onClick={() => onSubmit(prompt ?? '')}
-              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-xl border p-2 disabled:cursor-not-allowed"
+              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted disabled:!bg-background/70 disabled:!text-muted rounded-xl border p-2"
               disabled={!prompt || isSubmitting}
               title={
                 !prompt

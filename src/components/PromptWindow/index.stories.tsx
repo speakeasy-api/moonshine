@@ -1,7 +1,7 @@
 import { Attachment, PromptWindow, Suggestion } from '@/components/PromptWindow'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 
 const meta: Meta<typeof PromptWindow> = {
   component: PromptWindow,
@@ -34,7 +34,8 @@ const WithState = (args: Story['args']) => {
         setPrompt('Teach me about the history of the internet')
         break
       case 'upload-a-screenshot':
-        setPrompt('TODO: Upload a screenshot')
+        // trigger the file input control
+        fileInputRef.current?.click()
         break
       case 'make-a-moodboard':
         setPrompt('Help me make a moodboard for my new home renovation')
@@ -69,6 +70,8 @@ const WithState = (args: Story['args']) => {
     ])
   }, [])
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   return (
     <PromptWindow
       {...args}
@@ -84,6 +87,7 @@ const WithState = (args: Story['args']) => {
       suggestions={modifiedSuggestions}
       attachments={attachments}
       isSubmitting={isSubmitting}
+      fileInputRef={fileInputRef}
     />
   )
 }
