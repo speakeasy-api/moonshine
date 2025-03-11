@@ -23,8 +23,10 @@ export default meta
 type Story = StoryObj<typeof PromptWindow>
 
 const WithState = (args: Story['args']) => {
-  const [prompt, setPrompt] = useState('')
-  const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [prompt, setPrompt] = useState(args?.prompt ?? '')
+  const [attachments, setAttachments] = useState<Attachment[]>(
+    args?.attachments ?? []
+  )
 
   const handleSuggestionClick = useCallback((id: string) => {
     switch (id) {
@@ -108,5 +110,30 @@ export const Default: Story = {
         id: 'make-a-moodboard',
       },
     ],
+  },
+}
+
+export const WithAttachments: Story = {
+  render: (args) => <WithState {...args} />,
+  args: {
+    ...Default.args,
+    attachments: [
+      {
+        id: '1',
+        name: 'notes.txt',
+        type: 'text/plain',
+        size: 1000,
+        bytes: new Uint8Array([]),
+        onRemove: fn(),
+      },
+    ],
+  },
+}
+
+export const WithPrefilledPrompt: Story = {
+  render: (args) => <WithState {...args} />,
+  args: {
+    ...Default.args,
+    prompt: 'How big is the moon?',
   },
 }

@@ -264,10 +264,14 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-card flex flex-row items-center gap-1 rounded-lg border px-1.5 py-0.5 text-xs"
+      exit={{ opacity: 0, scale: 0 }}
+      className={cn(
+        'bg-card flex flex-row items-center rounded-lg border px-1.5 py-1 text-xs',
+        img && 'gap-1.5'
+      )}
       key={attachment.id}
     >
-      <div className="size-5">
+      <div className={cn('size-5', img && 'size-4')}>
         {img ? (
           <img
             src={img}
@@ -286,10 +290,10 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
       </div>
       {attachment.onRemove && (
         <div
-          className="hover:text-foreground cursor-pointer"
+          className="hover:text-foreground ml-1 cursor-pointer"
           onClick={() => attachment.onRemove?.(attachment.id)}
         >
-          <Icon name="x" className="h-4 w-4" />
+          <Icon name="x" className="size-3" />
         </div>
       )}
     </motion.div>
