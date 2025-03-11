@@ -148,18 +148,18 @@ export function PromptWindow({
           isDraggingOver && 'border-dashed border-emerald-500/60'
         )}
       >
-        {attachments.length > 0 && (
-          <div className="mb-2 flex flex-row gap-2 px-2">
-            <AnimatePresence mode="popLayout">
-              {attachments.map((attachment) => (
-                <AttachmentPreview
-                  key={attachment.id}
-                  attachment={attachment}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-        )}
+        <div
+          className={cn(
+            'flex flex-row gap-2 px-2',
+            attachments.length > 0 && 'mb-2'
+          )}
+        >
+          <AnimatePresence>
+            {attachments.map((attachment) => (
+              <AttachmentPreview key={attachment.id} attachment={attachment} />
+            ))}
+          </AnimatePresence>
+        </div>
 
         <div
           className="overflow-x-hidden overflow-y-scroll"
