@@ -27,7 +27,7 @@ const WithState = (args: Story['args']) => {
   const [attachments, setAttachments] = useState<Attachment[]>(
     args?.attachments ?? []
   )
-
+  const [isSubmitting, setIsSubmitting] = useState(args?.isSubmitting ?? false)
   const handleSuggestionClick = useCallback((id: string) => {
     switch (id) {
       case 'learn-something-new':
@@ -75,10 +75,15 @@ const WithState = (args: Story['args']) => {
       prompt={prompt}
       placeholder={args?.placeholder ?? ''}
       onChange={setPrompt}
-      onSubmit={fn()}
+      onSubmit={() =>
+        setTimeout(() => {
+          setIsSubmitting(true)
+        }, 500)
+      }
       onFileUpload={handleFileUpload}
       suggestions={modifiedSuggestions}
       attachments={attachments}
+      isSubmitting={isSubmitting}
     />
   )
 }
@@ -134,6 +139,15 @@ export const WithPrefilledPrompt: Story = {
   render: (args) => <WithState {...args} />,
   args: {
     ...Default.args,
+    prompt: 'How big is the moon?',
+  },
+}
+
+export const Submitting: Story = {
+  render: (args) => <WithState {...args} />,
+  args: {
+    ...Default.args,
+    isSubmitting: true,
     prompt: 'How big is the moon?',
   },
 }

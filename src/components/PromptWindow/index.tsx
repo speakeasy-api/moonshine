@@ -32,6 +32,16 @@ interface PromptWindowProps {
   attachments?: Attachment[]
 
   /**
+   * The icon to show when the prompt is being submitted.
+   */
+  submittingIcon?: IconName
+
+  /**
+   * Whether the prompt is being submitted.
+   */
+  isSubmitting?: boolean
+
+  /**
    * The max height the prompt window can grow to in pixels.
    */
   maxHeight?: number
@@ -46,6 +56,8 @@ export function PromptWindow({
   onFileUpload,
   attachments = [],
   maxHeight = 250,
+  isSubmitting = false,
+  submittingIcon = 'loader',
 }: PromptWindowProps) {
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
@@ -181,12 +193,26 @@ export function PromptWindow({
             <motion.button
               onClick={() => onSubmit(prompt ?? '')}
               className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-xl border p-2 disabled:cursor-not-allowed"
-              disabled={!prompt}
-              title={!prompt ? 'Enter a prompt to submit' : ''}
-              whileHover={prompt && { scale: 1.05 }}
-              whileTap={prompt && { scale: 0.95 }}
+              disabled={!prompt || isSubmitting}
+              title={
+                !prompt
+                  ? 'Enter a prompt to submit'
+                  : isSubmitting
+                    ? 'Submitting...'
+                    : ''
+              }
+              whileHover={
+                (prompt && !isSubmitting && { scale: 1.05 }) || undefined
+              }
+              whileTap={
+                (prompt && !isSubmitting && { scale: 0.95 }) || undefined
+              }
             >
-              <Icon name="arrow-up" strokeWidth={2.5} className="h-4 w-4" />
+              <Icon
+                name={isSubmitting ? submittingIcon : 'arrow-up'}
+                strokeWidth={2.5}
+                className={cn(isSubmitting && 'animate-spin')}
+              />
             </motion.button>
           </div>
         </div>
