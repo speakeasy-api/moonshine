@@ -22,7 +22,7 @@ export interface Attachment {
   onRemove?: (id: string) => void
 }
 
-interface PromptWindowProps {
+interface PromptInputProps {
   prompt?: string
   placeholder: string
   onChange: (prompt: string) => void
@@ -42,7 +42,7 @@ interface PromptWindowProps {
   isSubmitting?: boolean
 
   /**
-   * The max height the prompt window can grow to in pixels.
+   * The max height the prompt input can grow to in pixels.
    */
   maxHeight?: number
 
@@ -52,7 +52,7 @@ interface PromptWindowProps {
   fileInputRef?: React.RefObject<HTMLInputElement>
 }
 
-export function PromptWindow({
+export function PromptInput({
   placeholder,
   onSubmit,
   suggestions = [],
@@ -64,7 +64,7 @@ export function PromptWindow({
   isSubmitting = false,
   submittingIcon = 'loader',
   fileInputRef,
-}: PromptWindowProps) {
+}: PromptInputProps) {
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
   // This will help auto-expand the textarea on newlines

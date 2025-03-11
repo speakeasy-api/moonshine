@@ -1,10 +1,10 @@
-import { Attachment, PromptWindow, Suggestion } from '@/components/PromptWindow'
+import { Attachment, PromptInput, Suggestion } from '@/components/PromptInput'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import { useState, useCallback, useRef } from 'react'
 
-const meta: Meta<typeof PromptWindow> = {
-  component: PromptWindow,
+const meta: Meta<typeof PromptInput> = {
+  component: PromptInput,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -20,7 +20,7 @@ const meta: Meta<typeof PromptWindow> = {
 
 export default meta
 
-type Story = StoryObj<typeof PromptWindow>
+type Story = StoryObj<typeof PromptInput>
 
 const WithState = (args: Story['args']) => {
   const [prompt, setPrompt] = useState(args?.prompt ?? '')
@@ -73,7 +73,7 @@ const WithState = (args: Story['args']) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <PromptWindow
+    <PromptInput
       {...args}
       prompt={prompt}
       placeholder={args?.placeholder ?? ''}
