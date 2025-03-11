@@ -75,7 +75,7 @@ export function PromptWindow({
       return 0
     }
 
-    // 1 line in the textarea = height 16px (approx)
+    // 1 line in the textarea = height 20px (approx)
     const totalHeight = promptLines * 20
 
     // We need to clamp the height of the textarea to the max height
