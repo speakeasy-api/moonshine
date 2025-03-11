@@ -137,15 +137,32 @@ export function PromptInput({
     [fileInputRef]
   )
 
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+
+  const [isFocused, setIsFocused] = useState(false)
+
+  const handleFocus = useCallback(() => {
+    setIsFocused(true)
+    textAreaRef.current?.focus()
+  }, [])
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false)
+    textAreaRef.current?.blur()
+  }, [])
+
   return (
     <div className="flex flex-col">
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className={cn(
-          'text-foreground/70 dark:text-muted bg-background flex flex-col rounded-xl border pt-2 text-sm',
-          isDraggingOver && 'border-dashed border-emerald-500/60'
+          'text-foreground/70 dark:text-muted bg-background flex flex-col rounded-md border pt-2 text-sm transition-colors duration-500',
+          isDraggingOver && 'border-dashed border-emerald-500/60',
+          isFocused && 'border-emerald-500/60'
         )}
       >
         <div
@@ -166,13 +183,14 @@ export function PromptInput({
           style={{ minHeight, maxHeight }}
         >
           <textarea
-            className="text-foreground min-h-[inherit] w-full resize-none rounded-lg border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
+            className="text-foreground min-h-[inherit] w-full resize-none rounded-md border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
             placeholder={placeholder}
             value={prompt}
             onChange={(e) => onChange(e.target.value)}
             autoComplete="off"
             data-1p-ignore="true"
             data-dashlane-disabled-on-field="true"
+            ref={textAreaRef}
             spellCheck={false}
             onInput={(e) => {
               if (e.currentTarget.parentNode) {
@@ -187,7 +205,7 @@ export function PromptInput({
         <div id="actions-bar" className="flex items-center p-2">
           <div
             id="file-upload"
-            className="text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-lg p-1.5"
+            className="text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-md p-1.5"
             onClick={() => fileInputRefInternal.current?.click()}
           >
             <Icon name="paperclip" className="h-4 w-4" />
@@ -201,7 +219,7 @@ export function PromptInput({
           <div className="ml-auto">
             <motion.button
               onClick={() => onSubmit(prompt ?? '')}
-              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted disabled:!bg-background/70 disabled:!text-muted rounded-xl border p-2"
+              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-md border p-2"
               disabled={!prompt || isSubmitting}
               title={
                 !prompt
@@ -233,7 +251,7 @@ export function PromptInput({
             <div
               key={suggestion.label}
               className={cn(
-                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer select-none flex-row items-center gap-1.5 whitespace-nowrap rounded-xl border px-2.5 py-2 text-sm tracking-tight',
+                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer select-none flex-row items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 py-2 text-sm tracking-tight',
                 suggestion.className
               )}
               onClick={() => suggestion.onClick(suggestion.id)}
