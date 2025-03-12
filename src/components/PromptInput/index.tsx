@@ -152,7 +152,7 @@ export function PromptInput({
   }, [])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
