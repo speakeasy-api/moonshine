@@ -76,10 +76,15 @@
     --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
     /* Moonshine tokens */
-    --color-neutral-50: 0 0% 98%;
-    --color-neutral-100: 240 5% 96%;
-    --color-neutral-200: 0 100% 0%;
-    --color-neutral-400: 161 6% 65%;
+    --color-neutral-50: 240 10% 4%;
+    --color-neutral-100: 240 6% 10%;
+    --color-neutral-200: 240 4% 16%;
+    --color-neutral-400: 240 5% 34%;
+    --color-neutral-500: 240 4% 46%;
+    --color-neutral-600: 240 5% 65%;
+    --color-neutral-800: 240 6% 90%;
+    --color-neutral-900: 240 5% 96%;
+    --color-neutral-950: 0 0% 98%;
 
     --color-link-default: 198 93% 60%;
     --color-link-visited-primary: 200 98% 39%;
