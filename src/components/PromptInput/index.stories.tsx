@@ -87,6 +87,7 @@ const WithState = (args: Story['args']) => {
       suggestions={modifiedSuggestions}
       attachments={attachments}
       isSubmitting={isSubmitting}
+      isDisabled={prompt !== ''}
       fileInputRef={fileInputRef}
     />
   )

@@ -80,7 +80,7 @@ export const Slim = ({
   }, [expanded])
 
   return (
-    <div className="flex h-full w-full flex-row">
+    <div className={cn('flex h-full w-full flex-row', className)}>
       <div
         className={cn(
           'bg-background relative flex flex-col gap-8 border-r px-3 py-4',
