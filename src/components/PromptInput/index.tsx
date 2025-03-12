@@ -26,7 +26,7 @@ interface PromptInputProps {
   prompt?: string
   placeholder: string
   onChange: (prompt: string) => void
-  onSubmit: (prompt: string) => void
+  onSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void
   onFileUpload?: (files: Attachment[]) => void
   suggestions?: Suggestion[]
   attachments?: Attachment[]
@@ -50,6 +50,21 @@ interface PromptInputProps {
    * The ref to the file input.
    */
   fileInputRef?: React.RefObject<HTMLInputElement>
+
+  /**
+   * The file types that are accepted by the file input.
+   */
+  acceptedFileTypes?: string[]
+
+  /**
+   * Whether the prompt input is disabled.
+   */
+  isDisabled?: boolean
+
+  /**
+   * The maximum number of attachments that can be uploaded.
+   */
+  maxAttachments?: number
 }
 
 export function PromptInput({
@@ -64,10 +79,20 @@ export function PromptInput({
   isSubmitting = false,
   submittingIcon = 'loader',
   fileInputRef,
+  acceptedFileTypes,
+  isDisabled = false,
+  maxAttachments = 1,
 }: PromptInputProps) {
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
-  // This will help auto-expand the textarea on newlines
+  // Always create a ref, and then assign it to the consumer's ref if provided
+  const internalFileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRefInternal = useMemo(() => {
+    return fileInputRef || internalFileInputRef
+  }, [fileInputRef])
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+
   const minHeight = useMemo<React.CSSProperties['minHeight']>(() => {
     const promptLines = prompt?.split('\n').length ?? 0
 
@@ -132,37 +157,15 @@ export function PromptInput({
     []
   )
 
-  const fileInputRefInternal = useMemo(
-    () => fileInputRef || useRef<HTMLInputElement>(null),
-    [fileInputRef]
-  )
-
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
-
-  const [isFocused, setIsFocused] = useState(false)
-
-  const handleFocus = useCallback(() => {
-    setIsFocused(true)
-    textAreaRef.current?.focus()
-  }, [])
-
-  const handleBlur = useCallback(() => {
-    setIsFocused(false)
-    textAreaRef.current?.blur()
-  }, [])
-
   return (
     <div className="flex w-full flex-col">
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         className={cn(
           'text-foreground/70 dark:text-muted bg-background flex flex-col rounded-md border pt-2 text-sm transition-colors duration-500',
-          isDraggingOver && 'border-dashed border-emerald-500/60',
-          isFocused && 'border-emerald-500/60'
+          isDraggingOver && 'border-primary/60 border-dashed'
         )}
       >
         <div
@@ -183,7 +186,7 @@ export function PromptInput({
           style={{ minHeight, maxHeight }}
         >
           <textarea
-            className="text-foreground min-h-[inherit] w-full resize-none rounded-md border border-none bg-transparent px-3 py-1.5 selection:bg-emerald-500/20 selection:text-emerald-500 focus:outline-none dark:selection:bg-emerald-500/20 dark:selection:text-emerald-400 [&::-webkit-scrollbar]:!invisible"
+            className="text-foreground selection:bg-primary/20 selection:text-primary dark:selection:bg-primary/20 dark:selection:text-primary min-h-[inherit] w-full resize-none rounded-md border border-none bg-transparent px-3 py-1.5 focus:outline-none [&::-webkit-scrollbar]:!invisible"
             placeholder={placeholder}
             value={prompt}
             onChange={(e) => onChange(e.target.value)}
@@ -205,22 +208,37 @@ export function PromptInput({
         <div id="actions-bar" className="flex items-center p-2">
           <div
             id="file-upload"
-            className="text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-md p-1.5"
-            onClick={() => fileInputRefInternal.current?.click()}
+            className={cn(
+              'text-foreground hover:bg-accent/80 relative flex cursor-pointer items-center gap-1 rounded-md p-1.5',
+              attachments.length >= maxAttachments &&
+                'cursor-not-allowed opacity-50'
+            )}
+            onClick={() => {
+              if (attachments.length >= maxAttachments) {
+                return
+              }
+
+              fileInputRefInternal.current?.click()
+            }}
           >
             <Icon name="paperclip" className="h-4 w-4" />
             <input
               type="file"
-              ref={fileInputRefInternal}
+              ref={fileInputRef}
               className="absolute inset-0 hidden h-full w-full"
               onChange={(e) => handleFiles(Array.from(e.target.files ?? []))}
+              accept={acceptedFileTypes?.join(',')}
             />
           </div>
           <div className="ml-auto">
             <motion.button
-              onClick={() => onSubmit(prompt ?? '')}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onSubmit(e)
+              }}
               className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-md border p-2"
-              disabled={!prompt || isSubmitting}
+              disabled={isDisabled || isSubmitting}
               title={
                 !prompt
                   ? 'Enter a prompt to submit'
