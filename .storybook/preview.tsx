@@ -19,7 +19,7 @@ const moonshineConfigProviderDecorator = (story: any) => {
 export const decorators = [
   withThemeByClassName({
     themes: { light: 'light', dark: 'dark' },
-    defaultTheme: 'dark',
+    defaultTheme: 'light',
   }),
   moonshineConfigProviderDecorator,
 ]
