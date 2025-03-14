@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
-import { lineNumbers } from '../__beta__/CodePlayground/lineNumbers'
+import { lineNumbers } from '../CodePlayground/lineNumbers'
 
 type Theme = 'dark' | 'light'
 

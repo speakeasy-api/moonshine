@@ -84,17 +84,17 @@ export { Switch, type SwitchProps } from '@/components/Switch'
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
-import { ActionBar } from '@/components/__beta__/ActionBar'
+import { ActionBar } from '@/components/ActionBar'
 import { Timeline } from '@/components/__beta__/Timeline'
-import { Key, KeyHint } from '@/components/__beta__/KeyHint'
-import { HighlightedText } from '@/components/__beta__/HighlightedText'
-import { DragNDropArea } from '@/components/__beta__/DragNDrop/DragNDropArea'
-import { DragOverlay } from '@/components/__beta__/DragNDrop/DragOverlay'
-import { Draggable } from '@/components/__beta__/DragNDrop/Draggable'
-import { Droppable } from '@/components/__beta__/DragNDrop/Droppable'
-import { ResizablePanel } from './components/__beta__/ResizablePanel'
-import { CodePlayground } from './components/__beta__/CodePlayground'
-import { CodeEditor } from './components/__beta__/CodeEditorLayout'
+import { Key, KeyHint } from '@/components/KeyHint'
+import { HighlightedText } from '@/components/HighlightedText'
+import { DragNDropArea } from '@/components/DragNDrop/DragNDropArea'
+import { DragOverlay } from '@/components/DragNDrop/DragOverlay'
+import { Draggable } from '@/components/DragNDrop/Draggable'
+import { Droppable } from '@/components/DragNDrop/Droppable'
+import { ResizablePanel } from './components/ResizablePanel'
+import { CodePlayground } from './components/CodePlayground'
+import { CodeEditor } from './components/CodeEditorLayout'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
