@@ -99,6 +99,7 @@ import { Timeline } from '@/components/__beta__/Timeline'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
+  // TODO: needs light mode tweaks too.
   CLIWizard,
 
   // Readme editor components
