@@ -41,7 +41,11 @@ export {
   type Group,
 } from '@/components/Table'
 export { Input, type InputProps } from '@/components/Input'
-export { type SupportedLanguage, supportedLanguages } from '@/types'
+export {
+  type SupportedLanguage,
+  supportedLanguages,
+  isSupportedLanguage,
+} from '@/types'
 export { PageHeader } from '@/components/PageHeader'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export { ExternalPill } from '@/components/ExternalPill'

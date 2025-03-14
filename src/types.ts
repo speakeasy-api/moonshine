@@ -91,6 +91,12 @@ export const supportedLanguages = [
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]
 
+export function isSupportedLanguage(
+  language: string
+): language is SupportedLanguage {
+  return supportedLanguages.includes(language as SupportedLanguage)
+}
+
 export function prettyLanguageName(language: SupportedLanguage) {
   switch (language) {
     case 'typescript':
