@@ -19,8 +19,8 @@ import {
   highlightFgMap,
   mutedBgMap,
   mutedFgMap,
-} from '../HighlightedText'
-import { ActionBar } from '../ActionBar'
+} from '../../HighlightedText'
+import { ActionBar } from '../../ActionBar'
 
 interface TimelineItem {
   id: string

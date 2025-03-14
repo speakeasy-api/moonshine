@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../Tooltip'
-import { Key } from '../__beta__/KeyHint'
+import { Key } from '../KeyHint'
 
 export interface SlimProps {
   navItems?: NavItem[]

@@ -4,11 +4,10 @@ import { StoryObj, Meta } from '@storybook/react'
 import { fn } from '@storybook/test'
 
 const meta: Meta<typeof ActionBar> = {
-  component: ActionBar,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
+  component: ActionBar,
   decorators: [
     (Story) => (
       <DndContext>
