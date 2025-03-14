@@ -8,6 +8,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   icon?: IconName
   multiline?: boolean
+  error?: boolean
   className?: string
 }
 
@@ -18,6 +19,7 @@ export function Input({
   disabled,
   icon,
   multiline,
+  error,
   className,
   ...props
 }: InputProps) {
@@ -83,6 +85,7 @@ export function Input({
         'border-input text-muted-foreground flex items-center gap-3 rounded-md border px-4 py-3 transition-colors duration-300',
         icon && 'px-3',
         isFocused && 'text-foreground border-blue-500/75',
+        error ? 'border-rose-700' : 'border-input',
         className
       )}
     >

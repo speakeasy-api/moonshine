@@ -42,7 +42,11 @@ export {
   type Group,
 } from '@/components/Table'
 export { Input, type InputProps } from '@/components/Input'
-export { type SupportedLanguage, supportedLanguages } from '@/types'
+export {
+  type SupportedLanguage,
+  supportedLanguages,
+  isSupportedLanguage,
+} from '@/types'
 export { PageHeader } from '@/components/PageHeader'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export { ExternalPill } from '@/components/ExternalPill'
@@ -76,6 +80,7 @@ export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
 export { Navbar } from '@/components/Navbar'
+export { Switch, type SwitchProps } from '@/components/Switch'
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
