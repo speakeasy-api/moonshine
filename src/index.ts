@@ -82,40 +82,27 @@ export { Dialog } from '@/components/Dialog'
 export { Navbar } from '@/components/Navbar'
 export { Switch, type SwitchProps } from '@/components/Switch'
 
+export { ActionBar } from '@/components/ActionBar'
+export { Key, KeyHint } from '@/components/KeyHint'
+export { HighlightedText } from '@/components/HighlightedText'
+export { DragNDropArea } from '@/components/DragNDrop/DragNDropArea'
+export { DragOverlay } from '@/components/DragNDrop/DragOverlay'
+export { Draggable } from '@/components/DragNDrop/Draggable'
+export { Droppable } from '@/components/DragNDrop/Droppable'
+export { ResizablePanel } from '@/components/ResizablePanel'
+export { CodePlayground } from '@/components/CodePlayground'
+export { CodeEditor } from '@/components/CodeEditorLayout'
+
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
-import { ActionBar } from '@/components/ActionBar'
 import { Timeline } from '@/components/__beta__/Timeline'
-import { Key, KeyHint } from '@/components/KeyHint'
-import { HighlightedText } from '@/components/HighlightedText'
-import { DragNDropArea } from '@/components/DragNDrop/DragNDropArea'
-import { DragOverlay } from '@/components/DragNDrop/DragOverlay'
-import { Draggable } from '@/components/DragNDrop/Draggable'
-import { Droppable } from '@/components/DragNDrop/Droppable'
-import { ResizablePanel } from './components/ResizablePanel'
-import { CodePlayground } from './components/CodePlayground'
-import { CodeEditor } from './components/CodeEditorLayout'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
   CLIWizard,
 
   // Readme editor components
-  ActionBar,
   Timeline,
-  KeyHint,
-  Key,
-  HighlightedText,
-
-  // Drag & Drop primitives
-  DragNDropArea,
-  DragOverlay,
-  Draggable,
-  Droppable,
-
-  ResizablePanel,
-  CodePlayground,
-  CodeEditor,
 }
 
 /** END BETA COMPONENTS */
