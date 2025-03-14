@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Welcome" />
+
+# `@speakeasy/moonshine`
+
+Speakeasy's design system is a reusable component library that helps Speakeasy contributors build out product experiences quickly and consistently.
+
+## Installation
+
+```bash
+pnpm add @speakeasy-api/moonshine
+```
+
+Reference the CSS file in your project:
+
+```ts
+import '@speakeasy-api/moonshine/moonshine.css'
+```
+
+
+Wrap your application in the `MoonshineConfigProvider` component, passing in the HTML element where the tailwind dark/light class is applied:
+
+```tsx
+import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
+
+<MoonshineConfigProvider themeElement={document.documentElement}>
+  <App />
+</MoonshineConfigProvider>
+```
+
+Then you can import components from the package:
+
+```tsx
+import { Grid } from '@speakeasy-api/moonshine'
+```
+
+The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
