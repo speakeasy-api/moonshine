@@ -92,6 +92,16 @@ export { Droppable } from '@/components/DragNDrop/Droppable'
 export { ResizablePanel } from '@/components/ResizablePanel'
 export { CodePlayground } from '@/components/CodePlayground'
 export { CodeEditor } from '@/components/CodeEditorLayout'
+export {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandEmpty,
+  CommandInput,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '@/components/Command'
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
