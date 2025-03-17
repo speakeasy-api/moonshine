@@ -101,6 +101,7 @@ export {
   CommandList,
   CommandSeparator,
   CommandShortcut,
+  CommandDialog,
 } from '@/components/Command'
 
 /** START BETA COMPONENTS */
