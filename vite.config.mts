@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import tailwindcss from '@tailwindcss/vite'
 
 const packageName = 'moonshine'
 
@@ -18,6 +19,7 @@ export default defineConfig({
         exportType: 'default',
       },
     }),
+    tailwindcss(),
   ],
   test: {
     globals: true,

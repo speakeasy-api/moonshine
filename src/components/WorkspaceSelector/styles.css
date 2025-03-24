@@ -1,3 +1,5 @@
+@reference '../../global.css';
+
 ::view-transition-group(workspace-content),
 ::view-transition-group(create-dialog) {
   overflow: hidden;
