@@ -89,11 +89,11 @@ const Root: React.FC<RootProps> = ({ children, className }) => {
       <div className="min-h-full flex-grow">{timelineContent}</div>
       <div
         className={cn(
-          'absolute bottom-0 right-10 top-0 min-h-svh w-auto min-w-12 rounded-2xl',
+          'absolute top-0 right-10 bottom-0 min-h-svh w-auto min-w-12 rounded-2xl',
           className
         )}
       >
-        <div className="bg-mask pointer-events-none fixed bottom-0 top-0 z-10 h-full w-12"></div>
+        <div className="bg-mask pointer-events-none fixed top-0 bottom-0 z-10 h-full w-12"></div>
         <div className="h-full before:fixed before:right-16 before:-z-0 before:h-full before:w-[1px] before:-translate-x-1/2 before:bg-gradient-to-b before:from-transparent before:via-zinc-200 before:to-transparent dark:before:via-zinc-700">
           {timelineItems}
         </div>

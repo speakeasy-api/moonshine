@@ -26,7 +26,7 @@ const Breadcrumb = ({
           <>
             {child}
             {index < validChildren.length - 1 && (
-              <div className="text-muted">{separator}</div>
+              <div className="text-body-muted">{separator}</div>
             )}
           </>
         )

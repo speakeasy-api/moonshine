@@ -206,7 +206,7 @@ export const Empty: Story = {
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col items-center gap-1">
               <h2 className="text-lg font-semibold">No Tabs Open</h2>
-              <p className="text-muted-foreground text-muted text-sm">
+              <p className="text-body-muted text-sm">
                 Open a file to get started
               </p>
             </div>

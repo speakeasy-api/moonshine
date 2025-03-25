@@ -164,7 +164,7 @@ export function PromptInput({
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}
         className={cn(
-          'text-foreground/70 dark:text-muted bg-background flex flex-col rounded-md border pt-2 text-sm transition-colors duration-500',
+          'text-foreground/70 dark:text-body-muted bg-background flex flex-col rounded-md border pt-2 text-sm transition-colors duration-500',
           isDraggingOver && 'border-primary/60 border-dashed'
         )}
       >
@@ -237,7 +237,7 @@ export function PromptInput({
                 e.stopPropagation()
                 onSubmit(e)
               }}
-              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-muted rounded-md border p-2"
+              className="bg-foreground/5 text-foreground/60 dark:bg-foreground dark:text-background disabled:!bg-background/70 disabled:!text-body-muted rounded-md border p-2"
               disabled={isDisabled || isSubmitting}
               title={
                 !prompt
@@ -269,7 +269,7 @@ export function PromptInput({
             <div
               key={suggestion.label}
               className={cn(
-                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer select-none flex-row items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 py-2 text-sm tracking-tight',
+                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer flex-row items-center gap-1.5 rounded-md border px-2.5 py-2 text-sm tracking-tight whitespace-nowrap select-none',
                 suggestion.className
               )}
               onClick={() => suggestion.onClick(suggestion.id)}
@@ -355,7 +355,7 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
       </div>
       <div
         title={attachment.name}
-        className="max-w-36 flex-1 select-none truncate text-xs"
+        className="max-w-36 flex-1 truncate text-xs select-none"
       >
         {attachment.name}
       </div>

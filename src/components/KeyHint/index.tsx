@@ -50,16 +50,16 @@ function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
         <>
           <Key value={modifierMap[modifier]} />
           {index < modifiers.length - 1 && (
-            <span className="text-muted text-sm">+</span>
+            <span className="text-body-muted text-sm">+</span>
           )}
         </>
       ))}
-      {keys.length > 0 && <span className="text-muted text-sm">+</span>}
+      {keys.length > 0 && <span className="text-body-muted text-sm">+</span>}
       {keys.map((key, index) => (
         <>
           <Key value={key.toUpperCase()} />
           {index < keys.length - 1 && (
-            <span className="text-muted text-sm">+</span>
+            <span className="text-body-muted text-sm">+</span>
           )}
         </>
       ))}
@@ -89,12 +89,12 @@ export function KeyHint({
   return (
     <div
       className={cn(
-        'inline-flex min-w-24 select-none flex-col items-start gap-1 rounded-lg border text-base font-semibold tracking-tight text-black shadow-sm shadow-black/5 dark:text-white dark:shadow-white/10',
+        'inline-flex min-w-24 flex-col items-start gap-1 rounded-lg border text-base font-semibold tracking-tight text-black shadow-sm shadow-black/5 select-none dark:text-white dark:shadow-white/10',
         className
       )}
       {...props}
     >
-      <div className="text-muted dark:text-muted/80 flex w-full select-none flex-row items-center self-start border-b px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">
+      <div className="text-body-muted dark:text-body-muted/80 flex w-full flex-row items-center self-start border-b px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase select-none">
         <div>{titleText}</div>
         {dismissable && (
           <div
@@ -109,7 +109,9 @@ export function KeyHint({
       <div className="flex flex-row items-center gap-1 px-4 py-3.5">
         <KeyHintKeys modifiers={modifiers} keys={keys} />
         {actionText && (
-          <div className="text-muted text-sm font-normal">{actionText}</div>
+          <div className="text-body-muted text-sm font-normal">
+            {actionText}
+          </div>
         )}
       </div>
     </div>

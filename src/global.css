@@ -1,14 +1,12 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
-@config './tailwind.config.js';
-
 @utility typography-heading-xl {
   font-size: 1.8125rem;
   font-weight: 300;
   line-height: 1.517;
   letter-spacing: 0.0015em;
-  @media (width >= theme(--breakpoint-md)) {
+  @variant md {
     font-size: 2.0625rem;
     line-height: 1.375;
   }
@@ -18,7 +16,7 @@
   font-weight: 300;
   line-height: 1.615;
   letter-spacing: 0.0015em;
-  @media (width >= theme(--breakpoint-md)) {
+  @variant md {
     font-size: 1.8125rem;
     line-height: 1.517;
   }
@@ -28,7 +26,7 @@
   font-weight: 300;
   line-height: 1.609;
   letter-spacing: 0.0015em;
-  @media (width >= theme(--breakpoint-md)) {
+  @variant md {
     font-size: 1.625rem;
     line-height: 1.615;
   }
@@ -38,7 +36,8 @@
   font-weight: 300;
   line-height: 1.75;
   letter-spacing: 0.0015em;
-  @media (width >= theme(--breakpoint-md)) {
+
+  @variant md {
     font-size: 1.4375rem;
     line-height: 1.609;
   }
@@ -48,7 +47,7 @@
   font-weight: 300;
   line-height: 1.778;
   letter-spacing: 0.0015em;
-  @media (width >= theme(--breakpoint-md)) {
+  @variant md {
     font-size: 1.25rem;
     line-height: 1.75;
   }
@@ -92,7 +91,7 @@
     padding-inline: 0.5rem;
   }
 
-  @varianty md {
+  @variant md {
     padding-inline: 1rem;
   }
   
@@ -107,6 +106,10 @@
   @variant 2xl {
     padding-inline: 2.5rem;
   }
+}
+
+@utility bg-mask {
+  background-image: linear-gradient(to bottom, var(--background) 0%, var(--color-transparent) 5%,var(--color-transparent) 95%,var(--background) 100%)
 }
 
 :root {
@@ -189,6 +192,7 @@
 
   /* Moonshine tokens */
   --color-accessibility: hsl(221 83% 53%);
+  --color-transparent: hsla(0 0% 0% / 0);
 
   --color-brand-yellow-50: hsl(57 92% 95%);
   --color-brand-yellow-100: hsl(58 93% 88%);
@@ -222,7 +226,7 @@
   --color-information-fill: hsl(224 76% 48%);
   --color-information-text: hsl(217 91% 60%);
   --color-success-fill: hsl(163 94% 24%);
-    --color-success-text: hsl(160 84% 39%);
+  --color-success-text: hsl(160 84% 39%);
   --color-warning-fill: hsl(26 90% 37%);
   --color-warning-text: hsl(46 97% 65%);
 
@@ -350,19 +354,22 @@
   --color-feature-foreground: var(--feature-foreground);
 
   /* Text Colors */
-  --color-text-heading-xl: var(--color-neutral-50);
-  --color-text-heading-lg: var(--color-neutral-50);
-  --color-text-heading-md: var(--color-neutral-50);
-  --color-text-heading-sm: var(--color-neutral-100);
-  --color-text-heading-xs: var(--color-neutral-100);
-  --color-text-body: var(--color-neutral-200);
-  --color-text-muted: var(--color-neutral-400);
+  --color-heading-xl: var(--color-neutral-50);
+  --color-heading-lg: var(--color-neutral-50);
+  --color-heading-md: var(--color-neutral-50);
+  --color-heading-sm: var(--color-neutral-100);
+  --color-heading-xs: var(--color-neutral-100);
+  --color-body: var(--color-neutral-200);
+  --color-body-muted: var(--color-neutral-400);
 
   /* Link Colors */
   --color-link: var(--link-default);
   --color-link-secondary: var(--color-neutral-200);
   --color-link-visited-primary: var(--link-visited-primary);
   --color-link-visited-secondary: var(--link-visited-secondary);
+
+  /* Other Colors */
+/*   --color-transparent: var(--color-transparent); */
 
   /* Animation */
   --keyframes-wiggle: {
@@ -456,6 +463,4 @@
       transform: translateX(-100%);
     }
   }
-
-  /* TODO: Find a better place for these styles we don't want this file to baloon */
 }
