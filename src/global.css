@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
+@source "../tailwind_safelist.txt";
+
+@custom-variant dark (&:is(.dark *));
+
 @utility typography-heading-xl {
   font-size: 1.8125rem;
   font-weight: 300;
@@ -367,9 +371,6 @@
   --color-link-secondary: var(--color-neutral-200);
   --color-link-visited-primary: var(--link-visited-primary);
   --color-link-visited-secondary: var(--link-visited-secondary);
-
-  /* Other Colors */
-/*   --color-transparent: var(--color-transparent); */
 
   /* Animation */
   --keyframes-wiggle: {

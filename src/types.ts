@@ -1,4 +1,3 @@
-import { Range } from '@/lib/typeUtils'
 import { assertNever } from './lib/assert'
 
 // Button variants
@@ -32,11 +31,12 @@ export const directionOptions = ['row', 'column'] as const
 export type Direction = (typeof directionOptions)[number]
 
 // Gap
-export type Gap = 0 | 0.5 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16
+export const gapValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
+export type Gap = (typeof gapValues)[number]
 
 // Grid Columns
-export const maxGridColumns = 12
-export type Columns = Exclude<Range<typeof maxGridColumns>, 0>
+export const gridColumnValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+export type Columns = (typeof gridColumnValues)[number]
 
 // Padding
 export const paddingValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const

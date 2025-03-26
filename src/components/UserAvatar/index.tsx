@@ -60,7 +60,7 @@ export function UserAvatar({
         <img
           src={imageUrl}
           alt={name}
-          className="h-full w-full select-none object-cover object-center"
+          className="h-full w-full object-cover object-center select-none"
         />
       ) : (
         <svg

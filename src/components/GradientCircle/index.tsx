@@ -12,12 +12,20 @@ interface GradientCircleProps {
   className?: string
 }
 
-const sizeMap: Record<Size, number> = {
-  small: 6,
-  medium: 8,
-  large: 10,
-  xl: 12,
-  '2xl': 20,
+const heightMap: Record<Size, string> = {
+  small: 'h-6',
+  medium: 'h-8',
+  large: 'h-10',
+  xl: 'h-12',
+  '2xl': 'h-20',
+}
+
+const widthMap: Record<Size, string> = {
+  small: 'w-6',
+  medium: 'w-8',
+  large: 'w-10',
+  xl: 'w-12',
+  '2xl': 'w-20',
 }
 
 const initialSizeMap: Record<Size, number> = {
@@ -28,12 +36,12 @@ const initialSizeMap: Record<Size, number> = {
   '2xl': 48,
 }
 
-const borderSizeMap: Record<Size, number> = {
-  small: 2,
-  medium: 2,
-  large: 4,
-  xl: 4,
-  '2xl': 4,
+const borderSizeMap: Record<Size, string> = {
+  small: 'border-2',
+  medium: 'border-2',
+  large: 'border-4',
+  xl: 'border-4',
+  '2xl': 'border-4',
 }
 
 export function GradientCircle({
@@ -80,15 +88,11 @@ export function GradientCircle({
   const fromColor = `hsl(${hue1}, 85%, 60%)`
   const toColor = `hsl(${hue2}, 75%, 65%)`
 
-  const sizeValue = sizeMap[size]
-  const borderSize = borderSizeMap[size]
-
   return (
     <div
       className={cn(
         'gradient-circle relative min-h-6 min-w-6 rounded-full border-white',
-        sizeValue && `h-${sizeValue} w-${sizeValue}`,
-        borderSize && `border-${borderSize}`,
+        size && `${heightMap[size]} ${widthMap[size]} ${borderSizeMap[size]}`,
         inactive && 'opacity-50',
         className
       )}
