@@ -1,15 +1,14 @@
-import { useCallback, useState, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useState, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
-import { isProgrammingLanguage, ProgrammingLanguage, Size } from '@/types'
+import { ProgrammingLanguage, Size } from '@/types'
 import useTailwindTheme from '@/hooks/useTailwindTheme'
-import { highlight, HighlightedCode, Pre, RawCode } from 'codehike/code'
+import { HighlightedCode, Pre } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
+import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
-import { lineNumbers } from '../CodePlayground/lineNumbers'
-
-type Theme = 'dark' | 'light'
+import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
 
 interface CodeSnippetProps {
   /**
@@ -20,7 +19,6 @@ interface CodeSnippetProps {
    * Whether to show a copy button.
    */
   copyable?: boolean
-
   /**
    * One of the known Speakeasy target languages, or a language that Codehike supports.
    * The full list of supported languages is available at https://codehike.org/docs/concepts/code#languages
@@ -39,19 +37,9 @@ interface CodeSnippetProps {
    */
   fontSize?: Size
   /**
-   * The minimum width of the code snippet.
-   */
-  minWidth?: string
-
-  /**
    * Whether to show line numbers.
    */
   showLineNumbers?: boolean
-
-  /**
-   * The theme of the code snippet.
-   */
-  theme?: Theme
   /**
    * The callback to call when the code is selected or copied.
    */
@@ -79,57 +67,6 @@ const copyIconVariants = {
   visible: { opacity: 1, scale: 1 },
 }
 
-function getLanguage(language: ProgrammingLanguage): string {
-  switch (language) {
-    case 'javascript':
-      return 'js'
-    case 'typescript':
-      return 'ts'
-    case 'python':
-      return 'py'
-    case 'bash':
-      return 'bash'
-    case 'json':
-      return 'json'
-    case 'go':
-      return 'go'
-    case 'dotnet':
-      return 'c'
-    case 'java':
-      return 'java'
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-const codehikeThemeNames = [
-  'dark-plus',
-  'dracula-soft',
-  'dracula',
-  'github-dark',
-  'github-dark-dimmed',
-  'github-from-css',
-  'github-light',
-  'light-plus',
-  'material-darker',
-  'material-default',
-  'material-from-css',
-  'material-lighter',
-  'material-ocean',
-  'material-palenight',
-  'min-dark',
-  'min-light',
-  'monokai',
-  'nord',
-  'one-dark-pro',
-  'poimandres',
-  'slack-dark',
-  'slack-ochin',
-  'solarized-dark',
-  'solarized-light',
-] as const
-
-type CodehikeTheme = (typeof codehikeThemeNames)[number]
-
 export function CodeSnippet({
   code,
   copyable = false,
@@ -144,7 +81,6 @@ export function CodeSnippet({
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
-
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -170,7 +106,6 @@ export function CodeSnippet({
     return () => resizeObserver.disconnect()
   }, [])
 
-  const [highlighted, setHighlighted] = useState(false)
   const [highlightedCodeState, setHighlightedCodeState] = useState<
     HighlightedCode | undefined
   >(undefined)
@@ -178,50 +113,36 @@ export function CodeSnippet({
   const { themeElement } = useConfig()
   const theme = useTailwindTheme(themeElement)
 
-  const codehikeTheme = useMemo<CodehikeTheme>(() => {
-    if (theme === 'light') return 'solarized-light'
-    return 'nord'
-  }, [theme])
+  // Get the code handlers for line numbers and animations
+  const preHandlers = getCodeHandlers(showLineNumbers, true)
 
+  // Directly highlight the code when code or language changes
   useEffect(() => {
     if (!language) return
-    async function highlightCode() {
-      const rawCode: RawCode = {
-        value: code,
-        lang: isProgrammingLanguage(language)
-          ? getLanguage(language)
-          : language,
-        meta: '',
-      }
-      const highlighted = await highlight(rawCode, codehikeTheme)
+
+    // Use the highlightCode utility directly
+    highlightCode(code, language).then((highlighted) => {
       setHighlightedCodeState(highlighted)
-    }
-    highlightCode()
-  }, [code, language, codehikeTheme])
+    })
+  }, [code, language])
 
   const handleCopy = useCallback(() => {
-    setHighlighted(true)
     setCopying(true)
     navigator.clipboard.writeText(code)
     setTimeout(() => {
-      setHighlighted(false)
       setCopying(false)
       onSelectOrCopy?.()
-    }, 750)
-  }, [code])
+    }, 1000)
+  }, [code, onSelectOrCopy])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
-
-  const bgColor = useMemo(() => {
-    return theme === 'dark' ? 'bg-card' : 'bg-neutral-100'
-  }, [highlighted, theme])
 
   return (
     <div
       data-theme={theme}
       className={cn(
-        `border-muted snippet relative box-border flex w-full overflow-hidden rounded-lg border ${bgColor}`,
+        'border-muted snippet bg-background relative box-border flex w-full overflow-hidden rounded-lg border',
         inline && 'inline-flex',
         shimmer && 'shimmer',
         className
@@ -229,12 +150,7 @@ export function CodeSnippet({
       style={{ '--width': `${containerWidth}px` } as React.CSSProperties}
       ref={containerRef}
     >
-      <div
-        className={cn(
-          'snippet-inner flex w-full flex-row gap-2 rounded-lg p-4',
-          bgColor
-        )}
-      >
+      <div className="snippet-inner flex w-full flex-row gap-2 rounded-lg p-4">
         {language === 'bash' && (
           <div className="text-muted-foreground self-center font-mono font-light">
             {promptSymbol ?? '$'}
@@ -245,14 +161,12 @@ export function CodeSnippet({
             code={highlightedCodeState}
             onClick={onSelectOrCopy}
             className={cn(
-              'text-foreground highlighted-code inline-flex w-fit self-center font-mono outline-none',
-              highlighted && theme === 'dark' && '!bg-zinc-500/40',
-              highlighted && theme === 'light' && '!bg-zinc-200/40',
+              'highlighted-code inline-flex w-fit self-center font-mono outline-none',
               fontSizeMap[fontSize],
               isMultiline && 'min-w-32'
             )}
             onBeforeInput={handleBeforeInput}
-            handlers={showLineNumbers ? [lineNumbers] : []}
+            handlers={preHandlers}
           />
         )}
 
@@ -265,11 +179,7 @@ export function CodeSnippet({
           >
             <button
               role="button"
-              className={cn(
-                'relative ml-2 border-none bg-transparent outline-none',
-                theme === 'dark' && 'text-white',
-                theme === 'light' && 'text-black'
-              )}
+              className="relative ml-2 border-none bg-transparent"
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -279,7 +189,7 @@ export function CodeSnippet({
                     variants={copyIconVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-foreground"
+                    className="text-green-500"
                   >
                     <Icon name="check" stroke="currentColor" />
                   </motion.span>
@@ -289,7 +199,7 @@ export function CodeSnippet({
                     variants={copyIconVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-foreground"
+                    className="text-muted hover:text-foreground"
                     exit="hidden"
                   >
                     <Icon name="copy" stroke="currentColor" />
