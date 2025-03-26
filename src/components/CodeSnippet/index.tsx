@@ -150,7 +150,7 @@ export function CodeSnippet({
       style={{ '--width': `${containerWidth}px` } as React.CSSProperties}
       ref={containerRef}
     >
-      <div className="snippet-inner flex w-full flex-row gap-2 rounded-lg p-4">
+      <div className="snippet-inner bg-card flex w-full flex-row gap-2 rounded-lg p-4">
         {language === 'bash' && (
           <div className="text-muted-foreground self-center font-mono font-light">
             {promptSymbol ?? '$'}
