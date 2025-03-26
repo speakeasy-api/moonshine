@@ -142,7 +142,7 @@ export function CodeSnippet({
     <div
       data-theme={theme}
       className={cn(
-        'border-muted snippet bg-background relative box-border flex w-full overflow-hidden rounded-lg border',
+        'border-muted snippet bg-card relative box-border flex w-full overflow-hidden rounded-lg border',
         inline && 'inline-flex',
         shimmer && 'shimmer',
         className
