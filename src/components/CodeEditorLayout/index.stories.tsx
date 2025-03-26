@@ -30,7 +30,7 @@ type Story = StoryObj<typeof CodeEditor>
 export const Default: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="py-2">
+      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -93,7 +93,7 @@ export const Default: Story = {
 export const Empty: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="border-b py-2">
+      <CodeEditor.CommandBar className="border py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -143,7 +143,7 @@ export const Empty: Story = {
 export const SplitScreen: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="py-2">
+      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -205,7 +205,7 @@ export const SplitScreen: Story = {
 export const WithTabIcons: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="py-2">
+      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -332,7 +332,7 @@ export const TabStates: Story = {
 export const NoTabs: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="py-2">
+      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -350,15 +350,17 @@ export const NoTabs: Story = {
           </div>
         </div>
       </CodeEditor.CommandBar>,
-      <CodeEditor.Pane minSize={100}>
-        {Array.from({ length: 40 }).map((_, index) => (
-          <div key={index} className="mb-4">
-            {faker.lorem.paragraph()}
-          </div>
-        ))}
-      </CodeEditor.Pane>,
       <CodeEditor.Pane minSize={15} maxSize={30}>
-        <div>Sidebar</div>
+        <div className="p-2">Sidebar</div>
+      </CodeEditor.Pane>,
+      <CodeEditor.Pane minSize={100}>
+        <div className="p-2">
+          {Array.from({ length: 40 }).map((_, index) => (
+            <div key={index} className="mb-4">
+              {faker.lorem.paragraph()}
+            </div>
+          ))}
+        </div>
       </CodeEditor.Pane>,
     ],
   },

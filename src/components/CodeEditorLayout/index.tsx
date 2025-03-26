@@ -269,7 +269,7 @@ const CodeEditorCommandBar = ({
     <div
       {...props}
       className={cn(
-        'code-editor-command-bar bg-muted rounded-sm rounded-b-none border-l border-r border-t px-3 py-1',
+        'code-editor-command-bar bg-muted rounded-sm rounded-b-none px-3 py-1',
         className
       )}
     >
