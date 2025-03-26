@@ -179,7 +179,7 @@ export function CodeSnippet({
           >
             <button
               role="button"
-              className="relative ml-2 border-none bg-transparent"
+              className="relative ml-2 border-none bg-transparent outline-none"
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
