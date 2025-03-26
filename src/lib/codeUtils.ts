@@ -14,8 +14,8 @@ export async function highlightCode(
 ) {
   const rawCode: RawCode = {
     value: code,
-    lang: isProgrammingLanguage(language) 
-      ? getMappedLanguage(language) 
+    lang: isProgrammingLanguage(language)
+      ? getMappedLanguage(language)
       : language,
     meta: '',
   }
