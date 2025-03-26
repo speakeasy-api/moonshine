@@ -9,98 +9,42 @@ import {
   useMemo,
   HTMLAttributes,
 } from 'react'
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
+import {
+  Panel,
+  PanelGroup,
+  PanelProps,
+  PanelResizeHandle,
+} from 'react-resizable-panels'
 
 export interface CodeEditorLayoutProps {
   children: ReactNode[]
   className?: string
-  order?: 'sidebar-first' | 'sidebar-last'
-  showEmptyState?: boolean
 }
 
-const CodeEditorLayout = ({
-  children,
-  className,
-  order = 'sidebar-first',
-  showEmptyState = false,
-}: CodeEditorLayoutProps) => {
+const CodeEditorLayout = ({ children, className }: CodeEditorLayoutProps) => {
   const validChildren = Children.toArray(children).filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
     const isValidSubType =
-      type.displayName === 'CodeEditor.Sidebar' ||
-      type.displayName === 'CodeEditor.Content' ||
+      type.displayName === 'CodeEditor.Pane' ||
       type.displayName === 'CodeEditor.Tabs' ||
       type.displayName === 'CodeEditor.CommandBar' ||
       type.displayName === 'CodeEditor.Empty'
 
     if (!isValidSubType) {
       console.warn(
-        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Sidebar, CodeEditor.Content, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
+        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Pane, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
       )
     }
 
     return isValidSubType
   })
 
-  const sidebar = validChildren.find((child) => {
+  const panes = validChildren.filter((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
-    return type.displayName === 'CodeEditor.Sidebar'
+    return type.displayName === 'CodeEditor.Pane'
   })
-
-  const contentPane = validChildren.find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'CodeEditor.Content'
-  })
-
-  const minContentWidth = useMemo(() => {
-    if (!contentPane) return undefined
-    if (!isValidElement(contentPane)) return undefined
-    const minWidth = contentPane.props.minWidth
-    return minWidth ? minWidth : undefined
-  }, [contentPane])
-
-  const maxContentWidth = useMemo(() => {
-    if (!contentPane) return undefined
-    if (!isValidElement(contentPane)) return undefined
-    const maxWidth = contentPane.props.maxWidth
-    return maxWidth ? maxWidth : undefined
-  }, [contentPane])
-
-  const sidebarMinWidth = useMemo(() => {
-    if (!sidebar) return undefined
-    if (!isValidElement(sidebar)) return undefined
-    const minWidth = sidebar.props.minWidth
-    return minWidth ? minWidth : undefined
-  }, [sidebar])
-
-  const sidebarMaxWidth = useMemo(() => {
-    if (!sidebar) return undefined
-    if (!isValidElement(sidebar)) return undefined
-    const maxWidth = sidebar.props.maxWidth
-    return maxWidth ? maxWidth : undefined
-  }, [sidebar])
-
-  const tabs = validChildren.find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'CodeEditor.Tabs'
-  })
-
-  const hasActiveTab = useMemo(() => {
-    if (!tabs) return false
-    if (!isValidElement(tabs)) return false
-
-    const arr = Children.toArray(tabs.props.children)
-    if (!Array.isArray(arr)) return false
-    return arr.some((child) => {
-      if (!isValidElement(child)) return false
-      const type = child.type as { displayName?: string }
-      return type.displayName === 'CodeEditor.Tab' && child.props.active
-    })
-  }, [tabs])
 
   const empty = validChildren.find((child) => {
     if (!isValidElement(child)) return false
@@ -118,42 +62,21 @@ const CodeEditorLayout = ({
     <div className="flex h-full w-full flex-col rounded-lg">
       {commandBar}
       <PanelGroup
-        className={cn('flex min-h-0 flex-row border', className)}
+        className={cn('flex min-h-0 flex-row', className)}
         direction="horizontal"
       >
-        {order === 'sidebar-first' && sidebar && (
-          <Panel
-            order={1}
-            minSize={sidebarMinWidth}
-            defaultSize={sidebarMinWidth}
-            maxSize={sidebarMaxWidth}
-          >
-            {sidebar}
-          </Panel>
+        {Children.map(panes, (pane, index) =>
+          index < panes.length - 1 ? (
+            <>
+              {pane}
+
+              <PanelResizeHandle className="bg-muted" />
+            </>
+          ) : (
+            pane
+          )
         )}
-        {order === 'sidebar-first' && <PanelResizeHandle className="h-full" />}
-        {(contentPane || showEmptyState) && (
-          <Panel
-            defaultSize={minContentWidth}
-            maxSize={maxContentWidth}
-            className="flex w-full min-w-0 flex-col"
-            order={order === 'sidebar-first' ? 1 : 2}
-          >
-            {hasActiveTab && tabs}
-            {!showEmptyState ? contentPane : empty}
-          </Panel>
-        )}
-        {order === 'sidebar-last' && <PanelResizeHandle />}
-        {order === 'sidebar-last' && sidebar && (
-          <Panel
-            order={2}
-            minSize={sidebarMinWidth}
-            defaultSize={sidebarMinWidth}
-            maxSize={sidebarMaxWidth}
-          >
-            {sidebar}
-          </Panel>
-        )}
+        {empty && <Panel>{empty}</Panel>}
       </PanelGroup>
     </div>
   )
@@ -161,73 +84,39 @@ const CodeEditorLayout = ({
 
 CodeEditorLayout.displayName = 'CodeEditor'
 
-export interface CodeEditorSidebarProps
-  extends PropsWithChildren,
-    ResizablePanelProps,
-    HTMLAttributes<HTMLDivElement> {
-  className?: string
-}
-
-const CodeEditorSidebar = ({
-  children,
-  className,
-  minWidth = 20,
-  maxWidth,
-  ...props
-}: CodeEditorSidebarProps) => {
-  return (
-    <div
-      {...props}
-      data-min-width={minWidth}
-      data-max-width={maxWidth}
-      className={cn(
-        'code-editor-sidebar bg-background h-full w-full flex-none border-r border-l p-3',
-        className
-      )}
-    >
-      {children}
-    </div>
-  )
-}
-CodeEditorSidebar.displayName = 'CodeEditor.Sidebar'
-
-export interface ResizablePanelProps {
-  className?: string
-  minWidth: number
-  maxWidth?: number
-}
-
-export interface CodeEditorContentProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    ResizablePanelProps {
+export interface CodeEditorPaneProps extends PanelProps {
   className?: string
   containerRef?: React.RefObject<HTMLDivElement>
 }
 
-const CodeEditorContent = ({
+const CodeEditorPane = ({
   children,
   className,
-  minWidth,
-  maxWidth,
+  minSize,
+  maxSize,
   containerRef,
   ...props
-}: CodeEditorContentProps) => {
+}: CodeEditorPaneProps) => {
   return (
-    <div
+    <Panel
       {...props}
-      data-min-width={minWidth}
-      data-max-width={maxWidth}
-      className={cn(
-        'code-editor-content bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card flex-1 overflow-x-hidden overflow-y-scroll px-3 [&::-webkit-scrollbar]:w-2',
-        className
-      )}
-      ref={containerRef}
+      minSize={minSize}
+      maxSize={maxSize}
+      className={cn(className)}
     >
-      {children}
-    </div>
+      <div
+        className={cn(
+          'bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card h-full flex-1 overflow-x-hidden overflow-y-scroll border',
+          className
+        )}
+        ref={containerRef}
+      >
+        {children}
+      </div>
+    </Panel>
   )
 }
-CodeEditorContent.displayName = 'CodeEditor.Content'
+CodeEditorPane.displayName = 'CodeEditor.Pane'
 
 export interface CodeEditorTabsProps
   extends PropsWithChildren,
@@ -365,25 +254,6 @@ const CodeEditorTab = ({
 }
 CodeEditorTab.displayName = 'CodeEditor.Tab'
 
-export interface CodeEditorCustomElementProps
-  extends PropsWithChildren,
-    HTMLAttributes<HTMLDivElement> {
-  className?: string
-}
-
-const CodeEditorCustomElement = ({
-  children,
-  className,
-  ...props
-}: CodeEditorCustomElementProps) => {
-  return (
-    <div className={cn('code-editor-custom-element', className)} {...props}>
-      {children}
-    </div>
-  )
-}
-CodeEditorCustomElement.displayName = 'CodeEditor.CustomElement'
-
 export interface CodeEditorCommandBarProps
   extends PropsWithChildren,
     HTMLAttributes<HTMLDivElement> {
@@ -399,7 +269,7 @@ const CodeEditorCommandBar = ({
     <div
       {...props}
       className={cn(
-        'code-editor-command-bar bg-muted rounded-sm rounded-b-none border-t border-r border-l px-3 py-1',
+        'code-editor-command-bar bg-muted rounded-sm rounded-b-none px-3 py-1',
         className
       )}
     >
@@ -426,13 +296,11 @@ const Empty = ({ children, className, ...props }: CodeEditorEmptyProps) => {
 Empty.displayName = 'CodeEditor.Empty'
 
 const CodeEditor = Object.assign(CodeEditorLayout, {
-  Sidebar: CodeEditorSidebar,
-  Content: CodeEditorContent,
-  Tabs: CodeEditorTabs,
-  Tab: CodeEditorTab,
+  Pane: CodeEditorPane,
   CommandBar: CodeEditorCommandBar,
   Empty: Empty,
-  CustomElement: CodeEditorCustomElement,
+  Tabs: CodeEditorTabs,
+  Tab: CodeEditorTab,
 })
 
 export { CodeEditor }
