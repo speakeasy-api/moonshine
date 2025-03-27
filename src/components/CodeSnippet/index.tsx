@@ -1,8 +1,8 @@
-import { useCallback, useState, useEffect, useRef } from 'react'
+import { useCallback, useState, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
 import useTailwindTheme from '@/hooks/useTailwindTheme'
-import { HighlightedCode, Pre } from 'codehike/code'
+import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
 import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
@@ -114,7 +114,10 @@ export function CodeSnippet({
   const theme = useTailwindTheme(themeElement)
 
   // Get the code handlers for line numbers and animations
-  const preHandlers = getCodeHandlers(showLineNumbers, true)
+  const preHandlers = useMemo<AnnotationHandler[]>(
+    () => getCodeHandlers(showLineNumbers, true),
+    [showLineNumbers]
+  )
 
   // Directly highlight the code when code or language changes
   useEffect(() => {

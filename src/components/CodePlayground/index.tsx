@@ -1,4 +1,4 @@
-import { HighlightedCode, Pre } from 'codehike/code'
+import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import {
   useCallback,
   useEffect,
@@ -156,7 +156,7 @@ const CodePlayground = ({
     [selectedLanguage, snippets]
   )
 
-  const preHandlers = useMemo(() => {
+  const preHandlers = useMemo<AnnotationHandler[]>(() => {
     // Get the base handlers (lineNumbers and tokenTransitions)
     const handlers = getCodeHandlers(showLineNumbers, animateOnLanguageChange)
 
