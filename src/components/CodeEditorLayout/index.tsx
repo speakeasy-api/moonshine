@@ -87,6 +87,11 @@ CodeEditorLayout.displayName = 'CodeEditor'
 export interface CodeEditorPaneProps extends PanelProps {
   className?: string
   containerRef?: React.RefObject<HTMLDivElement>
+
+  /**
+   * Optional tabs to display above the scrolling pane
+   */
+  tabs?: React.ReactNode
 }
 
 const CodeEditorPane = ({
@@ -95,6 +100,7 @@ const CodeEditorPane = ({
   minSize,
   maxSize,
   containerRef,
+  tabs,
   ...props
 }: CodeEditorPaneProps) => {
   return (
@@ -104,6 +110,7 @@ const CodeEditorPane = ({
       maxSize={maxSize}
       className={cn(className)}
     >
+      {tabs}
       <div
         className={cn(
           'bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card h-full flex-1 overflow-x-hidden overflow-y-scroll border',
@@ -134,7 +141,7 @@ const CodeEditorTabs = ({
     const type = child.type as { displayName?: string }
     return (
       type.displayName === 'CodeEditor.Tab' ||
-      type.displayName === 'CodeEditor.CustomElement'
+      type.displayName === 'CodeEditor.CustomTabElement'
     )
   })
 
@@ -279,6 +286,25 @@ const CodeEditorCommandBar = ({
 }
 CodeEditorCommandBar.displayName = 'CodeEditor.CommandBar'
 
+export interface CodeEditorCustomElementProps
+  extends PropsWithChildren,
+    HTMLAttributes<HTMLDivElement> {
+  className?: string
+}
+
+const CustomTabElement = ({
+  children,
+  className,
+  ...props
+}: CodeEditorCustomElementProps) => {
+  return (
+    <div className={cn('h-full w-full', className)} {...props}>
+      {children}
+    </div>
+  )
+}
+CustomTabElement.displayName = 'CodeEditor.CustomTabElement'
+
 export interface CodeEditorEmptyProps
   extends PropsWithChildren,
     HTMLAttributes<HTMLDivElement> {
@@ -301,6 +327,7 @@ const CodeEditor = Object.assign(CodeEditorLayout, {
   Empty: Empty,
   Tabs: CodeEditorTabs,
   Tab: CodeEditorTab,
+  CustomTabElement: CustomTabElement,
 })
 
 export { CodeEditor }
