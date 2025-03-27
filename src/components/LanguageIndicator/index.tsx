@@ -59,7 +59,7 @@ export function LanguageIndicator({
         className={`mx-1 h-2 w-2 rounded-full ${languageColorMap[language]}`}
       />
       {!indicatorOnly && (
-        <span className="text-muted-foreground font-medium">
+        <span className="text-body font-medium">
           {languageLabelMap[language]}
         </span>
       )}

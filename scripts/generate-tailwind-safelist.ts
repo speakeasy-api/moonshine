@@ -56,7 +56,35 @@ function generate() {
   result = result.concat(
     generateResponsiveClasses(
       ['flex-'],
-      ['row', 'col', 'nowrap', 'wrap', 'wrap-reverse'],
+      [
+        'row',
+        'col',
+        'nowrap',
+        'wrap',
+        'wrap-reverse',
+        'none',
+        '1',
+        'grow',
+        'shrink',
+        'auto',
+        'initial',
+      ],
+      breakpointValues
+    )
+  )
+
+  result = result.concat(
+    generateResponsiveClasses(
+      ['justify-'],
+      ['start', 'center', 'end', 'between', 'evenly'],
+      breakpointValues
+    )
+  )
+
+  result = result.concat(
+    generateResponsiveClasses(
+      ['items-'],
+      ['start', 'center', 'end', 'stretch', 'baseline'],
       breakpointValues
     )
   )

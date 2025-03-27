@@ -109,7 +109,7 @@ const GetStartedHeaderContent = (
           : `${completedSteps.length} of ${steps.length} steps`}
       </Badge>
     </div>
-    <p className="text-muted-foreground text-sm">
+    <p className="text-body text-sm">
       {completedSteps.length === steps.length
         ? "Congratulations! You've completed all steps."
         : 'Welcome to Speakeasy! Follow these steps to create, automate, and publish your SDK.'}
@@ -182,7 +182,7 @@ export const FizzBuzz: Story = {
     ],
     headerContent: () => (
       <>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-body text-sm">
           Write a function that prints the numbers 1 to 100, but for multiples
           of 3 print "Fizz" instead of the number, for multiples of 5 print
           "Buzz", and for numbers which are multiples of both 3 and 5 print

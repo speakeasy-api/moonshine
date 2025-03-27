@@ -158,10 +158,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
       <Timeline.Content>
         <>
           {pageContent.map((content, index) => (
-            <p
-              key={index}
-              className="text-muted-foreground mb-6 text-base leading-normal"
-            >
+            <p key={index} className="text-body mb-6 text-base leading-normal">
               {annotateRandomWordInSentence(content, index)}
             </p>
           ))}

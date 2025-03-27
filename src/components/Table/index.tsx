@@ -86,7 +86,7 @@ const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
           ref={ref}
           className={cn(
             styles.table,
-            'relative grid w-full caption-bottom overflow-x-auto overflow-y-hidden rounded-lg border text-sm [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)]',
+            'relative grid w-full caption-bottom [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)] overflow-x-auto overflow-y-hidden rounded-lg border text-sm',
             tableDepth > 1 && 'rounded-none border-none',
             className
           )}
@@ -196,7 +196,7 @@ function HeaderContainer({
   return (
     <thead
       className={cn(
-        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
         className
       )}
     >
@@ -218,7 +218,7 @@ function Header<T extends object>(
 
   return (
     <HeaderContainer className={props.className}>
-      <tr className="table-header grid border-b [grid-column:1/-1] [grid-template-columns:subgrid]">
+      <tr className="table-header [grid-column:1/-1] grid [grid-template-columns:subgrid] border-b">
         {props.columns.map((column) => (
           <HeaderCell key={column.key.toString()}>{column.header}</HeaderCell>
         ))}
@@ -249,7 +249,7 @@ const BodyContainer = forwardRef<
     <tbody
       ref={ref}
       className={cn(
-        'relative grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        'relative [grid-column:1/-1] grid [grid-template-columns:subgrid]',
         className
       )}
     >
@@ -356,7 +356,7 @@ function RowContainer({ className, children, onClick }: RowContainerProps) {
   return (
     <tr
       className={cn(
-        'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 grid max-w-full border-b transition-colors [grid-column:1/-1] [grid-template-columns:subgrid] last:border-none',
+        'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none',
         onClick && 'cursor-pointer',
         className
       )}
@@ -459,7 +459,7 @@ function RowExpandable<T extends object>({
       {/* This grid stuff is a cute way to make the height animate smoothly when expanding/collapsing */}
       <div
         className={cn(
-          'grid overflow-hidden transition-[grid-template-rows] duration-300 [grid-column:1/-1]',
+          '[grid-column:1/-1] grid overflow-hidden transition-[grid-template-rows] duration-300',
           isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         )}
       >
@@ -487,7 +487,7 @@ function RowGroup<T extends object>({
   return (
     <div
       className={cn(
-        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
         className
       )}
     >
@@ -553,7 +553,7 @@ function NoResultsMessage({
   const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
     <div
       className={cn(
-        'grid [grid-column:1/-1] [grid-template-columns:subgrid]',
+        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
         className
       )}
     >
@@ -590,7 +590,7 @@ function LoadMore<T extends object>({
       <tr
         style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
         className={cn(
-          'absolute bottom-0 left-0 right-0 -z-0 grid min-h-16 max-w-full cursor-pointer items-center border-b opacity-30 transition-colors [grid-column:1/-1] [grid-template-columns:var(--grid-template-columns)]',
+          'absolute right-0 bottom-0 left-0 -z-0 [grid-column:1/-1] grid min-h-16 max-w-full cursor-pointer [grid-template-columns:var(--grid-template-columns)] items-center border-b opacity-30 transition-colors',
           className
         )}
       >
@@ -600,7 +600,7 @@ function LoadMore<T extends object>({
   }
 
   const ButtonWrapper = ({ children }: PropsWithChildren) => (
-    <div className="absolute bottom-0 left-0 right-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
+    <div className="absolute right-0 bottom-0 left-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
       {children}
     </div>
   )
@@ -618,7 +618,7 @@ function LoadMore<T extends object>({
       </RowWrapper>
       <ButtonWrapper>
         <button
-          className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium normal-case transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+          className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium whitespace-nowrap normal-case transition-colors select-none focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
           onClick={handleLoadMore}
         >
           {isLoading ? (
@@ -643,7 +643,7 @@ function HeaderCell({
     <th
       className={cn(
         styles.tableHeader,
-        'text-muted-foreground flex select-none items-center whitespace-nowrap align-middle font-medium',
+        'text-body flex items-center align-middle font-medium whitespace-nowrap select-none',
         className
       )}
     >

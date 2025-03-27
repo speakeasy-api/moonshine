@@ -155,7 +155,7 @@ export function CodeSnippet({
     >
       <div className="snippet-inner bg-card flex w-full flex-row gap-2 rounded-lg p-4">
         {language === 'bash' && (
-          <div className="text-muted-foreground self-center font-mono font-light">
+          <div className="text-body self-center font-mono font-light select-none">
             {promptSymbol ?? '$'}
           </div>
         )}
@@ -202,7 +202,7 @@ export function CodeSnippet({
                     variants={copyIconVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-muted hover:text-foreground"
+                    className="text-body-muted hover:text-body"
                     exit="hidden"
                   >
                     <Icon name="copy" stroke="currentColor" />

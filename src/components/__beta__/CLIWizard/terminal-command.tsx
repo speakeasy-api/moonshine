@@ -88,7 +88,7 @@ export function TerminalCommand({
                     <Copy
                       className={cn(
                         'h-3.5 w-3.5 transition-colors',
-                        'text-body-muted group-hover:text-muted-foreground'
+                        'text-body-muted group-hover:text-body'
                       )}
                     />
                   )}

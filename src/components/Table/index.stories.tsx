@@ -62,7 +62,7 @@ const defaultArgs: ListTableProps = {
       header: 'SDK',
       width: '1fr',
       render: (row) => (
-        <div className="text-muted-foreground flex flex-row items-center gap-1">
+        <div className="text-body flex flex-row items-center gap-1">
           <span>
             {row.org}/{row.name}
           </span>
@@ -74,7 +74,7 @@ const defaultArgs: ListTableProps = {
       header: 'Version',
       width: '0.75fr',
       render: (row) => (
-        <div className="text-muted-foreground">{row.version.toString()}</div>
+        <div className="text-body">{row.version.toString()}</div>
       ),
     },
     {
@@ -82,7 +82,7 @@ const defaultArgs: ListTableProps = {
       header: 'Last Generated',
       width: '1.25fr',
       render: (row) => (
-        <div className="text-muted-foreground">
+        <div className="text-body">
           {formatDistance(row.lastGeneratedAt, new Date(), { addSuffix: true })}
         </div>
       ),
@@ -93,7 +93,7 @@ const defaultArgs: ListTableProps = {
       width: '4fr',
       render: (row) => (
         <div>
-          <a href="#" className="text-muted-foreground">
+          <a href="#" className="text-body">
             github.com/{row.name}/{row.org}
           </a>
         </div>
@@ -168,7 +168,7 @@ export const Grouped: StoryObj<GroupedTableProps> = {
       { key: 'my-other-source', items: sdk.slice(2, 4), count: 2 },
     ],
     renderGroupHeader: (group) => (
-      <div className="text-muted-foreground flex w-full flex-row items-center gap-2 border-b bg-zinc-50 px-4 py-2 font-semibold dark:bg-zinc-900">
+      <div className="text-body flex w-full flex-row items-center gap-2 border-b bg-zinc-50 px-4 py-2 font-semibold dark:bg-zinc-900">
         <Icon name="code" />
         {group.key} ({group.count as number} SDKs total)
       </div>
@@ -246,7 +246,7 @@ export const Customized: StoryObj<ListTableProps> = {
   render: (args) => (
     <Table {...args}>
       <Table.Header columns={args.columns} />
-      <p className={'bg-green-500 p-4 [grid-column:1/-1]'}>
+      <p className={'[grid-column:1/-1] bg-green-500 p-4'}>
         MY CUSTOM COMPONENT
       </p>
       <Table.Body {...args} hasMore={false} />
@@ -262,12 +262,12 @@ export const CustomizedEvenMore: StoryObj<ListTableProps> = {
   render: (args) => (
     <Table {...args}>
       <Table.Header columns={args.columns} />
-      <p className={'bg-green-700 p-4 [grid-column:1/-1]'}>
+      <p className={'[grid-column:1/-1] bg-green-700 p-4'}>
         MY CUSTOM COMPONENT
       </p>
       <Table.Body>
         <Table.Row row={args.data[0]} columns={args.columns} />
-        <p className={'bg-yellow-700 p-4 [grid-column:1/-1]'}>
+        <p className={'[grid-column:1/-1] bg-yellow-700 p-4'}>
           ANOTHER CUSTOM COMPONENT
         </p>
         <Table.Row row={args.data[1]} columns={args.columns} />

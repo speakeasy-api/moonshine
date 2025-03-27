@@ -57,7 +57,7 @@ export const ResponsveSizes: Story = {
       { name: 'George Clooney', imageUrl: 'https://picsum.photos/id/70/200' },
     ],
     avatarSize: {
-      sm: 'small',
+      xs: 'small',
       md: 'medium',
       lg: 'large',
     },
@@ -148,7 +148,7 @@ export const StaticWithResponsiveImages: Story = {
       { name: 'George Clooney', imageUrl: 'https://picsum.photos/id/70/200' },
     ],
     avatarSize: {
-      sm: 'small',
+      xs: 'small',
       md: 'medium',
       lg: 'large',
     },

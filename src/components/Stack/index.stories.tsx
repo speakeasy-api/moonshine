@@ -168,7 +168,7 @@ export const AlignStretchHorizontal: Story = {
       <div key="1" className="bg-card text-card-foreground h-full p-4">
         Short content
       </div>,
-      <div key="2" className="bg-muted text-muted-foreground h-full p-4">
+      <div key="2" className="bg-muted text-body h-full p-4">
         This item has more content so it's taller
         <br />
         Multiple lines
@@ -193,22 +193,13 @@ export const AlignStretchVertical: Story = {
     gap: 2,
     align: 'stretch',
     children: [
-      <div
-        key="1"
-        className="bg-muted text-muted-foreground w-full rounded-md p-4"
-      >
+      <div key="1" className="bg-muted text-body w-full rounded-md p-4">
         Narrow content
       </div>,
-      <div
-        key="2"
-        className="bg-muted text-muted-foreground w-full rounded-md p-4"
-      >
+      <div key="2" className="bg-muted text-body w-full rounded-md p-4">
         This item has more content so it's wider than others
       </div>,
-      <div
-        key="3"
-        className="bg-muted text-muted-foreground w-full rounded-md p-4"
-      >
+      <div key="3" className="bg-muted text-body w-full rounded-md p-4">
         Narrow content
       </div>,
     ],
@@ -230,13 +221,13 @@ export const AlignStretchWithCenter: Story = {
     children: [
       <div
         key="1"
-        className="bg-muted text-muted-foreground flex items-center justify-center rounded-md p-4"
+        className="bg-muted text-body flex items-center justify-center rounded-md p-4"
       >
         Short
       </div>,
       <div
         key="2"
-        className="bg-muted text-muted-foreground flex items-center justify-center rounded-md p-4"
+        className="bg-muted text-body flex items-center justify-center rounded-md p-4"
       >
         This item has
         <br />
@@ -246,7 +237,7 @@ export const AlignStretchWithCenter: Story = {
       </div>,
       <div
         key="3"
-        className="bg-muted text-muted-foreground flex items-center justify-center rounded-md p-4"
+        className="bg-muted text-body flex items-center justify-center rounded-md p-4"
       >
         Short
       </div>,
@@ -379,9 +370,7 @@ export const MediaWithContent: Story = {
       </div>,
       <Stack key="content" direction="vertical" gap={2}>
         <div className="font-semibold">Title</div>
-        <div className="text-muted-foreground">
-          Description text goes here...
-        </div>
+        <div className="text-body">Description text goes here...</div>
         <Stack direction="horizontal" gap={2}>
           <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-sm">
             Tag 1
@@ -423,10 +412,7 @@ export const WrapItems: Story = {
     gap: 2,
     wrap: 'wrap',
     children: Array.from({ length: 10 }, (_, i) => (
-      <div
-        key={i}
-        className="bg-muted text-muted-foreground w-[150px] rounded-md p-4"
-      >
+      <div key={i} className="bg-muted text-body w-[150px] rounded-md p-4">
         Item {i + 1}
       </div>
     )),
@@ -448,7 +434,7 @@ export const ResponsiveWrap: Story = {
     children: Array.from({ length: 6 }, (_, i) => (
       <div
         key={i}
-        className="bg-muted text-muted-foreground w-[120px] flex-1 rounded-md p-4"
+        className="bg-muted text-body w-[120px] flex-1 rounded-md p-4"
       >
         Navigation Item {i + 1}
       </div>
@@ -464,7 +450,7 @@ export const WrapWithAlignment: Story = {
       <div
         key={i}
         className={cn(
-          'bg-muted text-muted-foreground flex w-[150px] items-center justify-center rounded-md p-4',
+          'bg-muted text-body flex w-[150px] items-center justify-center rounded-md p-4',
           i % 2 === 0 ? 'h-[80px]' : 'h-[120px]'
         )}
       >
@@ -486,7 +472,7 @@ export const Breadcrumbs: Story = {
       <div key="separator2">/</div>,
       <div key="category">Electronics</div>,
       <div key="separator3">/</div>,
-      <div key="current" className="text-muted-foreground">
+      <div key="current" className="text-body">
         Laptops
       </div>,
     ],
@@ -540,43 +526,25 @@ export const FooterLayout: Story = {
       <Stack key="company" direction="vertical" gap={4}>
         <div className="text-2xl font-bold">Company</div>
         <Stack direction="vertical" gap={2}>
-          <div className="text-muted-foreground hover:text-foreground">
-            About Us
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Careers
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Press
-          </div>
+          <div className="text-body hover:text-foreground">About Us</div>
+          <div className="text-body hover:text-foreground">Careers</div>
+          <div className="text-body hover:text-foreground">Press</div>
         </Stack>
       </Stack>,
       <Stack key="resources" direction="vertical" gap={4}>
         <div className="text-2xl font-bold">Resources</div>
         <Stack direction="vertical" gap={2}>
-          <div className="text-muted-foreground hover:text-foreground">
-            Blog
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Documentation
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Help Center
-          </div>
+          <div className="text-body hover:text-foreground">Blog</div>
+          <div className="text-body hover:text-foreground">Documentation</div>
+          <div className="text-body hover:text-foreground">Help Center</div>
         </Stack>
       </Stack>,
       <Stack key="legal" direction="vertical" gap={4}>
         <div className="text-2xl font-bold">Legal</div>
         <Stack direction="vertical" gap={2}>
-          <div className="text-muted-foreground hover:text-foreground">
-            Privacy
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Terms
-          </div>
-          <div className="text-muted-foreground hover:text-foreground">
-            Security
-          </div>
+          <div className="text-body hover:text-foreground">Privacy</div>
+          <div className="text-body hover:text-foreground">Terms</div>
+          <div className="text-body hover:text-foreground">Security</div>
         </Stack>
       </Stack>,
       <Stack key="newsletter" direction="vertical" gap={4}>
@@ -620,7 +588,7 @@ export const SidebarNavigation: Story = {
         <div className="bg-muted size-8 rounded-full" />
         <Stack direction="vertical" gap={0}>
           <div className="font-semibold">John Doe</div>
-          <div className="text-muted-foreground text-sm">Admin</div>
+          <div className="text-body text-sm">Admin</div>
         </Stack>
       </Stack>,
       <div key="divider" className="border-border my-2 border-t" />,
@@ -641,9 +609,9 @@ export const SidebarNavigation: Story = {
       ),
       <div key="spacer" className="flex-1" />,
       <Stack key="footer" direction="vertical" gap={2} padding={2}>
-        <div className="text-muted-foreground text-sm">Settings</div>
-        <div className="text-muted-foreground text-sm">Help</div>
-        <div className="text-muted-foreground text-sm">Logout</div>
+        <div className="text-body text-sm">Settings</div>
+        <div className="text-body text-sm">Help</div>
+        <div className="text-body text-sm">Logout</div>
       </Stack>,
     ],
   },
@@ -657,14 +625,10 @@ export const ResponsiveStack: Story = {
     justify: { xs: 'start', md: 'space-between' },
     children: [
       <Stack.Item key="1" grow={{ xs: false, md: true }}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          First
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">First</div>
       </Stack.Item>,
       <Stack.Item key="2" grow={{ xs: false, md: true }}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Second
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Second</div>
       </Stack.Item>,
     ],
   },
@@ -673,13 +637,13 @@ export const ResponsiveStack: Story = {
 export const BasicUsage: Story = {
   args: {
     children: [
-      <div key="1" className="bg-muted text-muted-foreground rounded-md p-4">
+      <div key="1" className="bg-muted text-body rounded-md p-4">
         First
       </div>,
-      <div key="2" className="bg-muted text-muted-foreground rounded-md p-4">
+      <div key="2" className="bg-muted text-body rounded-md p-4">
         Second
       </div>,
-      <div key="3" className="bg-muted text-muted-foreground rounded-md p-4">
+      <div key="3" className="bg-muted text-body rounded-md p-4">
         Third
       </div>,
     ],
@@ -691,19 +655,15 @@ export const StackItemBasic: Story = {
     direction: 'horizontal',
     children: [
       <Stack.Item key="1">
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Fixed width
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Fixed width</div>
       </Stack.Item>,
       <Stack.Item key="2" grow>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
+        <div className="bg-muted text-body rounded-md p-4">
           Grows to fill space
         </div>
       </Stack.Item>,
       <Stack.Item key="3">
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Fixed width
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Fixed width</div>
       </Stack.Item>,
     ],
   },
@@ -715,19 +675,13 @@ export const StackItemGrowCombinations: Story = {
     gap: 2,
     children: [
       <Stack.Item key="1" grow>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Grow
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Grow</div>
       </Stack.Item>,
       <Stack.Item key="2">
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Fixed
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Fixed</div>
       </Stack.Item>,
       <Stack.Item key="3" grow>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Grow
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Grow</div>
       </Stack.Item>,
     ],
   },
@@ -739,12 +693,12 @@ export const ResponsiveStackItem: Story = {
     gap: 2,
     children: [
       <Stack.Item key="1" grow={{ xs: true, md: false }}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
+        <div className="bg-muted text-body rounded-md p-4">
           Grows on xsall screens
         </div>
       </Stack.Item>,
       <Stack.Item key="2" grow={{ xs: false, md: true }}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
+        <div className="bg-muted text-body rounded-md p-4">
           Grows on medium+ screens
         </div>
       </Stack.Item>,
@@ -765,22 +719,13 @@ export const AlignmentDemo: Story = {
     gap: 2,
     align: 'center',
     children: [
-      <div
-        key="1"
-        className="bg-muted text-muted-foreground h-[50px] rounded-md p-4"
-      >
+      <div key="1" className="bg-muted text-body h-[50px] rounded-md p-4">
         Short
       </div>,
-      <div
-        key="2"
-        className="bg-muted text-muted-foreground h-[100px] rounded-md p-4"
-      >
+      <div key="2" className="bg-muted text-body h-[100px] rounded-md p-4">
         Medium
       </div>,
-      <div
-        key="3"
-        className="bg-muted text-muted-foreground h-[150px] rounded-md p-4"
-      >
+      <div key="3" className="bg-muted text-body h-[150px] rounded-md p-4">
         Tall
       </div>,
     ],
@@ -794,20 +739,12 @@ export const JustifyDemo: Story = {
     justify: 'space-between',
     children: [
       <Stack key="left" direction="horizontal" gap={2}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Left 1
-        </div>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Left 2
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Left 1</div>
+        <div className="bg-muted text-body rounded-md p-4">Left 2</div>
       </Stack>,
       <Stack key="right" direction="horizontal" gap={2}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Right 1
-        </div>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Right 2
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Right 1</div>
+        <div className="bg-muted text-body rounded-md p-4">Right 2</div>
       </Stack>,
     ],
   },
@@ -825,32 +762,22 @@ export const NestedStacksDemo: Story = {
         align="center"
       >
         <Stack.Item grow>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
+          <div className="bg-muted text-body rounded-md p-4">
             Header Content
           </div>
         </Stack.Item>
         <Stack direction="horizontal" gap={2}>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
-            Action 1
-          </div>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
-            Action 2
-          </div>
+          <div className="bg-muted text-body rounded-md p-4">Action 1</div>
+          <div className="bg-muted text-body rounded-md p-4">Action 2</div>
         </Stack>
       </Stack>,
       <Stack key="body" direction="horizontal" gap={4}>
         <Stack.Item grow>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
-            Main Content
-          </div>
+          <div className="bg-muted text-body rounded-md p-4">Main Content</div>
         </Stack.Item>
         <Stack direction="vertical" gap={2}>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
-            Sidebar 1
-          </div>
-          <div className="bg-muted text-muted-foreground rounded-md p-4">
-            Sidebar 2
-          </div>
+          <div className="bg-muted text-body rounded-md p-4">Sidebar 1</div>
+          <div className="bg-muted text-body rounded-md p-4">Sidebar 2</div>
         </Stack>
       </Stack>,
     ],
@@ -863,20 +790,12 @@ export const CommonResponsivePatterns: Story = {
     gap: { xs: 2, md: 4 },
     children: [
       <Stack.Item key="main" grow>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Main Content
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Main Content</div>
       </Stack.Item>,
       <Stack key="sidebar" direction="vertical" gap={2}>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Sidebar Item 1
-        </div>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Sidebar Item 2
-        </div>
-        <div className="bg-muted text-muted-foreground rounded-md p-4">
-          Sidebar Item 3
-        </div>
+        <div className="bg-muted text-body rounded-md p-4">Sidebar Item 1</div>
+        <div className="bg-muted text-body rounded-md p-4">Sidebar Item 2</div>
+        <div className="bg-muted text-body rounded-md p-4">Sidebar Item 3</div>
       </Stack>,
     ],
   },

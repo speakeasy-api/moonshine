@@ -367,10 +367,10 @@
   --color-body-muted: var(--color-neutral-400);
 
   /* Link Colors */
-  --color-link: var(--link-default);
+  --color-link: var(--color-link-default);
   --color-link-secondary: var(--color-neutral-200);
-  --color-link-visited-primary: var(--link-visited-primary);
-  --color-link-visited-secondary: var(--link-visited-secondary);
+  --color-link-visited-primary: var(--color-link-visited-primary);
+  --color-link-visited-secondary: var(--color-link-visited-secondary);
 
   /* Animation */
   --keyframes-wiggle: {
@@ -422,6 +422,11 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 
   * {
