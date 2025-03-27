@@ -18,16 +18,14 @@ import {
   SelectValue,
 } from '@/components/Select'
 import { prettyLanguageName, SupportedLanguage } from '@/types'
-import { lineNumbers } from './lineNumbers'
-import { tokenTransitions } from './tokenTransitions'
 import { wordWrapping } from './wordWrap'
-import './index.css'
+import '@/styles/codeSyntax.css'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { AnimatePresence } from 'framer-motion'
 import { Icon } from '@/components/Icon'
 import { Skeleton } from '@/components/Skeleton'
-import { highlightCode } from './utils'
+import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
 import React from 'react'
 
 const copyIconVariants = {
@@ -159,16 +157,10 @@ const CodePlayground = ({
   )
 
   const preHandlers = useMemo<AnnotationHandler[]>(() => {
-    const handlers: AnnotationHandler[] = []
+    // Get the base handlers (lineNumbers and tokenTransitions)
+    const handlers = getCodeHandlers(showLineNumbers, animateOnLanguageChange)
 
-    if (showLineNumbers) {
-      handlers.push(lineNumbers)
-    }
-
-    if (animateOnLanguageChange) {
-      handlers.push(tokenTransitions)
-    }
-
+    // Add wordWrap handler if needed
     if (wordWrap) {
       handlers.push(wordWrapping)
     }
@@ -258,7 +250,7 @@ const CodePlayground = ({
     setTimeout(() => {
       setCopying(false)
     }, 1000)
-  }, [])
+  }, [selectedCode.code])
 
   useEffect(() => {
     if (selectedCode.code) {
