@@ -18,7 +18,11 @@ type Story = StoryObj<typeof ResizablePanel>
 
 faker.seed(42)
 
-const mapPara = (p: string) => <p className="mb-4 text-sm">{p}</p>
+const mapPara = (p: string, index: number) => (
+  <p key={index} className="mb-4 text-sm">
+    {p}
+  </p>
+)
 
 const panelClasses = 'max-h-screen min-h-screen !overflow-y-scroll p-8'
 
