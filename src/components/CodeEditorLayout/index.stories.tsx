@@ -59,25 +59,28 @@ export const Default: Story = {
       <CodeEditor.Pane defaultSize={15} minSize={15}>
         <div className="px-2 py-1">Sidebar</div>
       </CodeEditor.Pane>,
-      <CodeEditor.Pane minSize={50}>
-        <CodeEditor.Tabs>
-          <CodeEditor.Tab
-            id="openapi.yml"
-            active
-            title="openapi.yml"
-            closable
-            dirty
-          />
-          <CodeEditor.Tab id="README.md" title="README.md" closable />
-          <CodeEditor.Tab id="src/index.ts" title="src/index.ts" closable />
-          <CodeEditor.Tab id="src/auth.ts" title="src/auth.ts" closable />
-          <CodeEditor.Tab
-            id="src/utils/models/ancillary/user.ts"
-            title="src/utils/models/ancillary/user.ts"
-          />
-          <CodeEditor.Tab id="package.json" title="package.json" />
-        </CodeEditor.Tabs>
-
+      <CodeEditor.Pane
+        minSize={50}
+        tabs={
+          <CodeEditor.Tabs>
+            <CodeEditor.Tab
+              id="openapi.yml"
+              active
+              title="openapi.yml"
+              closable
+              dirty
+            />
+            <CodeEditor.Tab id="README.md" title="README.md" closable />
+            <CodeEditor.Tab id="src/index.ts" title="src/index.ts" closable />
+            <CodeEditor.Tab id="src/auth.ts" title="src/auth.ts" closable />
+            <CodeEditor.Tab
+              id="src/utils/models/ancillary/user.ts"
+              title="src/utils/models/ancillary/user.ts"
+            />
+            <CodeEditor.Tab id="package.json" title="package.json" />
+          </CodeEditor.Tabs>
+        }
+      >
         <div className="px-2 py-1">
           {Array.from({ length: 40 }).map((_, index) => (
             <div key={index} className="mb-4">
@@ -179,17 +182,19 @@ export const SplitScreen: Story = {
           }}
         />
       </CodeEditor.Pane>,
-      <CodeEditor.Pane>
-        <CodeEditor.Tabs>
-          <CodeEditor.Tab
-            id="cat-breeds"
-            active
-            title="Cat Breeds"
-            closable
-            dirty
-          />
-        </CodeEditor.Tabs>
-
+      <CodeEditor.Pane
+        tabs={
+          <CodeEditor.Tabs className="border-r border-t">
+            <CodeEditor.Tab
+              id="cat-breeds"
+              active
+              title="Cat Breeds"
+              closable
+              dirty
+            />
+          </CodeEditor.Tabs>
+        }
+      >
         <ul className="list-inside list-disc px-2 py-1">
           {Array.from({ length: 40 }).map((_, index) => (
             <li key={index} className="mb-2">
@@ -234,24 +239,27 @@ export const WithTabIcons: Story = {
       <CodeEditor.Pane minSize={15} maxSize={30}>
         <div className="px-2 py-1">Sidebar</div>
       </CodeEditor.Pane>,
-      <CodeEditor.Pane minSize={40}>
-        <CodeEditor.Tabs>
-          <CodeEditor.Tab
-            id="openapi.yml"
-            active
-            title="openapi.yml"
-            closable
-            icon={<Icon name="file" className="h-3 w-3" />}
-            dirty
-          />
-          <CodeEditor.Tab
-            id="README.md"
-            title="README.md"
-            icon={<Icon name="file" className="h-3 w-3" />}
-            closable
-          />
-        </CodeEditor.Tabs>
-
+      <CodeEditor.Pane
+        minSize={40}
+        tabs={
+          <CodeEditor.Tabs>
+            <CodeEditor.Tab
+              id="openapi.yml"
+              active
+              title="openapi.yml"
+              closable
+              icon={<Icon name="file" className="h-3 w-3" />}
+              dirty
+            />
+            <CodeEditor.Tab
+              id="README.md"
+              title="README.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable
+            />
+          </CodeEditor.Tabs>
+        }
+      >
         <div className="px-2 py-1">
           {Array.from({ length: 40 }).map((_, index) => (
             <div key={index} className="mb-4">
@@ -266,57 +274,62 @@ export const WithTabIcons: Story = {
 
 export const TabStates: Story = {
   args: {
+    className: 'border rounded-md',
     children: [
-      <CodeEditor.Pane minSize={100}>
-        <CodeEditor.Tabs>
-          <CodeEditor.Tab
-            id="active-not-dirty-and-invalid"
-            active
-            invalid
-            title="openapi.yml"
-            closable
-            icon={<Icon name="file" className="h-3 w-3" />}
-          />
-          <CodeEditor.Tab
-            id="dirty-not-active-and-invalid"
-            dirty
-            title="README.md"
-            icon={<Icon name="file" className="h-3 w-3" />}
-            closable
-          />
-          <CodeEditor.Tab
-            id="active-not-dirty-and-valid"
-            title="README.md"
-            icon={<Icon name="file" className="h-3 w-3" />}
-            closable
-            invalid
-            dirty
-          />
-          <CodeEditor.Tab
-            id="dirty-not-closable"
-            title="FOO.md"
-            icon={<Icon name="file" className="h-3 w-3" />}
-            closable={false}
-            dirty
-          />
-          <CodeEditor.Tab
-            id="disabled"
-            title="BAR.md"
-            icon={<Icon name="file" className="h-3 w-3" />}
-            disabled
-          />
-          <CodeEditor.Tab
-            id="loading"
-            title={
-              <div className="flex w-full items-center gap-1">
-                <span>https://foo.com/file.json</span>
-                <Icon name="loader-circle" className="h-4 w-4 animate-spin" />
-              </div>
-            }
-            disabled
-            className="cursor-progress"
-          />
-        </CodeEditor.Tabs>
+      <CodeEditor.Pane
+        minSize={100}
+        tabs={
+          <CodeEditor.Tabs>
+            <CodeEditor.Tab
+              id="active-not-dirty-and-invalid"
+              active
+              invalid
+              title="openapi.yml"
+              closable
+              icon={<Icon name="file" className="h-3 w-3" />}
+            />
+            <CodeEditor.Tab
+              id="dirty-not-active-and-invalid"
+              dirty
+              title="README.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable
+            />
+            <CodeEditor.Tab
+              id="active-not-dirty-and-valid"
+              title="README.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable
+              invalid
+              dirty
+            />
+            <CodeEditor.Tab
+              id="dirty-not-closable"
+              title="FOO.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable={false}
+              dirty
+            />
+            <CodeEditor.Tab
+              id="disabled"
+              title="BAR.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              disabled
+            />
+            <CodeEditor.Tab
+              id="loading"
+              title={
+                <div className="flex w-full items-center gap-1">
+                  <span>https://foo.com/file.json</span>
+                  <Icon name="loader-circle" className="h-4 w-4 animate-spin" />
+                </div>
+              }
+              disabled
+              className="cursor-progress"
+            />
+          </CodeEditor.Tabs>
+        }
+      >
         <div className="px-2 py-1">
           {Array.from({ length: 40 }).map((_, index) => (
             <div key={index} className="mb-4">
@@ -355,6 +368,57 @@ export const NoTabs: Story = {
       </CodeEditor.Pane>,
       <CodeEditor.Pane minSize={100}>
         <div className="p-2">
+          {Array.from({ length: 40 }).map((_, index) => (
+            <div key={index} className="mb-4">
+              {faker.lorem.paragraph()}
+            </div>
+          ))}
+        </div>
+      </CodeEditor.Pane>,
+    ],
+  },
+}
+
+export const CustomTabElement: Story = {
+  args: {
+    children: [
+      <CodeEditor.Pane
+        minSize={100}
+        tabs={
+          <CodeEditor.Tabs className="flex items-center">
+            <CodeEditor.Tab
+              id="active-not-dirty-and-invalid"
+              active
+              invalid
+              title="openapi.yml"
+              closable
+              icon={<Icon name="file" className="h-3 w-3" />}
+            />
+            <CodeEditor.Tab
+              id="dirty-not-active-and-invalid"
+              dirty
+              title="README.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable
+            />
+            <CodeEditor.Tab
+              id="active-not-dirty-and-valid"
+              title="README.md"
+              icon={<Icon name="file" className="h-3 w-3" />}
+              closable
+              invalid
+              dirty
+            />
+            <CodeEditor.CustomTabElement className="ml-auto mr-4 flex h-full w-fit items-center">
+              <div className="flex cursor-pointer flex-row items-center gap-1">
+                <Icon name="plus" className="size-4" />
+                <span className="text-sm font-semibold">New tab</span>
+              </div>
+            </CodeEditor.CustomTabElement>
+          </CodeEditor.Tabs>
+        }
+      >
+        <div className="px-2 py-1">
           {Array.from({ length: 40 }).map((_, index) => (
             <div key={index} className="mb-4">
               {faker.lorem.paragraph()}
