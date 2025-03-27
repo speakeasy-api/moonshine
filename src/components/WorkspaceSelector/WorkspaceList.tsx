@@ -64,7 +64,7 @@ export function WorkspaceList({
       />
       {filteredWorkspaces.length === 0 ? (
         <div className="flex flex-grow items-center justify-center">
-          <p className="text-muted-foreground">
+          <p className="text-body">
             {search.length > 0
               ? 'No workspaces found'
               : 'No workspaces in this organization'}
