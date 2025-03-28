@@ -3,6 +3,7 @@ import { userEvent } from '@storybook/test'
 import { CodeSnippet } from '.'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+import { InnerLine } from 'codehike/code'
 
 const meta: Meta<typeof CodeSnippet> = {
   component: CodeSnippet,
@@ -211,5 +212,53 @@ console.log("Hello, world!")
 console.log("Hello, world!")`,
     language: 'javascript',
     showLineNumbers: true,
+  },
+}
+
+export const CustomHandler: Story = {
+  args: {
+    code: `function greet(name) {
+  // Say hello to the user
+  console.log("Hello, " + name);
+  return true;
+}`,
+    language: 'javascript',
+    copyable: true,
+    showLineNumbers: true,
+    customHandlers: [
+      {
+        // Always give your handler a descriptive name for debugging
+        name: 'simple-line-highlight',
+
+        /**
+         * Custom Line component that highlights line 3 with a background color
+         *
+         * The Line handler receives these important props:
+         * - lineNumber: The 1-based line number
+         * - children: The content of the line
+         * - indentation: The number of spaces for indentation
+         */
+        Line: (props) => {
+          // Check if this is the line to highlight (line 3)
+          if (props.lineNumber === 3) {
+            return (
+              <div
+                style={{
+                  backgroundColor: 'rgba(255, 230, 180, 0.3)',
+                  borderRadius: '4px',
+                  padding: '2px 0',
+                }}
+              >
+                {/* InnerLine with merge is critical for proper handler composition */}
+                <InnerLine merge={props} />
+              </div>
+            )
+          }
+
+          // For other lines, just use InnerLine with all props
+          return <InnerLine merge={props} />
+        },
+      },
+    ],
   },
 }
