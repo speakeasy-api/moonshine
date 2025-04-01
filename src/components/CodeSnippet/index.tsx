@@ -187,7 +187,7 @@ export function CodeSnippet({
           <div
             className={cn(
               'ml-auto mr-1 flex self-center text-white',
-              isMultiline && 'mt-1 self-start'
+              isMultiline && 'mt-1 h-4 w-6 self-start'
             )}
           >
             <button
