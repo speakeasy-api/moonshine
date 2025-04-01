@@ -52,6 +52,10 @@ interface CodeSnippetProps {
    * Additional CSS classes to apply to the code snippet.
    */
   className?: string
+  /**
+   * Custom annotation handlers to be added to the default handlers.
+   */
+  customHandlers?: AnnotationHandler[]
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -78,6 +82,7 @@ export function CodeSnippet({
   shimmer = false,
   className,
   showLineNumbers = false,
+  customHandlers = [],
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
@@ -113,11 +118,11 @@ export function CodeSnippet({
   const { themeElement } = useConfig()
   const theme = useTailwindTheme(themeElement)
 
-  // Get the code handlers for line numbers and animations
-  const preHandlers = useMemo<AnnotationHandler[]>(
-    () => getCodeHandlers(showLineNumbers, true),
-    [showLineNumbers]
-  )
+  // Get the code handlers for line numbers and animations, then add custom handlers
+  const preHandlers = useMemo<AnnotationHandler[]>(() => {
+    const defaultHandlers = getCodeHandlers(showLineNumbers, true)
+    return [...defaultHandlers, ...customHandlers]
+  }, [showLineNumbers, customHandlers])
 
   // Directly highlight the code when code or language changes
   useEffect(() => {
