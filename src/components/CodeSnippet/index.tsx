@@ -8,7 +8,11 @@ import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
-import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
+import {
+  highlightCode,
+  getCodeHandlers,
+  removeCodeHikeAnnotations,
+} from '@/lib/codeUtils'
 
 interface CodeSnippetProps {
   /**
@@ -135,8 +139,9 @@ export function CodeSnippet({
   }, [code, language])
 
   const handleCopy = useCallback(() => {
+    const cleanedCode = removeCodeHikeAnnotations(code)
     setCopying(true)
-    navigator.clipboard.writeText(code)
+    navigator.clipboard.writeText(cleanedCode)
     setTimeout(() => {
       setCopying(false)
       onSelectOrCopy?.()
