@@ -262,3 +262,19 @@ export const CustomHandler: Story = {
     ],
   },
 }
+
+export const WithAnnotations: Story = {
+  args: {
+    code: `function greet(name) {
+      // Say hello to the user
+      console.log("Hello, " + name);
+
+      # !callout
+      # This is a callout
+      console.log("Hello, " + name);
+    }`,
+    language: 'javascript',
+    copyable: true,
+    showLineNumbers: true,
+  },
+}

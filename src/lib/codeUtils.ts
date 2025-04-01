@@ -12,14 +12,22 @@ export async function highlightCode(
   code: string,
   language: SupportedLanguage | string
 ) {
+  // Clean the code by removing annotations
+  const cleanCode = removeCodeHikeAnnotations(code)
+
   const rawCode: RawCode = {
-    value: code,
+    value: code, // Use original code for highlighting
     lang: isProgrammingLanguage(language)
       ? getMappedLanguage(language)
       : language,
     meta: '',
   }
-  return highlight(rawCode, CODEHIKE_THEME)
+  const highlighted = await highlight(rawCode, CODEHIKE_THEME)
+
+  return {
+    ...highlighted,
+    code: cleanCode, // Return the clean code without annotations
+  }
 }
 
 /**

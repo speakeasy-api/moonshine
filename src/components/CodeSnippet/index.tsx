@@ -8,11 +8,7 @@ import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
-import {
-  highlightCode,
-  getCodeHandlers,
-  removeCodeHikeAnnotations,
-} from '@/lib/codeUtils'
+import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
 
 interface CodeSnippetProps {
   /**
@@ -139,14 +135,13 @@ export function CodeSnippet({
   }, [code, language])
 
   const handleCopy = useCallback(() => {
-    const cleanedCode = removeCodeHikeAnnotations(code)
     setCopying(true)
-    navigator.clipboard.writeText(cleanedCode)
+    navigator.clipboard.writeText(highlightedCodeState?.code ?? code)
     setTimeout(() => {
       setCopying(false)
       onSelectOrCopy?.()
     }, 1000)
-  }, [code, onSelectOrCopy])
+  }, [highlightedCodeState?.code, code])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
