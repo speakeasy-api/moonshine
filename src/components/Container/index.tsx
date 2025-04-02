@@ -3,7 +3,7 @@ import { cn, getResponsiveClasses } from '@/lib/utils'
 import { Padding, ResponsiveValue } from '@/types'
 import { ReactNode } from 'react'
 
-interface ContainerProps {
+export interface ContainerProps {
   children: ReactNode
   flex?: boolean
   padding?: ResponsiveValue<Padding>

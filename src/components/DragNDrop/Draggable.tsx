@@ -19,7 +19,7 @@ export interface DraggableChildrenProps {
   node: MutableRefObject<HTMLElement | null> | null
 }
 
-interface DraggableProps<TData> extends DndMonitorListener {
+export interface DraggableProps<TData> extends DndMonitorListener {
   /**
    * The children to render.
    *

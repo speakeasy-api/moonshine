@@ -2,7 +2,7 @@ import * as svgs from './svgs'
 
 type LogoVariant = 'wordmark' | 'icon'
 
-interface LogoProps extends React.SVGProps<SVGSVGElement> {
+export interface LogoProps extends React.SVGProps<SVGSVGElement> {
   variant: LogoVariant
   muted?: boolean
 }

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Orientation } from '@/types'
 
-interface SeparatorProps {
+export interface SeparatorProps {
   orientation?: Orientation
   className?: string
 }

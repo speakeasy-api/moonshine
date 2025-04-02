@@ -10,7 +10,7 @@ import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
 import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
 
-interface CodeSnippetProps {
+export interface CodeSnippetProps {
   /**
    * The code to display.
    */

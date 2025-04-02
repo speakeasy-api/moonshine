@@ -14,7 +14,7 @@ type AllExternalIcons =
   | 'terraform'
 const supportedExternals = ['github', 'npm', 'rubygems']
 
-interface ExternalPillProps {
+export interface ExternalPillProps {
   href: string
   icon: AllExternalIcons
   text: React.ReactNode

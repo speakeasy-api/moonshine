@@ -18,7 +18,7 @@ export interface SubnavItem {
   [key: string]: unknown
 }
 
-interface SubnavProps {
+export interface SubnavProps {
   items: SubnavItem[]
   renderItem: (item: SubnavItem) => React.ReactNode
   className?: string
@@ -65,11 +65,7 @@ const useDebounce = (callback: () => void, delay: number) => {
   }, [callback, delay])
 }
 
-export function Subnav({
-  items,
-  renderItem,
-  className,
-}: SubnavProps & { className?: string }) {
+export function Subnav({ items, renderItem, className }: SubnavProps) {
   const [activeItem, setActiveItem] = useState<string | null>(
     items.find((item) => item.active)?.href ?? null
   )

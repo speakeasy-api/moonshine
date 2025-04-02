@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
 import { Link, LinkProps } from '../Link'
 
-interface PageHeaderProps extends PropsWithChildren {
+export interface PageHeaderProps extends PropsWithChildren {
   className?: string
 }
 

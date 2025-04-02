@@ -54,7 +54,7 @@ interface ComboboxBaseProps<T extends string = string> {
   iconOnly?: boolean
 }
 
-type ComboboxProps<T extends string = string> = ComboboxBaseProps<T> &
+export type ComboboxProps<T extends string = string> = ComboboxBaseProps<T> &
   ComboboxDataProps<T>
 
 export function Combobox<T extends string = string>({

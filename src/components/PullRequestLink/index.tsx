@@ -5,7 +5,7 @@ import { GitPullRequest, GitPullRequestClosed, Merge } from 'lucide-react'
 
 type Status = 'open' | 'closed' | 'merged'
 
-interface PullRequestLinkProps {
+export interface PullRequestLinkProps {
   href: string
   prNumber?: number
   status?: Status
