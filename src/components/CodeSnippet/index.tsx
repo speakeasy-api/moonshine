@@ -136,12 +136,12 @@ export function CodeSnippet({
 
   const handleCopy = useCallback(() => {
     setCopying(true)
-    navigator.clipboard.writeText(code)
+    navigator.clipboard.writeText(highlightedCodeState?.code ?? code)
     setTimeout(() => {
       setCopying(false)
       onSelectOrCopy?.()
     }, 1000)
-  }, [code, onSelectOrCopy])
+  }, [highlightedCodeState?.code, code])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
@@ -182,7 +182,7 @@ export function CodeSnippet({
           <div
             className={cn(
               'ml-auto mr-1 flex self-center text-white',
-              isMultiline && 'mt-1 self-start'
+              isMultiline && 'mt-1 h-4 w-6 self-start'
             )}
           >
             <button

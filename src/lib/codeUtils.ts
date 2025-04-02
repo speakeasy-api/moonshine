@@ -12,14 +12,22 @@ export async function highlightCode(
   code: string,
   language: SupportedLanguage | string
 ) {
+  // Clean the code by removing annotations
+  const cleanCode = removeCodeHikeAnnotations(code)
+
   const rawCode: RawCode = {
-    value: code,
+    value: code, // Use original code for highlighting
     lang: isProgrammingLanguage(language)
       ? getMappedLanguage(language)
       : language,
     meta: '',
   }
-  return highlight(rawCode, CODEHIKE_THEME)
+  const highlighted = await highlight(rawCode, CODEHIKE_THEME)
+
+  return {
+    ...highlighted,
+    code: cleanCode, // Return the clean code without annotations
+  }
 }
 
 /**
@@ -82,7 +90,7 @@ export function getMappedLanguage(
 /**
  * Helper to check if a language is in our supported set
  */
-function isProgrammingLanguage(
+export function isProgrammingLanguage(
   language: string
 ): language is ProgrammingLanguage {
   return [
@@ -100,4 +108,50 @@ function isProgrammingLanguage(
     'swift',
     'terraform',
   ].includes(language)
+}
+
+const ANNOTATION_TYPES = [
+  'callout',
+  'className',
+  'hover',
+  'collapse',
+  'diff',
+  'focus',
+  'fold',
+  'link',
+  'mark',
+  'tooltip',
+]
+
+const ANNOTATION_REGEX = new RegExp(
+  `^\\s*#\\s*!(${ANNOTATION_TYPES.join('|')})(\\s*$begin:math:text$[^)]*\\$end:math:text$)?.*$`
+)
+
+/**
+ * Removes CodeHike annotations from the code
+ * Useful for copying code / excluding annotations from clipboard
+ * @param code - The code string containing CodeHike annotations
+ * @returns Clean code string without annotations
+ */
+export function removeCodeHikeAnnotations(code: string): string {
+  const lines = code.split('\n')
+  const result: string[] = []
+  let skipEmpty = false
+
+  for (const line of lines) {
+    if (ANNOTATION_REGEX.test(line)) {
+      skipEmpty = true
+      continue
+    }
+
+    if (line.trim() === '' && skipEmpty) {
+      skipEmpty = false
+      continue
+    }
+
+    result.push(line)
+    skipEmpty = false
+  }
+
+  return result.join('\n')
 }
