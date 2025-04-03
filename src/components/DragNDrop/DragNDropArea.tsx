@@ -1,7 +1,7 @@
 import { CollisionDetection, DndContext, Modifier } from '@dnd-kit/core'
 import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 
-interface DragNDropAreaProps {
+export interface DragNDropAreaProps {
   children: React.ReactNode
 
   modifiers?: Modifier[]

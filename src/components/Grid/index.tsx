@@ -7,7 +7,7 @@ import { cn, getResponsiveClasses } from '@/lib/utils'
 import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
 import { isValidElement, ReactElement } from 'react'
 
-interface GridProps {
+export interface GridProps {
   /**
    * The number of columns in the grid.
    * @default 1

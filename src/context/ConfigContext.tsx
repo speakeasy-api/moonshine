@@ -12,7 +12,7 @@ export const ConfigContext = createContext<ConfigContextType | undefined>(
   undefined
 )
 
-interface MoonshineConfigProviderProps extends ConfigContextType {
+export interface MoonshineConfigProviderProps extends ConfigContextType {
   children: React.ReactNode
 }
 

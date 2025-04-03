@@ -33,7 +33,7 @@ const alertVariants = cva<{
   }
 )
 
-type AlertProps = {
+export type AlertProps = {
   variant: NonNullable<VariantProps<typeof alertVariants>['variant']>
   children: React.ReactNode
   inline?: boolean

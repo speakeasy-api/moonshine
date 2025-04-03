@@ -1,40 +1,58 @@
 import './global.css'
 
 export { isGroupOf } from '@/lib/typeUtils'
-export { Grid } from '@/components/Grid'
-export { Stack } from '@/components/Stack'
+export { Grid, type GridProps } from '@/components/Grid'
+export { Stack, type StackProps } from '@/components/Stack'
 export { Button, type ButtonProps } from '@/components/Button'
-export { Card } from '@/components/Card'
-export { Icon } from '@/components/Icon'
+export { Card, type CardProps } from '@/components/Card'
+export { Icon, type IconProps } from '@/components/Icon'
 export { isIconName } from '@/components/Icon/isIconName'
 export { type IconName } from '@/components/Icon/names'
-export { Separator } from '@/components/Separator'
-export { Badge } from '@/components/Badge'
-export { Heading } from '@/components/Heading'
-export { Text } from '@/components/Text'
+export { Separator, type SeparatorProps } from '@/components/Separator'
+export { Badge, type BadgeProps } from '@/components/Badge'
+export { Heading, type HeadingProps } from '@/components/Heading'
+export { Text, type TextProps } from '@/components/Text'
 export { Score, type ScoreValue } from '@/components/Score'
-export { Logo } from '@/components/Logo'
-export { Container } from '@/components/Container'
-export { Combobox } from '@/components/Combobox'
-export { TargetLanguageIcon } from '@/components/TargetLanguageIcon'
-export { UserAvatar } from '@/components/UserAvatar'
-export { Subnav, type SubnavItem } from '@/components/Subnav'
-export { Breadcrumb } from '@/components/Breadcrumb'
-export { CodeSnippet } from '@/components/CodeSnippet'
-export { LoggedInUserMenu } from '@/components/LoggedInUserMenu'
-export { PromptInput } from '@/components/PromptInput'
+export { Logo, type LogoProps } from '@/components/Logo'
+export { Container, type ContainerProps } from '@/components/Container'
+export { Combobox, type ComboboxProps } from '@/components/Combobox'
+export {
+  TargetLanguageIcon,
+  type TargetLanguageIconProps,
+} from '@/components/TargetLanguageIcon'
+export { UserAvatar, type UserAvatarProps } from '@/components/UserAvatar'
+export { Subnav, type SubnavItem, type SubnavProps } from '@/components/Subnav'
+export { Breadcrumb, type BreadcrumbProps } from '@/components/Breadcrumb'
+export { CodeSnippet, type CodeSnippetProps } from '@/components/CodeSnippet'
+export {
+  LoggedInUserMenu,
+  type LoggedInUserProps,
+} from '@/components/LoggedInUserMenu'
+export {
+  PromptInput,
+  type PromptInputProps,
+  type Suggestion,
+  type Attachment,
+} from '@/components/PromptInput'
 export {
   WorkspaceSelector,
   type Org,
   type Workspace,
+  type WorkspaceSelectorProps,
 } from '@/components/WorkspaceSelector'
-export { Wizard } from '@/components/Wizard'
+export { Wizard, type WizardProps } from '@/components/Wizard'
 export { type WizardStep, type WizardCommand } from '@/components/Wizard/types'
-export { MoonshineConfigProvider } from '@/context/ConfigContext'
+export {
+  MoonshineConfigProvider,
+  type MoonshineConfigProviderProps,
+} from '@/context/ConfigContext'
 export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
-export { GradientCircle } from '@/components/GradientCircle'
-export { Alert } from '@/components/Alert'
-export { Tabs, type TabProps, type TabsProps } from '@/components/Tabs'
+export {
+  GradientCircle,
+  type GradientCircleProps,
+} from '@/components/GradientCircle'
+export { Alert, type AlertProps } from '@/components/Alert'
+export { Tabs, type TabProps } from '@/components/Tabs'
 export {
   Table,
   type TableProps,
@@ -47,11 +65,17 @@ export {
   supportedLanguages,
   isSupportedLanguage,
 } from '@/types'
-export { PageHeader } from '@/components/PageHeader'
+export { PageHeader, type PageHeaderProps } from '@/components/PageHeader'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
-export { ExternalPill } from '@/components/ExternalPill'
-export { LanguageIndicator } from '@/components/LanguageIndicator'
-export { PullRequestLink } from '@/components/PullRequestLink'
+export { ExternalPill, type ExternalPillProps } from '@/components/ExternalPill'
+export {
+  LanguageIndicator,
+  type LanguageIndicatorProps,
+} from '@/components/LanguageIndicator'
+export {
+  PullRequestLink,
+  type PullRequestLinkProps,
+} from '@/components/PullRequestLink'
 export {
   Select,
   SelectGroup,
@@ -79,19 +103,46 @@ export {
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
-export { Navbar } from '@/components/Navbar'
+export { Navbar, type NavbarProps, type NavItem } from '@/components/Navbar'
 export { Switch, type SwitchProps } from '@/components/Switch'
 
-export { ActionBar } from '@/components/ActionBar'
-export { Key, KeyHint } from '@/components/KeyHint'
-export { HighlightedText } from '@/components/HighlightedText'
-export { DragNDropArea } from '@/components/DragNDrop/DragNDropArea'
+export { ActionBar, type ActionBarProps } from '@/components/ActionBar'
+export {
+  Key,
+  type KeyProps,
+  KeyHint,
+  type KeyHintProps,
+} from '@/components/KeyHint'
+export {
+  HighlightedText,
+  type HighlightedTextProps,
+} from '@/components/HighlightedText'
+export {
+  DragNDropArea,
+  type DragNDropAreaProps,
+} from '@/components/DragNDrop/DragNDropArea'
 export { DragOverlay } from '@/components/DragNDrop/DragOverlay'
-export { Draggable } from '@/components/DragNDrop/Draggable'
-export { Droppable } from '@/components/DragNDrop/Droppable'
-export { ResizablePanel } from '@/components/ResizablePanel'
-export { CodePlayground } from '@/components/CodePlayground'
-export { CodeEditor } from '@/components/CodeEditorLayout'
+export {
+  Draggable,
+  type DraggableProps,
+} from '@/components/DragNDrop/Draggable'
+export {
+  Droppable,
+  type DroppableProps,
+} from '@/components/DragNDrop/Droppable'
+export {
+  ResizablePanel,
+  type ResizablePanelProps,
+} from '@/components/ResizablePanel'
+export {
+  CodePlayground,
+  type CodePlaygroundProps,
+  type CodePlaygroundSnippets,
+} from '@/components/CodePlayground'
+export {
+  CodeEditor,
+  type CodeEditorLayoutProps,
+} from '@/components/CodeEditorLayout'
 export {
   Command,
   CommandGroup,

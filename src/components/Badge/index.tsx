@@ -13,7 +13,7 @@ type BadgeVariants =
 
 type BadgeSizes = 'xs' | 'sm' | 'md' | 'lg'
 
-interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   as?: React.ElementType
   variant?: BadgeVariants

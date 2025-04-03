@@ -9,7 +9,7 @@ interface DroppableData {
   node: MutableRefObject<HTMLElement | null>
 }
 
-interface DroppableProps<TData extends Record<string, unknown>> {
+export interface DroppableProps<TData extends Record<string, unknown>> {
   /**
    * A function that returns a React node or a React node.
    * If a function is provided, it will be called with the droppable data.

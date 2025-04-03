@@ -18,13 +18,12 @@ const modifierMap: Record<Modifier, string> = {
   esc: 'Esc',
 }
 
-export function Key({
-  value,
-  className,
-}: {
+export interface KeyProps {
   value: string
   className?: string
-}) {
+}
+
+export function Key({ value, className }: KeyProps) {
   return (
     <span
       className={cn(
@@ -67,7 +66,7 @@ function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
   )
 }
 
-interface KeyHintProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface KeyHintProps extends React.HTMLAttributes<HTMLDivElement> {
   modifiers: Modifier[]
   keys: string[]
   actionText: string
