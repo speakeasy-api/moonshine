@@ -154,7 +154,7 @@ export const Slim = ({
         <div className="mt-auto cursor-pointer">
           <TooltipProvider>
             <Tooltip delayDuration={0}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button variant="ghost" size="sm" onClick={onCollapse}>
                   <Icon name="panel-left" className="text-body-muted" />
                 </Button>
