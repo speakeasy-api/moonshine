@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { isValidElement, ReactElement, ReactNode, Children } from 'react'
 
-interface BreadcrumbProps {
+export interface BreadcrumbProps {
   children: ReactElement<typeof BreadcrumbItem>[]
   separator?: ReactNode
   className?: string

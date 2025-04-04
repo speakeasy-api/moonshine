@@ -26,7 +26,7 @@ type TailwindAlign =
   | 'items-stretch'
 type TailwindDirection = 'flex-row' | 'flex-col'
 
-interface StackProps {
+export interface StackProps {
   children: React.ReactNode
 
   /** Specify the orientation for the stack container */

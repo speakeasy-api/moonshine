@@ -3,7 +3,7 @@ import { Size } from '@/types'
 import './gradientCircle.css'
 import { useMemo } from 'react'
 
-interface GradientCircleProps {
+export interface GradientCircleProps {
   name: string
   size?: Size
   transition?: boolean

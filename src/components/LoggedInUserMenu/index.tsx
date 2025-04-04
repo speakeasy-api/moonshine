@@ -12,7 +12,7 @@ import { UserAvatarProps } from '../UserAvatar'
 import React, { Children, Fragment, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
-interface LoggedInUserProps extends UserAvatarProps {
+export interface LoggedInUserProps extends UserAvatarProps {
   email: string
   children?: ReactNode | ReactNode[]
   onSignOut: () => void

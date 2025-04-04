@@ -33,9 +33,9 @@
     "storybook": "pnpm generate-tailwind-safelist && storybook dev -p 6006",
     "build-storybook": "pnpm generate-tailwind-safelist && storybook build",
     "chromatic": "chromatic",
-    "lint": "pnpm eslint",
-    "lint:fix": "pnpm eslint --fix",
-    "test": "vitest",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "vitest"
     "generate-tailwind-safelist": "tsx ./scripts/generate-tailwind-safelist.ts"
   },
   "author": "Speakeasy",

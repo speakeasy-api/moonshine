@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'
 import { SupportedLanguage } from '@/types'
 
-interface LanguageIndicatorProps {
+export interface LanguageIndicatorProps {
   language: SupportedLanguage
   className?: string
   indicatorOnly?: boolean

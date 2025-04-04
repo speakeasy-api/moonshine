@@ -4,7 +4,7 @@ import { CodeSnippet, Heading, Text } from '@/index'
 import { useMemo } from 'react'
 import { WizardStep } from './types'
 
-interface WizardProps {
+export interface WizardProps {
   /**
    * The steps to display in the wizard
    */

@@ -10,7 +10,7 @@ import { Icon } from '../Icon'
 import { useConfig } from '@/hooks/useConfig'
 import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
 
-interface CodeSnippetProps {
+export interface CodeSnippetProps {
   /**
    * The code to display.
    */
@@ -136,12 +136,12 @@ export function CodeSnippet({
 
   const handleCopy = useCallback(() => {
     setCopying(true)
-    navigator.clipboard.writeText(code)
+    navigator.clipboard.writeText(highlightedCodeState?.code ?? code)
     setTimeout(() => {
       setCopying(false)
       onSelectOrCopy?.()
     }, 1000)
-  }, [code, onSelectOrCopy])
+  }, [highlightedCodeState?.code, code])
 
   const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
     event.preventDefault()
@@ -181,8 +181,8 @@ export function CodeSnippet({
         {copyable && (
           <div
             className={cn(
-              'mr-1 ml-auto flex self-center text-white',
-              isMultiline && 'mt-1 self-start'
+              'ml-auto mr-1 flex self-center text-white',
+              isMultiline && 'mt-1 h-4 w-6 self-start'
             )}
           >
             <button

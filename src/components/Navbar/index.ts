@@ -1,4 +1,4 @@
-import { Slim } from './Slim'
+import { Slim, SlimProps } from './Slim'
 
 const Navbar = Object.assign(Slim, {
   /**
@@ -9,4 +9,5 @@ const Navbar = Object.assign(Slim, {
   // TODO: Add the full Navbar component here once we have ported across from the registry
 })
 
-export { Navbar }
+export { Navbar, type SlimProps as NavbarProps }
+export { type NavItem } from './Slim'

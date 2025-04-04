@@ -22,7 +22,7 @@ export interface Attachment {
   onRemove?: (id: string) => void
 }
 
-interface PromptInputProps {
+export interface PromptInputProps {
   prompt?: string
   placeholder: string
   onChange: (prompt: string) => void
