@@ -35,7 +35,7 @@
     "chromatic": "chromatic",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "test": "vitest"
+    "test": "vitest",
     "generate-tailwind-safelist": "tsx ./scripts/generate-tailwind-safelist.ts"
   },
   "author": "Speakeasy",
