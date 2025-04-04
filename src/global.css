@@ -1,7 +1,14 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
-@source "../tailwind_safelist.txt";
+@source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}flex-{row,col,nowrap,wrap,wrap-reverse,none,1,auto,initial,grow,shrink}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}justify-{start,center,end,between,evenly}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}items-{start,center,end,stretch,baseline}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}size-{8,12,16,24,32}");
 
 @custom-variant dark (&:is(.dark *));
 

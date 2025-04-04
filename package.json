@@ -29,14 +29,13 @@
     "build": "pnpm clean && vite build",
     "build:watch": "vite build --watch --mode development",
     "typecheck": "tsc --noEmit --skipLibCheck",
-    "prepack": "pnpm generate-tailwind-safelist && pnpm build",
-    "storybook": "pnpm generate-tailwind-safelist && storybook dev -p 6006",
-    "build-storybook": "pnpm generate-tailwind-safelist && storybook build",
+    "prepack": "pnpm build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "chromatic": "chromatic",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "test": "vitest",
-    "generate-tailwind-safelist": "tsx ./scripts/generate-tailwind-safelist.ts"
+    "test": "vitest"
   },
   "author": "Speakeasy",
   "license": "ISC",
@@ -60,7 +59,7 @@
     "@storybook/react-vite": "^8.6.9",
     "@storybook/test": "^8.6.9",
     "@storybook/theming": "^8.6.9",
-    "@tailwindcss/vite": "^4.0.15",
+    "@tailwindcss/vite": "^4.1.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@types/dom-view-transitions": "^1.0.5",
@@ -122,7 +121,7 @@
     "react-resizable-panels": "^2.1.7",
     "react-virtuoso": "^4.12.0",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss": "^4.0.15",
+    "tailwindcss": "^4.1.2",
     "tw-animate-css": "^1.2.4"
   }
 }
