@@ -1,3 +1,5 @@
+@reference '../../global.css';
+
 @property --from-color {
   syntax: '<color>';
   inherits: false;

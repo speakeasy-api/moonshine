@@ -54,12 +54,12 @@ export function LanguageIndicator({
   indicatorOnly = false,
 }: LanguageIndicatorProps) {
   return (
-    <div className={cn('gap flex select-none items-center gap-2', className)}>
+    <div className={cn('gap flex items-center gap-2 select-none', className)}>
       <div
         className={`mx-1 h-2 w-2 rounded-full ${languageColorMap[language]}`}
       />
       {!indicatorOnly && (
-        <span className="text-muted-foreground font-medium">
+        <span className="text-body font-medium">
           {languageLabelMap[language]}
         </span>
       )}

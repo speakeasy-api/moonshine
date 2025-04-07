@@ -149,7 +149,7 @@ const CodeEditorTabs = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tabs bg-background flex w-full flex-row overflow-y-hidden overflow-x-scroll border-b [&::-webkit-scrollbar]:hidden',
+        'code-editor-tabs bg-background flex w-full flex-row overflow-x-scroll overflow-y-hidden border-b [&::-webkit-scrollbar]:hidden',
         className
       )}
     >
@@ -206,7 +206,7 @@ const CodeEditorTab = ({
     () => (
       <button
         className={cn(
-          'text-muted hover:text-foreground ml-auto h-full rounded-sm px-0.5',
+          'text-body-muted hover:text-foreground ml-auto h-full rounded-sm px-0.5',
           hoveredCloseIntent && 'bg-background/80'
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
@@ -222,9 +222,9 @@ const CodeEditorTab = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tab bg-background hover:bg-muted/50 flex w-fit cursor-pointer select-none items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pl-3 pr-2 text-sm first-of-type:border-l-0',
+        'code-editor-tab bg-background hover:bg-muted/50 flex w-fit cursor-pointer items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pr-2 pl-3 text-sm select-none first-of-type:border-l-0',
         active && 'text-foreground bg-foreground/5 hover:bg-foreground/10',
-        !active && 'text-muted',
+        !active && 'text-body-muted',
         grow && 'flex-1',
         dirty && 'italic',
         invalid && 'text-red-700 dark:text-red-400',
@@ -245,7 +245,7 @@ const CodeEditorTab = ({
       {dirty && (
         <span
           onMouseEnter={() => setHoveredCloseIntent(true)}
-          className="text-muted ml-auto flex h-full w-3 items-center justify-center text-xs"
+          className="text-body-muted ml-auto flex h-full w-3 items-center justify-center text-xs"
         >
           {!hoveredCloseIntent ? (
             <Icon name="circle" className="fill-foreground h-2.5 w-2.5" />

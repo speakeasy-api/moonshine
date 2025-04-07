@@ -30,7 +30,7 @@ export const Default: Story = {
         <DropdownMenuLabel>
           <Stack direction="vertical" gap={1}>
             <div>Jane Smith</div>
-            <div className="text-muted-foreground text-sm font-normal">
+            <div className="text-body text-sm font-normal">
               jane@example.com
             </div>
           </Stack>

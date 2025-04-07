@@ -2,9 +2,9 @@ import {
   Breakpoint,
   breakpoints,
   Direction,
+  PaddingPerAxis,
   PaddingPerSide,
   PaddingPerSides,
-  PaddingValue,
   ResponsiveValue,
   Size,
   sizes,
@@ -51,7 +51,7 @@ export function isDirection(value: unknown): value is Direction {
  */
 export function isPaddingHorizontalOrVerticalAxis(
   value: unknown
-): value is { x: PaddingValue; y: PaddingValue } {
+): value is PaddingPerAxis {
   return (
     typeof value === 'object' &&
     value !== null &&

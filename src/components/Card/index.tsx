@@ -52,11 +52,11 @@ const CardHeader: FC<CardHeaderProps> = ({
     )}
 
     <div className="flex min-w-0 flex-grow flex-col gap-1">
-      <div className="text-md font-semibold leading-none tracking-tight">
+      <div className="text-md leading-none font-semibold tracking-tight">
         {children}
       </div>
       {subheader && (
-        <div className="text-muted-foreground mt-1 flex items-center text-sm">
+        <div className="text-card-foreground mt-1 flex items-center text-sm">
           {subheader}
         </div>
       )}
@@ -102,7 +102,7 @@ type CardFooterProps = {
 
 const CardFooter: FC<CardFooterProps> = ({ content, className }) => (
   <div className={cn('border-t px-6 py-4', className)}>
-    <div className="text-muted-foreground flex items-center text-sm">
+    <div className="text-card-foreground flex items-center text-sm">
       {content.text}
       {content.link && (
         <a

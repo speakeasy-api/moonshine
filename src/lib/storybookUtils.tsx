@@ -8,7 +8,7 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
     return (
       <div
         key={index}
-        className="bg-muted text-muted-foreground flex min-w-[100px] items-center justify-center rounded-md p-4 text-center"
+        className="bg-muted text-body flex min-w-[100px] items-center justify-center rounded-md p-4 text-center"
         data-testid={attachTestIds ? `sample-child-${index + 1}` : undefined}
       >
         {index + 1}

@@ -35,9 +35,7 @@ export function PullRequestLink({
       <span className={colors[status]}>
         <PullRequestStatusIcon status={status} />
       </span>
-      <span className="text-muted-foreground text-xs font-semibold">
-        {`#${num}`}
-      </span>
+      <span className="text-body text-xs font-semibold">{`#${num}`}</span>
     </a>
   )
 }

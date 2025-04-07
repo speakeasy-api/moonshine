@@ -98,7 +98,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
       const range = randomIndices.current[index]
 
       return (
-        <p className="text-muted mb-6 text-sm leading-normal">
+        <p className="text-body-muted mb-6 text-sm leading-normal">
           {/* Words before the range */}
           {words.slice(0, range.start).map((word, i) => (
             <span key={`before-${i}`}>{word} </span>
@@ -158,10 +158,7 @@ function TimelineWithState({ children }: TimelineWithStateProps) {
       <Timeline.Content>
         <>
           {pageContent.map((content, index) => (
-            <p
-              key={index}
-              className="text-muted-foreground mb-6 text-base leading-normal"
-            >
+            <p key={index} className="text-body mb-6 text-base leading-normal">
               {annotateRandomWordInSentence(content, index)}
             </p>
           ))}

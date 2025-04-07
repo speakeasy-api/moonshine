@@ -214,7 +214,7 @@ export function OperationGrouper({
                           <Icon
                             name="grip-vertical"
                             className={cn(
-                              'text-muted size-4',
+                              'text-body-muted size-4',
                               props.isDragging && 'text-foreground'
                             )}
                           />

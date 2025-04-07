@@ -63,7 +63,7 @@ const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
     <>
       <Stack padding={3}>
         <div className="truncate text-sm font-semibold">{name}</div>
-        <div className="text-muted-foreground truncate text-sm" title={email}>
+        <div className="text-body truncate text-sm" title={email}>
           {email}
         </div>
       </Stack>

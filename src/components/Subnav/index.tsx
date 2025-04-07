@@ -303,7 +303,7 @@ const SubnavItem = memo(
       <motion.div
         ref={ref}
         className={cn(
-          'text-muted-foreground relative z-10 cursor-pointer select-none',
+          'text-body relative z-10 cursor-pointer select-none',
           isActive && 'text-foreground font-semibold'
         )}
         {...handlers}

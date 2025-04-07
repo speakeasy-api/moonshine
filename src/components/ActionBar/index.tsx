@@ -95,7 +95,7 @@ const Root = ({
         left: state.x,
         ...transformStyle,
       }}
-      className="bg-card fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border py-2 pl-2 pr-2 shadow-lg shadow-white/5"
+      className="bg-card fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border py-2 pr-2 pl-2 shadow-lg shadow-white/5"
     >
       {draggable && (
         <>
@@ -131,16 +131,16 @@ const ActionBarItem = ({
         <TooltipTrigger
           onClick={onClick}
           className={cn(
-            'text-foreground flex cursor-pointer select-none items-center justify-center last-of-type:mr-1',
-            'focus: focus:rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500/70 focus:ring-offset-4 focus:ring-offset-slate-900',
+            'text-foreground flex cursor-pointer items-center justify-center select-none last-of-type:mr-1',
+            'focus: focus:rounded-md focus:ring-1 focus:ring-blue-500/70 focus:ring-offset-4 focus:ring-offset-slate-900 focus:outline-none',
             !disabled && 'hover:text-foreground cursor-pointer',
-            disabled && 'text-muted/70 cursor-not-allowed',
+            disabled && 'text-body-muted/70 cursor-not-allowed',
             className
           )}
         >
           <Icon name={iconName} size="small" />
         </TooltipTrigger>
-        <TooltipContent className="select-none border-zinc-100 px-2 py-1 text-xs shadow-none dark:border-zinc-900">
+        <TooltipContent className="border-zinc-100 px-2 py-1 text-xs shadow-none select-none dark:border-zinc-900">
           {children}
         </TooltipContent>
       </Tooltip>
@@ -169,7 +169,7 @@ const ActionBarHandle = ({
     <div
       {...listeners}
       {...attributes}
-      className="text-muted hover:text-foreground active:text-foreground h-full cursor-move"
+      className="text-body-muted hover:text-foreground active:text-foreground h-full cursor-move"
     >
       <Icon name="grip-vertical" className="h-4 w-4" />
     </div>

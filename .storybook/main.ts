@@ -22,7 +22,10 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       optimizeDeps: {
         // https://github.com/storybookjs/storybook/issues/28542#issuecomment-2268031095
-        exclude: ['node_modules/.cache/sb-vite'],
+        exclude: [
+          'node_modules/.cache/sb-vite',
+          'node_modules/.cache/storybook',
+        ],
       },
     })
   },

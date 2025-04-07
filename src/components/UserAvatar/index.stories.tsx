@@ -58,6 +58,7 @@ export const ResponsiveWithImage: Story = {
   args: {
     ...Default.args,
     size: {
+      xs: 'small',
       sm: 'small',
       md: 'medium',
       lg: 'large',
@@ -71,6 +72,7 @@ export const ResponsiveNoImage: Story = {
   args: {
     name: 'John Doe',
     size: {
+      xs: 'small',
       sm: 'small',
       md: 'medium',
       lg: 'large',

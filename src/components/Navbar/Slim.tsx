@@ -107,7 +107,7 @@ export const Slim = ({
                       <div
                         className={cn(
                           'flex cursor-pointer items-start gap-2',
-                          item.active ? 'text-foreground' : 'text-muted'
+                          item.active ? 'text-foreground' : 'text-body-muted'
                         )}
                         onClick={() => onItemClick?.(item)}
                       >
@@ -154,9 +154,9 @@ export const Slim = ({
         <div className="mt-auto cursor-pointer">
           <TooltipProvider>
             <Tooltip delayDuration={0}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button variant="ghost" size="sm" onClick={onCollapse}>
-                  <Icon name="panel-left" className="text-muted" />
+                  <Icon name="panel-left" className="text-body-muted" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent
