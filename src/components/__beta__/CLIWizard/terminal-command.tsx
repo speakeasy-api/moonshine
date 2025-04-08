@@ -57,10 +57,10 @@ export function TerminalCommand({
             )}
           >
             <div className="flex items-start gap-2">
-              <span className="text-emerald-500 select-none">$</span>
+              <span className="select-none text-emerald-500">$</span>
               <span
                 className={cn(
-                  'mt-0.5 flex-1 font-mono font-medium tracking-normal text-[#e4e4e7] select-text',
+                  'mt-0.5 flex-1 select-text font-mono font-medium tracking-normal text-[#e4e4e7]',
                   fontSize === 'small' && 'text-sm',
                   fontSize === 'medium' && 'text-base',
                   fontSize === 'large' && 'text-lg'

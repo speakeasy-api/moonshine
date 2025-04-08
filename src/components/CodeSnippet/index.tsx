@@ -160,7 +160,7 @@ export function CodeSnippet({
     >
       <div className="snippet-inner bg-card flex w-full flex-row gap-2 rounded-lg p-4">
         {language === 'bash' && (
-          <div className="text-body self-center font-mono font-light select-none">
+          <div className="text-body select-none self-center font-mono font-light">
             {promptSymbol ?? '$'}
           </div>
         )}
@@ -181,7 +181,7 @@ export function CodeSnippet({
         {copyable && (
           <div
             className={cn(
-              'mr-1 ml-auto flex self-center text-white',
+              'ml-auto mr-1 flex self-center text-white',
               isMultiline && 'mt-1 h-4 w-6 self-start'
             )}
           >

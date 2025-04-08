@@ -124,7 +124,7 @@ export function CreateWorkspace({
                   <span
                     title={currentOrg.slug}
                     className={cn(
-                      'text-foreground/80 text-lg font-semibold whitespace-pre select-none',
+                      'text-foreground/80 select-none whitespace-pre text-lg font-semibold',
                       currentOrg.slug.length > 20 &&
                         'max-w-40 truncate whitespace-pre'
                     )}
@@ -132,7 +132,7 @@ export function CreateWorkspace({
                     {currentOrg.slug}
                   </span>
                 )}
-                <span className="text-muted-foreground/50 mx-2 text-lg select-none">
+                <span className="text-muted-foreground/50 mx-2 select-none text-lg">
                   /
                 </span>
                 <div className="flex w-full">
