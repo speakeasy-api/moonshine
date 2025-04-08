@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Combobox } from './index'
+import { Combobox, ComboboxProps } from './index'
+import { useState } from 'react'
 
 const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
@@ -60,12 +61,37 @@ const generateGroupedList = (groupCount: number, itemsPerGroup: number) =>
     })),
   }))
 
+const Wrapper = (args: ComboboxProps) => {
+  const [value, setValue] = useState<string | undefined>()
+  if (value) {
+    return <Combobox {...args} value={value} onValueChange={setValue} />
+  } else {
+    return <Combobox {...args} onValueChange={setValue} />
+  }
+}
+
 // Basic Usage
 export const Default: Story = {
   args: {
     options: frameworks,
     placeholder: 'Select framework...',
   },
+  render: (args) => {
+    const [value, setValue] = useState<string | undefined>()
+    if (value) {
+      return <Combobox {...args} value={value} onValueChange={setValue} />
+    } else {
+      return <Combobox {...args} onValueChange={setValue} />
+    }
+  },
+}
+
+export const FixedWidth: Story = {
+  args: {
+    ...Default.args,
+    triggerClassName: 'min-w-[12rem]',
+  },
+  render: Wrapper,
 }
 
 export const WithValue: Story = {
@@ -73,6 +99,7 @@ export const WithValue: Story = {
     ...Default.args,
     value: 'next.js',
   },
+  render: Wrapper,
 }
 
 // Grouped Examples
@@ -81,6 +108,7 @@ export const Grouped: Story = {
     groups: groupedFrameworks,
     placeholder: 'Select framework...',
   },
+  render: Wrapper,
 }
 
 export const GroupedWithValue: Story = {
@@ -88,6 +116,7 @@ export const GroupedWithValue: Story = {
     ...Grouped.args,
     value: 'next.js',
   },
+  render: Wrapper,
 }
 
 // States
@@ -96,6 +125,7 @@ export const Loading: Story = {
     ...Default.args,
     loading: true,
   },
+  render: Wrapper,
 }
 
 export const LoadingWithValue: Story = {
@@ -103,6 +133,7 @@ export const LoadingWithValue: Story = {
     ...WithValue.args,
     loading: true,
   },
+  render: Wrapper,
 }
 
 export const Error: Story = {
@@ -111,6 +142,7 @@ export const Error: Story = {
     error: true,
     errorText: 'Failed to load frameworks',
   },
+  render: Wrapper,
 }
 
 export const Disabled: Story = {
@@ -118,6 +150,7 @@ export const Disabled: Story = {
     ...WithValue.args,
     disabled: true,
   },
+  render: Wrapper,
 }
 
 // Variants
@@ -127,6 +160,7 @@ export const IconOnly: Story = {
     iconOnly: true,
     variant: 'ghost',
   },
+  render: Wrapper,
 }
 
 export const NonSearchable: Story = {
@@ -134,6 +168,7 @@ export const NonSearchable: Story = {
     ...Default.args,
     searchable: false,
   },
+  render: Wrapper,
 }
 
 // Dynamic Height Examples
@@ -142,6 +177,7 @@ export const SmallList: Story = {
     options: generateList(3),
     placeholder: 'Small list (3 items)',
   },
+  render: Wrapper,
 }
 
 export const MediumList: Story = {
@@ -149,6 +185,7 @@ export const MediumList: Story = {
     options: generateList(8),
     placeholder: 'Medium list (8 items)',
   },
+  render: Wrapper,
 }
 
 export const LargeList: Story = {
@@ -156,6 +193,7 @@ export const LargeList: Story = {
     options: generateList(1000),
     placeholder: 'Large list (1000 items)',
   },
+  render: Wrapper,
 }
 
 export const SmallGroupedList: Story = {
@@ -163,6 +201,7 @@ export const SmallGroupedList: Story = {
     groups: generateGroupedList(2, 2),
     placeholder: 'Small grouped list (4 items)',
   },
+  render: Wrapper,
 }
 
 export const MediumGroupedList: Story = {
@@ -170,6 +209,7 @@ export const MediumGroupedList: Story = {
     groups: generateGroupedList(3, 3),
     placeholder: 'Medium grouped list (9 items)',
   },
+  render: Wrapper,
 }
 
 export const LargeGroupedList: Story = {
@@ -177,6 +217,7 @@ export const LargeGroupedList: Story = {
     groups: generateGroupedList(20, 50),
     placeholder: 'Large grouped list (1000 items)',
   },
+  render: Wrapper,
 }
 
 // Interactive Examples
@@ -186,6 +227,7 @@ export const SearchableList: Story = {
     placeholder: 'Type to filter items...',
     searchPlaceholder: 'Search items...',
   },
+  render: Wrapper,
 }
 
 export const SearchableGroupedList: Story = {
@@ -194,4 +236,5 @@ export const SearchableGroupedList: Story = {
     placeholder: 'Type to filter groups...',
     searchPlaceholder: 'Search groups and items...',
   },
+  render: Wrapper,
 }

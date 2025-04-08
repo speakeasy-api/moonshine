@@ -52,6 +52,11 @@ interface ComboboxBaseProps<T extends string = string> {
   emptyText?: string
   searchPlaceholder?: string
   iconOnly?: boolean
+  /**
+   * Classes to add to the trigger button. Useful for controlling the size of
+   * the combobox
+   */
+  triggerClassName?: string
 }
 
 export type ComboboxProps<T extends string = string> = ComboboxBaseProps<T> &
@@ -73,6 +78,7 @@ export function Combobox<T extends string = string>({
   emptyText = 'No option found.',
   searchPlaceholder = 'Search...',
   iconOnly = false,
+  triggerClassName,
 }: ComboboxProps<T>) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
@@ -130,6 +136,7 @@ export function Combobox<T extends string = string>({
           size={iconOnly ? 'icon' : size}
           disabled={disabled}
           aria-expanded={open}
+          className={triggerClassName}
         >
           {loading ? (
             <div className="h-4 w-4 animate-spin">
@@ -140,7 +147,9 @@ export function Combobox<T extends string = string>({
               <Icon name="chevrons-up-down" />
             </div>
           )}
-          {!iconOnly && <span>{selectedOption?.label || placeholder}</span>}
+          {!iconOnly && (
+            <span className="grow">{selectedOption?.label || placeholder}</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
