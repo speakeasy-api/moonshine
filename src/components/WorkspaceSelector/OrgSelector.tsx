@@ -106,7 +106,7 @@ export function OrgSelector({
           key={org.slug}
           value={org.slug}
           onSelect={() => handleSelect(org, index)}
-          className="relative block w-full cursor-pointer select-none items-center gap-2 truncate rounded-sm px-2 py-1.5 text-sm outline-none"
+          className="relative block w-full cursor-pointer items-center gap-2 truncate rounded-sm px-2 py-1.5 text-sm outline-none select-none"
         >
           {org.label}
         </CommandItem>

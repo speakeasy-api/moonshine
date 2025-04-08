@@ -282,7 +282,7 @@ const CodePlayground = ({
         <div className="select-none">{header && header}</div>
         <div className="ml-auto">
           <Select value={selectedLanguage} onValueChange={handleChangeLanguage}>
-            <SelectTrigger className="text-body-muted select-none gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0">
+            <SelectTrigger className="text-body-muted gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="bottom" align="start" alignOffset={-30}>
@@ -300,7 +300,7 @@ const CodePlayground = ({
         {code}
 
         {selectedCode.code && copyable && (
-          <div className="pointer-events-auto absolute right-6 top-5 bg-transparent">
+          <div className="pointer-events-auto absolute top-5 right-6 bg-transparent">
             <button
               role="button"
               className={cn('ml-2 border-none bg-transparent outline-none')}
@@ -401,7 +401,7 @@ const CodePlaygroundFooter = ({
   return (
     <div
       className={cn(
-        'bg-card flex select-none items-center border-t p-2',
+        'bg-card flex items-center border-t p-2 select-none',
         className
       )}
       {...props}
