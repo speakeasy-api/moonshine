@@ -2,7 +2,7 @@ import { Children, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
 import './skeleton.css'
 
-interface SkeletonProps {
+export interface SkeletonProps {
   /**
    * The children to display in the skeleton.
    * The width and content of each child will be used to determine the width of the skeleton.
