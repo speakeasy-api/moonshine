@@ -2,7 +2,7 @@ import { Children, cloneElement, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
 import './skeleton.css'
 
-interface SkeletonProps {
+export interface SkeletonProps {
   /**
    * The children to display in the skeleton.
    * The width and content of each child will be used to determine the width of the skeleton.
@@ -31,11 +31,11 @@ interface SkeletonProps {
 
 export function Skeleton({ children, className }: SkeletonProps) {
   return (
-    <div className="flex w-full flex-col items-start gap-2.5 select-none">
+    <div className="flex w-full select-none flex-col items-start gap-2.5">
       {Children.toArray(children).map((child) => {
         if (typeof child === 'string') {
           return (
-            <div className="skeleton h-5 max-w-max min-w-36 rounded-lg text-transparent">
+            <div className="skeleton h-5 min-w-36 max-w-max rounded-lg text-transparent">
               {child}
             </div>
           )
