@@ -2,7 +2,7 @@ import { cn } from '../../../lib/utils'
 import { Text } from '../../Text'
 import { Button } from '../../Button'
 import type { BasePartProps } from '../types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, MotionConfig } from 'framer-motion'
 
 type ToolInvocationState = 'partial-call' | 'call' | 'result'
@@ -40,6 +40,72 @@ export function AIChatMessageToolPart({
     return String(result)
   }
 
+  const StatusIndicator = () => {
+    // TODO: support an "isError(toolInvocation) => bool" prop?
+    // TODO: change icon based on success
+    const success = state === 'result' && (result as any)?.status !== "error";
+    const resultClassname = success ? 'bg-success-fill' : 'bg-danger-fill'
+
+    return (
+      <div className="flex h-6 w-6 items-center justify-center">
+        {state === 'result' ? (
+          <motion.div
+            className={cn(resultClassname, 'flex h-3 w-3 items-center justify-center rounded-full')}
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="h-3 w-3 text-neutral-900"
+              fill="currentColor"
+            >
+              <path d="M9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4L9.55 18Z" />
+            </svg>
+          </motion.div>
+        ) : (
+          <div className="relative">
+            {state === 'call' && (
+              <>
+                {/* Track */}
+                <motion.div
+                  className="bg-information-fill/20 absolute inset-0 rounded-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+                {/* Animated Ring */}
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div
+                    className="border-information-fill h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
+                    style={{
+                      animation: 'spin 1s linear infinite',
+                    }}
+                  />
+                </motion.div>
+              </>
+            )}
+            <motion.div
+              className={cn('relative h-3 w-3 rounded-full', {
+                'bg-warning-fill': state === 'partial-call',
+                'bg-information-fill': state === 'call',
+              })}
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+            />
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <MotionConfig transition={{ duration: 0.2 }}>
       <motion.div
@@ -60,63 +126,7 @@ export function AIChatMessageToolPart({
           )}
         >
           {/* Status Indicator */}
-          <div className="flex h-6 w-6 items-center justify-center">
-            {state === 'result' ? (
-              <motion.div
-                className="bg-success-fill flex h-3 w-3 items-center justify-center rounded-full"
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="h-3 w-3 text-neutral-900"
-                  fill="currentColor"
-                >
-                  <path d="M9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4L9.55 18Z" />
-                </svg>
-              </motion.div>
-            ) : (
-              <div className="relative">
-                {state === 'call' && (
-                  <>
-                    {/* Track */}
-                    <motion.div
-                      className="bg-information-fill/20 absolute inset-0 rounded-full"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                    {/* Animated Ring */}
-                    <motion.div
-                      className="absolute inset-0"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div
-                        className="border-information-fill h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
-                        style={{
-                          animation: 'spin 1s linear infinite',
-                        }}
-                      />
-                    </motion.div>
-                  </>
-                )}
-                <motion.div
-                  className={cn('relative h-3 w-3 rounded-full', {
-                    'bg-warning-fill': state === 'partial-call',
-                    'bg-information-fill': state === 'call',
-                  })}
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                />
-              </div>
-            )}
-          </div>
-
+          <StatusIndicator />
           {/* Tool Name */}
           {onClick ? (
             <Button
@@ -259,7 +269,7 @@ export function AIChatMessageToolPart({
             className="space-y-3 p-4"
           >
             {/* Tool Input */}
-            {args && Object.keys(args).length > 0 && (
+            {args && Object.keys(args).length > 0 ? (
               <motion.div
                 variants={{
                   expanded: { y: 0, opacity: 1 },
@@ -276,10 +286,10 @@ export function AIChatMessageToolPart({
                   {JSON.stringify(args as Record<string, unknown>, null, 2)}
                 </pre>
               </motion.div>
-            )}
+            ) : null}
 
             {/* Tool Result */}
-            {state === 'result' && result && (
+            {state === 'result' && result ? (
               <motion.div
                 variants={{
                   expanded: { y: 0, opacity: 1 },
@@ -296,7 +306,7 @@ export function AIChatMessageToolPart({
                   {formatResult(result)}
                 </pre>
               </motion.div>
-            )}
+            ) : null}
           </motion.div>
         </motion.div>
       </motion.div>

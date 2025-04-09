@@ -154,6 +154,7 @@ export {
   CommandShortcut,
   CommandDialog,
 } from '@/components/Command'
+export { AIChatContainer, AIChatMessage,AIChatMessageComposer,} from '@/components/AIChat';
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'

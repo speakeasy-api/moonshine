@@ -14,10 +14,12 @@ export type ToolArgs = {
 
 export type ToolInvocation = {
   type: 'tool-invocation'
-  toolName: string
-  toolCallId: string
-  state: 'partial-call' | 'call' | 'result'
-  args: ToolArgs
+  toolInvocation: {
+    toolName: string
+    toolCallId: string
+    state: 'partial-call' | 'call' | 'result'
+    args: ToolArgs
+  }
 }
 
 export type ToolResult = {

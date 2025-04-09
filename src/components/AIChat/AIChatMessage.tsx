@@ -65,16 +65,7 @@ export function AIChatMessage({ message, className }: AIChatMessageProps) {
                 return (
                   <AIChatMessageToolPart
                     key={index}
-                    toolInvocation={part}
-                    onClick={() => {
-                      console.log('clicked')
-                    }}
-                    onAccept={() => {
-                      console.log('accept')
-                    }}
-                    onReject={() => {
-                      console.log('reject')
-                    }}
+                    toolInvocation={part.toolInvocation}
                   />
                 )
               case 'file':
