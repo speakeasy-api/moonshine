@@ -103,7 +103,7 @@ Run `pnpm build:watch` within Moonshine to build the library and watch for chang
 Then run `pnpm link ../path/to/moonshine` within the app that will use the library. For the registry `webapp` directory (assuming a standard cloning setup where `moonshine` is a sibling of the registry repo), it would be:
 
 ```bash
-pnpm link ../../../../moonshine
+pnpm link ../path/to/moonshine
 ```
 
 The lockfile file within your app should referenced the linked copy:
