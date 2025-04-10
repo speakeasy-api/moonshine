@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
@@ -12,65 +12,65 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 
+/*
   TODO: Remove all the heading !important after we remove Mui
 */
 @utility typography-heading-xl {
-  font-size: 1.8125rem!important;
-  font-weight: 300!important;
-  line-height: 1.517!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.8125rem !important;
+  font-weight: 300 !important;
+  line-height: 1.517 !important;
+  letter-spacing: 0.0015em !important;
   @variant md {
-    font-size: 2.0625rem!important;
-    line-height: 1.375!important;
+    font-size: 2.0625rem !important;
+    line-height: 1.375 !important;
   }
 }
 @utility typography-heading-lg {
-  font-size: 1.625rem!important;
-  font-weight: 300!important;
-  line-height: 1.615!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.625rem !important;
+  font-weight: 300 !important;
+  line-height: 1.615 !important;
+  letter-spacing: 0.0015em !important;
   @variant md {
-    font-size: 1.8125rem!important;
-    line-height: 1.517!important;
+    font-size: 1.8125rem !important;
+    line-height: 1.517 !important;
   }
 }
 @utility typography-heading-md {
-  font-size: 1.4375rem!important;
-  font-weight: 300!important;
-  line-height: 1.609!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.4375rem !important;
+  font-weight: 300 !important;
+  line-height: 1.609 !important;
+  letter-spacing: 0.0015em !important;
   @variant md {
-    font-size: 1.625rem!important;
-    line-height: 1.615!important;
+    font-size: 1.625rem !important;
+    line-height: 1.615 !important;
   }
 }
 @utility typography-heading-sm {
-  font-size: 1.25rem!important;
-  font-weight: 300!important;
-  line-height: 1.75!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.25rem !important;
+  font-weight: 300 !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.0015em !important;
 
   @variant md {
-    font-size: 1.4375rem!important;
-    line-height: 1.609!important;
+    font-size: 1.4375rem !important;
+    line-height: 1.609 !important;
   }
 }
 @utility typography-heading-xs {
-  font-size: 1.125rem!important;
-  font-weight: 300!important;
-  line-height: 1.778!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.125rem !important;
+  font-weight: 300 !important;
+  line-height: 1.778 !important;
+  letter-spacing: 0.0015em !important;
   @variant md {
-    font-size: 1.25rem!important;
-    line-height: 1.75!important;
+    font-size: 1.25rem !important;
+    line-height: 1.75 !important;
   }
 }
 @utility typography-heading-xxs {
-  font-size: 1.125rem!important;
-  font-weight: 300!important;
-  line-height: 1.778!important;
-  letter-spacing: 0.0015em!important;
+  font-size: 1.125rem !important;
+  font-weight: 300 !important;
+  line-height: 1.778 !important;
+  letter-spacing: 0.0015em !important;
 }
 @utility typography-body-lg {
   font-size: 1.125rem;
@@ -100,7 +100,7 @@
 @utility container {
   padding-inline: 1rem;
   margin-inline: auto;
-  
+
   @variant sm {
     padding-inline: 0.5rem;
   }
@@ -108,11 +108,11 @@
   @variant md {
     padding-inline: 1rem;
   }
-  
+
   @variant lg {
     padding-inline: 1.5rem;
   }
-  
+
   @variant xl {
     padding-inline: 2rem;
   }
@@ -123,13 +123,19 @@
 }
 
 @utility bg-mask {
-  background-image: linear-gradient(to bottom, var(--background) 0%, var(--color-transparent) 5%,var(--color-transparent) 95%,var(--background) 100%)
+  background-image: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    var(--color-transparent) 5%,
+    var(--color-transparent) 95%,
+    var(--background) 100%
+  );
 }
 
-
-/* 
+/*
   Shadcn classes are deprecated and will be removed once we add the proper moonshine tokens
 */
+
 :root {
   /* Shadcn theme */
   --radius: 0.375rem;
@@ -170,13 +176,13 @@
 
   --destructive: hsl(345 83% 41%);
   --destructive-foreground: hsl(0 0% 98%);
-  
-  --warning:hsl( 26 89% 37%);
+
+  --warning: hsl(26 89% 37%);
   --warning-foreground: hsl(0 0% 98%);
-  
+
   --info: hsl(206 67% 38%);
   --info-foreground: hsl(0 0% 98%);
-  
+
   --feature: hsl(263 70% 50%);
   --feature-foreground: hsl(0 0% 98%);
 
@@ -227,16 +233,6 @@
   --color-base-white: hsl(0 0% 100%);
   --color-base-black: hsl(0 0% 0%);
 
-  --color-neutral-50: hsl(240 10% 4%);
-  --color-neutral-100: hsl(240 6% 10%);
-  --color-neutral-200: hsl(240 4% 16%);
-  --color-neutral-400: hsl(240 5% 34%);
-  --color-neutral-500: hsl(240 4% 46%);
-  --color-neutral-600: hsl(240 5% 65%);
-  --color-neutral-800: hsl(240 6% 90%);
-  --color-neutral-900: hsl(240 5% 96%);
-  --color-neutral-950: hsl(0 0% 98%);
-
   --color-danger-fill: hsl(345 83% 41%);
   --color-danger-text: hsl(350 89% 60%);
   --color-feature-fill: hsl(263 70% 50%);
@@ -259,7 +255,7 @@
 
   --background: hsl(240 10% 4%);
   --foreground: hsl(0 0% 98%);
-  --card: hsl(240 6% 10%)    ;
+  --card: hsl(240 6% 10%);
   --card-foreground: hsl(60 9% 98%);
   --popover: hsl(240 10% 4%);
   --popover-foreground: hsl(0 0% 98%);
@@ -319,12 +315,62 @@
 
 /* Theme configuration */
 @theme inline {
-  /** Shadcn */
+  /* Moonshine Base Colors */
+  --color-base-white: var(--color-base-white);
+  --color-base-black: var(--color-base-black);
+
+  /* Moonshine Brand Colors */
+  --color-brand-yellow-50: var(--color-brand-yellow-50);
+  --color-brand-yellow-100: var(--color-brand-yellow-100);
+  --color-brand-yellow-200: var(--color-brand-yellow-200);
+  --color-brand-yellow-300: var(--color-brand-yellow-300);
+  --color-brand-yellow-400: var(--color-brand-yellow-400);
+  --color-brand-yellow-500: var(--color-brand-yellow-500);
+  --color-brand-yellow-600: var(--color-brand-yellow-600);
+  --color-brand-yellow-700: var(--color-brand-yellow-700);
+  --color-brand-yellow-800: var(--color-brand-yellow-800);
+  --color-brand-yellow-900: var(--color-brand-yellow-900);
+  --color-brand-yellow-950: var(--color-brand-yellow-950);
+
+  /* Moonshine Neutral Colors */
+  --color-neutral-50: var(--color-neutral-50);
+  --color-neutral-100: var(--color-neutral-100);
+  --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-400: var(--color-neutral-400);
+  --color-neutral-500: var(--color-neutral-500);
+  --color-neutral-600: var(--color-neutral-600);
+  --color-neutral-800: var(--color-neutral-800);
+  --color-neutral-900: var(--color-neutral-900);
+  --color-neutral-950: var(--color-neutral-950);
+
+  /* Moonshine Semantic Colors */
+  --color-danger-fill: var(--color-danger-fill);
+  --color-danger-text: var(--color-danger-text);
+  --color-feature-fill: var(--color-feature-fill);
+  --color-feature-text: var(--color-feature-text);
+  --color-information-fill: var(--color-information-fill);
+  --color-information-text: var(--color-information-text);
+  --color-success-fill: var(--color-success-fill);
+  --color-success-text: var(--color-success-text);
+  --color-warning-fill: var(--color-warning-fill);
+  --color-warning-text: var(--color-warning-text);
+
+  /* Moonshine Link Colors */
+  --color-link-default: var(--color-link-default);
+  --color-link-visited-primary: var(--color-link-visited-primary);
+  --color-link-visited-secondary: var(--color-link-visited-secondary);
+
+  /* Moonshine Accessibility */
+  --color-accessibility: var(--color-accessibility);
+  --color-transparent: var(--color-transparent);
+
+  /* Existing theme configuration */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  /* Shadcn Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -343,13 +389,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -359,7 +403,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Alert Colors */
+  /* Moonshine Alert Colors */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-info: var(--info);
@@ -371,7 +415,7 @@
   --color-feature: var(--feature);
   --color-feature-foreground: var(--feature-foreground);
 
-  /* Text Colors */
+  /* Moonshine Text Colors */
   --color-heading-xl: var(--color-neutral-50);
   --color-heading-lg: var(--color-neutral-50);
   --color-heading-md: var(--color-neutral-50);
@@ -380,7 +424,7 @@
   --color-body: var(--color-neutral-200);
   --color-body-muted: var(--color-neutral-400);
 
-  /* Link Colors */
+  /* Moonshine Link Colors */
   --color-link: var(--color-link-default);
   --color-link-secondary: var(--color-neutral-200);
   --color-link-visited-primary: var(--color-link-visited-primary);
@@ -398,7 +442,7 @@
   };
   --animate-wiggle: wiggle 1s ease-in-out infinite;
 
-  /* Transition Timing Functions */
+  /* Moonshine Transition Timing Functions */
   --ease-in-out-quad: var(--ease-in-out-quad);
   --ease-in-out-cubic: var(--ease-in-out-cubic);
   --ease-in-out-quart: var(--ease-in-out-quart);
@@ -439,7 +483,7 @@
   }
 
   button:not(:disabled),
-  [role="button"]:not(:disabled) {
+  [role='button']:not(:disabled) {
     cursor: pointer;
   }
 
@@ -449,6 +493,30 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  :root {
+    --neutral-50-base: 0 0% 98%;
+    --neutral-100-base: 240 5% 96%;
+    --neutral-200-base: 240 6% 90%;
+    --neutral-400-base: 240 5% 65%;
+    --neutral-500-base: 240 4% 46%;
+    --neutral-600-base: 240 5% 34%;
+    --neutral-800-base: 240 4% 16%;
+    --neutral-900-base: 240 6% 10%;
+    --neutral-950-base: 240 10% 4%;
+  }
+
+  .dark {
+    --neutral-50-base: 240 10% 4%;
+    --neutral-100-base: 240 6% 10%;
+    --neutral-200-base: 240 4% 16%;
+    --neutral-400-base: 240 5% 34%;
+    --neutral-500-base: 240 4% 46%;
+    --neutral-600-base: 240 5% 65%;
+    --neutral-800-base: 240 6% 90%;
+    --neutral-900-base: 240 5% 96%;
+    --neutral-950-base: 0 0% 98%;
   }
 }
 
@@ -481,6 +549,15 @@
     to {
       opacity: 0;
       transform: translateX(-100%);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 }

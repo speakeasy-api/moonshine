@@ -9,6 +9,7 @@ export { Icon, type IconProps } from '@/components/Icon'
 export { isIconName } from '@/components/Icon/isIconName'
 export { type IconName } from '@/components/Icon/names'
 export { Separator, type SeparatorProps } from '@/components/Separator'
+export { Skeleton, type SkeletonProps } from '@/components/Skeleton'
 export { Badge, type BadgeProps } from '@/components/Badge'
 export { Heading, type HeadingProps } from '@/components/Heading'
 export { Text, type TextProps } from '@/components/Text'
@@ -167,5 +168,11 @@ export const beta = {
   // Readme editor components
   Timeline,
 }
+// DO NOT USE: EXPORTED TO UNBLOCK GRAM
+export {
+  AIChatContainer,
+  AIChatMessage,
+  AIChatMessageComposer,
+} from '@/components/AIChat'
 
 /** END BETA COMPONENTS */
