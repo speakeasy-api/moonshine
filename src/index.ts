@@ -168,5 +168,11 @@ export const beta = {
   // Readme editor components
   Timeline,
 }
+// DO NOT USE: EXPORTED TO UNBLOCK GRAM
+export {
+  AIChatContainer,
+  AIChatMessage,
+  AIChatMessageComposer,
+} from '@/components/AIChat'
 
 /** END BETA COMPONENTS */
