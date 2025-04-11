@@ -61,6 +61,7 @@ export interface LinkProps {
   size?: TextVariant
   underline?: boolean
   target?: '_blank' | '_self'
+  rel?: string
   iconPrefixName?: IconName
   iconSuffixName?: IconName
   className?: string
@@ -79,6 +80,7 @@ export const Link: React.FC<LinkProps> = forwardRef<
       size = 'md',
       underline = true,
       target = '_blank',
+      rel,
       iconPrefixName,
       iconSuffixName,
       className,
@@ -92,6 +94,7 @@ export const Link: React.FC<LinkProps> = forwardRef<
         href={href}
         ref={ref}
         target={target}
+        rel={rel}
         className={cn(linkVariants({ variant, size }), className)}
         onClick={onClick}
         {...rest}
