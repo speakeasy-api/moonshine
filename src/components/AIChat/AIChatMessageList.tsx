@@ -10,7 +10,7 @@ export function AIChatMessageList({ className }: AIChatMessageListProps) {
   const { messages } = useAIChat()
 
   return (
-    <ul role="log" className={cn('overflow-y-auto', className)}>
+    <ul role="log" className={cn('overflow-y-auto h-full', className)}>
       {messages.map((message) => (
         <AIChatMessage key={message.id} message={message} />
       ))}
