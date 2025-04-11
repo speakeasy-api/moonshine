@@ -383,3 +383,98 @@ const ToolCallStateDemoComponent = () => {
 export const ToolCallStateDemo: Story = {
   render: () => <ToolCallStateDemoComponent />,
 }
+
+// Markdown rendering demonstration
+const markdownRenderingMessages: ChatMessage[] = [
+  {
+    id: '1',
+    role: 'user',
+    parts: [
+      {
+        type: 'text',
+        text: 'Can you show me how markdown rendering works in the chat?',
+      },
+    ],
+  },
+  {
+    id: '2',
+    role: 'assistant',
+    parts: [
+      {
+        type: 'text',
+        text: `This message demonstrates the various markdown features supported by our enhanced chat component:
+
+## Text Formatting
+
+You can use **bold text**, *italic text*, and ~~strikethrough~~ text.
+
+## Code Blocks
+
+Inline code: \`const greeting = "Hello, world!";\`
+
+Code block with syntax highlighting:
+
+\`\`\`javascript
+function greet(name) {
+  return \`Hello, \${name}!\`;
+}
+
+console.log(greet("User"));
+\`\`\`
+
+## Lists
+
+### Unordered List
+- Item 1
+- Item 2
+  - Nested item 1
+  - Nested item 2
+- Item 3
+
+### Ordered List
+1. First item
+2. Second item
+3. Third item
+
+## Blockquotes
+
+> This is a blockquote.
+> It can span multiple lines.
+>
+> > And can be nested.
+
+## Tables
+
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Cell 1   | Cell 2   | Cell 3   |
+| Cell 4   | Cell 5   | Cell 6   |
+
+## Links and Images
+
+[Link to documentation](https://example.com)
+
+![Image description](https://via.placeholder.com/150)
+
+## Task Lists
+
+- [x] Completed task
+- [ ] Pending task
+
+## Horizontal Rule
+
+---
+
+That's all for this markdown demonstration!`,
+      },
+    ],
+  },
+]
+
+export const MarkdownRendering: Story = {
+  args: {
+    messages: markdownRenderingMessages,
+    isLoading: false,
+    onSendMessage: (message) => console.log('Sending message:', message),
+  },
+}
