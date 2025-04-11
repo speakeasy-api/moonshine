@@ -13,7 +13,10 @@ export function AIChatMessageTextPart({
   return (
     <Text
       variant="sm"
-      className={cn('leading-5 whitespace-pre-wrap', className)}
+      className={cn(
+        'prose prose-sm prose-gray leading-5 break-words whitespace-pre-wrap',
+        className
+      )}
     >
       {text}
     </Text>
