@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
 
 @source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
