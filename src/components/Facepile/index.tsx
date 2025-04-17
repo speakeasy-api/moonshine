@@ -195,7 +195,7 @@ export function Facepile({
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className={`pointer-events-none absolute left-0 z-10 flex h-5 items-center justify-center whitespace-nowrap rounded-full bg-black px-2 text-xs font-medium text-white`}
+            className={`pointer-events-none absolute left-0 z-10 flex h-5 items-center justify-center rounded-full bg-black px-2 text-xs font-medium whitespace-nowrap text-white`}
             style={{
               top: size + 4,
             }}

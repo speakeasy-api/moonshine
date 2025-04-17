@@ -246,7 +246,7 @@ export const Customized: StoryObj<ListTableProps> = {
   render: (args) => (
     <Table {...args}>
       <Table.Header columns={args.columns} />
-      <p className={'bg-green-500 p-4 [grid-column:1/-1]'}>
+      <p className={'[grid-column:1/-1] bg-green-500 p-4'}>
         MY CUSTOM COMPONENT
       </p>
       <Table.Body {...args} hasMore={false} />
@@ -262,12 +262,12 @@ export const CustomizedEvenMore: StoryObj<ListTableProps> = {
   render: (args) => (
     <Table {...args}>
       <Table.Header columns={args.columns} />
-      <p className={'bg-green-700 p-4 [grid-column:1/-1]'}>
+      <p className={'[grid-column:1/-1] bg-green-700 p-4'}>
         MY CUSTOM COMPONENT
       </p>
       <Table.Body>
         <Table.Row row={args.data[0]} columns={args.columns} />
-        <p className={'bg-yellow-700 p-4 [grid-column:1/-1]'}>
+        <p className={'[grid-column:1/-1] bg-yellow-700 p-4'}>
           ANOTHER CUSTOM COMPONENT
         </p>
         <Table.Row row={args.data[1]} columns={args.columns} />

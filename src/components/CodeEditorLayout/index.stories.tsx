@@ -30,7 +30,7 @@ type Story = StoryObj<typeof CodeEditor>
 export const Default: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
+      <CodeEditor.CommandBar className="border-t border-r border-l py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -146,7 +146,7 @@ export const Empty: Story = {
 export const SplitScreen: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
+      <CodeEditor.CommandBar className="border-t border-r border-l py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -184,7 +184,7 @@ export const SplitScreen: Story = {
       </CodeEditor.Pane>,
       <CodeEditor.Pane
         tabs={
-          <CodeEditor.Tabs className="border-r border-t">
+          <CodeEditor.Tabs className="border-t border-r">
             <CodeEditor.Tab
               id="cat-breeds"
               active
@@ -210,7 +210,7 @@ export const SplitScreen: Story = {
 export const WithTabIcons: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
+      <CodeEditor.CommandBar className="border-t border-r border-l py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -345,7 +345,7 @@ export const TabStates: Story = {
 export const NoTabs: Story = {
   args: {
     children: [
-      <CodeEditor.CommandBar className="border-l border-r border-t py-2">
+      <CodeEditor.CommandBar className="border-t border-r border-l py-2">
         <div className="flex flex-row items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Icon
@@ -409,7 +409,7 @@ export const CustomTabElement: Story = {
               invalid
               dirty
             />
-            <CodeEditor.CustomTabElement className="ml-auto mr-4 flex h-full w-fit items-center">
+            <CodeEditor.CustomTabElement className="mr-4 ml-auto flex h-full w-fit items-center">
               <div className="flex cursor-pointer flex-row items-center gap-1">
                 <Icon name="plus" className="size-4" />
                 <span className="text-sm font-semibold">New tab</span>

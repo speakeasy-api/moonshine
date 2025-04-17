@@ -18,7 +18,7 @@ export const Inline: Story = {
     const ref = useRef<HTMLDivElement>(null)
     return (
       <div className="flex max-w-sm flex-col gap-4">
-        <p className="inline-block w-fit pl-2 pr-4" ref={ref}>
+        <p className="inline-block w-fit pr-4 pl-2" ref={ref}>
           Lorem ipsum dolor sit amet
         </p>
         <SelectionBox targetRef={ref} display="inline" />
