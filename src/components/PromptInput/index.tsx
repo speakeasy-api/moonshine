@@ -269,7 +269,7 @@ export function PromptInput({
             <div
               key={suggestion.label}
               className={cn(
-                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer flex-row items-center gap-1.5 rounded-md border px-2.5 py-2 text-sm tracking-tight whitespace-nowrap select-none',
+                'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer select-none flex-row items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 py-2 text-sm tracking-tight',
                 suggestion.className
               )}
               onClick={() => suggestion.onClick(suggestion.id)}
@@ -355,7 +355,7 @@ function AttachmentPreview({ attachment }: { attachment: Attachment }) {
       </div>
       <div
         title={attachment.name}
-        className="max-w-36 flex-1 truncate text-xs select-none"
+        className="max-w-36 flex-1 select-none truncate text-xs"
       >
         {attachment.name}
       </div>

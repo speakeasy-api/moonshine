@@ -87,7 +87,7 @@ export function OrgList({
           )}
         />
       ) : (
-        <div className="text-muted-foreground m-auto flex h-full max-w-2/3 items-center justify-center p-6 text-center">
+        <div className="text-muted-foreground max-w-2/3 m-auto flex h-full items-center justify-center p-6 text-center">
           No organizations found
         </div>
       )}

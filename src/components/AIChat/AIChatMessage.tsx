@@ -14,7 +14,7 @@ export interface AIChatMessageProps {
 export function AIChatMessage({ message, className }: AIChatMessageProps) {
   const roleIcons = {
     user: (
-      <div className="h-6 w-6 overflow-hidden rounded-full ring-1 ring-neutral-400 ring-inset">
+      <div className="h-6 w-6 overflow-hidden rounded-full ring-1 ring-inset ring-neutral-400">
         <img
           src={`https://avatar.vercel.sh/user.svg?size=20`}
           alt="User"

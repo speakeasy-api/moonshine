@@ -117,9 +117,9 @@ export function Wizard({
       </div>
 
       <div className="relative mt-8 pl-3">
-        <div className="bg-border absolute top-0 bottom-0 left-7 w-px overflow-y-hidden">
+        <div className="bg-border absolute bottom-0 left-7 top-0 w-px overflow-y-hidden">
           <div
-            className="bg-primary absolute top-0 left-0 w-full transition-all duration-500"
+            className="bg-primary absolute left-0 top-0 w-full transition-all duration-500"
             style={{
               height: trackHeight,
             }}
@@ -167,7 +167,7 @@ export function Wizard({
                   {/* TODO: is this the best way to handle the opacity? */}
                   <div
                     className={cn(
-                      'mt-2 mb-4',
+                      'mb-4 mt-2',
                       status === 'upcoming' && 'opacity-50'
                     )}
                   >

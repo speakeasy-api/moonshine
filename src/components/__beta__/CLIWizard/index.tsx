@@ -91,7 +91,7 @@ export function CLIWizard({
   return (
     <motion.div
       layout
-      className="relative overflow-hidden border-b border-zinc-800 select-none"
+      className="relative select-none overflow-hidden border-b border-zinc-800"
       transition={{
         duration: 0.3,
         ease: [0.645, 0.045, 0.355, 1],

@@ -52,7 +52,7 @@ const CardHeader: FC<CardHeaderProps> = ({
     )}
 
     <div className="flex min-w-0 flex-grow flex-col gap-1">
-      <div className="text-md leading-none font-semibold tracking-tight">
+      <div className="text-md font-semibold leading-none tracking-tight">
         {children}
       </div>
       {subheader && (
