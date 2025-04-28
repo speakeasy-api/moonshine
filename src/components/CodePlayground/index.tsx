@@ -41,11 +41,6 @@ export interface CodePlaygroundSnippet {
    * Whether the code is loading.
    */
   loading?: boolean | undefined
-
-  /**
-   * The error to display in the playground if the code could not be loaded.
-   */
-  error?: React.ReactNode | undefined
 }
 
 export type CodePlaygroundSnippets = Partial<
@@ -58,6 +53,11 @@ export interface CodePlaygroundProps {
    * Accepts a `CodePlayground.Header` and a `CodePlayground.Footer` or a `CodePlayground.Code` component.
    */
   children: React.ReactNode
+
+  /**
+   * The error to display in the playground if the code could not be loaded.
+   */
+  error?: React.ReactNode | undefined
 
   /**
    * An object of snippets to display in the playground.
@@ -121,6 +121,7 @@ const CodePlayground = ({
   selectedLanguage,
   className,
   onChangeLanguage,
+  error,
   animateOnLanguageChange = true,
   showLineNumbers = true,
   wordWrap = true,
@@ -187,10 +188,10 @@ const CodePlayground = ({
   }, [codeRef.current])
 
   const codeContents = useMemo(() => {
-    return selectedCode.loading ? (
+    return error ? (
+      error
+    ) : selectedCode.loading ? (
       <div className="flex items-center p-4">{loadingSkeleton}</div>
-    ) : selectedCode.error ? (
-      selectedCode.error
     ) : highlighted ? (
       <Pre
         code={highlighted}
@@ -198,7 +199,7 @@ const CodePlayground = ({
         className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
       />
     ) : null
-  }, [selectedCode.loading, selectedCode.error, highlighted])
+  }, [selectedCode.loading, highlighted])
 
   const foundCustomCodeContainer = useMemo(
     () =>
