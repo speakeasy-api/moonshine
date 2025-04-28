@@ -199,7 +199,7 @@ const CodePlayground = ({
         className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
       />
     ) : null
-  }, [selectedCode.loading, highlighted])
+  }, [selectedCode.loading, highlighted, error])
 
   const foundCustomCodeContainer = useMemo(
     () =>
