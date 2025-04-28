@@ -226,20 +226,20 @@ export const ErrorState: Story = {
   ...Default,
   args: {
     ...Default.args,
+    error: (
+      <div className="flex flex-col gap-2 p-4">
+        <h3 className="text-base font-semibold text-rose-400">
+          Could not generate
+        </h3>
+        <p className="text-body-muted text-sm">
+          This might be due to a temporary issue on our side. Please try again
+          later.
+        </p>
+      </div>
+    ),
     snippets: {
       typescript: {
         loading: false,
-        error: (
-          <div className="flex flex-col gap-2 p-4">
-            <h3 className="text-base font-semibold text-rose-400">
-              Could not generate
-            </h3>
-            <p className="text-body-muted text-sm">
-              This might be due to a temporary issue on our side. Please try
-              again later.
-            </p>
-          </div>
-        ),
       },
     },
   },
