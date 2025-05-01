@@ -36,9 +36,10 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: packageName,
       fileName: (format) => `${packageName}.${format}.js`,
+      formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom', 'lucide-react'],
+      external: ['react', 'react/jsx-runtime', 'react-dom'],
       output: {
         globals: {
           react: 'React',
@@ -46,6 +47,10 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'lucide-react': 'LucideReact',
         },
+        manualChunks: {
+          'lucide-icons': ['lucide-react'],
+        },
+        inlineDynamicImports: false,
       },
     },
     sourcemap: true,
