@@ -46,6 +46,11 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'lucide-react': 'LucideReact',
         },
+        manualChunks: {
+          // lucide-react is a barrel file, so we need to split it into a separate chunk
+          // https://github.com/vitejs/vite/issues/8237
+          'lucide-icons': ['lucide-react'],
+        },
       },
     },
     sourcemap: true,
