@@ -36,6 +36,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: packageName,
       fileName: (format) => `${packageName}.${format}.js`,
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['react', 'react/jsx-runtime', 'react-dom'],
@@ -47,10 +48,9 @@ export default defineConfig({
           'lucide-react': 'LucideReact',
         },
         manualChunks: {
-          // lucide-react is a barrel file, so we need to split it into a separate chunk
-          // https://github.com/vitejs/vite/issues/8237
           'lucide-icons': ['lucide-react'],
         },
+        inlineDynamicImports: false,
       },
     },
     sourcemap: true,
