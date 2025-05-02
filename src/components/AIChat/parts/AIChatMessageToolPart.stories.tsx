@@ -142,3 +142,31 @@ export const WithError: Story = {
     onReject: () => alert('Error result rejected'),
   },
 }
+
+export const VeryLongJsonValue: Story = {
+  args: {
+    toolInvocation: {
+      state: 'result',
+      toolCallId: '5',
+      toolName: 'dub_getLinks',
+      args: {
+        url: 'https://www.typescriptlang.org/play/?noUncheckedIndexedAccess=true&noUnusedLocals=true&noUnusedParameters=true&target=esnext&jsx=react&module=esnext&strict=true&alwaysStrict=true&noImplicitOverride=true&noPropertyAccessFromIndexSignature=true&useDefineForClassFields=true&exactOptionalPropertyTypes=true&noFallthroughCasesInSwitch=true&noImplicitReturns=true&noImplicitAny=true&noImplicitThis=true&strictBindCallApply=true&strictNullChecks=true&strictFunctionTypes=true&downlevelIteration=true&esModuleInterop=true&forceConsistentCasingInFileNames=true',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'.repeat(
+            3
+          ),
+      },
+      result: {
+        id: 'Link_KNb4KkZcZkzWb7EqCmE7MDH',
+        domain: 'dub.sh',
+        url: 'https://www.typescriptlang.org/play/?noUncheckedIndexedAccess=true&noUnusedLocals=true&noUnusedParameters=true&target=esnext&jsx=react&module=esnext&strict=true&alwaysStrict=true&noImplicitOverride=true&noPropertyAccessFromIndexSignature=true&useDefineForClassFields=true&exactOptionalPropertyTypes=true&noFallthroughCasesInSwitch=true&noImplicitReturns=true&noImplicitAny=true&noImplicitThis=true&strictBindCallApply=true&strictNullChecks=true&strictFunctionTypes=true&downlevelIteration=true&esModuleInterop=true&forceConsistentCasingInFileNames=true',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'.repeat(
+            3
+          ),
+      },
+    },
+    onAccept: () => alert('Very long JSON value accepted'),
+    onReject: () => alert('Very long JSON value rejected'),
+  },
+}

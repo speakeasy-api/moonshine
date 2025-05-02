@@ -286,7 +286,7 @@ export function AIChatMessageToolPart({
                 >
                   Input
                 </Text>
-                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
+                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300">
                   {JSON.stringify(args as Record<string, unknown>, null, 2)}
                 </pre>
               </motion.div>
@@ -306,7 +306,7 @@ export function AIChatMessageToolPart({
                 >
                   Result
                 </Text>
-                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
+                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300">
                   {formatResult(result)}
                 </pre>
               </motion.div>
