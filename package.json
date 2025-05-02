@@ -35,7 +35,8 @@
     "chromatic": "chromatic",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "test": "vitest"
+    "test": "vitest",
+    "visualize": "npx vite-bundle-visualizer"
   },
   "author": "Speakeasy",
   "license": "ISC",

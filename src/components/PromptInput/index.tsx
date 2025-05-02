@@ -164,7 +164,7 @@ export function PromptInput({
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}
         className={cn(
-          'text-foreground/70 dark:text-body-muted bg-background flex flex-col rounded-md border pt-2 text-sm transition-colors duration-500',
+          'text-foreground/70 dark:text-body-muted bg-background flex flex-col rounded-md border pt-2 text-sm',
           isDraggingOver && 'border-primary/60 border-dashed'
         )}
       >
