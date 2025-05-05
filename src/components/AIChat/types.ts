@@ -72,6 +72,9 @@ export interface AIChatContextValue {
   messages: ChatMessage[]
   isLoading?: boolean
   onSendMessage?: (message: string) => void
+  model?: string
+  onModelChange?: (model: string) => void
+  availableModels?: { label: string; value: string }[]
 }
 
 export interface BasePartProps {
