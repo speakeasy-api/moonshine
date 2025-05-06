@@ -73,12 +73,13 @@ type TableContainerProps = PropsWithChildrenAndClassName & {
   tableDepth: number
   colWidths: string
   cellPadding?: CellPadding
+  expandedRowKeys?: Set<string | number>
 }
 
 const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
-  ({ children, className, tableDepth, colWidths, cellPadding }, ref) => {
+  ({ children, className, tableDepth, colWidths, cellPadding, expandedRowKeys }, ref) => {
     return (
-      <TableProvider depth={tableDepth}>
+      <TableProvider depth={tableDepth} expandedRowKeys={expandedRowKeys}>
         <table
           style={
             { '--grid-template-columns': colWidths } as React.CSSProperties
@@ -158,6 +159,12 @@ function TableRoot<T extends object>(
     setIsLoading(false)
   }
 
+  const expandedRowKeys = useMemo(() => {
+    if (!isGroupOf<T>(data)) {
+      return new Set(data.filter((row) => 'defaultExpanded' in row && row.defaultExpanded).map(row => rowKey(row as T)))
+    }
+  }, [data, rowKey])
+
   return (
     <TableContainer
       className={className}
@@ -165,6 +172,7 @@ function TableRoot<T extends object>(
       tableDepth={tableDepth}
       cellPadding={cellPadding}
       ref={tableRef}
+      expandedRowKeys={expandedRowKeys}
     >
       {!hideHeader && <Table.Header columns={columns} />}
       <Table.Body

@@ -223,6 +223,17 @@ export const Expandable: StoryObj<ListTableProps> = {
   render: (args) => <TableWithState {...args} />,
 }
 
+export const ExpandableWithDefaultExpanded: StoryObj<ListTableProps> = {
+  args: {
+    ...Expandable.args,
+    data: defaultArgs.data.map((row) => ({
+      ...row,
+      defaultExpanded: true,
+    })),
+  },
+  render: (args) => <TableWithState {...args} />,
+}
+
 export const ExpandableWithSubtable: StoryObj<ListTableProps> = {
   args: {
     ...defaultArgs,
