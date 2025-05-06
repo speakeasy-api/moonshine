@@ -4,11 +4,16 @@ import { TableContext } from './context'
 export interface TableProviderProps {
   children: React.ReactNode
   depth: number
+  expandedRowKeys?: Set<string | number>
 }
 
-export function TableProvider({ children, depth }: TableProviderProps) {
+export function TableProvider({
+  children,
+  depth,
+  expandedRowKeys: defaultExpanded,
+}: TableProviderProps) {
   const [expandedRowKeys, setExpandedRowKeys] = useState<Set<string | number>>(
-    new Set()
+    defaultExpanded ?? new Set()
   )
 
   const toggleExpanded = useCallback(
