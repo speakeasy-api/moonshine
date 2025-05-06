@@ -7,7 +7,11 @@ export interface TableProviderProps {
   expandedRowKeys?: Set<string | number>
 }
 
-export function TableProvider({ children, depth, expandedRowKeys: defaultExpanded }: TableProviderProps) {
+export function TableProvider({
+  children,
+  depth,
+  expandedRowKeys: defaultExpanded,
+}: TableProviderProps) {
   const [expandedRowKeys, setExpandedRowKeys] = useState<Set<string | number>>(
     defaultExpanded ?? new Set()
   )

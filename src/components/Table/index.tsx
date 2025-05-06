@@ -77,7 +77,17 @@ type TableContainerProps = PropsWithChildrenAndClassName & {
 }
 
 const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
-  ({ children, className, tableDepth, colWidths, cellPadding, expandedRowKeys }, ref) => {
+  (
+    {
+      children,
+      className,
+      tableDepth,
+      colWidths,
+      cellPadding,
+      expandedRowKeys,
+    },
+    ref
+  ) => {
     return (
       <TableProvider depth={tableDepth} expandedRowKeys={expandedRowKeys}>
         <table
@@ -161,7 +171,11 @@ function TableRoot<T extends object>(
 
   const expandedRowKeys = useMemo(() => {
     if (!isGroupOf<T>(data)) {
-      return new Set(data.filter((row) => 'defaultExpanded' in row && row.defaultExpanded).map(row => rowKey(row as T)))
+      return new Set(
+        data
+          .filter((row) => 'defaultExpanded' in row && row.defaultExpanded)
+          .map((row) => rowKey(row as T))
+      )
     }
   }, [data, rowKey])
 
