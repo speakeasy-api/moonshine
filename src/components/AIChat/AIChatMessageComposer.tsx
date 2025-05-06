@@ -3,6 +3,7 @@ import { cn } from '../../lib/utils'
 import { useAIChat } from './context'
 import { Button } from '../Button'
 import { Icon } from '../Icon'
+import { AIChatModelSelector } from './AIChatModelSelector'
 
 export interface AIChatMessageComposerProps {
   className?: string
@@ -13,7 +14,8 @@ export function AIChatMessageComposer({
 }: AIChatMessageComposerProps) {
   const [message, setMessage] = useState('')
   const [isFocused, setIsFocused] = useState(false)
-  const { onSendMessage, isLoading } = useAIChat()
+  const { onSendMessage, isLoading, model, onModelChange, availableModels } =
+    useAIChat()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const adjustHeight = () => {
@@ -74,14 +76,25 @@ export function AIChatMessageComposer({
           />
           <div className="flex items-center justify-between p-3 pt-2">
             <div className="flex items-center gap-2">
-              {/* Space for additional footer actions */}
+              {availableModels && model && onModelChange && (
+                <AIChatModelSelector
+                  modelSelector={{
+                    model,
+                    onModelChange,
+                    availableModels,
+                  }}
+                  /* Inner border radius = outer border radius (rounded-lg = 8px) - border width (1px) = 7px */
+                  className="rounded-[7px]"
+                />
+              )}
             </div>
             <Button
               type="submit"
               disabled={!message.trim() || isLoading}
               size="icon"
               variant="secondary"
-              className="h-8 w-8 rounded-sm"
+              /* Inner border radius = outer border radius (rounded-lg = 8px) - border width (1px) = 7px */
+              className="h-8 w-8 rounded-[7px]"
             >
               <Icon name="arrow-up" className="size-4" />
             </Button>
