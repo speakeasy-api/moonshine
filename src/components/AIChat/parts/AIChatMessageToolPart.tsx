@@ -1,9 +1,16 @@
-import { cn } from '../../../lib/utils'
-import { Text } from '../../Text'
-import { Button } from '../../Button'
-import type { BasePartProps } from '../types'
-import { useState } from 'react'
 import { motion, MotionConfig } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { cn } from '../../../lib/utils'
+import { Button } from '../../Button'
+import { Text } from '../../Text'
+import {
+  BaseComponents,
+  DefaultComponents,
+  FcOrClassName,
+  renderComponent,
+} from '../componentsTypes'
+import { useAIChat } from '../context'
+import type { BasePartProps } from '../types'
 
 type ToolInvocationState = 'partial-call' | 'call' | 'result'
 
@@ -17,20 +24,120 @@ interface ToolInvocation {
 
 export interface AIChatMessageToolPartProps extends BasePartProps {
   toolInvocation: ToolInvocation
+  components?: Partial<AIChatMessageToolPartComponents>
   onAccept?: () => void
   onReject?: () => void
-  onClick?: () => void
+}
+
+export interface AIChatMessageToolPartComponents extends BaseComponents {
+  toolName: FcOrClassName<ToolInvocation>
+  input: FcOrClassName<Omit<ToolInvocation, 'args'> & { args: string }>
+  result: FcOrClassName<Omit<ToolInvocation, 'result'> & { result: string }>
+  approveButton: FcOrClassName<ToolInvocation & { onClick: () => void }>
+  rejectButton: FcOrClassName<ToolInvocation & { onClick: () => void }>
+}
+
+const inputResultClassName =
+  'typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300'
+
+const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
+  toolName: ({ toolName, className }) => (
+    <Text
+      variant="xs"
+      className={cn('flex-1 py-1 font-medium text-neutral-100', className)}
+    >
+      {toolName}
+    </Text>
+  ),
+  input: ({ args, className }) => (
+    <>
+      <Text variant="xs" className="mb-1 font-medium text-neutral-300">
+        Input
+      </Text>
+      <pre className={cn(inputResultClassName, className)}>{args}</pre>
+    </>
+  ),
+  result: ({ result, className }) => (
+    <>
+      <Text variant="xs" className="mb-1 font-medium text-neutral-300">
+        Result
+      </Text>
+      <pre className={cn(inputResultClassName, className)}>{result}</pre>
+    </>
+  ),
+  approveButton: ({ onClick, className }) => (
+    <Button
+      size="icon"
+      variant="ghost"
+      onClick={onClick}
+      className={cn(
+        'border-em-600 h-6 w-6 bg-transparent text-emerald-300 hover:bg-emerald-800 hover:text-emerald-100',
+        className
+      )}
+      aria-label="Accept"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+    </Button>
+  ),
+  rejectButton: ({ onClick, className }) => (
+    <Button
+      size="icon"
+      variant="ghost"
+      onClick={onClick}
+      className={cn(
+        'h-6 w-6 text-red-400 hover:bg-red-800 hover:text-red-100',
+        className
+      )}
+      aria-label="Reject"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </Button>
+  ),
 }
 
 export function AIChatMessageToolPart({
   toolInvocation,
   className,
-  onAccept,
-  onReject,
-  onClick,
+  components,
 }: AIChatMessageToolPartProps) {
-  const { state, toolName, args, result } = toolInvocation
+  const { state, toolCallId, args, result } = toolInvocation
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const { toolCallApproval } = useAIChat()
+  const isPending = toolCallId === toolCallApproval?.pendingToolCall?.toolCallId
+  // const { approveToolCall, rejectToolCall } = isPending ? toolCallApproval : {}
+
+  useEffect(() => {
+    if (isPending) {
+      setIsExpanded(true)
+    }
+  }, [isPending])
 
   // Format the result for display
   const formatResult = (result: unknown): string => {
@@ -132,76 +239,27 @@ export function AIChatMessageToolPart({
           {/* Status Indicator */}
           <StatusIndicator />
           {/* Tool Name */}
-          {onClick ? (
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={onClick}
-              className="h-6 flex-1 justify-start p-0 text-neutral-100 hover:text-neutral-100 hover:underline"
-            >
-              <Text variant="xs" className="font-medium">
-                {toolName}
-              </Text>
-            </Button>
-          ) : (
-            <Text
-              variant="xs"
-              className="flex-1 py-1 font-medium text-neutral-100"
-            >
-              {toolName}
-            </Text>
+          {renderComponent(
+            defaultComponents,
+            components,
+            'toolName',
+            toolInvocation
           )}
 
           {/* Action Buttons */}
           <div className="flex items-center gap-1">
-            {state === 'result' && onReject && (
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={onReject}
-                className="h-6 w-6 text-neutral-300 hover:bg-neutral-800 hover:text-neutral-100"
-                aria-label="Reject"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </Button>
-            )}
-            {state === 'result' && onAccept && (
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={onAccept}
-                className="h-6 w-6 border-neutral-600 bg-transparent text-neutral-300 hover:bg-neutral-800 hover:text-neutral-100"
-                aria-label="Accept"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </Button>
-            )}
+            {isPending &&
+              toolCallApproval?.pendingToolCall?.reject &&
+              renderComponent(defaultComponents, components, 'rejectButton', {
+                ...toolInvocation,
+                onClick: toolCallApproval?.pendingToolCall?.reject,
+              })}
+            {isPending &&
+              toolCallApproval?.pendingToolCall?.approve &&
+              renderComponent(defaultComponents, components, 'approveButton', {
+                ...toolInvocation,
+                onClick: toolCallApproval?.pendingToolCall?.approve,
+              })}
             <Button
               size="icon"
               variant="ghost"
@@ -280,15 +338,14 @@ export function AIChatMessageToolPart({
                   collapsed: { y: -10, opacity: 0 },
                 }}
               >
-                <Text
-                  variant="xs"
-                  className="mb-1 font-medium text-neutral-300"
-                >
-                  Input
-                </Text>
-                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300">
-                  {JSON.stringify(args as Record<string, unknown>, null, 2)}
-                </pre>
+                {renderComponent(defaultComponents, components, 'input', {
+                  ...toolInvocation,
+                  args: JSON.stringify(
+                    args as Record<string, unknown>,
+                    null,
+                    2
+                  ),
+                })}
               </motion.div>
             ) : null}
 
@@ -300,15 +357,10 @@ export function AIChatMessageToolPart({
                   collapsed: { y: -10, opacity: 0 },
                 }}
               >
-                <Text
-                  variant="xs"
-                  className="mb-1 font-medium text-neutral-300"
-                >
-                  Result
-                </Text>
-                <pre className="typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300">
-                  {formatResult(result)}
-                </pre>
+                {renderComponent(defaultComponents, components, 'result', {
+                  ...toolInvocation,
+                  result: formatResult(result),
+                })}
               </motion.div>
             ) : null}
           </motion.div>

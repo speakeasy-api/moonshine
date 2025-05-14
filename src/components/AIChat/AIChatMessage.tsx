@@ -2,16 +2,22 @@ import { cn } from '../../lib/utils'
 import type { ChatMessage } from './types'
 import { AIChatMessageTextPart } from './parts/AIChatMessageTextPart'
 import { AIChatMessageReasoningPart } from './parts/AIChatMessageReasoningPart'
-import { AIChatMessageToolPart } from './parts/AIChatMessageToolPart'
+import { AIChatMessageToolPart, AIChatMessageToolPartComponents } from './parts/AIChatMessageToolPart'
 import { AIChatMessageFilePart } from './parts/AIChatMessageFilePart'
 import { AIChatMessageSourcePart } from './parts/AIChatMessageSourcePart'
+import { BaseComponents } from './componentsTypes'
 
 export interface AIChatMessageProps {
   message: ChatMessage
   className?: string
+  components?: Partial<AIChatMessageComponents>
 }
 
-export function AIChatMessage({ message, className }: AIChatMessageProps) {
+export interface AIChatMessageComponents {
+  toolCall: Partial<AIChatMessageToolPartComponents>
+}
+
+export function AIChatMessage({ message, className, components }: AIChatMessageProps) {
   const roleIcons = {
     user: (
       <div className="h-6 w-6 overflow-hidden rounded-full ring-1 ring-neutral-400 ring-inset">
@@ -66,6 +72,7 @@ export function AIChatMessage({ message, className }: AIChatMessageProps) {
                   <AIChatMessageToolPart
                     key={index}
                     toolInvocation={part.toolInvocation}
+                    components={components?.toolCall}
                   />
                 )
               case 'file':
