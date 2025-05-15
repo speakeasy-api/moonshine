@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { useEffect, useState } from 'react'
+import { Button } from '../Button'
 import { AIChatContainer } from './AIChatContainer'
+import { useToolCallApproval } from './toolCallApproval'
 import type { ChatMessage, ToolInvocation, ToolResult } from './types'
-import { useState, useEffect } from 'react'
 
 const meta: Meta<typeof AIChatContainer> = {
   component: AIChatContainer,
@@ -248,6 +250,30 @@ export const Loading: Story = {
   },
 }
 
+export const Customized: Story = {
+  args: {
+    messages: openApiEditingMessages.slice(0, 3),
+    onSendMessage: (message) => console.log('Sending message:', message),
+    components: {
+      composer: {
+        submitButton: ({ disabled, type }) => (
+          <Button type={type} disabled={disabled}>
+            Custom submit button
+          </Button>
+        ),
+        additionalActions: <Button>Additional action</Button>,
+      },
+      message: {
+        toolCall: {
+          toolName: 'bg-red-500',
+          input: 'bg-blue-500',
+          result: 'bg-green-500',
+        },
+      },
+    },
+  },
+}
+
 const ModelSelectorDemoComponent = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -349,6 +375,36 @@ export const WithModelSelector: Story = {
   render: () => <ModelSelectorDemoComponent />,
 }
 
+const ToolCallApprovalDemoComponent = () => {
+  const toolCallApproval = useToolCallApproval({
+    executeToolCall: async () => {
+      alert('Tool call approved')
+      return 'Tool call executed successfully'
+    },
+    requiresApproval: (toolCall) => {
+      return toolCall.toolName === 'read_file'
+    },
+  })
+
+  useEffect(() => {
+    toolCallApproval.toolCallFn({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toolCall: (toolCallStates[1].parts[1] as any).toolInvocation,
+    })
+  }, [])
+
+  return (
+    <AIChatContainer
+      messages={toolCallStates.slice(0, 2)}
+      toolCallApproval={toolCallApproval}
+    />
+  )
+}
+
+export const WithToolCallApproval: Story = {
+  render: () => <ToolCallApprovalDemoComponent />,
+}
+
 export const Empty: Story = {
   args: {
     messages: [],
@@ -407,7 +463,7 @@ const ToolCallStateDemoComponent = () => {
         if (prevState === 'call') return 'result'
         return 'partial-call'
       })
-    }, 5000) // Change state every 5 seconds
+    }, 1000) // Change state every 1 second
 
     return () => clearInterval(interval)
   }, [])
