@@ -22,9 +22,9 @@ export interface AIChatMessageProps {
 }
 
 interface AvatarComponents extends BaseComponents {
-  user: FcOrClassName<{}>
-  assistant: FcOrClassName<{}>
-  system: FcOrClassName<{}>
+  user: FcOrClassName<unknown>
+  assistant: FcOrClassName<unknown>
+  system: FcOrClassName<unknown>
 }
 
 export interface AIChatMessageComponents {

@@ -2,7 +2,9 @@ import { ToolCall } from 'ai'
 import { useState } from 'react'
 import { ToolCallApprovalProps, ToolCallWithApproval } from './types'
 
-type ToolCallFn = (t: { toolCall: ToolCall<string, any> }) => Promise<string>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type TC = ToolCall<string, any>
+type ToolCallFn = (t: { toolCall: TC }) => Promise<string>
 
 export const TOOL_CALL_ERROR_MESSAGE = 'Tool call error'
 export const TOOL_CALL_REJECTED_MESSAGE = 'User rejected tool call'
@@ -11,13 +13,13 @@ export function useToolCallApproval({
   executeToolCall,
   requiresApproval,
 }: {
-  executeToolCall: (toolCall: ToolCall<string, any>) => Promise<string>
-  requiresApproval?: (toolCall: ToolCall<string, any>) => boolean
+  executeToolCall: (toolCall: TC) => Promise<string>
+  requiresApproval?: (toolCall: TC) => boolean
 }): ToolCallApprovalProps & { toolCallFn: ToolCallFn } {
   const [pendingToolCall, setPendingToolCall] =
     useState<ToolCallWithApproval | null>(null)
 
-  const executeWithErrorHandling = async (toolCall: ToolCall<string, any>) => {
+  const executeWithErrorHandling = async (toolCall: TC) => {
     try {
       return await executeToolCall(toolCall)
     } catch (error) {
@@ -25,11 +27,7 @@ export function useToolCallApproval({
     }
   }
 
-  const toolCallFn = async ({
-    toolCall,
-  }: {
-    toolCall: ToolCall<string, any>
-  }) => {
+  const toolCallFn = async ({ toolCall }: { toolCall: TC }) => {
     if (!requiresApproval?.(toolCall)) {
       return executeWithErrorHandling(toolCall)
     }

@@ -377,7 +377,7 @@ export const WithModelSelector: Story = {
 
 const ToolCallApprovalDemoComponent = () => {
   const toolCallApproval = useToolCallApproval({
-    executeToolCall: async (toolCall) => {
+    executeToolCall: async () => {
       alert('Tool call approved')
       return 'Tool call executed successfully'
     },
@@ -388,6 +388,7 @@ const ToolCallApprovalDemoComponent = () => {
 
   useEffect(() => {
     toolCallApproval.toolCallFn({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       toolCall: (toolCallStates[1].parts[1] as any).toolInvocation,
     })
   }, [])

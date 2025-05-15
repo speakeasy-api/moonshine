@@ -84,6 +84,7 @@ export interface BasePartProps {
   className?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ToolCallWithApproval = ToolCall<string, any> & {
   approve: () => void
   reject: () => void

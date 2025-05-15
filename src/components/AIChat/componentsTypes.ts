@@ -4,7 +4,10 @@ type ClassName = string
 
 export type FcOrClassName<P> = FunctionComponent<P> | ClassName
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BaseComponents = Record<string, FcOrClassName<any> | ReactNode>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type FC = FunctionComponent<any>
 
 export type DefaultComponents<T extends BaseComponents> = {
   [key in keyof T]: T[key] extends FcOrClassName<infer P>
@@ -20,14 +23,12 @@ export const renderComponent = <T extends BaseComponents, K extends keyof T>(
 ): ReactNode => {
   const userComponent = userComponents?.[key]
   if (typeof userComponent === 'function') {
-    const Component = userComponent as React.FunctionComponent<any>
+    const Component = userComponent as FC
     return createElement(Component, props)
   }
 
   // Default component handling
-  const DefaultComponent = defaultComponents[
-    key
-  ] as React.FunctionComponent<any>
+  const DefaultComponent = defaultComponents[key] as FC
   return createElement(DefaultComponent, {
     ...(props as object),
     className: typeof userComponent === 'string' ? userComponent : '',

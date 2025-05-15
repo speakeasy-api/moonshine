@@ -1,4 +1,3 @@
-import { ToolCall } from 'ai'
 import { ReactNode } from 'react'
 import { cn } from '../../lib/utils'
 import { AIChatMessageComponents } from './AIChatMessage'
