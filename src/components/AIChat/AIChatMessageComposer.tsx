@@ -1,11 +1,14 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { cn } from '../../lib/utils'
 import { Button } from '../Button'
 import { Icon } from '../Icon'
 import { AIChatModelSelector } from './AIChatModelSelector'
+import {
+  DefaultComponents,
+  FcOrClassName,
+  renderComponent,
+} from './componentsTypes'
 import { useAIChat } from './context'
-import { DefaultComponents, renderComponent } from './componentsTypes'
-import { FcOrClassName } from './componentsTypes'
 
 export interface AIChatMessageComposerProps {
   className?: string
@@ -22,6 +25,7 @@ export type AIChatMessageComposerComponents = {
     onModelChange: (model: string) => void
     availableModels: { label: string; value: string }[]
   }>
+  additionalActions: ReactNode
 }
 
 const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
@@ -61,6 +65,7 @@ const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
       className={cn('rounded-[7px]', className)}
     />
   ),
+  additionalActions: null,
 }
 
 export function AIChatMessageComposer({
@@ -134,11 +139,17 @@ export function AIChatMessageComposer({
               {availableModels &&
                 model &&
                 onModelChange &&
-                renderComponent(defaultComponents, components, 'modelSelector', {
-                  model,
-                  onModelChange,
-                  availableModels,
-                })}
+                renderComponent(
+                  defaultComponents,
+                  components,
+                  'modelSelector',
+                  {
+                    model,
+                    onModelChange,
+                    availableModels,
+                  }
+                )}
+              {components?.additionalActions}
             </div>
             {renderComponent(defaultComponents, components, 'submitButton', {
               disabled: !message.trim() || isLoading,

@@ -4,12 +4,12 @@ type ClassName = string
 
 export type FcOrClassName<P> = FunctionComponent<P> | ClassName
 
-export type BaseComponents = Record<string, FcOrClassName<any>>
+export type BaseComponents = Record<string, FcOrClassName<any> | ReactNode>
 
 export type DefaultComponents<T extends BaseComponents> = {
   [key in keyof T]: T[key] extends FcOrClassName<infer P>
     ? FunctionComponent<P & { className: string }>
-    : never
+    : T[key]
 }
 
 export const renderComponent = <T extends BaseComponents, K extends keyof T>(

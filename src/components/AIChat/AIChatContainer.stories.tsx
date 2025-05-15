@@ -261,6 +261,7 @@ export const Customized: Story = {
             Custom submit button
           </Button>
         ),
+        additionalActions: <Button>Additional action</Button>,
       },
       message: {
         toolCall: {
