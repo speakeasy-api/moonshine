@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useEffect, useState } from 'react'
 import { Button } from '../Button'
 import { AIChatContainer } from './AIChatContainer'
-import { useToolCallApprovalManager } from './toolCallApproval'
+import { useToolCallApproval } from './toolCallApproval'
 import type { ChatMessage, ToolInvocation, ToolResult } from './types'
 
 const meta: Meta<typeof AIChatContainer> = {
@@ -375,11 +375,7 @@ export const WithModelSelector: Story = {
 }
 
 const ToolCallApprovalDemoComponent = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>(
-    toolCallStates.slice(0, 2)
-  )
-
-  const toolCallApproval = useToolCallApprovalManager({
+  const toolCallApproval = useToolCallApproval({
     executeToolCall: async (toolCall) => {
       alert('Tool call approved')
       return 'Tool call executed successfully'
@@ -396,7 +392,10 @@ const ToolCallApprovalDemoComponent = () => {
   }, [])
 
   return (
-    <AIChatContainer messages={messages} toolCallApproval={toolCallApproval} />
+    <AIChatContainer
+      messages={toolCallStates.slice(0, 2)}
+      toolCallApproval={toolCallApproval}
+    />
   )
 }
 
@@ -462,7 +461,7 @@ const ToolCallStateDemoComponent = () => {
         if (prevState === 'call') return 'result'
         return 'partial-call'
       })
-    }, 5000) // Change state every 5 seconds
+    }, 1000) // Change state every 1 second
 
     return () => clearInterval(interval)
   }, [])

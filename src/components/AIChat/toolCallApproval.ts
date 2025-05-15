@@ -4,7 +4,10 @@ import { ToolCallApprovalProps, ToolCallWithApproval } from './types'
 
 type ToolCallFn = (t: { toolCall: ToolCall<string, any> }) => Promise<string>
 
-export function useToolCallApprovalManager({
+export const TOOL_CALL_ERROR_MESSAGE = 'Tool call error'
+export const TOOL_CALL_REJECTED_MESSAGE = 'User rejected tool call'
+
+export function useToolCallApproval({
   executeToolCall,
   requiresApproval,
 }: {
@@ -18,7 +21,7 @@ export function useToolCallApprovalManager({
     try {
       return await executeToolCall(toolCall)
     } catch (error) {
-      return `Tool Call Error: ${error}`
+      return `${TOOL_CALL_ERROR_MESSAGE}: ${error}`
     }
   }
 
@@ -45,7 +48,7 @@ export function useToolCallApprovalManager({
       })
       .catch(() => {
         setPendingToolCall(null)
-        return `User rejected tool call`
+        return TOOL_CALL_REJECTED_MESSAGE
       })
   }
 

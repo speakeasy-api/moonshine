@@ -1,5 +1,6 @@
 import { motion, MotionConfig } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
 import { cn } from '../../../lib/utils'
 import { Button } from '../../Button'
 import { Text } from '../../Text'
@@ -10,9 +11,15 @@ import {
   renderComponent,
 } from '../componentsTypes'
 import { useAIChat } from '../context'
+import {
+  TOOL_CALL_ERROR_MESSAGE,
+  TOOL_CALL_REJECTED_MESSAGE,
+} from '../toolCallApproval'
 import type { BasePartProps } from '../types'
 
 type ToolInvocationState = 'partial-call' | 'call' | 'result'
+
+type ToolInvocationStatus = 'pending' | 'in-progress' | 'success' | 'error'
 
 interface ToolInvocation {
   state: ToolInvocationState
@@ -31,6 +38,7 @@ export interface AIChatMessageToolPartProps extends BasePartProps {
 
 export interface AIChatMessageToolPartComponents extends BaseComponents {
   toolName: FcOrClassName<ToolInvocation>
+  statusIndicator: FcOrClassName<{ status: ToolInvocationStatus }>
   input: FcOrClassName<Omit<ToolInvocation, 'args'> & { args: string }>
   result: FcOrClassName<Omit<ToolInvocation, 'result'> & { result: string }>
   approveButton: FcOrClassName<ToolInvocation & { onClick: () => void }>
@@ -48,6 +56,9 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
     >
       {toolName}
     </Text>
+  ),
+  statusIndicator: ({ status, className }) => (
+    <StatusIndicator status={status} className={className} />
   ),
   input: ({ args, className }) => (
     <>
@@ -76,20 +87,7 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
       )}
       aria-label="Accept"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M5 13l4 4L19 7"
-        />
-      </svg>
+      <CheckIcon className="h-4 w-4" />
     </Button>
   ),
   rejectButton: ({ onClick, className }) => (
@@ -103,20 +101,7 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
       )}
       aria-label="Reject"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
+      <XIcon className="h-4 w-4" />
     </Button>
   ),
 }
@@ -131,13 +116,20 @@ export function AIChatMessageToolPart({
 
   const { toolCallApproval } = useAIChat()
   const isPending = toolCallId === toolCallApproval?.pendingToolCall?.toolCallId
-  // const { approveToolCall, rejectToolCall } = isPending ? toolCallApproval : {}
 
   useEffect(() => {
     if (isPending) {
       setIsExpanded(true)
     }
   }, [isPending])
+
+  useEffect(() => {
+    if (state === 'result') {
+      setIsExpanded(false)
+    } else {
+      setIsExpanded(true)
+    }
+  }, [state])
 
   // Format the result for display
   const formatResult = (result: unknown): string => {
@@ -147,75 +139,17 @@ export function AIChatMessageToolPart({
     return String(result)
   }
 
-  const StatusIndicator = () => {
-    // TODO: support an "isError(toolInvocation) => bool" prop?
-    // TODO: change icon based on success
-    const success =
-      state === 'result' && (result as { status: string })?.status !== 'error'
-    const resultClassname = success ? 'bg-success-fill' : 'bg-danger-fill'
-
-    return (
-      <div className="flex h-6 w-6 items-center justify-center">
-        {state === 'result' ? (
-          <motion.div
-            className={cn(
-              resultClassname,
-              'flex h-3 w-3 items-center justify-center rounded-full'
-            )}
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-3 w-3 text-neutral-900"
-              fill="currentColor"
-            >
-              <path d="M9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4L9.55 18Z" />
-            </svg>
-          </motion.div>
-        ) : (
-          <div className="relative">
-            {state === 'call' && (
-              <>
-                {/* Track */}
-                <motion.div
-                  className="bg-information-fill/20 absolute inset-0 rounded-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
-                {/* Animated Ring */}
-                <motion.div
-                  className="absolute inset-0"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div
-                    className="border-information-fill h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
-                    style={{
-                      animation: 'spin 1s linear infinite',
-                    }}
-                  />
-                </motion.div>
-              </>
-            )}
-            <motion.div
-              className={cn('relative h-3 w-3 rounded-full', {
-                'bg-warning-fill': state === 'partial-call',
-                'bg-information-fill': state === 'call',
-              })}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-            />
-          </div>
-        )}
-      </div>
-    )
-  }
+  const status = useMemo(() => {
+    if (isPending) return 'pending'
+    if (state === 'call') return 'in-progress'
+    if (state === 'result') {
+      if (formatResult(result).includes(TOOL_CALL_ERROR_MESSAGE)) return 'error'
+      if (formatResult(result).includes(TOOL_CALL_REJECTED_MESSAGE))
+        return 'error'
+      return 'success'
+    }
+    return 'pending'
+  }, [state, isPending, result])
 
   return (
     <MotionConfig transition={{ duration: 0.2 }}>
@@ -237,7 +171,11 @@ export function AIChatMessageToolPart({
           )}
         >
           {/* Status Indicator */}
-          <StatusIndicator />
+          <div className="relative flex h-6 w-6 items-center justify-center">
+            {renderComponent(defaultComponents, components, 'statusIndicator', {
+              status,
+            })}
+          </div>
           {/* Tool Name */}
           {renderComponent(
             defaultComponents,
@@ -368,4 +306,113 @@ export function AIChatMessageToolPart({
       </motion.div>
     </MotionConfig>
   )
+}
+
+const StatusIndicator = ({
+  status,
+  className,
+}: {
+  status: ToolInvocationStatus
+  className: string
+}) => {
+  const widthHeight = 'h-3 w-3'
+  const baseClassName = `${widthHeight} flex items-center justify-center rounded-full`
+
+  switch (status) {
+    case 'success':
+      return (
+        <motion.div
+          className={cn(baseClassName, 'bg-success-fill', className)}
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+        >
+          <CheckIcon className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+        </motion.div>
+      )
+    case 'error':
+      return (
+        <motion.div
+          className={cn(baseClassName, 'bg-danger-fill', className)}
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+        >
+          <XIcon className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+        </motion.div>
+      )
+    case 'pending':
+      return (
+        <>
+          {/* Track */}
+          <motion.div
+            className="absolute inset-0 rounded-full bg-neutral-500/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          />
+          {/* Animated Ring */}
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div
+              className="h-full w-full rounded-full border-2 border-neutral-500 [border-top-color:transparent] [border-left-color:transparent]"
+              style={{
+                animation: 'spin 3s linear infinite',
+              }}
+            />
+          </motion.div>
+          <motion.div
+            className={cn(
+              'relative h-4 w-4 rounded-full bg-neutral-500',
+              className
+            )}
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          >
+            <UserCheck className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+          </motion.div>
+        </>
+      )
+    case 'in-progress':
+      return (
+        <>
+          {/* Track */}
+          <motion.div
+            className="bg-information-fill/20 absolute inset-0 rounded-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          />
+          {/* Animated Ring */}
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div
+              className="border-information-fill h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
+              style={{
+                animation: 'spin 1s linear infinite',
+              }}
+            />
+          </motion.div>
+          <motion.div
+            className={cn(
+              widthHeight,
+              'bg-information-fill relative rounded-full',
+              className
+            )}
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          />
+        </>
+      )
+  }
 }

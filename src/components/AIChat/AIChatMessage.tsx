@@ -1,11 +1,19 @@
 import { cn } from '../../lib/utils'
-import type { ChatMessage } from './types'
-import { AIChatMessageTextPart } from './parts/AIChatMessageTextPart'
-import { AIChatMessageReasoningPart } from './parts/AIChatMessageReasoningPart'
-import { AIChatMessageToolPart, AIChatMessageToolPartComponents } from './parts/AIChatMessageToolPart'
+import {
+  BaseComponents,
+  DefaultComponents,
+  FcOrClassName,
+  renderComponent,
+} from './componentsTypes'
 import { AIChatMessageFilePart } from './parts/AIChatMessageFilePart'
+import { AIChatMessageReasoningPart } from './parts/AIChatMessageReasoningPart'
 import { AIChatMessageSourcePart } from './parts/AIChatMessageSourcePart'
-import { BaseComponents } from './componentsTypes'
+import { AIChatMessageTextPart } from './parts/AIChatMessageTextPart'
+import {
+  AIChatMessageToolPart,
+  AIChatMessageToolPartComponents,
+} from './parts/AIChatMessageToolPart'
+import type { ChatMessage } from './types'
 
 export interface AIChatMessageProps {
   message: ChatMessage
@@ -13,48 +21,76 @@ export interface AIChatMessageProps {
   components?: Partial<AIChatMessageComponents>
 }
 
-export interface AIChatMessageComponents {
-  toolCall: Partial<AIChatMessageToolPartComponents>
+interface AvatarComponents extends BaseComponents {
+  user: FcOrClassName<{}>
+  assistant: FcOrClassName<{}>
+  system: FcOrClassName<{}>
 }
 
-export function AIChatMessage({ message, className, components }: AIChatMessageProps) {
-  const roleIcons = {
-    user: (
-      <div className="h-6 w-6 overflow-hidden rounded-full ring-1 ring-neutral-400 ring-inset">
-        <img
-          src={`https://avatar.vercel.sh/user.svg?size=20`}
-          alt="User"
-          className="h-full w-full"
-        />
-      </div>
-    ),
-    assistant: (
-      <div className="flex h-6 w-6 items-center justify-center rounded border border-neutral-800 bg-neutral-900 text-[10px] font-medium text-neutral-400">
-        AI
-      </div>
-    ),
-    system: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-neutral-400"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
-  }
+export interface AIChatMessageComponents {
+  toolCall: Partial<AIChatMessageToolPartComponents>
+  avatar: Partial<AvatarComponents>
+}
 
+const defaultAvatars: DefaultComponents<AvatarComponents> = {
+  user: ({ className }) => (
+    <div
+      className={cn(
+        'h-6 w-6 overflow-hidden rounded-full ring-1 ring-neutral-400 ring-inset',
+        className
+      )}
+    >
+      <img
+        src={`https://avatar.vercel.sh/user.svg?size=20`}
+        alt="User"
+        className="h-full w-full"
+      />
+    </div>
+  ),
+  assistant: ({ className }) => (
+    <div
+      className={cn(
+        'flex h-6 w-6 items-center justify-center rounded border border-neutral-800 bg-neutral-900 text-[10px] font-medium text-neutral-400',
+        className
+      )}
+    >
+      AI
+    </div>
+  ),
+  system: ({ className }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn('h-6 w-6 text-neutral-400', className)}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M13 10V3L4 14h7v7l9-11h-7z"
+      />
+    </svg>
+  ),
+}
+
+export function AIChatMessage({
+  message,
+  className,
+  components,
+}: AIChatMessageProps) {
   return (
     <li role="listitem" className={cn('px-4 py-3', className)}>
       <div className="flex items-start gap-2">
-        <div className="flex-shrink-0">{roleIcons[message.role]}</div>
+        <div className="flex-shrink-0">
+          {renderComponent(
+            defaultAvatars,
+            components?.avatar,
+            message.role,
+            {}
+          )}
+        </div>
         <div className="flex flex-1 flex-col gap-4">
           {message.parts.map((part, index) => {
             switch (part.type) {
