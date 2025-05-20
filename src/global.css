@@ -219,6 +219,17 @@
   --color-accessibility: hsl(221 83% 53%);
   --color-transparent: hsla(0 0% 0% / 0);
 
+  --color-neutral-50: hsl(240 10% 4%);
+  --color-neutral-100: hsl(240 6% 10%);
+  --color-neutral-200: hsl(240 4% 16%);
+  --color-neutral-300: hsl(240 4% 24%);
+  --color-neutral-400: hsl(240 5% 34%);
+  --color-neutral-500: hsl(240 4% 46%);
+  --color-neutral-600: hsl(240 5% 65%);
+  --color-neutral-800: hsl(240 6% 90%);
+  --color-neutral-900: hsl(240 5% 96%);
+  --color-neutral-950: hsl(0 0% 98%);
+
   --color-brand-yellow-50: hsl(57 92% 95%);
   --color-brand-yellow-100: hsl(58 93% 88%);
   --color-brand-yellow-200: hsl(55 97% 77%);
@@ -306,6 +317,7 @@
   --color-neutral-50: hsl(0 0% 98%);
   --color-neutral-100: hsl(240 5% 96%);
   --color-neutral-200: hsl(240 6% 90%);
+  --color-neutral-300: hsl(240 5% 84%);
   --color-neutral-400: hsl(240 5% 65%);
   --color-neutral-500: hsl(240 4% 46%);
   --color-neutral-600: hsl(240 5% 34%);

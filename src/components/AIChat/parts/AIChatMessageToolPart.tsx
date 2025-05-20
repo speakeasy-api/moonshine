@@ -1,3 +1,9 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/Tooltip'
 import { motion, MotionConfig } from 'framer-motion'
 import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -77,32 +83,46 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
     </>
   ),
   approveButton: ({ onClick, className }) => (
-    <Button
-      size="icon"
-      variant="ghost"
-      onClick={onClick}
-      className={cn(
-        'border-em-600 h-6 w-6 bg-transparent text-emerald-300 hover:bg-emerald-800 hover:text-emerald-100',
-        className
-      )}
-      aria-label="Accept"
-    >
-      <CheckIcon className="h-4 w-4" />
-    </Button>
+    <TooltipProvider>
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={onClick}
+            className={cn(
+              'border-em-600 bg-success-fill text-success-foreground/90 hover:bg-success-fill/80 hover:text-success-foreground h-6 w-6',
+              className
+            )}
+            aria-label="Accept"
+          >
+            <CheckIcon className="h-4 w-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Approve tool call</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   ),
   rejectButton: ({ onClick, className }) => (
-    <Button
-      size="icon"
-      variant="ghost"
-      onClick={onClick}
-      className={cn(
-        'h-6 w-6 text-red-400 hover:bg-red-800 hover:text-red-100',
-        className
-      )}
-      aria-label="Reject"
-    >
-      <XIcon className="h-4 w-4" />
-    </Button>
+    <TooltipProvider>
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={onClick}
+            className={cn(
+              'text-danger-fill hover:text-danger-fill hover:bg-danger-fill/30 h-6 w-6',
+              className
+            )}
+            aria-label="Reject"
+          >
+            <XIcon className="h-4 w-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Reject tool call</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   ),
 }
 
@@ -164,7 +184,7 @@ export function AIChatMessageToolPart({
         {/* Header */}
         <div
           className={cn(
-            'flex items-center gap-3 border-neutral-700 bg-neutral-900 px-4 py-2',
+            'flex items-center gap-3 border-neutral-600 bg-neutral-900 px-4 py-2',
             {
               'border-b': isExpanded,
             }
@@ -327,7 +347,7 @@ const StatusIndicator = ({
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
         >
-          <CheckIcon className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+          <CheckIcon className="h-full w-full text-neutral-100" />
         </motion.div>
       )
     case 'error':
@@ -338,7 +358,7 @@ const StatusIndicator = ({
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
         >
-          <XIcon className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+          <XIcon className="h-full w-full text-neutral-100" />
         </motion.div>
       )
     case 'pending':
@@ -374,7 +394,7 @@ const StatusIndicator = ({
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 500, damping: 15 }}
           >
-            <UserCheck className="h-full w-full text-neutral-100 dark:text-neutral-900" />
+            <UserCheck className="h-full w-full text-neutral-100" />
           </motion.div>
         </>
       )
