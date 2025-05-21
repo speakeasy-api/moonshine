@@ -88,6 +88,7 @@ export interface BasePartProps {
 export type ToolCallWithApproval = ToolCall<string, any> & {
   approve: () => void
   reject: () => void
+  confirmMessage?: string
 }
 
 export interface ToolCallApprovalProps {

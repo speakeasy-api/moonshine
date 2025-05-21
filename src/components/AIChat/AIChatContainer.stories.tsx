@@ -382,7 +382,7 @@ const ToolCallApprovalDemoComponent = () => {
       return 'Tool call executed successfully'
     },
     requiresApproval: (toolCall) => {
-      return toolCall.toolName === 'read_file'
+      return 'Allow this file to be read?'
     },
   })
 

@@ -1,9 +1,3 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/Tooltip'
 import { motion, MotionConfig } from 'framer-motion'
 import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -43,24 +37,22 @@ export interface AIChatMessageToolPartProps extends BasePartProps {
 }
 
 export interface AIChatMessageToolPartComponents extends BaseComponents {
-  toolName: FcOrClassName<ToolInvocation>
+  toolName: FcOrClassName<ToolInvocation & { confirmMessage?: string }>
   statusIndicator: FcOrClassName<{ status: ToolInvocationStatus }>
   input: FcOrClassName<Omit<ToolInvocation, 'args'> & { args: string }>
   result: FcOrClassName<Omit<ToolInvocation, 'result'> & { result: string }>
-  approveButton: FcOrClassName<ToolInvocation & { onClick: () => void }>
-  rejectButton: FcOrClassName<ToolInvocation & { onClick: () => void }>
 }
 
 const inputResultClassName =
   'typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300'
 
 const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
-  toolName: ({ toolName, className }) => (
+  toolName: ({ toolName, confirmMessage, className }) => (
     <Text
       variant="xs"
       className={cn('flex-1 py-1 font-medium text-neutral-100', className)}
     >
-      {toolName}
+      {confirmMessage || toolName}
     </Text>
   ),
   statusIndicator: ({ status, className }) => (
@@ -81,48 +73,6 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
       </Text>
       <pre className={cn(inputResultClassName, className)}>{result}</pre>
     </>
-  ),
-  approveButton: ({ onClick, className }) => (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={onClick}
-            className={cn(
-              'border-em-600 bg-success-fill text-success-foreground/90 hover:bg-success-fill/80 hover:text-success-foreground h-6 w-6',
-              className
-            )}
-            aria-label="Accept"
-          >
-            <CheckIcon className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Approve tool call</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  ),
-  rejectButton: ({ onClick, className }) => (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={onClick}
-            className={cn(
-              'text-danger-fill hover:text-danger-fill hover:bg-danger-fill/30 h-6 w-6',
-              className
-            )}
-            aria-label="Reject"
-          >
-            <XIcon className="h-4 w-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Reject tool call</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
   ),
 }
 
@@ -197,27 +147,13 @@ export function AIChatMessageToolPart({
             })}
           </div>
           {/* Tool Name */}
-          {renderComponent(
-            defaultComponents,
-            components,
-            'toolName',
-            toolInvocation
-          )}
+          {renderComponent(defaultComponents, components, 'toolName', {
+            ...toolInvocation,
+            confirmMessage: toolCallApproval?.pendingToolCall?.confirmMessage,
+          })}
 
           {/* Action Buttons */}
           <div className="flex items-center gap-1">
-            {isPending &&
-              toolCallApproval?.pendingToolCall?.reject &&
-              renderComponent(defaultComponents, components, 'rejectButton', {
-                ...toolInvocation,
-                onClick: toolCallApproval?.pendingToolCall?.reject,
-              })}
-            {isPending &&
-              toolCallApproval?.pendingToolCall?.approve &&
-              renderComponent(defaultComponents, components, 'approveButton', {
-                ...toolInvocation,
-                onClick: toolCallApproval?.pendingToolCall?.approve,
-              })}
             <Button
               size="icon"
               variant="ghost"
@@ -323,6 +259,30 @@ export function AIChatMessageToolPart({
             ) : null}
           </motion.div>
         </motion.div>
+
+        {/* Approve / Reject Footer */}
+        {isPending && (
+          <div className="flex justify-end border-t border-neutral-600 bg-neutral-900 px-4 py-2">
+            <div className="flex items-center gap-1.5">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toolCallApproval?.pendingToolCall?.reject}
+                className="hover:bg-background hover:text-foreground h-7 border border-transparent px-3 text-sm text-neutral-300 hover:border-neutral-600"
+              >
+                Reject
+              </Button>
+
+              <Button
+                size="sm"
+                onClick={toolCallApproval?.pendingToolCall?.approve}
+                className="bg-foreground text-background h-7 border border-transparent px-3 text-sm hover:border-neutral-200 hover:bg-neutral-200"
+              >
+                Accept
+              </Button>
+            </div>
+          </div>
+        )}
       </motion.div>
     </MotionConfig>
   )
@@ -436,3 +396,119 @@ const StatusIndicator = ({
       )
   }
 }
+
+// import { ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
+// import { Card } from './ui/card'
+
+// interface ToolCall {
+//   id: string
+//   name: string
+//   status: 'pending' | 'approved' | 'rejected'
+//   args: any
+//   approvalMessage?: string
+// }
+
+// interface ToolApprovalCardProps {
+//   toolCall: ToolCall
+//   onApprove: () => void
+//   onReject: () => void
+// }
+
+// export function ToolApprovalCard({
+//   toolCall,
+//   onApprove,
+//   onReject,
+// }: ToolApprovalCardProps) {
+//   const [expanded, setExpanded] = useState(true)
+
+//   const endpoint = toolCall.name.replace(/_/g, '/')
+
+//   return (
+//     <Card className="my-3 border border-zinc-700 bg-zinc-900 shadow-md">
+//       <div className="flex flex-col">
+//         <div className="flex items-center justify-between p-2.5">
+//           <div className="flex items-center gap-2.5">
+//             <Loader2 className="h-4 w-4 animate-spin text-zinc-400" />
+//             <span className="text-sm text-zinc-100">
+//               {toolCall.approvalMessage || 'Do you want to proceed?'}
+//             </span>
+//           </div>
+
+//           <Button
+//             variant="ghost"
+//             size="icon"
+//             onClick={() => setExpanded(!expanded)}
+//             className="ml-2 h-6 w-6 rounded-full text-zinc-400 hover:bg-zinc-800 hover:text-white"
+//           >
+//             {expanded ? (
+//               <ChevronUp className="h-3.5 w-3.5" />
+//             ) : (
+//               <ChevronDown className="h-3.5 w-3.5" />
+//             )}
+//             <span className="sr-only">
+//               {expanded ? 'Hide details' : 'Show details'}
+//             </span>
+//           </Button>
+//         </div>
+
+//         {expanded && (
+//           <div className="animate-in fade-in-50 border-t border-zinc-800 p-3 duration-100">
+//             <div className="mb-3 flex flex-col gap-2">
+//               <div className="grid grid-cols-2 gap-2">
+//                 <div>
+//                   <span className="mb-0.5 block text-xs text-zinc-500">
+//                     Name
+//                   </span>
+//                   <span className="text-xs font-medium text-zinc-300">
+//                     {toolCall.name}
+//                   </span>
+//                 </div>
+
+//                 <div>
+//                   <span className="mb-0.5 block text-xs text-zinc-500">
+//                     Endpoint
+//                   </span>
+//                   <div className="flex items-center">
+//                     <span className="mr-1 font-mono text-xs font-medium text-emerald-500">
+//                       POST
+//                     </span>
+//                     <span className="font-mono text-xs text-zinc-300">
+//                       /{endpoint}
+//                     </span>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div className="overflow-x-auto rounded bg-zinc-950 p-2 font-mono text-xs">
+//               <pre className="text-zinc-300">
+//                 {JSON.stringify(toolCall.args, null, 2)}
+//               </pre>
+//             </div>
+//           </div>
+//         )}
+
+//         <div className="flex justify-end border-t border-zinc-800 p-2">
+//           <div className="flex items-center gap-1.5">
+//             <Button
+//               variant="ghost"
+//               size="sm"
+//               onClick={onReject}
+//               className="h-7 border border-transparent px-3 text-sm text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800/70 hover:text-white"
+//             >
+//               Reject
+//             </Button>
+
+//             <Button
+//               size="sm"
+//               onClick={onApprove}
+//               className="h-7 border border-transparent bg-white px-3 text-sm text-black hover:border-zinc-200 hover:bg-gray-50"
+//             >
+//               Accept
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+//     </Card>
+//   )
+// }
