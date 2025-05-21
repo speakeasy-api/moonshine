@@ -1,8 +1,6 @@
 import { Navbar } from '.'
 import { Meta, StoryObj } from '@storybook/react'
-import type { NavItem, RenderNavItemProps } from './Slim'
-import { Icon } from '../Icon'
-import { cn } from '@/lib/utils'
+import type { NavItem } from './Slim'
 import { faker } from '@faker-js/faker'
 import { useState, useMemo } from 'react'
 
@@ -16,7 +14,7 @@ const meta: Meta<typeof Navbar.Slim> = {
   },
   decorators: [
     (Story) => (
-      <div className="h-screen">
+      <div className="bg-muted h-screen">
         <Story />
       </div>
     ),
@@ -29,21 +27,8 @@ const navItems: NavItem[] = [
   {
     id: 'new',
     active: true,
-    render: ({ expanded, active, onClick }: RenderNavItemProps) => (
-      <div
-        className={cn(
-          'bg-muted hover:bg-muted/50 relative -left-2 flex w-full flex-grow cursor-pointer flex-row items-center justify-center gap-1.5 rounded-xl border px-3',
-          expanded && 'flex-grow-0 justify-start',
-          active && 'bg-muted/50'
-        )}
-        onClick={onClick}
-      >
-        <Icon name="plus" className="h-full min-h-9" />
-
-        {expanded && <span className="whitespace-nowrap">New Project</span>}
-      </div>
-    ),
     label: 'New',
+    icon: 'plus',
   },
   {
     id: 'packages',
@@ -62,24 +47,28 @@ const navItems: NavItem[] = [
   },
 ]
 
+const DefaultContent = () => (
+  <div className="bg-muted min-h-screen p-6">
+    {Array.from({ length: 10 }).map((_, i) =>
+      i % 2 === 0 ? (
+        <h1 key={i} className="mb-5 text-2xl font-bold">
+          {faker.lorem.words(4)}
+        </h1>
+      ) : (
+        <p key={i} className="mb-3">
+          {faker.lorem.paragraphs(1, '\n')}
+        </p>
+      )
+    )}
+  </div>
+)
+
 export const Default: StoryObj<typeof Navbar.Slim> = {
-  args: {
-    navItems,
-    children: (
-      <div className="bg-muted min-h-screen p-6">
-        {Array.from({ length: 10 }).map((_, i) =>
-          i % 2 === 0 ? (
-            <h1 className="mb-5 text-2xl font-bold">{faker.lorem.words(4)}</h1>
-          ) : (
-            <p className="mb-3" key={i}>
-              {faker.lorem.paragraphs(1, '\n')}
-            </p>
-          )
-        )}
-      </div>
-    ),
-    defaultExpanded: false,
-  },
+  render: () => (
+    <Navbar.Slim navItems={navItems}>
+      <DefaultContent />
+    </Navbar.Slim>
+  ),
 }
 
 const WithState = () => {
@@ -99,11 +88,7 @@ const WithState = () => {
   }
 
   return (
-    <Navbar.Slim
-      navItems={clickableNavItems}
-      onItemClick={handleItemClick}
-      defaultExpanded={false}
-    >
+    <Navbar.Slim navItems={clickableNavItems} onItemClick={handleItemClick}>
       <div className="bg-muted min-h-screen p-6">
         <h2 className="border-border border-b pb-4 text-2xl font-bold capitalize">
           {activeTab}
