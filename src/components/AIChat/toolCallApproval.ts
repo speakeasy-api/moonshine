@@ -14,7 +14,7 @@ export function useToolCallApproval({
   requiresApproval,
 }: {
   executeToolCall: (toolCall: TC) => Promise<string>
-  requiresApproval?: (toolCall: TC) => boolean
+  requiresApproval?: (toolCall: TC) => boolean | string
 }): ToolCallApprovalProps & { toolCallFn: ToolCallFn } {
   const [pendingToolCall, setPendingToolCall] =
     useState<ToolCallWithApproval | null>(null)
@@ -28,7 +28,8 @@ export function useToolCallApproval({
   }
 
   const toolCallFn = async ({ toolCall }: { toolCall: TC }) => {
-    if (!requiresApproval?.(toolCall)) {
+    const confirmMessage = requiresApproval?.(toolCall)
+    if (!confirmMessage) {
       return executeWithErrorHandling(toolCall)
     }
 
@@ -38,6 +39,9 @@ export function useToolCallApproval({
         ...toolCall,
         approve: () => resolve('approved'),
         reject: () => reject('rejected'),
+        ...(typeof confirmMessage === 'string' && {
+          confirmMessage,
+        }),
       })
     })
       .then(async () => {
