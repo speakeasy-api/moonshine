@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { cn } from '../../lib/utils'
 import { AIChatMessage, AIChatMessageComponents } from './AIChatMessage'
 import { useAIChat } from './context'
@@ -12,6 +13,11 @@ export function AIChatMessageList({
   className,
 }: AIChatMessageListProps) {
   const { messages } = useAIChat()
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   return (
     <ul role="log" className={cn('h-full overflow-y-auto', className)}>
@@ -22,6 +28,7 @@ export function AIChatMessageList({
           components={components}
         />
       ))}
+      <div ref={messagesEndRef} />
     </ul>
   )
 }
