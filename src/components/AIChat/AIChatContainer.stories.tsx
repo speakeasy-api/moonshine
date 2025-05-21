@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { AIChatContainer } from './AIChatContainer'
 import type { ChatMessage, ToolInvocation, ToolResult } from './types'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const meta: Meta<typeof AIChatContainer> = {
   component: AIChatContainer,
@@ -477,4 +477,128 @@ export const MarkdownRendering: Story = {
     isLoading: false,
     onSendMessage: (message) => console.log('Sending message:', message),
   },
+}
+
+// Auto-scrolling demonstration
+const AutoScrollDemoComponent = () => {
+  const initialMessages: ChatMessage[] = [
+    { id: '1', role: 'user', parts: [{ type: 'text', text: 'Hello!' }] },
+    {
+      id: '2',
+      role: 'assistant',
+      parts: [{ type: 'text', text: 'Hi there! How can I help you today?' }],
+    },
+    {
+      id: '3',
+      role: 'user',
+      parts: [{ type: 'text', text: "I'm just testing the scroll behavior." }],
+    },
+    {
+      id: '4',
+      role: 'assistant',
+      parts: [
+        {
+          type: 'text',
+          text: 'Understood. This list should be long enough to require scrolling.',
+        },
+      ],
+    },
+    {
+      id: '5',
+      role: 'user',
+      parts: [{ type: 'text', text: "Let's add a few more to be sure." }],
+    },
+    {
+      id: '6',
+      role: 'assistant',
+      parts: [{ type: 'text', text: 'Message number six.' }],
+    },
+    {
+      id: '7',
+      role: 'user',
+      parts: [{ type: 'text', text: 'Message number seven.' }],
+    },
+    {
+      id: '8',
+      role: 'assistant',
+      parts: [
+        {
+          type: 'text',
+          text: 'Message number eight, this should definitely be scrollable now.',
+        },
+      ],
+    },
+    {
+      id: '9',
+      role: 'user',
+      parts: [
+        {
+          type: 'text',
+          text: 'Okay, I think that is enough initial messages.',
+        },
+      ],
+    },
+    {
+      id: '10',
+      role: 'assistant',
+      parts: [
+        { type: 'text', text: 'Agreed. Ready for the new message test?' },
+      ],
+    },
+  ]
+
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
+  const [isLoading, setIsLoading] = useState(false)
+  const messageCounter = useRef(initialMessages.length)
+
+  const handleAddMessage = async () => {
+    setIsLoading(true)
+    messageCounter.current += 1
+    const newMessage: ChatMessage = {
+      id: `msg-${messageCounter.current}`,
+      role: messageCounter.current % 2 === 0 ? 'assistant' : 'user',
+      parts: [
+        {
+          type: 'text',
+          text: `This is new message number ${messageCounter.current}.`,
+        },
+      ],
+    }
+
+    // Simulate some delay
+    await new Promise((resolve) => setTimeout(resolve, 300))
+
+    setMessages((prevMessages) => [...prevMessages, newMessage])
+    setIsLoading(false)
+  }
+
+  return (
+    <div
+      style={{
+        height: '400px',
+        border: '1px solid #ccc',
+        padding: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <AIChatContainer
+        messages={messages}
+        isLoading={isLoading}
+        onSendMessage={handleAddMessage} // Though we use a button, let's keep this for consistency
+        className="flex-grow"
+      />
+      <button
+        onClick={handleAddMessage}
+        disabled={isLoading}
+        style={{ marginTop: '10px', padding: '8px 12px', cursor: 'pointer' }}
+      >
+        {isLoading ? 'Adding...' : 'Add New Message & Scroll'}
+      </button>
+    </div>
+  )
+}
+
+export const AutoScrollDemo: Story = {
+  render: () => <AutoScrollDemoComponent />,
 }
