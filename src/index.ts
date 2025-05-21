@@ -191,5 +191,6 @@ export {
   AIChatMessage,
   AIChatMessageComposer,
 } from '@/components/AIChat'
+export { useToolCallApproval } from '@/components/AIChat/toolCallApproval'
 
 /** END BETA COMPONENTS */

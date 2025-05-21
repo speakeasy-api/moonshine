@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { Button } from '../Button'
 import { AIChatContainer } from './AIChatContainer'
+import { useToolCallApproval } from './toolCallApproval'
 import type { ChatMessage, ToolInvocation, ToolResult } from './types'
 import { useState, useEffect, useRef } from 'react'
 
@@ -248,6 +250,161 @@ export const Loading: Story = {
   },
 }
 
+export const Customized: Story = {
+  args: {
+    messages: openApiEditingMessages.slice(0, 3),
+    onSendMessage: (message) => console.log('Sending message:', message),
+    components: {
+      composer: {
+        submitButton: ({ disabled, type }) => (
+          <Button type={type} disabled={disabled}>
+            Custom submit button
+          </Button>
+        ),
+        additionalActions: <Button>Additional action</Button>,
+      },
+      message: {
+        toolCall: {
+          toolName: 'bg-red-500',
+          input: 'bg-blue-500',
+          result: 'bg-green-500',
+        },
+      },
+    },
+  },
+}
+
+const ModelSelectorDemoComponent = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: '1',
+      role: 'user',
+      parts: [
+        {
+          type: 'text',
+          text: 'What are the main differences between GPT-4 and Claude 3 Opus?',
+        },
+      ],
+    },
+    {
+      id: '2',
+      role: 'assistant',
+      parts: [
+        {
+          type: 'text',
+          text: 'GPT-4 and Claude 3 Opus are both advanced language models. GPT-4 is known for its reasoning and code generation, while Claude 3 Opus excels at summarization and safety.',
+        },
+      ],
+    },
+    {
+      id: '3',
+      role: 'user',
+      parts: [
+        {
+          type: 'text',
+          text: 'Can you summarize this text using Claude 3 Sonnet?',
+        },
+      ],
+    },
+    {
+      id: '4',
+      role: 'assistant',
+      parts: [
+        {
+          type: 'text',
+          text: 'Certainly! Here is a concise summary using Claude 3 Sonnet.',
+        },
+      ],
+    },
+  ])
+  const [isLoading, setIsLoading] = useState(false)
+  const [model, setModel] = useState('gpt-4')
+
+  const availableModels = [
+    { label: 'GPT-4', value: 'gpt-4' },
+    { label: 'GPT-3.5 Turbo', value: 'gpt-3.5-turbo' },
+    { label: 'Claude 3 Opus', value: 'claude-3-opus' },
+    { label: 'Claude 3 Sonnet', value: 'claude-3-sonnet' },
+  ]
+
+  const handleSendMessage = async (message: string) => {
+    setIsLoading(true)
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        role: 'user',
+        parts: [{ type: 'text', text: message }],
+      },
+    ])
+
+    // Simulate AI response
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        parts: [
+          {
+            type: 'text',
+            text: `This is a simulated response from ${model}. The actual model would generate a more sophisticated response.`,
+          },
+        ],
+      },
+    ])
+    setIsLoading(false)
+  }
+
+  return (
+    <AIChatContainer
+      messages={messages}
+      isLoading={isLoading}
+      onSendMessage={handleSendMessage}
+      modelSelector={{
+        model,
+        onModelChange: setModel,
+        availableModels,
+      }}
+    />
+  )
+}
+
+export const WithModelSelector: Story = {
+  render: () => <ModelSelectorDemoComponent />,
+}
+
+const ToolCallApprovalDemoComponent = () => {
+  const toolCallApproval = useToolCallApproval({
+    executeToolCall: async () => {
+      alert('Tool call approved')
+      return 'Tool call executed successfully'
+    },
+    requiresApproval: (toolCall) => {
+      return toolCall.toolName === 'read_file'
+    },
+  })
+
+  useEffect(() => {
+    toolCallApproval.toolCallFn({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toolCall: (toolCallStates[1].parts[1] as any).toolInvocation,
+    })
+  }, [])
+
+  return (
+    <AIChatContainer
+      messages={toolCallStates.slice(0, 2)}
+      toolCallApproval={toolCallApproval}
+    />
+  )
+}
+
+export const WithToolCallApproval: Story = {
+  render: () => <ToolCallApprovalDemoComponent />,
+}
+
 export const Empty: Story = {
   args: {
     messages: [],
@@ -306,7 +463,7 @@ const ToolCallStateDemoComponent = () => {
         if (prevState === 'call') return 'result'
         return 'partial-call'
       })
-    }, 5000) // Change state every 5 seconds
+    }, 1000) // Change state every 1 second
 
     return () => clearInterval(interval)
   }, [])

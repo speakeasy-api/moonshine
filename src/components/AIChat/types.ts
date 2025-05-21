@@ -1,3 +1,5 @@
+import { ToolCall } from 'ai'
+
 export type MessageRole = 'user' | 'assistant' | 'system'
 
 export type ToolArgs = {
@@ -72,8 +74,22 @@ export interface AIChatContextValue {
   messages: ChatMessage[]
   isLoading?: boolean
   onSendMessage?: (message: string) => void
+  model?: string
+  onModelChange?: (model: string) => void
+  availableModels?: { label: string; value: string }[]
+  toolCallApproval?: ToolCallApprovalProps
 }
 
 export interface BasePartProps {
   className?: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ToolCallWithApproval = ToolCall<string, any> & {
+  approve: () => void
+  reject: () => void
+}
+
+export interface ToolCallApprovalProps {
+  pendingToolCall: ToolCallWithApproval | null
 }
