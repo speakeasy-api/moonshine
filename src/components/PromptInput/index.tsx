@@ -266,7 +266,7 @@ export function PromptInput({
       {suggestions.length > 0 && (
         <div className="mt-4 flex w-full flex-row flex-wrap gap-3">
           {suggestions.map((suggestion) => (
-            <div
+            <button
               key={suggestion.label}
               className={cn(
                 'bg-foreground/5 hover:bg-foreground/10 text-foreground/80 relative flex cursor-pointer flex-row items-center gap-1.5 rounded-md border px-2.5 py-2 text-sm tracking-tight whitespace-nowrap select-none',
@@ -285,7 +285,7 @@ export function PromptInput({
                 />
               )}
               {suggestion.label}
-            </div>
+            </button>
           ))}
         </div>
       )}
