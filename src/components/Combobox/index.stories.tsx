@@ -195,3 +195,92 @@ export const SearchableGroupedList: Story = {
     searchPlaceholder: 'Search groups and items...',
   },
 }
+
+// Bug Test Cases
+export const BugTestLongGroupNames: Story = {
+  name: 'Bug Test: Long Group Names',
+  args: {
+    groups: [
+      {
+        label:
+          'This is a very long group name that should expand the dropdown width instead of wrapping',
+        options: [
+          { value: 'opt1', label: 'Option 1' },
+          { value: 'opt2', label: 'Option 2' },
+        ],
+      },
+      {
+        label:
+          'Another extremely long group name to test the dynamic width functionality of the combobox dropdown',
+        options: [
+          { value: 'opt3', label: 'Option 3' },
+          { value: 'opt4', label: 'Option 4' },
+        ],
+      },
+    ],
+    placeholder: 'Test long group names...',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Test case for bug #1: Long group names should expand the dropdown width',
+      },
+    },
+  },
+}
+
+export const BugTestScrollBehavior: Story = {
+  name: 'Bug Test: Scroll Behavior',
+  args: {
+    options: generateList(100),
+    placeholder: 'Test scroll behavior...',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Test case for bugs #2 & #3: The dropdown should scroll internally without affecting page scroll. Try scrolling with mouse wheel when the dropdown is open.',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ minHeight: '150vh', paddingTop: '40vh' }}>
+        <p style={{ marginBottom: '20px' }}>
+          Scroll test: The dropdown should scroll internally without affecting
+          the page scroll. Open the dropdown and try scrolling with your mouse
+          wheel.
+        </p>
+        <Story />
+        <p style={{ marginTop: '20px' }}>
+          If the page scrolls when trying to scroll the dropdown list, the bug
+          is present.
+        </p>
+      </div>
+    ),
+  ],
+}
+
+export const BugTestManyGroupsScroll: Story = {
+  name: 'Bug Test: Many Groups with Scroll',
+  args: {
+    groups: generateGroupedList(15, 10),
+    placeholder: 'Test grouped scroll...',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Test case combining long group names with many items to test both width and scroll behavior',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ minHeight: '150vh', paddingTop: '40vh' }}>
+        <Story />
+      </div>
+    ),
+  ],
+}

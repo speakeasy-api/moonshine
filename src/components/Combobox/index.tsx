@@ -76,6 +76,7 @@ export function Combobox<T extends string = string>({
 }: ComboboxProps<T>) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
 
   const allOptions = React.useMemo(() => {
     if (options) return options
@@ -110,6 +111,14 @@ export function Combobox<T extends string = string>({
     return Math.min(contentHeight + padding, max)
   }, [filteredItems])
 
+  // Calculate total item count for virtualization decision
+  const totalItemCount = React.useMemo(() => {
+    return filteredItems.reduce((sum, group) => sum + group.options.length, 0)
+  }, [filteredItems])
+
+  // Use virtualization only for larger lists
+  const useVirtualization = totalItemCount > 50
+
   const handleSelect = React.useCallback(
     (currentValue: string) => {
       const newValue = currentValue === value ? undefined : (currentValue as T)
@@ -123,9 +132,10 @@ export function Combobox<T extends string = string>({
   const selectedOption = allOptions.find((option) => option.value === value)
 
   return (
-    <Popover open={open} onOpenChange={disabled ? undefined : setOpen}>
+    <Popover open={open} onOpenChange={disabled ? undefined : setOpen} modal>
       <PopoverTrigger asChild>
         <Button
+          ref={triggerRef}
           variant={variant}
           size={iconOnly ? 'icon' : size}
           disabled={disabled}
@@ -143,7 +153,19 @@ export function Combobox<T extends string = string>({
           {!iconOnly && <span>{selectedOption?.label || placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent
+        className="w-auto max-w-[400px] min-w-[200px] p-0"
+        align="start"
+        sideOffset={4}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        style={{
+          width: triggerRef.current?.offsetWidth
+            ? Math.max(triggerRef.current.offsetWidth, 200)
+            : undefined,
+        }}
+      >
         <Command shouldFilter={false}>
           {searchable && (
             <CommandInput
@@ -152,17 +174,34 @@ export function Combobox<T extends string = string>({
               placeholder={searchPlaceholder}
             />
           )}
-          <CommandList>
+          <CommandList
+            className={cn(
+              !useVirtualization && 'max-h-[300px] overflow-y-auto'
+            )}
+            onWheel={(e) => e.stopPropagation()}
+          >
             {error ? (
               <CommandItem disabled>{errorText}</CommandItem>
             ) : filteredItems.length === 0 ? (
               <CommandItem disabled>{emptyText}</CommandItem>
-            ) : (
+            ) : useVirtualization ? (
+              // Use Virtuoso for large lists
               <Virtuoso
                 style={{ height: virtuosoHeight }}
                 data={filteredItems}
+                scrollerRef={(ref) => {
+                  // Ensure scroll events don't propagate from Virtuoso
+                  if (ref && ref instanceof HTMLElement) {
+                    ref.addEventListener('wheel', (e) => e.stopPropagation(), {
+                      passive: false,
+                    })
+                  }
+                }}
                 itemContent={(_, group) => (
-                  <CommandGroup heading={group.label}>
+                  <CommandGroup
+                    heading={group.label}
+                    className="[&>[data-cmdk-group-heading]]:whitespace-normal"
+                  >
                     {group.options.map((option) => (
                       <CommandItem
                         key={option.value}
@@ -184,6 +223,36 @@ export function Combobox<T extends string = string>({
                   </CommandGroup>
                 )}
               />
+            ) : (
+              // Use native rendering for small lists
+              <>
+                {filteredItems.map((group, groupIndex) => (
+                  <CommandGroup
+                    key={`${group.label}-${groupIndex}`}
+                    heading={group.label}
+                    className="[&>[data-cmdk-group-heading]]:whitespace-normal"
+                  >
+                    {group.options.map((option) => (
+                      <CommandItem
+                        key={option.value}
+                        value={option.value}
+                        onSelect={() => handleSelect(option.value)}
+                        disabled={option.disabled}
+                      >
+                        <div
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            value === option.value ? 'opacity-100' : 'opacity-0'
+                          )}
+                        >
+                          <Icon name="check" />
+                        </div>
+                        {option.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                ))}
+              </>
             )}
           </CommandList>
         </Command>
