@@ -103,7 +103,7 @@ const GetStartedHeaderContent = (
   <>
     <div className="flex items-center gap-2">
       <Heading variant="xl">Get Started</Heading>
-      <Badge variant="default">
+      <Badge>
         {completedSteps.length === steps.length
           ? 'Completed'
           : `${completedSteps.length} of ${steps.length} steps`}

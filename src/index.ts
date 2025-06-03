@@ -23,7 +23,6 @@ export {
 } from '@/components/TargetLanguageIcon'
 export { UserAvatar, type UserAvatarProps } from '@/components/UserAvatar'
 export { Subnav, type SubnavItem, type SubnavProps } from '@/components/Subnav'
-export { Breadcrumb, type BreadcrumbProps } from '@/components/Breadcrumb'
 export { CodeSnippet, type CodeSnippetProps } from '@/components/CodeSnippet'
 export {
   LoggedInUserMenu,
@@ -53,7 +52,6 @@ export {
   type GradientCircleProps,
 } from '@/components/GradientCircle'
 export { Alert, type AlertProps } from '@/components/Alert'
-export { Tabs, type TabProps } from '@/components/Tabs'
 export {
   Table,
   type TableProps,
@@ -175,15 +173,11 @@ export {
 
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
-import { Timeline } from '@/components/__beta__/Timeline'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
   // TODO: needs light mode tweaks too.
   CLIWizard,
-
-  // Readme editor components
-  Timeline,
 }
 // DO NOT USE: EXPORTED TO UNBLOCK GRAM
 export {
