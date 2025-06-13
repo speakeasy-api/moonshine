@@ -220,9 +220,9 @@
   --color-transparent: hsla(0 0% 0% / 0);
 
   --color-neutral-50: hsl(240 10% 4%);
-  --color-neutral-100: hsl(240 6% 10%);
-  --color-neutral-200: hsl(240 4% 16%);
-  --color-neutral-300: hsl(240 4% 24%);
+  --color-neutral-100: hsl(0 0% 98%);
+  --color-neutral-200: hsl(0 0% 92%);
+  --color-neutral-300: hsl(0 0% 86%);
   --color-neutral-400: hsl(240 5% 34%);
   --color-neutral-500: hsl(240 4% 46%);
   --color-neutral-600: hsl(240 5% 65%);
@@ -315,9 +315,9 @@
 
   /* Dark override Moonshine tokens */
   --color-neutral-50: hsl(0 0% 98%);
-  --color-neutral-100: hsl(240 5% 96%);
-  --color-neutral-200: hsl(240 6% 90%);
-  --color-neutral-300: hsl(240 5% 84%);
+  --color-neutral-100: hsl(0 0% 98%);
+  --color-neutral-200: hsl(0 0% 92%);
+  --color-neutral-300: hsl(0 0% 86%);
   --color-neutral-400: hsl(240 5% 65%);
   --color-neutral-500: hsl(240 4% 46%);
   --color-neutral-600: hsl(240 5% 34%);
@@ -510,8 +510,9 @@
 
   :root {
     --neutral-50-base: 0 0% 98%;
-    --neutral-100-base: 240 5% 96%;
-    --neutral-200-base: 240 6% 90%;
+    --neutral-100-base: 0 0% 98%;
+    --neutral-200-base: 0 0% 92%;
+    --neutral-300-base: 0 0% 86%;
     --neutral-400-base: 240 5% 65%;
     --neutral-500-base: 240 4% 46%;
     --neutral-600-base: 240 5% 34%;
@@ -522,8 +523,9 @@
 
   .dark {
     --neutral-50-base: 240 10% 4%;
-    --neutral-100-base: 240 6% 10%;
-    --neutral-200-base: 240 4% 16%;
+    --neutral-100-base: 0 0% 98%;
+    --neutral-200-base: 0 0% 92%;
+    --neutral-300-base: 0 0% 86%;
     --neutral-400-base: 240 5% 34%;
     --neutral-500-base: 240 4% 46%;
     --neutral-600-base: 240 5% 65%;
