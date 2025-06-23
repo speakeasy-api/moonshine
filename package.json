@@ -15,6 +15,10 @@
     "./moonshine.css": {
       "require": "./dist/style.css",
       "import": "./dist/style.css"
+    },
+    "./src/global.css": {
+      "require": "./src/global.css",
+      "import": "./src/global.css"
     }
   },
   "repository": {
