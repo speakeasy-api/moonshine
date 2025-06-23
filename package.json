@@ -22,7 +22,8 @@
     "url": "https://github.com/speakeasy-api/moonshine.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/global.css"
   ],
   "scripts": {
     "clean": "rimraf dist",
