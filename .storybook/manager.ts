@@ -1,4 +1,3 @@
-import { addons } from '@storybook/manager-api'
 import { create } from '@storybook/theming'
 
 // Define the colors and styles for the theme
@@ -36,6 +35,6 @@ export const speakeasyTheme = create({
   brandUrl: 'https://speakeasy.com',
 })
 
-addons.setConfig({
-  theme: speakeasyTheme,
-})
+// addons.setConfig({
+//   theme: speakeasyTheme,
+// })
