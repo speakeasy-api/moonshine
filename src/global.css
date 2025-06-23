@@ -868,3 +868,7 @@
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
 }
+
+@utility bg-gradient-primary {
+  background: var(--gradient-brand-primary);
+}
