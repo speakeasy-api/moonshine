@@ -315,7 +315,8 @@
 
   /* Shadcn colors these should only reference moonshine colors*/
   --radius: 0.625rem;
-  --background: var(--color-base-white);
+  --background-pure: var(--color-base-white);
+  --background: var(--color-neutral-100);
   --foreground: var(--color-neutral-900);
   --card: var(--color-base-white);
   --card-foreground: var(--color-neutral-900);
@@ -461,6 +462,7 @@
 
   /* Shadcn theme */
 
+  --background-pure: var(--color-base-black);
   --background: var(--color-base-black);
   --foreground: var(--color-neutral-300);
 
