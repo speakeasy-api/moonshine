@@ -1,0 +1,390 @@
+/*
+ * Utilities CSS - Exposed Tailwind Utilities
+ * These are the utilities that are exposed as Tailwind classes.
+ * They reference the primitives defined in base.css
+ */
+
+/*
+  TODO: Remove all the heading !important after we remove Mui
+  TODO: rename to text-*
+  TODO: replace these with the ones for the new brand
+*/
+@utility typography-heading-xl {
+  font-size: 2.063rem;
+  font-weight: 300;
+  line-height: 1.375;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility typography-heading-lg {
+  font-size: 1.813rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility typography-heading-md {
+  font-size: 1.625rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility typography-heading-sm {
+  font-size: 1.438rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility typography-heading-xs {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility typography-heading-xxs {
+  font-size: 1.125rem !important;
+  font-weight: 300 !important;
+  line-height: 1.778 !important;
+  letter-spacing: 0.0015em !important;
+}
+@utility typography-body-lg {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+@utility typography-body-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+@utility typography-body-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+@utility typography-body-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+
+@utility container {
+  padding-inline: 1rem;
+  margin-inline: auto;
+
+  @variant sm {
+    padding-inline: 0.5rem;
+  }
+
+  @variant md {
+    padding-inline: 1rem;
+  }
+
+  @variant lg {
+    padding-inline: 1.5rem;
+  }
+
+  @variant xl {
+    padding-inline: 2rem;
+  }
+
+  @variant 2xl {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility bg-mask {
+  background-image: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    var(--color-transparent) 5%,
+    var(--color-transparent) 95%,
+    var(--background) 100%
+  );
+}
+
+/* Display Typography */
+
+/* This token name is not final */
+@utility text-display-2xl {
+  font-size: 11.375rem; /* 182px */
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+@utility text-display-xl {
+  font-size: 5.625rem;
+  font-weight: 100;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+@utility text-display-lg {
+  font-size: 4.188rem;
+  font-weight: 100;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+@utility text-display-md {
+  font-size: 3.188rem;
+  font-weight: 100;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+@utility text-display-sm {
+  font-size: 2.375rem;
+  font-weight: 100;
+  line-height: 1.375;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+@utility text-display-xs {
+  font-size: 1.75rem;
+  font-weight: 100;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+
+/* Heading */
+@utility text-heading-xl {
+  font-size: 2.063rem;
+  font-weight: 300;
+  line-height: 1.375;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility text-heading-lg {
+  font-size: 1.813rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility text-heading-md {
+  font-size: 1.625rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility text-heading-sm {
+  font-size: 1.438rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+@utility text-heading-xs {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+
+@utility bg-gradient-primary {
+  background: var(--gradient-brand-primary);
+}
+
+@utility border-gradient-primary {
+  border-image: var(--gradient-brand-primary) 1;
+}
+
+@utility bg-surface-primary {
+  background-color: var(--color-base-white);
+
+  @variant dark {
+    background-color: var(--color-base-black);
+  }
+}
+
+@utility bg-surface-secondary {
+  background-color: var(--color-neutral-100);
+}
+
+@utility bg-warning {
+  background-color: var(--bg-warning);
+}
+
+@utility text-warning {
+  color: var(--text-warning) !important;
+}
+
+@utility border-warning {
+  border-color: var(--border-warning);
+  border-width: 1px;
+  border-style: solid;
+}
+
+@layer utilities {
+  .devicon-devicon-plain {
+    max-width: 2em;
+  }
+
+  /* if you want to change the original color */
+  .devicon-devicon-plain path {
+    fill: var(--primary);
+  }
+
+  @keyframes slide-fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-fade-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/*
+  Expose theme variables as utilities
+  Note: We're being selective about what we expose to avoid people using raw color values
+*/
+@theme inline {
+  --color-*: initial;
+
+  /* Link colors */
+  --color-link: var(--color-link-default);
+  --color-link-secondary: var(--color-neutral-200);
+  --color-link-visited-primary: var(--color-link-visited-primary);
+  --color-link-visited-secondary: var(--color-link-visited-secondary);
+
+  /* Shadcn theme */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-background-pure: var(--background-pure);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Alert Colors */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-feature: var(--feature);
+  --color-feature-foreground: var(--feature-foreground);
+
+  /* Text Colors */
+  /* These are incorrect, the headings should have our skimmable colors */
+  --color-heading-xl: var(--text-heading-xl);
+  --color-heading-lg: var(--text-heading-lg);
+  --color-heading-md: var(--text-heading-md);
+  --color-heading-sm: var(--text-heading-sm);
+  --color-heading-xs: var(--text-heading-xs);
+  --color-body: var(--text-body);
+  --color-body-muted: var(--text-body-muted);
+
+  /* Animation */
+  --keyframes-wiggle: {
+    0%,
+    100% {
+      transform: rotate(-1.5deg);
+    }
+    50% {
+      transform: rotate(1.5deg);
+    }
+  };
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  /* Transition Timing Functions */
+  --ease-in-out-quad: var(--ease-in-out-quad);
+  --ease-in-out-cubic: var(--ease-in-out-cubic);
+  --ease-in-out-quart: var(--ease-in-out-quart);
+  --ease-in-out-quint: var(--ease-in-out-quint);
+  --ease-in-out-expo: var(--ease-in-out-expo);
+  --ease-in-out-circ: var(--ease-in-out-circ);
+
+  --ease-in-quad: var(--ease-in-quad);
+  --ease-in-cubic: var(--ease-in-cubic);
+  --ease-in-quart: var(--ease-in-quart);
+  --ease-in-quint: var(--ease-in-quint);
+  --ease-in-expo: var(--ease-in-expo);
+  --ease-in-circ: var(--ease-in-circ);
+
+  --ease-out-quad: var(--ease-out-quad);
+  --ease-out-cubic: var(--ease-out-cubic);
+  --ease-out-quart: var(--ease-out-quart);
+  --ease-out-quint: var(--ease-out-quint);
+  --ease-out-expo: var(--ease-out-expo);
+  --ease-out-circ: var(--ease-out-circ);
+}

@@ -1,0 +1,366 @@
+/*
+ * Base CSS - Primitives and CSS Variables
+ * These are the foundational design tokens that should not be used directly.
+ * Instead, use the semantic utilities defined in utilities.css
+ */
+
+:root,
+:root.light {
+  --font-diatype: 'Diatype', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-diatype-mono: 'Diatype Mono', SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-tobias: 'Tobias', 'Cormorant', Georgia, Cambria, 'Times New Roman',
+    Times, serif;
+
+  --color-base-white: hsl(0 0% 100%);
+  --color-base-black: hsl(0 0% 0%);
+
+  /* Neutrals */
+  --color-neutral-100: hsl(0, 0%, 98%);
+  --color-neutral-200: hsl(0, 0%, 92%);
+  --color-neutral-300: hsl(0, 0%, 86%);
+  --color-neutral-400: hsl(0, 0%, 73%);
+  --color-neutral-500: hsl(0, 0%, 59%);
+  --color-neutral-600: hsl(0, 0%, 46%);
+  --color-neutral-700: hsl(0, 0%, 33%);
+  --color-neutral-800: hsl(0, 0%, 20%);
+  --color-neutral-900: hsl(0, 0%, 7%);
+
+  /* Brand red */
+  --color-brand-red-100: hsl(23, 96%, 62%);
+  --color-brand-red-200: hsl(19, 84%, 58%);
+  --color-brand-red-300: hsl(14, 74%, 54%);
+  --color-brand-red-400: hsl(9, 67%, 51%);
+  --color-brand-red-500: hsl(4, 67%, 47%);
+  --color-brand-red-600: hsl(1, 62%, 39%);
+  --color-brand-red-700: hsl(359, 58%, 31%);
+  --color-brand-red-800: hsl(352, 57%, 22%);
+  --color-brand-red-900: hsl(334, 54%, 13%);
+
+  --gradient-brand-red: radial-gradient(
+    138.34% 138.34% at 0% 4.4%,
+    var(--color-destructive-900) 0%,
+    var(--color-destructive-800) 12.5%,
+    var(--color-destructive-700) 25%,
+    var(--color-destructive-600) 37.5%,
+    var(--color-destructive-500) 50%,
+    var(--color-destructive-400) 62.5%,
+    var(--color-destructive-300) 75%,
+    var(--color-destructive-200) 87.5%,
+    var(--color-destructive-100) 100%
+  );
+
+  /* Brand green */
+  --color-brand-green-100: hsl(68, 52%, 72%);
+  --color-brand-green-200: hsl(75, 37%, 64%);
+  --color-brand-green-300: hsl(84, 28%, 56%);
+  --color-brand-green-400: hsl(95, 23%, 49%);
+  --color-brand-green-500: hsl(108, 24%, 41%);
+  --color-brand-green-600: hsl(116, 24%, 34%);
+  --color-brand-green-700: hsl(128, 30%, 25%);
+  --color-brand-green-800: hsl(140, 44%, 16%);
+  --color-brand-green-900: hsl(154, 100%, 7%);
+
+  --gradient-brand-green: radial-gradient(
+    137.26% 137.26% at 0% 0%,
+    var(--color-brand-green-900) 0%,
+    var(--color-brand-green-800) 12.5%,
+    var(--color-brand-green-700) 25%,
+    var(--color-brand-green-600) 37.5%,
+    var(--color-brand-green-500) 50%,
+    var(--color-brand-green-400) 62.5%,
+    var(--color-brand-green-300) 75%,
+    var(--color-brand-green-200) 87.5%,
+    var(--color-brand-green-100) 100%
+  );
+
+  /* Brand blue */
+  --color-brand-blue-100: hsl(216, 100%, 100%);
+  --color-brand-blue-200: hsl(215, 86%, 73%);
+  --color-brand-blue-300: hsl(215, 77%, 65%);
+  --color-brand-blue-400: hsl(215, 72%, 58%);
+  --color-brand-blue-500: hsl(214, 69%, 50%);
+  --color-brand-blue-600: hsl(215, 71%, 40%);
+  --color-brand-blue-700: hsl(215, 75%, 31%);
+  --color-brand-blue-800: hsl(217, 82%, 21%);
+  --color-brand-blue-900: hsl(220, 100%, 12%);
+
+  --gradient-brand-blue: radial-gradient(
+    141.42% 141.42% at 0% 0%,
+    var(--color-brand-blue-900) 0%,
+    var(--color-brand-blue-800) 12.5%,
+    var(--color-brand-blue-700) 25%,
+    var(--color-brand-blue-600) 37.5%,
+    var(--color-brand-blue-500) 50%,
+    var(--color-brand-blue-400) 62.5%,
+    var(--color-brand-blue-300) 75%,
+    var(--color-brand-blue-200) 87.5%,
+    var(--color-brand-blue-100) 100%
+  );
+
+  /* Tech colors */
+  --color-brand-typescript: hsl(0, 0%, 0%);
+  --color-brand-go: hsl(220, 100%, 12%);
+  --color-brand-java: hsl(214, 69%, 50%);
+  --color-brand-python: hsl(216, 100%, 80%);
+  --color-brand-c: hsl(154, 100%, 7%);
+  --color-brand-terraform: hsl(108, 24%, 41%);
+  --color-brand-unity: hsl(68, 52%, 72%);
+  --color-brand-php: hsl(334, 54%, 13%);
+  --color-brand-swift: hsl(4, 67%, 47%);
+  --color-brand-ruby: hsl(23, 96%, 62%);
+  --color-brand-postman: hsl(0, 0%, 83%);
+
+  --gradient-brand-primary-colors: var(--color-brand-php) 0%,
+    var(--color-brand-swift) 12.56%, var(--color-brand-ruby) 25.06%,
+    var(--color-brand-unity) 37.56%, var(--color-brand-terraform) 50.06%,
+    var(--color-brand-c) 62.06%, var(--color-brand-go) 74.06%,
+    var(--color-brand-java) 86.06%, var(--color-brand-python) 97.06%;
+
+  --gradient-brand-primary: linear-gradient(
+    90deg,
+    var(--gradient-brand-primary-colors)
+  );
+
+  --gradient-brand-primary-y: linear-gradient(
+    180deg,
+    var(--gradient-brand-primary-colors)
+  );
+
+  /* Feedback colors */
+
+  /* Destructive */
+  --color-destructive-100: hsl(0, 100%, 97%);
+  --color-destructive-200: hsl(3, 84%, 85%);
+  --color-destructive-300: hsl(3, 78%, 71%);
+  --color-destructive-400: hsl(2, 74%, 58%);
+  --color-destructive-500: hsl(4, 67%, 47%);
+  --color-destructive-600: hsl(2, 65%, 39%);
+  --color-destructive-700: hsl(1, 64%, 32%);
+  --color-destructive-800: hsl(1, 63%, 24%);
+  --color-destructive-900: hsl(0, 62%, 17%);
+
+  /* Warning */
+  --color-warning-100: hsl(29, 100%, 95%);
+  --color-warning-200: hsl(30, 100%, 85%);
+  --color-warning-300: hsl(28, 100%, 74%);
+  --color-warning-400: hsl(27, 100%, 66%);
+  --color-warning-500: hsl(23, 96%, 62%);
+  --color-warning-600: hsl(22, 70%, 53%);
+  --color-warning-700: hsl(21, 64%, 43%);
+  --color-warning-800: hsl(19, 66%, 33%);
+  --color-warning-900: hsl(18, 69%, 24%);
+
+  /* Success */
+  --color-success-100: hsl(102, 35%, 93%);
+  --color-success-200: hsl(99, 33%, 83%);
+  --color-success-300: hsl(99, 30%, 73%);
+  --color-success-400: hsl(101, 28%, 62%);
+  --color-success-500: hsl(108, 24%, 41%);
+  --color-success-600: hsl(107, 24%, 34%);
+  --color-success-700: hsl(105, 24%, 27%);
+  --color-success-800: hsl(104, 24%, 20%);
+  --color-success-900: hsl(105, 24%, 13%);
+
+  /* Information */
+  --color-info-100: hsl(212, 100%, 95%);
+  --color-info-200: hsl(214, 100%, 86%);
+  --color-info-300: hsl(214, 100%, 77%);
+  --color-info-400: hsl(214, 89%, 67%);
+  --color-info-500: hsl(214, 69%, 50%);
+  --color-info-600: hsl(215, 70%, 41%);
+  --color-info-700: hsl(215, 71%, 32%);
+  --color-info-800: hsl(217, 73%, 23%);
+  --color-info-900: hsl(218, 73%, 15%);
+
+  --color-link-default: hsl(201, 86%, 43%);
+  --color-link-visited-primary: hsl(201, 100%, 24%);
+  --color-link-visited-secondary: hsl(201, 5%, 65%);
+
+  /* Utility Tokens */
+  /* These are incorrect, the headings should have our skimmable colors */
+  --text-heading-xl: var(--color-neutral-900);
+  --text-heading-lg: var(--color-neutral-900);
+  --text-heading-md: var(--color-neutral-900);
+  --text-heading-sm: var(--color-neutral-900);
+  --text-heading-xs: var(--color-neutral-900);
+  --text-body: var(--color-neutral-900);
+  --text-body-muted: var(--color-neutral-400);
+
+  --border-warning: var(--color-warning-300);
+  --text-warning: var(--color-warning-700);
+  --bg-warning: var(--color-warning-100);
+
+  /* Shadcn colors these should only reference moonshine colors */
+  --radius: 0.625rem;
+  --background-pure: var(--color-base-white);
+  --background: var(--color-neutral-100);
+  --foreground: var(--color-neutral-900);
+  --card: var(--color-base-white);
+  --card-foreground: var(--color-neutral-900);
+  --popover: var(--color-base-white);
+  --popover-foreground: var(--color-neutral-900);
+  --primary: var(--color-base-black);
+  --primary-foreground: var(--color-base-white);
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-neutral-900);
+  --muted: var(--color-neutral-200);
+  --muted-foreground: var(--color-neutral-900);
+  --accent: var(--color-neutral-100);
+  --accent-foreground: var(--color-neutral-900);
+  --destructive: var(--color-destructive-500);
+  --border: var(--color-neutral-300);
+  --input: var(--color-neutral-400);
+  --ring: var(--color-brand-blue-600);
+  --chart-1: var(--color-brand-red-600);
+  --chart-2: var(--color-brand-green-600);
+  --chart-3: var(--color-brand-red-600);
+  --chart-4: var(--color-brand-blue-600);
+  --chart-5: var(--color-brand-green-600);
+  --sidebar: var(--color-neutral-100);
+  --sidebar-foreground: var(--color-neutral-900);
+  --sidebar-primary: var(--color-base-black);
+  --sidebar-primary-foreground: var(--color-neutral-300);
+  --sidebar-accent: var(--color-neutral-300);
+  --sidebar-accent-foreground: var(--color-neutral-900);
+  --sidebar-border: var(--color-neutral-300);
+  --sidebar-ring: var(--color-brand-blue-600);
+
+  /* Up to here */
+
+  --success: var(--color-success-100);
+  --success-foreground: var(--color-success-700);
+
+  --destructive: var(--color-destructive-100);
+  --destructive-foreground: var(--color-destructive-700);
+
+  --warning: var(--color-warning-100);
+  --warning-foreground: var(--color-warning-700);
+
+  --info: var(--color-info-100);
+  --info-foreground: var(--color-info-700);
+
+  --feature: var(--color-info-100);
+  --feature-foreground: var(--color-info-700);
+
+  --shadow: hsl(0 0% 50%);
+
+  /* Custom scrollbar */
+  --sb-size: 0.5rem;
+  --sb-track-color: var(--color-background);
+  --sb-thumb-color: var(--color-background);
+  --sb-track-border: var(--color-neutral-300);
+
+  /* Score colors - mapped to our new tokens */
+  --score-low: var(--color-destructive-500);
+  --score-mid: var(--color-warning-500);
+  --score-high: var(--color-success-500);
+  --score-track: var(--color-neutral-700);
+
+  /* Custom easing functions */
+  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+:root.dark {
+  /* Shadcn theme */
+  --background-pure: var(--color-base-black);
+  --background: var(--color-base-black);
+  --foreground: var(--color-neutral-300);
+
+  --card: var(--color-neutral-900);
+  --card-foreground: var(--color-neutral-300);
+
+  --popover: var(--color-base-black);
+  --popover-foreground: var(--color-neutral-100);
+
+  --primary: var(--color-base-black);
+  --primary-foreground: var(--color-neutral-300);
+
+  --secondary: var(--color-neutral-900);
+  --secondary-foreground: var(--color-neutral-300);
+
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-base-white);
+
+  --accent: var(--color-neutral-800);
+  --accent-foreground: var(--color-base-white);
+  --destructive: var(--color-destructive-500);
+  --border: var(--color-neutral-700);
+  --input: var(--color-neutral-700);
+  --ring: var(--color-brand-blue-600);
+  --chart-1: var(--color-brand-red-600);
+  --chart-2: var(--color-brand-green-600);
+  --chart-3: var(--color-brand-red-600);
+  --chart-4: var(--color-brand-blue-600);
+  --chart-5: var(--color-brand-green-600);
+
+  --sidebar: var(--color-neutral-900);
+  --sidebar-foreground: var(--color-base-white);
+
+  --sidebar-primary: var(--color-brand-red-600);
+  --sidebar-primary-foreground: var(--color-neutral-300);
+
+  --sidebar-accent: var(--color-neutral-700);
+  --sidebar-accent-foreground: var(--color-base-white);
+
+  --sidebar-border: var(--color-neutral-700);
+  --sidebar-ring: var(--color-brand-blue-600);
+
+  /* Up to here */
+
+  --success: var(--color-success-500);
+  --success-foreground: var(--color-success-100);
+  --destructive: var(--color-destructive-500);
+  --destructive-foreground: var(--color-destructive-100);
+  --warning: var(--color-warning-500);
+  --warning-foreground: var(--color-warning-100);
+  --info: var(--color-info-500);
+  --info-foreground: var(--color-info-100);
+  --feature: var(--color-info-500);
+  --feature-foreground: var(--color-info-100);
+
+  /* Score colors */
+  --score-low: hsl(350 89% 60%);
+  --score-mid: hsl(38 92% 50%);
+  --score-high: hsl(160 84% 39%);
+  --score-track: hsl(48 4% 28%);
+
+  --header-border: 0 0% 14.9%;
+
+  /* Custom scrollbar */
+  --sb-track-color: var(--color-neutral-800);
+  --sb-thumb-color: var(--color-neutral-900);
+  --sb-track-border: var(--color-neutral-800);
+
+  /* Utility Tokens */
+  --text-heading-xl: var(--color-neutral-100);
+  --text-heading-lg: var(--color-neutral-100);
+  --text-heading-md: var(--color-neutral-100);
+  --text-heading-sm: var(--color-neutral-100);
+  --text-heading-xs: var(--color-neutral-100);
+  --text-body: var(--color-neutral-200);
+  --text-body-muted: var(--color-neutral-400);
+  --bg-warning: var(--color-warning-900);
+  --border-warning: var(--color-warning-700);
+  --text-warning: var(--color-warning-300);
+}
