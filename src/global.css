@@ -1,10 +1,32 @@
+/*
+ * Global CSS - Main Entry Point
+ * 
+ * This file orchestrates the design system by:
+ * 1. Importing Tailwind and plugins
+ * 2. Defining custom variants
+ * 3. Configuring responsive utilities via @source
+ * 4. Setting theme values
+ * 5. Importing our design tokens and utilities
+ */
+
+/* ============================================
+ * CORE IMPORTS
+ * ============================================ */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
 
+/* ============================================
+ * DESIGN SYSTEM IMPORTS
+ * Order matters: base tokens must come before utilities
+ * ============================================ */
 @import './base.css';
 @import './utilities.css';
 
+/* ============================================
+ * CUSTOM VARIANTS
+ * Define responsive and interactive variants
+ * ============================================ */
 @custom-variant dark (&:is(.dark *));
 @custom-variant interact {
   &:hover,
@@ -13,19 +35,29 @@
   }
 }
 
+/* ============================================
+ * RESPONSIVE UTILITY SOURCES
+ * Generate utilities at different breakpoints
+ * ============================================ */
+
+/* Spacing Utilities */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
+
+/* Grid & Flexbox */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}flex-{row,col,nowrap,wrap,wrap-reverse,none,1,auto,initial,grow,shrink}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}justify-{start,center,end,between,evenly}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}items-{start,center,end,stretch,baseline}");
-@source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
+
+/* Sizing */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}size-{8,12,16,24,32}");
 
-/*
-  Shadcn classes are deprecated and will be removed once we add the proper moonshine tokens
-*/
-
+/* ============================================
+ * THEME CONFIGURATION
+ * Map our custom fonts to Tailwind's theme
+ * ============================================ */
 @theme {
   --font-sans: var(--font-diatype);
   --font-mono: var(--font-diatype-mono);
@@ -33,29 +65,3 @@
   --font-ascii: var(--font-speakeasy), var(--font-diatype-mono), monospace;
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-
-  button:not(:disabled),
-  [role='button']:not(:disabled) {
-    cursor: pointer;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}

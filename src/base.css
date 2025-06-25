@@ -1,11 +1,21 @@
 /*
- * Base CSS - Primitives and CSS Variables
- * These are the foundational design tokens that should not be used directly.
- * Instead, use the semantic utilities defined in utilities.css
+ * Base CSS - Design Tokens and CSS Variables
+ * 
+ * Structure:
+ * 1. Primitive Tokens - Raw values (colors, fonts, etc.)
+ * 2. Semantic/Utility Tokens - Theme-aware variables that map to utilities
+ * 3. Component Tokens - Higher-level semantic tokens
+ * 4. Deprecated Tokens - Shadcn compatibility (to be removed)
  */
 
 :root,
 :root.light {
+  /* ============================================
+   * 1. PRIMITIVE TOKENS
+   * Raw design values - do not use directly in components
+   * ============================================ */
+  
+  /* Font Families */
   --font-diatype: 'Diatype', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
   --font-diatype-mono: 'Diatype Mono', SFMono-Regular, Menlo, Monaco, Consolas,
@@ -178,8 +188,14 @@
   --color-link-visited-primary: hsl(201, 100%, 24%);
   --color-link-visited-secondary: hsl(201, 5%, 65%);
 
-  /* Utility Tokens */
-  /* These are incorrect, the headings should have our skimmable colors */
+  /* ============================================
+   * 2. SEMANTIC/UTILITY TOKENS
+   * Theme-aware variables that map directly to utility classes
+   * These change based on light/dark mode
+   * ============================================ */
+  
+  /* Text Colors */
+  /* TODO: These should use our skimmable colors for headings */
   --text-heading-xl: var(--color-neutral-900);
   --text-heading-lg: var(--color-neutral-900);
   --text-heading-md: var(--color-neutral-900);
@@ -188,12 +204,24 @@
   --text-body: var(--color-neutral-900);
   --text-body-muted: var(--color-neutral-400);
 
-  --border-warning: var(--color-warning-300);
-  --text-warning: var(--color-warning-700);
+  /* Warning State */
   --bg-warning: var(--color-warning-100);
+  --text-warning: var(--color-warning-700);
+  --border-warning: var(--color-warning-300);
 
-  /* Shadcn colors these should only reference moonshine colors */
+  /* ============================================
+   * 3. COMPONENT TOKENS
+   * Higher-level semantic tokens for specific use cases
+   * ============================================ */
+
+  /* Border Radius */
   --radius: 0.625rem;
+  /* ============================================
+   * 4. DEPRECATED TOKENS - SHADCN COMPATIBILITY
+   * These will be removed in future versions
+   * DO NOT use in new code
+   * ============================================ */
+  
   --background-pure: var(--color-base-white);
   --background: var(--color-neutral-100);
   --foreground: var(--color-neutral-900);
@@ -209,7 +237,7 @@
   --muted-foreground: var(--color-neutral-900);
   --accent: var(--color-neutral-100);
   --accent-foreground: var(--color-neutral-900);
-  --destructive: var(--color-destructive-500);
+  --destructive: var(--color-destructive-500);  /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-300);
   --input: var(--color-neutral-400);
   --ring: var(--color-brand-blue-600);
@@ -227,38 +255,34 @@
   --sidebar-border: var(--color-neutral-300);
   --sidebar-ring: var(--color-brand-blue-600);
 
-  /* Up to here */
-
+  /* Feedback States */
   --success: var(--color-success-100);
   --success-foreground: var(--color-success-700);
-
-  --destructive: var(--color-destructive-100);
-  --destructive-foreground: var(--color-destructive-700);
-
   --warning: var(--color-warning-100);
   --warning-foreground: var(--color-warning-700);
-
   --info: var(--color-info-100);
   --info-foreground: var(--color-info-700);
-
+  --destructive: var(--color-destructive-100);
+  --destructive-foreground: var(--color-destructive-700);
   --feature: var(--color-info-100);
   --feature-foreground: var(--color-info-700);
 
+  /* UI Elements */
   --shadow: hsl(0 0% 50%);
 
-  /* Custom scrollbar */
+  /* Custom Scrollbar */
   --sb-size: 0.5rem;
   --sb-track-color: var(--color-background);
   --sb-thumb-color: var(--color-background);
   --sb-track-border: var(--color-neutral-300);
 
-  /* Score colors - mapped to our new tokens */
+  /* Score Colors */
   --score-low: var(--color-destructive-500);
   --score-mid: var(--color-warning-500);
   --score-high: var(--color-success-500);
   --score-track: var(--color-neutral-700);
 
-  /* Custom easing functions */
+  /* Animation Easing Functions */
   --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
   --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
@@ -281,30 +305,109 @@
   --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 
+/* ============================================
+ * BASE ELEMENT STYLES
+ * Default styles for HTML elements
+ * ============================================ */
+
+/*
+ * Tailwind v4 Compatibility Layer
+ * The default border color has changed to `currentColor` in Tailwind CSS v4.
+ * These styles maintain v3 behavior until we can audit all border usage.
+ */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 :root.dark {
-  /* Shadcn theme */
+  /* ============================================
+   * DARK MODE OVERRIDES
+   * Only define values that change in dark mode
+   * ============================================ */
+
+  /* ============================================
+   * 2. SEMANTIC/UTILITY TOKENS (Dark Mode)
+   * ============================================ */
+  
+  /* Text Colors */
+  --text-heading-xl: var(--color-neutral-100);
+  --text-heading-lg: var(--color-neutral-100);
+  --text-heading-md: var(--color-neutral-100);
+  --text-heading-sm: var(--color-neutral-100);
+  --text-heading-xs: var(--color-neutral-100);
+  --text-body: var(--color-neutral-200);
+  --text-body-muted: var(--color-neutral-400);
+  
+  /* Warning State */
+  --bg-warning: var(--color-warning-900);
+  --text-warning: var(--color-warning-300);
+  --border-warning: var(--color-warning-700);
+
+  /* ============================================
+   * 3. COMPONENT TOKENS (Dark Mode)
+   * ============================================ */
+
+  /* Feedback States */
+  --success: var(--color-success-500);
+  --success-foreground: var(--color-success-100);
+  --warning: var(--color-warning-500);
+  --warning-foreground: var(--color-warning-100);
+  --info: var(--color-info-500);
+  --info-foreground: var(--color-info-100);
+  --destructive: var(--color-destructive-500);
+  --destructive-foreground: var(--color-destructive-100);
+  --feature: var(--color-info-500);
+  --feature-foreground: var(--color-info-100);
+
+  /* Score Colors */
+  --score-low: hsl(350 89% 60%);
+  --score-mid: hsl(38 92% 50%);
+  --score-high: hsl(160 84% 39%);
+  --score-track: hsl(48 4% 28%);
+
+  /* Custom Scrollbar */
+  --sb-track-color: var(--color-neutral-800);
+  --sb-thumb-color: var(--color-neutral-900);
+  --sb-track-border: var(--color-neutral-800);
+
+  /* Misc */
+  --header-border: 0 0% 14.9%;
+
+  /* ============================================
+   * 4. DEPRECATED TOKENS - SHADCN (Dark Mode)
+   * ============================================ */
+  
   --background-pure: var(--color-base-black);
   --background: var(--color-base-black);
   --foreground: var(--color-neutral-300);
-
   --card: var(--color-neutral-900);
   --card-foreground: var(--color-neutral-300);
-
   --popover: var(--color-base-black);
   --popover-foreground: var(--color-neutral-100);
-
   --primary: var(--color-base-black);
   --primary-foreground: var(--color-neutral-300);
-
   --secondary: var(--color-neutral-900);
   --secondary-foreground: var(--color-neutral-300);
-
   --muted: var(--color-neutral-800);
   --muted-foreground: var(--color-base-white);
-
   --accent: var(--color-neutral-800);
   --accent-foreground: var(--color-base-white);
-  --destructive: var(--color-destructive-500);
+  --destructive: var(--color-destructive-500);  /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-700);
   --input: var(--color-neutral-700);
   --ring: var(--color-brand-blue-600);
@@ -313,54 +416,12 @@
   --chart-3: var(--color-brand-red-600);
   --chart-4: var(--color-brand-blue-600);
   --chart-5: var(--color-brand-green-600);
-
   --sidebar: var(--color-neutral-900);
   --sidebar-foreground: var(--color-base-white);
-
   --sidebar-primary: var(--color-brand-red-600);
   --sidebar-primary-foreground: var(--color-neutral-300);
-
   --sidebar-accent: var(--color-neutral-700);
   --sidebar-accent-foreground: var(--color-base-white);
-
   --sidebar-border: var(--color-neutral-700);
   --sidebar-ring: var(--color-brand-blue-600);
-
-  /* Up to here */
-
-  --success: var(--color-success-500);
-  --success-foreground: var(--color-success-100);
-  --destructive: var(--color-destructive-500);
-  --destructive-foreground: var(--color-destructive-100);
-  --warning: var(--color-warning-500);
-  --warning-foreground: var(--color-warning-100);
-  --info: var(--color-info-500);
-  --info-foreground: var(--color-info-100);
-  --feature: var(--color-info-500);
-  --feature-foreground: var(--color-info-100);
-
-  /* Score colors */
-  --score-low: hsl(350 89% 60%);
-  --score-mid: hsl(38 92% 50%);
-  --score-high: hsl(160 84% 39%);
-  --score-track: hsl(48 4% 28%);
-
-  --header-border: 0 0% 14.9%;
-
-  /* Custom scrollbar */
-  --sb-track-color: var(--color-neutral-800);
-  --sb-thumb-color: var(--color-neutral-900);
-  --sb-track-border: var(--color-neutral-800);
-
-  /* Utility Tokens */
-  --text-heading-xl: var(--color-neutral-100);
-  --text-heading-lg: var(--color-neutral-100);
-  --text-heading-md: var(--color-neutral-100);
-  --text-heading-sm: var(--color-neutral-100);
-  --text-heading-xs: var(--color-neutral-100);
-  --text-body: var(--color-neutral-200);
-  --text-body-muted: var(--color-neutral-400);
-  --bg-warning: var(--color-warning-900);
-  --border-warning: var(--color-warning-700);
-  --text-warning: var(--color-warning-300);
 }

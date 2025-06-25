@@ -34,6 +34,50 @@ import { Grid } from '@speakeasy-api/moonshine'
 
 The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
 
+## Design System Architecture
+
+Moonshine is a utility-first design system built on top of [Tailwind CSS v4](https://tailwindcss.com/). It provides a curated set of design tokens and utilities that enforce consistency while preventing common pitfalls.
+
+### CSS Architecture
+
+Our CSS is organized into three main files:
+
+1. **`base.css`** - Primitive design tokens (colors, fonts, spacing scales)
+   - Contains raw values that should **not** be used directly in components
+   - Defines theme-aware semantic tokens that adapt to light/dark mode
+   - Houses base element styles and resets
+
+2. **`utilities.css`** - The public API of our design system
+   - Exposes carefully crafted utility classes like `text-heading-xl`, `bg-surface-primary`
+   - Enforces typography combinations to prevent arbitrary text styling
+   - Provides semantic color utilities that automatically handle theming
+
+3. **`global.css`** - Orchestration and configuration
+   - Imports Tailwind and configures plugins
+   - Defines custom variants (dark mode, interaction states)
+   - Sets up responsive utility generation
+
+### Design Principles
+
+- **Constrained, not restrictive**: We provide a curated set of utilities that make the right thing easy
+- **Semantic, not arbitrary**: Use `text-heading-lg` not `text-[29px] leading-[1.5]`
+- **Theme-aware by default**: Colors and styles automatically adapt to light/dark mode
+- **Type-safe when possible**: Utilities are designed to work with TypeScript autocomplete
+
+### Usage Guidelines
+
+✅ **Do:**
+- Use semantic utilities: `bg-warning`, `text-body`, `border-error`
+- Leverage pre-defined typography scales: `text-heading-xl`, `text-body-sm`
+- Stick to the exposed utility classes in `utilities.css`
+
+❌ **Don't:**
+- Access raw color values: `bg-[var(--color-neutral-200)]`
+- Create arbitrary combinations: `text-[1.813rem] leading-[1.5]`
+- Override the design system without discussing with the team
+
+For more technical details about the CSS architecture, see [CLAUDE.md](./CLAUDE.md).
+
 ## Contributing
 
 ### Setup
