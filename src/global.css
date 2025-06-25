@@ -882,6 +882,10 @@
   background: var(--gradient-brand-primary);
 }
 
+@utility border-gradient-primary {
+  border-image: var(--gradient-brand-primary) 1;
+}
+
 @utility bg-surface-primary {
   background-color: var(--color-base-white);
   @apply dark:bg-black;
