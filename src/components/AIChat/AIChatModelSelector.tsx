@@ -97,8 +97,7 @@ export function AIChatModelSelector({
         <button
           type="button"
           className={cn(
-            'flex h-8 items-center rounded-md px-1 text-xs text-neutral-400',
-            'hover:bg-neutral-800 hover:text-neutral-200',
+            'flex h-8 items-center rounded-md px-1 text-xs',
             className
           )}
         >
@@ -132,7 +131,7 @@ export function AIChatModelSelector({
 
       <PopoverContent
         align="start"
-        className="w-[220px] rounded-[7px] border border-neutral-700 p-0 shadow-lg"
+        className="w-[220px] rounded-[7px] border p-0 shadow-lg"
         side="top"
         sideOffset={8}
       >
@@ -146,10 +145,7 @@ export function AIChatModelSelector({
                 setOpen(false)
               }}
               className={cn(
-                'flex items-center justify-between gap-2 px-5 py-2 text-xs transition-colors',
-                m.value === model
-                  ? 'bg-neutral-800 font-semibold text-white'
-                  : 'hover:bg-neutral-800 hover:text-neutral-200'
+                'flex items-center justify-between gap-2 px-5 py-2 text-xs transition-colors'
               )}
             >
               <span>{m.label}</span>

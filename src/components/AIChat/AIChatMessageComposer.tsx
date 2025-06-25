@@ -113,8 +113,8 @@ export function AIChatMessageComposer({
       <div className="flex flex-col">
         <div
           className={cn(
-            'flex flex-col overflow-hidden rounded-lg border border-neutral-600 transition-shadow',
-            isFocused && 'ring-1 ring-white ring-offset-1'
+            'flex flex-col overflow-hidden rounded-lg border transition-shadow',
+            isFocused && 'ring-1 ring-offset-1'
           )}
         >
           <textarea
@@ -128,7 +128,7 @@ export function AIChatMessageComposer({
             rows={1}
             className={cn(
               'max-h-[300px] min-h-[44px] w-full resize-none bg-transparent px-4 pt-3',
-              'text-neutral-50 placeholder:text-neutral-400',
+              // 'text-neutral-50 placeholder:text-neutral-400',
               'focus:outline-none',
               'text-sm'
             )}

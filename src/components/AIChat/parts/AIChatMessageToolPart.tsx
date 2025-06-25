@@ -44,13 +44,13 @@ export interface AIChatMessageToolPartComponents extends BaseComponents {
 }
 
 const inputResultClassName =
-  'typography-body-xs max-h-48 overflow-auto rounded bg-neutral-900 p-2 break-all whitespace-pre-wrap text-neutral-300'
+  'typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground'
 
 const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   toolName: ({ toolName, confirmMessage, className }) => (
     <Text
       variant="xs"
-      className={cn('flex-1 py-1 font-medium text-neutral-100', className)}
+      className={cn('text-foreground flex-1 py-1 font-medium', className)}
     >
       {confirmMessage || toolName}
     </Text>
@@ -60,7 +60,7 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   ),
   input: ({ args, className }) => (
     <>
-      <Text variant="xs" className="mb-1 font-medium text-neutral-300">
+      <Text variant="xs" className="text-foreground mb-1 font-medium">
         Input
       </Text>
       <pre className={cn(inputResultClassName, className)}>{args}</pre>
@@ -68,7 +68,7 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   ),
   result: ({ result, className }) => (
     <>
-      <Text variant="xs" className="mb-1 font-medium text-neutral-300">
+      <Text variant="xs" className="text-foreground mb-1 font-medium">
         Result
       </Text>
       <pre className={cn(inputResultClassName, className)}>{result}</pre>
@@ -125,7 +125,7 @@ export function AIChatMessageToolPart({
     <MotionConfig transition={{ duration: 0.2 }}>
       <motion.div
         className={cn(
-          'overflow-hidden rounded-lg border border-neutral-600 transition-all duration-300',
+          'overflow-hidden rounded-lg border transition-all duration-300',
           className
         )}
         initial={false}
@@ -133,12 +133,9 @@ export function AIChatMessageToolPart({
       >
         {/* Header */}
         <div
-          className={cn(
-            'flex items-center gap-3 border-neutral-600 bg-neutral-900 px-4 py-2',
-            {
-              'border-b': isExpanded,
-            }
-          )}
+          className={cn('flex items-center gap-3 px-4 py-2', {
+            'border-b': isExpanded,
+          })}
         >
           {/* Status Indicator */}
           <div className="relative flex h-6 w-6 items-center justify-center">
@@ -158,7 +155,7 @@ export function AIChatMessageToolPart({
               size="icon"
               variant="ghost"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="h-6 w-6 text-neutral-300 hover:bg-neutral-800 hover:text-neutral-100"
+              className="h-6 w-6"
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
             >
               <motion.svg
@@ -262,13 +259,13 @@ export function AIChatMessageToolPart({
 
         {/* Approve / Reject Footer */}
         {isPending && (
-          <div className="flex justify-end border-t border-neutral-600 bg-neutral-900 px-4 py-2">
+          <div className="flex justify-end border-t px-4 py-2">
             <div className="flex items-center gap-1.5">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={toolCallApproval?.pendingToolCall?.reject}
-                className="hover:bg-background hover:text-foreground h-7 border border-transparent px-3 text-sm text-neutral-300 hover:border-neutral-600"
+                className="hover:bg-background hover:text-foreground h-7 border border-transparent px-3 text-sm"
               >
                 Reject
               </Button>
@@ -276,7 +273,7 @@ export function AIChatMessageToolPart({
               <Button
                 size="sm"
                 onClick={toolCallApproval?.pendingToolCall?.approve}
-                className="bg-foreground text-background h-7 border border-transparent px-3 text-sm hover:border-neutral-200 hover:bg-neutral-200"
+                className="bg-foreground text-background h-7 border border-transparent px-3 text-sm"
               >
                 Accept
               </Button>
@@ -307,7 +304,7 @@ const StatusIndicator = ({
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
         >
-          <CheckIcon className="h-full w-full text-neutral-100" />
+          <CheckIcon className="h-full w-full" />
         </motion.div>
       )
     case 'error':
@@ -318,7 +315,7 @@ const StatusIndicator = ({
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
         >
-          <XIcon className="h-full w-full text-neutral-100" />
+          <XIcon className="h-full w-full" />
         </motion.div>
       )
     case 'pending':
@@ -326,7 +323,7 @@ const StatusIndicator = ({
         <>
           {/* Track */}
           <motion.div
-            className="absolute inset-0 rounded-full bg-neutral-500/20"
+            className="absolute inset-0 rounded-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
@@ -339,22 +336,19 @@ const StatusIndicator = ({
             transition={{ duration: 0.2 }}
           >
             <div
-              className="h-full w-full rounded-full border-2 border-neutral-500 [border-top-color:transparent] [border-left-color:transparent]"
+              className="h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
               style={{
                 animation: 'spin 3s linear infinite',
               }}
             />
           </motion.div>
           <motion.div
-            className={cn(
-              'relative h-4 w-4 rounded-full bg-neutral-500',
-              className
-            )}
+            className={cn('relative h-4 w-4 rounded-full', className)}
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 500, damping: 15 }}
           >
-            <UserCheck className="h-full w-full text-neutral-100" />
+            <UserCheck className="h-full w-full" />
           </motion.div>
         </>
       )

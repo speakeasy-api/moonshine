@@ -546,12 +546,13 @@
 }
 
 @theme inline {
+  /* shouldn't really be exposing these colors as utility classes, should make semantic utility classes instead */
   /* Base colors */
-  --color-base-white: var(--color-base-white);
-  --color-base-black: var(--color-base-black);
+  /* --color-base-white: var(--color-base-white);
+  --color-base-black: var(--color-base-black); */
 
   /* Neutral colors */
-  --color-neutral-100: var(--color-neutral-100);
+  /* --color-neutral-100: var(--color-neutral-100);
   --color-neutral-200: var(--color-neutral-200);
   --color-neutral-300: var(--color-neutral-300);
   --color-neutral-400: var(--color-neutral-400);
@@ -559,10 +560,10 @@
   --color-neutral-600: var(--color-neutral-600);
   --color-neutral-700: var(--color-neutral-700);
   --color-neutral-800: var(--color-neutral-800);
-  --color-neutral-900: var(--color-neutral-900);
+  --color-neutral-900: var(--color-neutral-900); */
 
   /* Brand colors */
-  --color-brand-red-100: var(--color-brand-red-100);
+  /* --color-brand-red-100: var(--color-brand-red-100);
   --color-brand-red-200: var(--color-brand-red-200);
   --color-brand-red-300: var(--color-brand-red-300);
   --color-brand-red-400: var(--color-brand-red-400);
@@ -570,10 +571,10 @@
   --color-brand-red-600: var(--color-brand-red-600);
   --color-brand-red-700: var(--color-brand-red-700);
   --color-brand-red-800: var(--color-brand-red-800);
-  --color-brand-red-900: var(--color-brand-red-900);
+  --color-brand-red-900: var(--color-brand-red-900); */
 
   /* Feedback colors */
-  --color-destructive-100: var(--color-destructive-100);
+  /* --color-destructive-100: var(--color-destructive-100);
   --color-destructive-200: var(--color-destructive-200);
   --color-destructive-300: var(--color-destructive-300);
   --color-destructive-400: var(--color-destructive-400);
@@ -581,9 +582,9 @@
   --color-destructive-600: var(--color-destructive-600);
   --color-destructive-700: var(--color-destructive-700);
   --color-destructive-800: var(--color-destructive-800);
-  --color-destructive-900: var(--color-destructive-900);
+  --color-destructive-900: var(--color-destructive-900); */
 
-  --color-warning-100: var(--color-warning-100);
+  /* --color-warning-100: var(--color-warning-100);
   --color-warning-200: var(--color-warning-200);
   --color-warning-300: var(--color-warning-300);
   --color-warning-400: var(--color-warning-400);
@@ -591,9 +592,9 @@
   --color-warning-600: var(--color-warning-600);
   --color-warning-700: var(--color-warning-700);
   --color-warning-800: var(--color-warning-800);
-  --color-warning-900: var(--color-warning-900);
+  --color-warning-900: var(--color-warning-900); */
 
-  --color-success-100: var(--color-success-100);
+  /* --color-success-100: var(--color-success-100);
   --color-success-200: var(--color-success-200);
   --color-success-300: var(--color-success-300);
   --color-success-400: var(--color-success-400);
@@ -601,9 +602,9 @@
   --color-success-600: var(--color-success-600);
   --color-success-700: var(--color-success-700);
   --color-success-800: var(--color-success-800);
-  --color-success-900: var(--color-success-900);
+  --color-success-900: var(--color-success-900); */
 
-  --color-info-100: var(--color-info-100);
+  /* --color-info-100: var(--color-info-100);
   --color-info-200: var(--color-info-200);
   --color-info-300: var(--color-info-300);
   --color-info-400: var(--color-info-400);
@@ -611,7 +612,7 @@
   --color-info-600: var(--color-info-600);
   --color-info-700: var(--color-info-700);
   --color-info-800: var(--color-info-800);
-  --color-info-900: var(--color-info-900);
+  --color-info-900: var(--color-info-900); */
 
   /* Link colors */
   --color-link: var(--color-link-default);
