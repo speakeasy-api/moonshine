@@ -310,6 +310,15 @@
   --color-link-visited-secondary: hsl(201, 5%, 65%);
 
   /* Utility Tokens */
+  /* These are incorrect, the headings should have our skimmable colors */
+  --text-heading-xl: var(--color-neutral-900);
+  --text-heading-lg: var(--color-neutral-900);
+  --text-heading-md: var(--color-neutral-900);
+  --text-heading-sm: var(--color-neutral-900);
+  --text-heading-xs: var(--color-neutral-900);
+  --text-body: var(--color-neutral-900);
+  --text-body-muted: var(--color-neutral-400);
+
   --border-warning: var(--color-warning-300);
   --text-warning: var(--color-warning-700);
   --bg-warning: var(--color-warning-100);
@@ -533,6 +542,13 @@
   --sb-track-border: var(--color-neutral-800);
 
   /* Utility Tokens */
+  --text-heading-xl: var(--color-neutral-100);
+  --text-heading-lg: var(--color-neutral-100);
+  --text-heading-md: var(--color-neutral-100);
+  --text-heading-sm: var(--color-neutral-100);
+  --text-heading-xs: var(--color-neutral-100);
+  --text-body: var(--color-neutral-200);
+  --text-body-muted: var(--color-neutral-400);
   --bg-warning: var(--color-warning-900);
   --border-warning: var(--color-warning-700);
   --text-warning: var(--color-warning-300);
@@ -674,13 +690,14 @@
   --color-feature-foreground: var(--feature-foreground);
 
   /* Text Colors */
-  --color-heading-xl: var(--color-neutral-100);
-  --color-heading-lg: var(--color-neutral-100);
-  --color-heading-md: var(--color-neutral-100);
-  --color-heading-sm: var(--color-neutral-100);
-  --color-heading-xs: var(--color-neutral-100);
-  --color-body: var(--color-neutral-200);
-  --color-body-muted: var(--color-neutral-400);
+  /* These are incorrect, the headings should have our skimmable colors */
+  --color-heading-xl: var(--text-heading-xl);
+  --color-heading-lg: var(--text-heading-lg);
+  --color-heading-md: var(--text-heading-md);
+  --color-heading-sm: var(--text-heading-sm);
+  --color-heading-xs: var(--text-heading-xs);
+  --color-body: var(--text-body);
+  --color-body-muted: var(--text-body-muted);
 
   /* Animation */
   --keyframes-wiggle: {
