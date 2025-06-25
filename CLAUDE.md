@@ -123,6 +123,363 @@ Add new `@source` declarations in global.css:
 @source inline("{,sm:,md:,lg:,xl:,2xl:}your-utility-{value1,value2}");
 ```
 
+## Available Utility Classes
+
+This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:18:12.312Z
+
+### Typography Utilities
+
+#### `typography-heading-xl`
+
+```css
+.typography-heading-xl {
+  font-size: 2.063rem;
+  font-weight: 300;
+  line-height: 1.375;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-heading-lg`
+
+```css
+.typography-heading-lg {
+  font-size: 1.813rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-heading-md`
+
+```css
+.typography-heading-md {
+  font-size: 1.625rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-heading-sm`
+
+```css
+.typography-heading-sm {
+  font-size: 1.438rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-heading-xs`
+
+```css
+.typography-heading-xs {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-heading-xxs`
+
+```css
+.typography-heading-xxs {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.778;
+  letter-spacing: 0.0015em;
+}
+```
+
+#### `typography-body-lg`
+
+```css
+.typography-body-lg {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-body-md`
+
+```css
+.typography-body-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-body-sm`
+
+```css
+.typography-body-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `typography-body-xs`
+
+```css
+.typography-body-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-display-2xl`
+
+```css
+.text-display-2xl {
+  font-size: 11.375rem;
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-display-xl`
+
+```css
+.text-display-xl {
+  font-size: 5.625rem;
+  font-weight: 100;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-display-lg`
+
+```css
+.text-display-lg {
+  font-size: 4.188rem;
+  font-weight: 100;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-display-md`
+
+```css
+.text-display-md {
+  font-size: 3.188rem;
+  font-weight: 100;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-display-sm`
+
+```css
+.text-display-sm {
+  font-size: 2.375rem;
+  font-weight: 100;
+  line-height: 1.375;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-display-xs`
+
+```css
+.text-display-xs {
+  font-size: 1.75rem;
+  font-weight: 100;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  font-family: var(--font-tobias);
+}
+```
+
+#### `text-heading-xl`
+
+```css
+.text-heading-xl {
+  font-size: 2.063rem;
+  font-weight: 300;
+  line-height: 1.375;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-heading-lg`
+
+```css
+.text-heading-lg {
+  font-size: 1.813rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-heading-md`
+
+```css
+.text-heading-md {
+  font-size: 1.625rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-heading-sm`
+
+```css
+.text-heading-sm {
+  font-size: 1.438rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-heading-xs`
+
+```css
+.text-heading-xs {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-warning`
+
+```css
+.text-warning {
+  color: var(--text-warning);
+}
+```
+
+### Background Utilities
+
+#### `bg-mask`
+
+```css
+.bg-mask {
+  background-image: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    var(--color-transparent) 5%,
+    var(--color-transparent) 95%,
+    var(--background) 100%
+  );
+}
+```
+
+#### `bg-gradient-primary`
+
+```css
+.bg-gradient-primary {
+  background: var(--gradient-brand-primary);
+}
+```
+
+#### `bg-surface-primary`
+
+```css
+.bg-surface-primary {
+  background-color: var(--color-base-white);
+
+  /* dark variant */
+    background-color: var(--color-base-black);
+}
+```
+
+#### `bg-surface-secondary`
+
+```css
+.bg-surface-secondary {
+  background-color: var(--color-neutral-100);
+}
+```
+
+#### `bg-warning`
+
+```css
+.bg-warning {
+  background-color: var(--bg-warning);
+}
+```
+
+### Border Utilities
+
+#### `border-gradient-primary`
+
+```css
+.border-gradient-primary {
+  border-image: var(--gradient-brand-primary) 1;
+}
+```
+
+#### `border-warning`
+
+```css
+.border-warning {
+  border-color: var(--border-warning);
+  border-width: 1px;
+  border-style: solid;
+}
+```
+
+### Other Utilities
+
+#### `container`
+
+```css
+.container {
+  padding-inline: 1rem;
+  margin-inline: auto;
+}
+```
+
+#### `test-auto-gen`
+
+```css
+.test-auto-gen {
+  padding: 1rem;
+  background: red;
+  color: white;
+}
+```
+
 ## Migration Notes
 
 - **Shadcn components**: Currently using deprecated tokens, will need updates

@@ -27,7 +27,10 @@
   },
   "files": [
     "dist",
-    "src/global.css"
+    "src/global.css",
+    "src/base.css",
+    "src/utilities.css",
+    "types"
   ],
   "scripts": {
     "clean": "rimraf dist",
@@ -41,7 +44,9 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
-    "visualize": "npx vite-bundle-visualizer"
+    "visualize": "npx vite-bundle-visualizer",
+    "generate:docs": "node scripts/generate-utility-docs.js",
+    "postbuild": "pnpm generate:docs"
   },
   "author": "Speakeasy",
   "license": "ISC",

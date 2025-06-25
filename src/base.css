@@ -1,6 +1,10 @@
 /*
  * Base CSS - Design Tokens and CSS Variables
  * 
+ * ⚠️  WARNING: DO NOT IMPORT THIS FILE DIRECTLY IN YOUR PROJECT!
+ * This file is only exposed for Tailwind's @reference directive to work.
+ * Use the utility classes from utilities.css instead of these raw tokens.
+ * 
  * Structure:
  * 1. Primitive Tokens - Raw values (colors, fonts, etc.)
  * 2. Semantic/Utility Tokens - Theme-aware variables that map to utilities
