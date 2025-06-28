@@ -236,6 +236,36 @@
   border-style: solid;
 }
 
+/* Border utilities for neutral colors */
+@utility border-neutral-active {
+  border-color: var(--border-neutral-active);
+}
+
+@utility border-neutral-hover {
+  border-color: var(--border-neutral-hover);
+}
+
+@utility border-neutral-default {
+  border-color: var(--border-neutral-default);
+}
+
+@utility border-neutral-disabled {
+  border-color: var(--border-neutral-disabled);
+  opacity: 0.4;
+}
+
+@utility border-neutral-softest {
+  border-color: var(--border-neutral-softest);
+}
+
+@utility border-neutral-inset {
+  border-color: var(--border-neutral-inset);
+}
+
+@utility border-neutral-alpha {
+  border-color: var(--border-neutral-alpha);
+}
+
 @layer utilities {
   .devicon-devicon-plain {
     max-width: 2em;
@@ -283,7 +313,7 @@
   Note: We're being selective about what we expose to avoid people using raw color values
 */
 @theme inline {
-  --color-*: initial;
+  /* --color-*: initial; */
 
   /* Link colors */
   --color-link: var(--color-link-default);

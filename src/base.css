@@ -213,6 +213,15 @@
   --text-warning: var(--color-warning-700);
   --border-warning: var(--color-warning-300);
 
+  /* Border utilities - neutral states */
+  --border-neutral-active: var(--color-neutral-200); /* Temporary light mode value */
+  --border-neutral-hover: var(--color-neutral-300); /* Temporary light mode value */
+  --border-neutral-default: var(--color-neutral-400); /* Temporary light mode value */
+  --border-neutral-disabled: var(--color-neutral-400); /* Temporary light mode value */
+  --border-neutral-softest: var(--color-neutral-500); /* Temporary light mode value */
+  --border-neutral-inset: var(--color-neutral-900); /* Temporary light mode value */
+  --border-neutral-alpha: hsla(0, 0%, 0%, 0.2); /* Black with 20% opacity for light mode */
+
   /* ============================================
    * 3. COMPONENT TOKENS
    * Higher-level semantic tokens for specific use cases
@@ -361,6 +370,15 @@
   --bg-warning: var(--color-warning-900);
   --text-warning: var(--color-warning-300);
   --border-warning: var(--color-warning-700);
+
+  /* Border utilities - neutral states (dark mode) */
+  --border-neutral-active: var(--color-neutral-400);
+  --border-neutral-hover: var(--color-neutral-500);
+  --border-neutral-default: var(--color-neutral-600);
+  --border-neutral-disabled: var(--color-neutral-600);
+  --border-neutral-softest: var(--color-neutral-700);
+  --border-neutral-inset: var(--color-base-black);
+  --border-neutral-alpha: hsla(255, 255%, 255%, 0.2); /* White with 20% opacity */
 
   /* ============================================
    * 3. COMPONENT TOKENS (Dark Mode)
