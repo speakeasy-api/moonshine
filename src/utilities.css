@@ -266,6 +266,25 @@
   border-color: var(--border-neutral-alpha);
 }
 
+/* Link underline utilities */
+@utility underline-link-primary {
+  color: var(--underline-link-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+
+@utility underline-link-secondary {
+  color: var(--underline-link-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+
+@utility underline-link-visited {
+  color: var(--underline-link-visited);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+
 @layer utilities {
   .devicon-devicon-plain {
     max-width: 2em;

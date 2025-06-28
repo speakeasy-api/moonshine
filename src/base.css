@@ -222,6 +222,11 @@
   --border-neutral-inset: var(--color-neutral-900); /* Temporary light mode value */
   --border-neutral-alpha: hsla(0, 0%, 0%, 0.2); /* Black with 20% opacity for light mode */
 
+  /* Link utilities */
+  --underline-link-primary: var(--color-brand-blue-600); /* Temporary light mode value */
+  --underline-link-secondary: var(--color-neutral-900); /* Temporary light mode value */
+  --underline-link-visited: var(--color-brand-blue-800); /* Temporary light mode value */
+
   /* ============================================
    * 3. COMPONENT TOKENS
    * Higher-level semantic tokens for specific use cases
@@ -379,6 +384,11 @@
   --border-neutral-softest: var(--color-neutral-700);
   --border-neutral-inset: var(--color-base-black);
   --border-neutral-alpha: hsla(255, 255%, 255%, 0.2); /* White with 20% opacity */
+
+  /* Link utilities (dark mode) */
+  --underline-link-primary: var(--color-brand-blue-300);
+  --underline-link-secondary: var(--color-base-white);
+  --underline-link-visited: var(--color-brand-blue-400);
 
   /* ============================================
    * 3. COMPONENT TOKENS (Dark Mode)
