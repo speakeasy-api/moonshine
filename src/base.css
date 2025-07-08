@@ -279,7 +279,7 @@
   --accent: var(--color-neutral-200);
   --accent-foreground: var(--color-neutral-900);
   --destructive: var(
-    --color-destructive-500
+    --color-destructive-700
   ); /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-300);
   --input: var(--color-neutral-400);
