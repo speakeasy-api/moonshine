@@ -1,10 +1,10 @@
 /*
  * Base CSS - Design Tokens and CSS Variables
- * 
+ *
  * ⚠️  WARNING: DO NOT IMPORT THIS FILE DIRECTLY IN YOUR PROJECT!
  * This file is only exposed for Tailwind's @reference directive to work.
  * Use the utility classes from utilities.css instead of these raw tokens.
- * 
+ *
  * Structure:
  * 1. Primitive Tokens - Raw values (colors, fonts, etc.)
  * 2. Semantic/Utility Tokens - Theme-aware variables that map to utilities
@@ -18,7 +18,7 @@
    * 1. PRIMITIVE TOKENS
    * Raw design values - do not use directly in components
    * ============================================ */
-  
+
   /* Font Families */
   --font-diatype: 'Diatype', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
@@ -197,7 +197,7 @@
    * Theme-aware variables that map directly to utility classes
    * These change based on light/dark mode
    * ============================================ */
-  
+
   /* Text Colors */
   /* TODO: These should use our skimmable colors for headings */
   --text-heading-xl: var(--color-neutral-900);
@@ -214,18 +214,41 @@
   --border-warning: var(--color-warning-300);
 
   /* Border utilities - neutral states */
-  --border-neutral-active: var(--color-neutral-200); /* Temporary light mode value */
-  --border-neutral-hover: var(--color-neutral-300); /* Temporary light mode value */
-  --border-neutral-default: var(--color-neutral-400); /* Temporary light mode value */
-  --border-neutral-disabled: var(--color-neutral-400); /* Temporary light mode value */
-  --border-neutral-softest: var(--color-neutral-500); /* Temporary light mode value */
-  --border-neutral-inset: var(--color-neutral-900); /* Temporary light mode value */
-  --border-neutral-alpha: hsla(0, 0%, 0%, 0.2); /* Black with 20% opacity for light mode */
+  --border-neutral-active: var(
+    --color-neutral-200
+  ); /* Temporary light mode value */
+  --border-neutral-hover: var(
+    --color-neutral-300
+  ); /* Temporary light mode value */
+  --border-neutral-default: var(
+    --color-neutral-400
+  ); /* Temporary light mode value */
+  --border-neutral-disabled: var(
+    --color-neutral-400
+  ); /* Temporary light mode value */
+  --border-neutral-softest: var(
+    --color-neutral-500
+  ); /* Temporary light mode value */
+  --border-neutral-inset: var(
+    --color-neutral-900
+  ); /* Temporary light mode value */
+  --border-neutral-alpha: hsla(
+    0,
+    0%,
+    0%,
+    0.2
+  ); /* Black with 20% opacity for light mode */
 
   /* Link utilities */
-  --underline-link-primary: var(--color-brand-blue-600); /* Temporary light mode value */
-  --underline-link-secondary: var(--color-neutral-900); /* Temporary light mode value */
-  --underline-link-visited: var(--color-brand-blue-800); /* Temporary light mode value */
+  --underline-link-primary: var(
+    --color-brand-blue-600
+  ); /* Temporary light mode value */
+  --underline-link-secondary: var(
+    --color-neutral-900
+  ); /* Temporary light mode value */
+  --underline-link-visited: var(
+    --color-brand-blue-800
+  ); /* Temporary light mode value */
 
   /* ============================================
    * 3. COMPONENT TOKENS
@@ -239,7 +262,7 @@
    * These will be removed in future versions
    * DO NOT use in new code
    * ============================================ */
-  
+
   --background-pure: var(--color-base-white);
   --background: var(--color-neutral-100);
   --foreground: var(--color-neutral-900);
@@ -253,9 +276,11 @@
   --secondary-foreground: var(--color-neutral-900);
   --muted: var(--color-neutral-200);
   --muted-foreground: var(--color-neutral-900);
-  --accent: var(--color-neutral-100);
+  --accent: var(--color-neutral-200);
   --accent-foreground: var(--color-neutral-900);
-  --destructive: var(--color-destructive-500);  /* Note: conflicts with semantic token above */
+  --destructive: var(
+    --color-destructive-500
+  ); /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-300);
   --input: var(--color-neutral-400);
   --ring: var(--color-brand-blue-600);
@@ -361,7 +386,7 @@
   /* ============================================
    * 2. SEMANTIC/UTILITY TOKENS (Dark Mode)
    * ============================================ */
-  
+
   /* Text Colors */
   --text-heading-xl: var(--color-neutral-100);
   --text-heading-lg: var(--color-neutral-100);
@@ -370,7 +395,7 @@
   --text-heading-xs: var(--color-neutral-100);
   --text-body: var(--color-neutral-200);
   --text-body-muted: var(--color-neutral-400);
-  
+
   /* Warning State */
   --bg-warning: var(--color-warning-900);
   --text-warning: var(--color-warning-300);
@@ -383,7 +408,12 @@
   --border-neutral-disabled: var(--color-neutral-600);
   --border-neutral-softest: var(--color-neutral-700);
   --border-neutral-inset: var(--color-base-black);
-  --border-neutral-alpha: hsla(255, 255%, 255%, 0.2); /* White with 20% opacity */
+  --border-neutral-alpha: hsla(
+    255,
+    255%,
+    255%,
+    0.2
+  ); /* White with 20% opacity */
 
   /* Link utilities (dark mode) */
   --underline-link-primary: var(--color-brand-blue-300);
@@ -423,7 +453,7 @@
   /* ============================================
    * 4. DEPRECATED TOKENS - SHADCN (Dark Mode)
    * ============================================ */
-  
+
   --background-pure: var(--color-base-black);
   --background: var(--color-base-black);
   --foreground: var(--color-neutral-300);
@@ -439,7 +469,9 @@
   --muted-foreground: var(--color-base-white);
   --accent: var(--color-neutral-800);
   --accent-foreground: var(--color-base-white);
-  --destructive: var(--color-destructive-500);  /* Note: conflicts with semantic token above */
+  --destructive: var(
+    --color-destructive-500
+  ); /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-700);
   --input: var(--color-neutral-700);
   --ring: var(--color-brand-blue-600);
