@@ -1,29 +1,31 @@
 import { useEffect, useState } from 'react'
+import { useConfig } from './useConfig'
 
 type Theme = 'dark' | 'light'
 
 /**
  * Hook to get the current theme (light or dark) from the tailwind class element.
  */
-export default function useTailwindTheme(tailwindClassElement: HTMLElement) {
+export function useTheme() {
+  const { themeElement } = useConfig()
   const [theme, setTheme] = useState<Theme>(() =>
-    tailwindClassElement.classList.contains('dark') ? 'dark' : 'light'
+    themeElement.classList.contains('dark') ? 'dark' : 'light'
   )
 
   useEffect(() => {
-    const isDark = tailwindClassElement.classList.contains('dark')
+    const isDark = themeElement.classList.contains('dark')
     setTheme(isDark ? 'dark' : 'light')
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
-          const isDark = tailwindClassElement.classList.contains('dark')
+          const isDark = themeElement.classList.contains('dark')
           setTheme(isDark ? 'dark' : 'light')
         }
       })
     })
 
-    observer.observe(tailwindClassElement, {
+    observer.observe(themeElement, {
       attributes: true,
       attributeFilter: ['class'],
     })
