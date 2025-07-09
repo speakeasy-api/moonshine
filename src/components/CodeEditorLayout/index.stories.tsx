@@ -1,8 +1,9 @@
-import { CodeEditor } from '.'
+import { CodeEditor, CodeEditorTabProps } from '.'
 import { Meta, StoryObj } from '@storybook/react'
 import { faker } from '@faker-js/faker'
 import { Icon } from '@/components/Icon'
 import { Key } from '../KeyHint'
+import { useState } from 'react'
 
 faker.seed(123)
 
@@ -281,17 +282,16 @@ export const TabStates: Story = {
         tabs={
           <CodeEditor.Tabs>
             <CodeEditor.Tab
-              id="active-not-dirty-and-invalid"
+              id="active"
               active
-              invalid
-              title="openapi.yml"
+              title="active.yml"
               closable
               icon={<Icon name="file" className="h-3 w-3" />}
             />
             <CodeEditor.Tab
-              id="dirty-not-active-and-invalid"
+              id="dirty-and-invalid"
               dirty
-              title="README.md"
+              title="dirty-and-invalid.md"
               icon={<Icon name="file" className="h-3 w-3" />}
               closable
             />
@@ -315,17 +315,6 @@ export const TabStates: Story = {
               title="BAR.md"
               icon={<Icon name="file" className="h-3 w-3" />}
               disabled
-            />
-            <CodeEditor.Tab
-              id="loading"
-              title={
-                <div className="flex w-full items-center gap-1">
-                  <span>https://foo.com/file.json</span>
-                  <Icon name="loader-circle" className="h-4 w-4 animate-spin" />
-                </div>
-              }
-              disabled
-              className="cursor-progress"
             />
           </CodeEditor.Tabs>
         }
@@ -383,6 +372,7 @@ export const CustomTabElement: Story = {
   args: {
     children: [
       <CodeEditor.Pane
+        className="border"
         minSize={100}
         tabs={
           <CodeEditor.Tabs className="flex items-center">
@@ -428,4 +418,96 @@ export const CustomTabElement: Story = {
       </CodeEditor.Pane>,
     ],
   },
+}
+
+const Stateful = () => {
+  const handleTabOpen = (id: string) => {
+    const newOpenTab = tabs.find((tab) => tab.id === id)
+
+    if (!newOpenTab) {
+      return
+    }
+
+    setTabs(
+      tabs.map((tab) =>
+        tab.id === id ? { ...tab, active: true } : { ...tab, active: false }
+      )
+    )
+  }
+
+  const handleTabClose = (id: string) => {
+    setTabs(tabs.filter((tab) => tab.id !== id))
+  }
+
+  const [tabs, setTabs] = useState<CodeEditorTabProps[]>([
+    {
+      id: 'openapi.yml',
+      active: true,
+      title: 'openapi.yml',
+    },
+    {
+      id: 'README.md',
+      title: 'README.md',
+    },
+    {
+      id: 'src/index.ts',
+      title: 'src/index.ts',
+    },
+    {
+      id: 'src/auth.ts',
+      title: 'src/auth.ts',
+    },
+  ])
+
+  return (
+    <CodeEditor className="overflow-hidden border">
+      <CodeEditor.CommandBar className="border-t border-r border-l py-2">
+        <div className="flex flex-row items-center justify-between text-sm">
+          <div className="flex items-center gap-2">
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-red-500 stroke-red-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-yellow-500 stroke-yellow-500"
+            />
+            <Icon
+              name="circle"
+              className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
+            />
+          </div>
+        </div>
+      </CodeEditor.CommandBar>
+      <CodeEditor.Pane
+        minSize={100}
+        tabs={
+          <CodeEditor.Tabs className="flex items-center rounded-md border-t">
+            {tabs.map((tab, index) => (
+              <CodeEditor.Tab
+                key={tab.id}
+                closable
+                dirty={index % 2 === 0}
+                {...tab}
+                onClick={() => handleTabOpen(tab.id)}
+                onClose={() => handleTabClose(tab.id)}
+              />
+            ))}
+          </CodeEditor.Tabs>
+        }
+      >
+        <div className="px-2 py-1">
+          {Array.from({ length: 40 }).map((_, index) => (
+            <div key={index} className="mb-4">
+              {faker.lorem.paragraph()}
+            </div>
+          ))}
+        </div>
+      </CodeEditor.Pane>
+    </CodeEditor>
+  )
+}
+
+export const Interactive: Story = {
+  render: () => <Stateful />,
 }

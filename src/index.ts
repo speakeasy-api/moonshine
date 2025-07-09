@@ -47,6 +47,8 @@ export {
   type MoonshineConfigProviderProps,
 } from '@/context/ConfigContext'
 export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
+export { useTheme as useMoonshineTheme } from '@/hooks/useTheme'
+export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export {
   GradientCircle,
   type GradientCircleProps,
@@ -65,7 +67,7 @@ export {
   isSupportedLanguage,
 } from '@/types'
 export { PageHeader, type PageHeaderProps } from '@/components/PageHeader'
-export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
+
 export { ExternalPill, type ExternalPillProps } from '@/components/ExternalPill'
 export {
   LanguageIndicator,
