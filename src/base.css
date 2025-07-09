@@ -464,8 +464,8 @@
   --card-foreground: var(--color-neutral-300);
   --popover: var(--color-base-black);
   --popover-foreground: var(--color-neutral-100);
-  --primary: var(--color-base-black);
-  --primary-foreground: var(--color-neutral-300);
+  --primary: var(--color-base-white);
+  --primary-foreground: var(--color-base-black);
   --secondary: var(--color-neutral-900);
   --secondary-foreground: var(--color-neutral-300);
   --muted: var(--color-neutral-800);
