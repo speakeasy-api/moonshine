@@ -17,7 +17,7 @@ import {
 } from 'react-resizable-panels'
 
 export interface CodeEditorLayoutProps {
-  children: ReactNode[]
+  children: ReactNode[] | ReactNode
   className?: string
 }
 
@@ -178,6 +178,33 @@ export interface CodeEditorTabProps
    * Useful for loading states
    */
   disabled?: boolean
+
+  /**
+   * Custom styles for the tab
+   */
+  customStyles?: CodeEditorTabStateCustomStyles
+}
+
+/**
+ * Allows for custom styles to be applied to the tab based on its state
+ *
+ * @example
+ * <CodeEditor.Tab
+ *   customStyles={{
+ *     active: 'text-foreground bg-background',
+ *     inactive: 'text-body-muted bg-muted',
+ *     dirty: 'text-yellow-700/90 italic dark:text-yellow-300/70',
+ *     invalid: 'text-red-700 dark:text-red-400',
+ *     disabled: 'cursor-not-allowed opacity-75',
+ *   }}
+ * />
+ */
+type CodeEditorTabStateCustomStyles = {
+  active?: string
+  inactive?: string
+  dirty?: string
+  invalid?: string
+  disabled?: string
 }
 
 const CodeEditorTab = ({
@@ -193,6 +220,7 @@ const CodeEditorTab = ({
   onClose,
   icon,
   disabled,
+  customStyles,
   ...props
 }: CodeEditorTabProps) => {
   const [hoveredCloseIntent, setHoveredCloseIntent] = useState(false)
@@ -206,8 +234,11 @@ const CodeEditorTab = ({
     () => (
       <button
         className={cn(
-          'text-body-muted hover:text-foreground ml-auto h-full rounded-sm px-0.5',
-          hoveredCloseIntent && 'bg-background/80'
+          'text-body-muted hover:bg-muted hover:dark:bg-foreground/15 hover:text-foreground ml-auto h-full rounded-sm p-0.5',
+          hoveredCloseIntent && 'bg-background/80',
+          hoveredCloseIntent &&
+            dirty &&
+            `!bg-foreground/5 dark:!bg-foreground/10`
         )}
         onMouseEnter={() => setHoveredCloseIntent(true)}
         onMouseLeave={() => setHoveredCloseIntent(false)}
@@ -216,20 +247,28 @@ const CodeEditorTab = ({
         <Icon name="x" className="h-3.5 w-3.5" />
       </button>
     ),
-    [hoveredCloseIntent, onClose, id]
+    [hoveredCloseIntent, onClose, id, active]
   )
+
   return (
     <div
       {...props}
       className={cn(
-        'code-editor-tab bg-background hover:bg-muted/50 flex w-fit cursor-pointer items-center justify-center gap-2.5 rounded-sm rounded-t-none border-r py-2 pr-2 pl-3 text-sm select-none first-of-type:border-l-0',
-        active && 'text-foreground bg-foreground/5 hover:bg-foreground/10',
-        !active && 'text-body-muted',
+        'code-editor-tab bg-background flex w-fit cursor-pointer items-center justify-start gap-2.5 rounded-sm rounded-t-none border-r py-2 pr-2 pl-3 text-sm whitespace-nowrap select-none first-of-type:border-l-0',
         grow && 'flex-1',
-        dirty && 'italic',
+        active && 'text-foreground bg-background',
+        !active && 'text-body-muted bg-muted',
+        dirty && 'text-yellow-700/90 italic dark:text-yellow-300/70',
         invalid && 'text-red-700 dark:text-red-400',
         disabled && 'cursor-not-allowed opacity-75',
-        className
+        className,
+
+        // Override styles
+        customStyles && customStyles.active,
+        customStyles && customStyles.inactive,
+        customStyles && customStyles.dirty,
+        customStyles && customStyles.invalid,
+        customStyles && customStyles.disabled
       )}
       key={id}
       onClick={() => onClick?.(id)}
