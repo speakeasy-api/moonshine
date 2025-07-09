@@ -44,7 +44,7 @@ export interface AIChatMessageToolPartComponents extends BaseComponents {
 }
 
 const inputResultClassName =
-  'typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground'
+  'typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground bg-muted'
 
 const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   toolName: ({ toolName, confirmMessage, className }) => (
@@ -133,7 +133,7 @@ export function AIChatMessageToolPart({
       >
         {/* Header */}
         <div
-          className={cn('flex items-center gap-3 px-4 py-2', {
+          className={cn('bg-muted flex items-center gap-3 px-4 py-2', {
             'border-b': isExpanded,
           })}
         >
@@ -259,7 +259,7 @@ export function AIChatMessageToolPart({
 
         {/* Approve / Reject Footer */}
         {isPending && (
-          <div className="flex justify-end border-t px-4 py-2">
+          <div className="bg-muted flex justify-end border-t px-4 py-2">
             <div className="flex items-center gap-1.5">
               <Button
                 variant="ghost"
