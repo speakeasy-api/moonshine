@@ -299,7 +299,7 @@ const StatusIndicator = ({
     case 'success':
       return (
         <motion.div
-          className={cn(baseClassName, 'bg-success-fill', className)}
+          className={cn(baseClassName, 'bg-success', className)}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
@@ -310,7 +310,7 @@ const StatusIndicator = ({
     case 'error':
       return (
         <motion.div
-          className={cn(baseClassName, 'bg-danger-fill', className)}
+          className={cn(baseClassName, 'bg-destructive', className)}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}
