@@ -39,9 +39,9 @@ const badgeVariants = cva<BadgeVariantsCva>(
         tertiary: 'bg-primary/10 text-primary',
         destructive: 'bg-destructive text-destructive-foreground',
         outline: 'text-foreground',
-        success: 'bg-green-600 text-green-100',
-        warning: 'bg-yellow-600 text-yellow-100',
-        danger: 'bg-red-600 text-red-100',
+        success: 'bg-success text-success-foreground',
+        warning: 'bg-warning text-warning-foreground',
+        danger: 'bg-destructive text-destructive-foreground',
       },
       size: {
         xs: 'text-[11px]',

@@ -336,7 +336,7 @@
 
   /* Link colors */
   --color-link: var(--color-link-default);
-  --color-link-secondary: var(--color-neutral-200);
+  --color-link-secondary: var(--color-link-secondary);
   --color-link-visited-primary: var(--color-link-visited-primary);
   --color-link-visited-secondary: var(--color-link-visited-secondary);
 

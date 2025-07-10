@@ -190,9 +190,10 @@
   --color-info-800: hsl(217, 73%, 23%);
   --color-info-900: hsl(218, 73%, 15%);
 
-  --color-link-default: hsl(201, 86%, 43%);
-  --color-link-visited-primary: hsl(201, 100%, 24%);
-  --color-link-visited-secondary: hsl(201, 5%, 65%);
+  --color-link-default: var(--color-brand-blue-600);
+  --color-link-visited-primary: hsl(268, 75%, 31%);
+  --color-link-secondary: var(--color-base-black);
+  --color-link-visited-secondary: hsl(268, 75%, 31%);
 
   /* ============================================
    * 2. SEMANTIC/UTILITY TOKENS
@@ -367,7 +368,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--border-neutral-default, currentColor);
   }
 
   button:not(:disabled),
@@ -386,6 +387,11 @@
    * Only define values that change in dark mode
    * ============================================ */
 
+  --color-link-default: var(--color-brand-blue-300);
+  --color-link-visited-primary: hsl(268, 77%, 65%);
+  --color-link-secondary: var(--color-base-white);
+  --color-link-visited-secondary: hsl(268, 77%, 65%);
+
   /* ============================================
    * 2. SEMANTIC/UTILITY TOKENS (Dark Mode)
    * ============================================ */
@@ -397,7 +403,7 @@
   --text-heading-sm: var(--color-neutral-100);
   --text-heading-xs: var(--color-neutral-100);
   --text-body: var(--color-neutral-200);
-  --text-body-muted: var(--color-neutral-400);
+  --text-body-muted: var(--color-neutral-600);
 
   /* Warning State */
   --bg-warning: var(--color-warning-900);
