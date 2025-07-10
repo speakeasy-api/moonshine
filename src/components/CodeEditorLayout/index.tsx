@@ -258,8 +258,8 @@ const CodeEditorTab = ({
         grow && 'flex-1',
         active && 'text-foreground bg-background',
         !active && 'text-body-muted bg-muted',
-        dirty && 'text-yellow-700/90 italic dark:text-yellow-300/70',
-        invalid && 'text-red-700 dark:text-red-400',
+        dirty && 'text-warning',
+        invalid && 'text-destructive-foreground dark:text-destructive',
         disabled && 'cursor-not-allowed opacity-75',
         className,
 
