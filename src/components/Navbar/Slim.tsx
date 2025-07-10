@@ -92,9 +92,15 @@ export const Slim = ({
           <button
             id="brand"
             onClick={onHomeNavigation}
-            className="dark:text-primary text-black"
+            className="text-primary"
           >
-            <Logo variant="icon" className="size-6 fill-current" />
+            <Logo
+              variant={expanded ? 'wordmark' : 'icon'}
+              className={cn(
+                'fill-current',
+                expanded ? 'h-6 w-[166px]' : 'size-6'
+              )}
+            />
           </button>
         </div>
         <div className="relative left-2 flex w-full flex-col gap-5">
