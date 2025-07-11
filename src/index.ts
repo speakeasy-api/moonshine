@@ -54,6 +54,7 @@ export {
   type GradientCircleProps,
 } from '@/components/GradientCircle'
 export { Alert, type AlertProps } from '@/components/Alert'
+export { Tabs, type TabProps } from '@/components/Tabs'
 export {
   Table,
   type TableProps,
