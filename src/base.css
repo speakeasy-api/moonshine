@@ -309,7 +309,7 @@
   --info: var(--color-info-100);
   --info-foreground: var(--color-info-700);
   /* This is a dupe of a shadcn token, may need to rename*/
-  --destructive: var(--color-destructive-700);
+  --destructive: var(--color-destructive-100);
   --destructive-foreground: var(--color-destructive-700);
   --feature: var(--color-info-100);
   --feature-foreground: var(--color-info-700);
@@ -474,7 +474,7 @@
   --primary-foreground: var(--color-base-black);
   --secondary: var(--color-neutral-900);
   --secondary-foreground: var(--color-neutral-300);
-  --muted: var(--color-neutral-800);
+  --muted: var(--color-neutral-900);
   --muted-foreground: var(--color-neutral-100-alpha-64);
   --accent: var(--color-neutral-800);
   --accent-foreground: var(--color-base-white);
