@@ -316,6 +316,14 @@ export const TabStates: Story = {
               icon={<Icon name="file" className="h-3 w-3" />}
               disabled
             />
+            <CodeEditor.Tab
+              id="loading"
+              title="BAZ.md"
+              active
+              dirty
+              icon={<Icon name="file" className="h-3 w-3" />}
+              saving
+            />
           </CodeEditor.Tabs>
         }
       >
