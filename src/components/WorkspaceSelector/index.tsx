@@ -315,7 +315,7 @@ function WorkspaceViewContents({
         <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
           <Stack align="center" gap={4}>
             <div className="flex h-16 w-16 items-center justify-center">
-              <Logo variant="icon" />
+              <Logo variant="icon" className="size-12" />
             </div>
             <Stack align="center" gap={2}>
               <Heading variant="xl">Select your workspace</Heading>
