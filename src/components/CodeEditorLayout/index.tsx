@@ -15,6 +15,7 @@ import {
   PanelProps,
   PanelResizeHandle,
 } from 'react-resizable-panels'
+import styles from './styles.module.css'
 
 export interface CodeEditorLayoutProps {
   children: ReactNode[] | ReactNode
@@ -170,6 +171,7 @@ export interface CodeEditorTabProps
   icon?: ReactNode
   invalid?: boolean
   dirty?: boolean
+  saving?: boolean
   onClick?: (id: string) => void
   onClose?: (id: string) => void
 
@@ -205,6 +207,7 @@ type CodeEditorTabStateCustomStyles = {
   dirty?: string
   invalid?: string
   disabled?: string
+  saving?: string
 }
 
 const CodeEditorTab = ({
@@ -216,6 +219,7 @@ const CodeEditorTab = ({
   grow,
   dirty,
   invalid,
+  saving,
   onClick,
   onClose,
   icon,
@@ -254,11 +258,11 @@ const CodeEditorTab = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tab bg-background flex w-fit cursor-pointer items-center justify-start gap-2.5 rounded-sm rounded-t-none border-r py-2 pr-2 pl-3 text-sm whitespace-nowrap select-none first-of-type:border-l-0',
+        'code-editor-tab bg-background relative flex w-fit cursor-pointer items-center justify-start gap-2.5 rounded-sm rounded-t-none border-r py-2 pr-2 pl-3 text-sm whitespace-nowrap select-none first-of-type:border-l-0',
         grow && 'flex-1',
         active && 'text-foreground bg-background',
         !active && 'text-body-muted bg-muted',
-        dirty && 'text-yellow-700/90 italic dark:text-yellow-300/70',
+        dirty && !saving && 'text-yellow-700/90 italic dark:text-yellow-300/70',
         invalid && 'text-red-700 dark:text-red-400',
         disabled && 'cursor-not-allowed opacity-75',
         className,
@@ -268,7 +272,8 @@ const CodeEditorTab = ({
         customStyles && customStyles.inactive,
         customStyles && customStyles.dirty,
         customStyles && customStyles.invalid,
-        customStyles && customStyles.disabled
+        customStyles && customStyles.disabled,
+        customStyles && customStyles.saving
       )}
       key={id}
       onClick={() => onClick?.(id)}
@@ -281,7 +286,7 @@ const CodeEditorTab = ({
         </span>
       </div>
       {closable && !dirty && closeButton}
-      {dirty && (
+      {dirty && !saving && (
         <span
           onMouseEnter={() => setHoveredCloseIntent(true)}
           className="text-body-muted ml-auto flex h-full w-3 items-center justify-center text-xs"
@@ -294,6 +299,23 @@ const CodeEditorTab = ({
             <Icon name="circle" className="fill-foreground h-2.5 w-2.5" />
           )}
         </span>
+      )}
+
+      {saving && (
+        <div className="text-muted-foreground ml-auto flex h-full w-3 items-center justify-center">
+          <Icon name="loader-circle" className="size-5 animate-spin" />
+        </div>
+      )}
+
+      {saving && (
+        <div className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-full overflow-hidden">
+          <div
+            className={cn(
+              'absolute h-full w-3/4 -translate-x-full bg-blue-500 dark:bg-blue-300',
+              styles.editorTabLoadingBar
+            )}
+          />
+        </div>
       )}
     </div>
   )
