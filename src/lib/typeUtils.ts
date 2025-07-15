@@ -89,7 +89,7 @@ export function isPaddingPerSides(value: unknown): value is PaddingPerSides {
  * Asserts that a condition is true, otherwise throws an error
  * Can be used to narrow types
  */
-export function assert(condition: boolean, message: string): asserts condition {
+export function assert(condition: unknown, message: string): asserts condition {
   if (!condition) {
     throw new Error(message)
   }
