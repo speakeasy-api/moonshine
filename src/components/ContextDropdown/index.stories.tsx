@@ -29,7 +29,7 @@ function Screen({ title, content, index }: ScreenProps) {
   const nextIndex = index + 1
   return (
     <div className="flex h-full flex-col gap-4 p-4">
-      <h2 className="text-lg font-medium">{title}</h2>
+      <h2 className="font-medium">{title}</h2>
       <p>{content}</p>
 
       <Button
@@ -127,7 +127,7 @@ export const CustomTitle: Story = {
                 renderTitle={(screen, index) => (
                   <div
                     className={cn(
-                      'absolute text-lg font-medium',
+                      'text-md absolute font-medium',
                       index % 2 === 0
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-indigo-600 dark:text-indigo-400'

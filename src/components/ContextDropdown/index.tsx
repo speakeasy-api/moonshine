@@ -95,7 +95,7 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
                 <AnimatePresence initial={false} mode="sync" custom={isForward}>
                   <motion.h2
                     key={`title-${currentIndex}`}
-                    className="absolute text-lg font-medium"
+                    className="text-md absolute font-medium"
                     custom={isForward}
                     variants={slideVariants}
                     initial="enter"
