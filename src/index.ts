@@ -180,6 +180,8 @@ export { ContextDropdown } from '@/components/ContextDropdown'
 export { ContextDropdownProvider as ContextDropdownProvider } from '@/components/ContextDropdown/provider'
 export { useModal as useContextDropdown } from '@/components/ContextDropdown/useModal'
 
+export { Loader, type LoaderProps } from '@/components/Loader'
+
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
 import { Timeline } from '@/components/__beta__/Timeline'

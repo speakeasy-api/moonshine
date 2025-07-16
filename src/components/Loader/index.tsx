@@ -8,7 +8,7 @@ const animateProps: MotionProps['animate'] = {
   y: [0, -2, -2, 0],
 }
 
-interface LoaderProps {
+export interface LoaderProps {
   className?: string
 }
 
