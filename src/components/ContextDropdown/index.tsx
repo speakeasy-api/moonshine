@@ -6,6 +6,10 @@ import { Icon } from '../Icon'
 import { useModal } from './useModal'
 import { Screen } from './provider'
 import { assert } from '@/lib/typeUtils'
+import { Heading } from '../Heading'
+import React from 'react'
+
+const MotionHeading = motion(Heading)
 
 const animationDuration = 0.15
 
@@ -93,20 +97,21 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
               {/* Animated title */}
               <div className="relative h-7 w-fit min-w-xs overflow-x-hidden">
                 <AnimatePresence initial={false} mode="sync" custom={isForward}>
-                  <motion.h2
+                  <MotionHeading
                     key={`title-${currentIndex}`}
-                    className="text-md absolute font-medium"
+                    className="text-md absolute !leading-6 font-medium"
                     custom={isForward}
                     variants={slideVariants}
                     initial="enter"
                     animate="center"
                     exit="exit"
+                    variant="sm"
                     transition={{ type: 'tween', duration: animationDuration }}
                   >
                     {renderTitle
                       ? renderTitle(currentScreen, currentIndex)
                       : currentScreen.title}
-                  </motion.h2>
+                  </MotionHeading>
                 </AnimatePresence>
               </div>
             </div>
