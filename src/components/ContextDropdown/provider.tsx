@@ -55,26 +55,35 @@ export function ContextDropdownProvider({
   }
 
   const navigateTo = (index: number) => {
-    if (index >= 0 && index < screens.length) {
-      setNavigationDirection(index > currentIndex ? 'forward' : 'backward')
-      setCurrentIndex(index)
-    }
+    setScreens((prevScreens) => {
+      if (index >= 0 && index < prevScreens.length) {
+        setNavigationDirection(index > currentIndex ? 'forward' : 'backward')
+        setCurrentIndex(index)
+      }
+      return prevScreens
+    })
   }
 
   const pushScreen = (screen: Screen) => {
-    setScreens((prev) => [...prev, screen])
-    setCurrentIndex(screens.length)
+    setScreens((prev) => {
+      const newScreens = [...prev, screen]
+      setCurrentIndex(newScreens.length - 1)
+      return newScreens
+    })
     setNavigationDirection('forward')
   }
 
   const popScreen = () => {
-    if (screens.length > 1) {
-      setNavigationDirection('backward')
-      setCurrentIndex(currentIndex - 1)
-      setScreens((prev) => prev.slice(0, prev.length - 1))
-    } else {
-      close()
-    }
+    setScreens((prev) => {
+      if (prev.length > 1) {
+        setNavigationDirection('backward')
+        setCurrentIndex((idx) => idx - 1)
+        return prev.slice(0, prev.length - 1)
+      } else {
+        close()
+        return prev
+      }
+    })
   }
 
   return (
