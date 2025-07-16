@@ -12,10 +12,8 @@ const linkVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          'text-link visited:text-link-visited-primary visited:hover:text-link-visited-primary',
-        secondary:
-          'text-link-secondary visited:text-link-visited-secondary visited:hover:text-link-visited-secondary',
+        primary: 'text-link-primary visited:text-link-visited',
+        secondary: 'text-link-secondary visited:text-link-visited',
       },
       size: {
         xs: 'typography-body-xs gap-1',
@@ -33,7 +31,7 @@ const linkTextVariants = cva(
     variants: {
       variant: {
         primary: '',
-        secondary: '[&:not(:visited)]:decoration-link-secondary/40',
+        secondary: '',
       },
       underline: {
         false: 'no-underline group-hover/link:underline',
@@ -95,7 +93,7 @@ export const Link: React.FC<LinkProps> = forwardRef<
         ref={ref}
         target={target}
         rel={rel}
-        className={cn(linkVariants({ variant, size }), className)}
+        className={cn(linkVariants({ size, variant }), className)}
         onClick={onClick}
         {...rest}
       >
