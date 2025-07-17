@@ -30,8 +30,8 @@ This file contains four main sections:
 2. **Semantic/Utility Tokens** - Theme-aware variables that map to utilities
    ```css
    /* Light mode */
-   --text-warning: var(--color-warning-700);
-   --bg-warning: var(--color-warning-100);
+   --text-warning: var(--color-feedback-orange-700);
+   --bg-warning: var(--color-feedback-orange-100);
    
    /* Automatically switches in dark mode */
    ```
@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:18:12.312Z
+This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:53:27.862Z
 
 ### Typography Utilities
 
@@ -197,6 +197,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   font-weight: 300;
   line-height: 1.778;
   letter-spacing: 0.0015em;
+  font-family: var(--font-diatype);
 }
 ```
 
@@ -257,6 +258,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -269,6 +271,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -281,6 +284,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.2;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -293,6 +297,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.3;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -305,6 +310,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.375;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -317,6 +323,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.4;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
+  color: var(--text-display);
 }
 ```
 
@@ -329,6 +336,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.375;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
+  color: var(--text-heading-xl);
 }
 ```
 
@@ -341,6 +349,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.5;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
+  color: var(--text-heading-lg);
 }
 ```
 
@@ -353,6 +362,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
+  color: var(--text-heading-md);
 }
 ```
 
@@ -365,6 +375,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
+  color: var(--text-heading-sm);
 }
 ```
 
@@ -377,6 +388,273 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
+  color: var(--text-heading-xs);
+}
+```
+
+#### `text-body-lg`
+
+```css
+.text-body-lg {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-body-md`
+
+```css
+.text-body-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-body-sm`
+
+```css
+.text-body-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+}
+```
+
+#### `text-body-xs`
+
+```css
+.text-body-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-codeline-md`
+
+```css
+.text-codeline-md {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype-mono);
+  color: var(--text-default);
+}
+```
+
+#### `text-codeline-sm`
+
+```css
+.text-codeline-sm {
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype-mono);
+  color: var(--text-default);
+}
+```
+
+#### `text-codeline-xs`
+
+```css
+.text-codeline-xs {
+  font-size: 0.75rem;
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype-mono);
+  color: var(--text-default);
+}
+```
+
+#### `text-hightlight`
+
+```css
+.text-hightlight {
+  color: var(--text-highlight);
+}
+```
+
+#### `text-text-default`
+
+```css
+.text-text-default {
+  color: var(--text-default);
+}
+```
+
+#### `text-muted`
+
+```css
+.text-muted {
+  color: var(--text-muted);
+}
+```
+
+#### `text-placeholder`
+
+```css
+.text-placeholder {
+  color: var(--text-placeholder);
+}
+```
+
+#### `text-disabled`
+
+```css
+.text-disabled {
+  color: var(--text-disabled);
+}
+```
+
+#### `text-dark-light-highlight`
+
+```css
+.text-dark-light-highlight {
+  color: var(--text-dark-light-highlight);
+}
+```
+
+#### `text-dark-light-default`
+
+```css
+.text-dark-light-default {
+  color: var(--text-dark-light-default);
+}
+```
+
+#### `text-dark-light-muted`
+
+```css
+.text-dark-light-muted {
+  color: var(--text-dark-light-muted);
+}
+```
+
+#### `text-light-dark-highlight`
+
+```css
+.text-light-dark-highlight {
+  color: var(--text-light-dark-highlight);
+}
+```
+
+#### `text-light-dark-default`
+
+```css
+.text-light-dark-default {
+  color: var(--text-light-dark-default);
+}
+```
+
+#### `text-light-dark-muted`
+
+```css
+.text-light-dark-muted {
+  color: var(--text-light-dark-muted);
+}
+```
+
+#### `text-link-primary`
+
+```css
+.text-link-primary {
+  color: var(--text-link-primary);
+}
+```
+
+#### `text-link-secondary`
+
+```css
+.text-link-secondary {
+  color: var(--text-link-secondary);
+}
+```
+
+#### `text-link-visited`
+
+```css
+.text-link-visited {
+  color: var(--text-link-visited);
+}
+```
+
+#### `text-default-destructive`
+
+```css
+.text-default-destructive {
+  color: var(--text-default-destructive);
+}
+```
+
+#### `text-link-destructive`
+
+```css
+.text-link-destructive {
+  color: var(--text-link-destructive);
+}
+```
+
+#### `text-default-information`
+
+```css
+.text-default-information {
+  color: var(--text-default-information);
+}
+```
+
+#### `text-link-information`
+
+```css
+.text-link-information {
+  color: var(--text-link-information);
+}
+```
+
+#### `text-default-success`
+
+```css
+.text-default-success {
+  color: var(--text-default-success);
+}
+```
+
+#### `text-link-success`
+
+```css
+.text-link-success {
+  color: var(--text-link-success);
+}
+```
+
+#### `text-default-warning`
+
+```css
+.text-default-warning {
+  color: var(--text-default-warning);
+}
+```
+
+#### `text-link-warning`
+
+```css
+.text-link-warning {
+  color: var(--text-link-warning);
 }
 ```
 
@@ -439,6 +717,222 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
 }
 ```
 
+#### `bg-highlight`
+
+```css
+.bg-highlight {
+  background-color: var(--bg-highlight);
+}
+```
+
+#### `bg-active`
+
+```css
+.bg-active {
+  background-color: var(--bg-active);
+}
+```
+
+#### `bg-default`
+
+```css
+.bg-default {
+  background-color: var(--bg-default);
+}
+```
+
+#### `bg-muted`
+
+```css
+.bg-muted {
+  background-color: var(--bg-muted);
+}
+```
+
+#### `bg-inset`
+
+```css
+.bg-inset {
+  background-color: var(--bg-inset);
+}
+```
+
+#### `bg-light-dark-primary`
+
+```css
+.bg-light-dark-primary {
+  background-color: var(--bg-light-dark-primary);
+}
+```
+
+#### `bg-light-dark-secondary`
+
+```css
+.bg-light-dark-secondary {
+  background-color: var(--bg-light-dark-secondary);
+}
+```
+
+#### `bg-light-dark-tertiary`
+
+```css
+.bg-light-dark-tertiary {
+  background-color: var(--bg-light-dark-tertiary);
+}
+```
+
+#### `bg-dark-light-primary`
+
+```css
+.bg-dark-light-primary {
+  background-color: var(--bg-dark-light-primary);
+}
+```
+
+#### `bg-dark-light-secondary`
+
+```css
+.bg-dark-light-secondary {
+  background-color: var(--bg-dark-light-secondary);
+}
+```
+
+#### `bg-dark-light-tertiary`
+
+```css
+.bg-dark-light-tertiary {
+  background-color: var(--bg-dark-light-tertiary);
+}
+```
+
+#### `bg-destructive-highlight`
+
+```css
+.bg-destructive-highlight {
+  background-color: var(--bg-destructive-highlight);
+}
+```
+
+#### `bg-destructive-default`
+
+```css
+.bg-destructive-default {
+  background-color: var(--bg-destructive-default);
+}
+```
+
+#### `bg-destructive-muted`
+
+```css
+.bg-destructive-muted {
+  background-color: var(--bg-destructive-muted);
+}
+```
+
+#### `bg-destructive-softest`
+
+```css
+.bg-destructive-softest {
+  background-color: var(--bg-destructive-softest);
+}
+```
+
+#### `bg-information-highlight`
+
+```css
+.bg-information-highlight {
+  background-color: var(--bg-information-highlight);
+}
+```
+
+#### `bg-information-default`
+
+```css
+.bg-information-default {
+  background-color: var(--bg-information-default);
+}
+```
+
+#### `bg-information-muted`
+
+```css
+.bg-information-muted {
+  background-color: var(--bg-information-muted);
+}
+```
+
+#### `bg-information-softest`
+
+```css
+.bg-information-softest {
+  background-color: var(--bg-information-softest);
+}
+```
+
+#### `bg-success-highlight`
+
+```css
+.bg-success-highlight {
+  background-color: var(--bg-success-highlight);
+}
+```
+
+#### `bg-success-default`
+
+```css
+.bg-success-default {
+  background-color: var(--bg-success-default);
+}
+```
+
+#### `bg-success-muted`
+
+```css
+.bg-success-muted {
+  background-color: var(--bg-success-muted);
+}
+```
+
+#### `bg-success-softest`
+
+```css
+.bg-success-softest {
+  background-color: var(--bg-success-softest);
+}
+```
+
+#### `bg-warning-highlight`
+
+```css
+.bg-warning-highlight {
+  background-color: var(--bg-warning-highlight);
+}
+```
+
+#### `bg-warning-default`
+
+```css
+.bg-warning-default {
+  background-color: var(--bg-warning-default);
+}
+```
+
+#### `bg-warning-muted`
+
+```css
+.bg-warning-muted {
+  background-color: var(--bg-warning-muted);
+}
+```
+
+#### `bg-warning-softest`
+
+```css
+.bg-warning-softest {
+  background-color: var(--bg-warning-softest);
+}
+```
+
 ### Border Utilities
 
 #### `border-gradient-primary`
@@ -459,6 +953,167 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
 }
 ```
 
+#### `border-neutral-active`
+
+```css
+.border-neutral-active {
+  border-color: var(--border-neutral-active);
+}
+```
+
+#### `border-neutral-hover`
+
+```css
+.border-neutral-hover {
+  border-color: var(--border-neutral-hover);
+}
+```
+
+#### `border-neutral-default`
+
+```css
+.border-neutral-default {
+  border-color: var(--border-neutral-default);
+}
+```
+
+#### `border-neutral-disabled`
+
+```css
+.border-neutral-disabled {
+  border-color: var(--border-neutral-disabled);
+  opacity: 0.4;
+}
+```
+
+#### `border-neutral-softest`
+
+```css
+.border-neutral-softest {
+  border-color: var(--border-neutral-softest);
+}
+```
+
+#### `border-neutral-inset`
+
+```css
+.border-neutral-inset {
+  border-color: var(--border-neutral-inset);
+}
+```
+
+#### `border-neutral-alpha`
+
+```css
+.border-neutral-alpha {
+  border-color: var(--border-neutral-alpha);
+}
+```
+
+#### `border-destructive-highlight`
+
+```css
+.border-destructive-highlight {
+  border-color: var(--border-destructive-highlight);
+}
+```
+
+#### `border-destructive-default`
+
+```css
+.border-destructive-default {
+  border-color: var(--border-destructive-default);
+}
+```
+
+#### `border-destructive-muted`
+
+```css
+.border-destructive-muted {
+  border-color: var(--border-destructive-muted);
+}
+```
+
+#### `border-destructive-softest`
+
+```css
+.border-destructive-softest {
+  border-color: var(--border-destructive-softest);
+}
+```
+
+#### `border-information-highlight`
+
+```css
+.border-information-highlight {
+  border-color: var(--border-information-highlight);
+}
+```
+
+#### `border-information-default`
+
+```css
+.border-information-default {
+  border-color: var(--border-information-default);
+}
+```
+
+#### `border-information-muted`
+
+```css
+.border-information-muted {
+  border-color: var(--border-information-muted);
+}
+```
+
+#### `border-information-softest`
+
+```css
+.border-information-softest {
+  border-color: var(--border-information-softest);
+}
+```
+
+#### `border-success-highlight`
+
+```css
+.border-success-highlight {
+  border-color: var(--border-success-highlight);
+}
+```
+
+#### `border-success-default`
+
+```css
+.border-success-default {
+  border-color: var(--border-success-default);
+}
+```
+
+#### `border-success-muted`
+
+```css
+.border-success-muted {
+  border-color: var(--border-success-muted);
+}
+```
+
+#### `border-success-softest`
+
+```css
+.border-success-softest {
+  border-color: var(--border-success-softest);
+}
+```
+
+#### `border-focus`
+
+```css
+.border-focus {
+  border-color: var(--border-focus);
+}
+```
+
 ### Other Utilities
 
 #### `container`
@@ -470,13 +1125,233 @@ This section is auto-generated from the CSS files. Last updated: 2025-06-25T19:1
 }
 ```
 
-#### `test-auto-gen`
+#### `underline-link-primary`
 
 ```css
-.test-auto-gen {
-  padding: 1rem;
-  background: red;
-  color: white;
+.underline-link-primary {
+  color: var(--underline-link-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+```
+
+#### `underline-link-secondary`
+
+```css
+.underline-link-secondary {
+  color: var(--underline-link-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+```
+
+#### `underline-link-visited`
+
+```css
+.underline-link-visited {
+  color: var(--underline-link-visited);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+```
+
+#### `fill-neutral-highlight`
+
+```css
+.fill-neutral-highlight {
+  fill: var(--fill-neutral-highlight);
+}
+```
+
+#### `fill-neutral-active`
+
+```css
+.fill-neutral-active {
+  fill: var(--fill-neutral-active);
+}
+```
+
+#### `fill-neutral-default`
+
+```css
+.fill-neutral-default {
+  fill: var(--fill-neutral-default);
+}
+```
+
+#### `fill-neutral-muted`
+
+```css
+.fill-neutral-muted {
+  fill: var(--fill-neutral-muted);
+}
+```
+
+#### `fill-onColor-dark-highlight`
+
+```css
+.fill-onColor-dark-highlight {
+  fill: var(--fill-onColor-dark-highlight);
+}
+```
+
+#### `fill-onColor-dark-default`
+
+```css
+.fill-onColor-dark-default {
+  fill: var(--fill-onColor-dark-default);
+}
+```
+
+#### `fill-onColor-dark-muted`
+
+```css
+.fill-onColor-dark-muted {
+  fill: var(--fill-onColor-dark-muted);
+}
+```
+
+#### `fill-onColor-light-highlight`
+
+```css
+.fill-onColor-light-highlight {
+  fill: var(--fill-onColor-light-highlight);
+}
+```
+
+#### `fill-onColor-light-default`
+
+```css
+.fill-onColor-light-default {
+  fill: var(--fill-onColor-light-default);
+}
+```
+
+#### `fill-onColor-light-muted`
+
+```css
+.fill-onColor-light-muted {
+  fill: var(--fill-onColor-light-muted);
+}
+```
+
+#### `fill-link-primary`
+
+```css
+.fill-link-primary {
+  fill: var(--fill-link-primary);
+}
+```
+
+#### `fill-link-secondary`
+
+```css
+.fill-link-secondary {
+  fill: var(--fill-link-secondary);
+}
+```
+
+#### `fill-link-visited`
+
+```css
+.fill-link-visited {
+  fill: var(--fill-link-visited);
+}
+```
+
+#### `fill-destructive-highlight`
+
+```css
+.fill-destructive-highlight {
+  fill: var(--fill-destructive-highlight);
+}
+```
+
+#### `fill-destructive-default`
+
+```css
+.fill-destructive-default {
+  fill: var(--fill-destructive-default);
+}
+```
+
+#### `fill-destructive-muted`
+
+```css
+.fill-destructive-muted {
+  fill: var(--fill-destructive-muted);
+}
+```
+
+#### `fill-information-highlight`
+
+```css
+.fill-information-highlight {
+  fill: var(--fill-information-highlight);
+}
+```
+
+#### `fill-information-default`
+
+```css
+.fill-information-default {
+  fill: var(--fill-information-default);
+}
+```
+
+#### `fill-information-muted`
+
+```css
+.fill-information-muted {
+  fill: var(--fill-information-muted);
+}
+```
+
+#### `fill-success-highlight`
+
+```css
+.fill-success-highlight {
+  fill: var(--fill-success-highlight);
+}
+```
+
+#### `fill-success-default`
+
+```css
+.fill-success-default {
+  fill: var(--fill-success-default);
+}
+```
+
+#### `fill-success-muted`
+
+```css
+.fill-success-muted {
+  fill: var(--fill-success-muted);
+}
+```
+
+#### `fill-warning-highlight`
+
+```css
+.fill-warning-highlight {
+  fill: var(--fill-warning-highlight);
+}
+```
+
+#### `fill-warning-default`
+
+```css
+.fill-warning-default {
+  fill: var(--fill-warning-default);
+}
+```
+
+#### `fill-warning-muted`
+
+```css
+.fill-warning-muted {
+  fill: var(--fill-warning-muted);
 }
 ```
 

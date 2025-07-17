@@ -146,54 +146,58 @@
 
   /* Feedback colors */
 
-  /* Destructive */
-  --color-destructive-100: hsl(0, 100%, 97%);
-  --color-destructive-200: hsl(3, 84%, 85%);
-  --color-destructive-300: hsl(3, 78%, 71%);
-  --color-destructive-400: hsl(2, 74%, 58%);
-  --color-destructive-500: hsl(4, 67%, 47%);
-  --color-destructive-600: hsl(2, 65%, 39%);
-  --color-destructive-700: hsl(1, 64%, 32%);
-  --color-destructive-800: hsl(1, 63%, 24%);
-  --color-destructive-900: hsl(0, 62%, 17%);
+  /* Red */
+  --color-feedback-red-100: hsl(0, 100%, 97%);
+  --color-feedback-red-200: hsl(3, 84%, 85%);
+  --color-feedback-red-300: hsl(3, 78%, 71%);
+  --color-feedback-red-400: hsl(2, 74%, 58%);
+  --color-feedback-red-500: hsl(4, 67%, 47%);
+  --color-feedback-red-600: hsl(2, 65%, 39%);
+  --color-feedback-red-700: hsl(1, 64%, 32%);
+  --color-feedback-red-800: hsl(1, 63%, 24%);
+  --color-feedback-red-900: hsl(0, 62%, 17%);
 
-  /* Warning */
-  --color-warning-100: hsl(29, 100%, 95%);
-  --color-warning-200: hsl(30, 100%, 85%);
-  --color-warning-300: hsl(28, 100%, 74%);
-  --color-warning-400: hsl(27, 100%, 66%);
-  --color-warning-500: hsl(23, 96%, 62%);
-  --color-warning-600: hsl(22, 70%, 53%);
-  --color-warning-700: hsl(21, 64%, 43%);
-  --color-warning-800: hsl(19, 66%, 33%);
-  --color-warning-900: hsl(18, 69%, 24%);
+  /* Orange */
+  --color-feedback-orange-100: hsl(29, 100%, 95%);
+  --color-feedback-orange-200: hsl(30, 100%, 85%);
+  --color-feedback-orange-300: hsl(28, 100%, 74%);
+  --color-feedback-orange-400: hsl(27, 100%, 66%);
+  --color-feedback-orange-500: hsl(23, 96%, 62%);
+  --color-feedback-orange-600: hsl(22, 70%, 53%);
+  --color-feedback-orange-700: hsl(21, 64%, 43%);
+  --color-feedback-orange-800: hsl(19, 66%, 33%);
+  --color-feedback-orange-900: hsl(18, 69%, 24%);
 
-  /* Success */
-  --color-success-100: hsl(102, 35%, 93%);
-  --color-success-200: hsl(99, 33%, 83%);
-  --color-success-300: hsl(99, 30%, 73%);
-  --color-success-400: hsl(101, 28%, 62%);
-  --color-success-500: hsl(108, 24%, 41%);
-  --color-success-600: hsl(107, 24%, 34%);
-  --color-success-700: hsl(105, 24%, 27%);
-  --color-success-800: hsl(104, 24%, 20%);
-  --color-success-900: hsl(105, 24%, 13%);
+  /* Green */
+  --color-feedback-green-100: hsl(102, 35%, 93%);
+  --color-feedback-green-200: hsl(99, 33%, 83%);
+  --color-feedback-green-300: hsl(99, 30%, 73%);
+  --color-feedback-green-400: hsl(101, 28%, 62%);
+  --color-feedback-green-500: hsl(108, 24%, 41%);
+  --color-feedback-green-600: hsl(107, 24%, 34%);
+  --color-feedback-green-700: hsl(105, 24%, 27%);
+  --color-feedback-green-800: hsl(104, 24%, 20%);
+  --color-feedback-green-900: hsl(105, 24%, 13%);
 
-  /* Information */
-  --color-info-100: hsl(212, 100%, 95%);
-  --color-info-200: hsl(214, 100%, 86%);
-  --color-info-300: hsl(214, 100%, 77%);
-  --color-info-400: hsl(214, 89%, 67%);
-  --color-info-500: hsl(214, 69%, 50%);
-  --color-info-600: hsl(215, 70%, 41%);
-  --color-info-700: hsl(215, 71%, 32%);
-  --color-info-800: hsl(217, 73%, 23%);
-  --color-info-900: hsl(218, 73%, 15%);
+  /* Blue */
+  --color-feedback-blue-100: hsl(212, 100%, 95%);
+  --color-feedback-blue-200: hsl(214, 100%, 86%);
+  --color-feedback-blue-300: hsl(214, 100%, 77%);
+  --color-feedback-blue-400: hsl(214, 89%, 67%);
+  --color-feedback-blue-500: hsl(214, 69%, 50%);
+  --color-feedback-blue-600: hsl(215, 70%, 41%);
+  --color-feedback-blue-700: hsl(215, 71%, 32%);
+  --color-feedback-blue-800: hsl(217, 73%, 23%);
+  --color-feedback-blue-900: hsl(218, 73%, 15%);
+
+  /* Violet */
+  --color-feedback-violet-300: hsl(265, 77%, 65%);
+  --color-feedback-violet-600: 	hsl(268, 75%, 31%);
 
   --color-link-default: var(--color-brand-blue-600);
-  --color-link-visited-primary: hsl(268, 75%, 31%);
+  --color-link-visited-primary: var(--color-feedback-violet-600);
   --color-link-secondary: var(--color-base-black);
-  --color-link-visited-secondary: hsl(268, 75%, 31%);
+  --color-link-visited-secondary: var(--color-feedback-violet-600);
 
   /* ============================================
    * 2. SEMANTIC/UTILITY TOKENS
@@ -206,15 +210,66 @@
   --text-heading-xl: var(--color-neutral-900);
   --text-heading-lg: var(--color-neutral-900);
   --text-heading-md: var(--color-neutral-900);
-  --text-heading-sm: var(--color-neutral-900);
-  --text-heading-xs: var(--color-neutral-900);
+  --text-heading-sm: var(--color-neutral-800);
+  --text-heading-xs: var(--color-neutral-800);
+
+  --text-display: var(--color-base-black);
+
+  --text-highlight: var(--color-neutral-900);
+  --text-default: var(--color-neutral-700);
+  --text-muted: hsl(from var(--color-neutral-900) h s l / 64%);
+  --text-placeholder: hsl(from var(--color-neutral-900) h s l / 56%);
+  --text-disabled: hsl(from var(--color-neutral-900) h s l / 40%);
+
+  --text-dark-light-highlight: var(--color-base-black);
+  --text-dark-light-default: var(--color-neutral-900);
+  --text-dark-light-muted: hsl(from var(--color-neutral-900) h s l / 64%);
+
+  --text-light-dark-highlight: var(--color-base-white);
+  --text-light-dark-default: var(--color-neutral-100);
+  --text-light-dark-muted: hsl(from var(--color-neutral-100) h s l / 64%);
+
+  --text-link-primary: var(--color-brand-blue-600);
+  --text-link-secondary: var(--color-base-black);
+  --text-link-visited: var(--color-feedback-violet-600);
+
+  --text-default-destructive: var(--color-feedbackred-700);
+  --text-link-destructive: var(--color-feedback-red-900);
+
+  --text-default-information: var(--color-feedback-blue-700);
+  --text-link-information: var(--color-feedback-blue-900);
+
+  --text-default-success: var(--color-feedback-green-900);
+  --text-link-success: var(--color-feedback-green-900);
+
+  --text-default-warning: var(--color-feedback-orange-900);
+  --text-link-warning: var(--color-feedback-orange-900);
+
+
   --text-body: var(--color-neutral-900);
   --text-body-muted: var(--color-neutral-400);
 
   /* Warning State */
-  --bg-warning: var(--color-warning-100);
-  --text-warning: var(--color-warning-700);
-  --border-warning: var(--color-warning-300);
+  --bg-warning: var(--color-feedback-orange-100);
+  --text-warning: var(--color-feedback-orange-700);
+  --border-warning: var(--color-feedback-orange-300);
+
+
+    /* Link utilities */
+  --underline-link-primary: var(
+    --color-brand-blue-600
+  ); /* Temporary light mode value */
+  --underline-link-secondary: var(
+    --color-neutral-900
+  ); /* Temporary light mode value */
+  --underline-link-visited: var(
+    --color-brand-blue-800
+  ); /* Temporary light mode value */
+
+
+  /* ============================================
+   * BORDER TOKENS
+   * ============================================ */
 
   /* Border utilities - neutral states */
   --border-neutral-active: var(
@@ -242,16 +297,130 @@
     0.2
   ); /* Black with 20% opacity for light mode */
 
-  /* Link utilities */
-  --underline-link-primary: var(
-    --color-brand-blue-600
-  ); /* Temporary light mode value */
-  --underline-link-secondary: var(
-    --color-neutral-900
-  ); /* Temporary light mode value */
-  --underline-link-visited: var(
-    --color-brand-blue-800
-  ); /* Temporary light mode value */
+
+  /* Border Destructive utilities */
+  --border-destructive-highlight: var(--color-feedback-red-600);
+  --border-destructive-default: var(--color-feedback-red-500);
+  --border-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+  --border-destructive-softest: var(--colo-feedback-red-300);
+
+  /* Border Information utilities */
+  --border-information-highlight: var(--color-feedback-blue-600);
+  --border-information-default: var(--color-feedback-blue-500);
+  --border-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+  --border-information-softest: var(--colo-feedback-blue-300);
+
+  /* Border Success utilities */
+  --border-success-highlight: var(--color-feedback-green-600);
+  --border-success-default: var(--color-feedback-green-600);
+  --border-success-muted: hsl(from var(--color-feedback-green-600) h s l / 56%);
+  --border-success-softest: var(--colo-feedback-green-600);
+
+  /* Border Warning utilities */
+  --border-warning-highlight: var(--color-feedback-orange-600);
+  --border-warning-default: var(--color-feedback-orange-600);
+  --border-warning-muted: hsl(from var(--color-feedback-orange-600) h s l / 56%);
+  --border-warning-softest: var(--colo-feedback-orange-600);
+
+  /* Border Focus utilities */
+  --border-focus: var(--color-brand-blue-600);
+
+
+  /* ============================================
+   * FILLS
+   * ============================================ */
+
+   /* Neutrals */
+   --fill-neutral-highlight: var(--color-base-black);
+   --fill-neutral-active: var(--color-neutral-900);
+   --fill-neutral-default: var(--color-neutral-800);
+   --fill-neutral-muted: hsl(from var(--color-neutral-800) h s l / 56%);
+
+   /* onColor / Dark */
+   --fill-onColor-dark-highlight: var(--color-base-black);
+   --fill-onColor-dark-default: var(--color-neutral-800);
+   --fill-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+
+   /* onColor / Light */
+   --fill-onColor-light-highlight: var(--color-base-white);
+   --fill-onColor-light-default: var(--color-neutral-100);
+   --fill-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+
+   /* Links */
+   --fill-link-primary: var(--color-brand-blue-600);
+   --fill-link-secondary: var(--color-base-black);
+   --fill-link-visited: var(--color-feedback-violet-600);
+
+   /* Destructive */
+   --fill-destructive-highlight: var(--color-feedback-red-600);
+   --fill-destructive-default: var(--color-feedback-red-500);
+   --fill-destructive-muted: hsl(from var(--color-feedback-red-600) h s l / 56%);
+
+   /* Information */
+   --fill-information-highlight: var(--color-feedback-blue-600);
+   --fill-information-default: var(--color-feedback-blue-500);
+   --fill-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+
+   /* Success */
+   --fill-success-highlight: var(--color-feedback-green-600);
+   --fill-success-default: var(--color-feedback-green-500);
+   --fill-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+
+   /* Warning */
+   --fill-warning-highlight: var(--color-feedback-orange-600);
+   --fill-warning-default: var(--color-feedback-orange-500);
+   --fill-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+
+  /* ============================================
+   * BACKGROUNDS
+   * ============================================ */
+   --bg-primary: var(--color-base-white);
+   --bg-secondary: var(--color-neutral-100);
+   --bg-tertiary: var(--color-neutral-200);
+
+   /* State */
+   --bg-highlight: var(--color-neutral-300);
+   --bg-active: var(--color-neutral-200);
+   --bg-default: var(--color-neutral-100);
+   --bg-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --bg-inset: var(--color-base-white);
+
+   /* Light background in dark mode */
+   --bg-light-dark-primary: var(--base-white);
+   --bg-light-dark-secondary: var(--color-neutral-100);
+   --bg-light-dark-tertiary: var(--color-neutral-200);
+
+   /* Dark background in light mode */
+   --bg-dark-light-primary: var(--color-base-black);
+   --bg-dark-light-secondary: var(--color-neutral-900);
+   --bg-dark-light-tertiary: var(--color-neutral-800);
+
+   /* Destructive */
+   --bg-destructive-highlight: var(--color-feedback-red-600);
+   --bg-destructive-default: var(--color-feedback-red-500);
+   --bg-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+   --bg-destructive-softest: var(--color-feedback-red-100);
+
+   /* Information */
+   --bg-information-highlight: var(--color-feedback-blue-600);
+   --bg-information-default: var(--color-feedback-blue-500);
+   --bg-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --bg-information-softest: var(--color-feedback-blue-100);
+
+   /* Success */
+   --bg-success-highlight: var(--color-feedback-green-600);
+   --bg-success-default: var(--color-feedback-green-500);
+   --bg-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --bg-success-softest: var(--color-feedback-green-100);
+
+   /* Warning */
+   --bg-warning-highlight: var(--color-feedback-orange-600);
+   --bg-warning-default: var(--color-feedback-orange-500);
+   --bg-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --bg-warning-softest: var(--color-feedback-orange-100);
+
+
+
 
   /* ============================================
    * 3. COMPONENT TOKENS
@@ -282,7 +451,7 @@
   --accent: var(--color-neutral-200);
   --accent-foreground: var(--color-neutral-900);
   --destructive: var(
-    --color-destructive-700
+    --color-feedback-red-700
   ); /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-300);
   --input: var(--color-neutral-400);
@@ -302,10 +471,10 @@
   --sidebar-ring: var(--color-brand-blue-600);
 
   /* Feedback States */
-  --success: var(--color-success-100);
-  --success-foreground: var(--color-success-700);
-  --warning: var(--color-warning-100);
-  --warning-foreground: var(--color-warning-700);
+  --success: var(--color-feedback-green-100);
+  --success-foreground: var(--color-feedback-green-700);
+  --warning: var(--color-feedback-orange-100);
+  --warning-foreground: var(--color-feedback-orange-700);
   --info: var(--color-info-100);
   --info-foreground: var(--color-info-700);
   /* This is a dupe of a shadcn token, may need to rename*/
@@ -325,8 +494,8 @@
 
   /* Score Colors */
   --score-low: var(--color-destructive-500);
-  --score-mid: var(--color-warning-500);
-  --score-high: var(--color-success-500);
+  --score-mid: var(--color-feedback-orange-500);
+  --score-high: var(--color-feedback-green-500);
   --score-track: var(--color-neutral-700);
 
   /* Animation Easing Functions */
@@ -388,9 +557,9 @@
    * ============================================ */
 
   --color-link-default: var(--color-brand-blue-300);
-  --color-link-visited-primary: hsl(268, 77%, 65%);
+  --color-link-visited-primary: var(--color-feedback-violet-300);
   --color-link-secondary: var(--color-base-white);
-  --color-link-visited-secondary: hsl(268, 77%, 65%);
+  --color-link-visited-secondary: var(--color-feedback-violet-300);
 
   /* ============================================
    * 2. SEMANTIC/UTILITY TOKENS (Dark Mode)
@@ -400,15 +569,40 @@
   --text-heading-xl: var(--color-neutral-100);
   --text-heading-lg: var(--color-neutral-100);
   --text-heading-md: var(--color-neutral-100);
-  --text-heading-sm: var(--color-neutral-100);
-  --text-heading-xs: var(--color-neutral-100);
+  --text-heading-sm: var(--color-neutral-200);
+  --text-heading-xs: var(--color-neutral-200);
+
+  --text-display: var(--color-base-white);
+
+  --text-highlight: var(--color-neutral-100);
+  --text-default: var(--color-neutral-300);
+  --text-muted: hsl(from var(--color-neutral-100) h s l / 64%);
+  --text-placeholder: hsl(from var(--color-neutral-100) h s l / 56%);
+  --text-disabled: hsl(from var(--color-neutral-100) h s l / 40%);
+
+  --text-link-primary: var(--color-brand-blue-300);
+  --text-link-secondary: var(--color-base-white);
+  --text-link-visited: var(--color-feedback-violet-300);
+
+  --text-default-destructive: var(--color-feedbackred-300);
+  --text-link-destructive: var(--color-feedback-red-100);
+
+  --text-default-information: var(--color-feedback-blue-300);
+  --text-link-information: var(--color-feedback-blue-100);
+
+  --text-default-success: var(--color-feedback-green-100);
+  --text-link-success: var(--color-feedback-green-100);
+
+  --text-default-warning: var(--color-feedback-orange-100);
+  --text-link-warning: var(--color-feedback-orange-100);
+
   --text-body: var(--color-neutral-200);
   --text-body-muted: var(--color-neutral-600);
 
   /* Warning State */
-  --bg-warning: var(--color-warning-900);
-  --text-warning: var(--color-warning-300);
-  --border-warning: var(--color-warning-700);
+  --bg-warning: var(--color-feedback-orange-900);
+  --text-warning: var(--color-feedback-orange-300);
+  --border-warning: var(--color-feedback-orange-700);
 
   /* Border utilities - neutral states (dark mode) */
   --border-neutral-active: var(--color-neutral-400);
@@ -424,20 +618,141 @@
     0.2
   ); /* White with 20% opacity */
 
-  /* Link utilities (dark mode) */
+
+    /* Link utilities (dark mode) */
   --underline-link-primary: var(--color-brand-blue-300);
   --underline-link-secondary: var(--color-base-white);
   --underline-link-visited: var(--color-brand-blue-400);
+
+  /* ============================================
+   * BORDER TOKENS
+   * ============================================ */
+
+  /* Border destructive utilities */
+  --border-destructive-highlight: var(--color-feedback-red-300);
+  --border-destructive-default: var(--color-feedback-red-500);
+  --border-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+  --border-destructive-softest: var(--color-feedback-red-700);
+
+  /* Border Information utilities */
+  --border-information-highlight: var(--color-feedback-blue-300);
+  --border-information-default: var(--color-feedback-blue-500);
+  --border-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+  --border-information-softest: var(--colo-feedback-blue-700);
+
+  /* Border Success utilities */
+  --border-success-highlight: var(--color-feedback-green-300);
+  --border-success-default: var(--color-feedback-green-300);
+  --border-success-muted: hsl(from var(--color-feedback-green-300) h s l / 56%);
+  --border-success-softest: var(--colo-feedback-green-300);
+
+  /* Border Warning utilities */
+  --border-warning-highlight: var(--color-feedback-orange-300);
+  --border-warning-default: var(--color-feedback-orange-300);
+  --border-warning-muted: hsl(from var(--color-feedback-orange-300) h s l / 56%);
+  --border-warning-softest: var(--colo-feedback-orange-300);
+
+    /* Border Focus utilities */
+  --border-focus: var(--color-brand-blue-300);
+
+
+   /* ============================================
+   * FILLS
+   * ============================================ */
+
+   /* Neutrals */
+  --fill-neutral-highlight: var(--color-base-white);
+  --fill-neutral-active: var(--color-neutral-100);
+  --fill-neutral-default: var(--color-neutral-200);
+  --fill-neutral-muted: hsl(from var(--color-neutral-200) h s l / 56%);
+
+  /* onColor / Dark */
+   --fill-onColor-dark-highlight: var(--color-base-black);
+   --fill-onColor-dark-default: var(--color-neutral-800);
+   --fill-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+
+   /* onColor / Light */
+   --fill-onColor-light-highlight: var(--color-base-white);
+   --fill-onColor-light-default: var(--color-neutral-100);
+   --fill-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+
+   /* Links */
+   --fill-link-primary: var(--color-brand-blue-300);
+   --fill-link-secondary: var(--color-base-white);
+   --fill-link-visited: var(--color-feedback-violet-300);
+
+    /* Destructive */
+   --fill-destructive-highlight: var(--color-feedback-red-300);
+   --fill-destructive-default: var(--color-feedback-red-400);
+   --fill-destructive-muted: hsl(from var(--color-feedback-red-400) h s l / 56%);
+
+   /* Information */
+   --fill-information-highlight: var(--color-feedback-blue-300);
+   --fill-information-default: var(--color-feedback-blue-400);
+   --fill-information-muted: hsl(from var(--color-feedback-blue-400) h s l / 56%);
+
+   /* Success */
+   --fill-success-highlight: var(--color-feedback-green-300);
+   --fill-success-default: var(--color-feedback-green-400);
+   --fill-success-muted: hsl(from var(--color-feedback-green-400) h s l / 56%);
+
+   /* Warning */
+   --fill-warning-highlight: var(--color-feedback-orange-300);
+   --fill-warning-default: var(--color-feedback-orange-400);
+   --fill-warning-muted: hsl(from var(--color-feedback-orange-400) h s l / 56%);
+
+   /* ============================================
+   * BACKGROUNDS
+   * ============================================ */
+   --bg-primary: var(--color-base-black);
+   --bg-secondary: var(--color-neutral-900);
+   --bg-tertiary: var(--color-neutral-800);
+
+   /* State */
+   --bg-highlight: var(--color-neutral-700);
+   --bg-active: var(--color-neutral-800);
+   --bg-default: var(--color-neutral-900);
+   --bg-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --bg-inset: var(--color-base-black);
+
+   /* Light background in dark mode */
+
+   /* Dark background in light mode */
+
+   /* Destructive */
+   --bg-destructive-highlight: var(--color-feedback-red-300);
+   --bg-destructive-default: var(--color-feedback-red-500);
+   --bg-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+   --bg-destructive-softest: var(--color-feedback-red-900);
+
+   /* Information */
+   --bg-information-highlight: var(--color-feedback-blue-300);
+   --bg-information-default: var(--color-feedback-blue-500);
+   --bg-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --bg-information-softest: var(--color-feedback-blue-900);
+
+   /* Success */
+   --bg-success-highlight: var(--color-feedback-green-300);
+   --bg-success-default: var(--color-feedback-green-500);
+   --bg-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --bg-success-softest: var(--color-feedback-green-900);
+
+   /* Warning */
+   --bg-warning-highlight: var(--color-feedback-orange-300);
+   --bg-warning-default: var(--color-feedback-orange-500);
+   --bg-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --bg-warning-softest: var(--color-feedback-orange-900);
+
 
   /* ============================================
    * 3. COMPONENT TOKENS (Dark Mode)
    * ============================================ */
 
   /* Feedback States */
-  --success: var(--color-success-500);
-  --success-foreground: var(--color-success-100);
-  --warning: var(--color-warning-500);
-  --warning-foreground: var(--color-warning-100);
+  --success: var(--color-feedback-green-500);
+  --success-foreground: var(--color-feedback-green-100);
+  --warning: var(--color-feedback-orange-500);
+  --warning-foreground: var(--color-feedback-orange-100);
   --info: var(--color-info-500);
   --info-foreground: var(--color-info-100);
   --destructive: var(--color-destructive-500);
@@ -479,7 +794,7 @@
   --accent: var(--color-neutral-800);
   --accent-foreground: var(--color-base-white);
   --destructive: var(
-    --color-destructive-500
+    --color-feedback-red-500
   ); /* Note: conflicts with semantic token above */
   --border: var(--color-neutral-700);
   --input: var(--color-neutral-700);
