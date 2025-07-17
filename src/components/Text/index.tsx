@@ -49,7 +49,7 @@ export function Text({
       className={cn(
         variantStyles[variant],
         whitespaceStyles[whiteSpace],
-        muted ? 'text-body-muted' : 'text-body',
+        muted ? 'text-muted' : 'text-default',
         className
       )}
     >

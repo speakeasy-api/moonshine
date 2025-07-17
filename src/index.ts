@@ -174,6 +174,8 @@ export {
   DropdownMenuShortcut,
 } from '@/components/Dropdown'
 
+export { cn } from '@/lib/utils'
+
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
 
