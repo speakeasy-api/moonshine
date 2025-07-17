@@ -110,6 +110,25 @@ The types are automatically generated during the build process and include:
 
 The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
 
+### Using Tailwind Merge
+
+Moonshine exports a custom wrapper for Tailwind Merge to avoid unexpected clashes between semantic class names. This version should be used in favour of using tailwind merge directly.
+
+```tsx
+import { cn } from '@speakeasy-api/moonshine'
+
+return (
+  <span
+    className={cn('text-body-md', props.muted ? 'text-muted' : 'text-default')}
+  >
+    Lorem Ipsum
+  </span>
+)
+
+```
+
+
+
 ## Design System Architecture
 
 Moonshine is a utility-first design system built on top of [Tailwind CSS v4](https://tailwindcss.com/). It provides a curated set of design tokens and utilities that enforce consistency while preventing common pitfalls.

@@ -233,16 +233,16 @@
   --text-link-secondary: var(--color-base-black);
   --text-link-visited: var(--color-feedback-violet-600);
 
-  --text-default-destructive: var(--color-feedbackred-700);
+  --text-default-destructive: var(--color-feedback-red-700);
   --text-link-destructive: var(--color-feedback-red-900);
 
   --text-default-information: var(--color-feedback-blue-700);
   --text-link-information: var(--color-feedback-blue-900);
 
-  --text-default-success: var(--color-feedback-green-900);
+  --text-default-success: var(--color-feedback-green-700);
   --text-link-success: var(--color-feedback-green-900);
 
-  --text-default-warning: var(--color-feedback-orange-900);
+  --text-default-warning: var(--color-feedback-orange-700);
   --text-link-warning: var(--color-feedback-orange-900);
 
 
@@ -584,16 +584,16 @@
   --text-link-secondary: var(--color-base-white);
   --text-link-visited: var(--color-feedback-violet-300);
 
-  --text-default-destructive: var(--color-feedbackred-300);
+  --text-default-destructive: var(--color-feedback-red-300);
   --text-link-destructive: var(--color-feedback-red-100);
 
   --text-default-information: var(--color-feedback-blue-300);
   --text-link-information: var(--color-feedback-blue-100);
 
-  --text-default-success: var(--color-feedback-green-100);
+  --text-default-success: var(--color-feedback-green-300);
   --text-link-success: var(--color-feedback-green-100);
 
-  --text-default-warning: var(--color-feedback-orange-100);
+  --text-default-warning: var(--color-feedback-orange-300);
   --text-link-warning: var(--color-feedback-orange-100);
 
   --text-body: var(--color-neutral-200);
