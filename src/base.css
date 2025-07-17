@@ -373,8 +373,9 @@
 
   /* ============================================
    * BACKGROUNDS
-   * NOTE: bg-primary and bg-secondary will be created by the theme in utilities.css
    * ============================================ */
+   --bg-primary: var(--color-base-white);
+   --bg-secondary: var(--color-neutral-100);
    --bg-tertiary: var(--color-neutral-200);
 
    /* State */
@@ -702,8 +703,9 @@
 
    /* ============================================
    * BACKGROUNDS
-   * NOTE: bg-primary and bg-secondary will be created by the theme in utilities.css
    * ============================================ */
+   --bg-primary: var(--color-base-black);
+   --bg-secondary: var(--color-neutral-900);
    --bg-tertiary: var(--color-neutral-800);
 
    /* State */

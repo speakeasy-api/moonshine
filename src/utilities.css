@@ -630,8 +630,15 @@
 
 /* ============================================
 * BACKGROUNDS
-* NOTE: bg-primary and bg-secondary will be created by the theme below
 * ============================================ */
+@utilities bg-primary {
+  background-color: var(--bg-primary);
+}
+
+@utilities bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
 @utilities bg-tertiary {
   background-color: var(--bg-tertiary);
 }
