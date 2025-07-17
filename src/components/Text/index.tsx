@@ -23,10 +23,10 @@ export type TextProps = {
 )
 
 const variantStyles: Record<TextVariant, string> = {
-  lg: 'typography-body-lg',
-  md: 'typography-body-md',
-  sm: 'typography-body-sm',
-  xs: 'typography-body-xs',
+  lg: 'text-body-lg',
+  md: 'text-body-md',
+  sm: 'text-body-sm',
+  xs: 'text-body-xs',
 }
 
 const whitespaceStyles: Record<TextWhitespace, string> = {

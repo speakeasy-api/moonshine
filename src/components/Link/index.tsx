@@ -16,10 +16,10 @@ const linkVariants = cva(
         secondary: 'text-link-secondary visited:text-link-visited',
       },
       size: {
-        xs: 'typography-body-xs gap-1',
-        sm: 'typography-body-sm gap-1',
-        md: 'typography-body-md gap-2',
-        lg: 'typography-body-lg gap-2',
+        xs: 'text-body-xs gap-1',
+        sm: 'text-body-sm gap-1',
+        md: 'text-body-md gap-2',
+        lg: 'text-body-lg gap-2',
       },
     },
   }
