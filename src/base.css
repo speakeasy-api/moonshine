@@ -256,15 +256,9 @@
 
 
     /* Link utilities */
-  --underline-link-primary: var(
-    --color-brand-blue-600
-  ); /* Temporary light mode value */
-  --underline-link-secondary: var(
-    --color-neutral-900
-  ); /* Temporary light mode value */
-  --underline-link-visited: var(
-    --color-brand-blue-800
-  ); /* Temporary light mode value */
+  --underline-link-primary: var(--color-brand-blue-600);
+  --underline-link-secondary: var(--color-base-black);
+  --underline-link-visited: var(--color-feedback-violet-600);
 
 
   /* ============================================
@@ -272,24 +266,12 @@
    * ============================================ */
 
   /* Border utilities - neutral states */
-  --border-neutral-active: var(
-    --color-neutral-200
-  ); /* Temporary light mode value */
-  --border-neutral-hover: var(
-    --color-neutral-300
-  ); /* Temporary light mode value */
-  --border-neutral-default: var(
-    --color-neutral-400
-  ); /* Temporary light mode value */
-  --border-neutral-disabled: var(
-    --color-neutral-400
-  ); /* Temporary light mode value */
-  --border-neutral-softest: var(
-    --color-neutral-500
-  ); /* Temporary light mode value */
-  --border-neutral-inset: var(
-    --color-neutral-900
-  ); /* Temporary light mode value */
+  --border-neutral-active: var(--color-neutral-600);
+  --border-neutral-hover: var(--color-neutral-500);
+  --border-neutral-default: var(--color-neutral-400);
+  --border-neutral-disabled: hsl(from var(--color-neutral-400) h s l / 40%);
+  --border-neutral-softest: var(--color-neutral-300);
+  --border-neutral-inset: var(--color-base-black);
   --border-neutral-alpha: hsla(
     0,
     0%,
@@ -312,9 +294,9 @@
 
   /* Border Success utilities */
   --border-success-highlight: var(--color-feedback-green-600);
-  --border-success-default: var(--color-feedback-green-600);
-  --border-success-muted: hsl(from var(--color-feedback-green-600) h s l / 56%);
-  --border-success-softest: var(--colo-feedback-green-600);
+  --border-success-default: var(--color-feedback-green-500);
+  --border-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+  --border-success-softest: var(--colo-feedback-green-300);
 
   /* Border Warning utilities */
   --border-warning-highlight: var(--color-feedback-orange-600);
@@ -370,6 +352,51 @@
    --fill-warning-highlight: var(--color-feedback-orange-600);
    --fill-warning-default: var(--color-feedback-orange-500);
    --fill-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+
+   /* ============================================
+   * Strokes
+   * ============================================ */
+
+   /* Neutrals */
+   --stroke-neutral-highlight: var(--color-base-black);
+   --stroke-neutral-active: var(--color-neutral-900);
+   --stroke-neutral-default: var(--color-neutral-800);
+   --stroke-neutral-muted: hsl(from var(--color-neutral-800) h s l / 56%);
+
+   /* onColor / Dark */
+   --stroke-onColor-dark-highlight: var(--color-base-black);
+   --stroke-onColor-dark-default: var(--color-neutral-800);
+   --stroke-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+
+   /* onColor / Light */
+   --stroke-onColor-light-highlight: var(--color-base-white);
+   --stroke-onColor-light-default: var(--color-neutral-100);
+   --stroke-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+
+   /* Links */
+   --stroke-link-primary: var(--color-brand-blue-600);
+   --stroke-link-secondary: var(--color-base-black);
+   --stroke-link-visited: var(--color-feedback-violet-600);
+
+   /* Destructive */
+   --stroke-destructive-highlight: var(--color-feedback-red-600);
+   --stroke-destructive-default: var(--color-feedback-red-500);
+   --stroke-destructive-muted: hsl(from var(--color-feedback-red-600) h s l / 56%);
+
+   /* Information */
+   --stroke-information-highlight: var(--color-feedback-blue-600);
+   --stroke-information-default: var(--color-feedback-blue-500);
+   --stroke-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+
+   /* Success */
+   --stroke-success-highlight: var(--color-feedback-green-600);
+   --stroke-success-default: var(--color-feedback-green-500);
+   --stroke-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+
+   /* Warning */
+   --stroke-warning-highlight: var(--color-feedback-orange-600);
+   --stroke-warning-default: var(--color-feedback-orange-500);
+   --stroke-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
 
   /* ============================================
    * BACKGROUNDS
@@ -604,29 +631,28 @@
   --text-warning: var(--color-feedback-orange-300);
   --border-warning: var(--color-feedback-orange-700);
 
+    /* Link utilities (dark mode) */
+  --underline-link-primary: var(--color-brand-blue-300);
+  --underline-link-secondary: var(--color-base-white);
+  --underline-link-visited: var(--color-feedback-violet-300);
+
+  /* ============================================
+   * BORDER TOKENS
+   * ============================================ */
+
   /* Border utilities - neutral states (dark mode) */
   --border-neutral-active: var(--color-neutral-400);
   --border-neutral-hover: var(--color-neutral-500);
   --border-neutral-default: var(--color-neutral-600);
-  --border-neutral-disabled: var(--color-neutral-600);
+  --border-neutral-disabled: hsl(from var(--color-neutral-600) h s l / 40%);
   --border-neutral-softest: var(--color-neutral-700);
-  --border-neutral-inset: var(--color-base-black);
+  --border-neutral-inset: var(--color-base-white);
   --border-neutral-alpha: hsla(
     255,
     255%,
     255%,
     0.2
   ); /* White with 20% opacity */
-
-
-    /* Link utilities (dark mode) */
-  --underline-link-primary: var(--color-brand-blue-300);
-  --underline-link-secondary: var(--color-base-white);
-  --underline-link-visited: var(--color-brand-blue-400);
-
-  /* ============================================
-   * BORDER TOKENS
-   * ============================================ */
 
   /* Border destructive utilities */
   --border-destructive-highlight: var(--color-feedback-red-300);
@@ -642,9 +668,9 @@
 
   /* Border Success utilities */
   --border-success-highlight: var(--color-feedback-green-300);
-  --border-success-default: var(--color-feedback-green-300);
-  --border-success-muted: hsl(from var(--color-feedback-green-300) h s l / 56%);
-  --border-success-softest: var(--colo-feedback-green-300);
+  --border-success-default: var(--color-feedback-green-500);
+  --border-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+  --border-success-softest: var(--colo-feedback-green-700);
 
   /* Border Warning utilities */
   --border-warning-highlight: var(--color-feedback-orange-300);
@@ -700,6 +726,51 @@
    --fill-warning-highlight: var(--color-feedback-orange-300);
    --fill-warning-default: var(--color-feedback-orange-400);
    --fill-warning-muted: hsl(from var(--color-feedback-orange-400) h s l / 56%);
+
+   /* ============================================
+   * Strokes
+   * ============================================ */
+
+   /* Neutrals */
+  --stroke-neutral-highlight: var(--color-base-white);
+  --stroke-neutral-active: var(--color-neutral-100);
+  --stroke-neutral-default: var(--color-neutral-200);
+  --stroke-neutral-muted: hsl(from var(--color-neutral-200) h s l / 56%);
+
+  /* onColor / Dark */
+   --stroke-onColor-dark-highlight: var(--color-base-black);
+   --stroke-onColor-dark-default: var(--color-neutral-800);
+   --stroke-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+
+   /* onColor / Light */
+   --stroke-onColor-light-highlight: var(--color-base-white);
+   --stroke-onColor-light-default: var(--color-neutral-100);
+   --stroke-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+
+   /* Links */
+   --stroke-link-primary: var(--color-brand-blue-300);
+   --stroke-link-secondary: var(--color-base-white);
+   --stroke-link-visited: var(--color-feedback-violet-300);
+
+    /* Destructive */
+   --stroke-destructive-highlight: var(--color-feedback-red-300);
+   --stroke-destructive-default: var(--color-feedback-red-400);
+   --stroke-destructive-muted: hsl(from var(--color-feedback-red-400) h s l / 56%);
+
+   /* Information */
+   --stroke-information-highlight: var(--color-feedback-blue-300);
+   --stroke-information-default: var(--color-feedback-blue-400);
+   --stroke-information-muted: hsl(from var(--color-feedback-blue-400) h s l / 56%);
+
+   /* Success */
+   --stroke-success-highlight: var(--color-feedback-green-300);
+   --stroke-success-default: var(--color-feedback-green-400);
+   --stroke-success-muted: hsl(from var(--color-feedback-green-400) h s l / 56%);
+
+   /* Warning */
+   --stroke-warning-highlight: var(--color-feedback-orange-300);
+   --stroke-warning-default: var(--color-feedback-orange-400);
+   --stroke-warning-muted: hsl(from var(--color-feedback-orange-400) h s l / 56%);
 
    /* ============================================
    * BACKGROUNDS

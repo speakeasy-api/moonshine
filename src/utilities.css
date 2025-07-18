@@ -511,6 +511,23 @@
   border-color: var(--border-success-softest);
 }
 
+/* Warning Border utilities */
+@utility border-warning-highlight {
+  border-color: var(--border-warning-highlight);
+}
+
+@utility border-warning-default {
+  border-color: var(--border-warning-default);
+}
+
+@utility border-warning-muted {
+  border-color: var(--border-warning-muted);
+}
+
+@utility border-warning-softest {
+  border-color: var(--border-warning-softest);
+}
+
 /* Focus Border utilities */
 @utility border-focus {
   border-color: var(--border-focus);
@@ -626,6 +643,118 @@
 
 @utility fill-warning-muted {
   fill: var(--fill-warning-muted);
+}
+
+/* =============================
+*  Strokes
+*  ============================*/
+
+/* Neutrals */
+@utility stroke-neutral-highlight {
+  stroke: var(--stroke-neutral-highlight);
+}
+
+@utility stroke-neutral-active {
+  stroke: var(--stroke-neutral-active);
+}
+
+@utility stroke-neutral-default {
+  stroke: var(--stroke-neutral-default);
+}
+
+@utility stroke-neutral-muted {
+  stroke: var(--stroke-neutral-muted);
+}
+
+/* onColor / Dark */
+@utility stroke-onColor-dark-highlight {
+  stroke: var(--stroke-onColor-dark-highlight);
+}
+
+@utility stroke-onColor-dark-default {
+  stroke: var(--stroke-onColor-dark-default);
+}
+
+@utility stroke-onColor-dark-muted {
+  stroke: var(--stroke-onColor-dark-muted);
+}
+
+/* onColor / Light */
+@utility stroke-onColor-light-highlight {
+  stroke: var(--stroke-onColor-light-highlight);
+}
+
+@utility stroke-onColor-light-default {
+  stroke: var(--stroke-onColor-light-default);
+}
+
+@utility stroke-onColor-light-muted {
+  stroke: var(--stroke-onColor-light-muted);
+}
+
+/* Link stroke */
+@utility stroke-link-primary {
+  stroke: var(--stroke-link-primary);
+}
+
+@utility stroke-link-secondary {
+  stroke: var(--stroke-link-secondary);
+}
+
+@utility stroke-link-visited {
+  stroke: var(--stroke-link-visited);
+}
+
+/* Destructive stroke */
+@utility stroke-destructive-highlight {
+  stroke: var(--stroke-destructive-highlight);
+}
+
+@utility stroke-destructive-default {
+  stroke: var(--stroke-destructive-default);
+}
+
+@utility stroke-destructive-muted {
+  stroke: var(--stroke-destructive-muted);
+}
+
+/* Information stroke */
+@utility stroke-information-highlight {
+  stroke: var(--stroke-information-highlight);
+}
+
+@utility stroke-information-default {
+  stroke: var(--stroke-information-default);
+}
+
+@utility stroke-information-muted {
+  stroke: var(--stroke-information-muted);
+}
+
+/* Success stroke */
+@utility stroke-success-highlight {
+  stroke: var(--stroke-success-highlight);
+}
+
+@utility stroke-success-default {
+  stroke: var(--stroke-success-default);
+}
+
+@utility stroke-success-muted {
+  stroke: var(--stroke-success-muted);
+}
+
+/* Warninig stroke */
+@utility stroke-warning-highlight {
+  stroke: var(--stroke-warning-highlight);
+}
+
+@utility stroke-warning-default {
+  stroke: var(--stroke-warning-default);
+}
+
+@utility stroke-warning-muted {
+  stroke: var(--stroke-warning-muted);
 }
 
 /* ============================================
