@@ -40,8 +40,22 @@
   --color-neutral-700: hsl(0, 0%, 33%);
   --color-neutral-800: hsl(0, 0%, 20%);
   --color-neutral-900: hsl(0, 0%, 7%);
-  --color-neutral-900-alpha-64: hsla(0, 0%, 7%, 0.64);
-  --color-neutral-100-alpha-64: hsla(0, 0%, 98%, 0.64);
+
+  --color-neutral-100-40: hsl(from var(--color-neutral-100) h s l / 40%);
+  --color-neutral-100-56: hsl(from var(--color-neutral-100) h s l / 56%);
+  --color-neutral-100-64: hsl(from var(--color-neutral-100) h s l / 64%);
+
+  --color-neutral-200-56: hsl(from var(--color-neutral-200) h s l / 56%);
+
+  --color-neutral-400-40: hsl(from var(--color-neutral-400) h s l / 40%);
+
+  --color-neutral-600-40: hsl(from var(--color-neutral-600) h s l / 40%);
+
+  --color-neutral-800-56: hsl(from var(--color-neutral-800) h s l / 56%);
+
+  --color-neutral-900-40: hsl(from var(--color-neutral-900) h s l / 40%);
+  --color-neutral-900-56: hsl(from var(--color-neutral-900) h s l / 56%);
+  --color-neutral-900-64: hsl(from var(--color-neutral-900) h s l / 64%);
 
   /* Brand red */
   --color-brand-red-100: hsl(23, 96%, 62%);
@@ -157,6 +171,11 @@
   --color-feedback-red-800: hsl(1, 63%, 24%);
   --color-feedback-red-900: hsl(0, 62%, 17%);
 
+  --color-feedback-red-400-56: hsl(from var(--color-feedback-red-400) h s l / 56%);
+  --color-feedback-red-500-56: hsl(from var(--color-feedback-red-500) h s l / 56%);
+  --color-feedback-red-600-56: hsl(from var(--color-feedback-red-600) h s l / 56%);
+
+
   /* Orange */
   --color-feedback-orange-100: hsl(29, 100%, 95%);
   --color-feedback-orange-200: hsl(30, 100%, 85%);
@@ -167,6 +186,9 @@
   --color-feedback-orange-700: hsl(21, 64%, 43%);
   --color-feedback-orange-800: hsl(19, 66%, 33%);
   --color-feedback-orange-900: hsl(18, 69%, 24%);
+
+  --color-feedback-orange-400-56: hsl(from var(--color-feedback-orange-400) h s l / 56%);
+  --color-feedback-orange-500-56: hsl(from var(--color-feedback-orange-500) h s l / 56%);
 
   /* Green */
   --color-feedback-green-100: hsl(102, 35%, 93%);
@@ -179,6 +201,9 @@
   --color-feedback-green-800: hsl(104, 24%, 20%);
   --color-feedback-green-900: hsl(105, 24%, 13%);
 
+  --color-feedback-green-400-56: hsl(from var(--color-feedback-green-400) h s l / 56%);
+  --color-feedback-green-500-56: hsl(from var(--color-feedback-green-500) h s l / 56%);
+
   /* Blue */
   --color-feedback-blue-100: hsl(212, 100%, 95%);
   --color-feedback-blue-200: hsl(214, 100%, 86%);
@@ -189,6 +214,9 @@
   --color-feedback-blue-700: hsl(215, 71%, 32%);
   --color-feedback-blue-800: hsl(217, 73%, 23%);
   --color-feedback-blue-900: hsl(218, 73%, 15%);
+
+  --color-feedback-blue-400-56: hsl(from var(--color-feedback-blue-400) h s l / 56%);
+  --color-feedback-blue-500-56: hsl(from var(--color-feedback-blue-500) h s l / 56%);
 
   /* Violet */
   --color-feedback-violet-300: hsl(265, 77%, 65%);
@@ -217,17 +245,17 @@
 
   --text-highlight: var(--color-neutral-900);
   --text-default: var(--color-neutral-700);
-  --text-muted: hsl(from var(--color-neutral-900) h s l / 64%);
-  --text-placeholder: hsl(from var(--color-neutral-900) h s l / 56%);
-  --text-disabled: hsl(from var(--color-neutral-900) h s l / 40%);
+  --text-muted: var(--color-neutral-900-64);
+  --text-placeholder: var(--color-neutral-900-56);
+  --text-disabled: var(--color-neutral-900-40);
 
   --text-dark-light-highlight: var(--color-base-black);
   --text-dark-light-default: var(--color-neutral-900);
-  --text-dark-light-muted: hsl(from var(--color-neutral-900) h s l / 64%);
+  --text-dark-light-muted: var(--color-neutral-900-64);
 
   --text-light-dark-highlight: var(--color-base-white);
   --text-light-dark-default: var(--color-neutral-100);
-  --text-light-dark-muted: hsl(from var(--color-neutral-100) h s l / 64%);
+  --text-light-dark-muted: var(--color-neutral-100-64);
 
   --text-link-primary: var(--color-brand-blue-600);
   --text-link-secondary: var(--color-base-black);
@@ -269,7 +297,7 @@
   --border-neutral-active: var(--color-neutral-600);
   --border-neutral-hover: var(--color-neutral-500);
   --border-neutral-default: var(--color-neutral-400);
-  --border-neutral-disabled: hsl(from var(--color-neutral-400) h s l / 40%);
+  --border-neutral-disabled: var(--color-neutral-400-40);
   --border-neutral-softest: var(--color-neutral-300);
   --border-neutral-inset: var(--color-base-black);
   --border-neutral-alpha: hsla(
@@ -283,26 +311,26 @@
   /* Border Destructive utilities */
   --border-destructive-highlight: var(--color-feedback-red-600);
   --border-destructive-default: var(--color-feedback-red-500);
-  --border-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
-  --border-destructive-softest: var(--colo-feedback-red-300);
+  --border-destructive-muted: var(--color-feedback-red-500-56);
+  --border-destructive-softest: var(--color-feedback-red-300);
 
   /* Border Information utilities */
   --border-information-highlight: var(--color-feedback-blue-600);
   --border-information-default: var(--color-feedback-blue-500);
-  --border-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
-  --border-information-softest: var(--colo-feedback-blue-300);
+  --border-information-muted: var(--color-feedback-blue-500-56);
+  --border-information-softest: var(--color-feedback-blue-300);
 
   /* Border Success utilities */
   --border-success-highlight: var(--color-feedback-green-600);
   --border-success-default: var(--color-feedback-green-500);
-  --border-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
-  --border-success-softest: var(--colo-feedback-green-300);
+  --border-success-muted: var(--color-feedback-green-500-56);
+  --border-success-softest: var(--color-feedback-green-300);
 
   /* Border Warning utilities */
   --border-warning-highlight: var(--color-feedback-orange-600);
-  --border-warning-default: var(--color-feedback-orange-600);
-  --border-warning-muted: hsl(from var(--color-feedback-orange-600) h s l / 56%);
-  --border-warning-softest: var(--colo-feedback-orange-600);
+  --border-warning-default: var(--color-feedback-orange-500);
+  --border-warning-muted: var(--color-feedback-orange-500-56);
+  --border-warning-softest: var(--color-feedback-orange-300);
 
   /* Border Focus utilities */
   --border-focus: var(--color-brand-blue-600);
@@ -316,17 +344,17 @@
    --fill-neutral-highlight: var(--color-base-black);
    --fill-neutral-active: var(--color-neutral-900);
    --fill-neutral-default: var(--color-neutral-800);
-   --fill-neutral-muted: hsl(from var(--color-neutral-800) h s l / 56%);
+   --fill-neutral-muted: var(--color-neutral-800-56);
 
    /* onColor / Dark */
    --fill-onColor-dark-highlight: var(--color-base-black);
    --fill-onColor-dark-default: var(--color-neutral-800);
-   --fill-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --fill-onColor-dark-muted: var(--color-neutral-900-56);
 
    /* onColor / Light */
    --fill-onColor-light-highlight: var(--color-base-white);
    --fill-onColor-light-default: var(--color-neutral-100);
-   --fill-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --fill-onColor-light-muted: var(--color-neutral-100-56);
 
    /* Links */
    --fill-link-primary: var(--color-brand-blue-600);
@@ -336,22 +364,22 @@
    /* Destructive */
    --fill-destructive-highlight: var(--color-feedback-red-600);
    --fill-destructive-default: var(--color-feedback-red-500);
-   --fill-destructive-muted: hsl(from var(--color-feedback-red-600) h s l / 56%);
+   --fill-destructive-muted: var(--color-feedback-red-600-56);
 
    /* Information */
    --fill-information-highlight: var(--color-feedback-blue-600);
    --fill-information-default: var(--color-feedback-blue-500);
-   --fill-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --fill-information-muted: var(--color-feedback-blue-500-56);
 
    /* Success */
    --fill-success-highlight: var(--color-feedback-green-600);
    --fill-success-default: var(--color-feedback-green-500);
-   --fill-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --fill-success-muted: var(--color-feedback-green-500-56);
 
    /* Warning */
    --fill-warning-highlight: var(--color-feedback-orange-600);
    --fill-warning-default: var(--color-feedback-orange-500);
-   --fill-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --fill-warning-muted: var(--color-feedback-orange-500-56);
 
    /* ============================================
    * Strokes
@@ -361,17 +389,17 @@
    --stroke-neutral-highlight: var(--color-base-black);
    --stroke-neutral-active: var(--color-neutral-900);
    --stroke-neutral-default: var(--color-neutral-800);
-   --stroke-neutral-muted: hsl(from var(--color-neutral-800) h s l / 56%);
+   --stroke-neutral-muted: var(--color-neutral-800-56);
 
    /* onColor / Dark */
    --stroke-onColor-dark-highlight: var(--color-base-black);
    --stroke-onColor-dark-default: var(--color-neutral-800);
-   --stroke-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --stroke-onColor-dark-muted: var(--color-neutral-900-56);
 
    /* onColor / Light */
    --stroke-onColor-light-highlight: var(--color-base-white);
    --stroke-onColor-light-default: var(--color-neutral-100);
-   --stroke-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --stroke-onColor-light-muted: var(--color-neutral-100-56);
 
    /* Links */
    --stroke-link-primary: var(--color-brand-blue-600);
@@ -381,22 +409,22 @@
    /* Destructive */
    --stroke-destructive-highlight: var(--color-feedback-red-600);
    --stroke-destructive-default: var(--color-feedback-red-500);
-   --stroke-destructive-muted: hsl(from var(--color-feedback-red-600) h s l / 56%);
+   --stroke-destructive-muted: var(--color-feedback-red-600-56);
 
    /* Information */
    --stroke-information-highlight: var(--color-feedback-blue-600);
    --stroke-information-default: var(--color-feedback-blue-500);
-   --stroke-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --stroke-information-muted: var(--color-feedback-blue-500-56);
 
    /* Success */
    --stroke-success-highlight: var(--color-feedback-green-600);
    --stroke-success-default: var(--color-feedback-green-500);
-   --stroke-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --stroke-success-muted: var(--color-feedback-green-500-56);
 
    /* Warning */
    --stroke-warning-highlight: var(--color-feedback-orange-600);
    --stroke-warning-default: var(--color-feedback-orange-500);
-   --stroke-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --stroke-warning-muted: var(--color-feedback-orange-500-56);
 
   /* ============================================
    * BACKGROUNDS
@@ -409,11 +437,11 @@
    --bg-highlight: var(--color-neutral-300);
    --bg-active: var(--color-neutral-200);
    --bg-default: var(--color-neutral-100);
-   --bg-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --bg-muted: var(--color-neutral-100-56);
    --bg-inset: var(--color-base-white);
 
    /* Light background in dark mode */
-   --bg-light-dark-primary: var(--base-white);
+   --bg-light-dark-primary: var(--color-base-white);
    --bg-light-dark-secondary: var(--color-neutral-100);
    --bg-light-dark-tertiary: var(--color-neutral-200);
 
@@ -425,25 +453,25 @@
    /* Destructive */
    --bg-destructive-highlight: var(--color-feedback-red-600);
    --bg-destructive-default: var(--color-feedback-red-500);
-   --bg-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+   --bg-destructive-muted: var(--color-feedback-red-500-56);
    --bg-destructive-softest: var(--color-feedback-red-100);
 
    /* Information */
    --bg-information-highlight: var(--color-feedback-blue-600);
    --bg-information-default: var(--color-feedback-blue-500);
-   --bg-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --bg-information-muted: var(--color-feedback-blue-500-56);
    --bg-information-softest: var(--color-feedback-blue-100);
 
    /* Success */
    --bg-success-highlight: var(--color-feedback-green-600);
    --bg-success-default: var(--color-feedback-green-500);
-   --bg-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --bg-success-muted: var(--color-feedback-green-500-56);
    --bg-success-softest: var(--color-feedback-green-100);
 
    /* Warning */
    --bg-warning-highlight: var(--color-feedback-orange-600);
    --bg-warning-default: var(--color-feedback-orange-500);
-   --bg-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --bg-warning-muted: var(--color-feedback-orange-500-56);
    --bg-warning-softest: var(--color-feedback-orange-100);
 
 
@@ -474,7 +502,7 @@
   --secondary: var(--color-neutral-100);
   --secondary-foreground: var(--color-neutral-900);
   --muted: var(--color-neutral-200);
-  --muted-foreground: var(--color-neutral-900-alpha-64);
+  --muted-foreground: var(--color-neutral-900-64);
   --accent: var(--color-neutral-200);
   --accent-foreground: var(--color-neutral-900);
   --destructive: var(
@@ -603,9 +631,9 @@
 
   --text-highlight: var(--color-neutral-100);
   --text-default: var(--color-neutral-300);
-  --text-muted: hsl(from var(--color-neutral-100) h s l / 64%);
-  --text-placeholder: hsl(from var(--color-neutral-100) h s l / 56%);
-  --text-disabled: hsl(from var(--color-neutral-100) h s l / 40%);
+  --text-muted: var(--color-neutral-100-64);
+  --text-placeholder: var(--color-neutral-100-56);
+  --text-disabled: var(--color-neutral-100-40);
 
   --text-link-primary: var(--color-brand-blue-300);
   --text-link-secondary: var(--color-base-white);
@@ -644,7 +672,7 @@
   --border-neutral-active: var(--color-neutral-400);
   --border-neutral-hover: var(--color-neutral-500);
   --border-neutral-default: var(--color-neutral-600);
-  --border-neutral-disabled: hsl(from var(--color-neutral-600) h s l / 40%);
+  --border-neutral-disabled: var(--color-neutral-600-40);
   --border-neutral-softest: var(--color-neutral-700);
   --border-neutral-inset: var(--color-base-white);
   --border-neutral-alpha: hsla(
@@ -657,26 +685,26 @@
   /* Border destructive utilities */
   --border-destructive-highlight: var(--color-feedback-red-300);
   --border-destructive-default: var(--color-feedback-red-500);
-  --border-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+  --border-destructive-muted: var(--color-feedback-red-500-56);
   --border-destructive-softest: var(--color-feedback-red-700);
 
   /* Border Information utilities */
   --border-information-highlight: var(--color-feedback-blue-300);
   --border-information-default: var(--color-feedback-blue-500);
-  --border-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
-  --border-information-softest: var(--colo-feedback-blue-700);
+  --border-information-muted: var(--color-feedback-blue-500-56);
+  --border-information-softest: var(--color-feedback-blue-700);
 
   /* Border Success utilities */
   --border-success-highlight: var(--color-feedback-green-300);
   --border-success-default: var(--color-feedback-green-500);
-  --border-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
-  --border-success-softest: var(--colo-feedback-green-700);
+  --border-success-muted: var(--color-feedback-green-500-56);
+  --border-success-softest: var(--color-feedback-green-700);
 
   /* Border Warning utilities */
   --border-warning-highlight: var(--color-feedback-orange-300);
-  --border-warning-default: var(--color-feedback-orange-300);
-  --border-warning-muted: hsl(from var(--color-feedback-orange-300) h s l / 56%);
-  --border-warning-softest: var(--colo-feedback-orange-300);
+  --border-warning-default: var(--color-feedback-orange-500);
+  --border-warning-muted: var(--color-feedback-orange-500-56);
+  --border-warning-softest: var(--color-feedback-orange-700);
 
     /* Border Focus utilities */
   --border-focus: var(--color-brand-blue-300);
@@ -690,17 +718,17 @@
   --fill-neutral-highlight: var(--color-base-white);
   --fill-neutral-active: var(--color-neutral-100);
   --fill-neutral-default: var(--color-neutral-200);
-  --fill-neutral-muted: hsl(from var(--color-neutral-200) h s l / 56%);
+  --fill-neutral-muted: var(--color-neutral-200-56);
 
   /* onColor / Dark */
    --fill-onColor-dark-highlight: var(--color-base-black);
    --fill-onColor-dark-default: var(--color-neutral-800);
-   --fill-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --fill-onColor-dark-muted: var(--color-neutral-900-56);
 
    /* onColor / Light */
    --fill-onColor-light-highlight: var(--color-base-white);
    --fill-onColor-light-default: var(--color-neutral-100);
-   --fill-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --fill-onColor-light-muted: var(--color-neutral-100-56);
 
    /* Links */
    --fill-link-primary: var(--color-brand-blue-300);
@@ -710,22 +738,22 @@
     /* Destructive */
    --fill-destructive-highlight: var(--color-feedback-red-300);
    --fill-destructive-default: var(--color-feedback-red-400);
-   --fill-destructive-muted: hsl(from var(--color-feedback-red-400) h s l / 56%);
+   --fill-destructive-muted: var(--color-feedback-red-400-56);
 
    /* Information */
    --fill-information-highlight: var(--color-feedback-blue-300);
    --fill-information-default: var(--color-feedback-blue-400);
-   --fill-information-muted: hsl(from var(--color-feedback-blue-400) h s l / 56%);
+   --fill-information-muted: var(--color-feedback-blue-400-56);
 
    /* Success */
    --fill-success-highlight: var(--color-feedback-green-300);
    --fill-success-default: var(--color-feedback-green-400);
-   --fill-success-muted: hsl(from var(--color-feedback-green-400) h s l / 56%);
+   --fill-success-muted: var(--color-feedback-green-400-56);
 
    /* Warning */
    --fill-warning-highlight: var(--color-feedback-orange-300);
    --fill-warning-default: var(--color-feedback-orange-400);
-   --fill-warning-muted: hsl(from var(--color-feedback-orange-400) h s l / 56%);
+   --fill-warning-muted: var(--color-feedback-orange-400-56);
 
    /* ============================================
    * Strokes
@@ -735,17 +763,17 @@
   --stroke-neutral-highlight: var(--color-base-white);
   --stroke-neutral-active: var(--color-neutral-100);
   --stroke-neutral-default: var(--color-neutral-200);
-  --stroke-neutral-muted: hsl(from var(--color-neutral-200) h s l / 56%);
+  --stroke-neutral-muted: var(--color-neutral-200-56);
 
   /* onColor / Dark */
    --stroke-onColor-dark-highlight: var(--color-base-black);
    --stroke-onColor-dark-default: var(--color-neutral-800);
-   --stroke-onColor-dark-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --stroke-onColor-dark-muted: var(--color-neutral-900-56);
 
    /* onColor / Light */
    --stroke-onColor-light-highlight: var(--color-base-white);
    --stroke-onColor-light-default: var(--color-neutral-100);
-   --stroke-onColor-light-muted: hsl(from var(--color-neutral-100) h s l / 56%);
+   --stroke-onColor-light-muted: var(--color-neutral-100-56);
 
    /* Links */
    --stroke-link-primary: var(--color-brand-blue-300);
@@ -755,22 +783,22 @@
     /* Destructive */
    --stroke-destructive-highlight: var(--color-feedback-red-300);
    --stroke-destructive-default: var(--color-feedback-red-400);
-   --stroke-destructive-muted: hsl(from var(--color-feedback-red-400) h s l / 56%);
+   --stroke-destructive-muted: var(--color-feedback-red-400-56);
 
    /* Information */
    --stroke-information-highlight: var(--color-feedback-blue-300);
    --stroke-information-default: var(--color-feedback-blue-400);
-   --stroke-information-muted: hsl(from var(--color-feedback-blue-400) h s l / 56%);
+   --stroke-information-muted: var(--color-feedback-blue-400-56);
 
    /* Success */
    --stroke-success-highlight: var(--color-feedback-green-300);
    --stroke-success-default: var(--color-feedback-green-400);
-   --stroke-success-muted: hsl(from var(--color-feedback-green-400) h s l / 56%);
+   --stroke-success-muted: var(--color-feedback-green-400-56);
 
    /* Warning */
    --stroke-warning-highlight: var(--color-feedback-orange-300);
    --stroke-warning-default: var(--color-feedback-orange-400);
-   --stroke-warning-muted: hsl(from var(--color-feedback-orange-400) h s l / 56%);
+   --stroke-warning-muted: var(--color-feedback-orange-400-56);
 
    /* ============================================
    * BACKGROUNDS
@@ -783,7 +811,7 @@
    --bg-highlight: var(--color-neutral-700);
    --bg-active: var(--color-neutral-800);
    --bg-default: var(--color-neutral-900);
-   --bg-muted: hsl(from var(--color-neutral-900) h s l / 56%);
+   --bg-muted: var(--color-neutral-900-56);
    --bg-inset: var(--color-base-black);
 
    /* Light background in dark mode */
@@ -793,25 +821,25 @@
    /* Destructive */
    --bg-destructive-highlight: var(--color-feedback-red-300);
    --bg-destructive-default: var(--color-feedback-red-500);
-   --bg-destructive-muted: hsl(from var(--color-feedback-red-500) h s l / 56%);
+   --bg-destructive-muted: var(--color-feedback-red-500-56);
    --bg-destructive-softest: var(--color-feedback-red-900);
 
    /* Information */
    --bg-information-highlight: var(--color-feedback-blue-300);
    --bg-information-default: var(--color-feedback-blue-500);
-   --bg-information-muted: hsl(from var(--color-feedback-blue-500) h s l / 56%);
+   --bg-information-muted: var(--color-feedback-blue-500-56);
    --bg-information-softest: var(--color-feedback-blue-900);
 
    /* Success */
    --bg-success-highlight: var(--color-feedback-green-300);
    --bg-success-default: var(--color-feedback-green-500);
-   --bg-success-muted: hsl(from var(--color-feedback-green-500) h s l / 56%);
+   --bg-success-muted: var(--color-feedback-green-500-56);
    --bg-success-softest: var(--color-feedback-green-900);
 
    /* Warning */
    --bg-warning-highlight: var(--color-feedback-orange-300);
    --bg-warning-default: var(--color-feedback-orange-500);
-   --bg-warning-muted: hsl(from var(--color-feedback-orange-500) h s l / 56%);
+   --bg-warning-muted: var(--color-feedback-orange-500-56);
    --bg-warning-softest: var(--color-feedback-orange-900);
 
 
@@ -861,7 +889,7 @@
   --secondary: var(--color-neutral-900);
   --secondary-foreground: var(--color-neutral-300);
   --muted: var(--color-neutral-900);
-  --muted-foreground: var(--color-neutral-100-alpha-64);
+  --muted-foreground: var(--color-neutral-100-64);
   --accent: var(--color-neutral-800);
   --accent-foreground: var(--color-base-white);
   --destructive: var(
