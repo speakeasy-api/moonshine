@@ -237,6 +237,7 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
+  color: var(--text-default);
 }
 @utility text-body-xs {
   font-size: 0.75rem;
@@ -270,6 +271,32 @@
   line-height: 1.7;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype-mono);
+  color: var(--text-default);
+}
+
+/* Buttons */
+@utility text-button-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+@utility text-button-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+@utility text-button-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
   color: var(--text-default);
 }
 
