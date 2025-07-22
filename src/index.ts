@@ -15,6 +15,7 @@ export { Heading, type HeadingProps } from '@/components/Heading'
 export { Text, type TextProps } from '@/components/Text'
 export { Score, type ScoreValue } from '@/components/Score'
 export { Logo, type LogoProps } from '@/components/Logo'
+export { AnimatedLogo } from '@/components/Logo/Animated'
 export { Container, type ContainerProps } from '@/components/Container'
 export { Combobox, type ComboboxProps } from '@/components/Combobox'
 export {
