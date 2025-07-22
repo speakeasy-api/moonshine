@@ -57,7 +57,7 @@ const VariantPreview = ({
   title: string
   children: React.ReactNode
 }) => (
-  <div className="flex flex-col gap-4">
+  <div className="flex min-h-20 flex-col gap-4">
     <h3 className="text-muted-foreground border-b pb-2 text-sm font-medium">
       {title}
     </h3>
@@ -67,48 +67,52 @@ const VariantPreview = ({
 
 export const AllVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-4 p-6">
-      <h2 className="my-4 text-xl font-semibold">Size variants</h2>
-      <VariantPreview title="Default (md)">
-        <AnimatedLogo />
-      </VariantPreview>
+    <div className="flex max-w-2xl flex-row justify-between p-6">
+      <div className="flex flex-col gap-4">
+        <h2 className="my-4 text-xl font-semibold">Size variants</h2>
+        <VariantPreview title="Default (md)">
+          <AnimatedLogo />
+        </VariantPreview>
 
-      <VariantPreview title="Small (sm)">
-        <AnimatedLogo size="sm" />
-      </VariantPreview>
+        <VariantPreview title="Small (sm)">
+          <AnimatedLogo size="sm" />
+        </VariantPreview>
 
-      <VariantPreview title="Medium (md)">
-        <AnimatedLogo size="md" />
-      </VariantPreview>
+        <VariantPreview title="Medium (md)">
+          <AnimatedLogo size="md" />
+        </VariantPreview>
 
-      <VariantPreview title="Large (lg)">
-        <AnimatedLogo size="lg" />
-      </VariantPreview>
+        <VariantPreview title="Large (lg)">
+          <AnimatedLogo size="lg" />
+        </VariantPreview>
 
-      <VariantPreview title="Extra Large (xl)">
-        <AnimatedLogo size="xl" />
-      </VariantPreview>
+        <VariantPreview title="Extra Large (xl)">
+          <AnimatedLogo size="xl" />
+        </VariantPreview>
+      </div>
 
-      <h2 className="my-4 text-xl font-semibold">Wordmark variants</h2>
-      <VariantPreview title="Default (md)">
-        <AnimatedLogo size="md" variant="icon-with-wordmark" />
-      </VariantPreview>
+      <div className="flex flex-col gap-4">
+        <h2 className="my-4 text-xl font-semibold">Wordmark variants</h2>
+        <VariantPreview title="Default (md)">
+          <AnimatedLogo size="md" variant="icon-with-wordmark" />
+        </VariantPreview>
 
-      <VariantPreview title="Small (sm)">
-        <AnimatedLogo size="sm" variant="icon-with-wordmark" />
-      </VariantPreview>
+        <VariantPreview title="Small (sm)">
+          <AnimatedLogo size="sm" variant="icon-with-wordmark" />
+        </VariantPreview>
 
-      <VariantPreview title="Medium (md)">
-        <AnimatedLogo size="md" variant="icon-with-wordmark" />
-      </VariantPreview>
+        <VariantPreview title="Medium (md)">
+          <AnimatedLogo size="md" variant="icon-with-wordmark" />
+        </VariantPreview>
 
-      <VariantPreview title="Large (lg)">
-        <AnimatedLogo size="lg" variant="icon-with-wordmark" />
-      </VariantPreview>
+        <VariantPreview title="Large (lg)">
+          <AnimatedLogo size="lg" variant="icon-with-wordmark" />
+        </VariantPreview>
 
-      <VariantPreview title="Extra Large (xl)">
-        <AnimatedLogo size="xl" variant="icon-with-wordmark" />
-      </VariantPreview>
+        <VariantPreview title="Extra Large (xl)">
+          <AnimatedLogo size="xl" variant="icon-with-wordmark" />
+        </VariantPreview>
+      </div>
     </div>
   ),
 }
