@@ -5,13 +5,21 @@ import remarkGfm from 'remark-gfm'
 
 export interface AIChatMessageTextPartProps extends BasePartProps {
   text: string
+  isLoading?: boolean
 }
 
 // The line-heights here have been left as the prose defaults for now, ideally they should be adjusted to match the design system
 export function AIChatMessageTextPart({
   text,
   className,
+  isLoading = false,
 }: AIChatMessageTextPartProps) {
+  // Don't render anything when loading with no text content
+  // This just shows the avatar, which is the main goal
+  if (isLoading && !text) {
+    return null
+  }
+
   return (
     <div
       className={cn(

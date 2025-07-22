@@ -19,6 +19,7 @@ export interface AIChatMessageProps {
   message: ChatMessage
   className?: string
   components?: Partial<AIChatMessageComponents>
+  isLoading?: boolean
 }
 
 interface AvatarComponents extends BaseComponents {
@@ -79,6 +80,7 @@ export function AIChatMessage({
   message,
   className,
   components,
+  isLoading = false,
 }: AIChatMessageProps) {
   return (
     <li role="listitem" className={cn('px-4 py-3', className)}>
@@ -92,42 +94,57 @@ export function AIChatMessage({
           )}
         </div>
         <div className="flex flex-1 flex-col gap-4">
-          {message.parts.map((part, index) => {
-            switch (part.type) {
-              case 'text':
-                return <AIChatMessageTextPart key={index} text={part.text} />
-              case 'reasoning':
-                return (
-                  <AIChatMessageReasoningPart
-                    key={index}
-                    reasoning={part.reasoning}
-                  />
-                )
-              case 'tool-invocation':
-                return (
-                  <AIChatMessageToolPart
-                    key={index}
-                    toolInvocation={part.toolInvocation}
-                    components={components?.toolCall}
-                  />
-                )
-              case 'file':
-                return (
-                  <AIChatMessageFilePart
-                    key={index}
-                    mimeType={part.mimeType}
-                    data={part.data}
-                    fileName={part.fileName}
-                  />
-                )
-              case 'source':
-                return (
-                  <AIChatMessageSourcePart key={index} source={part.source} />
-                )
-              default:
-                return null
-            }
-          })}
+          {message.parts.length > 0
+            ? message.parts.map((part, index) => {
+                switch (part.type) {
+                  case 'text':
+                    return (
+                      <AIChatMessageTextPart
+                        key={index}
+                        text={part.text}
+                        isLoading={isLoading}
+                      />
+                    )
+                  case 'reasoning':
+                    return (
+                      <AIChatMessageReasoningPart
+                        key={index}
+                        reasoning={part.reasoning}
+                      />
+                    )
+                  case 'tool-invocation':
+                    return (
+                      <AIChatMessageToolPart
+                        key={index}
+                        toolInvocation={part.toolInvocation}
+                        components={components?.toolCall}
+                      />
+                    )
+                  case 'file':
+                    return (
+                      <AIChatMessageFilePart
+                        key={index}
+                        mimeType={part.mimeType}
+                        data={part.data}
+                        fileName={part.fileName}
+                      />
+                    )
+                  case 'source':
+                    return (
+                      <AIChatMessageSourcePart
+                        key={index}
+                        source={part.source}
+                      />
+                    )
+                  default:
+                    return null
+                }
+              })
+            : // Show loading state for empty assistant messages
+              isLoading &&
+              message.role === 'assistant' && (
+                <AIChatMessageTextPart text="" isLoading={true} />
+              )}
         </div>
       </div>
     </li>

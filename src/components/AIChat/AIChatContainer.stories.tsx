@@ -10,9 +10,6 @@ const meta: Meta<typeof AIChatContainer> = {
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    backgrounds: {
-      default: 'dark',
-    },
   },
   decorators: [
     (Story) => (
@@ -248,6 +245,96 @@ export const Loading: Story = {
     isLoading: true,
     onSendMessage: (message) => console.log('Sending message:', message),
   },
+}
+
+// Demonstrates the immediate avatar showing with loading state
+export const ImmediateLoading: Story = {
+  args: {
+    messages: [
+      {
+        id: '1',
+        role: 'user',
+        parts: [{ type: 'text', text: 'Hello, can you help me?' }],
+      },
+      {
+        id: '2',
+        role: 'assistant',
+        parts: [], // Empty parts - will show loading indicator
+      },
+    ],
+    isLoading: true,
+    onSendMessage: (message) => console.log('Sending message:', message),
+  },
+}
+
+// Interactive demo that shows the loading behavior in action
+const LoadingSimulationComponent = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: '1',
+      role: 'user',
+      parts: [{ type: 'text', text: 'Can you explain how React hooks work?' }],
+    },
+  ])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const simulateAIResponse = async () => {
+    setIsLoading(true)
+    
+    // Step 1: Add empty assistant message immediately (shows avatar + loading dots)
+    const assistantMessage: ChatMessage = {
+      id: Date.now().toString(),
+      role: 'assistant',
+      parts: [], // Empty parts
+    }
+    setMessages((prev) => [...prev, assistantMessage])
+    
+    // Step 2: After a short delay, start "streaming" content
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    
+    // Step 3: Add content to the assistant message
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === assistantMessage.id
+          ? {
+              ...msg,
+              parts: [
+                {
+                  type: 'text',
+                  text: 'React hooks are functions that let you use state and lifecycle features in functional components...',
+                },
+              ],
+            }
+          : msg
+      )
+    )
+    
+    setIsLoading(false)
+  }
+
+  const handleSendMessage = (message: string) => {
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      role: 'user',
+      parts: [{ type: 'text', text: message }],
+    }
+    setMessages((prev) => [...prev, userMessage])
+    
+    // Simulate the response after a brief moment
+    setTimeout(simulateAIResponse, 100)
+  }
+
+  return (
+    <AIChatContainer
+      messages={messages}
+      isLoading={isLoading}
+      onSendMessage={handleSendMessage}
+    />
+  )
+}
+
+export const LoadingSimulation: Story = {
+  render: () => <LoadingSimulationComponent />,
 }
 
 export const Customized: Story = {

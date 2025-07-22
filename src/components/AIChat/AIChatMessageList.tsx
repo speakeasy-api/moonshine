@@ -12,7 +12,7 @@ export function AIChatMessageList({
   components,
   className,
 }: AIChatMessageListProps) {
-  const { messages } = useAIChat()
+  const { messages, isLoading } = useAIChat()
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -21,11 +21,16 @@ export function AIChatMessageList({
 
   return (
     <ul role="log" className={cn('h-full overflow-y-auto', className)}>
-      {messages.map((message) => (
+      {messages.map((message, index) => (
         <AIChatMessage
           key={message.id}
           message={message}
           components={components}
+          isLoading={
+            isLoading &&
+            index === messages.length - 1 &&
+            message.role === 'assistant'
+          }
         />
       ))}
       <div ref={messagesEndRef} />
