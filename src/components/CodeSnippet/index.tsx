@@ -185,6 +185,7 @@ export function CodeSnippet({
           >
             <button
               role="button"
+              aria-label="copy"
               className="relative ml-2 border-none bg-transparent outline-none"
               onClick={handleCopy}
             >
