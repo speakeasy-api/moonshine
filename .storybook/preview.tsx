@@ -10,11 +10,7 @@ import { MoonshineConfigProvider } from '../src/context/ConfigContext'
 
 const moonshineConfigProviderDecorator: Decorator = (story, context) => {
   return (
-    <MoonshineConfigProvider
-      themeElement={document.documentElement}
-      theme={context.globals.theme}
-      setTheme={() => {}}
-    >
+    <MoonshineConfigProvider theme={context.globals.theme} setTheme={() => {}}>
       {story()}
     </MoonshineConfigProvider>
   )
