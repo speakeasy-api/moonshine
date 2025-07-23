@@ -303,11 +303,11 @@
 /* Text colors */
 
 /* Body */
-@utility text-hightlight {
+@utility text-highlight {
   color: var(--text-highlight);
 }
 
-@utility text-text-default {
+@utility text-default {
   color: var(--text-default);
 }
 

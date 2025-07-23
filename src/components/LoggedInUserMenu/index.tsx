@@ -34,7 +34,10 @@ const Root: React.FC<LoggedInUserProps> = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer outline-none">
+      <DropdownMenuTrigger
+        className="cursor-pointer outline-none"
+        aria-label="open menu"
+      >
         <UserAvatar name={name} imageUrl={imageUrl} size={size} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-2 max-w-64 p-0">

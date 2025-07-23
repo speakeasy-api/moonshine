@@ -176,7 +176,7 @@ export const Interactive: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const codeSnippet = canvas.getByRole('button')
+    const codeSnippet = await canvas.findByRole('button', { name: /copy/i })
     await userEvent.click(codeSnippet)
     expect(navigator.clipboard.readText()).resolves.toBe(
       'console.log("Hello, world!")'

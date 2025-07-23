@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/react'
+import type { Preview, Decorator } from '@storybook/react'
 import '../src/global.css'
 import './fonts.css'
 import React from 'react'
@@ -8,16 +8,15 @@ import { ThemedDocsContainer } from './themedDocsContainer'
 
 import { MoonshineConfigProvider } from '../src/context/ConfigContext'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const moonshineConfigProviderDecorator = (story: any) => {
+const moonshineConfigProviderDecorator: Decorator = (story, context) => {
   return (
-    <MoonshineConfigProvider themeElement={document.documentElement}>
+    <MoonshineConfigProvider theme={context.globals.theme} setTheme={() => {}}>
       {story()}
     </MoonshineConfigProvider>
   )
 }
 
-export const decorators = [
+export const decorators: Decorator[] = [
   withThemeByClassName({
     themes: { light: 'light', dark: 'dark' },
     defaultTheme: 'light',

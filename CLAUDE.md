@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:53:27.862Z
+This section is auto-generated from the CSS files. Last updated: 2025-07-23T14:50:22.686Z
 
 ### Typography Utilities
 
@@ -427,6 +427,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:5
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
+  color: var(--text-default);
 }
 ```
 
@@ -482,18 +483,57 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:5
 }
 ```
 
-#### `text-hightlight`
+#### `text-button-md`
 
 ```css
-.text-hightlight {
+.text-button-md {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-button-sm`
+
+```css
+.text-button-sm {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-button-xs`
+
+```css
+.text-button-xs {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.0025em;
+  font-family: var(--font-diatype);
+  color: var(--text-default);
+}
+```
+
+#### `text-highlight`
+
+```css
+.text-highlight {
   color: var(--text-highlight);
 }
 ```
 
-#### `text-text-default`
+#### `text-default`
 
 ```css
-.text-text-default {
+.text-default {
   color: var(--text-default);
 }
 ```
@@ -1106,6 +1146,38 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:5
 }
 ```
 
+#### `border-warning-highlight`
+
+```css
+.border-warning-highlight {
+  border-color: var(--border-warning-highlight);
+}
+```
+
+#### `border-warning-default`
+
+```css
+.border-warning-default {
+  border-color: var(--border-warning-default);
+}
+```
+
+#### `border-warning-muted`
+
+```css
+.border-warning-muted {
+  border-color: var(--border-warning-muted);
+}
+```
+
+#### `border-warning-softest`
+
+```css
+.border-warning-softest {
+  border-color: var(--border-warning-softest);
+}
+```
+
 #### `border-focus`
 
 ```css
@@ -1352,6 +1424,206 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-16T17:5
 ```css
 .fill-warning-muted {
   fill: var(--fill-warning-muted);
+}
+```
+
+#### `stroke-neutral-highlight`
+
+```css
+.stroke-neutral-highlight {
+  stroke: var(--stroke-neutral-highlight);
+}
+```
+
+#### `stroke-neutral-active`
+
+```css
+.stroke-neutral-active {
+  stroke: var(--stroke-neutral-active);
+}
+```
+
+#### `stroke-neutral-default`
+
+```css
+.stroke-neutral-default {
+  stroke: var(--stroke-neutral-default);
+}
+```
+
+#### `stroke-neutral-muted`
+
+```css
+.stroke-neutral-muted {
+  stroke: var(--stroke-neutral-muted);
+}
+```
+
+#### `stroke-onColor-dark-highlight`
+
+```css
+.stroke-onColor-dark-highlight {
+  stroke: var(--stroke-onColor-dark-highlight);
+}
+```
+
+#### `stroke-onColor-dark-default`
+
+```css
+.stroke-onColor-dark-default {
+  stroke: var(--stroke-onColor-dark-default);
+}
+```
+
+#### `stroke-onColor-dark-muted`
+
+```css
+.stroke-onColor-dark-muted {
+  stroke: var(--stroke-onColor-dark-muted);
+}
+```
+
+#### `stroke-onColor-light-highlight`
+
+```css
+.stroke-onColor-light-highlight {
+  stroke: var(--stroke-onColor-light-highlight);
+}
+```
+
+#### `stroke-onColor-light-default`
+
+```css
+.stroke-onColor-light-default {
+  stroke: var(--stroke-onColor-light-default);
+}
+```
+
+#### `stroke-onColor-light-muted`
+
+```css
+.stroke-onColor-light-muted {
+  stroke: var(--stroke-onColor-light-muted);
+}
+```
+
+#### `stroke-link-primary`
+
+```css
+.stroke-link-primary {
+  stroke: var(--stroke-link-primary);
+}
+```
+
+#### `stroke-link-secondary`
+
+```css
+.stroke-link-secondary {
+  stroke: var(--stroke-link-secondary);
+}
+```
+
+#### `stroke-link-visited`
+
+```css
+.stroke-link-visited {
+  stroke: var(--stroke-link-visited);
+}
+```
+
+#### `stroke-destructive-highlight`
+
+```css
+.stroke-destructive-highlight {
+  stroke: var(--stroke-destructive-highlight);
+}
+```
+
+#### `stroke-destructive-default`
+
+```css
+.stroke-destructive-default {
+  stroke: var(--stroke-destructive-default);
+}
+```
+
+#### `stroke-destructive-muted`
+
+```css
+.stroke-destructive-muted {
+  stroke: var(--stroke-destructive-muted);
+}
+```
+
+#### `stroke-information-highlight`
+
+```css
+.stroke-information-highlight {
+  stroke: var(--stroke-information-highlight);
+}
+```
+
+#### `stroke-information-default`
+
+```css
+.stroke-information-default {
+  stroke: var(--stroke-information-default);
+}
+```
+
+#### `stroke-information-muted`
+
+```css
+.stroke-information-muted {
+  stroke: var(--stroke-information-muted);
+}
+```
+
+#### `stroke-success-highlight`
+
+```css
+.stroke-success-highlight {
+  stroke: var(--stroke-success-highlight);
+}
+```
+
+#### `stroke-success-default`
+
+```css
+.stroke-success-default {
+  stroke: var(--stroke-success-default);
+}
+```
+
+#### `stroke-success-muted`
+
+```css
+.stroke-success-muted {
+  stroke: var(--stroke-success-muted);
+}
+```
+
+#### `stroke-warning-highlight`
+
+```css
+.stroke-warning-highlight {
+  stroke: var(--stroke-warning-highlight);
+}
+```
+
+#### `stroke-warning-default`
+
+```css
+.stroke-warning-default {
+  stroke: var(--stroke-warning-default);
+}
+```
+
+#### `stroke-warning-muted`
+
+```css
+.stroke-warning-muted {
+  stroke: var(--stroke-warning-muted);
 }
 ```
 
