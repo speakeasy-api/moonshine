@@ -15,15 +15,18 @@ const alertVariants = cva<{
     [k in Modifier]: string
   }
 }>(
-  `min-w-48 max-h-fit flex flex-row subpixel-antialiased font-light items-center px-3 pr-2 py-2 w-full`,
+  `min-w-48 max-h-fit flex flex-row subpixel-antialiased font-light items-center px-3 pr-2 py-2 w-full border`,
   {
     variants: {
       variant: {
         default: 'bg-card',
-        success: 'bg-success text-success-foreground',
-        error: 'bg-destructive text-destructive-foreground',
-        warning: 'bg-warning text-warning-foreground',
-        info: 'bg-info text-info-foreground',
+        success:
+          'bg-success-softest text-default-success border-success-default',
+        error:
+          'bg-destructive-softest text-default-destructive border-destructive-default',
+        warning:
+          'bg-warning-softest text-default-warning border-warning-default',
+        info: 'bg-information-softest text-default-information border-information-default',
         feature: 'bg-feature text-feature-foreground',
       },
       modifiers: {
