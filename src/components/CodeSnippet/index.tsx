@@ -1,13 +1,13 @@
 import { useCallback, useState, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
-import { useTheme } from '@/hooks/useTheme'
 import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import { AnimatePresence, motion } from 'framer-motion'
 import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
+import { useConfig } from '@/hooks/useConfig'
 
 export interface CodeSnippetProps {
   /**
@@ -114,7 +114,7 @@ export function CodeSnippet({
     HighlightedCode | undefined
   >(undefined)
   const isMultiline = code.split('\n').length > 1
-  const theme = useTheme()
+  const { theme } = useConfig()
 
   // Get the code handlers for line numbers and animations, then add custom handlers
   const preHandlers = useMemo<AnnotationHandler[]>(() => {
