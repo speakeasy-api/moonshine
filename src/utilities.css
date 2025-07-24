@@ -787,16 +787,28 @@
 /* ============================================
 * BACKGROUNDS
 * ============================================ */
-@utilities bg-primary {
-  background-color: var(--bg-primary);
+@utility bg-surface-primary-default {
+  background-color: var(--bg-surface-primary-default);
 }
 
-@utilities bg-secondary {
-  background-color: var(--bg-secondary);
+@utility bg-surface-primary-inverse {
+  background-color: var(--bg-surface-primary-inverse);
 }
 
-@utilities bg-tertiary {
-  background-color: var(--bg-tertiary);
+@utility bg-surface-secondary-default {
+  background-color: var(--bg-surface-secondary);
+}
+
+@utility bg-surface-secondary-inverse {
+  background-color: var(--bg-surface-secondary-inverse);
+}
+
+@utility bg-surface-tertiary-default {
+  background-color: var(--bg-surface-tertiary-default);
+}
+
+@utility bg-surface-tertiary-inverse {
+  background-color: var(--bg-surface-tertiary-inverse);
 }
 
 /* State */
@@ -821,29 +833,29 @@
 }
 
 /* Light background in dark mode */
-@utility bg-light-dark-primary {
-  background-color: var(--bg-light-dark-primary);
+@utility bg-surface-primary-fixed-light {
+  background-color: var(--bg-surface-primary-fixed-light);
 }
 
-@utility bg-light-dark-secondary {
-  background-color: var(--bg-light-dark-secondary);
+@utility bg-surface-secondary-fixed-light {
+  background-color: var(--bg-surface-secondary-fixed-light);
 }
 
-@utility bg-light-dark-tertiary {
-  background-color: var(--bg-light-dark-tertiary);
+@utility bg-surface-tertiary-fixed-light {
+  background-color: var(--bg-surface-tertiary-fixed-light);
 }
 
 /* Dark background in light mode */
-@utility bg-dark-light-primary {
-  background-color: var(--bg-dark-light-primary);
+@utility bg-surface-primary-fixed-dark {
+  background-color: var(--bg-surface-primary-fixed-dark);
 }
 
-@utility bg-dark-light-secondary {
-  background-color: var(--bg-dark-light-secondary);
+@utility bg-surface-secondary-fixed-dark {
+  background-color: var(--bg-surface-secondary-fixed-dark);
 }
 
-@utility bg-dark-light-tertiary {
-  background-color: var(--bg-dark-light-tertiary);
+@utility bg-surface-tertiary-fixed-dark {
+  background-color: var(--bg-surface-tertiary-fixed-dark);
 }
 
 /* Destructive */

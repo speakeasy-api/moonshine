@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-07-23T14:50:22.686Z
+This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:26:06.945Z
 
 ### Typography Utilities
 
@@ -754,6 +754,30 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-23T14:5
 ```css
 .bg-warning {
   background-color: var(--bg-warning);
+}
+```
+
+#### `bg-surface-primary`
+
+```css
+.bg-surface-primary {
+  background-color: var(--bg-surface-primary);
+}
+```
+
+#### `bg-surface-secondary`
+
+```css
+.bg-surface-secondary {
+  background-color: var(--bg-surface-secondary);
+}
+```
+
+#### `bg-surface-tertiary`
+
+```css
+.bg-surface-tertiary {
+  background-color: var(--bg-surface-tertiary);
 }
 ```
 
