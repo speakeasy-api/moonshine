@@ -21,12 +21,12 @@ const alertVariants = cva<{
       variant: {
         default: 'bg-card',
         success:
-          'bg-success-softest text-default-success border-success-default',
+          'bg-success-softest text-default-success border-success-softest',
         error:
-          'bg-destructive-softest text-default-destructive border-destructive-default',
+          'bg-destructive-softest text-default-destructive border-destructive-softest',
         warning:
-          'bg-warning-softest text-default-warning border-warning-default',
-        info: 'bg-information-softest text-default-information border-information-default',
+          'bg-warning-softest text-default-warning border-warning-softest',
+        info: 'bg-information-softest text-default-information border-information-softest',
         feature: 'bg-feature text-feature-foreground',
       },
       modifiers: {

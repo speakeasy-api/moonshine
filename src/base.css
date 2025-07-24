@@ -429,9 +429,12 @@
   /* ============================================
    * BACKGROUNDS
    * ============================================ */
-   --bg-primary: var(--color-base-white);
-   --bg-secondary: var(--color-neutral-100);
-   --bg-tertiary: var(--color-neutral-200);
+   --bg-surface-primary-default: var(--color-base-white);
+   --bg-surface-secondary-default: var(--color-neutral-100);
+   --bg-surface-tertiary-default: var(--color-neutral-200);
+   --bg-surface-primary-inverse: var(--color-base-black);
+   --bg-surface-secondary-inverse: var(--color-neutral-900);
+   --bg-surface-tertiary-inverse: var(--color-neutral-800);
 
    /* State */
    --bg-highlight: var(--color-neutral-300);
@@ -441,14 +444,14 @@
    --bg-inset: var(--color-base-white);
 
    /* Light background in dark mode */
-   --bg-light-dark-primary: var(--color-base-white);
-   --bg-light-dark-secondary: var(--color-neutral-100);
-   --bg-light-dark-tertiary: var(--color-neutral-200);
+   --bg-surface-primary-fixed-light: var(--color-base-white);
+   --bg-surface-secondary-fixed-light: var(--color-neutral-100);
+   --bg-surface-tertiary-fixed-light: var(--color-neutral-200);
 
    /* Dark background in light mode */
-   --bg-dark-light-primary: var(--color-base-black);
-   --bg-dark-light-secondary: var(--color-neutral-900);
-   --bg-dark-light-tertiary: var(--color-neutral-800);
+   --bg-surface-primary-fixed-dark: var(--color-base-black);
+   --bg-surface-secondary-fixed-dark: var(--color-neutral-900);
+   --bg-surface-tertiary-fixed-dark: var(--color-neutral-800);
 
    /* Destructive */
    --bg-destructive-highlight: var(--color-feedback-red-600);
@@ -683,25 +686,25 @@
   ); /* White with 20% opacity */
 
   /* Border destructive utilities */
-  --border-destructive-highlight: var(--color-feedback-red-300);
+  --border-destructive-highlight: var(--color-feedback-red-400);
   --border-destructive-default: var(--color-feedback-red-500);
   --border-destructive-muted: var(--color-feedback-red-500-56);
   --border-destructive-softest: var(--color-feedback-red-700);
 
   /* Border Information utilities */
-  --border-information-highlight: var(--color-feedback-blue-300);
+  --border-information-highlight: var(--color-feedback-blue-400);
   --border-information-default: var(--color-feedback-blue-500);
   --border-information-muted: var(--color-feedback-blue-500-56);
   --border-information-softest: var(--color-feedback-blue-700);
 
   /* Border Success utilities */
-  --border-success-highlight: var(--color-feedback-green-300);
+  --border-success-highlight: var(--color-feedback-green-400);
   --border-success-default: var(--color-feedback-green-500);
   --border-success-muted: var(--color-feedback-green-500-56);
   --border-success-softest: var(--color-feedback-green-700);
 
   /* Border Warning utilities */
-  --border-warning-highlight: var(--color-feedback-orange-300);
+  --border-warning-highlight: var(--color-feedback-orange-400);
   --border-warning-default: var(--color-feedback-orange-500);
   --border-warning-muted: var(--color-feedback-orange-500-56);
   --border-warning-softest: var(--color-feedback-orange-700);
@@ -803,9 +806,12 @@
    /* ============================================
    * BACKGROUNDS
    * ============================================ */
-   --bg-primary: var(--color-base-black);
-   --bg-secondary: var(--color-neutral-900);
-   --bg-tertiary: var(--color-neutral-800);
+   --bg-surface-primary-default: var(--color-base-black);
+   --bg-surface-secondary-default: var(--color-neutral-900);
+   --bg-surface-tertiary-default: var(--color-neutral-800);
+   --bg-surface-primary-inverse: var(--color-base-white);
+   --bg-surface-secondary-inverse: var(--color-neutral-100);
+   --bg-surface-tertiary-inverse: var(--color-neutral-200);
 
    /* State */
    --bg-highlight: var(--color-neutral-700);
@@ -819,25 +825,25 @@
    /* Dark background in light mode */
 
    /* Destructive */
-   --bg-destructive-highlight: var(--color-feedback-red-300);
+   --bg-destructive-highlight: var(--color-feedback-red-400);
    --bg-destructive-default: var(--color-feedback-red-500);
    --bg-destructive-muted: var(--color-feedback-red-500-56);
    --bg-destructive-softest: var(--color-feedback-red-900);
 
    /* Information */
-   --bg-information-highlight: var(--color-feedback-blue-300);
+   --bg-information-highlight: var(--color-feedback-blue-400);
    --bg-information-default: var(--color-feedback-blue-500);
    --bg-information-muted: var(--color-feedback-blue-500-56);
    --bg-information-softest: var(--color-feedback-blue-900);
 
    /* Success */
-   --bg-success-highlight: var(--color-feedback-green-300);
+   --bg-success-highlight: var(--color-feedback-green-400);
    --bg-success-default: var(--color-feedback-green-500);
    --bg-success-muted: var(--color-feedback-green-500-56);
    --bg-success-softest: var(--color-feedback-green-900);
 
    /* Warning */
-   --bg-warning-highlight: var(--color-feedback-orange-300);
+   --bg-warning-highlight: var(--color-feedback-orange-400);
    --bg-warning-default: var(--color-feedback-orange-500);
    --bg-warning-muted: var(--color-feedback-orange-500-56);
    --bg-warning-softest: var(--color-feedback-orange-900);

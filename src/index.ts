@@ -174,6 +174,11 @@ export {
   DropdownMenuShortcut,
 } from '@/components/Dropdown'
 
+export {
+  ThemeSwitcher,
+  type ThemeSwitcherProps,
+} from '@/components/ThemeSwitcher'
+
 export { cn } from '@/lib/utils'
 
 /** START BETA COMPONENTS */

@@ -38,14 +38,14 @@ const badgeVariants = cva<BadgeVariantsCva>(
         secondary: 'bg-secondary text-secondary-foreground',
         tertiary: 'bg-tertiary text-primary border-neutral-softest',
         destructive:
-          'bg-destructive-softest text-default-destructive border-destructive-default',
+          'bg-destructive-softest text-default-destructive border-destructive-softest',
         outline: 'text-foreground',
         success:
-          'bg-success-softest text-default-success border-success-default',
+          'bg-success-softest text-default-success border-success-softest',
         warning:
-          'bg-warning-softest text-default-warning border-warning-default',
+          'bg-warning-softest text-default-warning border-warning-softest',
         danger:
-          'bg-destructive-softest text-default-destructive border-destructive-default',
+          'bg-destructive-softest text-default-destructive border-destructive-softest',
       },
       size: {
         xs: 'text-[11px]',

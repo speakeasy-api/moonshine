@@ -3,17 +3,17 @@
 import { ReactNode, useId, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { Moon, Sun } from 'lucide-react'
-import { m } from 'motion/react'
 import { useIsMounted } from '@/hooks/useIsMounted'
 import { useConfig } from '@/hooks/useConfig'
 import { Theme } from '@/context/theme'
+import { motion } from 'motion/react'
 
 const THEMES: { key: Theme; icon: ReactNode }[] = [
   { key: 'light', icon: <Sun /> },
   { key: 'dark', icon: <Moon /> },
 ]
 
-interface ThemeSwitcherProps {
+export interface ThemeSwitcherProps {
   onThemeSwitch?: (theme: string) => void
   className?: string
 }
@@ -79,7 +79,7 @@ export function ThemeSwitcher({
           )
         })}
       </fieldset>
-      <m.div
+      <motion.div
         initial={{ transform: `translateX(${posX}%)` }}
         animate={{
           transform: `translateX(${posX}%)`,
