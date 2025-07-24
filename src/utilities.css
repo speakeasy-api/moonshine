@@ -787,15 +787,15 @@
 /* ============================================
 * BACKGROUNDS
 * ============================================ */
-@utilities bg-primary {
+@utility bg-primary {
   background-color: var(--bg-primary);
 }
 
-@utilities bg-secondary {
+@utility bg-secondary {
   background-color: var(--bg-secondary);
 }
 
-@utilities bg-tertiary {
+@utility bg-tertiary {
   background-color: var(--bg-tertiary);
 }
 

@@ -30,18 +30,22 @@ type BadgeVariantsCva = {
 }
 
 const badgeVariants = cva<BadgeVariantsCva>(
-  'inline-flex text-xs select-none rounded-full px-3 py-1',
+  'inline-flex text-xs select-none rounded-full px-3 py-1 border',
   {
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground',
         secondary: 'bg-secondary text-secondary-foreground',
-        tertiary: 'bg-primary/10 text-primary',
-        destructive: 'bg-destructive text-destructive-foreground',
+        tertiary: 'bg-tertiary text-primary border-neutral-softest',
+        destructive:
+          'bg-destructive-softest text-default-destructive border-destructive-default',
         outline: 'text-foreground',
-        success: 'bg-success text-success-foreground',
-        warning: 'bg-warning text-warning-foreground',
-        danger: 'bg-destructive text-destructive-foreground',
+        success:
+          'bg-success-softest text-default-success border-success-default',
+        warning:
+          'bg-warning-softest text-default-warning border-warning-default',
+        danger:
+          'bg-destructive-softest text-default-destructive border-destructive-default',
       },
       size: {
         xs: 'text-[11px]',
