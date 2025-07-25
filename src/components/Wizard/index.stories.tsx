@@ -90,8 +90,8 @@ const WizardWithState = ({ steps, headerContent }: WizardWithStateProps) => {
     <Wizard
       steps={steps}
       headerContent={headerContent}
-      currentStep={1}
-      completedSteps={[]}
+      currentStep={2}
+      completedSteps={[1]}
     />
   )
 }
