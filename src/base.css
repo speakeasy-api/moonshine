@@ -249,13 +249,20 @@
   --text-placeholder: var(--color-neutral-900-56);
   --text-disabled: var(--color-neutral-900-40);
 
-  --text-dark-light-highlight: var(--color-base-black);
-  --text-dark-light-default: var(--color-neutral-900);
-  --text-dark-light-muted: var(--color-neutral-900-64);
+  /* Fixed dark text */
+  --text-highlight-fixed-dark: var(--color-base-black);
+  --text-default-fixed-dark: var(--color-neutral-900);
+  --text-muted-fixed-dark: var(--color-neutral-900-64);
 
-  --text-light-dark-highlight: var(--color-base-white);
-  --text-light-dark-default: var(--color-neutral-100);
-  --text-light-dark-muted: var(--color-neutral-100-64);
+  /* Fixed light text */
+  --text-highlight-fixed-light: var(--color-base-white);
+  --text-default-fixed-light: var(--color-neutral-100);
+  --text-muted-fixed-light: var(--color-neutral-100-64);
+
+  /* Inverse text */
+  --text-highlight-inverse: var(--base-white);
+  --text-default-inverse: var(--color-neutral-100);
+  --text-muted-inverse: var(--color-neutral-100-64);
 
   --text-link-primary: var(--color-brand-blue-600);
   --text-link-secondary: var(--color-base-black);
@@ -346,15 +353,20 @@
    --fill-neutral-default: var(--color-neutral-800);
    --fill-neutral-muted: var(--color-neutral-800-56);
 
-   /* onColor / Dark */
-   --fill-onColor-dark-highlight: var(--color-base-black);
-   --fill-onColor-dark-default: var(--color-neutral-800);
-   --fill-onColor-dark-muted: var(--color-neutral-900-56);
+   /* Fixed dark fill */
+   --fill-neutral-highlight-fixed-dark: var(--color-base-black);
+   --fill-neutral-default-fixed-dark: var(--color-neutral-800);
+   --fill-neutral-muted-fixed-dark: var(--color-neutral-900-56);
 
-   /* onColor / Light */
-   --fill-onColor-light-highlight: var(--color-base-white);
-   --fill-onColor-light-default: var(--color-neutral-100);
-   --fill-onColor-light-muted: var(--color-neutral-100-56);
+   /* Fixed light fill */
+   --fill-neutral-highlight-fixed-light: var(--color-base-white);
+   --fill-neutral-default-fixed-light: var(--color-neutral-100);
+   --fill-neutral-muted-fixed-light: var(--color-neutral-100-56);
+
+   /* Inverse fill */
+    --fill-neutral-highlight-inverse: var(--base-white);
+    --fill-neutral-default-inverse: var(--color-neutral-100);
+    --fill-neutral-muted-inverse: var(--color-neutral-100-56);
 
    /* Links */
    --fill-link-primary: var(--color-brand-blue-600);
@@ -391,15 +403,20 @@
    --stroke-neutral-default: var(--color-neutral-800);
    --stroke-neutral-muted: var(--color-neutral-800-56);
 
-   /* onColor / Dark */
-   --stroke-onColor-dark-highlight: var(--color-base-black);
-   --stroke-onColor-dark-default: var(--color-neutral-800);
-   --stroke-onColor-dark-muted: var(--color-neutral-900-56);
+   /* Fixed dark stroke */
+   --stroke-neutral-highlight-fixed-dark: var(--color-base-black);
+   --stroke-neutral-default-fixed-dark: var(--color-neutral-800);
+   --stroke-neutral-muted-fixed-dark: var(--color-neutral-900-56);
 
-   /* onColor / Light */
-   --stroke-onColor-light-highlight: var(--color-base-white);
-   --stroke-onColor-light-default: var(--color-neutral-100);
-   --stroke-onColor-light-muted: var(--color-neutral-100-56);
+   /* Fixed light stroke */
+   --stroke-neutral-highlight-fixed-lightt: var(--color-base-white);
+   --stroke-neutral-default-fixed-light: var(--color-neutral-100);
+   --stroke-neutral-muted-fixed-light: var(--color-neutral-100-56);
+
+   /* Inverse stroke */
+   --stroke-neutral-highlight-inverse: var(--base-white);
+   --stroke-neutral-default-inverse: var(--color-neutral-100);
+   --stroke-neutral-muted-inverse: var(--color-neutral-100-56);
 
    /* Links */
    --stroke-link-primary: var(--color-brand-blue-600);
@@ -638,6 +655,11 @@
   --text-placeholder: var(--color-neutral-100-56);
   --text-disabled: var(--color-neutral-100-40);
 
+  /* Inverse text */
+  --text-highlight-inverse: var(--base-black);
+  --text-default-inverse: var(--color-neutral-900);
+  --text-muted-inverse: var(--color-neutral-900-64);
+
   --text-link-primary: var(--color-brand-blue-300);
   --text-link-secondary: var(--color-base-white);
   --text-link-visited: var(--color-feedback-violet-300);
@@ -723,15 +745,14 @@
   --fill-neutral-default: var(--color-neutral-200);
   --fill-neutral-muted: var(--color-neutral-200-56);
 
-  /* onColor / Dark */
-   --fill-onColor-dark-highlight: var(--color-base-black);
-   --fill-onColor-dark-default: var(--color-neutral-800);
-   --fill-onColor-dark-muted: var(--color-neutral-900-56);
+  /* Fixed dark fill */
 
-   /* onColor / Light */
-   --fill-onColor-light-highlight: var(--color-base-white);
-   --fill-onColor-light-default: var(--color-neutral-100);
-   --fill-onColor-light-muted: var(--color-neutral-100-56);
+   /* Fixed light fill */
+
+   /* Inverse fill */
+    --fill-neutral-highlight-inverse: var(--base-black);
+    --fill-neutral-default-inverse: var(--color-neutral-900);
+    --fill-neutral-muted-inverse: var(--color-neutral-900-56);
 
    /* Links */
    --fill-link-primary: var(--color-brand-blue-300);
@@ -768,15 +789,14 @@
   --stroke-neutral-default: var(--color-neutral-200);
   --stroke-neutral-muted: var(--color-neutral-200-56);
 
-  /* onColor / Dark */
-   --stroke-onColor-dark-highlight: var(--color-base-black);
-   --stroke-onColor-dark-default: var(--color-neutral-800);
-   --stroke-onColor-dark-muted: var(--color-neutral-900-56);
+  /* Fixed dark stroke*/
 
-   /* onColor / Light */
-   --stroke-onColor-light-highlight: var(--color-base-white);
-   --stroke-onColor-light-default: var(--color-neutral-100);
-   --stroke-onColor-light-muted: var(--color-neutral-100-56);
+   /* Fixed light stroke */
+
+   /* Inverse stroke */
+   --stroke-neutral-highlight-inverse: var(--base-black);
+   --stroke-neutral-default-inverse: var(--color-neutral-900);
+   --stroke-neutral-muted-inverse: var(--color-neutral-900-56);
 
    /* Links */
    --stroke-link-primary: var(--color-brand-blue-300);
