@@ -612,7 +612,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--border-neutral-default, currentColor);
+    @apply border-neutral-softest;
   }
 
   button:not(:disabled),
@@ -621,7 +621,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-surface-primary-default text-default;
   }
 }
 
