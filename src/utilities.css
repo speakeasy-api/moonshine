@@ -726,7 +726,7 @@
 }
 
 @utility stroke-neutral-default-fixed-dark {
-  stroke: var(--stroke-oneutral-default-fixed-dark);
+  stroke: var(--stroke-neutral-default-fixed-dark);
 }
 
 @utility stroke-neutral-muted-fixed-dark {
