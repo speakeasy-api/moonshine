@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { cn } from '../../lib/utils'
 import { Icon } from '../Icon'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, Variants } from 'motion/react'
 import React from 'react'
 
 interface ModelSelectorConfig {
@@ -29,7 +29,7 @@ const AnimatedLabel = React.memo(function AnimatedLabel({
     },
   }
 
-  const char = {
+  const char: Variants = {
     hidden: { opacity: 0, y: 10, filter: 'blur(4px)' },
     visible: {
       opacity: 1,
