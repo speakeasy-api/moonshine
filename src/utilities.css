@@ -345,7 +345,7 @@
   color: var(--text-default-fixed-light);
 }
 
-@utility ttext-muted-fixed-light {
+@utility text-muted-fixed-light {
   color: var(--text-muted-fixed-light);
 }
 
