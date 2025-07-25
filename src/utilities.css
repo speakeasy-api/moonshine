@@ -323,31 +323,45 @@
   color: var(--text-disabled);
 }
 
-/* onColor / Dark */
-@utility text-dark-light-highlight {
-  color: var(--text-dark-light-highlight);
+/* Fixed dark text */
+@utility text-highlight-fixed-dark {
+  color: var(--text-highlight-fixed-dark);
 }
 
-@utility text-dark-light-default {
-  color: var(--text-dark-light-default);
+@utility text-default-fixed-dark {
+  color: var(--text-default-fixed-dark);
 }
 
-@utility text-dark-light-muted {
-  color: var(--text-dark-light-muted);
+@utility text-muted-fixed-dark {
+  color: var(--text-muted-fixed-dark);
 }
 
-/*  onColor / Light */
-@utility text-light-dark-highlight {
-  color: var(--text-light-dark-highlight);
+/*  Fixed light text */
+@utility text-highlight-fixed-light {
+  color: var(--text-highlight-fixed-light);
 }
 
-@utility text-light-dark-default {
-  color: var(--text-light-dark-default);
+@utility text-default-fixed-light {
+  color: var(--text-default-fixed-light);
 }
 
-@utility text-light-dark-muted {
-  color: var(--text-light-dark-muted);
+@utility text-muted-fixed-light {
+  color: var(--text-muted-fixed-light);
 }
+
+/* Inverse text */
+@utility text-highlight-inverse {
+  color: var(--text-highlight-inverse);
+}
+
+@utility text-default-inverse {
+  color: var(--text-default-inverse);
+}
+
+@utility text-muted-inverse {
+  color: var(--text-muted-inverse);
+}
+
 
 /* Link colors */
 @utility text-link-primary {
@@ -581,30 +595,43 @@
   fill: var(--fill-neutral-muted);
 }
 
-/* onColor / Dark */
-@utility fill-onColor-dark-highlight {
-  fill: var(--fill-onColor-dark-highlight);
+/* Fixed dark fill */
+@utility fill-neutral-highlight-fixed-dark {
+  fill: var(--fill-neutral-highlight-fixed-dark);
 }
 
-@utility fill-onColor-dark-default {
-  fill: var(--fill-onColor-dark-default);
+@utility fill-neutral-default-fixed-dark {
+  fill: var(--fill-neutral-default-fixed-dark);
 }
 
-@utility fill-onColor-dark-muted {
-  fill: var(--fill-onColor-dark-muted);
+@utility fill-neutral-muted-fixed-dark {
+  fill: var(--fill-neutral-muted-fixed-dark);
 }
 
-/* onColor / Light */
-@utility fill-onColor-light-highlight {
-  fill: var(--fill-onColor-light-highlight);
+/* Fixed light fill */
+@utility fill-neutral-highlight-fixed-light {
+  fill: var(--fill-neutral-highlight-fixed-light);
 }
 
-@utility fill-onColor-light-default {
-  fill: var(--fill-onColor-light-default);
+@utility fill-neutral-default-fixed-light {
+  fill: var(--fill-neutral-default-fixed-light);
 }
 
-@utility fill-onColor-light-muted {
-  fill: var(--fill-onColor-light-muted);
+@utility fill-neutral-muted-fixed-light {
+  fill: var(--fill-neutral-muted-fixed-light);
+}
+
+/* Inverse fill */
+@utility fill-neutral-highlight-inverse {
+  fill: var(--fill-neutral-highlight-inverse);
+}
+
+@utility fill-neutral-default-inverse {
+  fill: var(--fill-neutral-default-inverse);
+}
+
+@utility fill-neutral-muted-inverse {
+  fill: var(--fill-neutral-muted-inverse);
 }
 
 /* Link Fill */
@@ -693,30 +720,43 @@
   stroke: var(--stroke-neutral-muted);
 }
 
-/* onColor / Dark */
-@utility stroke-onColor-dark-highlight {
-  stroke: var(--stroke-onColor-dark-highlight);
+/* Fixed dark stroke */
+@utility stroke-neutral-highlight-fixed-dark {
+  stroke: var(--stroke-neutral-highlight-fixed-dark);
 }
 
-@utility stroke-onColor-dark-default {
-  stroke: var(--stroke-onColor-dark-default);
+@utility stroke-neutral-default-fixed-dark {
+  stroke: var(--stroke-oneutral-default-fixed-dark);
 }
 
-@utility stroke-onColor-dark-muted {
-  stroke: var(--stroke-onColor-dark-muted);
+@utility stroke-neutral-muted-fixed-dark {
+  stroke: var(--stroke-neutral-muted-fixed-dark);
 }
 
-/* onColor / Light */
-@utility stroke-onColor-light-highlight {
-  stroke: var(--stroke-onColor-light-highlight);
+/* Fixed light stroke */
+@utility stroke-neutral-highlight-fixed-light {
+  stroke: var(--stroke-neutral-highlight-fixed-light);
 }
 
-@utility stroke-onColor-light-default {
-  stroke: var(--stroke-onColor-light-default);
+@utility stroke-neutral-default-fixed-light {
+  stroke: var(--stroke-neutral-default-fixed-light);
 }
 
-@utility stroke-onColor-light-muted {
-  stroke: var(--stroke-onColor-light-muted);
+@utility stroke-neutral-muted-fixed-light {
+  stroke: var(--stroke-neutral-muted-fixed-light);
+}
+
+/* Inverse stroke */
+@utility stroke-neutral-highlight-inverse {
+  stroke: var(--stroke-neutral-highlight-inverse);
+}
+
+@utility stroke-neutral-default-inverse {
+  stroke: var(--stroke-neutral-default-inverse);
+}
+
+@utility stroke-neutral-muted-inverse {
+  stroke: var(--stroke-neutral-muted-inverse);
 }
 
 /* Link stroke */
@@ -796,7 +836,7 @@
 }
 
 @utility bg-surface-secondary-default {
-  background-color: var(--bg-surface-secondary);
+  background-color: var(--bg-surface-secondary-default);
 }
 
 @utility bg-surface-secondary-inverse {
