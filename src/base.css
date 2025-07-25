@@ -260,7 +260,7 @@
   --text-muted-fixed-light: var(--color-neutral-100-64);
 
   /* Inverse text */
-  --text-highlight-inverse: var(--base-white);
+  --text-highlight-inverse: var(--color-base-white);
   --text-default-inverse: var(--color-neutral-100);
   --text-muted-inverse: var(--color-neutral-100-64);
 
@@ -364,7 +364,7 @@
    --fill-neutral-muted-fixed-light: var(--color-neutral-100-56);
 
    /* Inverse fill */
-    --fill-neutral-highlight-inverse: var(--base-white);
+    --fill-neutral-highlight-inverse: var(--color-base-white);
     --fill-neutral-default-inverse: var(--color-neutral-100);
     --fill-neutral-muted-inverse: var(--color-neutral-100-56);
 
@@ -409,12 +409,12 @@
    --stroke-neutral-muted-fixed-dark: var(--color-neutral-900-56);
 
    /* Fixed light stroke */
-   --stroke-neutral-highlight-fixed-lightt: var(--color-base-white);
+   --stroke-neutral-highlight-fixed-light: var(--color-base-white);
    --stroke-neutral-default-fixed-light: var(--color-neutral-100);
    --stroke-neutral-muted-fixed-light: var(--color-neutral-100-56);
 
    /* Inverse stroke */
-   --stroke-neutral-highlight-inverse: var(--base-white);
+   --stroke-neutral-highlight-inverse: var(--color-base-white);
    --stroke-neutral-default-inverse: var(--color-neutral-100);
    --stroke-neutral-muted-inverse: var(--color-neutral-100-56);
 
@@ -656,7 +656,7 @@
   --text-disabled: var(--color-neutral-100-40);
 
   /* Inverse text */
-  --text-highlight-inverse: var(--base-black);
+  --text-highlight-inverse: var(--color-base-black);
   --text-default-inverse: var(--color-neutral-900);
   --text-muted-inverse: var(--color-neutral-900-64);
 
@@ -750,7 +750,7 @@
    /* Fixed light fill */
 
    /* Inverse fill */
-    --fill-neutral-highlight-inverse: var(--base-black);
+    --fill-neutral-highlight-inverse: var(--color-base-black);
     --fill-neutral-default-inverse: var(--color-neutral-900);
     --fill-neutral-muted-inverse: var(--color-neutral-900-56);
 
@@ -794,7 +794,7 @@
    /* Fixed light stroke */
 
    /* Inverse stroke */
-   --stroke-neutral-highlight-inverse: var(--base-black);
+   --stroke-neutral-highlight-inverse: var(--color-base-black);
    --stroke-neutral-default-inverse: var(--color-neutral-900);
    --stroke-neutral-muted-inverse: var(--color-neutral-900-56);
 
