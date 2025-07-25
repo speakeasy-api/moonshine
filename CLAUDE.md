@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:26:06.945Z
+This section is auto-generated from the CSS files. Last updated: 2025-07-25T19:46:22.449Z
 
 ### Typography Utilities
 
@@ -562,51 +562,75 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:2
 }
 ```
 
-#### `text-dark-light-highlight`
+#### `text-highlight-fixed-dark`
 
 ```css
-.text-dark-light-highlight {
-  color: var(--text-dark-light-highlight);
+.text-highlight-fixed-dark {
+  color: var(--text-highlight-fixed-dark);
 }
 ```
 
-#### `text-dark-light-default`
+#### `text-default-fixed-dark`
 
 ```css
-.text-dark-light-default {
-  color: var(--text-dark-light-default);
+.text-default-fixed-dark {
+  color: var(--text-default-fixed-dark);
 }
 ```
 
-#### `text-dark-light-muted`
+#### `text-muted-fixed-dark`
 
 ```css
-.text-dark-light-muted {
-  color: var(--text-dark-light-muted);
+.text-muted-fixed-dark {
+  color: var(--text-muted-fixed-dark);
 }
 ```
 
-#### `text-light-dark-highlight`
+#### `text-highlight-fixed-light`
 
 ```css
-.text-light-dark-highlight {
-  color: var(--text-light-dark-highlight);
+.text-highlight-fixed-light {
+  color: var(--text-highlight-fixed-light);
 }
 ```
 
-#### `text-light-dark-default`
+#### `text-default-fixed-light`
 
 ```css
-.text-light-dark-default {
-  color: var(--text-light-dark-default);
+.text-default-fixed-light {
+  color: var(--text-default-fixed-light);
 }
 ```
 
-#### `text-light-dark-muted`
+#### `text-muted-fixed-light`
 
 ```css
-.text-light-dark-muted {
-  color: var(--text-light-dark-muted);
+.text-muted-fixed-light {
+  color: var(--text-muted-fixed-light);
+}
+```
+
+#### `text-highlight-inverse`
+
+```css
+.text-highlight-inverse {
+  color: var(--text-highlight-inverse);
+}
+```
+
+#### `text-default-inverse`
+
+```css
+.text-default-inverse {
+  color: var(--text-default-inverse);
+}
+```
+
+#### `text-muted-inverse`
+
+```css
+.text-muted-inverse {
+  color: var(--text-muted-inverse);
 }
 ```
 
@@ -757,27 +781,51 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:2
 }
 ```
 
-#### `bg-surface-primary`
+#### `bg-surface-primary-default`
 
 ```css
-.bg-surface-primary {
-  background-color: var(--bg-surface-primary);
+.bg-surface-primary-default {
+  background-color: var(--bg-surface-primary-default);
 }
 ```
 
-#### `bg-surface-secondary`
+#### `bg-surface-primary-inverse`
 
 ```css
-.bg-surface-secondary {
-  background-color: var(--bg-surface-secondary);
+.bg-surface-primary-inverse {
+  background-color: var(--bg-surface-primary-inverse);
 }
 ```
 
-#### `bg-surface-tertiary`
+#### `bg-surface-secondary-default`
 
 ```css
-.bg-surface-tertiary {
-  background-color: var(--bg-surface-tertiary);
+.bg-surface-secondary-default {
+  background-color: var(--bg-surface-secondary-default);
+}
+```
+
+#### `bg-surface-secondary-inverse`
+
+```css
+.bg-surface-secondary-inverse {
+  background-color: var(--bg-surface-secondary-inverse);
+}
+```
+
+#### `bg-surface-tertiary-default`
+
+```css
+.bg-surface-tertiary-default {
+  background-color: var(--bg-surface-tertiary-default);
+}
+```
+
+#### `bg-surface-tertiary-inverse`
+
+```css
+.bg-surface-tertiary-inverse {
+  background-color: var(--bg-surface-tertiary-inverse);
 }
 ```
 
@@ -821,51 +869,51 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:2
 }
 ```
 
-#### `bg-light-dark-primary`
+#### `bg-surface-primary-fixed-light`
 
 ```css
-.bg-light-dark-primary {
-  background-color: var(--bg-light-dark-primary);
+.bg-surface-primary-fixed-light {
+  background-color: var(--bg-surface-primary-fixed-light);
 }
 ```
 
-#### `bg-light-dark-secondary`
+#### `bg-surface-secondary-fixed-light`
 
 ```css
-.bg-light-dark-secondary {
-  background-color: var(--bg-light-dark-secondary);
+.bg-surface-secondary-fixed-light {
+  background-color: var(--bg-surface-secondary-fixed-light);
 }
 ```
 
-#### `bg-light-dark-tertiary`
+#### `bg-surface-tertiary-fixed-light`
 
 ```css
-.bg-light-dark-tertiary {
-  background-color: var(--bg-light-dark-tertiary);
+.bg-surface-tertiary-fixed-light {
+  background-color: var(--bg-surface-tertiary-fixed-light);
 }
 ```
 
-#### `bg-dark-light-primary`
+#### `bg-surface-primary-fixed-dark`
 
 ```css
-.bg-dark-light-primary {
-  background-color: var(--bg-dark-light-primary);
+.bg-surface-primary-fixed-dark {
+  background-color: var(--bg-surface-primary-fixed-dark);
 }
 ```
 
-#### `bg-dark-light-secondary`
+#### `bg-surface-secondary-fixed-dark`
 
 ```css
-.bg-dark-light-secondary {
-  background-color: var(--bg-dark-light-secondary);
+.bg-surface-secondary-fixed-dark {
+  background-color: var(--bg-surface-secondary-fixed-dark);
 }
 ```
 
-#### `bg-dark-light-tertiary`
+#### `bg-surface-tertiary-fixed-dark`
 
 ```css
-.bg-dark-light-tertiary {
-  background-color: var(--bg-dark-light-tertiary);
+.bg-surface-tertiary-fixed-dark {
+  background-color: var(--bg-surface-tertiary-fixed-dark);
 }
 ```
 
@@ -1283,51 +1331,75 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:2
 }
 ```
 
-#### `fill-onColor-dark-highlight`
+#### `fill-neutral-highlight-fixed-dark`
 
 ```css
-.fill-onColor-dark-highlight {
-  fill: var(--fill-onColor-dark-highlight);
+.fill-neutral-highlight-fixed-dark {
+  fill: var(--fill-neutral-highlight-fixed-dark);
 }
 ```
 
-#### `fill-onColor-dark-default`
+#### `fill-neutral-default-fixed-dark`
 
 ```css
-.fill-onColor-dark-default {
-  fill: var(--fill-onColor-dark-default);
+.fill-neutral-default-fixed-dark {
+  fill: var(--fill-neutral-default-fixed-dark);
 }
 ```
 
-#### `fill-onColor-dark-muted`
+#### `fill-neutral-muted-fixed-dark`
 
 ```css
-.fill-onColor-dark-muted {
-  fill: var(--fill-onColor-dark-muted);
+.fill-neutral-muted-fixed-dark {
+  fill: var(--fill-neutral-muted-fixed-dark);
 }
 ```
 
-#### `fill-onColor-light-highlight`
+#### `fill-neutral-highlight-fixed-light`
 
 ```css
-.fill-onColor-light-highlight {
-  fill: var(--fill-onColor-light-highlight);
+.fill-neutral-highlight-fixed-light {
+  fill: var(--fill-neutral-highlight-fixed-light);
 }
 ```
 
-#### `fill-onColor-light-default`
+#### `fill-neutral-default-fixed-light`
 
 ```css
-.fill-onColor-light-default {
-  fill: var(--fill-onColor-light-default);
+.fill-neutral-default-fixed-light {
+  fill: var(--fill-neutral-default-fixed-light);
 }
 ```
 
-#### `fill-onColor-light-muted`
+#### `fill-neutral-muted-fixed-light`
 
 ```css
-.fill-onColor-light-muted {
-  fill: var(--fill-onColor-light-muted);
+.fill-neutral-muted-fixed-light {
+  fill: var(--fill-neutral-muted-fixed-light);
+}
+```
+
+#### `fill-neutral-highlight-inverse`
+
+```css
+.fill-neutral-highlight-inverse {
+  fill: var(--fill-neutral-highlight-inverse);
+}
+```
+
+#### `fill-neutral-default-inverse`
+
+```css
+.fill-neutral-default-inverse {
+  fill: var(--fill-neutral-default-inverse);
+}
+```
+
+#### `fill-neutral-muted-inverse`
+
+```css
+.fill-neutral-muted-inverse {
+  fill: var(--fill-neutral-muted-inverse);
 }
 ```
 
@@ -1483,51 +1555,75 @@ This section is auto-generated from the CSS files. Last updated: 2025-07-24T09:2
 }
 ```
 
-#### `stroke-onColor-dark-highlight`
+#### `stroke-neutral-highlight-fixed-dark`
 
 ```css
-.stroke-onColor-dark-highlight {
-  stroke: var(--stroke-onColor-dark-highlight);
+.stroke-neutral-highlight-fixed-dark {
+  stroke: var(--stroke-neutral-highlight-fixed-dark);
 }
 ```
 
-#### `stroke-onColor-dark-default`
+#### `stroke-neutral-default-fixed-dark`
 
 ```css
-.stroke-onColor-dark-default {
-  stroke: var(--stroke-onColor-dark-default);
+.stroke-neutral-default-fixed-dark {
+  stroke: var(--stroke-neutral-default-fixed-dark);
 }
 ```
 
-#### `stroke-onColor-dark-muted`
+#### `stroke-neutral-muted-fixed-dark`
 
 ```css
-.stroke-onColor-dark-muted {
-  stroke: var(--stroke-onColor-dark-muted);
+.stroke-neutral-muted-fixed-dark {
+  stroke: var(--stroke-neutral-muted-fixed-dark);
 }
 ```
 
-#### `stroke-onColor-light-highlight`
+#### `stroke-neutral-highlight-fixed-light`
 
 ```css
-.stroke-onColor-light-highlight {
-  stroke: var(--stroke-onColor-light-highlight);
+.stroke-neutral-highlight-fixed-light {
+  stroke: var(--stroke-neutral-highlight-fixed-light);
 }
 ```
 
-#### `stroke-onColor-light-default`
+#### `stroke-neutral-default-fixed-light`
 
 ```css
-.stroke-onColor-light-default {
-  stroke: var(--stroke-onColor-light-default);
+.stroke-neutral-default-fixed-light {
+  stroke: var(--stroke-neutral-default-fixed-light);
 }
 ```
 
-#### `stroke-onColor-light-muted`
+#### `stroke-neutral-muted-fixed-light`
 
 ```css
-.stroke-onColor-light-muted {
-  stroke: var(--stroke-onColor-light-muted);
+.stroke-neutral-muted-fixed-light {
+  stroke: var(--stroke-neutral-muted-fixed-light);
+}
+```
+
+#### `stroke-neutral-highlight-inverse`
+
+```css
+.stroke-neutral-highlight-inverse {
+  stroke: var(--stroke-neutral-highlight-inverse);
+}
+```
+
+#### `stroke-neutral-default-inverse`
+
+```css
+.stroke-neutral-default-inverse {
+  stroke: var(--stroke-neutral-default-inverse);
+}
+```
+
+#### `stroke-neutral-muted-inverse`
+
+```css
+.stroke-neutral-muted-inverse {
+  stroke: var(--stroke-neutral-muted-inverse);
 }
 ```
 
