@@ -147,10 +147,11 @@ export function Wizard({
                       className={cn(
                         'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold',
                         // TODO: update these to use new color tokens
-                        status === 'completed' && 'bg-emerald-500 text-black',
+                        status === 'completed' &&
+                          'bg-success-default text-highlight-fixed-light',
                         status === 'current' &&
-                          'scale-110 bg-zinc-400 text-zinc-800',
-                        status === 'upcoming' && 'bg-zinc-900 text-zinc-400'
+                          'bg-surface-primary-inverse text-default-inverse scale-110',
+                        status === 'upcoming' && 'bg-muted text-muted'
                       )}
                     >
                       {stepNumber}
