@@ -8,6 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 const packageName = 'moonshine'
 
 export default defineConfig({
+  assetsInclude: ['**/*.riv'],
   plugins: [
     react(),
     dts(),
