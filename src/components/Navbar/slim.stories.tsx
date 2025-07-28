@@ -28,7 +28,10 @@ export default meta
 const navItems: NavItem[] = [
   {
     id: 'new',
+    icon: 'plus',
     active: true,
+    disabled: false,
+    onClick: () => {},
     render: ({ expanded, active, onClick }: RenderNavItemProps) => (
       <div
         className={cn(
@@ -48,17 +51,34 @@ const navItems: NavItem[] = [
   {
     id: 'packages',
     icon: 'box',
+    active: false,
+    disabled: false,
+    onClick: () => {},
     label: 'Packages',
   },
   {
     id: 'alerts',
     icon: 'siren',
     label: 'Alerts',
+    active: false,
+    disabled: false,
+    onClick: () => {},
   },
   {
     id: 'settings',
     icon: 'settings',
     label: 'Settings',
+    active: false,
+    disabled: false,
+    onClick: () => {},
+  },
+  {
+    id: 'disabled',
+    icon: 'lock',
+    label: 'Disabled',
+    active: false,
+    disabled: true,
+    onClick: () => {},
   },
 ]
 
