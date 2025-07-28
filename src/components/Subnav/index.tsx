@@ -218,7 +218,7 @@ export function Subnav({ items, renderItem, className }: SubnavProps) {
       <AnimatePresence>
         {indicatorProps && baseWidth > 0 && (
           <motion.div
-            className="bg-surface-secondary-default absolute inset-y-0 my-auto h-[calc(100%-10px)] rounded-md"
+            className="bg-surface-secondary-default absolute inset-y-0 my-auto h-[calc(100%-10px)] rounded-xs"
             style={{
               width: baseWidth,
               transformOrigin: '50% 50% 0px',
