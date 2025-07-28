@@ -107,6 +107,11 @@ export interface CodePlaygroundProps {
   animateOnLanguageChange?: boolean
 
   /**
+   * Whether to show the language selector.
+   */
+  showLanguageSelector?: boolean
+
+  /**
    * Whether to show line numbers.
    *
    * @default true
@@ -124,6 +129,7 @@ const CodePlayground = ({
   error,
   animateOnLanguageChange = true,
   showLineNumbers = true,
+  showLanguageSelector = true,
   wordWrap = true,
 }: CodePlaygroundProps) => {
   const codeRef = useRef<HTMLDivElement>(null)
@@ -281,20 +287,25 @@ const CodePlayground = ({
     >
       <div className="bg-card flex items-center border-b p-2">
         <div className="select-none">{header && header}</div>
-        <div className="ml-auto">
-          <Select value={selectedLanguage} onValueChange={handleChangeLanguage}>
-            <SelectTrigger className="text-body gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent side="bottom" align="start" alignOffset={-30}>
-              {Object.keys(snippets).map((language) => (
-                <SelectItem key={language} value={language}>
-                  {prettyLanguageName(language as SupportedLanguage)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {showLanguageSelector && (
+          <div className="ml-auto">
+            <Select
+              value={selectedLanguage}
+              onValueChange={handleChangeLanguage}
+            >
+              <SelectTrigger className="text-body-muted gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent side="bottom" align="start" alignOffset={-30}>
+                {Object.keys(snippets).map((language) => (
+                  <SelectItem key={language} value={language}>
+                    {prettyLanguageName(language as SupportedLanguage)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
 
       <div className="relative">
