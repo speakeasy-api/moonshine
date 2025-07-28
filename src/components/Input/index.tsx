@@ -58,8 +58,8 @@ export function Input({
       {...commonProps}
       {...props}
       className={cn(
-        'bg-background placeholder:text-muted-foreground text-foreground h-full w-full rounded-md text-sm shadow-none outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
-        isFocused && 'placeholder:text-foreground'
+        'bg-surface-primary-default placeholder:text-placeholder text-default h-full w-full rounded-md text-sm shadow-none outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
+        isFocused && 'placeholder:text-default'
       )}
     />
   )
@@ -72,8 +72,8 @@ export function Input({
         cols={30}
         rows={10}
         className={cn(
-          'bg-background placeholder:text-muted-foreground text-foreground my-2 h-full max-h-60 min-h-16 w-full rounded-md px-3 py-3 text-sm shadow-sm outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
-          isFocused && 'placeholder:text-foreground'
+          'bg-surface-primary-default placeholder:text-placeholder text-default my-2 h-full max-h-60 min-h-16 w-full rounded-md px-3 py-3 text-sm shadow-none outline-none placeholder:transition-colors placeholder:duration-500 disabled:cursor-not-allowed disabled:opacity-50',
+          isFocused && 'placeholder:text-default'
         )}
       />
     )
@@ -82,10 +82,10 @@ export function Input({
   return (
     <div
       className={cn(
-        'border-input text-muted-foreground flex items-center gap-3 rounded-md border px-4 py-3 transition-colors duration-300',
+        'bg-surface-primary-default border-input text-muted-foreground flex items-center gap-3 rounded-md border px-4 py-3 transition-colors duration-300',
         icon && 'px-3',
-        isFocused && 'text-foreground border-blue-500/75',
-        error ? 'border-rose-700' : 'border-input',
+        isFocused && 'text-default border-focus',
+        error && 'border-destructive-default',
         className
       )}
     >
