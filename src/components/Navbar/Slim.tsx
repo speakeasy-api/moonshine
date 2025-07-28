@@ -113,7 +113,9 @@ export const Slim = ({
                       <div
                         className={cn(
                           'flex cursor-pointer items-start gap-2',
-                          item.active ? 'text-foreground' : 'text-body-muted',
+                          item.active
+                            ? 'text-foreground'
+                            : 'text-muted-foreground',
                           item.disabled && 'cursor-not-allowed opacity-50'
                         )}
                         onClick={() => !item.disabled && onItemClick?.(item)}

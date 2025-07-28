@@ -293,7 +293,7 @@ const CodePlayground = ({
               value={selectedLanguage}
               onValueChange={handleChangeLanguage}
             >
-              <SelectTrigger className="text-body-muted gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
+              <SelectTrigger className="text-body gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent side="bottom" align="start" alignOffset={-30}>
