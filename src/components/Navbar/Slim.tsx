@@ -23,17 +23,17 @@ export interface SlimProps {
   onItemClick?: (item: NavItem) => void
 }
 
-export interface RenderNavItemProps {
+export interface RenderNavItemProps extends NavItem {
   expanded: boolean
-  active: boolean
-  onClick: () => void
 }
 
 export interface NavItem {
   id: string
-  icon?: IconName
+  icon: IconName
   label: string
-  active?: boolean
+  active: boolean
+  disabled: boolean
+  onClick: () => void
   render?: (props: RenderNavItemProps) => React.ReactNode
 }
 
@@ -107,9 +107,10 @@ export const Slim = ({
                       <div
                         className={cn(
                           'flex cursor-pointer items-start gap-2',
-                          item.active ? 'text-foreground' : 'text-body-muted'
+                          item.active ? 'text-foreground' : 'text-body-muted',
+                          item.disabled && 'cursor-not-allowed opacity-50'
                         )}
-                        onClick={() => onItemClick?.(item)}
+                        onClick={() => !item.disabled && onItemClick?.(item)}
                       >
                         <Icon
                           name={item.icon}
@@ -122,8 +123,7 @@ export const Slim = ({
                   ) : item.render ? (
                     item.render({
                       expanded,
-                      active: item.active ?? false,
-                      onClick: () => onItemClick?.(item),
+                      ...item,
                     })
                   ) : (
                     <TooltipTrigger
