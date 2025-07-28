@@ -211,7 +211,7 @@ export function Subnav({ items, renderItem, className }: SubnavProps) {
 
   return (
     <div
-      className={cn('relative flex', className)}
+      className={cn('relative flex items-center', className)}
       onMouseEnter={handleContainerMouseEnter}
       onMouseLeave={handleContainerMouseLeave}
     >

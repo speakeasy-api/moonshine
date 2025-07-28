@@ -1,6 +1,7 @@
 import { Subnav } from '.'
 
 import { StoryObj, Meta } from '@storybook/react'
+import { Badge } from '../Badge'
 
 const meta: Meta<typeof Subnav> = {
   component: Subnav,
@@ -12,7 +13,10 @@ export default meta
 type Story = StoryObj<typeof Subnav>
 
 const defaultRenderItem = (item: { label: string; href: string }) => (
-  <div className="px-4 py-3 text-sm">{item.label}</div>
+  <div className="px-4 py-3 text-sm">
+    {item.label}{' '}
+    {item.label === 'Contact' && <Badge variant="outline">new</Badge>}
+  </div>
 )
 
 export const Default: Story = {
