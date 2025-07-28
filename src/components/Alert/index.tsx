@@ -95,6 +95,7 @@ export function Alert({
 
   return (
     <div
+      role="alert"
       className={cn(
         alertVariants({ variant, modifiers: inline ? 'inline' : undefined }),
         isDismissing && 'opacity-0 transition-opacity duration-500',
