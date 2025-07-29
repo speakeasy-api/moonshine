@@ -116,3 +116,15 @@ export const AllVariants: Story = {
     </div>
   ),
 }
+
+export const DifferentBackgroundColor: Story = {
+  render: () => (
+    <div className="flex flex-col gap-3 rounded-lg bg-zinc-200 p-4 dark:bg-zinc-800">
+      <p>Icon with wordmark:</p>
+      <AnimatedLogo variant="icon-with-wordmark" />
+
+      <p>Icon only:</p>
+      <AnimatedLogo variant="icon" />
+    </div>
+  ),
+}
