@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useConfig } from './useConfig'
 
-type Theme = 'dark' | 'light'
+export type Theme = 'dark' | 'light'
 
 /**
  * Hook to get the current theme (light or dark) from the tailwind class element.

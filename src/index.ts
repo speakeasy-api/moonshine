@@ -49,7 +49,7 @@ export {
   type MoonshineConfigProviderProps,
 } from '@/context/ConfigContext'
 export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
-export { useTheme as useMoonshineTheme } from '@/hooks/useTheme'
+export { useTheme as useMoonshineTheme, type Theme } from '@/hooks/useTheme'
 export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
 export {
   GradientCircle,
