@@ -13,11 +13,11 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 }
 
 const variantStyles: Record<HeadingVariant, string> = {
-  xl: 'typography-heading-xl text-heading-xl',
-  lg: 'typography-heading-lg text-heading-lg',
-  md: 'typography-heading-md text-heading-md',
-  sm: 'typography-heading-sm text-heading-sm',
-  xs: 'typography-heading-xs text-heading-xs',
+  xl: 'text-heading-xl',
+  lg: 'text-heading-lg',
+  md: 'text-heading-md',
+  sm: 'text-heading-sm',
+  xs: 'text-heading-xs',
 }
 
 const variantToElement: Record<HeadingVariant, HeadingElement> = {

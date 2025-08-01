@@ -104,7 +104,7 @@ export const WithHref: Story = {
         Interact with me!
       </Card.Header>,
       <Card.Content key="content">
-        <Badge variant="secondary">Something went wrong</Badge>
+        <Badge>Something went wrong</Badge>
       </Card.Content>,
     ],
     href: '/test',

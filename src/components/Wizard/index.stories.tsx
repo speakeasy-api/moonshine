@@ -90,8 +90,8 @@ const WizardWithState = ({ steps, headerContent }: WizardWithStateProps) => {
     <Wizard
       steps={steps}
       headerContent={headerContent}
-      currentStep={1}
-      completedSteps={[]}
+      currentStep={2}
+      completedSteps={[1]}
     />
   )
 }
@@ -103,7 +103,7 @@ const GetStartedHeaderContent = (
   <>
     <div className="flex items-center gap-2">
       <Heading variant="xl">Get Started</Heading>
-      <Badge variant="default">
+      <Badge>
         {completedSteps.length === steps.length
           ? 'Completed'
           : `${completedSteps.length} of ${steps.length} steps`}

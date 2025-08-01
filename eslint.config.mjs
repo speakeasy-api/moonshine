@@ -18,6 +18,9 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   includeIgnoreFile(gitignorePath),
   {
+    ignores: ['scripts/generate-utility-docs.js'],
+  },
+  {
     languageOptions: {
       globals: {
         console: true,

@@ -36,7 +36,7 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
   user: ({ className }) => (
     <div
       className={cn(
-        'h-6 w-6 overflow-hidden rounded-full ring-1 ring-neutral-400 ring-inset',
+        'h-6 w-6 overflow-hidden rounded-full ring-1 ring-inset',
         className
       )}
     >
@@ -50,7 +50,7 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
   assistant: ({ className }) => (
     <div
       className={cn(
-        'flex h-6 w-6 items-center justify-center rounded border border-neutral-800 bg-neutral-900 text-[10px] font-medium text-neutral-400',
+        'flex h-6 w-6 items-center justify-center rounded border text-[10px] font-medium',
         className
       )}
     >
@@ -60,7 +60,7 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
   system: ({ className }) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('h-6 w-6 text-neutral-400', className)}
+      className={cn('h-6 w-6', className)}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

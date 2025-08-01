@@ -211,14 +211,14 @@ export function Subnav({ items, renderItem, className }: SubnavProps) {
 
   return (
     <div
-      className={cn('relative flex', className)}
+      className={cn('relative flex items-center', className)}
       onMouseEnter={handleContainerMouseEnter}
       onMouseLeave={handleContainerMouseLeave}
     >
       <AnimatePresence>
         {indicatorProps && baseWidth > 0 && (
           <motion.div
-            className="bg-secondary absolute inset-y-0 my-auto h-[calc(100%-10px)] rounded-md"
+            className="bg-surface-secondary-default absolute inset-y-0 my-auto h-[calc(100%-10px)] rounded-xs"
             style={{
               width: baseWidth,
               transformOrigin: '50% 50% 0px',
@@ -260,7 +260,7 @@ export function Subnav({ items, renderItem, className }: SubnavProps) {
 
       {activeIndicatorProps && baseWidth > 0 && (
         <motion.div
-          className="bg-primary absolute bottom-0 h-[2px]"
+          className="bg-surface-primary-inverse absolute bottom-0 h-[2px]"
           style={{
             width: baseWidth,
             transformOrigin: '50% 50% 0px',
@@ -303,8 +303,8 @@ const SubnavItem = memo(
       <motion.div
         ref={ref}
         className={cn(
-          'text-body relative z-10 cursor-pointer select-none',
-          isActive && 'text-foreground font-semibold'
+          'text-default relative z-10 cursor-pointer select-none',
+          isActive && 'text-highlight font-semibold'
         )}
         {...handlers}
       >

@@ -96,7 +96,10 @@ export const Interactive: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByRole('button'), { delay: 500 })
+    await userEvent.click(
+      await canvas.findByRole('button', { name: /open menu/i }),
+      { delay: 500 }
+    )
     await userEvent.click(screen.getByText('Logout'))
 
     expect(Interactive.args?.onSignOut).toHaveBeenCalled()

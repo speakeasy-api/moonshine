@@ -55,7 +55,7 @@ export const ExpandChevron = ({
         ease: [0.215, 0.61, 0.355, 1],
       }}
     >
-      <ChevronUp className="h-4 w-4 text-zinc-400" />
+      <ChevronUp className="text-default h-4 w-4" />
     </motion.div>
   )
 }
@@ -91,7 +91,7 @@ export function CLIWizard({
   return (
     <motion.div
       layout
-      className="relative overflow-hidden border-b border-zinc-800 select-none"
+      className="border-neutral-softest relative overflow-hidden border-b select-none"
       transition={{
         duration: 0.3,
         ease: [0.645, 0.045, 0.355, 1],
@@ -319,16 +319,16 @@ function CircleOrCheck({
 }) {
   const variants = {
     complete: {
-      circle: 'bg-emerald-500 border-emerald-500',
+      circle: 'bg-emerald-500',
       text: 'text-black',
     },
     active: {
-      circle: 'bg-zinc-400 border-zinc-400',
-      text: 'text-zinc-800',
+      circle: 'bg-surface-tertiary-inverse',
+      text: 'text-default-inverse',
     },
     default: {
-      circle: 'bg-zinc-900 border-zinc-900',
-      text: 'text-zinc-400',
+      circle: 'bg-surface-tertiary-default',
+      text: 'text-default',
     },
   }
 
@@ -338,12 +338,12 @@ function CircleOrCheck({
   return (
     <div className="relative z-20 flex h-6 w-6 items-center justify-center">
       <motion.div
-        className={cn('absolute inset-0 rounded-full border-2', circle)}
+        className={cn('absolute inset-0 rounded-full', circle)}
         initial={false}
       />
       <motion.div
         className={cn(
-          'relative z-20 flex h-full w-full items-center justify-center rounded-full border-2',
+          'relative z-20 flex h-full w-full items-center justify-center rounded-full',
           circle,
           text
         )}

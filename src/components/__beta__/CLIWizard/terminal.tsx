@@ -18,9 +18,9 @@ interface TerminalProps {
 
 export function Terminal({ children, path = '~' }: TerminalProps) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
+    <div className="bg-surface-secondary-default border-neutral-softest flex h-full flex-col overflow-hidden rounded-lg border">
       {/* Header */}
-      <div className="flex h-10 items-center justify-between bg-zinc-800 px-4">
+      <div className="bg-surface-tertiary-default flex h-10 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
             <div className="h-2.5 w-2.5 rounded-full bg-red-500" />

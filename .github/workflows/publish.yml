@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - alpha
 
 permissions:
   contents: write # to be able to publish a GitHub release

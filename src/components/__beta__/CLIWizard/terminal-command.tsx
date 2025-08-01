@@ -53,14 +53,14 @@ export function TerminalCommand({
             className={cn(
               'relative -mx-2 rounded-md px-2 py-0.5 transition-colors',
               isActive && 'bg-emerald-500/10',
-              !isActive && 'hover:bg-zinc-800'
+              !isActive && 'hover:bg-active'
             )}
           >
             <div className="flex items-start gap-2">
               <span className="text-emerald-500 select-none">$</span>
               <span
                 className={cn(
-                  'mt-0.5 flex-1 font-mono font-medium tracking-normal text-[#e4e4e7] select-text',
+                  'text-default mt-0.5 flex-1 font-mono font-medium tracking-normal select-text',
                   fontSize === 'small' && 'text-sm',
                   fontSize === 'medium' && 'text-base',
                   fontSize === 'large' && 'text-lg'

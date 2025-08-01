@@ -1,576 +1,67 @@
+/*
+ * Global CSS - Main Entry Point
+ * 
+ * This file orchestrates the design system by:
+ * 1. Importing Tailwind and plugins
+ * 2. Defining custom variants
+ * 3. Configuring responsive utilities via @source
+ * 4. Setting theme values
+ * 5. Importing our design tokens and utilities
+ */
+
+/* ============================================
+ * CORE IMPORTS
+ * ============================================ */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
 
+/* ============================================
+ * DESIGN SYSTEM IMPORTS
+ * Order matters: base tokens must come before utilities
+ * ============================================ */
+@import './base.css';
+@import './utilities.css';
+
+/* ============================================
+ * CUSTOM VARIANTS
+ * Define responsive and interactive variants
+ * ============================================ */
+@custom-variant dark (&:is(.dark *));
+@custom-variant interact {
+  &:hover,
+  &:focus-visible {
+    @slot;
+  }
+}
+
+/* ============================================
+ * RESPONSIVE UTILITY SOURCES
+ * Generate utilities at different breakpoints
+ * ============================================ */
+
+/* Spacing Utilities */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
+
+/* Grid & Flexbox */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}flex-{row,col,nowrap,wrap,wrap-reverse,none,1,auto,initial,grow,shrink}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}justify-{start,center,end,between,evenly}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}items-{start,center,end,stretch,baseline}");
-@source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
+
+/* Sizing */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}size-{8,12,16,24,32}");
 
-@custom-variant dark (&:is(.dark *));
-
-/*
-  TODO: Remove all the heading !important after we remove Mui
-*/
-@utility typography-heading-xl {
-  font-size: 1.8125rem !important;
-  font-weight: 300 !important;
-  line-height: 1.517 !important;
-  letter-spacing: 0.0015em !important;
-  @variant md {
-    font-size: 2.0625rem !important;
-    line-height: 1.375 !important;
-  }
-}
-@utility typography-heading-lg {
-  font-size: 1.625rem !important;
-  font-weight: 300 !important;
-  line-height: 1.615 !important;
-  letter-spacing: 0.0015em !important;
-  @variant md {
-    font-size: 1.8125rem !important;
-    line-height: 1.517 !important;
-  }
-}
-@utility typography-heading-md {
-  font-size: 1.4375rem !important;
-  font-weight: 300 !important;
-  line-height: 1.609 !important;
-  letter-spacing: 0.0015em !important;
-  @variant md {
-    font-size: 1.625rem !important;
-    line-height: 1.615 !important;
-  }
-}
-@utility typography-heading-sm {
-  font-size: 1.25rem !important;
-  font-weight: 300 !important;
-  line-height: 1.75 !important;
-  letter-spacing: 0.0015em !important;
-
-  @variant md {
-    font-size: 1.4375rem !important;
-    line-height: 1.609 !important;
-  }
-}
-@utility typography-heading-xs {
-  font-size: 1.125rem !important;
-  font-weight: 300 !important;
-  line-height: 1.778 !important;
-  letter-spacing: 0.0015em !important;
-  @variant md {
-    font-size: 1.25rem !important;
-    line-height: 1.75 !important;
-  }
-}
-@utility typography-heading-xxs {
-  font-size: 1.125rem !important;
-  font-weight: 300 !important;
-  line-height: 1.778 !important;
-  letter-spacing: 0.0015em !important;
-}
-@utility typography-body-lg {
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-}
-@utility typography-body-md {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-}
-@utility typography-body-sm {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-}
-@utility typography-body-xs {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
+/* ============================================
+ * THEME CONFIGURATION
+ * Map our custom fonts to Tailwind's theme
+ * ============================================ */
+@theme {
+  --font-sans: var(--font-diatype);
+  --font-mono: var(--font-diatype-mono);
+  --font-display: var(--font-tobias);
+  --font-ascii: var(--font-speakeasy), var(--font-diatype-mono), monospace;
 }
 
-@utility container {
-  padding-inline: 1rem;
-  margin-inline: auto;
-
-  @variant sm {
-    padding-inline: 0.5rem;
-  }
-
-  @variant md {
-    padding-inline: 1rem;
-  }
-
-  @variant lg {
-    padding-inline: 1.5rem;
-  }
-
-  @variant xl {
-    padding-inline: 2rem;
-  }
-
-  @variant 2xl {
-    padding-inline: 2.5rem;
-  }
-}
-
-@utility bg-mask {
-  background-image: linear-gradient(
-    to bottom,
-    var(--background) 0%,
-    var(--color-transparent) 5%,
-    var(--color-transparent) 95%,
-    var(--background) 100%
-  );
-}
-
-/*
-  Shadcn classes are deprecated and will be removed once we add the proper moonshine tokens
-*/
-
-:root {
-  /* Shadcn theme */
-  --radius: 0.375rem;
-
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(24 10% 10%);
-  --card: hsl(0 0% 98%);
-  --card-foreground: hsl(240 10% 4%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 4%);
-  --primary: hsl(240 6% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 6% 90%);
-  --secondary-foreground: hsl(240 6% 10%);
-  --muted: hsl(240 5% 96%);
-  --muted-foreground: hsl(240 5% 65);
-  --accent: hsl(240 6% 90%);
-  --accent-foreground: hsl(240 6% 10%);
-  --border: hsl(240 6% 90%);
-  --input: hsl(240 5% 84%);
-  --ring: hsl(217 91% 60%);
-  --chart-1: hsl(173 58% 39%);
-  --chart-2: hsl(12 76% 61%);
-  --chart-3: hsl(197 37% 24%);
-  --chart-4: hsl(43 74% 66%);
-  --chart-5: hsl(27 87% 67%);
-  --sidebar-foreground: hsl(240 5% 26%);
-  --sidebar-background: hsl(0 0% 98%);
-  --sidebar-primary: hsl(48 92% 47%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(40 5% 96%);
-  --sidebar-accent-foreground: hsl(240 6% 10%);
-  --sidebar-border: hsl(240 6% 90%);
-  --sidebar-ring: hsl(240 5% 65%);
-
-  --success: hsl(161 76% 27%);
-  --success-foreground: hsl(0 0% 98%);
-
-  --destructive: hsl(345 83% 41%);
-  --destructive-foreground: hsl(0 0% 98%);
-
-  --warning: hsl(26 89% 37%);
-  --warning-foreground: hsl(0 0% 98%);
-
-  --info: hsl(206 67% 38%);
-  --info-foreground: hsl(0 0% 98%);
-
-  --feature: hsl(263 70% 50%);
-  --feature-foreground: hsl(0 0% 98%);
-
-  /* TODO: Update these once we know what these map to in terms of generic tokens */
-  --score-low: hsl(350 89% 60%);
-  --score-mid: hsl(38 92% 50%);
-  --score-high: hsl(160 84% 39%);
-  --score-track: hsl(48 4% 28%);
-
-  /* Custom easing functions */
-  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
-  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
-  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
-
-  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
-  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
-  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
-  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
-
-  /* Moonshine tokens */
-  --color-accessibility: hsl(221 83% 53%);
-  --color-transparent: hsla(0 0% 0% / 0);
-
-  --color-neutral-50: hsl(240 10% 4%);
-  --color-neutral-100: hsl(240 6% 10%);
-  --color-neutral-200: hsl(240 4% 16%);
-  --color-neutral-300: hsl(240 4% 24%);
-  --color-neutral-400: hsl(240 5% 34%);
-  --color-neutral-500: hsl(240 4% 46%);
-  --color-neutral-600: hsl(240 5% 65%);
-  --color-neutral-800: hsl(240 6% 90%);
-  --color-neutral-900: hsl(240 5% 96%);
-  --color-neutral-950: hsl(0 0% 98%);
-
-  --color-brand-yellow-50: hsl(57 92% 95%);
-  --color-brand-yellow-100: hsl(58 93% 88%);
-  --color-brand-yellow-200: hsl(55 97% 77%);
-  --color-brand-yellow-300: hsl(53 96% 59%);
-  --color-brand-yellow-400: hsl(50 94% 53%);
-  --color-brand-yellow-500: hsl(48 92% 47%);
-  --color-brand-yellow-600: hsl(43 94% 40%);
-  --color-brand-yellow-700: hsl(38 90% 33%);
-  --color-brand-yellow-800: hsl(31 71% 26%);
-  --color-brand-yellow-900: hsl(29 67% 23%);
-  --color-brand-yellow-950: hsl(29 81% 14%);
-
-  --color-base-white: hsl(0 0% 100%);
-  --color-base-black: hsl(0 0% 0%);
-
-  --color-danger-fill: hsl(345 83% 41%);
-  --color-danger-text: hsl(350 89% 60%);
-  --color-feature-fill: hsl(263 70% 50%);
-  --color-feature-text: hsl(258 90% 66%);
-  --color-information-fill: hsl(224 76% 48%);
-  --color-information-text: hsl(217 91% 60%);
-  --color-success-fill: hsl(163 94% 24%);
-  --color-success-text: hsl(160 84% 39%);
-  --color-warning-fill: hsl(26 90% 37%);
-  --color-warning-text: hsl(46 97% 65%);
-
-  --color-link-default: hsl(198 93% 60%);
-  --color-link-visited-primary: hsl(200 98% 39%);
-  --color-link-visited-secondary: hsl(240 5% 65%);
-}
-
-.dark {
-  /* Shadcn theme */
-  --radius: 0.375rem;
-
-  --background: hsl(240 10% 4%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 6% 10%);
-  --card-foreground: hsl(60 9% 98%);
-  --popover: hsl(240 10% 4%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(240 5% 96%);
-  --primary-foreground: hsl(240 6% 10%);
-  --secondary: hsl(240 4% 16%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 6% 10%);
-  --muted-foreground: hsl(240 5% 65%);
-  --accent: hsl(240 6% 10%);
-  --accent-foreground: hsl(0 0% 98%);
-  --border: hsl(240 4% 16%);
-  --input: hsl(240 4% 16%);
-  --ring: hsl(217 91% 60%);
-  --chart-1: hsl(220 70% 50%);
-  --chart-2: hsl(340 75% 55%);
-  --chart-3: hsl(30 80% 55%);
-  --chart-4: hsl(280 65% 60%);
-  --chart-5: hsl(160 60% 45%);
-  --sidebar-background: hsl(240 10% 4%);
-  --sidebar-foreground: hsl(240 5% 96%);
-  --sidebar-primary: hsl(53 96% 59%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 6% 10%);
-  --sidebar-accent-foreground: hsl(240 5% 96%);
-  --sidebar-border: hsl(240 4% 16%);
-  --sidebar-ring: hsl(240 5% 84%);
-
-  --success: hsl(161 76% 27%);
-  --success-foreground: hsl(0 0% 98%);
-  --destructive: hsl(345 83% 41%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --warning: hsl(26 89% 37%);
-  --warning-foreground: hsl(0 0% 98%);
-  --info: hsl(206 67% 38%);
-  --info-foreground: hsl(0 0% 98%);
-  --feature: hsl(263 70% 50%);
-  --feature-foreground: hsl(0 0% 98%);
-
-  /* TODO: Update these once we know what these map to in terms of generic tokens */
-  --score-low: hsl(350 89% 60%);
-  --score-mid: hsl(38 92% 50%);
-  --score-high: hsl(160 84% 39%);
-  --score-track: hsl(48 4% 28%);
-
-  /* Dark override Moonshine tokens */
-  --color-neutral-50: hsl(0 0% 98%);
-  --color-neutral-100: hsl(240 5% 96%);
-  --color-neutral-200: hsl(240 6% 90%);
-  --color-neutral-300: hsl(240 5% 84%);
-  --color-neutral-400: hsl(240 5% 65%);
-  --color-neutral-500: hsl(240 4% 46%);
-  --color-neutral-600: hsl(240 5% 34%);
-  --color-neutral-800: hsl(240 4% 16%);
-  --color-neutral-900: hsl(240 6% 10%);
-  --color-neutral-950: hsl(240 10% 4%);
-}
-
-/* Theme configuration */
-@theme inline {
-  /* Moonshine Base Colors */
-  --color-base-white: var(--color-base-white);
-  --color-base-black: var(--color-base-black);
-
-  /* Moonshine Brand Colors */
-  --color-brand-yellow-50: var(--color-brand-yellow-50);
-  --color-brand-yellow-100: var(--color-brand-yellow-100);
-  --color-brand-yellow-200: var(--color-brand-yellow-200);
-  --color-brand-yellow-300: var(--color-brand-yellow-300);
-  --color-brand-yellow-400: var(--color-brand-yellow-400);
-  --color-brand-yellow-500: var(--color-brand-yellow-500);
-  --color-brand-yellow-600: var(--color-brand-yellow-600);
-  --color-brand-yellow-700: var(--color-brand-yellow-700);
-  --color-brand-yellow-800: var(--color-brand-yellow-800);
-  --color-brand-yellow-900: var(--color-brand-yellow-900);
-  --color-brand-yellow-950: var(--color-brand-yellow-950);
-
-  /* Moonshine Neutral Colors */
-  --color-neutral-50: var(--color-neutral-50);
-  --color-neutral-100: var(--color-neutral-100);
-  --color-neutral-200: var(--color-neutral-200);
-  --color-neutral-400: var(--color-neutral-400);
-  --color-neutral-500: var(--color-neutral-500);
-  --color-neutral-600: var(--color-neutral-600);
-  --color-neutral-800: var(--color-neutral-800);
-  --color-neutral-900: var(--color-neutral-900);
-  --color-neutral-950: var(--color-neutral-950);
-
-  /* Moonshine Semantic Colors */
-  --color-danger-fill: var(--color-danger-fill);
-  --color-danger-text: var(--color-danger-text);
-  --color-feature-fill: var(--color-feature-fill);
-  --color-feature-text: var(--color-feature-text);
-  --color-information-fill: var(--color-information-fill);
-  --color-information-text: var(--color-information-text);
-  --color-success-fill: var(--color-success-fill);
-  --color-success-text: var(--color-success-text);
-  --color-warning-fill: var(--color-warning-fill);
-  --color-warning-text: var(--color-warning-text);
-
-  /* Moonshine Link Colors */
-  --color-link-default: var(--color-link-default);
-  --color-link-visited-primary: var(--color-link-visited-primary);
-  --color-link-visited-secondary: var(--color-link-visited-secondary);
-
-  /* Moonshine Accessibility */
-  --color-accessibility: var(--color-accessibility);
-  --color-transparent: var(--color-transparent);
-
-  /* Existing theme configuration */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  /* Shadcn Colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  /* Moonshine Alert Colors */
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-info: var(--info);
-  --color-info-foreground: var(--info-foreground);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-feature: var(--feature);
-  --color-feature-foreground: var(--feature-foreground);
-
-  /* Moonshine Text Colors */
-  --color-heading-xl: var(--color-neutral-50);
-  --color-heading-lg: var(--color-neutral-50);
-  --color-heading-md: var(--color-neutral-50);
-  --color-heading-sm: var(--color-neutral-100);
-  --color-heading-xs: var(--color-neutral-100);
-  --color-body: var(--color-neutral-200);
-  --color-body-muted: var(--color-neutral-400);
-
-  /* Moonshine Link Colors */
-  --color-link: var(--color-link-default);
-  --color-link-secondary: var(--color-neutral-200);
-  --color-link-visited-primary: var(--color-link-visited-primary);
-  --color-link-visited-secondary: var(--color-link-visited-secondary);
-
-  /* Animation */
-  --keyframes-wiggle: {
-    0%,
-    100% {
-      transform: rotate(-1.5deg);
-    }
-    50% {
-      transform: rotate(1.5deg);
-    }
-  };
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
-
-  /* Moonshine Transition Timing Functions */
-  --ease-in-out-quad: var(--ease-in-out-quad);
-  --ease-in-out-cubic: var(--ease-in-out-cubic);
-  --ease-in-out-quart: var(--ease-in-out-quart);
-  --ease-in-out-quint: var(--ease-in-out-quint);
-  --ease-in-out-expo: var(--ease-in-out-expo);
-  --ease-in-out-circ: var(--ease-in-out-circ);
-
-  --ease-in-quad: var(--ease-in-quad);
-  --ease-in-cubic: var(--ease-in-cubic);
-  --ease-in-quart: var(--ease-in-quart);
-  --ease-in-quint: var(--ease-in-quint);
-  --ease-in-expo: var(--ease-in-expo);
-  --ease-in-circ: var(--ease-in-circ);
-
-  --ease-out-quad: var(--ease-out-quad);
-  --ease-out-cubic: var(--ease-out-cubic);
-  --ease-out-quart: var(--ease-out-quart);
-  --ease-out-quint: var(--ease-out-quint);
-  --ease-out-expo: var(--ease-out-expo);
-  --ease-out-circ: var(--ease-out-circ);
-}
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-
-  button:not(:disabled),
-  [role='button']:not(:disabled) {
-    cursor: pointer;
-  }
-
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-
-  :root {
-    --neutral-50-base: 0 0% 98%;
-    --neutral-100-base: 240 5% 96%;
-    --neutral-200-base: 240 6% 90%;
-    --neutral-400-base: 240 5% 65%;
-    --neutral-500-base: 240 4% 46%;
-    --neutral-600-base: 240 5% 34%;
-    --neutral-800-base: 240 4% 16%;
-    --neutral-900-base: 240 6% 10%;
-    --neutral-950-base: 240 10% 4%;
-  }
-
-  .dark {
-    --neutral-50-base: 240 10% 4%;
-    --neutral-100-base: 240 6% 10%;
-    --neutral-200-base: 240 4% 16%;
-    --neutral-400-base: 240 5% 34%;
-    --neutral-500-base: 240 4% 46%;
-    --neutral-600-base: 240 5% 65%;
-    --neutral-800-base: 240 6% 90%;
-    --neutral-900-base: 240 5% 96%;
-    --neutral-950-base: 0 0% 98%;
-  }
-}
-
-@layer utilities {
-  .devicon-devicon-plain {
-    max-width: 2em;
-  }
-
-  /* if you want to change the original color */
-  .devicon-devicon-plain path {
-    fill: var(--primary);
-  }
-
-  @keyframes slide-fade-in {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slide-fade-out {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-}

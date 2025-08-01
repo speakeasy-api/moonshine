@@ -92,9 +92,15 @@ export const Slim = ({
           <button
             id="brand"
             onClick={onHomeNavigation}
-            className="dark:text-primary text-black"
+            className="text-primary"
           >
-            <Logo variant="icon" className="size-6 fill-current" />
+            <Logo
+              variant={expanded ? 'wordmark' : 'icon'}
+              className={cn(
+                'fill-current',
+                expanded ? 'h-6 w-[166px]' : 'size-6'
+              )}
+            />
           </button>
         </div>
         <div className="relative left-2 flex w-full flex-col gap-5">
@@ -107,7 +113,9 @@ export const Slim = ({
                       <div
                         className={cn(
                           'flex cursor-pointer items-start gap-2',
-                          item.active ? 'text-foreground' : 'text-body-muted',
+                          item.active
+                            ? 'text-foreground'
+                            : 'text-muted-foreground',
                           item.disabled && 'cursor-not-allowed opacity-50'
                         )}
                         onClick={() => !item.disabled && onItemClick?.(item)}
@@ -156,7 +164,7 @@ export const Slim = ({
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="sm" onClick={onCollapse}>
-                  <Icon name="panel-left" className="text-body-muted" />
+                  <Icon name="panel-left" className="text-muted-foreground" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent

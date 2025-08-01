@@ -15,6 +15,10 @@
     "./moonshine.css": {
       "require": "./dist/style.css",
       "import": "./dist/style.css"
+    },
+    "./src/global.css": {
+      "require": "./src/global.css",
+      "import": "./src/global.css"
     }
   },
   "repository": {
@@ -22,7 +26,11 @@
     "url": "https://github.com/speakeasy-api/moonshine.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/global.css",
+    "src/base.css",
+    "src/utilities.css",
+    "types"
   ],
   "scripts": {
     "clean": "rimraf dist",
@@ -36,7 +44,9 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
-    "visualize": "npx vite-bundle-visualizer"
+    "visualize": "npx vite-bundle-visualizer",
+    "generate:docs": "node scripts/generate-utility-docs.js",
+    "postbuild": "pnpm generate:docs"
   },
   "author": "Speakeasy",
   "license": "ISC",

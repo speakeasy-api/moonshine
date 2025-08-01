@@ -71,7 +71,7 @@ const CodeEditorLayout = ({ children, className }: CodeEditorLayoutProps) => {
             <>
               {pane}
 
-              <PanelResizeHandle className="bg-muted" />
+              <PanelResizeHandle className="bg-background" />
             </>
           ) : (
             pane
@@ -114,7 +114,7 @@ const CodeEditorPane = ({
       {tabs}
       <div
         className={cn(
-          'bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card h-full flex-1 overflow-x-hidden overflow-y-scroll border',
+          'bg-background [&::-webkit-scrollbar-thumb]:bg-foreground/10 [&::-webkit-scrollbar-thumb]:hover:bg-foreground/20 [&::-webkit-scrollbar-track]:bg-card border-neutral-softest h-full flex-1 overflow-x-hidden overflow-y-scroll border',
           className
         )}
         ref={containerRef}
@@ -150,7 +150,7 @@ const CodeEditorTabs = ({
     <div
       {...props}
       className={cn(
-        'code-editor-tabs bg-background flex w-full flex-row overflow-x-scroll overflow-y-hidden border-b [&::-webkit-scrollbar]:hidden',
+        'code-editor-tabs bg-background border-neutral-softest flex w-full flex-row overflow-x-scroll overflow-y-hidden border-b [&::-webkit-scrollbar]:hidden',
         className
       )}
     >
