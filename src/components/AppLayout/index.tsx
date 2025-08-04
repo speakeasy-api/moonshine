@@ -9,6 +9,15 @@ import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
 import { motion } from 'framer-motion'
 import { Logo } from '../Logo'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipPortal,
+} from '../Tooltip'
+import { Key } from '../KeyHint'
+import { useAppLayoutKeys } from './keys'
 
 interface AppLayoutProps extends PropsWithChildren {
   className?: string
@@ -48,7 +57,7 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
         layout
         initial={{ width: collapsed ? '100%' : 'calc(100% - 240px)' }}
         animate={{ width: collapsed ? '100%' : 'calc(100% - 240px)' }}
-        transition={{ duration: 0.25, ease: 'anticipate' }}
+        transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
       >
         <div className="flex w-full flex-1 items-center border-b p-2">
           {surfaceHeader}
@@ -181,20 +190,40 @@ const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
   const [isHovered, setIsHovered] = useState(false)
-  const { collapsed, setCollapsed } = useAppLayout()
+  const { collapsed, setCollapsed, keybinds } = useAppLayout()
+  useAppLayoutKeys()
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <button
-        className="typography-body-md hover:bg-accent rounded-md p-1.5"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setCollapsed(!collapsed)}
-      >
-        <Icon
-          name="panel-left"
-          className={cn('text-muted size-4', isHovered && 'text-primary')}
-        />
-      </button>
+      <TooltipProvider>
+        <Tooltip delayDuration={500}>
+          <TooltipTrigger asChild>
+            <button
+              className="typography-body-md hover:bg-accent rounded-md p-1.5"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              <Icon
+                name="panel-left"
+                className={cn('text-muted size-4', isHovered && 'text-primary')}
+              />
+            </button>
+          </TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent
+              side="right"
+              className="!z-50 flex flex-row items-center gap-2 px-2 py-1"
+            >
+              <span>{keybinds.toggle.description}</span>
+              <div className="flex flex-row items-center gap-1">
+                <Key value="⌘" />
+                <span>+</span>
+                <Key value={keybinds.toggle.key} />
+              </div>
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   )
 }
@@ -202,16 +231,7 @@ const AppLayoutCollapseButton = ({
 AppLayoutCollapseButton.displayName = 'AppLayout.CollapseButton'
 
 const AppLayoutSurfaceHeader = ({ children }: PropsWithChildren) => {
-  const headerChildren = Children.toArray(children).filter((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return (
-      type.displayName === 'AppLayout.CollapseButton' ||
-      type.displayName === 'AppLayout.Breadcrumb' ||
-      type.displayName === 'AppLayout.HeaderDivider'
-    )
-  })
-  return <div className="flex items-center gap-3">{headerChildren}</div>
+  return <div className="flex w-full items-center gap-3">{children}</div>
 }
 
 AppLayoutSurfaceHeader.displayName = 'AppLayout.SurfaceHeader'
