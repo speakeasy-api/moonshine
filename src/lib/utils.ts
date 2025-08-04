@@ -69,3 +69,17 @@ export function getResponsiveClasses<T>(
  */
 export const toKebabCase = (string: string) =>
   string.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+
+export const partitionBy = <T>(
+  array: T[],
+  predicate: (item: T) => boolean
+): [T[], T[]] => {
+  return array.reduce(
+    (acc: [T[], T[]], item: T): [T[], T[]] => {
+      const key = predicate(item) ? 0 : 1
+      acc[key].push(item)
+      return acc
+    },
+    [[], []]
+  )
+}

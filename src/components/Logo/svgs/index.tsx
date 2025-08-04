@@ -9,7 +9,9 @@ export function Wordmark({ className, muted, ...props }: SvgProps) {
     <svg
       aria-label="Speakeasy Logo"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 166 24`}
+      shapeRendering="geometricPrecision"
+      textRendering="optimizeLegibility"
+      viewBox={`0 0 140 24`}
       preserveAspectRatio="xMidYMid meet"
       className={cn(
         muted ? 'text-foreground/80' : 'text-foreground dark:text-primary',
@@ -84,6 +86,8 @@ export function Logo({ className, muted, ...props }: SvgProps) {
     <svg
       width={24}
       height={24}
+      shapeRendering="geometricPrecision"
+      textRendering="optimizeLegibility"
       viewBox={`0 0 24 24`}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid meet"
