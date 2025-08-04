@@ -6,6 +6,8 @@ export function useAppLayoutKeys() {
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
+      console.log('event', event.metaKey, event.ctrlKey, event.key)
+      console.log('keybinds', keybinds.toggle.key)
       if (
         (event.metaKey || event.ctrlKey) &&
         event.key.toLowerCase() === keybinds.toggle.key.toLowerCase()
@@ -22,5 +24,5 @@ export function useAppLayoutKeys() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [keybinds, collapsed, setCollapsed])
+  }, [handleKeyDown])
 }

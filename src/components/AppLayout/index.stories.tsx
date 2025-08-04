@@ -38,7 +38,6 @@ const SurfaceContent = () => {
           A surface should have a tactile feel to it, like your first school
           diary. It should evoke a sense of nostalgia and warmth.
         </Text>
-        <Text variant="md">Some more bullshit text to fill the space.</Text>
       </div>
     </React.Fragment>
   )
@@ -104,6 +103,52 @@ export const Default: Story = {
   },
   render: (args) => (
     <AppLayoutProvider defaultCollapsed>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
+}
+
+export const WithHeader: Story = {
+  name: 'With Header',
+  args: {
+    children: [
+      <AppLayout.Header key="header" className="p-3">
+        <Text variant="sm">This layout is in beta.</Text>
+      </AppLayout.Header>,
+      <AppLayout.Sidebar key="sidebar">
+        {(collapsed) => (
+          <div className="flex flex-col">
+            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
+              <Icon name="house" className="size-6" strokeWidth={1.25} />
+              {collapsed ? null : <span>Home</span>}
+            </div>
+            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
+              <Icon name="settings" className="size-6" strokeWidth={1.25} />
+              {collapsed ? null : <span>Settings</span>}
+            </div>
+            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
+              <Icon name="users" className="size-6" strokeWidth={1.25} />
+              {collapsed ? null : <span>Users</span>}
+            </div>
+          </div>
+        )}
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <div className="mr-1 ml-auto flex items-center gap-3">
+          <Button variant="outline">
+            <Icon name="circle-plus" className="size-4" strokeWidth={1.25} />
+            <span>Add new</span>
+          </Button>
+        </div>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args) => (
+    <AppLayoutProvider>
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),

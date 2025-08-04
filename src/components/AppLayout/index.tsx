@@ -42,6 +42,13 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
     return type.displayName === 'AppLayout.SurfaceHeader'
   })
 
+  // primary header to render above the surface
+  const header = Children.toArray(children).find((child) => {
+    if (!isValidElement(child)) return false
+    const type = child.type as { displayName?: string }
+    return type.displayName === 'AppLayout.Header'
+  })
+
   const { collapsed } = useAppLayout()
 
   return (
@@ -51,19 +58,25 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
       {sidebar}
 
       <motion.div
-        className={cn(
-          'bg-surface-primary flex-1 overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
-        )}
         layout
-        initial={{ width: collapsed ? '100%' : 'calc(100% - 240px)' }}
-        animate={{ width: collapsed ? '100%' : 'calc(100% - 240px)' }}
+        className="flex w-full flex-1 flex-col"
+        initial={{ left: collapsed ? '100%' : '0' }}
+        animate={{ left: collapsed ? '100%' : '0' }}
         transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
       >
-        <div className="flex w-full flex-1 items-center border-b p-2">
-          {surfaceHeader}
-        </div>
+        {header}
 
-        {surface}
+        <div
+          className={cn(
+            'bg-surface-primary flex-1 overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
+          )}
+        >
+          <div className="flex w-full flex-1 items-center border-b p-2">
+            {surfaceHeader}
+          </div>
+
+          {surface}
+        </div>
       </motion.div>
     </div>
   )
@@ -211,11 +224,12 @@ const AppLayoutCollapseButton = ({
           </TooltipTrigger>
           <TooltipPortal>
             <TooltipContent
-              side="right"
+              side="bottom"
+              align="start"
               className="!z-50 flex flex-row items-center gap-2 px-2 py-1"
             >
               <span>{keybinds.toggle.description}</span>
-              <div className="flex flex-row items-center gap-1">
+              <div className="flex flex-row items-center gap-1 p-0.5">
                 <Key value="⌘" />
                 <span>+</span>
                 <Key value={keybinds.toggle.key} />
@@ -230,11 +244,36 @@ const AppLayoutCollapseButton = ({
 
 AppLayoutCollapseButton.displayName = 'AppLayout.CollapseButton'
 
-const AppLayoutSurfaceHeader = ({ children }: PropsWithChildren) => {
-  return <div className="flex w-full items-center gap-3">{children}</div>
+interface AppLayoutSurfaceHeaderProps extends PropsWithChildren {
+  className?: string
+}
+
+const AppLayoutSurfaceHeader = ({
+  children,
+  className,
+}: AppLayoutSurfaceHeaderProps) => {
+  return (
+    <div className={cn('flex w-full items-center gap-3', className)}>
+      {children}
+    </div>
+  )
 }
 
 AppLayoutSurfaceHeader.displayName = 'AppLayout.SurfaceHeader'
+
+interface AppLayoutHeaderProps extends PropsWithChildren {
+  className?: string
+}
+
+const AppLayoutHeader = ({ children, className }: AppLayoutHeaderProps) => {
+  return (
+    <div className={cn('flex w-full items-center gap-3', className)}>
+      {children}
+    </div>
+  )
+}
+
+AppLayoutHeader.displayName = 'AppLayout.Header'
 
 export const AppLayout = Object.assign(AppLayoutBase, {
   Surface: AppLayoutSurface,
@@ -244,4 +283,5 @@ export const AppLayout = Object.assign(AppLayoutBase, {
   BreadcrumbItem: AppLayoutBreadcrumbItem,
   CollapseButton: AppLayoutCollapseButton,
   HeaderDivider: AppLayoutHeaderDivider,
+  Header: AppLayoutHeader,
 })
