@@ -87,6 +87,7 @@ export const supportedLanguages = [
   'swift',
   'ruby',
   'postman',
+  'json',
 ] as const
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]
@@ -121,6 +122,8 @@ export function prettyLanguageName(language: SupportedLanguage) {
       return 'Terraform'
     case 'unity':
       return 'Unity'
+    case 'json':
+      return 'JSON'
     default:
       assertNever(language)
   }

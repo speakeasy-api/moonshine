@@ -46,6 +46,16 @@ puts users`,
 const users = sdk.getUsers()
 console.log(users)`,
   },
+  json: {
+    code: `{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe"
+    },
+  ]
+}`,
+  },
 }
 
 export const Default: Story = {

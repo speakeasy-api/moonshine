@@ -12,6 +12,7 @@ import PhpIcon from '@/assets/icons/languages/php.svg?react'
 import SwiftIcon from '@/assets/icons/languages/swift.svg?react'
 import RubyIcon from '@/assets/icons/languages/ruby.svg?react'
 import PostmanIcon from '@/assets/icons/languages/postman.svg?react'
+import JSONIcon from '@/assets/icons/languages/json.svg?react'
 import { cn } from '@/lib/utils'
 
 const sizeMap: Record<Size, number> = {
@@ -45,6 +46,7 @@ const icons: Record<
   swift: SwiftIcon,
   ruby: RubyIcon,
   postman: PostmanIcon,
+  json: JSONIcon,
 }
 
 export interface TargetLanguageIconProps {
