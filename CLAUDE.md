@@ -22,21 +22,24 @@ src/
 This file contains four main sections:
 
 1. **Primitive Tokens** - Raw design values (should not be used directly)
+
    ```css
    --color-neutral-200: hsl(0, 0%, 92%);
    --font-diatype: 'Diatype', -apple-system, ...;
    ```
 
 2. **Semantic/Utility Tokens** - Theme-aware variables that map to utilities
+
    ```css
    /* Light mode */
    --text-warning: var(--color-feedback-orange-700);
    --bg-warning: var(--color-feedback-orange-100);
-   
+
    /* Automatically switches in dark mode */
    ```
 
 3. **Component Tokens** - Higher-level semantic tokens
+
    ```css
    --radius: 0.625rem;
    --shadow: hsl(0 0% 50%);
@@ -67,14 +70,16 @@ Handles Tailwind configuration and imports:
 ### Why Custom Typography Utilities?
 
 Instead of allowing arbitrary combinations like:
+
 ```css
 /* ❌ Bad - leads to inconsistency */
 .heading {
-  @apply text-[1.813rem] leading-[1.5] tracking-[0.0015em] font-light;
+  @apply text-[1.813rem] leading-[1.5] font-light tracking-[0.0015em];
 }
 ```
 
 We provide semantic utilities:
+
 ```css
 /* ✅ Good - enforces design system */
 .heading {
@@ -98,6 +103,7 @@ The "utility tokens" pattern in base.css enables automatic theme switching:
 ### Preventing Design System Escape Hatches
 
 We intentionally:
+
 - Don't expose raw color values as utilities
 - Provide complete typography utilities (not individual properties)
 - Use semantic naming to guide correct usage
@@ -119,1638 +125,1403 @@ We intentionally:
 ### Extending Responsive Utilities
 
 Add new `@source` declarations in global.css:
+
 ```css
-@source inline("{,sm:,md:,lg:,xl:,2xl:}your-utility-{value1,value2}");
+/* Format: @source inline("{breakpoints}{utility-name}{values}"); */
+@source inline("{,sm:,md:,lg:,xl:,2xl:}your-utility-{small,medium,large}");
 ```
+
+**Example - Creating responsive margin utilities:**
+
+```css
+@source inline("{,sm:,md:,lg:,xl:,2xl:}m-{0,1,2,4,8,16}");
+```
+
+This generates classes like: `m-0`, `sm:m-0`, `md:m-2`, `lg:m-8`, etc.
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-07-25T19:46:22.449Z
+This section is auto-generated from the CSS files. Last updated: 2025-08-05T10:11:38.811Z
 
 ### Typography Utilities
 
-#### `typography-heading-xl`
-
-```css
-.typography-heading-xl {
-  font-size: 2.063rem;
-  font-weight: 300;
-  line-height: 1.375;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-heading-lg`
-
-```css
-.typography-heading-lg {
-  font-size: 1.813rem;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-heading-md`
-
-```css
-.typography-heading-md {
-  font-size: 1.625rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-heading-sm`
-
-```css
-.typography-heading-sm {
-  font-size: 1.438rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-heading-xs`
-
-```css
-.typography-heading-xs {
-  font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-heading-xxs`
-
-```css
-.typography-heading-xxs {
-  font-size: 1.125rem;
-  font-weight: 300;
-  line-height: 1.778;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-body-lg`
-
-```css
-.typography-body-lg {
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-body-md`
-
-```css
-.typography-body-md {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-body-sm`
-
-```css
-.typography-body-sm {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-}
-```
-
-#### `typography-body-xs`
-
-```css
-.typography-body-xs {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-}
-```
-
 #### `text-display-2xl`
 
-```css
-.text-display-2xl {
-  font-size: 11.375rem;
-  font-weight: 100;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-2xl')}>
+Hello world
+</p>
 ```
 
 #### `text-display-xl`
 
-```css
-.text-display-xl {
-  font-size: 5.625rem;
-  font-weight: 100;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-xl')}>
+Hello world
+</p>
 ```
 
 #### `text-display-lg`
 
-```css
-.text-display-lg {
-  font-size: 4.188rem;
-  font-weight: 100;
-  line-height: 1.2;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-lg')}>
+Hello world
+</p>
 ```
 
 #### `text-display-md`
 
-```css
-.text-display-md {
-  font-size: 3.188rem;
-  font-weight: 100;
-  line-height: 1.3;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-md')}>
+Hello world
+</p>
 ```
 
 #### `text-display-sm`
 
-```css
-.text-display-sm {
-  font-size: 2.375rem;
-  font-weight: 100;
-  line-height: 1.375;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-sm')}>
+Hello world
+</p>
 ```
 
 #### `text-display-xs`
 
-```css
-.text-display-xs {
-  font-size: 1.75rem;
-  font-weight: 100;
-  line-height: 1.4;
-  letter-spacing: -0.04em;
-  font-family: var(--font-tobias);
-  color: var(--text-display);
-}
+```tsx
+<p className={cn('text-display-xs')}>
+Hello world
+</p>
 ```
 
 #### `text-heading-xl`
 
-```css
-.text-heading-xl {
-  font-size: 2.063rem;
-  font-weight: 300;
-  line-height: 1.375;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-  color: var(--text-heading-xl);
-}
+```tsx
+<p className={cn('text-heading-xl')}>
+Hello world
+</p>
 ```
 
 #### `text-heading-lg`
 
-```css
-.text-heading-lg {
-  font-size: 1.813rem;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-  color: var(--text-heading-lg);
-}
+```tsx
+<p className={cn('text-heading-lg')}>
+Hello world
+</p>
 ```
 
 #### `text-heading-md`
 
-```css
-.text-heading-md {
-  font-size: 1.625rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-  color: var(--text-heading-md);
-}
+```tsx
+<p className={cn('text-heading-md')}>
+Hello world
+</p>
 ```
 
 #### `text-heading-sm`
 
-```css
-.text-heading-sm {
-  font-size: 1.438rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-  color: var(--text-heading-sm);
-}
+```tsx
+<p className={cn('text-heading-sm')}>
+Hello world
+</p>
 ```
 
 #### `text-heading-xs`
 
-```css
-.text-heading-xs {
-  font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.0015em;
-  font-family: var(--font-diatype);
-  color: var(--text-heading-xs);
-}
+```tsx
+<p className={cn('text-heading-xs')}>
+Hello world
+</p>
 ```
 
 #### `text-body-lg`
 
-```css
-.text-body-lg {
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-body-lg')}>
+Hello world
+</p>
 ```
 
 #### `text-body-md`
 
-```css
-.text-body-md {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-body-md')}>
+Hello world
+</p>
 ```
 
 #### `text-body-sm`
 
-```css
-.text-body-sm {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-body-sm')}>
+Hello world
+</p>
 ```
 
 #### `text-body-xs`
 
-```css
-.text-body-xs {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-body-xs')}>
+Hello world
+</p>
 ```
 
 #### `text-codeline-md`
 
-```css
-.text-codeline-md {
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype-mono);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-codeline-md')}>
+Hello world
+</p>
 ```
 
 #### `text-codeline-sm`
 
-```css
-.text-codeline-sm {
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype-mono);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-codeline-sm')}>
+Hello world
+</p>
 ```
 
 #### `text-codeline-xs`
 
-```css
-.text-codeline-xs {
-  font-size: 0.75rem;
-  font-weight: 300;
-  line-height: 1.7;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype-mono);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-codeline-xs')}>
+Hello world
+</p>
 ```
 
 #### `text-button-md`
 
-```css
-.text-button-md {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-button-md')}>
+Hello world
+</p>
 ```
 
 #### `text-button-sm`
 
-```css
-.text-button-sm {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-button-sm')}>
+Hello world
+</p>
 ```
 
 #### `text-button-xs`
 
-```css
-.text-button-xs {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.0025em;
-  font-family: var(--font-diatype);
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-button-xs')}>
+Hello world
+</p>
 ```
 
 #### `text-highlight`
 
-```css
-.text-highlight {
-  color: var(--text-highlight);
-}
+```tsx
+<p className={cn('text-highlight')}>
+Hello world
+</p>
 ```
 
 #### `text-default`
 
-```css
-.text-default {
-  color: var(--text-default);
-}
+```tsx
+<p className={cn('text-default')}>
+Hello world
+</p>
 ```
 
 #### `text-muted`
 
-```css
-.text-muted {
-  color: var(--text-muted);
-}
+```tsx
+<p className={cn('text-muted')}>
+Hello world
+</p>
 ```
 
 #### `text-placeholder`
 
-```css
-.text-placeholder {
-  color: var(--text-placeholder);
-}
+```tsx
+<p className={cn('text-placeholder')}>
+Hello world
+</p>
 ```
 
 #### `text-disabled`
 
-```css
-.text-disabled {
-  color: var(--text-disabled);
-}
+```tsx
+<p className={cn('text-disabled')}>
+Hello world
+</p>
 ```
 
 #### `text-highlight-fixed-dark`
 
-```css
-.text-highlight-fixed-dark {
-  color: var(--text-highlight-fixed-dark);
-}
+```tsx
+<p className={cn('text-highlight-fixed-dark')}>
+Hello world
+</p>
 ```
 
 #### `text-default-fixed-dark`
 
-```css
-.text-default-fixed-dark {
-  color: var(--text-default-fixed-dark);
-}
+```tsx
+<p className={cn('text-default-fixed-dark')}>
+Hello world
+</p>
 ```
 
 #### `text-muted-fixed-dark`
 
-```css
-.text-muted-fixed-dark {
-  color: var(--text-muted-fixed-dark);
-}
+```tsx
+<p className={cn('text-muted-fixed-dark')}>
+Hello world
+</p>
 ```
 
 #### `text-highlight-fixed-light`
 
-```css
-.text-highlight-fixed-light {
-  color: var(--text-highlight-fixed-light);
-}
+```tsx
+<p className={cn('text-highlight-fixed-light')}>
+Hello world
+</p>
 ```
 
 #### `text-default-fixed-light`
 
-```css
-.text-default-fixed-light {
-  color: var(--text-default-fixed-light);
-}
+```tsx
+<p className={cn('text-default-fixed-light')}>
+Hello world
+</p>
 ```
 
 #### `text-muted-fixed-light`
 
-```css
-.text-muted-fixed-light {
-  color: var(--text-muted-fixed-light);
-}
+```tsx
+<p className={cn('text-muted-fixed-light')}>
+Hello world
+</p>
 ```
 
 #### `text-highlight-inverse`
 
-```css
-.text-highlight-inverse {
-  color: var(--text-highlight-inverse);
-}
+```tsx
+<p className={cn('text-highlight-inverse')}>
+Hello world
+</p>
 ```
 
 #### `text-default-inverse`
 
-```css
-.text-default-inverse {
-  color: var(--text-default-inverse);
-}
+```tsx
+<p className={cn('text-default-inverse')}>
+Hello world
+</p>
 ```
 
 #### `text-muted-inverse`
 
-```css
-.text-muted-inverse {
-  color: var(--text-muted-inverse);
-}
+```tsx
+<p className={cn('text-muted-inverse')}>
+Hello world
+</p>
 ```
 
 #### `text-link-primary`
 
-```css
-.text-link-primary {
-  color: var(--text-link-primary);
-}
+```tsx
+<p className={cn('text-link-primary')}>
+Hello world
+</p>
 ```
 
 #### `text-link-secondary`
 
-```css
-.text-link-secondary {
-  color: var(--text-link-secondary);
-}
+```tsx
+<p className={cn('text-link-secondary')}>
+Hello world
+</p>
 ```
 
 #### `text-link-visited`
 
-```css
-.text-link-visited {
-  color: var(--text-link-visited);
-}
+```tsx
+<p className={cn('text-link-visited')}>
+Hello world
+</p>
 ```
 
 #### `text-default-destructive`
 
-```css
-.text-default-destructive {
-  color: var(--text-default-destructive);
-}
+```tsx
+<p className={cn('text-default-destructive')}>
+Hello world
+</p>
 ```
 
 #### `text-link-destructive`
 
-```css
-.text-link-destructive {
-  color: var(--text-link-destructive);
-}
+```tsx
+<p className={cn('text-link-destructive')}>
+Hello world
+</p>
 ```
 
 #### `text-default-information`
 
-```css
-.text-default-information {
-  color: var(--text-default-information);
-}
+```tsx
+<p className={cn('text-default-information')}>
+Hello world
+</p>
 ```
 
 #### `text-link-information`
 
-```css
-.text-link-information {
-  color: var(--text-link-information);
-}
+```tsx
+<p className={cn('text-link-information')}>
+Hello world
+</p>
 ```
 
 #### `text-default-success`
 
-```css
-.text-default-success {
-  color: var(--text-default-success);
-}
+```tsx
+<p className={cn('text-default-success')}>
+Hello world
+</p>
 ```
 
 #### `text-link-success`
 
-```css
-.text-link-success {
-  color: var(--text-link-success);
-}
+```tsx
+<p className={cn('text-link-success')}>
+Hello world
+</p>
 ```
 
 #### `text-default-warning`
 
-```css
-.text-default-warning {
-  color: var(--text-default-warning);
-}
+```tsx
+<p className={cn('text-default-warning')}>
+Hello world
+</p>
 ```
 
 #### `text-link-warning`
 
-```css
-.text-link-warning {
-  color: var(--text-link-warning);
-}
+```tsx
+<p className={cn('text-link-warning')}>
+Hello world
+</p>
 ```
 
 #### `text-warning`
 
-```css
-.text-warning {
-  color: var(--text-warning);
-}
+```tsx
+<p className={cn('text-warning')}>
+Hello world
+</p>
 ```
 
 ### Background Utilities
 
 #### `bg-mask`
 
-```css
-.bg-mask {
-  background-image: linear-gradient(
-    to bottom,
-    var(--background) 0%,
-    var(--color-transparent) 5%,
-    var(--color-transparent) 95%,
-    var(--background) 100%
-  );
-}
+```tsx
+<div className={cn('bg-mask')}>
+Hello world
+</div>
 ```
 
 #### `bg-gradient-primary`
 
-```css
-.bg-gradient-primary {
-  background: var(--gradient-brand-primary);
-}
+```tsx
+<div className={cn('bg-gradient-primary')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-primary`
 
-```css
-.bg-surface-primary {
-  background-color: var(--color-base-white);
-
-  /* dark variant */
-    background-color: var(--color-base-black);
-}
+```tsx
+<div className={cn('bg-surface-primary')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-secondary`
 
-```css
-.bg-surface-secondary {
-  background-color: var(--color-neutral-100);
-}
+```tsx
+<div className={cn('bg-surface-secondary')}>
+Hello world
+</div>
 ```
 
 #### `bg-warning`
 
-```css
-.bg-warning {
-  background-color: var(--bg-warning);
-}
+```tsx
+<div className={cn('bg-warning')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-primary-default`
 
-```css
-.bg-surface-primary-default {
-  background-color: var(--bg-surface-primary-default);
-}
+```tsx
+<div className={cn('bg-surface-primary-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-primary-inverse`
 
-```css
-.bg-surface-primary-inverse {
-  background-color: var(--bg-surface-primary-inverse);
-}
+```tsx
+<div className={cn('bg-surface-primary-inverse')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-secondary-default`
 
-```css
-.bg-surface-secondary-default {
-  background-color: var(--bg-surface-secondary-default);
-}
+```tsx
+<div className={cn('bg-surface-secondary-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-secondary-inverse`
 
-```css
-.bg-surface-secondary-inverse {
-  background-color: var(--bg-surface-secondary-inverse);
-}
+```tsx
+<div className={cn('bg-surface-secondary-inverse')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-tertiary-default`
 
-```css
-.bg-surface-tertiary-default {
-  background-color: var(--bg-surface-tertiary-default);
-}
+```tsx
+<div className={cn('bg-surface-tertiary-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-tertiary-inverse`
 
-```css
-.bg-surface-tertiary-inverse {
-  background-color: var(--bg-surface-tertiary-inverse);
-}
+```tsx
+<div className={cn('bg-surface-tertiary-inverse')}>
+Hello world
+</div>
 ```
 
 #### `bg-highlight`
 
-```css
-.bg-highlight {
-  background-color: var(--bg-highlight);
-}
+```tsx
+<div className={cn('bg-highlight')}>
+Hello world
+</div>
 ```
 
 #### `bg-active`
 
-```css
-.bg-active {
-  background-color: var(--bg-active);
-}
+```tsx
+<div className={cn('bg-active')}>
+Hello world
+</div>
 ```
 
 #### `bg-default`
 
-```css
-.bg-default {
-  background-color: var(--bg-default);
-}
+```tsx
+<div className={cn('bg-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-muted`
 
-```css
-.bg-muted {
-  background-color: var(--bg-muted);
-}
+```tsx
+<div className={cn('bg-muted')}>
+Hello world
+</div>
 ```
 
 #### `bg-inset`
 
-```css
-.bg-inset {
-  background-color: var(--bg-inset);
-}
+```tsx
+<div className={cn('bg-inset')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-primary-fixed-light`
 
-```css
-.bg-surface-primary-fixed-light {
-  background-color: var(--bg-surface-primary-fixed-light);
-}
+```tsx
+<div className={cn('bg-surface-primary-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-secondary-fixed-light`
 
-```css
-.bg-surface-secondary-fixed-light {
-  background-color: var(--bg-surface-secondary-fixed-light);
-}
+```tsx
+<div className={cn('bg-surface-secondary-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-tertiary-fixed-light`
 
-```css
-.bg-surface-tertiary-fixed-light {
-  background-color: var(--bg-surface-tertiary-fixed-light);
-}
+```tsx
+<div className={cn('bg-surface-tertiary-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-primary-fixed-dark`
 
-```css
-.bg-surface-primary-fixed-dark {
-  background-color: var(--bg-surface-primary-fixed-dark);
-}
+```tsx
+<div className={cn('bg-surface-primary-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-secondary-fixed-dark`
 
-```css
-.bg-surface-secondary-fixed-dark {
-  background-color: var(--bg-surface-secondary-fixed-dark);
-}
+```tsx
+<div className={cn('bg-surface-secondary-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `bg-surface-tertiary-fixed-dark`
 
-```css
-.bg-surface-tertiary-fixed-dark {
-  background-color: var(--bg-surface-tertiary-fixed-dark);
-}
+```tsx
+<div className={cn('bg-surface-tertiary-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `bg-destructive-highlight`
 
-```css
-.bg-destructive-highlight {
-  background-color: var(--bg-destructive-highlight);
-}
+```tsx
+<div className={cn('bg-destructive-highlight')}>
+Hello world
+</div>
 ```
 
 #### `bg-destructive-default`
 
-```css
-.bg-destructive-default {
-  background-color: var(--bg-destructive-default);
-}
+```tsx
+<div className={cn('bg-destructive-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-destructive-muted`
 
-```css
-.bg-destructive-muted {
-  background-color: var(--bg-destructive-muted);
-}
+```tsx
+<div className={cn('bg-destructive-muted')}>
+Hello world
+</div>
 ```
 
 #### `bg-destructive-softest`
 
-```css
-.bg-destructive-softest {
-  background-color: var(--bg-destructive-softest);
-}
+```tsx
+<div className={cn('bg-destructive-softest')}>
+Hello world
+</div>
 ```
 
 #### `bg-information-highlight`
 
-```css
-.bg-information-highlight {
-  background-color: var(--bg-information-highlight);
-}
+```tsx
+<div className={cn('bg-information-highlight')}>
+Hello world
+</div>
 ```
 
 #### `bg-information-default`
 
-```css
-.bg-information-default {
-  background-color: var(--bg-information-default);
-}
+```tsx
+<div className={cn('bg-information-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-information-muted`
 
-```css
-.bg-information-muted {
-  background-color: var(--bg-information-muted);
-}
+```tsx
+<div className={cn('bg-information-muted')}>
+Hello world
+</div>
 ```
 
 #### `bg-information-softest`
 
-```css
-.bg-information-softest {
-  background-color: var(--bg-information-softest);
-}
+```tsx
+<div className={cn('bg-information-softest')}>
+Hello world
+</div>
 ```
 
 #### `bg-success-highlight`
 
-```css
-.bg-success-highlight {
-  background-color: var(--bg-success-highlight);
-}
+```tsx
+<div className={cn('bg-success-highlight')}>
+Hello world
+</div>
 ```
 
 #### `bg-success-default`
 
-```css
-.bg-success-default {
-  background-color: var(--bg-success-default);
-}
+```tsx
+<div className={cn('bg-success-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-success-muted`
 
-```css
-.bg-success-muted {
-  background-color: var(--bg-success-muted);
-}
+```tsx
+<div className={cn('bg-success-muted')}>
+Hello world
+</div>
 ```
 
 #### `bg-success-softest`
 
-```css
-.bg-success-softest {
-  background-color: var(--bg-success-softest);
-}
+```tsx
+<div className={cn('bg-success-softest')}>
+Hello world
+</div>
 ```
 
 #### `bg-warning-highlight`
 
-```css
-.bg-warning-highlight {
-  background-color: var(--bg-warning-highlight);
-}
+```tsx
+<div className={cn('bg-warning-highlight')}>
+Hello world
+</div>
 ```
 
 #### `bg-warning-default`
 
-```css
-.bg-warning-default {
-  background-color: var(--bg-warning-default);
-}
+```tsx
+<div className={cn('bg-warning-default')}>
+Hello world
+</div>
 ```
 
 #### `bg-warning-muted`
 
-```css
-.bg-warning-muted {
-  background-color: var(--bg-warning-muted);
-}
+```tsx
+<div className={cn('bg-warning-muted')}>
+Hello world
+</div>
 ```
 
 #### `bg-warning-softest`
 
-```css
-.bg-warning-softest {
-  background-color: var(--bg-warning-softest);
-}
+```tsx
+<div className={cn('bg-warning-softest')}>
+Hello world
+</div>
 ```
 
 ### Border Utilities
 
 #### `border-gradient-primary`
 
-```css
-.border-gradient-primary {
-  border-image: var(--gradient-brand-primary) 1;
-}
+```tsx
+<div className={cn('border-gradient-primary')}>
+Hello world
+</div>
 ```
 
 #### `border-warning`
 
-```css
-.border-warning {
-  border-color: var(--border-warning);
-  border-width: 1px;
-  border-style: solid;
-}
+```tsx
+<div className={cn('border-warning')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-active`
 
-```css
-.border-neutral-active {
-  border-color: var(--border-neutral-active);
-}
+```tsx
+<div className={cn('border-neutral-active')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-hover`
 
-```css
-.border-neutral-hover {
-  border-color: var(--border-neutral-hover);
-}
+```tsx
+<div className={cn('border-neutral-hover')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-default`
 
-```css
-.border-neutral-default {
-  border-color: var(--border-neutral-default);
-}
+```tsx
+<div className={cn('border-neutral-default')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-disabled`
 
-```css
-.border-neutral-disabled {
-  border-color: var(--border-neutral-disabled);
-  opacity: 0.4;
-}
+```tsx
+<div className={cn('border-neutral-disabled')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-softest`
 
-```css
-.border-neutral-softest {
-  border-color: var(--border-neutral-softest);
-}
+```tsx
+<div className={cn('border-neutral-softest')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-inset`
 
-```css
-.border-neutral-inset {
-  border-color: var(--border-neutral-inset);
-}
+```tsx
+<div className={cn('border-neutral-inset')}>
+Hello world
+</div>
 ```
 
 #### `border-neutral-alpha`
 
-```css
-.border-neutral-alpha {
-  border-color: var(--border-neutral-alpha);
-}
+```tsx
+<div className={cn('border-neutral-alpha')}>
+Hello world
+</div>
 ```
 
 #### `border-destructive-highlight`
 
-```css
-.border-destructive-highlight {
-  border-color: var(--border-destructive-highlight);
-}
+```tsx
+<div className={cn('border-destructive-highlight')}>
+Hello world
+</div>
 ```
 
 #### `border-destructive-default`
 
-```css
-.border-destructive-default {
-  border-color: var(--border-destructive-default);
-}
+```tsx
+<div className={cn('border-destructive-default')}>
+Hello world
+</div>
 ```
 
 #### `border-destructive-muted`
 
-```css
-.border-destructive-muted {
-  border-color: var(--border-destructive-muted);
-}
+```tsx
+<div className={cn('border-destructive-muted')}>
+Hello world
+</div>
 ```
 
 #### `border-destructive-softest`
 
-```css
-.border-destructive-softest {
-  border-color: var(--border-destructive-softest);
-}
+```tsx
+<div className={cn('border-destructive-softest')}>
+Hello world
+</div>
 ```
 
 #### `border-information-highlight`
 
-```css
-.border-information-highlight {
-  border-color: var(--border-information-highlight);
-}
+```tsx
+<div className={cn('border-information-highlight')}>
+Hello world
+</div>
 ```
 
 #### `border-information-default`
 
-```css
-.border-information-default {
-  border-color: var(--border-information-default);
-}
+```tsx
+<div className={cn('border-information-default')}>
+Hello world
+</div>
 ```
 
 #### `border-information-muted`
 
-```css
-.border-information-muted {
-  border-color: var(--border-information-muted);
-}
+```tsx
+<div className={cn('border-information-muted')}>
+Hello world
+</div>
 ```
 
 #### `border-information-softest`
 
-```css
-.border-information-softest {
-  border-color: var(--border-information-softest);
-}
+```tsx
+<div className={cn('border-information-softest')}>
+Hello world
+</div>
 ```
 
 #### `border-success-highlight`
 
-```css
-.border-success-highlight {
-  border-color: var(--border-success-highlight);
-}
+```tsx
+<div className={cn('border-success-highlight')}>
+Hello world
+</div>
 ```
 
 #### `border-success-default`
 
-```css
-.border-success-default {
-  border-color: var(--border-success-default);
-}
+```tsx
+<div className={cn('border-success-default')}>
+Hello world
+</div>
 ```
 
 #### `border-success-muted`
 
-```css
-.border-success-muted {
-  border-color: var(--border-success-muted);
-}
+```tsx
+<div className={cn('border-success-muted')}>
+Hello world
+</div>
 ```
 
 #### `border-success-softest`
 
-```css
-.border-success-softest {
-  border-color: var(--border-success-softest);
-}
+```tsx
+<div className={cn('border-success-softest')}>
+Hello world
+</div>
 ```
 
 #### `border-warning-highlight`
 
-```css
-.border-warning-highlight {
-  border-color: var(--border-warning-highlight);
-}
+```tsx
+<div className={cn('border-warning-highlight')}>
+Hello world
+</div>
 ```
 
 #### `border-warning-default`
 
-```css
-.border-warning-default {
-  border-color: var(--border-warning-default);
-}
+```tsx
+<div className={cn('border-warning-default')}>
+Hello world
+</div>
 ```
 
 #### `border-warning-muted`
 
-```css
-.border-warning-muted {
-  border-color: var(--border-warning-muted);
-}
+```tsx
+<div className={cn('border-warning-muted')}>
+Hello world
+</div>
 ```
 
 #### `border-warning-softest`
 
-```css
-.border-warning-softest {
-  border-color: var(--border-warning-softest);
-}
+```tsx
+<div className={cn('border-warning-softest')}>
+Hello world
+</div>
 ```
 
 #### `border-focus`
 
-```css
-.border-focus {
-  border-color: var(--border-focus);
-}
+```tsx
+<div className={cn('border-focus')}>
+Hello world
+</div>
 ```
 
 ### Other Utilities
 
 #### `container`
 
-```css
-.container {
-  padding-inline: 1rem;
-  margin-inline: auto;
-}
+```tsx
+<div className={cn('container')}>
+Hello world
+</div>
 ```
 
 #### `underline-link-primary`
 
-```css
-.underline-link-primary {
-  color: var(--underline-link-primary);
-  text-decoration: underline;
-  text-underline-offset: 0.125rem;
-}
+```tsx
+<div className={cn('underline-link-primary')}>
+Hello world
+</div>
 ```
 
 #### `underline-link-secondary`
 
-```css
-.underline-link-secondary {
-  color: var(--underline-link-secondary);
-  text-decoration: underline;
-  text-underline-offset: 0.125rem;
-}
+```tsx
+<div className={cn('underline-link-secondary')}>
+Hello world
+</div>
 ```
 
 #### `underline-link-visited`
 
-```css
-.underline-link-visited {
-  color: var(--underline-link-visited);
-  text-decoration: underline;
-  text-underline-offset: 0.125rem;
-}
+```tsx
+<div className={cn('underline-link-visited')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-highlight`
 
-```css
-.fill-neutral-highlight {
-  fill: var(--fill-neutral-highlight);
-}
+```tsx
+<div className={cn('fill-neutral-highlight')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-active`
 
-```css
-.fill-neutral-active {
-  fill: var(--fill-neutral-active);
-}
+```tsx
+<div className={cn('fill-neutral-active')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-default`
 
-```css
-.fill-neutral-default {
-  fill: var(--fill-neutral-default);
-}
+```tsx
+<div className={cn('fill-neutral-default')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-muted`
 
-```css
-.fill-neutral-muted {
-  fill: var(--fill-neutral-muted);
-}
+```tsx
+<div className={cn('fill-neutral-muted')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-highlight-fixed-dark`
 
-```css
-.fill-neutral-highlight-fixed-dark {
-  fill: var(--fill-neutral-highlight-fixed-dark);
-}
+```tsx
+<div className={cn('fill-neutral-highlight-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-default-fixed-dark`
 
-```css
-.fill-neutral-default-fixed-dark {
-  fill: var(--fill-neutral-default-fixed-dark);
-}
+```tsx
+<div className={cn('fill-neutral-default-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-muted-fixed-dark`
 
-```css
-.fill-neutral-muted-fixed-dark {
-  fill: var(--fill-neutral-muted-fixed-dark);
-}
+```tsx
+<div className={cn('fill-neutral-muted-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-highlight-fixed-light`
 
-```css
-.fill-neutral-highlight-fixed-light {
-  fill: var(--fill-neutral-highlight-fixed-light);
-}
+```tsx
+<div className={cn('fill-neutral-highlight-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-default-fixed-light`
 
-```css
-.fill-neutral-default-fixed-light {
-  fill: var(--fill-neutral-default-fixed-light);
-}
+```tsx
+<div className={cn('fill-neutral-default-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-muted-fixed-light`
 
-```css
-.fill-neutral-muted-fixed-light {
-  fill: var(--fill-neutral-muted-fixed-light);
-}
+```tsx
+<div className={cn('fill-neutral-muted-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-highlight-inverse`
 
-```css
-.fill-neutral-highlight-inverse {
-  fill: var(--fill-neutral-highlight-inverse);
-}
+```tsx
+<div className={cn('fill-neutral-highlight-inverse')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-default-inverse`
 
-```css
-.fill-neutral-default-inverse {
-  fill: var(--fill-neutral-default-inverse);
-}
+```tsx
+<div className={cn('fill-neutral-default-inverse')}>
+Hello world
+</div>
 ```
 
 #### `fill-neutral-muted-inverse`
 
-```css
-.fill-neutral-muted-inverse {
-  fill: var(--fill-neutral-muted-inverse);
-}
+```tsx
+<div className={cn('fill-neutral-muted-inverse')}>
+Hello world
+</div>
 ```
 
 #### `fill-link-primary`
 
-```css
-.fill-link-primary {
-  fill: var(--fill-link-primary);
-}
+```tsx
+<div className={cn('fill-link-primary')}>
+Hello world
+</div>
 ```
 
 #### `fill-link-secondary`
 
-```css
-.fill-link-secondary {
-  fill: var(--fill-link-secondary);
-}
+```tsx
+<div className={cn('fill-link-secondary')}>
+Hello world
+</div>
 ```
 
 #### `fill-link-visited`
 
-```css
-.fill-link-visited {
-  fill: var(--fill-link-visited);
-}
+```tsx
+<div className={cn('fill-link-visited')}>
+Hello world
+</div>
 ```
 
 #### `fill-destructive-highlight`
 
-```css
-.fill-destructive-highlight {
-  fill: var(--fill-destructive-highlight);
-}
+```tsx
+<div className={cn('fill-destructive-highlight')}>
+Hello world
+</div>
 ```
 
 #### `fill-destructive-default`
 
-```css
-.fill-destructive-default {
-  fill: var(--fill-destructive-default);
-}
+```tsx
+<div className={cn('fill-destructive-default')}>
+Hello world
+</div>
 ```
 
 #### `fill-destructive-muted`
 
-```css
-.fill-destructive-muted {
-  fill: var(--fill-destructive-muted);
-}
+```tsx
+<div className={cn('fill-destructive-muted')}>
+Hello world
+</div>
 ```
 
 #### `fill-information-highlight`
 
-```css
-.fill-information-highlight {
-  fill: var(--fill-information-highlight);
-}
+```tsx
+<div className={cn('fill-information-highlight')}>
+Hello world
+</div>
 ```
 
 #### `fill-information-default`
 
-```css
-.fill-information-default {
-  fill: var(--fill-information-default);
-}
+```tsx
+<div className={cn('fill-information-default')}>
+Hello world
+</div>
 ```
 
 #### `fill-information-muted`
 
-```css
-.fill-information-muted {
-  fill: var(--fill-information-muted);
-}
+```tsx
+<div className={cn('fill-information-muted')}>
+Hello world
+</div>
 ```
 
 #### `fill-success-highlight`
 
-```css
-.fill-success-highlight {
-  fill: var(--fill-success-highlight);
-}
+```tsx
+<div className={cn('fill-success-highlight')}>
+Hello world
+</div>
 ```
 
 #### `fill-success-default`
 
-```css
-.fill-success-default {
-  fill: var(--fill-success-default);
-}
+```tsx
+<div className={cn('fill-success-default')}>
+Hello world
+</div>
 ```
 
 #### `fill-success-muted`
 
-```css
-.fill-success-muted {
-  fill: var(--fill-success-muted);
-}
+```tsx
+<div className={cn('fill-success-muted')}>
+Hello world
+</div>
 ```
 
 #### `fill-warning-highlight`
 
-```css
-.fill-warning-highlight {
-  fill: var(--fill-warning-highlight);
-}
+```tsx
+<div className={cn('fill-warning-highlight')}>
+Hello world
+</div>
 ```
 
 #### `fill-warning-default`
 
-```css
-.fill-warning-default {
-  fill: var(--fill-warning-default);
-}
+```tsx
+<div className={cn('fill-warning-default')}>
+Hello world
+</div>
 ```
 
 #### `fill-warning-muted`
 
-```css
-.fill-warning-muted {
-  fill: var(--fill-warning-muted);
-}
+```tsx
+<div className={cn('fill-warning-muted')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-highlight`
 
-```css
-.stroke-neutral-highlight {
-  stroke: var(--stroke-neutral-highlight);
-}
+```tsx
+<div className={cn('stroke-neutral-highlight')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-active`
 
-```css
-.stroke-neutral-active {
-  stroke: var(--stroke-neutral-active);
-}
+```tsx
+<div className={cn('stroke-neutral-active')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-default`
 
-```css
-.stroke-neutral-default {
-  stroke: var(--stroke-neutral-default);
-}
+```tsx
+<div className={cn('stroke-neutral-default')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-muted`
 
-```css
-.stroke-neutral-muted {
-  stroke: var(--stroke-neutral-muted);
-}
+```tsx
+<div className={cn('stroke-neutral-muted')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-highlight-fixed-dark`
 
-```css
-.stroke-neutral-highlight-fixed-dark {
-  stroke: var(--stroke-neutral-highlight-fixed-dark);
-}
+```tsx
+<div className={cn('stroke-neutral-highlight-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-default-fixed-dark`
 
-```css
-.stroke-neutral-default-fixed-dark {
-  stroke: var(--stroke-neutral-default-fixed-dark);
-}
+```tsx
+<div className={cn('stroke-neutral-default-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-muted-fixed-dark`
 
-```css
-.stroke-neutral-muted-fixed-dark {
-  stroke: var(--stroke-neutral-muted-fixed-dark);
-}
+```tsx
+<div className={cn('stroke-neutral-muted-fixed-dark')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-highlight-fixed-light`
 
-```css
-.stroke-neutral-highlight-fixed-light {
-  stroke: var(--stroke-neutral-highlight-fixed-light);
-}
+```tsx
+<div className={cn('stroke-neutral-highlight-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-default-fixed-light`
 
-```css
-.stroke-neutral-default-fixed-light {
-  stroke: var(--stroke-neutral-default-fixed-light);
-}
+```tsx
+<div className={cn('stroke-neutral-default-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-muted-fixed-light`
 
-```css
-.stroke-neutral-muted-fixed-light {
-  stroke: var(--stroke-neutral-muted-fixed-light);
-}
+```tsx
+<div className={cn('stroke-neutral-muted-fixed-light')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-highlight-inverse`
 
-```css
-.stroke-neutral-highlight-inverse {
-  stroke: var(--stroke-neutral-highlight-inverse);
-}
+```tsx
+<div className={cn('stroke-neutral-highlight-inverse')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-default-inverse`
 
-```css
-.stroke-neutral-default-inverse {
-  stroke: var(--stroke-neutral-default-inverse);
-}
+```tsx
+<div className={cn('stroke-neutral-default-inverse')}>
+Hello world
+</div>
 ```
 
 #### `stroke-neutral-muted-inverse`
 
-```css
-.stroke-neutral-muted-inverse {
-  stroke: var(--stroke-neutral-muted-inverse);
-}
+```tsx
+<div className={cn('stroke-neutral-muted-inverse')}>
+Hello world
+</div>
 ```
 
 #### `stroke-link-primary`
 
-```css
-.stroke-link-primary {
-  stroke: var(--stroke-link-primary);
-}
+```tsx
+<div className={cn('stroke-link-primary')}>
+Hello world
+</div>
 ```
 
 #### `stroke-link-secondary`
 
-```css
-.stroke-link-secondary {
-  stroke: var(--stroke-link-secondary);
-}
+```tsx
+<div className={cn('stroke-link-secondary')}>
+Hello world
+</div>
 ```
 
 #### `stroke-link-visited`
 
-```css
-.stroke-link-visited {
-  stroke: var(--stroke-link-visited);
-}
+```tsx
+<div className={cn('stroke-link-visited')}>
+Hello world
+</div>
 ```
 
 #### `stroke-destructive-highlight`
 
-```css
-.stroke-destructive-highlight {
-  stroke: var(--stroke-destructive-highlight);
-}
+```tsx
+<div className={cn('stroke-destructive-highlight')}>
+Hello world
+</div>
 ```
 
 #### `stroke-destructive-default`
 
-```css
-.stroke-destructive-default {
-  stroke: var(--stroke-destructive-default);
-}
+```tsx
+<div className={cn('stroke-destructive-default')}>
+Hello world
+</div>
 ```
 
 #### `stroke-destructive-muted`
 
-```css
-.stroke-destructive-muted {
-  stroke: var(--stroke-destructive-muted);
-}
+```tsx
+<div className={cn('stroke-destructive-muted')}>
+Hello world
+</div>
 ```
 
 #### `stroke-information-highlight`
 
-```css
-.stroke-information-highlight {
-  stroke: var(--stroke-information-highlight);
-}
+```tsx
+<div className={cn('stroke-information-highlight')}>
+Hello world
+</div>
 ```
 
 #### `stroke-information-default`
 
-```css
-.stroke-information-default {
-  stroke: var(--stroke-information-default);
-}
+```tsx
+<div className={cn('stroke-information-default')}>
+Hello world
+</div>
 ```
 
 #### `stroke-information-muted`
 
-```css
-.stroke-information-muted {
-  stroke: var(--stroke-information-muted);
-}
+```tsx
+<div className={cn('stroke-information-muted')}>
+Hello world
+</div>
 ```
 
 #### `stroke-success-highlight`
 
-```css
-.stroke-success-highlight {
-  stroke: var(--stroke-success-highlight);
-}
+```tsx
+<div className={cn('stroke-success-highlight')}>
+Hello world
+</div>
 ```
 
 #### `stroke-success-default`
 
-```css
-.stroke-success-default {
-  stroke: var(--stroke-success-default);
-}
+```tsx
+<div className={cn('stroke-success-default')}>
+Hello world
+</div>
 ```
 
 #### `stroke-success-muted`
 
-```css
-.stroke-success-muted {
-  stroke: var(--stroke-success-muted);
-}
+```tsx
+<div className={cn('stroke-success-muted')}>
+Hello world
+</div>
 ```
 
 #### `stroke-warning-highlight`
 
-```css
-.stroke-warning-highlight {
-  stroke: var(--stroke-warning-highlight);
-}
+```tsx
+<div className={cn('stroke-warning-highlight')}>
+Hello world
+</div>
 ```
 
 #### `stroke-warning-default`
 
-```css
-.stroke-warning-default {
-  stroke: var(--stroke-warning-default);
-}
+```tsx
+<div className={cn('stroke-warning-default')}>
+Hello world
+</div>
 ```
 
 #### `stroke-warning-muted`
 
-```css
-.stroke-warning-muted {
-  stroke: var(--stroke-warning-muted);
-}
+```tsx
+<div className={cn('stroke-warning-muted')}>
+Hello world
+</div>
 ```
 
 ## Migration Notes
 
 - **Shadcn components**: Currently using deprecated tokens, will need updates
-- **Typography consolidation**: `typography-*` utilities should be removed in favor of `text-*`
 - **Raw color usage**: Audit and replace any `var(--color-neutral-*)` usage with semantic utilities
 
 ## Performance Considerations

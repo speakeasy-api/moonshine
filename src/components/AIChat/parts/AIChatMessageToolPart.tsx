@@ -44,7 +44,7 @@ export interface AIChatMessageToolPartComponents extends BaseComponents {
 }
 
 const inputResultClassName =
-  'typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground bg-muted'
+  'text-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground bg-muted'
 
 const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   toolName: ({ toolName, confirmMessage, className }) => (

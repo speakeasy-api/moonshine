@@ -37,7 +37,7 @@ export function AIChatMessageToolResultPart({
         </Text>
       </div>
       <div className="mt-2">
-        <pre className="typography-body-xs rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
+        <pre className="text-body-xs rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
           {content}
         </pre>
       </div>
