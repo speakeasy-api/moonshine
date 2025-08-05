@@ -108,7 +108,12 @@ export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
 export { Navbar, type NavbarProps, type NavItem } from '@/components/Navbar'
 export { Switch, type SwitchProps } from '@/components/Switch'
+
+// AppLayout
 export { AppLayout } from '@/components/AppLayout'
+export { AppLayoutProvider } from '@/components/AppLayout/provider'
+export { useAppLayout } from '@/hooks/useAppLayout'
+
 export { ActionBar, type ActionBarProps } from '@/components/ActionBar'
 export {
   Key,
