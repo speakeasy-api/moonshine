@@ -87,12 +87,20 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
 
 AppLayoutBase.displayName = 'AppLayout'
 
-interface AppLayoutSurfaceProps extends PropsWithChildren {
+interface AppLayoutSurfaceProps extends HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
-const AppLayoutSurface = ({ children, className }: AppLayoutSurfaceProps) => {
-  return <div className={cn('flex-1', className)}>{children}</div>
+const AppLayoutSurface = ({
+  children,
+  className,
+  ...props
+}: AppLayoutSurfaceProps) => {
+  return (
+    <div className={cn('flex-1', className)} {...props}>
+      {children}
+    </div>
+  )
 }
 
 AppLayoutSurface.displayName = 'AppLayout.Surface'
@@ -112,12 +120,15 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
   })
 
   return (
-    <div
+    <motion.div
+      initial={false}
+      layout="position"
       className={cn(
         'mt-4 mr-9 ml-2 flex w-fit flex-col gap-4',
         className,
         collapsed && 'mr-6'
       )}
+      transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
       {/* TODO: Gram will use a different logo so we need a way of making this dynamic */}
       <Logo
@@ -125,7 +136,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
         className={cn(!collapsed && 'min-w-[140px]')}
       />
       <div className={cn('flex flex-col')}>{nav}</div>
-    </div>
+    </motion.div>
   )
 }
 AppLayoutSidebar.displayName = 'AppLayout.Sidebar'
@@ -220,7 +231,7 @@ const AppLayoutCollapseButton = ({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <TooltipProvider>
-        <Tooltip delayDuration={700}>
+        <Tooltip delayDuration={800} disableHoverableContent>
           <TooltipTrigger asChild>
             <button
               className="typography-body-md hover:bg-accent rounded-md p-1.5"

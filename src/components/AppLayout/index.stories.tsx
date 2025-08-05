@@ -47,16 +47,30 @@ export const Default: Story = {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
-          <AppLayout.NavItem title="Home" icon="house" />
-          <AppLayout.NavItem title="Settings" icon="settings" />
-          <AppLayout.NavItem title="Users" icon="users" />
+          <AppLayout.NavItem
+            onClick={() => alert('Home')}
+            title="Home"
+            icon="house"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Settings')}
+            title="Settings"
+            icon="settings"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Users')}
+            title="Users"
+            icon="users"
+          />
         </AppLayout.Nav>
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          <AppLayout.BreadcrumbItem>Home</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+            Home
+          </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
         </AppLayout.Breadcrumb>
       </AppLayout.SurfaceHeader>,
@@ -81,7 +95,11 @@ export const WithHeader: Story = {
       </AppLayout.Header>,
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
-          <AppLayout.NavItem title="Home" icon="house" />
+          <AppLayout.NavItem
+            onClick={() => alert('Home')}
+            title="Home"
+            icon="house"
+          />
           <AppLayout.NavItem title="Settings" icon="settings" />
           <AppLayout.NavItem title="Users" icon="users" />
         </AppLayout.Nav>
@@ -114,7 +132,11 @@ export const WithNavItemGroups: Story = {
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItemGroup name="General">
-            <AppLayout.NavItem title="Home" icon="house" />
+            <AppLayout.NavItem
+              onClick={() => alert('Home')}
+              title="Home"
+              icon="house"
+            />
             <AppLayout.NavItem title="Settings" icon="settings" />
             <AppLayout.NavItem title="Users" icon="users" />
           </AppLayout.NavItemGroup>
@@ -151,9 +173,21 @@ export const CustomSurfaceHeader: Story = {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
-          <AppLayout.NavItem title="Home" icon="house" />
-          <AppLayout.NavItem title="Settings" icon="settings" />
-          <AppLayout.NavItem title="Users" icon="users" />
+          <AppLayout.NavItem
+            onClick={() => alert('Home')}
+            title="Home"
+            icon="house"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Settings')}
+            title="Settings"
+            icon="settings"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Users')}
+            title="Users"
+            icon="users"
+          />
         </AppLayout.Nav>
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
