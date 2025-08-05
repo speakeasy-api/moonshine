@@ -160,7 +160,7 @@ const AppLayoutBreadcrumb = ({
 AppLayoutBreadcrumb.displayName = 'AppLayout.Breadcrumb'
 
 const AppLayoutBreadcrumbDivider = () => {
-  return <span className="text-muted-foreground typography-body-lg">/</span>
+  return <span className="text-muted-foreground text-body-lg">/</span>
 }
 
 interface AppLayoutBreadcrumbItemProps extends PropsWithChildren {
@@ -176,7 +176,7 @@ const AppLayoutBreadcrumbItem = ({
   return (
     <div
       className={cn(
-        'typography-body-md text-muted-foreground cursor-pointer',
+        'text-body-md text-muted-foreground cursor-pointer',
         active && 'text-foreground cursor-default',
         !active && 'hover:text-foreground',
         className
@@ -211,7 +211,7 @@ const AppLayoutCollapseButton = ({
         <Tooltip delayDuration={500}>
           <TooltipTrigger asChild>
             <button
-              className="typography-body-md hover:bg-accent rounded-md p-1.5"
+              className="text-body-md hover:bg-accent rounded-md p-1.5"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={() => setCollapsed(!collapsed)}

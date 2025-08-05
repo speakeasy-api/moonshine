@@ -43,7 +43,7 @@ export function AIChatMessageToolInvocationPart({
           <Text variant="xs" className="mb-1 font-medium text-neutral-200">
             Input:
           </Text>
-          <pre className="typography-body-xs rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
+          <pre className="text-body-xs rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
             {JSON.stringify(toolInput, null, 2)}
           </pre>
         </div>
