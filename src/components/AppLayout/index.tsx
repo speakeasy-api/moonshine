@@ -17,7 +17,7 @@ import {
   TooltipPortal,
 } from '../Tooltip'
 import { Key } from '../KeyHint'
-import { useAppLayoutKeys } from './keys'
+import { useAppLayoutKeys } from './useAppLayoutKeys'
 
 interface AppLayoutProps extends PropsWithChildren {
   className?: string
