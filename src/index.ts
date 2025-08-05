@@ -106,7 +106,6 @@ export {
 export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
-export { Navbar, type NavbarProps, type NavItem } from '@/components/Navbar'
 export { Switch, type SwitchProps } from '@/components/Switch'
 
 // AppLayout

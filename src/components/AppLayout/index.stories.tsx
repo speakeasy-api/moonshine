@@ -5,7 +5,6 @@ import { Heading } from '../Heading'
 import { Text } from '../Text'
 import { Icon } from '../Icon'
 import { Button } from '../Button'
-import { motion } from 'framer-motion'
 import React from 'react'
 
 type Story = StoryObj<typeof AppLayout>
@@ -47,46 +46,11 @@ export const Default: Story = {
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
-        {(collapsed) => (
-          <div className="flex flex-col">
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="house" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Home
-                </motion.span>
-              )}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="settings" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Settings
-                </motion.span>
-              )}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="users" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Users
-                </motion.span>
-              )}
-            </div>
-          </div>
-        )}
+        <AppLayout.Nav>
+          <AppLayout.NavItem title="Home" icon="house" />
+          <AppLayout.NavItem title="Settings" icon="settings" />
+          <AppLayout.NavItem title="Users" icon="users" />
+        </AppLayout.Nav>
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
@@ -116,22 +80,11 @@ export const WithHeader: Story = {
         <Text variant="sm">This layout is in beta.</Text>
       </AppLayout.Header>,
       <AppLayout.Sidebar key="sidebar">
-        {(collapsed) => (
-          <div className="flex flex-col">
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="house" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Home</span>}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="settings" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Settings</span>}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="users" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Users</span>}
-            </div>
-          </div>
-        )}
+        <AppLayout.Nav>
+          <AppLayout.NavItem title="Home" icon="house" />
+          <AppLayout.NavItem title="Settings" icon="settings" />
+          <AppLayout.NavItem title="Users" icon="users" />
+        </AppLayout.Nav>
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
@@ -154,27 +107,54 @@ export const WithHeader: Story = {
   ),
 }
 
+export const WithNavItemGroups: Story = {
+  name: 'With Nav Item Groups',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar">
+        <AppLayout.Nav>
+          <AppLayout.NavItemGroup name="General">
+            <AppLayout.NavItem title="Home" icon="house" />
+            <AppLayout.NavItem title="Settings" icon="settings" />
+            <AppLayout.NavItem title="Users" icon="users" />
+          </AppLayout.NavItemGroup>
+          <AppLayout.NavItemGroup name="Activity">
+            <AppLayout.NavItem title="Activity" icon="activity" />
+            <AppLayout.NavItem title="Notifications" icon="bell" />
+            <AppLayout.NavItem title="Messages" icon="message-circle" />
+          </AppLayout.NavItemGroup>
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem>Home</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args) => (
+    <AppLayoutProvider>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
+}
+
 export const CustomSurfaceHeader: Story = {
   name: 'Custom Surface Header',
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
-        {(collapsed) => (
-          <div className="flex flex-col">
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="house" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Home</span>}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="settings" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Settings</span>}
-            </div>
-            <div className="text-muted-foreground hover:text-foreground flex h-9 cursor-pointer items-center gap-3">
-              <Icon name="users" className="size-6" strokeWidth={1.25} />
-              {collapsed ? null : <span>Users</span>}
-            </div>
-          </div>
-        )}
+        <AppLayout.Nav>
+          <AppLayout.NavItem title="Home" icon="house" />
+          <AppLayout.NavItem title="Settings" icon="settings" />
+          <AppLayout.NavItem title="Users" icon="users" />
+        </AppLayout.Nav>
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
