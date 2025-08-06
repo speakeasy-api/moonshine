@@ -57,7 +57,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   return (
     <div
       className={cn(
-        'bg-surface-secondary flex min-h-full w-full p-3 pr-0 pb-0',
+        'bg-surface-secondary flex h-screen w-full overflow-hidden p-3 pr-0 pb-0',
         className
       )}
     >
@@ -65,7 +65,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
 
       <motion.div
         layout
-        className="flex w-full flex-1 flex-col"
+        className="flex w-full flex-col"
         initial={{ left: collapsed ? '100%' : '0' }}
         animate={{ left: collapsed ? '100%' : '0' }}
         transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
@@ -74,14 +74,14 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
 
         <div
           className={cn(
-            'bg-surface-primary flex-1 overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
+            'bg-surface-primary flex h-full flex-col overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
           )}
         >
-          <div className="flex w-full flex-1 items-center border-b p-2">
+          <div className="flex w-full flex-shrink-0 items-center border-b p-2">
             {surfaceHeader}
           </div>
 
-          {surface}
+          <div className="min-h-0 flex-1">{surface}</div>
         </div>
       </motion.div>
     </div>
@@ -100,7 +100,7 @@ const AppLayoutSurface = ({
   ...props
 }: AppLayoutSurfaceProps) => {
   return (
-    <div className={cn('flex-1', className)} {...props}>
+    <div className={cn('h-full overflow-auto', className)} {...props}>
       {children}
     </div>
   )
@@ -166,7 +166,7 @@ const AppLayoutBreadcrumb = ({
   return (
     <div
       className={cn(
-        'bg-surface-primary flex min-h-8 flex-1 items-center gap-1.5',
+        'bg-surface-primary flex min-h-8 items-center gap-1.5',
         className
       )}
     >

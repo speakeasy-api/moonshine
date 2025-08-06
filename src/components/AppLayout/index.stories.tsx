@@ -16,13 +16,6 @@ const meta: Meta<typeof AppLayout> = {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    (Story) => (
-      <div className="h-svh w-full">
-        <Story />
-      </div>
-    ),
-  ],
 }
 
 export default meta
@@ -299,7 +292,7 @@ const SurfaceTransition = () => {
   }
 
   return (
-    <div className="h-svh w-full">
+    <div>
       <style>{`
         ::view-transition-group(page-transition) {
           overflow: hidden;
@@ -385,4 +378,60 @@ const SurfaceTransition = () => {
 export const SurfaceTransitionStory: Story = {
   name: 'Surface Transition',
   render: () => <SurfaceTransition />,
+}
+
+export const WithFullScreenSurface: Story = {
+  name: 'With Full Screen Surface',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar">
+        <AppLayout.Nav>
+          <AppLayout.NavItem
+            onClick={() => alert('Home')}
+            title="Home"
+            icon="house"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Settings')}
+            title="Settings"
+            icon="settings"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Users')}
+            title="Users"
+            icon="users"
+          />
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+            Home
+          </AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-0" key="surface">
+        <div className="bg-surface-secondary flex h-full w-full flex-col">
+          <div className="flex items-center justify-center py-4">
+            <Text>This is a full screen surface</Text>
+          </div>
+
+          <div className="border-neutral-default mt-auto flex items-center justify-center border-t py-4">
+            <Text>
+              This content is pushed to the bottom but doesn't overflow the
+              viewport
+            </Text>
+          </div>
+        </div>
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args) => (
+    <AppLayoutProvider>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
 }
