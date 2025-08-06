@@ -57,7 +57,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   return (
     <div
       className={cn(
-        'bg-surface-secondary flex min-h-svh w-full p-3 pr-0 pb-0',
+        'bg-surface-secondary flex min-h-full w-full p-3 pr-0 pb-0',
         className
       )}
     >
