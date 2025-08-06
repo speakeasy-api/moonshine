@@ -190,10 +190,13 @@ const AppLayoutBreadcrumbDivider = () => {
   )
 }
 
-interface AppLayoutBreadcrumbItemProps extends MotionProps, PropsWithChildren {
+export interface AppLayoutBreadcrumbItemProps
+  extends MotionProps,
+    PropsWithChildren {
   className?: string
   active?: boolean
   children?: React.ReactNode
+  disabled?: boolean
   onClick?: () => void
 }
 
@@ -201,22 +204,26 @@ const AppLayoutBreadcrumbItem = ({
   children,
   className,
   active = false,
+  disabled = false,
   onClick,
   ...props
 }: AppLayoutBreadcrumbItemProps) => {
   return (
-    <motion.div
+    <motion.button
+      disabled={disabled}
       className={cn(
         'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
         active && 'text-foreground cursor-default',
         !active && 'hover:text-foreground hover:bg-accent',
+        disabled &&
+          'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
         className
       )}
       onClick={onClick}
       {...props}
     >
       {children}
-    </motion.div>
+    </motion.button>
   )
 }
 
@@ -324,9 +331,11 @@ const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
 
 AppLayoutNav.displayName = 'AppLayout.Nav'
 
-interface AppLayoutNavItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface AppLayoutNavItemProps
+  extends HTMLAttributes<HTMLButtonElement> {
   title: string
   icon: IconName
+  children?: React.ReactNode
 
   render?: ({
     title,
@@ -339,6 +348,7 @@ interface AppLayoutNavItemProps extends HTMLAttributes<HTMLDivElement> {
   }) => React.ReactNode
   className?: string
   active?: boolean
+  disabled?: boolean
 }
 
 const AppLayoutNavItem = ({
@@ -347,6 +357,7 @@ const AppLayoutNavItem = ({
   render,
   className,
   active,
+  disabled,
   ...props
 }: AppLayoutNavItemProps) => {
   const { collapsed } = useAppLayout()
@@ -359,10 +370,13 @@ const AppLayoutNavItem = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div
+          <button
+            disabled={disabled}
             className={cn(
               'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
               active && 'text-foreground',
+              disabled &&
+                'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
               className
             )}
             {...props}
@@ -378,12 +392,12 @@ const AppLayoutNavItem = ({
                 {title}
               </motion.span>
             )}
-          </div>
+          </button>
         </TooltipTrigger>
         <TooltipContent
           className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
           side="right"
-          hidden={!collapsed}
+          hidden={!collapsed || disabled}
         >
           <TooltipArrow className="fill-foreground" />
           {title}
@@ -395,7 +409,8 @@ const AppLayoutNavItem = ({
 
 AppLayoutNavItem.displayName = 'AppLayout.NavItem'
 
-interface AppLayoutNavItemGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface AppLayoutNavItemGroupProps
+  extends HTMLAttributes<HTMLDivElement> {
   className?: string
 
   /**

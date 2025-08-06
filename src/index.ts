@@ -109,7 +109,12 @@ export { Dialog } from '@/components/Dialog'
 export { Switch, type SwitchProps } from '@/components/Switch'
 
 // AppLayout
-export { AppLayout } from '@/components/AppLayout'
+export {
+  AppLayout,
+  type AppLayoutNavItemProps,
+  type AppLayoutNavItemGroupProps,
+  type AppLayoutBreadcrumbItemProps,
+} from '@/components/AppLayout'
 export { AppLayoutProvider } from '@/components/AppLayout/provider'
 export { useAppLayout } from '@/hooks/useAppLayout'
 
