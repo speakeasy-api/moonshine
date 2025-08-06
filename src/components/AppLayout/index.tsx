@@ -26,7 +26,7 @@ interface AppLayoutProps extends PropsWithChildren {
   className?: string
 }
 
-const AppLayoutBase = ({ children }: AppLayoutProps) => {
+const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   const sidebar = Children.toArray(children).find((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
@@ -56,7 +56,10 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
 
   return (
     <div
-      className={cn('bg-surface-secondary flex min-h-svh w-full p-3 pr-0 pb-0')}
+      className={cn(
+        'bg-surface-secondary flex min-h-svh w-full p-3 pr-0 pb-0',
+        className
+      )}
     >
       {sidebar}
 
