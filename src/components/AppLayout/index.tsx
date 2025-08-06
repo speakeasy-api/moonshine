@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { motion } from 'framer-motion'
+import { motion, MotionProps } from 'framer-motion'
 import { Logo } from '../Logo'
 import {
   Tooltip,
@@ -163,7 +163,7 @@ const AppLayoutBreadcrumb = ({
   return (
     <div
       className={cn(
-        'bg-surface-primary flex flex-1 items-center gap-2',
+        'bg-surface-primary flex min-h-8 flex-1 items-center gap-1.5',
         className
       )}
     >
@@ -180,12 +180,17 @@ const AppLayoutBreadcrumb = ({
 AppLayoutBreadcrumb.displayName = 'AppLayout.Breadcrumb'
 
 const AppLayoutBreadcrumbDivider = () => {
-  return <span className="text-muted-foreground typography-body-lg">/</span>
+  return (
+    <span className="text-muted-foreground typography-body-lg select-none">
+      /
+    </span>
+  )
 }
 
-interface AppLayoutBreadcrumbItemProps extends PropsWithChildren {
+interface AppLayoutBreadcrumbItemProps extends MotionProps, PropsWithChildren {
   className?: string
   active?: boolean
+  children?: React.ReactNode
   onClick?: () => void
 }
 
@@ -196,17 +201,17 @@ const AppLayoutBreadcrumbItem = ({
   onClick,
 }: AppLayoutBreadcrumbItemProps) => {
   return (
-    <div
+    <motion.div
       className={cn(
-        'typography-body-md text-muted-foreground cursor-pointer',
+        'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
         active && 'text-foreground cursor-default',
-        !active && 'hover:text-foreground',
+        !active && 'hover:text-foreground hover:bg-accent',
         className
       )}
       onClick={onClick}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }
 
