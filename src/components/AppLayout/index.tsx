@@ -199,6 +199,7 @@ const AppLayoutBreadcrumbItem = ({
   className,
   active = false,
   onClick,
+  ...props
 }: AppLayoutBreadcrumbItemProps) => {
   return (
     <motion.div
@@ -209,6 +210,7 @@ const AppLayoutBreadcrumbItem = ({
         className
       )}
       onClick={onClick}
+      {...props}
     >
       {children}
     </motion.div>
