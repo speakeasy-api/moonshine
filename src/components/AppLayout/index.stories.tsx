@@ -16,13 +16,6 @@ const meta: Meta<typeof AppLayout> = {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    (Story) => (
-      <div className="h-svh w-full">
-        <Story />
-      </div>
-    ),
-  ],
 }
 
 export default meta
@@ -152,7 +145,8 @@ export const WithNavItemGroups: Story = {
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
           <AppLayout.BreadcrumbItem>Home</AppLayout.BreadcrumbItem>
-          <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem>Settings</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Users</AppLayout.BreadcrumbItem>
         </AppLayout.Breadcrumb>
       </AppLayout.SurfaceHeader>,
       <AppLayout.Surface className="p-4" key="surface">
@@ -211,15 +205,25 @@ export const CustomSurfaceHeader: Story = {
   ),
 }
 
-const HomePage = () => {
+const HomePage = ({
+  handlePageChange,
+}: {
+  handlePageChange: (page: AllPages) => void
+}) => {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <Heading>Home</Heading>
 
       <Text>
         This is the home page. It's the first page you see when you open the
         app.
       </Text>
+
+      <div>
+        <Button onClick={() => handlePageChange('settings')}>
+          Go to settings
+        </Button>
+      </div>
     </div>
   )
 }
@@ -237,12 +241,15 @@ const SettingsPage = () => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+const allPages = ['home', 'settings'] as const
+type AllPages = (typeof allPages)[number]
 const SurfaceTransition = () => {
-  const [page, setPage] = useState<'home' | 'settings'>('settings')
+  const [page, setPage] = useState<AllPages>('settings')
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward')
 
-  const handlePageChange = (newPage: 'home' | 'settings') => {
+  const handlePageChange = (newPage: AllPages) => {
     if (newPage === page || isTransitioning) return // Don't transition if already on that page or transitioning
 
     setIsTransitioning(true)
@@ -285,7 +292,7 @@ const SurfaceTransition = () => {
   }
 
   return (
-    <div className="h-svh w-full">
+    <div>
       <style>{`
         ::view-transition-group(page-transition) {
           overflow: hidden;
@@ -329,6 +336,8 @@ const SurfaceTransition = () => {
           <AppLayout.Sidebar>
             <AppLayout.Nav>
               <AppLayout.NavItem title="Home" icon="house" />
+              <AppLayout.NavItem title="Settings" icon="settings" />
+              <AppLayout.NavItem title="Users" icon="users" />
             </AppLayout.Nav>
           </AppLayout.Sidebar>
           <AppLayout.SurfaceHeader>
@@ -340,12 +349,14 @@ const SurfaceTransition = () => {
               >
                 Home
               </AppLayout.BreadcrumbItem>
-              <AppLayout.BreadcrumbItem
-                active={page === 'settings'}
-                onClick={() => handlePageChange('settings')}
-              >
-                Settings
-              </AppLayout.BreadcrumbItem>
+              {page === 'settings' && (
+                <AppLayout.BreadcrumbItem
+                  active={page === 'settings'}
+                  onClick={() => handlePageChange('settings')}
+                >
+                  Settings
+                </AppLayout.BreadcrumbItem>
+              )}
             </AppLayout.Breadcrumb>
           </AppLayout.SurfaceHeader>
           <AppLayout.Surface
@@ -353,7 +364,11 @@ const SurfaceTransition = () => {
             data-direction={direction}
             className="p-4"
           >
-            {page === 'home' ? <HomePage /> : <SettingsPage />}
+            {page === 'home' ? (
+              <HomePage handlePageChange={handlePageChange} />
+            ) : (
+              <SettingsPage />
+            )}
           </AppLayout.Surface>
         </AppLayout>
       </AppLayoutProvider>
@@ -363,4 +378,60 @@ const SurfaceTransition = () => {
 export const SurfaceTransitionStory: Story = {
   name: 'Surface Transition',
   render: () => <SurfaceTransition />,
+}
+
+export const WithFullScreenSurface: Story = {
+  name: 'With Full Screen Surface',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar">
+        <AppLayout.Nav>
+          <AppLayout.NavItem
+            onClick={() => alert('Home')}
+            title="Home"
+            icon="house"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Settings')}
+            title="Settings"
+            icon="settings"
+          />
+          <AppLayout.NavItem
+            onClick={() => alert('Users')}
+            title="Users"
+            icon="users"
+          />
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+            Home
+          </AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-0" key="surface">
+        <div className="bg-surface-secondary flex h-full w-full flex-col">
+          <div className="flex items-center justify-center py-4">
+            <Text>This is a full screen surface</Text>
+          </div>
+
+          <div className="border-neutral-default mt-auto flex items-center justify-center border-t py-4">
+            <Text>
+              This content is pushed to the bottom but doesn't overflow the
+              viewport
+            </Text>
+          </div>
+        </div>
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args) => (
+    <AppLayoutProvider>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
 }

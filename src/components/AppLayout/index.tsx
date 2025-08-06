@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { motion } from 'framer-motion'
+import { motion, MotionProps } from 'framer-motion'
 import { Logo } from '../Logo'
 import {
   Tooltip,
@@ -26,7 +26,7 @@ interface AppLayoutProps extends PropsWithChildren {
   className?: string
 }
 
-const AppLayoutBase = ({ children }: AppLayoutProps) => {
+const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   const sidebar = Children.toArray(children).find((child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
@@ -56,13 +56,16 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
 
   return (
     <div
-      className={cn('bg-surface-secondary flex min-h-svh w-full p-3 pr-0 pb-0')}
+      className={cn(
+        'bg-surface-secondary flex h-screen w-full overflow-hidden p-3 pr-0 pb-0',
+        className
+      )}
     >
       {sidebar}
 
       <motion.div
         layout
-        className="flex w-full flex-1 flex-col"
+        className="flex w-full flex-col"
         initial={{ left: collapsed ? '100%' : '0' }}
         animate={{ left: collapsed ? '100%' : '0' }}
         transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
@@ -71,14 +74,14 @@ const AppLayoutBase = ({ children }: AppLayoutProps) => {
 
         <div
           className={cn(
-            'bg-surface-primary flex-1 overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
+            'bg-surface-primary flex h-full flex-col overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
           )}
         >
-          <div className="flex w-full flex-1 items-center border-b p-2">
+          <div className="flex w-full flex-shrink-0 items-center border-b p-2">
             {surfaceHeader}
           </div>
 
-          {surface}
+          <div className="min-h-0 flex-1">{surface}</div>
         </div>
       </motion.div>
     </div>
@@ -97,7 +100,7 @@ const AppLayoutSurface = ({
   ...props
 }: AppLayoutSurfaceProps) => {
   return (
-    <div className={cn('flex-1', className)} {...props}>
+    <div className={cn('h-full overflow-auto', className)} {...props}>
       {children}
     </div>
   )
@@ -163,7 +166,7 @@ const AppLayoutBreadcrumb = ({
   return (
     <div
       className={cn(
-        'bg-surface-primary flex flex-1 items-center gap-2',
+        'bg-surface-primary flex min-h-8 items-center gap-1.5',
         className
       )}
     >
@@ -180,12 +183,17 @@ const AppLayoutBreadcrumb = ({
 AppLayoutBreadcrumb.displayName = 'AppLayout.Breadcrumb'
 
 const AppLayoutBreadcrumbDivider = () => {
-  return <span className="text-muted-foreground typography-body-lg">/</span>
+  return (
+    <span className="text-muted-foreground typography-body-lg select-none">
+      /
+    </span>
+  )
 }
 
-interface AppLayoutBreadcrumbItemProps extends PropsWithChildren {
+interface AppLayoutBreadcrumbItemProps extends MotionProps, PropsWithChildren {
   className?: string
   active?: boolean
+  children?: React.ReactNode
   onClick?: () => void
 }
 
@@ -194,19 +202,21 @@ const AppLayoutBreadcrumbItem = ({
   className,
   active = false,
   onClick,
+  ...props
 }: AppLayoutBreadcrumbItemProps) => {
   return (
-    <div
+    <motion.div
       className={cn(
-        'typography-body-md text-muted-foreground cursor-pointer',
+        'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
         active && 'text-foreground cursor-default',
-        !active && 'hover:text-foreground',
+        !active && 'hover:text-foreground hover:bg-accent',
         className
       )}
       onClick={onClick}
+      {...props}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }
 
