@@ -137,6 +137,7 @@ export const WithNavItemGroups: Story = {
             <AppLayout.NavItem title="Activity" icon="activity" />
             <AppLayout.NavItem title="Notifications" icon="bell" />
             <AppLayout.NavItem title="Messages" icon="message-circle" />
+            <AppLayout.NavItem title="Users" icon="users" disabled />
           </AppLayout.NavItemGroup>
         </AppLayout.Nav>
       </AppLayout.Sidebar>,
