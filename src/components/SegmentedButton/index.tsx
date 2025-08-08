@@ -76,8 +76,8 @@ const SegmentedButtonItem = ({
   return (
     <motion.button
       className="text-codeline-xs relative flex items-center rounded-full px-5 py-1 uppercase"
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
       {...props}
     >
       {highlighted && (
