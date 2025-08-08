@@ -305,7 +305,7 @@
   --border-neutral-hover: var(--color-neutral-500);
   --border-neutral-default: var(--color-neutral-400);
   --border-neutral-disabled: var(--color-neutral-400-40);
-  --border-neutral-softest: var(--color-neutral-300);
+  --border-neutral-softest: var(--color-neutral-200);
   --border-neutral-inset: var(--color-base-white);
   --border-neutral-alpha: hsla(
     0,
@@ -698,7 +698,7 @@
   --border-neutral-hover: var(--color-neutral-500);
   --border-neutral-default: var(--color-neutral-600);
   --border-neutral-disabled: var(--color-neutral-600-40);
-  --border-neutral-softest: var(--color-neutral-700);
+  --border-neutral-softest: var(--color-neutral-800-56);
   --border-neutral-inset: var(--color-base-black);
   --border-neutral-alpha: hsla(
     255,
