@@ -107,7 +107,7 @@ export { Facepile, type FacepileProps } from '@/components/Facepile'
 export { Link, type LinkProps } from '@/components/Link'
 export { Dialog } from '@/components/Dialog'
 export { Switch, type SwitchProps } from '@/components/Switch'
-
+export { SegmentedButton } from '@/components/SegmentedButton'
 // AppLayout
 export {
   AppLayout,
