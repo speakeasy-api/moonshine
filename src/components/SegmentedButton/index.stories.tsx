@@ -76,3 +76,29 @@ export const Default: Story = {
   },
   render: (args) => <StoryRenderer {...args} />,
 }
+
+export const TwoItems: Story = {
+  args: {
+    children: [
+      <SegmentedButton.Item id="chat">Chat</SegmentedButton.Item>,
+      <SegmentedButton.Item id="split" active>
+        Split
+      </SegmentedButton.Item>,
+    ],
+  },
+  render: (args) => <StoryRenderer {...args} />,
+}
+
+export const FourItems: Story = {
+  args: {
+    children: [
+      <SegmentedButton.Item id="chat">Chat</SegmentedButton.Item>,
+      <SegmentedButton.Item id="split" active>
+        Split
+      </SegmentedButton.Item>,
+      <SegmentedButton.Item id="code">Code</SegmentedButton.Item>,
+      <SegmentedButton.Item id="beast-mode">Beast Mode</SegmentedButton.Item>,
+    ],
+  },
+  render: (args) => <StoryRenderer {...args} />,
+}

@@ -44,7 +44,7 @@ const SegmentedButtonBase = ({ children, className }: SegmentedButtonProps) => {
   return (
     <div
       className={cn(
-        'border-neutral-softest relative inline-flex flex-row items-center overflow-hidden rounded-full border',
+        'border-neutral-softest relative inline-flex flex-row items-center overflow-hidden rounded-full border shadow-xs backdrop-blur-md',
         className
       )}
       onMouseLeave={() => setHoveredId(null)}
@@ -75,10 +75,7 @@ const SegmentedButtonItem = ({
 }: SegmentedButtonItemProps) => {
   return (
     <motion.button
-      className={cn(
-        'text-codeline-sm relative flex items-center rounded-full px-6 py-1 uppercase',
-        className
-      )}
+      className="text-codeline-xs relative flex items-center rounded-full px-5 py-1 uppercase"
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
       {...props}
@@ -87,7 +84,7 @@ const SegmentedButtonItem = ({
         <motion.span
           layoutId="segmented-highlight"
           className={cn(
-            'absolute inset-0 -z-10 rounded-full py-2 shadow-sm',
+            'absolute inset-0 -z-10 rounded-full shadow-sm',
             styles.active
           )}
           transition={{ type: 'easeInOut', stiffness: 300, damping: 40 }}
@@ -96,7 +93,8 @@ const SegmentedButtonItem = ({
       <span
         className={cn(
           'text-muted relative z-10',
-          highlighted && 'text-highlight'
+          highlighted && 'text-highlight',
+          className
         )}
       >
         {children}
