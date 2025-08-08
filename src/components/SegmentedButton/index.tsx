@@ -76,8 +76,6 @@ const SegmentedButtonItem = ({
   return (
     <motion.button
       className="text-codeline-xs relative flex items-center rounded-full px-5 py-1 uppercase"
-      whileHover={props.active ? undefined : { scale: 1.04 }}
-      whileTap={{ scale: 0.97 }}
       {...props}
     >
       {highlighted && (
@@ -87,7 +85,7 @@ const SegmentedButtonItem = ({
             'absolute inset-0 -z-10 rounded-full shadow-sm',
             styles.active
           )}
-          transition={{ type: 'easeInOut', stiffness: 300, damping: 80 }}
+          transition={{ type: 'spring', duration: 0.7, bounce: 0.3 }}
         />
       )}
       <span
