@@ -76,7 +76,7 @@ const SegmentedButtonItem = ({
   return (
     <motion.button
       className="text-codeline-xs relative flex items-center rounded-full px-5 py-1 uppercase"
-      whileHover={{ scale: 1.04 }}
+      whileHover={props.active ? undefined : { scale: 1.04 }}
       whileTap={{ scale: 0.97 }}
       {...props}
     >
@@ -87,7 +87,7 @@ const SegmentedButtonItem = ({
             'absolute inset-0 -z-10 rounded-full shadow-sm',
             styles.active
           )}
-          transition={{ type: 'easeInOut', stiffness: 300, damping: 40 }}
+          transition={{ type: 'easeInOut', stiffness: 300, damping: 80 }}
         />
       )}
       <span
