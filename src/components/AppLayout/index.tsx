@@ -127,17 +127,14 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
     <motion.div
       initial={false}
       layout="position"
-      className={cn('mt-4 mr-1 flex w-fit flex-col items-start', className)}
+      className={cn(
+        'mt-4 flex w-fit flex-col items-start',
+        className,
+        !collapsed && 'mr-5'
+      )}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
-      <div
-        className={cn(
-          'relative flex flex-col gap-4',
-          // Fix flex alignment issue when collapsing/uncollapsing
-          collapsed && 'relative left-1',
-          !collapsed && 'left-1'
-        )}
-      >
+      <div className="flex flex-col gap-4 px-2">
         {/* TODO: Gram will use a different logo so we need a way of making this dynamic */}
         <Logo
           variant={collapsed ? 'icon' : 'wordmark'}
