@@ -44,7 +44,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
-    "visualize": "npx vite-bundle-visualizer",
+    "analyze-bundle": "npx vite-bundle-visualizer",
     "generate:docs": "node scripts/generate-utility-docs.js",
     "postbuild": "pnpm generate:docs"
   },
