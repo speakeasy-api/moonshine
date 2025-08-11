@@ -6,6 +6,7 @@ import { Text } from '../Text'
 import { Icon } from '../Icon'
 import { Button } from '../Button'
 import React, { useState } from 'react'
+import { MoonshineConfigProvider } from '@/context/ConfigContext'
 
 type Story = StoryObj<typeof AppLayout>
 
@@ -433,6 +434,60 @@ export const WithFullScreenSurface: Story = {
   render: (args) => (
     <AppLayoutProvider>
       <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
+}
+
+export const CustomExtraSidebarChildren: Story = {
+  name: 'Custom Extra Sidebar Children',
+  args: {
+    children: [
+      <AppLayout.Sidebar className="max-h-full" key="sidebar">
+        <AppLayout.Nav>
+          <AppLayout.NavItemGroup name="General">
+            <AppLayout.NavItem
+              onClick={() => alert('Home')}
+              title="Home"
+              icon="house"
+            />
+            <AppLayout.NavItem title="Settings" icon="settings" />
+            <AppLayout.NavItem title="Users" icon="users" />
+          </AppLayout.NavItemGroup>
+          <AppLayout.NavItemGroup name="Activity">
+            <AppLayout.NavItem title="Activity" icon="activity" />
+            <AppLayout.NavItem title="Notifications" icon="bell" />
+            <AppLayout.NavItem title="Messages" icon="message-circle" />
+            <AppLayout.NavItem title="Users" icon="users" disabled />
+          </AppLayout.NavItemGroup>
+        </AppLayout.Nav>
+
+        <AppLayout.ThemeSwitcher />
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem>Home</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem>Settings</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Users</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args, context) => (
+    <AppLayoutProvider>
+      <MoonshineConfigProvider
+        theme={context.globals.theme}
+        /** TODO: support changing the storybook context value from the story */
+        setTheme={(theme) => {
+          console.log('theme', theme)
+        }}
+      >
+        <AppLayout {...args} />
+      </MoonshineConfigProvider>
     </AppLayoutProvider>
   ),
 }

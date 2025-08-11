@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn, partitionBy } from '@/lib/utils'
 import React, {
   Children,
   isValidElement,
@@ -21,6 +21,7 @@ import {
 import { Key } from '../KeyHint'
 import { useAppLayoutKeys } from './useAppLayoutKeys'
 import { IconName } from '../Icon/names'
+import { ThemeSwitcher } from '../ThemeSwitcher'
 
 interface AppLayoutProps extends PropsWithChildren {
   className?: string
@@ -57,7 +58,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   return (
     <div
       className={cn(
-        'bg-surface-secondary flex h-screen w-full overflow-hidden p-3 pr-0 pb-0',
+        'bg-surface-secondary flex h-screen w-full gap-3 overflow-hidden p-3 pr-0 pb-0',
         className
       )}
     >
@@ -116,7 +117,7 @@ interface AppLayoutSidebarProps {
 const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
   const { collapsed } = useAppLayout()
 
-  const nav = Children.toArray(children).find((child) => {
+  const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
     if (!isValidElement(child)) return false
     const type = child.type as { displayName?: string }
     return type.displayName === 'AppLayout.Nav'
@@ -127,22 +128,40 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
       initial={false}
       layout="position"
       className={cn(
-        'mt-4 mr-9 ml-2 flex w-fit flex-col gap-4',
+        'mt-4 flex w-fit flex-col items-start',
         className,
-        collapsed && 'mr-6'
+        !collapsed && 'mr-5'
       )}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
-      {/* TODO: Gram will use a different logo so we need a way of making this dynamic */}
-      <Logo
-        variant={collapsed ? 'icon' : 'wordmark'}
-        className={cn(!collapsed && 'min-w-[140px]')}
-      />
-      <div className={cn('flex flex-col')}>{nav}</div>
+      <div className="flex flex-col gap-4 px-2">
+        {/* TODO: Gram will use a different logo so we need a way of making this dynamic */}
+        <Logo
+          variant={collapsed ? 'icon' : 'wordmark'}
+          className={cn(!collapsed && 'min-w-[140px]')}
+        />
+        {nav}
+      </div>
+      {rest}
     </motion.div>
   )
 }
 AppLayoutSidebar.displayName = 'AppLayout.Sidebar'
+
+interface AppLayoutThemeSwitcherProps {
+  className?: string
+}
+
+const AppLayoutThemeSwitcher = ({ className }: AppLayoutThemeSwitcherProps) => {
+  const { collapsed } = useAppLayout()
+  return (
+    <motion.div className={cn('mt-auto mb-6', className)}>
+      <ThemeSwitcher orientation={collapsed ? 'vertical' : 'horizontal'} />
+    </motion.div>
+  )
+}
+
+AppLayoutThemeSwitcher.displayName = 'AppLayout.ThemeSwitcher'
 
 interface AppLayoutBreadcrumbProps extends PropsWithChildren {
   className?: string
@@ -323,7 +342,7 @@ interface AppLayoutNavProps extends HTMLAttributes<HTMLDivElement> {
 
 const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
   return (
-    <nav className={cn('mt-3 flex flex-col', className)} {...props}>
+    <nav className={cn('mt-3 flex flex-col items-start', className)} {...props}>
       {children}
     </nav>
   )
@@ -450,7 +469,7 @@ export const AppLayout = Object.assign(AppLayoutBase, {
   CollapseButton: AppLayoutCollapseButton,
   HeaderDivider: AppLayoutHeaderDivider,
   Header: AppLayoutHeader,
-
+  ThemeSwitcher: AppLayoutThemeSwitcher,
   // Nav
   Nav: AppLayoutNav,
   NavItem: AppLayoutNavItem,

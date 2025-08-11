@@ -16,11 +16,13 @@ const THEMES: { key: Theme; icon: ReactNode }[] = [
 export interface ThemeSwitcherProps {
   onThemeSwitch?: (theme: string) => void
   className?: string
+  orientation?: 'horizontal' | 'vertical'
 }
 
 export function ThemeSwitcher({
   className,
   onThemeSwitch,
+  orientation = 'horizontal',
 }: ThemeSwitcherProps) {
   const isMounted = useIsMounted()
   const { theme, setTheme } = useConfig()
@@ -31,12 +33,29 @@ export function ThemeSwitcher({
     return 100 * themeIndex
   }, [theme])
 
-  if (!isMounted)
-    return <div className="h-[2.125rem] w-[calc(2.125rem*3+2px)]" />
+  const isVertical = orientation === 'vertical'
+  const knobSizeRem = 2.125
+  const placeholderStyle = isVertical
+    ? {
+        width: `${knobSizeRem}rem`,
+        height: `calc(${knobSizeRem}rem * ${THEMES.length} + 2px)`,
+      }
+    : {
+        width: `calc(${knobSizeRem}rem * ${THEMES.length} + 2px)`,
+        height: `${knobSizeRem}rem`,
+      }
+
+  if (!isMounted) return <div style={placeholderStyle} />
 
   return (
     <div className="relative h-fit w-fit overflow-hidden rounded-full border border-neutral-300 bg-neutral-100 p-0 dark:border-neutral-800/30 dark:bg-neutral-900">
-      <fieldset className={cn('group m-0 flex items-center', className)}>
+      <fieldset
+        className={cn(
+          'group m-0 flex',
+          isVertical ? 'flex-col items-stretch' : 'flex-row items-center',
+          className
+        )}
+      >
         <legend className="sr-only">Select a display theme:</legend>
         {THEMES.map(({ key, icon }) => {
           const checked = key === theme
@@ -80,9 +99,15 @@ export function ThemeSwitcher({
         })}
       </fieldset>
       <motion.div
-        initial={{ transform: `translateX(${posX}%)` }}
+        initial={{
+          transform: isVertical
+            ? `translateY(${posX}%)`
+            : `translateX(${posX}%)`,
+        }}
         animate={{
-          transform: `translateX(${posX}%)`,
+          transform: isVertical
+            ? `translateY(${posX}%)`
+            : `translateX(${posX}%)`,
         }}
         transition={{ type: 'spring', duration: 0.7, bounce: 0.3 }}
         className="absolute top-0 left-0 z-[10] size-[2.125rem] rounded-full shadow-[0px_0px_4px_0px_rgba(0,0,0,0.10),0px_2px_1px_0px_#FFF_inset,0px_-2px_1px_0px_rgba(0,0,0,0.05)_inset] dark:shadow-[0px_2px_4px_0px_rgba(0,0,0,0.60),0px_2px_1px_0px_#282828_inset,0px_-2px_1px_0px_rgba(0,0,0,0.05)_inset]"
