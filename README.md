@@ -10,7 +10,12 @@ Speakeasy's design system.
 
 ```bash
 pnpm add @speakeasy-api/moonshine
-pnpm add -D tw-animate-css @tailwindcss/typography
+```
+
+Make sure you install Lucide as it is a peer dependency of this package:
+
+```
+pnpm add lucide-react
 ```
 
 ### 2. Configure Tailwind CSS
@@ -41,8 +46,7 @@ Wrap your application in the `MoonshineConfigProvider` component:
 
 ```tsx
 import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
-
-<MoonshineConfigProvider themeElement={document.documentElement}>
+;<MoonshineConfigProvider themeElement={document.documentElement}>
   <App />
 </MoonshineConfigProvider>
 ```
@@ -54,16 +58,16 @@ Moonshine uses custom fonts (Diatype, Tobias). If you have licenses for these fo
 ```css
 /* In your global CSS */
 @font-face {
-  font-family: "Diatype";
-  src: url("/fonts/diatype/ABCDiatype-Regular.woff2") format("woff2");
+  font-family: 'Diatype';
+  src: url('/fonts/diatype/ABCDiatype-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: block;
 }
 
 @font-face {
-  font-family: "Diatype";
-  src: url("/fonts/diatype/ABCDiatype-Light.woff2") format("woff2");
+  font-family: 'Diatype';
+  src: url('/fonts/diatype/ABCDiatype-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: block;
@@ -80,9 +84,7 @@ If you don't have these fonts, the design system will fall back to system fonts.
 import { Grid } from '@speakeasy-api/moonshine'
 
 // Use semantic utility classes
-<div className="text-heading-lg bg-surface-primary">
-  Hello Moonshine!
-</div>
+;<div className="text-heading-lg bg-surface-primary">Hello Moonshine!</div>
 ```
 
 ### TypeScript Support for Utility Classes
@@ -102,6 +104,7 @@ const styles: MoonshineClasses = 'text-heading-lg' // ✅ Autocompletes!
 ```
 
 The types are automatically generated during the build process and include:
+
 - All custom utilities (`text-heading-xl`, `bg-surface-primary`, etc.)
 - All semantic color utilities (`bg-warning`, `text-success`, etc.)
 - Full IntelliSense support in your IDE
@@ -124,10 +127,7 @@ return (
     Lorem Ipsum
   </span>
 )
-
 ```
-
-
 
 ## Design System Architecture
 
@@ -138,11 +138,13 @@ Moonshine is a utility-first design system built on top of [Tailwind CSS v4](htt
 Our CSS is organized into three main files:
 
 1. **`base.css`** - Primitive design tokens (colors, fonts, spacing scales)
+
    - Contains raw values that should **not** be used directly in components
    - Defines theme-aware semantic tokens that adapt to light/dark mode
    - Houses base element styles and resets
 
 2. **`utilities.css`** - The public API of our design system
+
    - Exposes carefully crafted utility classes like `text-heading-xl`, `bg-surface-primary`
    - Enforces typography combinations to prevent arbitrary text styling
    - Provides semantic color utilities that automatically handle theming
@@ -162,11 +164,13 @@ Our CSS is organized into three main files:
 ### Usage Guidelines
 
 ✅ **Do:**
+
 - Use semantic utilities: `bg-warning`, `text-body`, `border-error`
 - Leverage pre-defined typography scales: `text-heading-xl`, `text-body-sm`
 - Stick to the exposed utility classes in `utilities.css`
 
 ❌ **Don't:**
+
 - Access raw color values: `bg-[var(--color-neutral-200)]`
 - Create arbitrary combinations: `text-[1.813rem] leading-[1.5]`
 - Override the design system without discussing with the team
@@ -176,16 +180,21 @@ For more technical details about the CSS architecture, see [CLAUDE.md](./CLAUDE.
 ## Troubleshooting
 
 ### Utilities not working
+
 Make sure you've added the `@reference` directive to your global CSS file. This is required for Tailwind v4 to pick up Moonshine's utility classes.
 
 ### Fonts not loading
+
 The custom fonts (Diatype, Tobias) require licenses. If you don't have them, the system will use fallback fonts. Ensure your font files are in the correct path if you do have licenses.
 
 ### Dark mode not working
+
 Ensure the `themeElement` prop in `MoonshineConfigProvider` points to the element where your `dark` class is applied (usually `document.documentElement`).
 
 ### TypeScript types not found
+
 Make sure you're importing from the correct path:
+
 ```tsx
 import type { MoonshineClasses } from '@speakeasy-api/moonshine/types/utilities'
 ```
