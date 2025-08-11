@@ -40,18 +40,23 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom'],
+      // Ensure consumers provide these deps. Also treat subpath imports as external
+      // e.g. `lucide-react/dynamicIconImports`.
+      external: (id) => {
+        const externals = [
+          'react',
+          'react-dom',
+          'react/jsx-runtime',
+          'lucide-react',
+        ]
+        return externals.some((pkg) => id === pkg || id.startsWith(pkg + '/'))
+      },
       output: {
         globals: {
           react: 'React',
           'react/jsx-runtime': 'jsxRuntime',
           'react-dom': 'ReactDOM',
-          'lucide-react': 'LucideReact',
         },
-        manualChunks: {
-          'lucide-icons': ['lucide-react'],
-        },
-        inlineDynamicImports: false,
       },
     },
     sourcemap: true,
