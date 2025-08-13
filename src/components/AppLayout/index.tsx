@@ -238,7 +238,6 @@ const AppLayoutBreadcrumbItem = <E extends ElementType = 'a'>({
 
   return (
     <Component
-      aria-disabled={disabled || undefined}
       className={cn(
         'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
         active && 'text-foreground cursor-default',
@@ -404,7 +403,6 @@ const AppLayoutNavItem = <E extends ElementType = 'a'>({
       <Tooltip>
         <TooltipTrigger asChild>
           <Component
-            aria-disabled={disabled || undefined}
             className={cn(
               'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
               active && 'text-foreground',
