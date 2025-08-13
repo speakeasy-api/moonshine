@@ -5,10 +5,12 @@ import React, {
   PropsWithChildren,
   HTMLAttributes,
   useState,
+  ElementType,
+  ComponentPropsWithoutRef,
 } from 'react'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { motion, MotionProps } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Logo } from '../Logo'
 import {
   Tooltip,
@@ -209,27 +211,33 @@ const AppLayoutBreadcrumbDivider = () => {
   )
 }
 
-export interface AppLayoutBreadcrumbItemProps
-  extends MotionProps,
-    PropsWithChildren {
+type AppLayoutBreadcrumbItemOwnProps = {
   className?: string
   active?: boolean
   children?: React.ReactNode
   disabled?: boolean
-  onClick?: () => void
 }
 
-const AppLayoutBreadcrumbItem = ({
+export type AppLayoutBreadcrumbItemProps<E extends ElementType = 'a'> = {
+  as?: E
+} & AppLayoutBreadcrumbItemOwnProps &
+  Omit<
+    ComponentPropsWithoutRef<E>,
+    keyof AppLayoutBreadcrumbItemOwnProps | 'as'
+  >
+
+const AppLayoutBreadcrumbItem = <E extends ElementType = 'a'>({
+  as,
   children,
   className,
   active = false,
   disabled = false,
-  onClick,
-  ...props
-}: AppLayoutBreadcrumbItemProps) => {
+  ...rest
+}: AppLayoutBreadcrumbItemProps<E>) => {
+  const Component = (as || 'a') as ElementType
+
   return (
-    <motion.button
-      disabled={disabled}
+    <Component
       className={cn(
         'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
         active && 'text-foreground cursor-default',
@@ -238,11 +246,10 @@ const AppLayoutBreadcrumbItem = ({
           'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
         className
       )}
-      onClick={onClick}
-      {...props}
+      {...(rest as unknown as Record<string, unknown>)}
     >
       {children}
-    </motion.button>
+    </Component>
   )
 }
 
@@ -350,12 +357,10 @@ const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
 
 AppLayoutNav.displayName = 'AppLayout.Nav'
 
-export interface AppLayoutNavItemProps
-  extends HTMLAttributes<HTMLButtonElement> {
+type AppLayoutNavItemOwnProps = {
   title: string
   icon: IconName
   children?: React.ReactNode
-
   render?: ({
     title,
     icon,
@@ -370,27 +375,34 @@ export interface AppLayoutNavItemProps
   disabled?: boolean
 }
 
-const AppLayoutNavItem = ({
+export type AppLayoutNavItemProps<E extends ElementType = 'a'> = {
+  as?: E
+} & AppLayoutNavItemOwnProps &
+  Omit<ComponentPropsWithoutRef<E>, keyof AppLayoutNavItemOwnProps | 'as'>
+
+const AppLayoutNavItem = <E extends ElementType = 'a'>({
+  as,
   title,
   icon,
   render,
   className,
   active,
   disabled,
-  ...props
-}: AppLayoutNavItemProps) => {
+  ...rest
+}: AppLayoutNavItemProps<E>) => {
   const { collapsed } = useAppLayout()
 
   if (render) {
-    return render({ title, icon, active, ...props })
+    return render({ title, icon, active, ...rest })
   }
+
+  const Component = (as || 'a') as ElementType
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <button
-            disabled={disabled}
+          <Component
             className={cn(
               'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
               active && 'text-foreground',
@@ -398,7 +410,7 @@ const AppLayoutNavItem = ({
                 'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
               className
             )}
-            {...props}
+            {...(rest as unknown as Record<string, unknown>)}
           >
             <Icon name={icon} className="size-6" strokeWidth={1.3} />
             {collapsed ? null : (
@@ -411,7 +423,7 @@ const AppLayoutNavItem = ({
                 {title}
               </motion.span>
             )}
-          </button>
+          </Component>
         </TooltipTrigger>
         <TooltipContent
           className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"

@@ -491,3 +491,68 @@ export const CustomExtraSidebarChildren: Story = {
     </AppLayoutProvider>
   ),
 }
+
+// Demonstrates polymorphic `as` prop for NavItem and BreadcrumbItem
+const FakeLink = ({
+  to,
+  lookAtThisTypeSafety,
+  ...props
+}: {
+  to: string
+  lookAtThisTypeSafety: boolean
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  console.log(
+    'This is a type safety check. The prop lookAtThisTypeSafety is inherited.',
+    lookAtThisTypeSafety
+  )
+  return <a href={to} {...props} />
+}
+
+export const Polymorphic: Story = {
+  name: 'Polymorphic Components',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar">
+        <AppLayout.Nav>
+          {/* Default anchor with href */}
+          <AppLayout.NavItem href="#" title="Home" icon="house" />
+
+          {/* Custom Link-like component with `to` prop */}
+          <AppLayout.NavItem
+            as={FakeLink}
+            to="/settings"
+            lookAtThisTypeSafety={true}
+            title="Settings"
+            icon="settings"
+          />
+
+          {/* Another example showing disabled state still renders as anchor */}
+          <AppLayout.NavItem href="#" title="Users" icon="users" disabled />
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          {/* Breadcrumb uses polymorphic `as` with FakeLink */}
+          <AppLayout.BreadcrumbItem
+            as={FakeLink}
+            to="/"
+            lookAtThisTypeSafety={true}
+          >
+            Home
+          </AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
+  render: (args) => (
+    <AppLayoutProvider>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
+}
