@@ -568,7 +568,7 @@
   --sb-track-border: var(--color-neutral-300);
 
   /* Score Colors */
-  --score-low: var(--color-destructive-500);
+  --score-low: var(--color-feedback-red-500);
   --score-mid: var(--color-feedback-orange-500);
   --score-high: var(--color-feedback-green-500);
   --score-track: var(--color-neutral-700);
