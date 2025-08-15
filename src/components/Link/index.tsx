@@ -82,11 +82,21 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   ) => {
     const Comp = asChild ? Slot : 'a'
 
+    // When asChild is true, we need to apply underline styles to the main component
+    // since the Text wrapper won't be used
+    const underlineClasses = asChild
+      ? linkTextVariants({ underline, variant })
+      : ''
+
     return (
       <Comp
         ref={ref}
         target={target}
-        className={cn(linkVariants({ size, variant }), className)}
+        className={cn(
+          linkVariants({ size, variant }),
+          underlineClasses,
+          className
+        )}
         {...rest}
       >
         {iconPrefixName && (
