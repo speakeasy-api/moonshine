@@ -492,19 +492,13 @@ export const CustomExtraSidebarChildren: Story = {
   ),
 }
 
-// Demonstrates polymorphic `as` prop for NavItem and BreadcrumbItem
+// Demonstrates polymorphic `asChild` prop for NavItem and BreadcrumbItem
 const FakeLink = ({
   to,
-  lookAtThisTypeSafety,
   ...props
 }: {
   to: string
-  lookAtThisTypeSafety: boolean
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  console.log(
-    'This is a type safety check. The prop lookAtThisTypeSafety is inherited.',
-    lookAtThisTypeSafety
-  )
   return <a href={to} {...props} />
 }
 
@@ -517,14 +511,13 @@ export const Polymorphic: Story = {
           {/* Default anchor with href */}
           <AppLayout.NavItem href="#" title="Home" icon="house" />
 
-          {/* Custom Link-like component with `to` prop */}
-          <AppLayout.NavItem
-            as={FakeLink}
-            to="/settings"
-            lookAtThisTypeSafety={true}
-            title="Settings"
-            icon="settings"
-          />
+          {/* Custom Link-like component with asChild prop */}
+          <AppLayout.NavItem asChild title="Settings" icon="settings">
+            <FakeLink to="/settings">
+              <Icon name="settings" className="size-6" strokeWidth={1.3} />
+              <span className="typography-body-sm">Settings</span>
+            </FakeLink>
+          </AppLayout.NavItem>
 
           {/* Another example showing disabled state still renders as anchor */}
           <AppLayout.NavItem href="#" title="Users" icon="users" disabled />
@@ -534,13 +527,9 @@ export const Polymorphic: Story = {
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          {/* Breadcrumb uses polymorphic `as` with FakeLink */}
-          <AppLayout.BreadcrumbItem
-            as={FakeLink}
-            to="/"
-            lookAtThisTypeSafety={true}
-          >
-            Home
+          {/* Breadcrumb uses polymorphic asChild with FakeLink */}
+          <AppLayout.BreadcrumbItem asChild>
+            <FakeLink to="/">Home</FakeLink>
           </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
         </AppLayout.Breadcrumb>

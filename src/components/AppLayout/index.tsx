@@ -5,9 +5,8 @@ import React, {
   PropsWithChildren,
   HTMLAttributes,
   useState,
-  ElementType,
-  ComponentPropsWithoutRef,
 } from 'react'
+import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
 import { motion } from 'framer-motion'
@@ -211,47 +210,50 @@ const AppLayoutBreadcrumbDivider = () => {
   )
 }
 
-type AppLayoutBreadcrumbItemOwnProps = {
+export interface AppLayoutBreadcrumbItemProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string
   active?: boolean
   children?: React.ReactNode
   disabled?: boolean
+  asChild?: boolean
 }
 
-export type AppLayoutBreadcrumbItemProps<E extends ElementType = 'a'> = {
-  as?: E
-} & AppLayoutBreadcrumbItemOwnProps &
-  Omit<
-    ComponentPropsWithoutRef<E>,
-    keyof AppLayoutBreadcrumbItemOwnProps | 'as'
-  >
+const AppLayoutBreadcrumbItem = React.forwardRef<
+  HTMLAnchorElement,
+  AppLayoutBreadcrumbItemProps
+>(
+  (
+    {
+      asChild = false,
+      children,
+      className,
+      active = false,
+      disabled = false,
+      ...rest
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : 'a'
 
-const AppLayoutBreadcrumbItem = <E extends ElementType = 'a'>({
-  as,
-  children,
-  className,
-  active = false,
-  disabled = false,
-  ...rest
-}: AppLayoutBreadcrumbItemProps<E>) => {
-  const Component = (as || 'a') as ElementType
-
-  return (
-    <Component
-      className={cn(
-        'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
-        active && 'text-foreground cursor-default',
-        !active && 'hover:text-foreground hover:bg-accent',
-        disabled &&
-          'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
-        className
-      )}
-      {...(rest as unknown as Record<string, unknown>)}
-    >
-      {children}
-    </Component>
-  )
-}
+    return (
+      <Comp
+        ref={ref}
+        className={cn(
+          'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
+          active && 'text-foreground cursor-default',
+          !active && 'hover:text-foreground hover:bg-accent',
+          disabled &&
+            'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
+          className
+        )}
+        {...rest}
+      >
+        {children}
+      </Comp>
+    )
+  }
+)
 
 AppLayoutBreadcrumbItem.displayName = 'AppLayout.BreadcrumbItem'
 
@@ -357,7 +359,8 @@ const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
 
 AppLayoutNav.displayName = 'AppLayout.Nav'
 
-type AppLayoutNavItemOwnProps = {
+export interface AppLayoutNavItemProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   title: string
   icon: IconName
   children?: React.ReactNode
@@ -373,70 +376,94 @@ type AppLayoutNavItemOwnProps = {
   className?: string
   active?: boolean
   disabled?: boolean
+  asChild?: boolean
 }
 
-export type AppLayoutNavItemProps<E extends ElementType = 'a'> = {
-  as?: E
-} & AppLayoutNavItemOwnProps &
-  Omit<ComponentPropsWithoutRef<E>, keyof AppLayoutNavItemOwnProps | 'as'>
+const AppLayoutNavItem = React.forwardRef<
+  HTMLAnchorElement,
+  AppLayoutNavItemProps
+>(
+  (
+    {
+      asChild = false,
+      title,
+      icon,
+      render,
+      className,
+      active,
+      disabled,
+      children,
+      ...rest
+    },
+    ref
+  ) => {
+    const { collapsed } = useAppLayout()
 
-const AppLayoutNavItem = <E extends ElementType = 'a'>({
-  as,
-  title,
-  icon,
-  render,
-  className,
-  active,
-  disabled,
-  ...rest
-}: AppLayoutNavItemProps<E>) => {
-  const { collapsed } = useAppLayout()
+    if (render) {
+      return render({ title, icon, active })
+    }
 
-  if (render) {
-    return render({ title, icon, active, ...rest })
-  }
+    const Comp = asChild ? Slot : 'a'
+    const iconElement = (
+      <Icon name={icon} className="size-6" strokeWidth={1.3} />
+    )
+    const titleElement = collapsed ? null : (
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+        className="typography-body-sm"
+      >
+        {title}
+      </motion.span>
+    )
 
-  const Component = (as || 'a') as ElementType
+    const content = asChild ? (
+      children
+    ) : (
+      <>
+        {iconElement}
+        {titleElement}
+      </>
+    )
 
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Component
-            className={cn(
-              'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
-              active && 'text-foreground',
-              disabled &&
-                'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
-              className
-            )}
-            {...(rest as unknown as Record<string, unknown>)}
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Comp
+              ref={ref}
+              className={cn(
+                'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
+                active && 'text-foreground',
+                disabled &&
+                  'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
+                className
+              )}
+              {...rest}
+              {...(asChild && {
+                'data-title': title,
+                'data-icon': icon,
+                'data-active': active,
+                'data-disabled': disabled,
+              })}
+            >
+              {content}
+            </Comp>
+          </TooltipTrigger>
+          <TooltipContent
+            className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+            side="right"
+            hidden={!collapsed || disabled}
           >
-            <Icon name={icon} className="size-6" strokeWidth={1.3} />
-            {collapsed ? null : (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                className="typography-body-sm"
-              >
-                {title}
-              </motion.span>
-            )}
-          </Component>
-        </TooltipTrigger>
-        <TooltipContent
-          className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
-          side="right"
-          hidden={!collapsed || disabled}
-        >
-          <TooltipArrow className="fill-foreground" />
-          {title}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
-}
+            <TooltipArrow className="fill-foreground" />
+            {title}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
+  }
+)
 
 AppLayoutNavItem.displayName = 'AppLayout.NavItem'
 

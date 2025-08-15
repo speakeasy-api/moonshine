@@ -1,6 +1,7 @@
 import React, { forwardRef, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
+import { Slot, Slottable } from '@radix-ui/react-slot'
 import { IconName } from '../Icon/names'
 import { Icon as IconComponent } from '../Icon'
 import { TextVariant } from '../Text'
@@ -52,49 +53,50 @@ const iconWrapperVariants = cva('inline-block', {
   },
 })
 
-export interface LinkProps {
-  href?: string
+export interface LinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode
   variant?: LinkVariant
   size?: TextVariant
   underline?: boolean
-  target?: '_blank' | '_self'
-  rel?: string
   iconPrefixName?: IconName
   iconSuffixName?: IconName
-  className?: string
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  asChild?: boolean
 }
 
-export const Link: React.FC<LinkProps> = forwardRef<
-  HTMLAnchorElement,
-  LinkProps
->(
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   (
     {
-      href,
       children,
       variant = 'primary',
       size = 'md',
       underline = true,
       target = '_blank',
-      rel,
       iconPrefixName,
       iconSuffixName,
       className,
-      onClick,
-      ...rest // ...rest is needed so that we can use Link with <TooltipTrigger asChild>
+      asChild = false,
+      ...rest
     },
     ref
   ) => {
+    const Comp = asChild ? Slot : 'a'
+
+    // When asChild is true, we need to apply underline styles to the main component
+    // since the Text wrapper won't be used
+    const underlineClasses = asChild
+      ? linkTextVariants({ underline, variant })
+      : ''
+
     return (
-      <a
-        href={href}
+      <Comp
         ref={ref}
         target={target}
-        rel={rel}
-        className={cn(linkVariants({ size, variant }), className)}
-        onClick={onClick}
+        className={cn(
+          linkVariants({ size, variant }),
+          underlineClasses,
+          className
+        )}
         {...rest}
       >
         {iconPrefixName && (
@@ -103,16 +105,20 @@ export const Link: React.FC<LinkProps> = forwardRef<
           </IconWrapper>
         )}
 
-        <Text underline={underline} variant={variant}>
-          {children}
-        </Text>
+        {asChild ? (
+          <Slottable>{children}</Slottable>
+        ) : (
+          <Text underline={underline} variant={variant}>
+            {children}
+          </Text>
+        )}
 
         {iconSuffixName && (
           <IconWrapper size={size}>
             <IconComponent name={iconSuffixName} size="small" />
           </IconWrapper>
         )}
-      </a>
+      </Comp>
     )
   }
 )
