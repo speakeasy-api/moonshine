@@ -7,6 +7,7 @@ import { Icon } from '../Icon'
 import { Button } from '../Button'
 import React, { useState } from 'react'
 import { MoonshineConfigProvider } from '@/context/ConfigContext'
+import { useAppLayout } from '@/hooks/useAppLayout'
 
 type Story = StoryObj<typeof AppLayout>
 
@@ -501,6 +502,20 @@ const FakeLink = ({
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return <a href={to} {...props} />
 }
+const CustomLink = ({
+  to,
+  ...props
+}: {
+  to: string
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  const { collapsed } = useAppLayout()
+  return (
+    <FakeLink to={to} {...props}>
+      <Icon name="settings" className="size-6" strokeWidth={1.3} />
+      {!collapsed && <span className="typography-body-sm">Settings</span>}
+    </FakeLink>
+  )
+}
 
 export const Polymorphic: Story = {
   name: 'Polymorphic Components',
@@ -513,10 +528,7 @@ export const Polymorphic: Story = {
 
           {/* Custom Link-like component with asChild prop */}
           <AppLayout.NavItem asChild title="Settings" icon="settings">
-            <FakeLink to="/settings">
-              <Icon name="settings" className="size-6" strokeWidth={1.3} />
-              <span className="typography-body-sm">Settings</span>
-            </FakeLink>
+            <CustomLink to="/settings" />
           </AppLayout.NavItem>
 
           {/* Another example showing disabled state still renders as anchor */}

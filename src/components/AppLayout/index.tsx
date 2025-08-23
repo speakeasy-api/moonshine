@@ -4,7 +4,7 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
-  useState,
+  useMemo,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
@@ -29,37 +29,50 @@ interface AppLayoutProps extends PropsWithChildren {
 }
 
 const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
-  const sidebar = Children.toArray(children).find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'AppLayout.Sidebar'
-  })
-
-  const surface = Children.toArray(children).find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'AppLayout.Surface'
-  })
-
-  const surfaceHeader = Children.toArray(children).find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'AppLayout.SurfaceHeader'
-  })
-
-  // primary header to render above the surface
-  const header = Children.toArray(children).find((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    return type.displayName === 'AppLayout.Header'
-  })
-
   const { collapsed } = useAppLayout()
+
+  // Single pass through children to find all layout components
+  const childComponents = useMemo(
+    () =>
+      Children.toArray(children).reduce(
+        (acc, child) => {
+          if (!isValidElement(child)) return acc
+          const type = child.type as { displayName?: string }
+          const displayName = type.displayName
+
+          switch (displayName) {
+            case 'AppLayout.Sidebar':
+              acc.sidebar = child
+              break
+            case 'AppLayout.Surface':
+              acc.surface = child
+              break
+            case 'AppLayout.SurfaceHeader':
+              acc.surfaceHeader = child
+              break
+            case 'AppLayout.Header':
+              acc.header = child
+              break
+          }
+
+          return acc
+        },
+        {
+          sidebar: null as React.ReactElement | null,
+          surface: null as React.ReactElement | null,
+          surfaceHeader: null as React.ReactElement | null,
+          header: null as React.ReactElement | null,
+        }
+      ),
+    []
+  )
+
+  const { sidebar, surface, surfaceHeader, header } = childComponents
 
   return (
     <div
       className={cn(
-        'bg-surface-secondary flex h-screen w-full gap-3 overflow-hidden p-3 pr-0 pb-0',
+        'bg-surface-secondary flex h-screen w-full gap-3 overflow-hidden p-2 pr-0 pb-0',
         className
       )}
     >
@@ -74,9 +87,9 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
       >
         {header}
 
-        <div
+        <main
           className={cn(
-            'bg-surface-primary flex h-full flex-col overflow-hidden rounded-tl-xl border border-r-0 shadow will-change-transform'
+            'bg-surface-primary mr-2 mb-2 flex h-full flex-col overflow-hidden rounded-xl shadow-sm'
           )}
         >
           <div className="flex w-full flex-shrink-0 items-center border-b p-2">
@@ -84,7 +97,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
           </div>
 
           <div className="min-h-0 flex-1">{surface}</div>
-        </div>
+        </main>
       </motion.div>
     </div>
   )
@@ -113,6 +126,7 @@ AppLayoutSurface.displayName = 'AppLayout.Surface'
 interface AppLayoutSidebarProps {
   className?: string
   children?: React.ReactNode
+  Logo?: React.ReactNode
 }
 
 const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
@@ -128,11 +142,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
     <motion.div
       initial={false}
       layout="position"
-      className={cn(
-        'mt-4 flex w-fit flex-col items-start',
-        className,
-        !collapsed && 'mr-5'
-      )}
+      className={cn('mt-4 flex w-fit flex-col items-start', className)}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
       <div className="flex flex-col gap-4 px-2">
@@ -172,17 +182,22 @@ const AppLayoutBreadcrumb = ({
   children,
   className,
 }: AppLayoutBreadcrumbProps) => {
-  const validChildren = Children.toArray(children).filter((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
-    const isValidSubType = type.displayName === 'AppLayout.BreadcrumbItem'
-    if (!isValidSubType) {
-      console.warn(
-        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Pane, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
-      )
-    }
-    return isValidSubType
-  })
+  const validChildren = useMemo(
+    () =>
+      Children.toArray(children).filter((child) => {
+        if (!isValidElement(child)) return false
+        const type = child.type as { displayName?: string }
+        const isValidSubType = type.displayName === 'AppLayout.BreadcrumbItem'
+        if (!isValidSubType) {
+          console.warn(
+            `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Pane, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
+          )
+        }
+        return isValidSubType
+      }),
+    [children]
+  )
+
   return (
     <div
       className={cn(
@@ -240,7 +255,7 @@ const AppLayoutBreadcrumbItem = React.forwardRef<
       <Comp
         ref={ref}
         className={cn(
-          'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 select-none',
+          'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 text-lg font-light select-none',
           active && 'text-foreground cursor-default',
           !active && 'hover:text-foreground hover:bg-accent',
           disabled &&
@@ -270,7 +285,6 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const [isHovered, setIsHovered] = useState(false)
   const { collapsed, setCollapsed, keybinds } = useAppLayout()
   useAppLayoutKeys()
   return (
@@ -279,14 +293,13 @@ const AppLayoutCollapseButton = ({
         <Tooltip delayDuration={800} disableHoverableContent>
           <TooltipTrigger asChild>
             <button
-              className="typography-body-md hover:bg-accent rounded-md p-1.5"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
               onClick={() => setCollapsed(!collapsed)}
+              aria-label="Toggle sidebar"
             >
               <Icon
                 name="panel-left"
-                className={cn('text-muted size-4', isHovered && 'text-primary')}
+                className="text-muted group-hover:!text-primary size-4"
               />
             </button>
           </TooltipTrigger>
@@ -499,18 +512,32 @@ const AppLayoutNavItemGroup = ({
 
 AppLayoutNavItemGroup.displayName = 'AppLayout.NavItemGroup'
 
-export const AppLayout = Object.assign(AppLayoutBase, {
-  Surface: AppLayoutSurface,
-  SurfaceHeader: AppLayoutSurfaceHeader,
-  Sidebar: AppLayoutSidebar,
-  Breadcrumb: AppLayoutBreadcrumb,
-  BreadcrumbItem: AppLayoutBreadcrumbItem,
-  CollapseButton: AppLayoutCollapseButton,
-  HeaderDivider: AppLayoutHeaderDivider,
-  Header: AppLayoutHeader,
-  ThemeSwitcher: AppLayoutThemeSwitcher,
-  // Nav
-  Nav: AppLayoutNav,
-  NavItem: AppLayoutNavItem,
-  NavItemGroup: AppLayoutNavItemGroup,
-})
+const AppLayout = AppLayoutBase as typeof AppLayoutBase & {
+  Surface: typeof AppLayoutSurface
+  SurfaceHeader: typeof AppLayoutSurfaceHeader
+  Sidebar: typeof AppLayoutSidebar
+  Breadcrumb: typeof AppLayoutBreadcrumb
+  BreadcrumbItem: typeof AppLayoutBreadcrumbItem
+  CollapseButton: typeof AppLayoutCollapseButton
+  HeaderDivider: typeof AppLayoutHeaderDivider
+  Header: typeof AppLayoutHeader
+  ThemeSwitcher: typeof AppLayoutThemeSwitcher
+  Nav: typeof AppLayoutNav
+  NavItem: typeof AppLayoutNavItem
+  NavItemGroup: typeof AppLayoutNavItemGroup
+}
+
+AppLayout.Surface = AppLayoutSurface
+AppLayout.SurfaceHeader = AppLayoutSurfaceHeader
+AppLayout.Sidebar = AppLayoutSidebar
+AppLayout.Breadcrumb = AppLayoutBreadcrumb
+AppLayout.BreadcrumbItem = AppLayoutBreadcrumbItem
+AppLayout.CollapseButton = AppLayoutCollapseButton
+AppLayout.HeaderDivider = AppLayoutHeaderDivider
+AppLayout.Header = AppLayoutHeader
+AppLayout.ThemeSwitcher = AppLayoutThemeSwitcher
+AppLayout.Nav = AppLayoutNav
+AppLayout.NavItem = AppLayoutNavItem
+AppLayout.NavItemGroup = AppLayoutNavItemGroup
+
+export { AppLayout }

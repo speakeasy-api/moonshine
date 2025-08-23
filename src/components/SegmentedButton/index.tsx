@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { motion, MotionProps } from 'framer-motion'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './index.module.css'
 
 export interface SegmentedButtonProps {
@@ -11,35 +11,31 @@ export interface SegmentedButtonProps {
 const SegmentedButtonBase = ({ children, className }: SegmentedButtonProps) => {
   const [hoveredId, setHoveredId] = React.useState<string | null>(null)
 
-  const enhancedChildren = React.Children.map(children, (child) => {
-    if (!React.isValidElement<SegmentedButtonItemProps>(child)) return child
-    const childId: string | undefined = child.props.id
+  const enhancedChildren = useMemo(
+    () =>
+      React.Children.map(children, (child) => {
+        if (!React.isValidElement<SegmentedButtonItemProps>(child)) return child
+        const childId: string | undefined = child.props.id
 
-    const handleMouseEnter: React.MouseEventHandler<HTMLButtonElement> = (
-      e
-    ) => {
-      setHoveredId(childId ?? null)
-      child.props.onMouseEnter?.(e)
-    }
+        const onClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+          setHoveredId(childId ?? null)
+          child.props.onClick?.(e)
+        }
 
-    const handleMouseLeave: React.MouseEventHandler<HTMLButtonElement> = (
-      e
-    ) => {
-      setHoveredId((current) => (current === childId ? null : current))
-      child.props.onMouseLeave?.(e)
-    }
+        const highlighted = hoveredId
+          ? childId === hoveredId
+          : child.props.active
 
-    const highlighted = hoveredId ? childId === hoveredId : child.props.active
-
-    return React.cloneElement(
-      child as React.ReactElement<SegmentedButtonItemProps>,
-      {
-        highlighted,
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave,
-      }
-    )
-  })
+        return React.cloneElement(
+          child as React.ReactElement<SegmentedButtonItemProps>,
+          {
+            highlighted,
+            onClick,
+          }
+        )
+      }),
+    [children]
+  )
 
   return (
     <div
@@ -47,7 +43,6 @@ const SegmentedButtonBase = ({ children, className }: SegmentedButtonProps) => {
         'border-neutral-softest relative inline-flex flex-row items-center overflow-hidden rounded-full border shadow-xs backdrop-blur-md',
         className
       )}
-      onMouseLeave={() => setHoveredId(null)}
     >
       {enhancedChildren}
     </div>
@@ -62,9 +57,7 @@ export interface SegmentedButtonItemProps extends MotionProps {
   active?: boolean
   highlighted?: boolean
   id: string
-  onClick?: () => void
-  onMouseEnter?: React.MouseEventHandler<HTMLButtonElement>
-  onMouseLeave?: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const SegmentedButtonItem = ({
@@ -75,7 +68,7 @@ const SegmentedButtonItem = ({
 }: SegmentedButtonItemProps) => {
   return (
     <motion.button
-      className="text-codeline-xs relative flex items-center rounded-full px-5 py-1 uppercase"
+      className="text-codeline-xs hover:text-highlight relative flex items-center rounded-full px-5 py-1 uppercase"
       {...props}
     >
       {highlighted && (
@@ -90,7 +83,7 @@ const SegmentedButtonItem = ({
       )}
       <span
         className={cn(
-          'text-muted relative z-10',
+          'relative z-10',
           highlighted && 'text-highlight',
           className
         )}
