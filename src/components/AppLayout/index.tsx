@@ -73,7 +73,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   return (
     <div
       className={cn(
-        'bg-surface-secondary flex h-screen w-full gap-3 overflow-hidden p-3 pr-0 pb-0',
+        'bg-surface-secondary flex h-screen w-full gap-3 overflow-hidden p-2 pr-0 pb-0',
         className
       )}
     >
@@ -90,7 +90,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
 
         <main
           className={cn(
-            'bg-surface-primary m-2 ml-0 flex h-full flex-col overflow-hidden rounded-xl shadow-sm'
+            'bg-surface-primary mr-2 mb-2 flex h-full flex-col overflow-hidden rounded-xl shadow-sm'
           )}
         >
           <div className="flex w-full flex-shrink-0 items-center border-b p-2">
