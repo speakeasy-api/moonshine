@@ -4,7 +4,6 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
-  useState,
   useMemo,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
@@ -256,7 +255,7 @@ const AppLayoutBreadcrumbItem = React.forwardRef<
       <Comp
         ref={ref}
         className={cn(
-          'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 font-light select-none',
+          'typography-body-md text-muted-foreground cursor-pointer rounded-md px-1.5 text-lg font-light select-none',
           active && 'text-foreground cursor-default',
           !active && 'hover:text-foreground hover:bg-accent',
           disabled &&
@@ -286,7 +285,6 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const [isHovered, setIsHovered] = useState(false)
   const { collapsed, setCollapsed, keybinds } = useAppLayout()
   useAppLayoutKeys()
   return (
@@ -295,14 +293,13 @@ const AppLayoutCollapseButton = ({
         <Tooltip delayDuration={800} disableHoverableContent>
           <TooltipTrigger asChild>
             <button
-              className="typography-body-md hover:bg-accent rounded-md p-1.5"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
               onClick={() => setCollapsed(!collapsed)}
+              aria-label="Toggle sidebar"
             >
               <Icon
                 name="panel-left"
-                className={cn('text-muted size-4', isHovered && 'text-primary')}
+                className="text-muted group-hover:!text-primary size-4"
               />
             </button>
           </TooltipTrigger>
