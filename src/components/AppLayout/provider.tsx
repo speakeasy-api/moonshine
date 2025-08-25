@@ -6,17 +6,18 @@ interface AppLayoutProviderProps extends PropsWithChildren {
   keybinds?: AppLayoutContextType['keybinds']
 }
 
+const defaultKeybinds = {
+  toggle: {
+    key: 'B',
+    description: 'Toggle',
+  },
+}
+
 export const AppLayoutProvider = ({
   children,
   defaultCollapsed = false,
   keybinds,
 }: AppLayoutProviderProps) => {
-  const defaultKeybinds = {
-    toggle: {
-      key: 'B',
-      description: 'Toggle',
-    },
-  }
   const finalKeybinds = keybinds ?? defaultKeybinds
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
 
