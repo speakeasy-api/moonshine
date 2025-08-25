@@ -190,7 +190,7 @@ export type MoonshineUtilities =
   | 'bg-warning-highlight'
   | 'bg-warning-default'
   | 'bg-warning-muted'
-  | 'bg-warning-softest';
+  | 'bg-warning-softest'
 
 /**
  * Semantic color utilities available from theme
@@ -416,14 +416,19 @@ export type MoonshineColorUtilities =
   | 'text-body-muted'
   | 'border-body-muted'
   | 'ring-body-muted'
-  | 'divide-body-muted';
+  | 'divide-body-muted'
 
 /**
  * All available Moonshine utility classes
  */
-export type MoonshineClasses = MoonshineUtilities | MoonshineColorUtilities;
+export type MoonshineClasses = MoonshineUtilities | MoonshineColorUtilities
 
 /**
  * Helper type for className props
  */
-export type MoonshineClassName = MoonshineClasses | MoonshineClasses[] | undefined | null | false;
+export type MoonshineClassName =
+  | MoonshineClasses
+  | MoonshineClasses[]
+  | undefined
+  | null
+  | false
