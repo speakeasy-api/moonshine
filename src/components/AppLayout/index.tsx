@@ -4,7 +4,6 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
-  useMemo,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
@@ -32,39 +31,35 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   const { collapsed } = useAppLayout()
 
   // Single pass through children to find all layout components
-  const childComponents = useMemo(
-    () =>
-      Children.toArray(children).reduce(
-        (acc, child) => {
-          if (!isValidElement(child)) return acc
-          const type = child.type as { displayName?: string }
-          const displayName = type.displayName
+  const childComponents = Children.toArray(children).reduce(
+    (acc, child) => {
+      if (!isValidElement(child)) return acc
+      const type = child.type as { displayName?: string }
+      const displayName = type.displayName
 
-          switch (displayName) {
-            case 'AppLayout.Sidebar':
-              acc.sidebar = child
-              break
-            case 'AppLayout.Surface':
-              acc.surface = child
-              break
-            case 'AppLayout.SurfaceHeader':
-              acc.surfaceHeader = child
-              break
-            case 'AppLayout.Header':
-              acc.header = child
-              break
-          }
+      switch (displayName) {
+        case 'AppLayout.Sidebar':
+          acc.sidebar = child
+          break
+        case 'AppLayout.Surface':
+          acc.surface = child
+          break
+        case 'AppLayout.SurfaceHeader':
+          acc.surfaceHeader = child
+          break
+        case 'AppLayout.Header':
+          acc.header = child
+          break
+      }
 
-          return acc
-        },
-        {
-          sidebar: null as React.ReactElement | null,
-          surface: null as React.ReactElement | null,
-          surfaceHeader: null as React.ReactElement | null,
-          header: null as React.ReactElement | null,
-        }
-      ),
-    []
+      return acc
+    },
+    {
+      sidebar: null as React.ReactElement | null,
+      surface: null as React.ReactElement | null,
+      surfaceHeader: null as React.ReactElement | null,
+      header: null as React.ReactElement | null,
+    }
   )
 
   const { sidebar, surface, surfaceHeader, header } = childComponents
@@ -182,21 +177,17 @@ const AppLayoutBreadcrumb = ({
   children,
   className,
 }: AppLayoutBreadcrumbProps) => {
-  const validChildren = useMemo(
-    () =>
-      Children.toArray(children).filter((child) => {
-        if (!isValidElement(child)) return false
-        const type = child.type as { displayName?: string }
-        const isValidSubType = type.displayName === 'AppLayout.BreadcrumbItem'
-        if (!isValidSubType) {
-          console.warn(
-            `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Pane, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
-          )
-        }
-        return isValidSubType
-      }),
-    [children]
-  )
+  const validChildren = Children.toArray(children).filter((child) => {
+    if (!isValidElement(child)) return false
+    const type = child.type as { displayName?: string }
+    const isValidSubType = type.displayName === 'AppLayout.BreadcrumbItem'
+    if (!isValidSubType) {
+      console.warn(
+        `Invalid child type: ${type.displayName}. Must be one of: CodeEditor.Pane, CodeEditor.Tabs, CodeEditor.CommandBar, CodeEditor.Empty`
+      )
+    }
+    return isValidSubType
+  })
 
   return (
     <div
