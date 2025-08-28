@@ -6,7 +6,7 @@ export type Screen = {
   component: ReactNode
 }
 
-type ContextDropdownContextType = {
+type ModalContextType = {
   screens: Screen[]
   currentIndex: number
   isOpen: boolean
@@ -19,14 +19,14 @@ type ContextDropdownContextType = {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const ContextDropdownContext = createContext<
-  ContextDropdownContextType | undefined
->(undefined)
+export const ModalContext = createContext<ModalContextType | undefined>(
+  undefined
+)
 
-export function ContextDropdownProvider({
+export function ModalProvider({
   children,
 }: {
-  children: ReactNode | ((props: ContextDropdownContextType) => ReactNode)
+  children: ReactNode | ((props: ModalContextType) => ReactNode)
 }) {
   const [screens, setScreens] = useState<Screen[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -87,7 +87,7 @@ export function ContextDropdownProvider({
   }
 
   return (
-    <ContextDropdownContext.Provider
+    <ModalContext.Provider
       value={{
         screens,
         currentIndex,
@@ -113,6 +113,6 @@ export function ContextDropdownProvider({
             navigationDirection,
           })
         : children}
-    </ContextDropdownContext.Provider>
+    </ModalContext.Provider>
   )
 }
