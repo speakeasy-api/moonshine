@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { ContextDropdownContext } from './provider'
+import { ModalContext } from '@/context/ModalContext'
 
 export function useModal() {
-  const context = useContext(ContextDropdownContext)
+  const context = useContext(ModalContext)
   if (context === undefined) {
     throw new Error('useModal must be used within a ModalProvider')
   }

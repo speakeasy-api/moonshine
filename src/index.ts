@@ -186,8 +186,8 @@ export {
 
 // ContextDropdown
 export { ContextDropdown } from '@/components/ContextDropdown'
-export { ContextDropdownProvider as ContextDropdownProvider } from '@/components/ContextDropdown/provider'
-export { useModal as useContextDropdown } from '@/components/ContextDropdown/useModal'
+export { ModalProvider } from '@/context/ModalContext'
+export { useModal } from '@/hooks/useModal'
 
 export {
   ThemeSwitcher,

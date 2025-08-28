@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { ContextDropdown } from '.'
-import { useModal } from './useModal'
+import { useModal } from '../../hooks/useModal'
 import { Button } from '../Button'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import { ContextDropdownProvider } from './provider'
+import { ModalProvider } from '@/context/ModalContext'
 import { faker } from '@faker-js/faker'
 import { cn } from '@/lib/utils'
 import { Heading } from '../Heading'
@@ -65,7 +65,7 @@ function Screen({ title, content, index }: ScreenProps) {
 export const Default: Story = {
   render: () => {
     return (
-      <ContextDropdownProvider>
+      <ModalProvider>
         {({ isOpen, openScreen }) => (
           <Popover open={isOpen}>
             <PopoverTrigger asChild>
@@ -96,7 +96,7 @@ export const Default: Story = {
             </PopoverContent>
           </Popover>
         )}
-      </ContextDropdownProvider>
+      </ModalProvider>
     )
   },
 }
@@ -104,7 +104,7 @@ export const Default: Story = {
 export const CustomTitle: Story = {
   render: () => {
     return (
-      <ContextDropdownProvider>
+      <ModalProvider>
         {({ isOpen, openScreen }) => (
           <Popover open={isOpen}>
             <PopoverTrigger asChild>
@@ -148,7 +148,7 @@ export const CustomTitle: Story = {
             </PopoverContent>
           </Popover>
         )}
-      </ContextDropdownProvider>
+      </ModalProvider>
     )
   },
 }

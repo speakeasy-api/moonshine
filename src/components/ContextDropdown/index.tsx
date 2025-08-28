@@ -3,11 +3,11 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '../Icon'
-import { useModal } from './useModal'
-import { Screen } from './provider'
 import { assert } from '@/lib/typeUtils'
 import { Heading } from '../Heading'
 import React from 'react'
+import { useModal } from '@/hooks/useModal'
+import { Screen } from '@/context/ModalContext'
 
 const MotionHeading = motion(Heading)
 
