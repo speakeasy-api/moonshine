@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/Button'
 import { Icon } from '../Icon'
 
-interface ModalProps {
+export interface ModalProps {
   closable?: boolean
   className?: string
 }

@@ -189,6 +189,9 @@ export { ContextDropdown } from '@/components/ContextDropdown'
 export { ModalProvider } from '@/context/ModalContext'
 export { useModal } from '@/hooks/useModal'
 
+// Modal
+export { Modal, type ModalProps } from '@/components/Modal'
+
 export {
   ThemeSwitcher,
   type ThemeSwitcherProps,
