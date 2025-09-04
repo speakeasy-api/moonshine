@@ -78,6 +78,7 @@ export interface AIChatContextValue {
   onModelChange?: (model: string) => void
   availableModels?: { label: string; value: string }[]
   toolCallApproval?: ToolCallApprovalProps
+  initialInput?: string
 }
 
 export interface BasePartProps {

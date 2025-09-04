@@ -25,6 +25,7 @@ export interface AIChatContainerProps
   components?: Partial<AIChatComponents>
   toolCallApproval?: ToolCallApprovalProps
   children?: ReactNode
+  initialInput?: string
 }
 
 interface AIChatComponents {
@@ -41,6 +42,7 @@ export function AIChatContainer({
   components,
   toolCallApproval,
   children,
+  initialInput,
 }: AIChatContainerProps) {
   return (
     <AIChatContext.Provider
@@ -52,6 +54,7 @@ export function AIChatContainer({
         onModelChange: modelSelector?.onModelChange,
         availableModels: modelSelector?.availableModels,
         toolCallApproval,
+        initialInput,
       }}
     >
       <div className={cn('flex h-full min-h-0 max-w-3xl flex-col', className)}>
