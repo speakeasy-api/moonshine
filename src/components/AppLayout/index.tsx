@@ -4,6 +4,8 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
+  useRef,
+  useEffect,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
@@ -125,7 +127,7 @@ interface AppLayoutSidebarProps {
 }
 
 const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
-  const { collapsed } = useAppLayout()
+  const { collapsed, setCollapsed, hoverExpandsSidebar } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
     if (!isValidElement(child)) return false
@@ -133,11 +135,36 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
     return type.displayName === 'AppLayout.Nav'
   })
 
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
+  // Handle hover intent when the sidebar is collapsed
+  useEffect(() => {
+    if (hoverExpandsSidebar && collapsed) {
+      const handleMouseEnter = () => {
+        setCollapsed(false)
+      }
+
+      const handleMouseLeave = () => {
+        setCollapsed(true)
+      }
+      // TODO: might need to add a hover intent delay for the mouseenter event if
+      // the hovering behaviour is undesirable
+      sidebarRef.current?.addEventListener('mouseenter', handleMouseEnter)
+      sidebarRef.current?.addEventListener('mouseleave', handleMouseLeave)
+
+      return () => {
+        sidebarRef.current?.removeEventListener('mouseenter', handleMouseEnter)
+        sidebarRef.current?.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+  }, [hoverExpandsSidebar])
+
   return (
     <motion.div
       initial={false}
       layout="position"
       className={cn('mt-4 flex w-fit flex-col items-start', className)}
+      ref={sidebarRef}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
       <div className="flex flex-col gap-4 px-2">

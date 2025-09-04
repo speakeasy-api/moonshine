@@ -17,6 +17,9 @@ export interface AppLayoutContextType {
   keybinds: {
     toggle: KeybindConfig
   }
+
+  // hoverExpandsSidebar
+  hoverExpandsSidebar: boolean
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
@@ -28,4 +31,5 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
       description: 'Toggle',
     },
   },
+  hoverExpandsSidebar: true,
 })
