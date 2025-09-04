@@ -168,7 +168,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
         setCollapsed(false)
         setExpandedByHover(true) // Mark as expanded by hover
         hoverTimeoutRef.current = null
-      }, 150) // 150ms delay
+      }, 250) // 250ms delay
     }
 
     const handleMouseLeave = () => {
