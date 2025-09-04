@@ -37,8 +37,8 @@ export const AppLayoutProvider = ({
         setCollapsed,
         keybinds: finalKeybinds,
         hoverExpandsSidebar,
-        expandedByHover,
-        setExpandedByHover,
+        _expandedByHover: expandedByHover,
+        _setExpandedByHover: setExpandedByHover,
       }}
     >
       {children}

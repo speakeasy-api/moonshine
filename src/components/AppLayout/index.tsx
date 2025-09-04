@@ -131,8 +131,8 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
     collapsed,
     setCollapsed,
     hoverExpandsSidebar,
-    expandedByHover,
-    setExpandedByHover,
+    _expandedByHover,
+    _setExpandedByHover,
   } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
@@ -143,12 +143,12 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
 
   const sidebarRef = useRef<HTMLDivElement>(null)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const expandedByHoverRef = useRef(expandedByHover)
+  const expandedByHoverRef = useRef(_expandedByHover)
 
   // Keep ref in sync with state
   useEffect(() => {
-    expandedByHoverRef.current = expandedByHover
-  }, [expandedByHover])
+    expandedByHoverRef.current = _expandedByHover
+  }, [_expandedByHover])
 
   // Handle hover intent when the sidebar is collapsed
   useEffect(() => {
@@ -166,7 +166,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
       // Set a delay before expanding
       hoverTimeoutRef.current = setTimeout(() => {
         setCollapsed(false)
-        setExpandedByHover(true) // Mark as expanded by hover
+        _setExpandedByHover(true) // Mark as expanded by hover
         hoverTimeoutRef.current = null
       }, 250) // 250ms delay
     }
@@ -181,7 +181,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
       // Only collapse if it was expanded by hover, not manually
       if (expandedByHoverRef.current) {
         setCollapsed(true)
-        setExpandedByHover(false)
+        _setExpandedByHover(false)
       }
     }
 
@@ -198,7 +198,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
       sidebar.removeEventListener('mouseenter', handleMouseEnter)
       sidebar.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [hoverExpandsSidebar, collapsed, setCollapsed, setExpandedByHover])
+  }, [hoverExpandsSidebar, collapsed, setCollapsed, _setExpandedByHover])
 
   return (
     <motion.div
@@ -344,7 +344,7 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const { collapsed, setCollapsed, keybinds, setExpandedByHover } =
+  const { collapsed, setCollapsed, keybinds, _setExpandedByHover } =
     useAppLayout()
   useAppLayoutKeys()
   return (
@@ -356,7 +356,7 @@ const AppLayoutCollapseButton = ({
               className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
               onClick={() => {
                 setCollapsed(!collapsed)
-                setExpandedByHover(false) // Reset hover state on manual toggle
+                _setExpandedByHover(false) // Reset hover state on manual toggle
               }}
               aria-label="Toggle sidebar"
             >

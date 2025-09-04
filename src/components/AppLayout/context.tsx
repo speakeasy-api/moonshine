@@ -18,12 +18,14 @@ export interface AppLayoutContextType {
     toggle: KeybindConfig
   }
 
-  // hoverExpandsSidebar
+  /**
+   * If the sidebar is collapsed, should it expand when hovered?
+   */
   hoverExpandsSidebar: boolean
 
   // track if sidebar was expanded by hover vs manual toggle
-  expandedByHover: boolean
-  setExpandedByHover: (expandedByHover: boolean) => void
+  _expandedByHover: boolean
+  _setExpandedByHover: (expandedByHover: boolean) => void
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
@@ -36,6 +38,6 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
     },
   },
   hoverExpandsSidebar: true,
-  expandedByHover: false,
-  setExpandedByHover: () => {},
+  _expandedByHover: false,
+  _setExpandedByHover: () => {},
 })
