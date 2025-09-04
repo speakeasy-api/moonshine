@@ -72,10 +72,16 @@ export function AIChatMessageComposer({
   className,
   components,
 }: AIChatMessageComposerProps) {
-  const [message, setMessage] = useState('')
+  const {
+    onSendMessage,
+    isLoading,
+    model,
+    onModelChange,
+    availableModels,
+    initialInput,
+  } = useAIChat()
+  const [message, setMessage] = useState(initialInput || '')
   const [isFocused, setIsFocused] = useState(false)
-  const { onSendMessage, isLoading, model, onModelChange, availableModels } =
-    useAIChat()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const adjustHeight = () => {
@@ -89,6 +95,13 @@ export function AIChatMessageComposer({
   useEffect(() => {
     adjustHeight()
   }, [message])
+
+  // Set initial input only once when component mounts with an initialInput
+  useEffect(() => {
+    if (initialInput) {
+      setMessage(initialInput)
+    }
+  }, [])
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault()
