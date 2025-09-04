@@ -22,10 +22,12 @@ export const AppLayoutProvider = ({
 }: AppLayoutProviderProps) => {
   const finalKeybinds = keybinds ?? defaultKeybinds
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
+  const [expandedByHover, setExpandedByHover] = useState(false)
 
   // respond to defaultCollapsed changes
   useEffect(() => {
     setCollapsed(defaultCollapsed)
+    setExpandedByHover(false) // Reset hover state when default changes
   }, [defaultCollapsed])
 
   return (
@@ -35,6 +37,8 @@ export const AppLayoutProvider = ({
         setCollapsed,
         keybinds: finalKeybinds,
         hoverExpandsSidebar,
+        expandedByHover,
+        setExpandedByHover,
       }}
     >
       {children}

@@ -127,7 +127,13 @@ interface AppLayoutSidebarProps {
 }
 
 const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
-  const { collapsed, setCollapsed, hoverExpandsSidebar } = useAppLayout()
+  const {
+    collapsed,
+    setCollapsed,
+    hoverExpandsSidebar,
+    expandedByHover,
+    setExpandedByHover,
+  } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
     if (!isValidElement(child)) return false
@@ -136,28 +142,63 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
   })
 
   const sidebarRef = useRef<HTMLDivElement>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const expandedByHoverRef = useRef(expandedByHover)
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    expandedByHoverRef.current = expandedByHover
+  }, [expandedByHover])
 
   // Handle hover intent when the sidebar is collapsed
   useEffect(() => {
-    if (hoverExpandsSidebar && collapsed) {
-      const handleMouseEnter = () => {
+    const sidebar = sidebarRef.current
+    if (!sidebar || !hoverExpandsSidebar) return
+
+    const handleMouseEnter = () => {
+      // Only expand if currently collapsed
+      if (!collapsed) return
+      // Clear any existing timeout
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+      }
+
+      // Set a delay before expanding
+      hoverTimeoutRef.current = setTimeout(() => {
         setCollapsed(false)
+        setExpandedByHover(true) // Mark as expanded by hover
+        hoverTimeoutRef.current = null
+      }, 150) // 150ms delay
+    }
+
+    const handleMouseLeave = () => {
+      // Clear the timeout if mouse leaves before delay completes
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
       }
 
-      const handleMouseLeave = () => {
+      // Only collapse if it was expanded by hover, not manually
+      if (expandedByHoverRef.current) {
         setCollapsed(true)
-      }
-      // TODO: might need to add a hover intent delay for the mouseenter event if
-      // the hovering behaviour is undesirable
-      sidebarRef.current?.addEventListener('mouseenter', handleMouseEnter)
-      sidebarRef.current?.addEventListener('mouseleave', handleMouseLeave)
-
-      return () => {
-        sidebarRef.current?.removeEventListener('mouseenter', handleMouseEnter)
-        sidebarRef.current?.removeEventListener('mouseleave', handleMouseLeave)
+        setExpandedByHover(false)
       }
     }
-  }, [hoverExpandsSidebar])
+
+    // Add listeners when hover expansion is enabled
+    sidebar.addEventListener('mouseenter', handleMouseEnter)
+    sidebar.addEventListener('mouseleave', handleMouseLeave)
+
+    // Cleanup function - always runs when effect re-runs or component unmounts
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
+      sidebar.removeEventListener('mouseenter', handleMouseEnter)
+      sidebar.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [hoverExpandsSidebar, collapsed, setCollapsed, setExpandedByHover])
 
   return (
     <motion.div
@@ -303,7 +344,8 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const { collapsed, setCollapsed, keybinds } = useAppLayout()
+  const { collapsed, setCollapsed, keybinds, setExpandedByHover } =
+    useAppLayout()
   useAppLayoutKeys()
   return (
     <div className={cn('flex items-center gap-2', className)}>
@@ -312,7 +354,10 @@ const AppLayoutCollapseButton = ({
           <TooltipTrigger asChild>
             <button
               className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={() => {
+                setCollapsed(!collapsed)
+                setExpandedByHover(false) // Reset hover state on manual toggle
+              }}
               aria-label="Toggle sidebar"
             >
               <Icon

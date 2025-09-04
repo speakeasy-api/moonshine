@@ -20,6 +20,10 @@ export interface AppLayoutContextType {
 
   // hoverExpandsSidebar
   hoverExpandsSidebar: boolean
+
+  // track if sidebar was expanded by hover vs manual toggle
+  expandedByHover: boolean
+  setExpandedByHover: (expandedByHover: boolean) => void
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
@@ -32,4 +36,6 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
     },
   },
   hoverExpandsSidebar: true,
+  expandedByHover: false,
+  setExpandedByHover: () => {},
 })
