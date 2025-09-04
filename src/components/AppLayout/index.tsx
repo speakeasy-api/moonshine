@@ -4,6 +4,8 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
+  useRef,
+  useEffect,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
@@ -125,7 +127,13 @@ interface AppLayoutSidebarProps {
 }
 
 const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
-  const { collapsed } = useAppLayout()
+  const {
+    collapsed,
+    setCollapsed,
+    hoverExpandsSidebar,
+    _expandedByHover,
+    _setExpandedByHover,
+  } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
     if (!isValidElement(child)) return false
@@ -133,11 +141,71 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
     return type.displayName === 'AppLayout.Nav'
   })
 
+  const sidebarRef = useRef<HTMLDivElement>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const expandedByHoverRef = useRef(_expandedByHover)
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    expandedByHoverRef.current = _expandedByHover
+  }, [_expandedByHover])
+
+  // Handle hover intent when the sidebar is collapsed
+  useEffect(() => {
+    const sidebar = sidebarRef.current
+    if (!sidebar || !hoverExpandsSidebar) return
+
+    const handleMouseEnter = () => {
+      // Only expand if currently collapsed
+      if (!collapsed) return
+      // Clear any existing timeout
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+      }
+
+      // Set a delay before expanding
+      hoverTimeoutRef.current = setTimeout(() => {
+        setCollapsed(false)
+        _setExpandedByHover(true) // Mark as expanded by hover
+        hoverTimeoutRef.current = null
+      }, 250) // 250ms delay
+    }
+
+    const handleMouseLeave = () => {
+      // Clear the timeout if mouse leaves before delay completes
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
+
+      // Only collapse if it was expanded by hover, not manually
+      if (expandedByHoverRef.current) {
+        setCollapsed(true)
+        _setExpandedByHover(false)
+      }
+    }
+
+    // Add listeners when hover expansion is enabled
+    sidebar.addEventListener('mouseenter', handleMouseEnter)
+    sidebar.addEventListener('mouseleave', handleMouseLeave)
+
+    // Cleanup function - always runs when effect re-runs or component unmounts
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
+      sidebar.removeEventListener('mouseenter', handleMouseEnter)
+      sidebar.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [hoverExpandsSidebar, collapsed, setCollapsed, _setExpandedByHover])
+
   return (
     <motion.div
       initial={false}
       layout="position"
       className={cn('mt-4 flex w-fit flex-col items-start', className)}
+      ref={sidebarRef}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
       <div className="flex flex-col gap-4 px-2">
@@ -276,7 +344,8 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const { collapsed, setCollapsed, keybinds } = useAppLayout()
+  const { collapsed, setCollapsed, keybinds, _setExpandedByHover } =
+    useAppLayout()
   useAppLayoutKeys()
   return (
     <div className={cn('flex items-center gap-2', className)}>
@@ -285,7 +354,10 @@ const AppLayoutCollapseButton = ({
           <TooltipTrigger asChild>
             <button
               className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={() => {
+                setCollapsed(!collapsed)
+                _setExpandedByHover(false) // Reset hover state on manual toggle
+              }}
               aria-label="Toggle sidebar"
             >
               <Icon

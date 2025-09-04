@@ -1,9 +1,10 @@
-import { PropsWithChildren, useState } from 'react'
+import { PropsWithChildren, useState, useEffect } from 'react'
 import { AppLayoutContext, AppLayoutContextType } from './context'
 
 interface AppLayoutProviderProps extends PropsWithChildren {
   defaultCollapsed?: boolean
   keybinds?: AppLayoutContextType['keybinds']
+  hoverExpandsSidebar?: boolean
 }
 
 const defaultKeybinds = {
@@ -17,13 +18,28 @@ export const AppLayoutProvider = ({
   children,
   defaultCollapsed = false,
   keybinds,
+  hoverExpandsSidebar = true,
 }: AppLayoutProviderProps) => {
   const finalKeybinds = keybinds ?? defaultKeybinds
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
+  const [expandedByHover, setExpandedByHover] = useState(false)
+
+  // respond to defaultCollapsed changes
+  useEffect(() => {
+    setCollapsed(defaultCollapsed)
+    setExpandedByHover(false) // Reset hover state when default changes
+  }, [defaultCollapsed])
 
   return (
     <AppLayoutContext.Provider
-      value={{ collapsed, setCollapsed, keybinds: finalKeybinds }}
+      value={{
+        collapsed,
+        setCollapsed,
+        keybinds: finalKeybinds,
+        hoverExpandsSidebar,
+        _expandedByHover: expandedByHover,
+        _setExpandedByHover: setExpandedByHover,
+      }}
     >
       {children}
     </AppLayoutContext.Provider>
