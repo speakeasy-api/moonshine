@@ -41,7 +41,7 @@ type ComboboxDataProps<T extends string = string> =
 interface ComboboxBaseProps<T extends string = string> {
   value: T
   onValueChange: (value: T | undefined) => void
-  variant?: Extract<ButtonProps['variant'], 'outline' | 'ghost'>
+  variant?: ButtonProps['variant']
   size?: ButtonProps['size']
   disabled?: boolean
   loading?: boolean
@@ -62,8 +62,8 @@ export function Combobox<T extends string = string>({
   groups,
   value,
   onValueChange,
-  variant = 'outline',
-  size = 'default',
+  variant = 'secondary',
+  size = 'md',
   disabled,
   loading,
   error,
@@ -127,7 +127,7 @@ export function Combobox<T extends string = string>({
       <PopoverTrigger asChild>
         <Button
           variant={variant}
-          size={iconOnly ? 'icon' : size}
+          size={size}
           disabled={disabled}
           aria-expanded={open}
         >

@@ -9,7 +9,7 @@ import {
 } from '@radix-ui/react-dialog'
 import { useModal } from '@/hooks/useModal'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/Button'
+import { IconButton } from '@/components/IconButton'
 import { Icon } from '../Icon'
 
 export interface ModalProps {
@@ -37,16 +37,17 @@ export const Modal = ({ closable = false, className }: ModalProps) => {
         >
           {closable && (
             <DialogClose asChild>
-              <Button
-                variant="ghost"
-                size="icon"
+              <IconButton
+                variant="tertiary"
+                icon={
+                  <Icon
+                    name="x"
+                    className="text-neutral-default hover:text-neutral-default/80 size-7 focus:outline-none"
+                  />
+                }
+                aria-label="Close modal"
                 className="absolute top-4 right-4 focus:ring-0 focus:outline-none focus-visible:ring-0"
-              >
-                <Icon
-                  name="x"
-                  className="text-neutral-default hover:text-neutral-default/80 size-7 focus:outline-none"
-                />
-              </Button>
+              />
             </DialogClose>
           )}
           {currentScreen.title && (

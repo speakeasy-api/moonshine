@@ -67,7 +67,7 @@ const ModalRenderer = ({
 
           {multiScreen && (
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               className="w-fit justify-self-end"
               onClick={addScreen}

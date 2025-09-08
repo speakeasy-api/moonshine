@@ -125,7 +125,7 @@ export const IconOnly: Story = {
   args: {
     ...Default.args,
     iconOnly: true,
-    variant: 'ghost',
+    variant: 'tertiary',
   },
 }
 

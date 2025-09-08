@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { cn } from '../../lib/utils'
-import { Button } from '../Button'
+import { IconButton } from '../IconButton'
 import { Icon } from '../Icon'
 import { AIChatModelSelector } from './AIChatModelSelector'
 import {
@@ -38,15 +38,14 @@ const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
     type: 'submit'
     className: string
   }) => (
-    <Button
+    <IconButton
       type={type}
       disabled={disabled}
-      size="icon"
       variant="secondary"
+      icon={<Icon name="arrow-up" className="size-4" />}
+      aria-label="Send message"
       className={cn('h-8 w-8 rounded-[7px]', className)}
-    >
-      <Icon name="arrow-up" className="size-4" />
-    </Button>
+    />
   ),
   modelSelector: ({
     model,

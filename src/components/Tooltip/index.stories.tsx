@@ -24,7 +24,7 @@ export const Default: Story = {
   args: {
     children: [
       <TooltipTrigger>
-        <Button variant="outline">Hover me</Button>
+        <Button variant="secondary">Hover me</Button>
       </TooltipTrigger>,
       <TooltipContent side="right">
         <p>You hovered me!</p>
