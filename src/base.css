@@ -70,15 +70,15 @@
 
   --gradient-brand-red: radial-gradient(
     138.34% 138.34% at 0% 4.4%,
-    var(--color-destructive-900) 0%,
-    var(--color-destructive-800) 12.5%,
-    var(--color-destructive-700) 25%,
-    var(--color-destructive-600) 37.5%,
-    var(--color-destructive-500) 50%,
-    var(--color-destructive-400) 62.5%,
-    var(--color-destructive-300) 75%,
-    var(--color-destructive-200) 87.5%,
-    var(--color-destructive-100) 100%
+    var(--color-brand-red-900) 0%,
+    var(--color-brand-red-800) 12.5%,
+    var(--color-brand-red-700) 25%,
+    var(--color-brand-red-600) 37.5%,
+    var(--color-brand-red-500) 50%,
+    var(--color-brand-red-400) 62.5%,
+    var(--color-brand-red-300) 75%,
+    var(--color-brand-red-200) 87.5%,
+    var(--color-brand-red-100) 100%
   );
 
   /* Brand green */
@@ -233,215 +233,18 @@
    * These change based on light/dark mode
    * ============================================ */
 
-  /* Text Colors */
-  /* TODO: These should use our skimmable colors for headings */
-  --text-heading-xl: var(--color-neutral-900);
-  --text-heading-lg: var(--color-neutral-900);
-  --text-heading-md: var(--color-neutral-900);
-  --text-heading-sm: var(--color-neutral-800);
-  --text-heading-xs: var(--color-neutral-800);
-
-  --text-display: var(--color-base-black);
-
-  --text-highlight: var(--color-neutral-900);
-  --text-default: var(--color-neutral-700);
-  --text-muted: var(--color-neutral-900-64);
-  --text-placeholder: var(--color-neutral-900-56);
-  --text-disabled: var(--color-neutral-900-40);
-
-  /* Fixed dark text */
-  --text-highlight-fixed-dark: var(--color-base-black);
-  --text-default-fixed-dark: var(--color-neutral-900);
-  --text-muted-fixed-dark: var(--color-neutral-900-64);
-
-  /* Fixed light text */
-  --text-highlight-fixed-light: var(--color-base-white);
-  --text-default-fixed-light: var(--color-neutral-100);
-  --text-muted-fixed-light: var(--color-neutral-100-64);
-
-  /* Inverse text */
-  --text-highlight-inverse: var(--color-base-white);
-  --text-default-inverse: var(--color-neutral-100);
-  --text-muted-inverse: var(--color-neutral-100-64);
-
-  --text-link-primary: var(--color-brand-blue-600);
-  --text-link-secondary: var(--color-base-black);
-  --text-link-visited: var(--color-feedback-violet-600);
-
-  --text-default-destructive: var(--color-feedback-red-700);
-  --text-link-destructive: var(--color-feedback-red-900);
-
-  --text-default-information: var(--color-feedback-blue-700);
-  --text-link-information: var(--color-feedback-blue-900);
-
-  --text-default-success: var(--color-feedback-green-700);
-  --text-link-success: var(--color-feedback-green-900);
-
-  --text-default-warning: var(--color-feedback-orange-700);
-  --text-link-warning: var(--color-feedback-orange-900);
-
-
-  --text-body: var(--color-neutral-900);
-  --text-body-muted: var(--color-neutral-400);
-
-  /* Warning State */
-  --bg-warning: var(--color-feedback-orange-100);
-  --text-warning: var(--color-feedback-orange-700);
-  --border-warning: var(--color-feedback-orange-300);
-
-
-    /* Link utilities */
-  --underline-link-primary: var(--color-brand-blue-600);
-  --underline-link-secondary: var(--color-base-black);
-  --underline-link-visited: var(--color-feedback-violet-600);
-
-
   /* ============================================
-   * BORDER TOKENS
+   * NOTE: Text/Background/Border intermediate variables removed
+   * All utilities now use primitive tokens directly
+   * This improves performance and clarity
    * ============================================ */
 
-  /* Border utilities - neutral states */
-  --border-neutral-active: var(--color-neutral-600);
-  --border-neutral-hover: var(--color-neutral-500);
-  --border-neutral-default: var(--color-neutral-400);
-  --border-neutral-disabled: var(--color-neutral-400-40);
-  --border-neutral-softest: var(--color-neutral-200);
-  --border-neutral-inset: var(--color-base-white);
-  --border-neutral-alpha: hsla(
-    0,
-    0%,
-    0%,
-    0.2
-  ); /* Black with 20% opacity for light mode */
 
-
-  /* Border Destructive utilities */
-  --border-destructive-highlight: var(--color-feedback-red-600);
-  --border-destructive-default: var(--color-feedback-red-500);
-  --border-destructive-muted: var(--color-feedback-red-500-56);
-  --border-destructive-softest: var(--color-feedback-red-300);
-
-  /* Border Information utilities */
-  --border-information-highlight: var(--color-feedback-blue-600);
-  --border-information-default: var(--color-feedback-blue-500);
-  --border-information-muted: var(--color-feedback-blue-500-56);
-  --border-information-softest: var(--color-feedback-blue-300);
-
-  /* Border Success utilities */
-  --border-success-highlight: var(--color-feedback-green-600);
-  --border-success-default: var(--color-feedback-green-500);
-  --border-success-muted: var(--color-feedback-green-500-56);
-  --border-success-softest: var(--color-feedback-green-300);
-
-  /* Border Warning utilities */
-  --border-warning-highlight: var(--color-feedback-orange-600);
-  --border-warning-default: var(--color-feedback-orange-500);
-  --border-warning-muted: var(--color-feedback-orange-500-56);
-  --border-warning-softest: var(--color-feedback-orange-300);
-
-  /* Border Focus utilities */
+  /* Border Focus - still needed for focus states */
   --border-focus: var(--color-brand-blue-600);
 
 
-  /* ============================================
-   * FILLS
-   * ============================================ */
 
-   /* Neutrals */
-   --fill-neutral-highlight: var(--color-base-black);
-   --fill-neutral-active: var(--color-neutral-900);
-   --fill-neutral-default: var(--color-neutral-800);
-   --fill-neutral-muted: var(--color-neutral-800-56);
-
-   /* Fixed dark fill */
-   --fill-neutral-highlight-fixed-dark: var(--color-base-black);
-   --fill-neutral-default-fixed-dark: var(--color-neutral-800);
-   --fill-neutral-muted-fixed-dark: var(--color-neutral-900-56);
-
-   /* Fixed light fill */
-   --fill-neutral-highlight-fixed-light: var(--color-base-white);
-   --fill-neutral-default-fixed-light: var(--color-neutral-100);
-   --fill-neutral-muted-fixed-light: var(--color-neutral-100-56);
-
-   /* Inverse fill */
-    --fill-neutral-highlight-inverse: var(--color-base-white);
-    --fill-neutral-default-inverse: var(--color-neutral-100);
-    --fill-neutral-muted-inverse: var(--color-neutral-100-56);
-
-   /* Links */
-   --fill-link-primary: var(--color-brand-blue-600);
-   --fill-link-secondary: var(--color-base-black);
-   --fill-link-visited: var(--color-feedback-violet-600);
-
-   /* Destructive */
-   --fill-destructive-highlight: var(--color-feedback-red-600);
-   --fill-destructive-default: var(--color-feedback-red-500);
-   --fill-destructive-muted: var(--color-feedback-red-600-56);
-
-   /* Information */
-   --fill-information-highlight: var(--color-feedback-blue-600);
-   --fill-information-default: var(--color-feedback-blue-500);
-   --fill-information-muted: var(--color-feedback-blue-500-56);
-
-   /* Success */
-   --fill-success-highlight: var(--color-feedback-green-600);
-   --fill-success-default: var(--color-feedback-green-500);
-   --fill-success-muted: var(--color-feedback-green-500-56);
-
-   /* Warning */
-   --fill-warning-highlight: var(--color-feedback-orange-600);
-   --fill-warning-default: var(--color-feedback-orange-500);
-   --fill-warning-muted: var(--color-feedback-orange-500-56);
-
-   /* ============================================
-   * Strokes
-   * ============================================ */
-
-   /* Neutrals */
-   --stroke-neutral-highlight: var(--color-base-black);
-   --stroke-neutral-active: var(--color-neutral-900);
-   --stroke-neutral-default: var(--color-neutral-800);
-   --stroke-neutral-muted: var(--color-neutral-800-56);
-
-   /* Fixed dark stroke */
-   --stroke-neutral-highlight-fixed-dark: var(--color-base-black);
-   --stroke-neutral-default-fixed-dark: var(--color-neutral-800);
-   --stroke-neutral-muted-fixed-dark: var(--color-neutral-900-56);
-
-   /* Fixed light stroke */
-   --stroke-neutral-highlight-fixed-light: var(--color-base-white);
-   --stroke-neutral-default-fixed-light: var(--color-neutral-100);
-   --stroke-neutral-muted-fixed-light: var(--color-neutral-100-56);
-
-   /* Inverse stroke */
-   --stroke-neutral-highlight-inverse: var(--color-base-white);
-   --stroke-neutral-default-inverse: var(--color-neutral-100);
-   --stroke-neutral-muted-inverse: var(--color-neutral-100-56);
-
-   /* Links */
-   --stroke-link-primary: var(--color-brand-blue-600);
-   --stroke-link-secondary: var(--color-base-black);
-   --stroke-link-visited: var(--color-feedback-violet-600);
-
-   /* Destructive */
-   --stroke-destructive-highlight: var(--color-feedback-red-600);
-   --stroke-destructive-default: var(--color-feedback-red-500);
-   --stroke-destructive-muted: var(--color-feedback-red-600-56);
-
-   /* Information */
-   --stroke-information-highlight: var(--color-feedback-blue-600);
-   --stroke-information-default: var(--color-feedback-blue-500);
-   --stroke-information-muted: var(--color-feedback-blue-500-56);
-
-   /* Success */
-   --stroke-success-highlight: var(--color-feedback-green-600);
-   --stroke-success-default: var(--color-feedback-green-500);
-   --stroke-success-muted: var(--color-feedback-green-500-56);
-
-   /* Warning */
-   --stroke-warning-highlight: var(--color-feedback-orange-600);
-   --stroke-warning-default: var(--color-feedback-orange-500);
-   --stroke-warning-muted: var(--color-feedback-orange-500-56);
 
   /* ============================================
    * BACKGROUNDS

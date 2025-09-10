@@ -109,8 +109,8 @@
   background-image: linear-gradient(
     to bottom,
     var(--background) 0%,
-    var(--color-transparent) 5%,
-    var(--color-transparent) 95%,
+    transparent 5%,
+    transparent 95%,
     var(--background) 100%
   );
 }
@@ -124,7 +124,11 @@
   line-height: 1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-display-xl {
@@ -133,7 +137,11 @@
   line-height: 1.1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-display-lg {
@@ -142,7 +150,11 @@
   line-height: 1.2;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-display-md {
@@ -151,7 +163,11 @@
   line-height: 1.3;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-display-sm {
@@ -160,7 +176,11 @@
   line-height: 1.375;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-display-xs {
@@ -169,7 +189,11 @@
   line-height: 1.4;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 /* Heading */
@@ -179,7 +203,11 @@
   line-height: 1.375;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-xl);
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
 }
 @utility text-heading-lg {
   font-size: 1.813rem;
@@ -187,7 +215,11 @@
   line-height: 1.5;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-lg);
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
 }
 @utility text-heading-md {
   font-size: 1.625rem;
@@ -195,7 +227,11 @@
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-md);
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
 }
 @utility text-heading-sm {
   font-size: 1.438rem;
@@ -203,7 +239,11 @@
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-sm);
+  color: var(--color-neutral-800);
+  
+  @variant dark {
+    color: var(--color-neutral-200);
+  }
 }
 @utility text-heading-xs {
   font-size: 1.25rem;
@@ -211,7 +251,11 @@
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-xs);
+  color: var(--color-neutral-800);
+  
+  @variant dark {
+    color: var(--color-neutral-200);
+  }
 }
 
 /* Body */
@@ -221,7 +265,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-body-md {
   font-size: 1rem;
@@ -229,7 +277,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-body-sm {
   font-size: 0.875rem;
@@ -237,7 +289,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-body-xs {
   font-size: 0.75rem;
@@ -245,7 +301,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 
 /* Code */
@@ -255,7 +315,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype-mono);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-codeline-sm {
   font-size: 0.875rem;
@@ -263,7 +327,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype-mono);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-codeline-xs {
   font-size: 0.75rem;
@@ -271,7 +339,11 @@
   line-height: 1.7;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype-mono);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 
 /* Buttons */
@@ -281,7 +353,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-button-sm {
   font-size: 0.875rem;
@@ -289,7 +365,11 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 @utility text-button-xs {
   font-size: 0.75rem;
@@ -297,124 +377,401 @@
   line-height: 1.75;
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype);
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 
-/* Text colors */
+/* Text colors - using primitive tokens directly */
 
-/* Body */
+/* Body text utilities */
 @utility text-highlight {
-  color: var(--text-highlight);
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
 }
 
 @utility text-default {
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+  
+  @variant dark {
+    color: var(--color-neutral-300);
+  }
 }
 
 @utility text-muted {
-  color: var(--text-muted)!important;
+  color: var(--color-neutral-900-64);
+  
+  @variant dark {
+    color: var(--color-neutral-100-64);
+  }
 }
 
 @utility text-placeholder {
-  color: var(--text-placeholder);
+  color: var(--color-neutral-900-56);
+  
+  @variant dark {
+    color: var(--color-neutral-100-56);
+  }
 }
 
 @utility text-disabled {
-  color: var(--text-disabled);
+  color: var(--color-neutral-900-40);
+  
+  @variant dark {
+    color: var(--color-neutral-100-40);
+  }
 }
 
-/* Fixed dark text */
+/* Fixed dark text (always dark regardless of theme) */
 @utility text-highlight-fixed-dark {
-  color: var(--text-highlight-fixed-dark);
+  color: var(--color-base-black);
 }
 
 @utility text-default-fixed-dark {
-  color: var(--text-default-fixed-dark);
+  color: var(--color-neutral-900);
 }
 
 @utility text-muted-fixed-dark {
-  color: var(--text-muted-fixed-dark);
+  color: var(--color-neutral-900-64);
 }
 
-/*  Fixed light text */
+/* Fixed light text (always light regardless of theme) */
 @utility text-highlight-fixed-light {
-  color: var(--text-highlight-fixed-light);
+  color: var(--color-base-white);
 }
 
 @utility text-default-fixed-light {
-  color: var(--text-default-fixed-light);
+  color: var(--color-neutral-100);
 }
 
 @utility text-muted-fixed-light {
-  color: var(--text-muted-fixed-light);
+  color: var(--color-neutral-100-64);
 }
 
-/* Inverse text */
+/* Inverse text (opposite of current theme) */
 @utility text-highlight-inverse {
-  color: var(--text-highlight-inverse);
+  color: var(--color-base-white);
+  
+  @variant dark {
+    color: var(--color-base-black);
+  }
 }
 
 @utility text-default-inverse {
-  color: var(--text-default-inverse);
+  color: var(--color-neutral-100);
+  
+  @variant dark {
+    color: var(--color-neutral-900);
+  }
 }
 
 @utility text-muted-inverse {
-  color: var(--text-muted-inverse);
+  color: var(--color-neutral-100-64);
+  
+  @variant dark {
+    color: var(--color-neutral-900-64);
+  }
 }
 
 
-/* Link colors */
+/* Link colors - using primitive tokens */
 @utility text-link-primary {
-  color: var(--text-link-primary);
+  color: var(--color-brand-blue-600);
+  
+  @variant dark {
+    color: var(--color-brand-blue-400);
+  }
 }
 
 @utility text-link-secondary {
-  color: var(--text-link-secondary);
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility text-link-visited {
-  color: var(--text-link-visited);
+  color: var(--color-feedback-violet-600);
+  
+  @variant dark {
+    color: var(--color-feedback-violet-300);
+  }
 }
 
-/* Destructive */
+/* Destructive text - using primitive tokens */
 @utility text-default-destructive {
-  color: var(--text-default-destructive);
+  color: var(--color-feedback-red-700);
+  
+  @variant dark {
+    color: var(--color-feedback-red-300);
+  }
 }
 
 @utility text-link-destructive {
-  color: var(--text-link-destructive);
+  color: var(--color-feedback-red-900);
+  
+  @variant dark {
+    color: var(--color-feedback-red-200);
+  }
 }
 
-/* Information */
+/* Information text - using primitive tokens */
 @utility text-default-information {
-  color: var(--text-default-information);
+  color: var(--color-feedback-blue-700);
+  
+  @variant dark {
+    color: var(--color-feedback-blue-300);
+  }
 }
 
 @utility text-link-information {
-  color: var(--text-link-information);
+  color: var(--color-feedback-blue-900);
+  
+  @variant dark {
+    color: var(--color-feedback-blue-200);
+  }
 }
 
-/* Success */
+/* Success text - using primitive tokens */
 @utility text-default-success {
-  color: var(--text-default-success);
+  color: var(--color-feedback-green-700);
+  
+  @variant dark {
+    color: var(--color-feedback-green-300);
+  }
 }
 
 @utility text-link-success {
-  color: var(--text-link-success);
+  color: var(--color-feedback-green-900);
+  
+  @variant dark {
+    color: var(--color-feedback-green-200);
+  }
 }
 
-/* Warning */
+/* Warning text - using primitive tokens */
 @utility text-default-warning {
-  color: var(--text-default-warning);
+  color: var(--color-feedback-orange-700);
+  
+  @variant dark {
+    color: var(--color-feedback-orange-300);
+  }
 }
 
 @utility text-link-warning {
-  color: var(--text-link-warning);
+  color: var(--color-feedback-orange-900);
+  
+  @variant dark {
+    color: var(--color-feedback-orange-200);
+  }
+}
+
+/* Button Text Colors */
+@utility text-btn-brand {
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
+}
+
+@utility text-btn-brand-hover {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-brand-active {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-brand-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+  }
+}
+
+@utility text-btn-primary {
+  color: var(--color-base-white);
+  
+  @variant dark {
+    color: var(--color-base-black);
+  }
+}
+
+@utility text-btn-primary-hover {
+  color: var(--color-base-white);
+  
+  @variant dark {
+    color: var(--color-base-black);
+  }
+}
+
+@utility text-btn-primary-active {
+  color: var(--color-base-white);
+  
+  @variant dark {
+    color: var(--color-base-black);
+  }
+}
+
+@utility text-btn-primary-disabled {
+  color: var(--color-base-white);
+  opacity: 0.4;
+  
+  @variant dark {
+    color: var(--color-base-black);
+    opacity: 0.4;
+  }
+}
+
+@utility text-btn-secondary {
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
+}
+
+@utility text-btn-secondary-hover {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-secondary-active {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-secondary-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+  }
+}
+
+@utility text-btn-tertiary {
+  color: var(--color-neutral-900);
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+  }
+}
+
+@utility text-btn-tertiary-hover {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-tertiary-active {
+  color: var(--color-base-black);
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
+}
+
+@utility text-btn-tertiary-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+  
+  @variant dark {
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+  }
+}
+
+@utility text-btn-destructive-primary {
+  color: var(--color-base-white);
+}
+
+@utility text-btn-destructive-primary-hover {
+  color: var(--color-base-white);
+}
+
+@utility text-btn-destructive-primary-active {
+  color: var(--color-base-white);
+}
+
+@utility text-btn-destructive-primary-disabled {
+  color: var(--color-base-white);
+  opacity: 0.4;
+}
+
+@utility text-btn-destructive-secondary {
+  color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    color: var(--color-feedback-red-400);
+  }
+}
+
+@utility text-btn-destructive-secondary-hover {
+  color: var(--color-feedback-red-700);
+  
+  @variant dark {
+    color: var(--color-feedback-red-500);
+  }
+}
+
+@utility text-btn-destructive-secondary-active {
+  color: var(--color-feedback-red-800);
+  
+  @variant dark {
+    color: var(--color-feedback-red-600);
+  }
+}
+
+@utility text-btn-destructive-secondary-disabled {
+  color: var(--color-feedback-red-600);
+  opacity: 0.4;
+  
+  @variant dark {
+    color: var(--color-feedback-red-400);
+    opacity: 0.4;
+  }
 }
 
 
 @utility bg-gradient-primary {
   background: var(--gradient-brand-primary);
+}
+
+/* TODO: check with others on the naming convention for brand gradient utilities */
+@utility bg-gradient-green {
+  background: var(--gradient-brand-green);
+}
+
+@utility bg-gradient-red {
+  background: var(--gradient-brand-red);
 }
 
 @utility border-gradient-primary {
@@ -438,139 +795,313 @@
 }
 
 @utility bg-warning {
-  background-color: var(--bg-warning);
+  background-color: var(--color-feedback-orange-100);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-900);
+  }
 }
 
 @utility text-warning {
-  color: var(--text-warning) !important;
+  color: var(--color-feedback-orange-700);
+  
+  @variant dark {
+    color: var(--color-feedback-orange-300);
+  }
 }
 
 @utility border-warning {
-  border-color: var(--border-warning);
+  border-color: var(--color-feedback-orange-300);
   border-width: 1px;
   border-style: solid;
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-700);
+  }
 }
 
 
-/* Link underline utilities */
+/* Link underline utilities - using primitive tokens */
 @utility underline-link-primary {
-  color: var(--underline-link-primary);
+  color: var(--color-brand-blue-600);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
+  
+  @variant dark {
+    color: var(--color-brand-blue-400);
+  }
 }
 
 @utility underline-link-secondary {
-  color: var(--underline-link-secondary);
+  color: var(--color-base-black);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
+  
+  @variant dark {
+    color: var(--color-base-white);
+  }
 }
 
 @utility underline-link-visited {
-  color: var(--underline-link-visited);
+  color: var(--color-feedback-violet-600);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
+  
+  @variant dark {
+    color: var(--color-feedback-violet-300);
+  }
 }
 
 /* ======================================
-* BORDERS
-* ======================================= */
+ * BORDERS - Standardized token patterns
+ * Pattern: border-{category}-{intensity}
+ * Rest state has no suffix, follows Tailwind conventions
+ * ======================================= */
 
-/* Border utilities for neutral colors */
+/* Neutral border utilities - inline values for better performance */
+/* Follows Tailwind pattern: rest state has no suffix */
 @utility border-neutral-active {
-  border-color: var(--border-neutral-active);
+  border-color: var(--color-neutral-800);
+  
+  @variant dark {
+    border-color: var(--color-neutral-300);
+  }
 }
 
 @utility border-neutral-hover {
-  border-color: var(--border-neutral-hover);
+  border-color: var(--color-neutral-700);
+  
+  @variant dark {
+    border-color: var(--color-neutral-400);
+  }
 }
 
+/* Primary neutral border - rest state (no suffix) */
+@utility border-neutral {
+  border-color: var(--color-neutral-600);
+  
+  @variant dark {
+    border-color: var(--color-neutral-500);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility border-neutral-default {
-  border-color: var(--border-neutral-default);
+  border-color: var(--color-neutral-600);
+  
+  @variant dark {
+    border-color: var(--color-neutral-500);
+  }
 }
 
 @utility border-neutral-disabled {
-  border-color: var(--border-neutral-disabled);
+  border-color: var(--color-neutral-600);
   opacity: 0.4;
+  
+  @variant dark {
+    border-color: var(--color-neutral-500);
+    opacity: 0.4;
+  }
 }
 
 @utility border-neutral-softest {
-  border-color: var(--border-neutral-softest);
+  border-color: var(--color-neutral-200);
+  
+  @variant dark {
+    border-color: var(--color-neutral-800);
+  }
 }
 
 @utility border-neutral-inset {
-  border-color: var(--border-neutral-inset);
+  border-color: var(--color-neutral-300);
+  
+  @variant dark {
+    border-color: var(--color-neutral-700);
+  }
 }
 
 @utility border-neutral-alpha {
-  border-color: var(--border-neutral-alpha);
+  border-color: var(--color-neutral-500-40);
+  
+  @variant dark {
+    border-color: var(--color-neutral-600-40);
+  }
 }
 
-/* Destructive border utilities */
+/* Destructive border utilities - inline values */
+/* border-destructive-default is now border-destructive (rest state) */
 @utility border-destructive-highlight {
-  border-color: var(--border-destructive-highlight);
+  border-color: var(--color-feedback-red-400);
+  
+  @variant dark {
+    border-color: var(--color-feedback-red-400);
+  }
 }
 
+/* Primary destructive border - rest state (no suffix) */
+@utility border-destructive {
+  border-color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-red-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility border-destructive-default {
-  border-color: var(--border-destructive-default);
+  border-color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-red-400);
+  }
 }
 
 @utility border-destructive-muted {
-  border-color: var(--border-destructive-muted);
+  border-color: var(--color-feedback-red-600-56);
+  
+  @variant dark {
+    border-color: var(--color-feedback-red-400-56);
+  }
 }
 
 @utility border-destructive-softest {
-  border-color: var(--border-destructive-softest);
+  border-color: var(--color-feedback-red-100);
+  
+  @variant dark {
+    border-color: var(--color-feedback-red-900);
+  }
 }
 
-/* Information Border utilities */
+/* Information border utilities - inline values */
+/* border-information-default is now border-information (rest state) */
 @utility border-information-highlight {
-  border-color: var(--border-information-highlight);
+  border-color: var(--color-feedback-blue-400);
+  
+  @variant dark {
+    border-color: var(--color-feedback-blue-400);
+  }
 }
 
+/* Primary information border - rest state (no suffix) */
+@utility border-information {
+  border-color: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-blue-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility border-information-default {
-  border-color: var(--border-information-default);
+  border-color: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-blue-400);
+  }
 }
 
 @utility border-information-muted {
-  border-color: var(--border-information-muted);
+  border-color: var(--color-feedback-blue-500-56);
+  
+  @variant dark {
+    border-color: var(--color-feedback-blue-400-56);
+  }
 }
 
 @utility border-information-softest {
-  border-color: var(--border-information-softest);
+  border-color: var(--color-feedback-blue-100);
+  
+  @variant dark {
+    border-color: var(--color-feedback-blue-900);
+  }
 }
 
-/* Success Border utilities */
+/* Success border utilities - inline values */
+/* border-success-default is now border-success (rest state) */
 @utility border-success-highlight {
-  border-color: var(--border-success-highlight);
+  border-color: var(--color-feedback-green-400);
+  
+  @variant dark {
+    border-color: var(--color-feedback-green-400);
+  }
 }
 
+/* Primary success border - rest state (no suffix) */
+@utility border-success {
+  border-color: var(--color-feedback-green-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-green-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility border-success-default {
-  border-color: var(--border-success-default);
+  border-color: var(--color-feedback-green-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-green-400);
+  }
 }
 
 @utility border-success-muted {
-  border-color: var(--border-success-muted);
+  border-color: var(--color-feedback-green-500-56);
+  
+  @variant dark {
+    border-color: var(--color-feedback-green-400-56);
+  }
 }
 
 @utility border-success-softest {
-  border-color: var(--border-success-softest);
+  border-color: var(--color-feedback-green-100);
+  
+  @variant dark {
+    border-color: var(--color-feedback-green-900);
+  }
 }
 
-/* Warning Border utilities */
+/* Warning border utilities - inline values */
+/* border-warning-default is now border-warning (rest state) */
 @utility border-warning-highlight {
-  border-color: var(--border-warning-highlight);
+  border-color: var(--color-feedback-orange-400);
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-400);
+  }
 }
 
+/* Primary warning border - rest state (no suffix) */
+@utility border-warning {
+  border-color: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility border-warning-default {
-  border-color: var(--border-warning-default);
+  border-color: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-400);
+  }
 }
 
 @utility border-warning-muted {
-  border-color: var(--border-warning-muted);
+  border-color: var(--color-feedback-orange-500-56);
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-400-56);
+  }
 }
 
 @utility border-warning-softest {
-  border-color: var(--border-warning-softest);
+  border-color: var(--color-feedback-orange-100);
+  
+  @variant dark {
+    border-color: var(--color-feedback-orange-900);
+  }
 }
 
 /* Focus Border utilities */
@@ -579,24 +1110,53 @@
 }
 
 /* =============================
-*  FILLS
-*  ============================*/
+ * FILLS - Standardized token patterns
+ * Pattern: fill-{category}-{intensity}
+ * Rest state has no suffix, follows Tailwind conventions
+ * ============================*/
 
-/* Neutrals */
+/* Neutral fill utilities - using primitive tokens */
+/* fill-neutral-default is now fill-neutral (rest state) */
 @utility fill-neutral-highlight {
-  fill: var(--fill-neutral-highlight);
+  fill: var(--color-neutral-900);
+  
+  @variant dark {
+    fill: var(--color-neutral-100);
+  }
 }
 
 @utility fill-neutral-active {
-  fill: var(--fill-neutral-active);
+  fill: var(--color-neutral-800);
+  
+  @variant dark {
+    fill: var(--color-neutral-300);
+  }
 }
 
+/* Primary neutral fill - rest state (no suffix) */
+@utility fill-neutral {
+  fill: var(--color-neutral-700);
+  
+  @variant dark {
+    fill: var(--color-neutral-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility fill-neutral-default {
-  fill: var(--fill-neutral-default);
+  fill: var(--color-neutral-700);
+  
+  @variant dark {
+    fill: var(--color-neutral-400);
+  }
 }
 
 @utility fill-neutral-muted {
-  fill: var(--fill-neutral-muted);
+  fill: var(--color-neutral-500);
+  
+  @variant dark {
+    fill: var(--color-neutral-600);
+  }
 }
 
 /* Fixed dark fill */
@@ -651,77 +1211,198 @@
   fill: var(--fill-link-visited);
 }
 
-/* Destructive Fill */
+/* Destructive fill utilities - using primitive tokens */
+/* fill-destructive-default is now fill-destructive (rest state) */
 @utility fill-destructive-highlight {
-  fill: var(--fill-destructive-highlight);
+  fill: var(--color-feedback-red-400);
+  
+  @variant dark {
+    fill: var(--color-feedback-red-400);
+  }
 }
 
+/* Primary destructive fill - rest state (no suffix) */
+@utility fill-destructive {
+  fill: var(--color-feedback-red-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-red-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility fill-destructive-default {
-  fill: var(--fill-destructive-default);
+  fill: var(--color-feedback-red-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-red-400);
+  }
 }
 
 @utility fill-destructive-muted {
-  fill: var(--fill-destructive-muted);
+  fill: var(--color-feedback-red-600-56);
+  
+  @variant dark {
+    fill: var(--color-feedback-red-400-56);
+  }
 }
 
-/* Information Fill */
+/* Information fill utilities - using primitive tokens */
+/* fill-information-default is now fill-information (rest state) */
 @utility fill-information-highlight {
-  fill: var(--fill-information-highlight);
+  fill: var(--color-feedback-blue-400);
+  
+  @variant dark {
+    fill: var(--color-feedback-blue-400);
+  }
 }
 
+/* Primary information fill - rest state (no suffix) */
+@utility fill-information {
+  fill: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-blue-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility fill-information-default {
-  fill: var(--fill-information-default);
+  fill: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-blue-400);
+  }
 }
 
 @utility fill-information-muted {
-  fill: var(--fill-information-muted);
+  fill: var(--color-feedback-blue-500-56);
+  
+  @variant dark {
+    fill: var(--color-feedback-blue-400-56);
+  }
 }
 
-/* Success Fill */
+/* Success fill utilities - using primitive tokens */
+/* fill-success-default is now fill-success (rest state) */
 @utility fill-success-highlight {
-  fill: var(--fill-success-highlight);
+  fill: var(--color-feedback-green-400);
+  
+  @variant dark {
+    fill: var(--color-feedback-green-400);
+  }
 }
 
+/* Primary success fill - rest state (no suffix) */
+@utility fill-success {
+  fill: var(--color-feedback-green-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-green-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility fill-success-default {
-  fill: var(--fill-success-default);
+  fill: var(--color-feedback-green-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-green-400);
+  }
 }
 
 @utility fill-success-muted {
-  fill: var(--fill-success-muted);
+  fill: var(--color-feedback-green-500-56);
+  
+  @variant dark {
+    fill: var(--color-feedback-green-400-56);
+  }
 }
 
-/* Warninig Fill */
+/* Warning fill utilities - using primitive tokens */
+/* fill-warning-default is now fill-warning (rest state) */
 @utility fill-warning-highlight {
-  fill: var(--fill-warning-highlight);
+  fill: var(--color-feedback-orange-400);
+  
+  @variant dark {
+    fill: var(--color-feedback-orange-400);
+  }
 }
 
+/* Primary warning fill - rest state (no suffix) */
+@utility fill-warning {
+  fill: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-orange-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility fill-warning-default {
-  fill: var(--fill-warning-default);
+  fill: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    fill: var(--color-feedback-orange-400);
+  }
 }
 
 @utility fill-warning-muted {
-  fill: var(--fill-warning-muted);
+  fill: var(--color-feedback-orange-500-56);
+  
+  @variant dark {
+    fill: var(--color-feedback-orange-400-56);
+  }
 }
 
 /* =============================
-*  Strokes
-*  ============================*/
+ * STROKES - Standardized token patterns
+ * Pattern: stroke-{category}-{intensity}
+ * Rest state has no suffix, follows Tailwind conventions
+ * ============================*/
 
-/* Neutrals */
+/* Neutral stroke utilities - using primitive tokens */
+/* stroke-neutral-default is now stroke-neutral (rest state) */
 @utility stroke-neutral-highlight {
-  stroke: var(--stroke-neutral-highlight);
+  stroke: var(--color-neutral-900);
+  
+  @variant dark {
+    stroke: var(--color-neutral-100);
+  }
 }
 
 @utility stroke-neutral-active {
-  stroke: var(--stroke-neutral-active);
+  stroke: var(--color-neutral-800);
+  
+  @variant dark {
+    stroke: var(--color-neutral-300);
+  }
 }
 
+/* Primary neutral stroke - rest state (no suffix) */
+@utility stroke-neutral {
+  stroke: var(--color-neutral-700);
+  
+  @variant dark {
+    stroke: var(--color-neutral-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility stroke-neutral-default {
-  stroke: var(--stroke-neutral-default);
+  stroke: var(--color-neutral-700);
+  
+  @variant dark {
+    stroke: var(--color-neutral-400);
+  }
 }
 
 @utility stroke-neutral-muted {
-  stroke: var(--stroke-neutral-muted);
+  stroke: var(--color-neutral-500);
+  
+  @variant dark {
+    stroke: var(--color-neutral-600);
+  }
 }
 
 /* Fixed dark stroke */
@@ -776,198 +1457,614 @@
   stroke: var(--stroke-link-visited);
 }
 
-/* Destructive stroke */
+/* Destructive stroke utilities - using primitive tokens */
+/* stroke-destructive-default is now stroke-destructive (rest state) */
 @utility stroke-destructive-highlight {
-  stroke: var(--stroke-destructive-highlight);
+  stroke: var(--color-feedback-red-400);
+  
+  @variant dark {
+    stroke: var(--color-feedback-red-400);
+  }
 }
 
+/* Primary destructive stroke - rest state (no suffix) */
+@utility stroke-destructive {
+  stroke: var(--color-feedback-red-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-red-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility stroke-destructive-default {
-  stroke: var(--stroke-destructive-default);
+  stroke: var(--color-feedback-red-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-red-400);
+  }
 }
 
 @utility stroke-destructive-muted {
-  stroke: var(--stroke-destructive-muted);
+  stroke: var(--color-feedback-red-600-56);
+  
+  @variant dark {
+    stroke: var(--color-feedback-red-400-56);
+  }
 }
 
-/* Information stroke */
+/* Information stroke utilities - using primitive tokens */
+/* stroke-information-default is now stroke-information (rest state) */
 @utility stroke-information-highlight {
-  stroke: var(--stroke-information-highlight);
+  stroke: var(--color-feedback-blue-400);
+  
+  @variant dark {
+    stroke: var(--color-feedback-blue-400);
+  }
 }
 
+/* Primary information stroke - rest state (no suffix) */
+@utility stroke-information {
+  stroke: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-blue-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility stroke-information-default {
-  stroke: var(--stroke-information-default);
+  stroke: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-blue-400);
+  }
 }
 
 @utility stroke-information-muted {
-  stroke: var(--stroke-information-muted);
+  stroke: var(--color-feedback-blue-500-56);
+  
+  @variant dark {
+    stroke: var(--color-feedback-blue-400-56);
+  }
 }
 
-/* Success stroke */
+/* Success stroke utilities - using primitive tokens */
+/* stroke-success-default is now stroke-success (rest state) */
 @utility stroke-success-highlight {
-  stroke: var(--stroke-success-highlight);
+  stroke: var(--color-feedback-green-400);
+  
+  @variant dark {
+    stroke: var(--color-feedback-green-400);
+  }
 }
 
+/* Primary success stroke - rest state (no suffix) */
+@utility stroke-success {
+  stroke: var(--color-feedback-green-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-green-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility stroke-success-default {
-  stroke: var(--stroke-success-default);
+  stroke: var(--color-feedback-green-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-green-400);
+  }
 }
 
 @utility stroke-success-muted {
-  stroke: var(--stroke-success-muted);
+  stroke: var(--color-feedback-green-500-56);
+  
+  @variant dark {
+    stroke: var(--color-feedback-green-400-56);
+  }
 }
 
-/* Warninig stroke */
+/* Warning stroke utilities - using primitive tokens */
+/* stroke-warning-default is now stroke-warning (rest state) */
 @utility stroke-warning-highlight {
-  stroke: var(--stroke-warning-highlight);
+  stroke: var(--color-feedback-orange-400);
+  
+  @variant dark {
+    stroke: var(--color-feedback-orange-400);
+  }
 }
 
+/* Primary warning stroke - rest state (no suffix) */
+@utility stroke-warning {
+  stroke: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-orange-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility stroke-warning-default {
-  stroke: var(--stroke-warning-default);
+  stroke: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    stroke: var(--color-feedback-orange-400);
+  }
 }
 
 @utility stroke-warning-muted {
-  stroke: var(--stroke-warning-muted);
+  stroke: var(--color-feedback-orange-500-56);
+  
+  @variant dark {
+    stroke: var(--color-feedback-orange-400-56);
+  }
 }
 
 /* ============================================
-* BACKGROUNDS
-* ============================================ */
-@utility bg-surface-primary-default {
-  background-color: var(--bg-surface-primary-default);
+ * BACKGROUNDS - Standardized token patterns
+ * Pattern: bg-{category}-{intensity}
+ * Rest state has no suffix, follows Tailwind conventions
+ * Verbose tokens simplified with backward compatibility
+ * ============================================ */
+
+/* Button Background utilities
+ * Figma: Surface/Button/{Variant}/bg-{state} → Code: bg-btn-{variant}-{state}
+ * Follows Tailwind conventions: bg-*, rest state has no suffix */
+@utility bg-btn-brand {
+  background-color: var(--color-base-white);
+  
+  @variant dark {
+    background-color: var(--color-base-black);
+  }
+}
+
+@utility bg-btn-brand-hover {
+  background-color: var(--color-neutral-100);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900);
+  }
+}
+
+@utility bg-btn-brand-active {
+  background-color: var(--color-neutral-200);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
+}
+
+@utility bg-btn-brand-disabled {
+  background-color: var(--color-base-white);
+  
+  @variant dark {
+    background-color: var(--color-base-black);
+  }
+}
+
+@utility bg-btn-primary {
+  background-color: var(--color-neutral-700);
+  
+  @variant dark {
+    background-color: var(--color-neutral-300);
+  }
+}
+
+@utility bg-btn-primary-hover {
+  background-color: var(--color-neutral-800);
+  
+  @variant dark {
+    background-color: var(--color-neutral-200);
+  }
+}
+
+@utility bg-btn-primary-active {
+  background-color: var(--color-neutral-900);
+  
+  @variant dark {
+    background-color: var(--color-neutral-100);
+  }
+}
+
+@utility bg-btn-primary-disabled {
+  background-color: var(--color-neutral-900);
+  opacity: 0.4;
+  
+  @variant dark {
+    background-color: var(--color-neutral-100);
+    opacity: 0.4;
+  }
+}
+
+@utility bg-btn-secondary {
+  background-color: var(--color-neutral-200);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
+}
+
+@utility bg-btn-secondary-hover {
+  background-color: var(--color-neutral-300);
+  
+  @variant dark {
+    background-color: var(--color-neutral-700);
+  }
+}
+
+@utility bg-btn-secondary-active {
+  background-color: var(--color-neutral-400);
+  
+  @variant dark {
+    background-color: var(--color-neutral-600);
+  }
+}
+
+@utility bg-btn-secondary-disabled {
+  background-color: var(--color-neutral-200);
+  opacity: 0.4;
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+    opacity: 0.4;
+  }
+}
+
+@utility bg-btn-destructive {
+  background-color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400);
+  }
+}
+
+@utility bg-btn-destructive-hover {
+  background-color: var(--color-feedback-red-700);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-500);
+  }
+}
+
+@utility bg-btn-destructive-active {
+  background-color: var(--color-feedback-red-800);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-600);
+  }
+}
+
+@utility bg-btn-destructive-disabled {
+  background-color: var(--color-feedback-red-600);
+  opacity: 0.4;
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400);
+    opacity: 0.4;
+  }
+}
+
+/* Surface Background utilities - simplified naming */
+/* Verbose names simplified while maintaining backward compatibility */
+
+/* Primary surface backgrounds */
+@utility bg-surface-primary {
+  background-color: var(--color-base-white);
+  
+  @variant dark {
+    background-color: var(--color-base-black);
+  }
 }
 
 @utility bg-surface-primary-inverse {
-  background-color: var(--bg-surface-primary-inverse);
+  background-color: var(--color-base-black);
+  
+  @variant dark {
+    background-color: var(--color-base-white);
+  }
 }
 
-@utility bg-surface-secondary-default {
-  background-color: var(--bg-surface-secondary-default);
+/* Secondary surface backgrounds */
+@utility bg-surface-secondary {
+  background-color: var(--color-neutral-100);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900);
+  }
 }
 
 @utility bg-surface-secondary-inverse {
-  background-color: var(--bg-surface-secondary-inverse);
+  background-color: var(--color-neutral-900);
+  
+  @variant dark {
+    background-color: var(--color-neutral-100);
+  }
 }
 
-@utility bg-surface-tertiary-default {
-  background-color: var(--bg-surface-tertiary-default);
+/* Tertiary surface backgrounds */
+@utility bg-surface-tertiary {
+  background-color: var(--color-neutral-200);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
 }
 
 @utility bg-surface-tertiary-inverse {
-  background-color: var(--bg-surface-tertiary-inverse);
+  background-color: var(--color-neutral-800);
+  
+  @variant dark {
+    background-color: var(--color-neutral-200);
+  }
 }
 
-/* State */
+/* Backward compatibility aliases - will be deprecated */
+@utility bg-surface-primary-default {
+  background-color: var(--color-base-white);
+  
+  @variant dark {
+    background-color: var(--color-base-black);
+  }
+}
+
+@utility bg-surface-secondary-default {
+  background-color: var(--color-neutral-100);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900);
+  }
+}
+
+@utility bg-surface-tertiary-default {
+  background-color: var(--color-neutral-200);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
+}
+
+/* State backgrounds - using primitive tokens */
 @utility bg-highlight {
-  background-color: var(--bg-highlight);
+  background-color: var(--color-neutral-100-64);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900-64);
+  }
 }
 
 @utility bg-active {
-  background-color: var(--bg-active);
+  background-color: var(--color-neutral-300);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
 }
 
 @utility bg-default {
-  background-color: var(--bg-default);
+  background-color: var(--color-neutral-200);
+  
+  @variant dark {
+    background-color: var(--color-neutral-800);
+  }
 }
 
 @utility bg-muted {
-  background-color: var(--bg-muted);
+  background-color: var(--color-neutral-100);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900);
+  }
 }
 
 @utility bg-inset {
-  background-color: var(--bg-inset);
+  background-color: var(--color-neutral-100);
+  
+  @variant dark {
+    background-color: var(--color-neutral-900);
+  }
 }
 
-/* Light background in dark mode */
+/* Fixed light backgrounds (always light regardless of theme) */
 @utility bg-surface-primary-fixed-light {
-  background-color: var(--bg-surface-primary-fixed-light);
+  background-color: var(--color-base-white);
 }
 
 @utility bg-surface-secondary-fixed-light {
-  background-color: var(--bg-surface-secondary-fixed-light);
+  background-color: var(--color-neutral-100);
 }
 
 @utility bg-surface-tertiary-fixed-light {
-  background-color: var(--bg-surface-tertiary-fixed-light);
+  background-color: var(--color-neutral-200);
 }
 
-/* Dark background in light mode */
+/* Fixed dark backgrounds (always dark regardless of theme) */
 @utility bg-surface-primary-fixed-dark {
-  background-color: var(--bg-surface-primary-fixed-dark);
+  background-color: var(--color-base-black);
 }
 
 @utility bg-surface-secondary-fixed-dark {
-  background-color: var(--bg-surface-secondary-fixed-dark);
+  background-color: var(--color-neutral-900);
 }
 
 @utility bg-surface-tertiary-fixed-dark {
-  background-color: var(--bg-surface-tertiary-fixed-dark);
+  background-color: var(--color-neutral-800);
 }
 
-/* Destructive */
+/* Destructive backgrounds - standardized naming */
+/* bg-destructive-default is now bg-destructive (rest state) */
 @utility bg-destructive-highlight {
-  background-color: var(--bg-destructive-highlight);
+  background-color: var(--color-feedback-red-400);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400);
+  }
 }
 
+/* Primary destructive background - rest state (no suffix) */
+@utility bg-destructive {
+  background-color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility bg-destructive-default {
-  background-color: var(--bg-destructive-default);
+  background-color: var(--color-feedback-red-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400);
+  }
 }
 
 @utility bg-destructive-muted {
-  background-color: var(--bg-destructive-muted);
+  background-color: var(--color-feedback-red-600-56);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-400-56);
+  }
 }
 
 @utility bg-destructive-softest {
-  background-color: var(--bg-destructive-softest);
+  background-color: var(--color-feedback-red-100);
+  
+  @variant dark {
+    background-color: var(--color-feedback-red-900);
+  }
 }
 
-/* Information */
+/* Information backgrounds - standardized naming */
+/* bg-information-default is now bg-information (rest state) */
 @utility bg-information-highlight {
-  background-color: var(--bg-information-highlight);
+  background-color: var(--color-feedback-blue-400);
+  
+  @variant dark {
+    background-color: var(--color-feedback-blue-400);
+  }
 }
 
+/* Primary information background - rest state (no suffix) */
+@utility bg-information {
+  background-color: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-blue-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility bg-information-default {
-  background-color: var(--bg-information-default);
+  background-color: var(--color-feedback-blue-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-blue-400);
+  }
 }
 
 @utility bg-information-muted {
-  background-color: var(--bg-information-muted);
+  background-color: var(--color-feedback-blue-500-56);
+  
+  @variant dark {
+    background-color: var(--color-feedback-blue-400-56);
+  }
 }
 
 @utility bg-information-softest {
-  background-color: var(--bg-information-softest);
+  background-color: var(--color-feedback-blue-100);
+  
+  @variant dark {
+    background-color: var(--color-feedback-blue-900);
+  }
 }
 
-/* Success */
+/* Success backgrounds - standardized naming */
+/* bg-success-default is now bg-success (rest state) */
 @utility bg-success-highlight {
-  background-color: var(--bg-success-highlight);
+  background-color: var(--color-feedback-green-400);
+  
+  @variant dark {
+    background-color: var(--color-feedback-green-400);
+  }
 }
 
+/* Primary success background - rest state (no suffix) */
+@utility bg-success {
+  background-color: var(--color-feedback-green-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-green-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility bg-success-default {
-  background-color: var(--bg-success-default);
+  background-color: var(--color-feedback-green-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-green-400);
+  }
 }
 
 @utility bg-success-muted {
-  background-color: var(--bg-success-muted);
+  background-color: var(--color-feedback-green-500-56);
+  
+  @variant dark {
+    background-color: var(--color-feedback-green-400-56);
+  }
 }
 
 @utility bg-success-softest {
-  background-color: var(--bg-success-softest);
+  background-color: var(--color-feedback-green-100);
+  
+  @variant dark {
+    background-color: var(--color-feedback-green-900);
+  }
 }
 
-/* Warning */
+/* Warning backgrounds - standardized naming */
+/* bg-warning-default is now bg-warning (rest state) */
 @utility bg-warning-highlight {
-  background-color: var(--bg-warning-highlight);
+  background-color: var(--color-feedback-orange-400);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-400);
+  }
 }
 
+/* Primary warning background - rest state (no suffix) */
+@utility bg-warning {
+  background-color: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-400);
+  }
+}
+
+/* Backward compatibility alias - will be deprecated */
 @utility bg-warning-default {
-  background-color: var(--bg-warning-default);
+  background-color: var(--color-feedback-orange-600);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-400);
+  }
 }
 
 @utility bg-warning-muted {
-  background-color: var(--bg-warning-muted);
+  background-color: var(--color-feedback-orange-500-56);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-400-56);
+  }
 }
 
 @utility bg-warning-softest {
-  background-color: var(--bg-warning-softest);
+  background-color: var(--color-feedback-orange-100);
+  
+  @variant dark {
+    background-color: var(--color-feedback-orange-900);
+  }
 }
 
 
@@ -1021,64 +2118,64 @@
   /* --color-*: initial; */
 
   /* Link colors */
-  --color-link: var(--text-link-primary);
+  --color-link: var(--color-brand-blue-600);
 
-  /* Shadcn theme */
+  /* Shadcn theme - using primitive tokens directly for better performance */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --color-background: var(--background);
-  --color-background-pure: var(--background-pure);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-background: var(--color-neutral-100);
+  --color-background-pure: var(--color-base-white);
+  --color-foreground: var(--color-neutral-900);
+  --color-card: var(--color-base-white);
+  --color-card-foreground: var(--color-neutral-900);
+  --color-popover: var(--color-base-white);
+  --color-popover-foreground: var(--color-neutral-900);
+  --color-primary: var(--color-base-black);
+  --color-primary-foreground: var(--color-base-white);
+  --color-secondary: var(--color-neutral-100);
+  --color-secondary-foreground: var(--color-neutral-900);
+  --color-muted: var(--color-neutral-200);
+  --color-muted-foreground: var(--color-neutral-600);
+  --color-accent: var(--color-neutral-200);
+  --color-accent-foreground: var(--color-neutral-900);
+  --color-destructive: var(--color-feedback-red-700);
+  --color-border: var(--color-neutral-300);
+  --color-input: var(--color-neutral-400);
+  --color-ring: var(--color-brand-blue-600);
 
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-chart-1: var(--color-brand-red-600);
+  --color-chart-2: var(--color-brand-green-600);
+  --color-chart-3: var(--color-brand-red-600);
+  --color-chart-4: var(--color-brand-blue-600);
+  --color-chart-5: var(--color-brand-green-600);
 
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar: var(--color-neutral-100);
+  --color-sidebar-foreground: var(--color-neutral-900);
+  --color-sidebar-primary: var(--color-base-black);
+  --color-sidebar-primary-foreground: var(--color-neutral-300);
+  --color-sidebar-accent: var(--color-neutral-300);
+  --color-sidebar-accent-foreground: var(--color-neutral-900);
+  --color-sidebar-border: var(--color-neutral-300);
+  --color-sidebar-ring: var(--color-brand-blue-600);
 
   /* Alert Colors */
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-info: var(--info);
-  --color-info-foreground: var(--info-foreground);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-feature: var(--feature);
-  --color-feature-foreground: var(--feature-foreground);
+  --color-success: var(--color-feedback-green-100);
+  --color-success-foreground: var(--color-feedback-green-700);
+  --color-info: var(--color-info-100);
+  --color-info-foreground: var(--color-info-700);
+  --color-warning: var(--color-feedback-orange-100);
+  --color-warning-foreground: var(--color-feedback-orange-700);
+  --color-destructive: var(--color-feedback-red-700);
+  --color-destructive-foreground: var(--color-base-white);
+  --color-feature: var(--color-info-100);
+  --color-feature-foreground: var(--color-info-700);
 
   /* Text Colors */
-  --color-body: var(--text-body);
-  --color-body-muted: var(--text-body-muted);
+  --color-body: var(--color-neutral-900);
+  --color-body-muted: var(--color-neutral-400);
 
   /* Animation */
   --keyframes-wiggle: {
@@ -1092,27 +2189,27 @@
   };
   --animate-wiggle: wiggle 1s ease-in-out infinite;
 
-  /* Transition Timing Functions */
-  --ease-in-out-quad: var(--ease-in-out-quad);
-  --ease-in-out-cubic: var(--ease-in-out-cubic);
-  --ease-in-out-quart: var(--ease-in-out-quart);
-  --ease-in-out-quint: var(--ease-in-out-quint);
-  --ease-in-out-expo: var(--ease-in-out-expo);
-  --ease-in-out-circ: var(--ease-in-out-circ);
+  /* Transition Timing Functions - using direct values for better performance */
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
-  --ease-in-quad: var(--ease-in-quad);
-  --ease-in-cubic: var(--ease-in-cubic);
-  --ease-in-quart: var(--ease-in-quart);
-  --ease-in-quint: var(--ease-in-quint);
-  --ease-in-expo: var(--ease-in-expo);
-  --ease-in-circ: var(--ease-in-circ);
+  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
 
-  --ease-out-quad: var(--ease-out-quad);
-  --ease-out-cubic: var(--ease-out-cubic);
-  --ease-out-quart: var(--ease-out-quart);
-  --ease-out-quint: var(--ease-out-quint);
-  --ease-out-expo: var(--ease-out-expo);
-  --ease-out-circ: var(--ease-out-circ);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 
