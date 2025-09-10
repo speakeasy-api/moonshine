@@ -446,7 +446,11 @@ function RowExpandable<T extends object>({
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
             <div className="flex w-full justify-end">
-              <Button onClick={expand} variant={'ghost'} className={`h-6 w-6`}>
+              <Button
+                onClick={expand}
+                variant={'tertiary'}
+                className={`h-6 w-6`}
+              >
                 <ExpandChevron isCollapsed={!isExpanded} />
               </Button>
             </div>

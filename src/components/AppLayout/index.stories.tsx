@@ -102,7 +102,7 @@ export const WithHeader: Story = {
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
         <div className="mr-1 ml-auto flex items-center gap-3">
-          <Button variant="outline">
+          <Button variant="secondary">
             <Icon name="circle-plus" className="size-4" strokeWidth={1.25} />
             <span>Add new</span>
           </Button>
@@ -190,7 +190,7 @@ export const CustomSurfaceHeader: Story = {
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
         <div className="mr-1 ml-auto flex items-center gap-3">
-          <Button variant="outline">
+          <Button variant="secondary">
             <Icon name="circle-plus" className="size-4" strokeWidth={1.25} />
             <span>Add new</span>
           </Button>

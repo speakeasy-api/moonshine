@@ -70,15 +70,15 @@
 
   --gradient-brand-red: radial-gradient(
     138.34% 138.34% at 0% 4.4%,
-    var(--color-destructive-900) 0%,
-    var(--color-destructive-800) 12.5%,
-    var(--color-destructive-700) 25%,
-    var(--color-destructive-600) 37.5%,
-    var(--color-destructive-500) 50%,
-    var(--color-destructive-400) 62.5%,
-    var(--color-destructive-300) 75%,
-    var(--color-destructive-200) 87.5%,
-    var(--color-destructive-100) 100%
+    var(--color-brand-red-900) 0%,
+    var(--color-brand-red-800) 12.5%,
+    var(--color-brand-red-700) 25%,
+    var(--color-brand-red-600) 37.5%,
+    var(--color-brand-red-500) 50%,
+    var(--color-brand-red-400) 62.5%,
+    var(--color-brand-red-300) 75%,
+    var(--color-brand-red-200) 87.5%,
+    var(--color-brand-red-100) 100%
   );
 
   /* Brand green */

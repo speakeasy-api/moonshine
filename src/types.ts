@@ -2,18 +2,22 @@ import { assertNever } from './lib/assert'
 
 // Button variants
 export const buttonVariants = [
-  'default',
-  'destructive',
-  'outline',
+  'brand',
+  'primary',
   'secondary',
-  'ghost',
-  'link',
+  'tertiary',
+  'destructive-primary',
+  'destructive-secondary',
 ] as const
 export type ButtonVariant = (typeof buttonVariants)[number]
 
 // Button sizes
-export const buttonSizes = ['default', 'sm', 'lg', 'icon'] as const
+export const buttonSizes = ['xs', 'sm', 'md', 'lg'] as const
 export type ButtonSize = (typeof buttonSizes)[number]
+
+// Button contexts
+export const buttonContexts = ['product', 'marketing'] as const
+export type ButtonContext = (typeof buttonContexts)[number]
 
 // Generic
 export type Orientation = 'horizontal' | 'vertical'

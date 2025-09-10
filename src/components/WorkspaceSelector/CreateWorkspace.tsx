@@ -169,7 +169,7 @@ export function CreateWorkspace({
 
       <div className="border-input bg-background flex border-t px-8 py-4">
         {backButtonEnabled && onBack && (
-          <Button variant="outline" onClick={onBack}>
+          <Button variant="secondary" onClick={onBack}>
             <Icon name="chevron-left" size="small" />
             Back
           </Button>

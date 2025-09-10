@@ -3,6 +3,7 @@ import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { cn } from '../../../lib/utils'
 import { Button } from '../../Button'
+import { IconButton } from '../../IconButton'
 import { Text } from '../../Text'
 import {
   BaseComponents,
@@ -151,32 +152,34 @@ export function AIChatMessageToolPart({
 
           {/* Action Buttons */}
           <div className="flex items-center gap-1">
-            <Button
-              size="icon"
-              variant="ghost"
+            <IconButton
+              variant="tertiary"
               onClick={() => setIsExpanded(!isExpanded)}
               className="h-6 w-6"
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
-            >
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                variants={{
-                  expanded: { rotate: 180 },
-                  collapsed: { rotate: 0 },
-                }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </motion.svg>
-            </Button>
+              icon={
+                <motion.svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  variants={{
+                    expanded: { rotate: 180 },
+                    collapsed: { rotate: 0 },
+                  }}
+                  animate={isExpanded ? 'expanded' : 'collapsed'}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </motion.svg>
+              }
+            />
           </div>
         </div>
 
@@ -262,7 +265,7 @@ export function AIChatMessageToolPart({
           <div className="bg-muted flex justify-end border-t px-4 py-2">
             <div className="flex items-center gap-1.5">
               <Button
-                variant="ghost"
+                variant="tertiary"
                 size="sm"
                 onClick={toolCallApproval?.pendingToolCall?.reject}
                 className="hover:bg-background hover:text-foreground h-7 border border-transparent px-3 text-sm"

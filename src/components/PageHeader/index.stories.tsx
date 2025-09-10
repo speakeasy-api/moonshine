@@ -35,7 +35,7 @@ export const Default: Story = {
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
         </PageHeader.TitleArea>
         <PageHeader.Actions>
-          <Button variant="outline">Regenerate</Button>
+          <Button variant="secondary">Regenerate</Button>
           <Button variant="secondary">Action</Button>
         </PageHeader.Actions>
       </PageHeader.TitleBar>,
@@ -69,7 +69,7 @@ export const WithActions: Story = {
           <PageHeader.Title>speakeasy-sdks / code-sample-api</PageHeader.Title>
         </PageHeader.TitleArea>
         <PageHeader.Actions>
-          <Button variant="outline">Regenerate</Button>
+          <Button variant="secondary">Regenerate</Button>
           <Button variant="secondary">Action</Button>
         </PageHeader.Actions>
       </PageHeader.TitleBar>,
