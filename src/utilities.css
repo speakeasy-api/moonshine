@@ -312,7 +312,7 @@
 }
 
 @utility text-muted {
-  color: var(--text-muted)!important;
+  color: var(--text-muted) !important;
 }
 
 @utility text-placeholder {
@@ -361,7 +361,6 @@
 @utility text-muted-inverse {
   color: var(--text-muted-inverse);
 }
-
 
 /* Link colors */
 @utility text-link-primary {
@@ -415,7 +414,7 @@
 /* Button Text Colors */
 @utility text-btn-brand {
   color: var(--color-neutral-900);
-  
+
   @variant dark {
     color: var(--color-neutral-100);
   }
@@ -423,7 +422,7 @@
 
 @utility text-btn-brand-hover {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -431,7 +430,7 @@
 
 @utility text-btn-brand-active {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -440,7 +439,7 @@
 @utility text-btn-brand-disabled {
   color: var(--color-neutral-900);
   opacity: 0.4;
-  
+
   @variant dark {
     color: var(--color-neutral-100);
     opacity: 0.4;
@@ -448,16 +447,16 @@
 }
 
 @utility text-btn-primary {
-  color: var(--color-base-white);
-  
+  color: var(--color-neutral-900);
+
   @variant dark {
-    color: var(--color-base-black);
+    color: var(--color-neutral-100);
   }
 }
 
 @utility text-btn-primary-hover {
   color: var(--color-base-white);
-  
+
   @variant dark {
     color: var(--color-base-black);
   }
@@ -465,25 +464,25 @@
 
 @utility text-btn-primary-active {
   color: var(--color-base-white);
-  
+
   @variant dark {
     color: var(--color-base-black);
   }
 }
 
 @utility text-btn-primary-disabled {
-  color: var(--color-base-white);
+  color: var(--color-neutral-900);
   opacity: 0.4;
-  
+
   @variant dark {
-    color: var(--color-base-black);
+    color: var(--color-neutral-100);
     opacity: 0.4;
   }
 }
 
 @utility text-btn-secondary {
   color: var(--color-neutral-900);
-  
+
   @variant dark {
     color: var(--color-neutral-100);
   }
@@ -491,7 +490,7 @@
 
 @utility text-btn-secondary-hover {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -499,7 +498,7 @@
 
 @utility text-btn-secondary-active {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -508,7 +507,7 @@
 @utility text-btn-secondary-disabled {
   color: var(--color-neutral-900);
   opacity: 0.4;
-  
+
   @variant dark {
     color: var(--color-neutral-100);
     opacity: 0.4;
@@ -517,7 +516,7 @@
 
 @utility text-btn-tertiary {
   color: var(--color-neutral-900);
-  
+
   @variant dark {
     color: var(--color-neutral-100);
   }
@@ -525,7 +524,7 @@
 
 @utility text-btn-tertiary-hover {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -533,7 +532,7 @@
 
 @utility text-btn-tertiary-active {
   color: var(--color-base-black);
-  
+
   @variant dark {
     color: var(--color-base-white);
   }
@@ -542,7 +541,7 @@
 @utility text-btn-tertiary-disabled {
   color: var(--color-neutral-900);
   opacity: 0.4;
-  
+
   @variant dark {
     color: var(--color-neutral-100);
     opacity: 0.4;
@@ -568,7 +567,7 @@
 
 @utility text-btn-destructive-secondary {
   color: var(--color-feedback-red-600);
-  
+
   @variant dark {
     color: var(--color-feedback-red-400);
   }
@@ -576,7 +575,7 @@
 
 @utility text-btn-destructive-secondary-hover {
   color: var(--color-feedback-red-700);
-  
+
   @variant dark {
     color: var(--color-feedback-red-500);
   }
@@ -584,7 +583,7 @@
 
 @utility text-btn-destructive-secondary-active {
   color: var(--color-feedback-red-800);
-  
+
   @variant dark {
     color: var(--color-feedback-red-600);
   }
@@ -593,13 +592,12 @@
 @utility text-btn-destructive-secondary-disabled {
   color: var(--color-feedback-red-600);
   opacity: 0.4;
-  
+
   @variant dark {
     color: var(--color-feedback-red-400);
     opacity: 0.4;
   }
 }
-
 
 @utility bg-gradient-primary {
   background: var(--gradient-brand-primary);
@@ -647,7 +645,6 @@
   border-width: 1px;
   border-style: solid;
 }
-
 
 /* Link underline utilities */
 @utility underline-link-primary {
@@ -1034,7 +1031,7 @@
  * Follows Tailwind conventions: bg-*, rest state has no suffix */
 @utility bg-btn-brand {
   background-color: var(--color-base-white);
-  
+
   @variant dark {
     background-color: var(--color-base-black);
   }
@@ -1042,7 +1039,7 @@
 
 @utility bg-btn-brand-hover {
   background-color: var(--color-neutral-100);
-  
+
   @variant dark {
     background-color: var(--color-neutral-900);
   }
@@ -1050,7 +1047,7 @@
 
 @utility bg-btn-brand-active {
   background-color: var(--color-neutral-200);
-  
+
   @variant dark {
     background-color: var(--color-neutral-800);
   }
@@ -1058,49 +1055,49 @@
 
 @utility bg-btn-brand-disabled {
   background-color: var(--color-base-white);
-  
+
   @variant dark {
     background-color: var(--color-base-black);
   }
 }
 
 @utility bg-btn-primary {
-  background-color: var(--color-neutral-700);
-  
-  @variant dark {
-    background-color: var(--color-neutral-300);
-  }
-}
-
-@utility bg-btn-primary-hover {
   background-color: var(--color-neutral-800);
-  
+
   @variant dark {
     background-color: var(--color-neutral-200);
   }
 }
 
-@utility bg-btn-primary-active {
+@utility bg-btn-primary-hover {
   background-color: var(--color-neutral-900);
-  
+
   @variant dark {
     background-color: var(--color-neutral-100);
   }
 }
 
-@utility bg-btn-primary-disabled {
-  background-color: var(--color-neutral-900);
-  opacity: 0.4;
-  
+@utility bg-btn-primary-active {
+  background-color: var(--color-base-black);
+
   @variant dark {
-    background-color: var(--color-neutral-100);
+    background-color: var(--color-base-white);
+  }
+}
+
+@utility bg-btn-primary-disabled {
+  background-color: var(--color-neutral-800);
+  opacity: 0.4;
+
+  @variant dark {
+    background-color: var(--color-neutral-200);
     opacity: 0.4;
   }
 }
 
 @utility bg-btn-secondary {
   background-color: var(--color-neutral-200);
-  
+
   @variant dark {
     background-color: var(--color-neutral-800);
   }
@@ -1108,7 +1105,7 @@
 
 @utility bg-btn-secondary-hover {
   background-color: var(--color-neutral-300);
-  
+
   @variant dark {
     background-color: var(--color-neutral-700);
   }
@@ -1116,7 +1113,7 @@
 
 @utility bg-btn-secondary-active {
   background-color: var(--color-neutral-400);
-  
+
   @variant dark {
     background-color: var(--color-neutral-600);
   }
@@ -1125,7 +1122,7 @@
 @utility bg-btn-secondary-disabled {
   background-color: var(--color-neutral-200);
   opacity: 0.4;
-  
+
   @variant dark {
     background-color: var(--color-neutral-800);
     opacity: 0.4;
@@ -1134,7 +1131,7 @@
 
 @utility bg-btn-destructive {
   background-color: var(--color-feedback-red-600);
-  
+
   @variant dark {
     background-color: var(--color-feedback-red-400);
   }
@@ -1142,7 +1139,7 @@
 
 @utility bg-btn-destructive-hover {
   background-color: var(--color-feedback-red-700);
-  
+
   @variant dark {
     background-color: var(--color-feedback-red-500);
   }
@@ -1150,7 +1147,7 @@
 
 @utility bg-btn-destructive-active {
   background-color: var(--color-feedback-red-800);
-  
+
   @variant dark {
     background-color: var(--color-feedback-red-600);
   }
@@ -1159,7 +1156,7 @@
 @utility bg-btn-destructive-disabled {
   background-color: var(--color-feedback-red-600);
   opacity: 0.4;
-  
+
   @variant dark {
     background-color: var(--color-feedback-red-400);
     opacity: 0.4;
@@ -1306,7 +1303,6 @@
   background-color: var(--bg-warning-softest);
 }
 
-
 @layer utilities {
   .devicon-devicon-plain {
     max-width: 2em;
@@ -1450,5 +1446,3 @@
   --ease-out-expo: var(--ease-out-expo);
   --ease-out-circ: var(--ease-out-circ);
 }
-
-
