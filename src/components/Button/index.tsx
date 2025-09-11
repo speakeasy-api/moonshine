@@ -5,12 +5,28 @@ import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { ButtonSize, ButtonVariant, ButtonContext } from '@/types'
 
-const lerp = (a: number, b: number, t: number) => {
-  return a + (b - a) * t
+// Lerp for angles, taking the shortest path around the circle
+const lerpAngle = (a: number, b: number, t: number) => {
+  // Normalize angles to 0-360 range
+  a = ((a % 360) + 360) % 360
+  b = ((b % 360) + 360) % 360
+
+  // Calculate the shortest difference
+  let diff = b - a
+  if (diff > 180) {
+    diff -= 360
+  } else if (diff < -180) {
+    diff += 360
+  }
+
+  // Interpolate and normalize result
+  const result = a + diff * t
+  return ((result % 360) + 360) % 360
 }
 
 const useAnimationFrame = (
-  callback: (timestamp: number, delta: number) => void
+  callback: (timestamp: number, delta: number) => void,
+  enabled: boolean = true
 ) => {
   const requestRef = React.useRef<number>()
   const previousTimeRef = React.useRef<number>()
@@ -22,19 +38,23 @@ const useAnimationFrame = (
         callback(timestamp, deltaTime)
       }
       previousTimeRef.current = timestamp
-      requestRef.current = requestAnimationFrame(animate)
+      if (enabled) {
+        requestRef.current = requestAnimationFrame(animate)
+      }
     },
-    [callback]
+    [callback, enabled]
   )
 
   React.useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate)
+    if (enabled) {
+      requestRef.current = requestAnimationFrame(animate)
+    }
     return () => {
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current)
       }
     }
-  }, [animate])
+  }, [animate, enabled])
 }
 
 const ButtonLeftIcon = React.forwardRef<
@@ -87,7 +107,7 @@ const buttonVariants = cva(
       },
       variant: {
         brand:
-          'relative bg-btn-brand hover:bg-btn-brand-hover text-btn-brand hover:text-btn-brand-hover disabled:bg-btn-brand-disabled disabled:text-btn-brand-disabled disabled:opacity-100 before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-sm focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
+          'relative bg-btn-brand hover:bg-btn-brand-hover text-btn-brand hover:text-btn-brand-hover disabled:bg-btn-brand-disabled disabled:text-btn-brand-disabled disabled:opacity-100 before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-[2px] focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
         primary:
           'bg-btn-primary text-btn-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-primary-hover hover:text-btn-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-primary-active active:text-btn-primary-active active:shadow-none disabled:bg-btn-primary-disabled disabled:text-btn-primary-disabled disabled:opacity-100',
         secondary:
@@ -143,6 +163,7 @@ type Attributes = Pick<
   | 'onMouseLeave'
   | 'onMouseDown'
   | 'onMouseUp'
+  | 'onMouseMove'
 >
 
 export interface ButtonProps extends Attributes {
@@ -166,12 +187,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onMouseLeave,
       onMouseDown,
       onMouseUp,
+      onMouseMove,
       ...props
     },
     ref
   ) => {
     const [isPressed, setIsPressed] = React.useState(false)
+    const [cursorPosition, setCursorPosition] = React.useState<{
+      x: number
+      y: number
+    } | null>(null)
     const buttonRef = React.useRef<HTMLButtonElement | null>(null)
+    const buttonDimensionsRef = React.useRef<{
+      width: number
+      height: number
+    } | null>(null)
 
     if (process.env.NODE_ENV === 'development') {
       const validateChildren = () => {
@@ -232,34 +262,64 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const isBrandVariant = variant === 'brand'
 
+    // Only run animation frame when brand variant is active
     useAnimationFrame(
       React.useCallback(
         (_timestamp: number, delta: number) => {
-          if (!buttonRef.current || !isBrandVariant) return
+          if (!buttonRef.current) return
 
           const gradientValues = gradientRefs.current
 
-          if (Math.abs(gradientValues.target - gradientValues.current) < 0.01) {
-            Object.assign(gradientValues, { current: gradientValues.target })
+          // Calculate target based on cursor position if hovering
+          if (cursorPosition && buttonDimensionsRef.current) {
+            const centerX = buttonDimensionsRef.current.width / 2
+            const centerY = buttonDimensionsRef.current.height / 2
+
+            // Calculate angle from center to cursor position
+            const angle =
+              Math.atan2(
+                cursorPosition.y - centerY,
+                cursorPosition.x - centerX
+              ) *
+              (180 / Math.PI)
+
+            // Normalize angle to 0-360 range and add offset
+            gradientValues.target = (angle + 360) % 360
+          } else {
+            // Always reset to original position when not hovering
+            gradientValues.target = 220
+          }
+
+          // Early exit if we're close enough to target
+          const diff = Math.abs(gradientValues.target - gradientValues.current)
+          if (diff < 0.1) {
+            if (diff > 0) {
+              gradientValues.current = gradientValues.target
+              buttonRef.current.style.setProperty(
+                '--gradient-rotation',
+                `${Math.round(gradientValues.target)}deg`
+              )
+            }
             return
           }
 
-          const lerpValue = Math.min((delta / 1000) * 4, 1)
+          const lerpValue = Math.min((delta / 1000) * 8, 1) // Increased speed for snappier response
 
-          const newCurrent = lerp(
+          const newCurrent = lerpAngle(
             gradientValues.current,
             gradientValues.target,
             lerpValue
           )
-          Object.assign(gradientValues, { current: newCurrent })
+          gradientValues.current = newCurrent
 
           buttonRef.current.style.setProperty(
             '--gradient-rotation',
             `${Math.round(newCurrent)}deg`
           )
         },
-        [isBrandVariant]
-      )
+        [cursorPosition]
+      ),
+      isBrandVariant // Only enable animation for brand variant
     )
 
     if (process.env.NODE_ENV === 'development') {
@@ -278,10 +338,31 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }
     }
 
+    const handleMouseMove = React.useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (isBrandVariant && buttonRef.current) {
+          const rect = buttonRef.current.getBoundingClientRect()
+          const x = e.clientX - rect.left
+          const y = e.clientY - rect.top
+          setCursorPosition({ x, y })
+        }
+        onMouseMove?.(e)
+      },
+      [isBrandVariant, onMouseMove]
+    )
+
     const handleMouseEnter = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (isBrandVariant) {
-          gradientRefs.current.target = 320
+        if (isBrandVariant && buttonRef.current) {
+          const rect = buttonRef.current.getBoundingClientRect()
+          // Cache dimensions for animation frame
+          buttonDimensionsRef.current = {
+            width: rect.width,
+            height: rect.height,
+          }
+          const x = e.clientX - rect.left
+          const y = e.clientY - rect.top
+          setCursorPosition({ x, y })
         }
         onMouseEnter?.(e)
       },
@@ -291,6 +372,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const handleMouseLeave = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isBrandVariant) {
+          setCursorPosition(null)
+          buttonDimensionsRef.current = null
+          // Explicitly set target to ensure reset
           gradientRefs.current.target = 220
           setIsPressed(false)
         }
@@ -337,12 +421,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     )
 
     // Auto-wrap raw text children in Button.Text
-    const processedChildren = React.Children.map(props.children, (child) => {
-      if (typeof child === 'string' || typeof child === 'number') {
-        return <ButtonText>{child}</ButtonText>
-      }
-      return child
-    })
+    const processedChildren = React.useMemo(
+      () =>
+        React.Children.map(props.children, (child) => {
+          if (typeof child === 'string' || typeof child === 'number') {
+            return <ButtonText>{child}</ButtonText>
+          }
+          return child
+        }),
+      [props.children]
+    )
 
     return (
       <Comp
@@ -354,6 +442,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={combinedRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         {...props}
