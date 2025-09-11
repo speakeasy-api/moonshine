@@ -447,10 +447,10 @@
 }
 
 @utility text-btn-primary {
-  color: var(--color-neutral-900);
+  color: var(--color-neutral-100);
 
   @variant dark {
-    color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
   }
 }
 
@@ -471,11 +471,11 @@
 }
 
 @utility text-btn-primary-disabled {
-  color: var(--color-neutral-900);
+  color: var(--color-neutral-100);
   opacity: 0.4;
 
   @variant dark {
-    color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
     opacity: 0.4;
   }
 }
