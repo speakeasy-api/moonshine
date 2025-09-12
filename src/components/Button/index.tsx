@@ -203,7 +203,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       height: number
     } | null>(null)
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && !asChild) {
       const validateChildren = () => {
         if (!props.children) return
 
@@ -420,17 +420,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       [ref]
     )
 
-    // Auto-wrap raw text children in Button.Text
-    const processedChildren = React.useMemo(
-      () =>
-        React.Children.map(props.children, (child) => {
-          if (typeof child === 'string' || typeof child === 'number') {
-            return <ButtonText>{child}</ButtonText>
-          }
-          return child
-        }),
-      [props.children]
-    )
+    // Auto-wrap raw text children in Button.Text (only when not using asChild)
+    const processedChildren = React.useMemo(() => {
+      if (asChild) {
+        // When asChild is true, return children as-is for Slot to handle
+        return props.children
+      }
+
+      return React.Children.map(props.children, (child) => {
+        if (typeof child === 'string' || typeof child === 'number') {
+          return <ButtonText>{child}</ButtonText>
+        }
+        return child
+      })
+    }, [props.children, asChild])
 
     return (
       <Comp
