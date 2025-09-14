@@ -83,23 +83,27 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
           transition={{ duration: animationDuration }}
         >
           <div className="flex h-16 items-center justify-between border-b px-4">
-            <div className="flex items-center gap-2">
+            <div className="flex h-full items-center gap-2">
               {currentIndex > 0 && (
-                <button
+                <motion.button
+                  animate={{ x: 0 }}
+                  transition={{
+                    duration: 300,
+                  }}
                   onClick={popScreen}
                   className="hover:bg-muted mr-2 rounded-full border p-2 disabled:opacity-50 disabled:hover:bg-transparent"
                   aria-label="Go back"
                 >
                   <Icon name="chevron-left" className="size-4" />
-                </button>
+                </motion.button>
               )}
 
               {/* Animated title */}
-              <div className="relative h-7 w-fit min-w-xs overflow-x-hidden">
+              <div className="relative flex h-full w-fit min-w-xs items-center overflow-x-hidden">
                 <AnimatePresence initial={false} mode="sync" custom={isForward}>
                   <MotionHeading
                     key={`title-${currentIndex}`}
-                    className="text-md absolute !leading-6 font-medium"
+                    className="text-heading-md absolute"
                     custom={isForward}
                     variants={slideVariants}
                     initial="enter"

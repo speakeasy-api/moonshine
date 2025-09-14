@@ -4,6 +4,7 @@ export type Screen = {
   id: string
   title: string
   component: ReactNode
+  closable?: boolean
 }
 
 type ModalContextType = {
