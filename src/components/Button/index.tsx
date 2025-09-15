@@ -152,19 +152,7 @@ const buttonVariants = cva(
   }
 )
 
-type Attributes = Pick<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  | 'disabled'
-  | 'onClick'
-  | 'type'
-  | 'children'
-  | 'role'
-  | 'onMouseEnter'
-  | 'onMouseLeave'
-  | 'onMouseDown'
-  | 'onMouseUp'
-  | 'onMouseMove'
->
+type Attributes = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'style'>
 
 export interface ButtonProps extends Attributes {
   asChild?: boolean
