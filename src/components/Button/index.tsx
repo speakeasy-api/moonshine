@@ -192,7 +192,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const [isPressed, setIsPressed] = React.useState(false)
     const [cursorPosition, setCursorPosition] = React.useState<{
       x: number
       y: number
@@ -376,7 +375,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonDimensionsRef.current = null
           // Explicitly set target to ensure reset
           gradientRefs.current.target = 220
-          setIsPressed(false)
         }
         onMouseLeave?.(e)
       },
@@ -385,7 +383,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleMouseDown = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        setIsPressed(true)
         onMouseDown?.(e)
       },
       [onMouseDown]
@@ -393,7 +390,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleMouseUp = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        setIsPressed(false)
         onMouseUp?.(e)
       },
       [onMouseUp]
@@ -437,11 +433,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant, size, context }),
-          isPressed && 'active:scale-[0.98] active:duration-75',
-          className
-        )}
+        className={cn(buttonVariants({ variant, size, context }), className)}
         ref={combinedRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

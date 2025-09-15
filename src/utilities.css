@@ -1055,6 +1055,7 @@
 
 @utility bg-btn-brand-disabled {
   background-color: var(--color-base-white);
+  opacity: 0.4;
 
   @variant dark {
     background-color: var(--color-base-black);
