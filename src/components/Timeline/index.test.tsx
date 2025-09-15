@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { Database, CheckCircle, Clock } from 'lucide-react'
+import { Database, CheckCircle } from 'lucide-react'
 import { Timeline } from './'
 
 describe('Timeline', () => {
@@ -160,16 +160,6 @@ describe('Timeline', () => {
 
     const content = screen.getByText('Test Content').closest('.custom-content')
     expect(content).toBeInTheDocument()
-  })
-
-  it('renders standalone Timeline.Icon component', () => {
-    render(
-      <Timeline.Icon>
-        <Clock data-testid="standalone-icon" />
-      </Timeline.Icon>
-    )
-
-    expect(screen.getByTestId('standalone-icon')).toBeInTheDocument()
   })
 
   it('handles single timeline item', () => {

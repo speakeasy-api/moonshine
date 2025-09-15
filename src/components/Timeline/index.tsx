@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'
-import { Text } from '../../Text'
-import { Heading } from '../../Heading'
+import { Text } from '../Text'
+import { Heading } from '../Heading'
 
 const TIMELINE_STYLES = {
   line: 'bg-surface-tertiary-default',
@@ -148,17 +148,6 @@ function TimelineTimestamp({ children, className }: TimelineTimestampProps) {
   )
 }
 
-interface TimelineIconProps {
-  children: React.ReactNode
-  className?: string
-}
-
-function TimelineIcon({ children, className }: TimelineIconProps) {
-  return (
-    <div className={cn(TIMELINE_STYLES.iconIcon, className)}>{children}</div>
-  )
-}
-
 interface TimelineSeparatorProps {
   className?: string
 }
@@ -217,7 +206,6 @@ const Timeline = Object.assign(TimelineRoot, {
   Title: TimelineTitle,
   Description: TimelineDescription,
   Timestamp: TimelineTimestamp,
-  Icon: TimelineIcon,
   Separator: TimelineSeparator,
 })
 
@@ -230,6 +218,5 @@ export {
   TimelineTitle,
   TimelineDescription,
   TimelineTimestamp,
-  TimelineIcon,
   TimelineSeparator,
 }
