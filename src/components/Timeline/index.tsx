@@ -1,6 +1,13 @@
 'use client'
 
-import * as React from 'react'
+import React, {
+  useLayoutEffect,
+  useRef,
+  useState,
+  isValidElement,
+  cloneElement,
+} from 'react'
+import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { Text } from '../Text'
 import { Heading } from '../Heading'
@@ -18,29 +25,9 @@ const TIMELINE_STYLES = {
   transition: 'transition-opacity duration-300',
 } as const
 
-// Timeline context is no longer needed since we only support vertical layout
-
-interface TimelineItemContextValue {
-  index: number
-  isLast: boolean
-}
-
-const TimelineItemContext =
-  React.createContext<TimelineItemContextValue | null>(null)
-
-const useTimelineItemContext = () => {
-  const context = React.useContext(TimelineItemContext)
-  if (!context) {
-    throw new Error(
-      'Timeline.Content and related components must be used within Timeline.Item'
-    )
-  }
-  return context
-}
-
-interface TimelineItemProps {
-  icon?: React.ReactNode
-  children: React.ReactNode
+export interface TimelineItemProps {
+  icon?: ReactNode
+  children: ReactNode
   className?: string
   index?: number
   isLast?: boolean
@@ -51,42 +38,39 @@ function TimelineItem({
   children,
   className,
   index = 0,
-  isLast = false,
 }: TimelineItemProps) {
-  const itemContextValue: TimelineItemContextValue = {
-    index,
-    isLast,
-  }
-
   return (
-    <TimelineItemContext.Provider value={itemContextValue}>
-      <div className={cn('relative flex items-start gap-4', className)}>
-        {/* Status indicator */}
-        <div className={TIMELINE_STYLES.iconContainer}>
-          <div className={TIMELINE_STYLES.iconBackground} />
-          <div className={TIMELINE_STYLES.iconContent}>
-            {icon ? (
-              <div className={TIMELINE_STYLES.iconIcon}>{icon}</div>
-            ) : (
-              <div className={TIMELINE_STYLES.iconNumber}>{index + 1}</div>
-            )}
-          </div>
+    <div
+      className={cn('relative flex items-start gap-4', className)}
+      data-timeline-item
+    >
+      <div className={TIMELINE_STYLES.iconContainer}>
+        <div className={TIMELINE_STYLES.iconBackground} />
+        <div className={TIMELINE_STYLES.iconContent}>
+          {icon ? (
+            <div className={TIMELINE_STYLES.iconIcon}>{icon}</div>
+          ) : (
+            <div className={TIMELINE_STYLES.iconNumber}>{index + 1}</div>
+          )}
         </div>
-
-        {children}
       </div>
-    </TimelineItemContext.Provider>
+
+      {children}
+    </div>
   )
 }
 
-interface TimelineContentProps {
-  children: React.ReactNode
+export interface TimelineContentProps {
+  children: ReactNode
   className?: string
+  isLast?: boolean
 }
 
-function TimelineContent({ children, className }: TimelineContentProps) {
-  const { isLast } = useTimelineItemContext()
-
+function TimelineContent({
+  children,
+  className,
+  isLast,
+}: TimelineContentProps) {
   return (
     <div className={cn('min-w-0 flex-1', !isLast && 'pb-6', className)}>
       {children}
@@ -94,8 +78,8 @@ function TimelineContent({ children, className }: TimelineContentProps) {
   )
 }
 
-interface TimelineTitleProps {
-  children: React.ReactNode
+export interface TimelineTitleProps {
+  children: ReactNode
   className?: string
 }
 
@@ -111,8 +95,8 @@ function TimelineTitle({ children, className }: TimelineTitleProps) {
   )
 }
 
-interface TimelineDescriptionProps {
-  children: React.ReactNode
+export interface TimelineDescriptionProps {
+  children: ReactNode
   className?: string
 }
 
@@ -131,8 +115,8 @@ function TimelineDescription({
   )
 }
 
-interface TimelineTimestampProps {
-  children: React.ReactNode
+export interface TimelineTimestampProps {
+  children: ReactNode
   className?: string
 }
 
@@ -148,7 +132,7 @@ function TimelineTimestamp({ children, className }: TimelineTimestampProps) {
   )
 }
 
-interface TimelineSeparatorProps {
+export interface TimelineSeparatorProps {
   className?: string
 }
 
@@ -160,18 +144,20 @@ function TimelineSeparator({ className }: TimelineSeparatorProps) {
   )
 }
 
-interface TimelineRootProps {
-  children: React.ReactNode
+export interface TimelineRootProps {
+  children: ReactNode
   className?: string
 }
 
 function TimelineRoot({ children, className }: TimelineRootProps) {
   const childrenArray = React.Children.toArray(children)
   const itemCount = childrenArray.length
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const [lineHeight, setLineHeight] = useState<number | null>(null)
 
   const enhancedChildren = childrenArray.map((child, index) => {
-    if (React.isValidElement(child) && child.type === TimelineItem) {
-      return React.cloneElement(child, {
+    if (isValidElement(child) && child.type === TimelineItem) {
+      return cloneElement(child, {
         ...child.props,
         index,
         isLast: index === itemCount - 1,
@@ -180,16 +166,33 @@ function TimelineRoot({ children, className }: TimelineRootProps) {
     return child
   })
 
+  useLayoutEffect(() => {
+    if (timelineRef.current && itemCount > 1) {
+      const timelineItems = timelineRef.current.querySelectorAll(
+        '[data-timeline-item]'
+      )
+      if (timelineItems.length >= 2) {
+        const lastItem = timelineItems[timelineItems.length - 1] as HTMLElement
+
+        // Calculate distance from center of first icon to center of last icon
+        const firstIconCenter = 24 // 1.5rem (top-6) + 0.75rem (half of 3rem icon height)
+        const lastItemTop = lastItem.offsetTop
+        const calculatedHeight = lastItemTop + 24 - firstIconCenter // 24px = center of last icon
+
+        setLineHeight(calculatedHeight)
+      }
+    }
+  }, [itemCount, children])
+
   return (
     <div className={cn('relative', className)}>
       {itemCount > 0 && (
-        <div className="relative">
+        <div className="relative" ref={timelineRef}>
           {itemCount > 1 && (
             <div
-              className={cn(TIMELINE_STYLES.line, 'absolute left-6 w-px')}
+              className={cn(TIMELINE_STYLES.line, 'absolute top-6 left-6 w-px')}
               style={{
-                top: '1.5rem',
-                bottom: '1.5rem',
+                height: lineHeight ? `${lineHeight}px` : `calc(100% - 4.5rem)`,
               }}
             />
           )}
@@ -210,13 +213,3 @@ const Timeline = Object.assign(TimelineRoot, {
 })
 
 export { Timeline }
-
-export {
-  TimelineRoot,
-  TimelineItem,
-  TimelineContent,
-  TimelineTitle,
-  TimelineDescription,
-  TimelineTimestamp,
-  TimelineSeparator,
-}

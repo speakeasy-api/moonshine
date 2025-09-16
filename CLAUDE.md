@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-09-15T15:33:15.394Z
+This section is auto-generated from the CSS files. Last updated: 2025-09-15T21:43:34.740Z
 
 ### Typography Utilities
 

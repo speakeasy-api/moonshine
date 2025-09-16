@@ -103,10 +103,10 @@ export const ComposableCustomContent: Story = {
           <Timeline.Title>Database Setup</Timeline.Title>
           <Timeline.Description>
             PostgreSQL instance configured with optimized settings.
+            <div className="text-success-default mt-2 text-xs font-medium">
+              ✓ Performance: 95ms avg query time
+            </div>
           </Timeline.Description>
-          <div className="text-success-default mt-2 text-xs font-medium">
-            ✓ Performance: 95ms avg query time
-          </div>
           <Timeline.Timestamp>Jan 15, 2024</Timeline.Timestamp>
         </Timeline.Content>
       </Timeline.Item>
@@ -116,12 +116,12 @@ export const ComposableCustomContent: Story = {
           <Timeline.Title>API Integration</Timeline.Title>
           <Timeline.Description>
             Connecting external services and third-party APIs.
-          </Timeline.Description>
-          <div className="bg-warning-softest border-warning-softest mt-2 rounded border p-2">
-            <div className="text-warning-default text-xs">
-              ⚠️ Rate limit: 450/500 requests
+            <div className="bg-warning-softest border-warning-softest mt-2 rounded border p-2">
+              <div className="text-warning-default text-xs">
+                ⚠️ Rate limit: 450/500 requests
+              </div>
             </div>
-          </div>
+          </Timeline.Description>
           <Timeline.Timestamp>Jan 17, 2024</Timeline.Timestamp>
         </Timeline.Content>
       </Timeline.Item>
@@ -131,10 +131,10 @@ export const ComposableCustomContent: Story = {
           <Timeline.Title>Performance Testing</Timeline.Title>
           <Timeline.Description>
             Load testing and optimization.
+            <div className="text-muted mt-2 text-xs">
+              Estimated duration: 2-3 days
+            </div>
           </Timeline.Description>
-          <div className="text-muted mt-2 text-xs">
-            Estimated duration: 2-3 days
-          </div>
           <Timeline.Timestamp>Jan 20, 2024</Timeline.Timestamp>
         </Timeline.Content>
       </Timeline.Item>
