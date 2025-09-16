@@ -1,6 +1,7 @@
 import React from 'react'
 import { Timeline } from '.'
 import { StoryObj, Meta } from '@storybook/react'
+import { Button } from '../Button'
 import {
   Code,
   Palette,
@@ -12,6 +13,7 @@ import {
   CheckCircle,
   AlertCircle,
   Clock,
+  ChevronDown,
 } from 'lucide-react'
 
 const meta: Meta<typeof Timeline> = {
@@ -219,6 +221,142 @@ export const ComposableWithSeparator: Story = {
     docs: {
       description: {
         story: 'Timeline with custom separators to divide phases or sections.',
+      },
+    },
+  },
+}
+
+export const ComposableWithTimestamps: Story = {
+  render: () => (
+    <Timeline>
+      <Timeline.Item icon={<CheckCircle />}>
+        <Timeline.Content>
+          <Timeline.Title>Project Kickoff</Timeline.Title>
+          <Timeline.Description>
+            Initial meeting with stakeholders and team setup. Requirements
+            gathering and project scope definition completed.
+          </Timeline.Description>
+          <Timeline.Timestamp>Jan 8, 2024 • 9:00 AM</Timeline.Timestamp>
+        </Timeline.Content>
+      </Timeline.Item>
+
+      <Timeline.Item icon={<Palette />}>
+        <Timeline.Content>
+          <Timeline.Title>Design Review</Timeline.Title>
+          <Timeline.Description>
+            UI/UX mockups presented and approved. Design system components
+            finalized and ready for development.
+          </Timeline.Description>
+          <Timeline.Timestamp>Jan 12, 2024 • 2:30 PM</Timeline.Timestamp>
+        </Timeline.Content>
+      </Timeline.Item>
+
+      <Timeline.Item icon={<Code />}>
+        <Timeline.Content>
+          <Timeline.Title>Development Started</Timeline.Title>
+          <Timeline.Description>
+            Core functionality implementation began. Backend API endpoints
+            created and frontend components initialized.
+          </Timeline.Description>
+          <Timeline.Timestamp>Jan 15, 2024 • 10:15 AM</Timeline.Timestamp>
+        </Timeline.Content>
+      </Timeline.Item>
+
+      <Timeline.Item icon={<TestTube />}>
+        <Timeline.Content>
+          <Timeline.Title>Testing Phase</Timeline.Title>
+          <Timeline.Description>
+            Quality assurance testing in progress. Unit tests and integration
+            tests running successfully.
+          </Timeline.Description>
+          <Timeline.Timestamp>Jan 22, 2024 • 4:45 PM</Timeline.Timestamp>
+        </Timeline.Content>
+      </Timeline.Item>
+
+      <Timeline.Item icon={<Rocket />}>
+        <Timeline.Content>
+          <Timeline.Title>Production Deployment</Timeline.Title>
+          <Timeline.Description>
+            Application successfully deployed to production environment.
+            Monitoring and performance metrics look good.
+          </Timeline.Description>
+          <Timeline.Timestamp>Jan 25, 2024 • 11:30 AM</Timeline.Timestamp>
+        </Timeline.Content>
+      </Timeline.Item>
+    </Timeline>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Timeline showcasing the Timestamp component with detailed time information for each milestone.',
+      },
+    },
+  },
+}
+
+export const ComposableWithHasMore: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Timeline hasMore>
+        <Timeline.Item icon={<CheckCircle />}>
+          <Timeline.Content>
+            <Timeline.Title>Account Created</Timeline.Title>
+            <Timeline.Description>
+              New user account successfully created and verified.
+            </Timeline.Description>
+            <Timeline.Timestamp>2 hours ago</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+
+        <Timeline.Item icon={<Database />}>
+          <Timeline.Content>
+            <Timeline.Title>Profile Setup</Timeline.Title>
+            <Timeline.Description>
+              User completed profile information and preferences.
+            </Timeline.Description>
+            <Timeline.Timestamp>1 hour ago</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+
+        <Timeline.Item icon={<Clock />}>
+          <Timeline.Content>
+            <Timeline.Title>First Login</Timeline.Title>
+            <Timeline.Description>
+              User successfully logged in and started exploring the platform.
+            </Timeline.Description>
+            <Timeline.Timestamp>30 minutes ago</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+
+        <Timeline.Item icon={<Code />}>
+          <Timeline.Content>
+            <Timeline.Title>API Key Generated</Timeline.Title>
+            <Timeline.Description>
+              Development API key created for integration testing.
+            </Timeline.Description>
+            <Timeline.Timestamp>15 minutes ago</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+      </Timeline>
+
+      <div className="flex justify-center">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => alert('Loading more timeline items...')}
+        >
+          <ChevronDown className="mr-2 h-4 w-4" />
+          Load More
+        </Button>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Timeline with hasMore prop enabled, extending the line past the last item with a "Load More" button to indicate more content can be loaded.',
       },
     },
   },

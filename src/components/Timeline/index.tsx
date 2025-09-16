@@ -6,6 +6,7 @@ import React, {
   useState,
   isValidElement,
   cloneElement,
+  Children,
 } from 'react'
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
@@ -38,7 +39,19 @@ function TimelineItem({
   children,
   className,
   index = 0,
+  isLast = false,
 }: TimelineItemProps) {
+  // Pass isLast prop to TimelineContent children
+  const enhancedChildren = Children.map(children, (child) => {
+    if (isValidElement(child) && child.type === TimelineContent) {
+      return cloneElement(child, {
+        ...child.props,
+        isLast,
+      })
+    }
+    return child
+  })
+
   return (
     <div
       className={cn('relative flex items-start gap-4', className)}
@@ -55,7 +68,7 @@ function TimelineItem({
         </div>
       </div>
 
-      {children}
+      {enhancedChildren}
     </div>
   )
 }
@@ -71,9 +84,45 @@ function TimelineContent({
   className,
   isLast,
 }: TimelineContentProps) {
+  // Extract title and timestamp from children to create header layout
+  const childrenArray = Children.toArray(children)
+  let titleElement: React.ReactNode = null
+  let timestampElement: React.ReactNode = null
+  const otherChildren: React.ReactNode[] = []
+
+  childrenArray.forEach((child) => {
+    if (isValidElement(child)) {
+      if (child.type === TimelineTitle) {
+        titleElement = child
+      } else if (child.type === TimelineTimestamp) {
+        timestampElement = child
+      } else {
+        otherChildren.push(child)
+      }
+    } else {
+      otherChildren.push(child)
+    }
+  })
+
   return (
-    <div className={cn('min-w-0 flex-1', !isLast && 'pb-6', className)}>
-      {children}
+    <div
+      className={cn('min-w-0 flex-1', !isLast && 'pb-6', className)}
+      data-testid={isLast ? 'timeline-content-last' : 'timeline-content'}
+    >
+      {/* Header with title and timestamp */}
+      {(titleElement || timestampElement) && (
+        <div className="mb-1 flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">{titleElement}</div>
+          {timestampElement && (
+            <div className="flex-shrink-0">{timestampElement}</div>
+          )}
+        </div>
+      )}
+
+      {/* Other content (description, etc.) */}
+      {otherChildren.length > 0 && (
+        <div className="space-y-1">{otherChildren}</div>
+      )}
     </div>
   )
 }
@@ -125,7 +174,7 @@ function TimelineTimestamp({ children, className }: TimelineTimestampProps) {
     <Text
       variant="xs"
       muted
-      className={cn(TIMELINE_STYLES.transition, 'text-right', className)}
+      className={cn(TIMELINE_STYLES.transition, className)}
     >
       {children}
     </Text>
@@ -140,6 +189,7 @@ function TimelineSeparator({ className }: TimelineSeparatorProps) {
   return (
     <div
       className={cn('bg-border-neutral-softest mx-6 h-px w-full', className)}
+      data-testid="timeline-separator"
     />
   )
 }
@@ -147,10 +197,15 @@ function TimelineSeparator({ className }: TimelineSeparatorProps) {
 export interface TimelineRootProps {
   children: ReactNode
   className?: string
+  hasMore?: boolean
 }
 
-function TimelineRoot({ children, className }: TimelineRootProps) {
-  const childrenArray = React.Children.toArray(children)
+function TimelineRoot({
+  children,
+  className,
+  hasMore = false,
+}: TimelineRootProps) {
+  const childrenArray = Children.toArray(children)
   const itemCount = childrenArray.length
   const timelineRef = useRef<HTMLDivElement>(null)
   const [lineHeight, setLineHeight] = useState<number | null>(null)
@@ -177,12 +232,15 @@ function TimelineRoot({ children, className }: TimelineRootProps) {
         // Calculate distance from center of first icon to center of last icon
         const firstIconCenter = 24 // 1.5rem (top-6) + 0.75rem (half of 3rem icon height)
         const lastItemTop = lastItem.offsetTop
-        const calculatedHeight = lastItemTop + 24 - firstIconCenter // 24px = center of last icon
+        const baseHeight = lastItemTop + 24 - firstIconCenter // 24px = center of last icon
+
+        // If hasMore is true, extend the line by an additional 2rem (32px) past the last icon
+        const calculatedHeight = hasMore ? baseHeight + 32 : baseHeight
 
         setLineHeight(calculatedHeight)
       }
     }
-  }, [itemCount, children])
+  }, [itemCount, children, hasMore])
 
   return (
     <div className={cn('relative', className)}>
@@ -192,7 +250,11 @@ function TimelineRoot({ children, className }: TimelineRootProps) {
             <div
               className={cn(TIMELINE_STYLES.line, 'absolute top-6 left-6 w-px')}
               style={{
-                height: lineHeight ? `${lineHeight}px` : `calc(100% - 4.5rem)`,
+                height: lineHeight
+                  ? `${lineHeight}px`
+                  : hasMore
+                    ? `calc(100% - 2.5rem)`
+                    : `calc(100% - 4.5rem)`,
               }}
             />
           )}
