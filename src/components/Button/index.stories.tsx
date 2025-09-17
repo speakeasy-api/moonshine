@@ -385,6 +385,12 @@ export const WithStates: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2">
+        <Button variant="brand">Normal</Button>
+        <Button variant="brand" disabled>
+          Disabled
+        </Button>
+      </div>
+      <div className="flex gap-2">
         <Button variant="primary">Normal</Button>
         <Button variant="primary" disabled>
           Disabled
