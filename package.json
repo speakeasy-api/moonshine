@@ -30,7 +30,8 @@
     "src/global.css",
     "src/base.css",
     "src/utilities.css",
-    "types"
+    "types",
+    "README.md"
   ],
   "scripts": {
     "clean": "rimraf dist",
