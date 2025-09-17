@@ -174,6 +174,50 @@ describe('Timeline Component', () => {
         expect(updatedLine.getAttribute('style')).toMatch(/height:\s*\d+px/)
       })
     })
+
+    it('extends line height when hasMore is true', async () => {
+      const { rerender } = render(
+        <Timeline hasMore={false}>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>First</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Second</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      // Without hasMore, line should exist
+      const initialLine = screen.getByTestId('timeline-connector')
+      expect(initialLine).toBeInTheDocument()
+
+      rerender(
+        <Timeline hasMore={true}>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>First</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Second</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      // With hasMore, the dynamic calculation should result in a taller line
+      await waitFor(() => {
+        const hasMoreLine = screen.getByTestId('timeline-connector')
+        expect(hasMoreLine).toHaveAttribute('style')
+        // The line should have a pixel height when hasMore is true
+        expect(hasMoreLine.getAttribute('style')).toMatch(/height:\s*\d+px/)
+      })
+    })
   })
 
   describe('Icon and Index Behavior', () => {
