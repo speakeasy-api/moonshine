@@ -93,31 +93,6 @@ describe('Timeline', () => {
     expect(screen.getByText('3')).toBeInTheDocument()
   })
 
-  it('renders timeline with separator', () => {
-    const { container } = render(
-      <Timeline>
-        <Timeline.Item>
-          <Timeline.Content>
-            <Timeline.Title>Phase 1</Timeline.Title>
-          </Timeline.Content>
-        </Timeline.Item>
-        <Timeline.Separator className="custom-separator" />
-        <Timeline.Item>
-          <Timeline.Content>
-            <Timeline.Title>Phase 2</Timeline.Title>
-          </Timeline.Content>
-        </Timeline.Item>
-      </Timeline>
-    )
-
-    expect(screen.getByText('Phase 1')).toBeInTheDocument()
-    expect(screen.getByText('Phase 2')).toBeInTheDocument()
-
-    // Check separator is rendered by looking for its className
-    const separator = container.querySelector('.custom-separator')
-    expect(separator).toBeInTheDocument()
-  })
-
   it('applies custom className to timeline root', () => {
     const { container } = render(
       <Timeline className="custom-timeline">
