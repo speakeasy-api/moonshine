@@ -101,7 +101,7 @@ describe('Timeline Component', () => {
 
   describe('Timeline Line and Layout Behavior', () => {
     it('does not render connecting line for single item', () => {
-      const { container } = render(
+      render(
         <Timeline>
           <Timeline.Item>
             <Timeline.Content>
@@ -111,12 +111,11 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      const line = container.querySelector('[class*="absolute"][class*="w-px"]')
-      expect(line).not.toBeInTheDocument()
+      expect(screen.queryByTestId('timeline-connector')).not.toBeInTheDocument()
     })
 
     it('renders connecting line for multiple items', () => {
-      const { container } = render(
+      render(
         <Timeline>
           <Timeline.Item>
             <Timeline.Content>
@@ -131,12 +130,11 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      const line = container.querySelector('[class*="absolute"][class*="w-px"]')
-      expect(line).toBeInTheDocument()
+      expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
     })
 
     it('applies correct line height calculation for hasMore prop', async () => {
-      const { container, rerender } = render(
+      const { rerender } = render(
         <Timeline hasMore={false}>
           <Timeline.Item>
             <Timeline.Content>
@@ -151,8 +149,9 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      const line = container.querySelector('[class*="absolute"][class*="w-px"]')
-      expect(line).toHaveStyle({ height: 'calc(100% - 4.5rem)' })
+      expect(screen.getByTestId('timeline-connector')).toHaveStyle({
+        height: 'calc(100% - 4.5rem)',
+      })
 
       rerender(
         <Timeline hasMore={true}>
@@ -170,12 +169,9 @@ describe('Timeline Component', () => {
       )
 
       await waitFor(() => {
-        const updatedLine = container.querySelector(
-          '[class*="absolute"][class*="w-px"]'
-        )
-        // The dynamic calculation should result in a pixel value, not the fallback calc
+        const updatedLine = screen.getByTestId('timeline-connector')
         expect(updatedLine).toHaveAttribute('style')
-        expect(updatedLine?.getAttribute('style')).toMatch(/height:\s*\d+px/)
+        expect(updatedLine.getAttribute('style')).toMatch(/height:\s*\d+px/)
       })
     })
   })
@@ -242,34 +238,6 @@ describe('Timeline Component', () => {
     })
   })
 
-  describe('Timeline Separator Integration', () => {
-    it('renders separators as non-timeline items', () => {
-      const { container } = render(
-        <Timeline>
-          <Timeline.Item>
-            <Timeline.Content>
-              <Timeline.Title>Before Separator</Timeline.Title>
-            </Timeline.Content>
-          </Timeline.Item>
-          <Timeline.Separator />
-          <Timeline.Item>
-            <Timeline.Content>
-              <Timeline.Title>After Separator</Timeline.Title>
-            </Timeline.Content>
-          </Timeline.Item>
-        </Timeline>
-      )
-
-      const separator = screen.getByTestId('timeline-separator')
-      expect(separator).toBeInTheDocument()
-      expect(separator).toHaveClass('h-px', 'w-full')
-
-      // Should still have connecting line for timeline items
-      const line = container.querySelector('[class*="absolute"][class*="w-px"]')
-      expect(line).toBeInTheDocument()
-    })
-  })
-
   describe('Content Spacing and Layout', () => {
     it('correctly identifies last timeline content item', () => {
       render(
@@ -307,7 +275,7 @@ describe('Timeline Component', () => {
 
   describe('Dynamic Line Height Calculation', () => {
     it('updates line height when content changes', async () => {
-      const { container, rerender } = render(
+      const { rerender } = render(
         <Timeline>
           <Timeline.Item>
             <Timeline.Content>
@@ -322,10 +290,7 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      const initialLine = container.querySelector(
-        '[class*="absolute"][class*="w-px"]'
-      )
-      expect(initialLine).toBeInTheDocument()
+      expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
 
       // Rerender with more content
       rerender(
@@ -353,17 +318,37 @@ describe('Timeline Component', () => {
 
       // Line should still be present and potentially have different height
       await waitFor(() => {
-        const updatedLine = container.querySelector(
-          '[class*="absolute"][class*="w-px"]'
-        )
-        expect(updatedLine).toBeInTheDocument()
+        expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
       })
     })
   })
 
   describe('Accessibility and Data Attributes', () => {
+    it('applies semantic list markup (ol/li) to container and items', () => {
+      render(
+        <Timeline>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Item One</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Item Two</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      // List container should be an ordered list (implicit role)
+      expect(screen.getByRole('list')).toBeInTheDocument()
+
+      // List items should be li elements (implicit role=listitem)
+      expect(screen.getAllByRole('listitem').length).toBe(2)
+    })
+
     it('applies data-timeline-item attribute for layout calculations', () => {
-      const { container } = render(
+      render(
         <Timeline>
           <Timeline.Item>
             <Timeline.Content>
@@ -373,7 +358,7 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      const timelineItem = container.querySelector('[data-timeline-item]')
+      const timelineItem = screen.getByRole('listitem')
       expect(timelineItem).toBeInTheDocument()
       expect(timelineItem).toHaveClass(
         'relative',
@@ -383,12 +368,12 @@ describe('Timeline Component', () => {
       )
     })
 
-    it('maintains proper semantic structure', () => {
-      render(
+    it('maintains proper semantic structure with configurable heading levels', () => {
+      const { rerender } = render(
         <Timeline>
           <Timeline.Item>
             <Timeline.Content>
-              <Timeline.Title>Semantic Test</Timeline.Title>
+              <Timeline.Title as="h2">Semantic Test</Timeline.Title>
               <Timeline.Description>Description content</Timeline.Description>
               <Timeline.Timestamp>Time info</Timeline.Timestamp>
             </Timeline.Content>
@@ -396,9 +381,25 @@ describe('Timeline Component', () => {
         </Timeline>
       )
 
-      // Title should be rendered as h3
-      const title = screen.getByRole('heading', { level: 3 })
-      expect(title).toHaveTextContent('Semantic Test')
+      // Title should be rendered as h2 when specified
+      const h2Title = screen.getByRole('heading', { level: 2 })
+      expect(h2Title).toHaveTextContent('Semantic Test')
+
+      // Test default behavior (div, no heading role)
+      rerender(
+        <Timeline>
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Default Test</Timeline.Title>
+              <Timeline.Description>Description content</Timeline.Description>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      // Should not have heading role when using default (div)
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+      expect(screen.getByText('Default Test')).toBeInTheDocument()
     })
   })
 })

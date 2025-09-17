@@ -11,7 +11,6 @@ import {
   GitBranch,
   Database,
   CheckCircle,
-  AlertCircle,
   Clock,
   ChevronDown,
 } from 'lucide-react'
@@ -184,48 +183,6 @@ export const ComposableMinimal: Story = {
   },
 }
 
-export const ComposableWithSeparator: Story = {
-  render: () => (
-    <Timeline>
-      <Timeline.Item icon={<CheckCircle />}>
-        <Timeline.Content>
-          <Timeline.Title>Phase 1 Complete</Timeline.Title>
-          <Timeline.Description>
-            All initial requirements met.
-          </Timeline.Description>
-        </Timeline.Content>
-      </Timeline.Item>
-
-      <Timeline.Separator />
-
-      <Timeline.Item icon={<Clock />}>
-        <Timeline.Content>
-          <Timeline.Title>Phase 2 Active</Timeline.Title>
-          <Timeline.Description>
-            Currently in development phase.
-          </Timeline.Description>
-        </Timeline.Content>
-      </Timeline.Item>
-
-      <Timeline.Item icon={<AlertCircle />}>
-        <Timeline.Content>
-          <Timeline.Title>Phase 3 Pending</Timeline.Title>
-          <Timeline.Description>
-            Waiting for Phase 2 completion.
-          </Timeline.Description>
-        </Timeline.Content>
-      </Timeline.Item>
-    </Timeline>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Timeline with custom separators to divide phases or sections.',
-      },
-    },
-  },
-}
-
 export const ComposableWithTimestamps: Story = {
   render: () => (
     <Timeline>
@@ -290,6 +247,56 @@ export const ComposableWithTimestamps: Story = {
       description: {
         story:
           'Timeline showcasing the Timestamp component with detailed time information for each milestone.',
+      },
+    },
+  },
+}
+
+export const ComposableWithSemanticHeadings: Story = {
+  render: () => (
+    <div>
+      <div className="mb-4">
+        <h1>Project Timeline</h1>
+      </div>
+
+      <Timeline>
+        <Timeline.Item icon={<Code />}>
+          <Timeline.Content>
+            <Timeline.Title as="h2">Phase 1: Planning</Timeline.Title>
+            <Timeline.Description>
+              Initial project setup and requirements gathering.
+            </Timeline.Description>
+            <Timeline.Timestamp>Week 1</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+
+        <Timeline.Item icon={<Palette />}>
+          <Timeline.Content>
+            <Timeline.Title as="h2">Phase 2: Design</Timeline.Title>
+            <Timeline.Description>
+              UI/UX design and system architecture planning.
+            </Timeline.Description>
+            <Timeline.Timestamp>Week 2</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+
+        <Timeline.Item icon={<Hammer />}>
+          <Timeline.Content>
+            <Timeline.Title as="h2">Phase 3: Development</Timeline.Title>
+            <Timeline.Description>
+              Core feature implementation and testing.
+            </Timeline.Description>
+            <Timeline.Timestamp>Week 3-4</Timeline.Timestamp>
+          </Timeline.Content>
+        </Timeline.Item>
+      </Timeline>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Timeline with proper semantic heading structure using the `as` prop for accessibility.',
       },
     },
   },

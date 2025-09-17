@@ -32,6 +32,7 @@ export interface TimelineItemProps {
   className?: string
   index?: number
   isLast?: boolean
+  setsize?: number
 }
 
 function TimelineItem({
@@ -40,8 +41,8 @@ function TimelineItem({
   className,
   index = 0,
   isLast = false,
+  setsize,
 }: TimelineItemProps) {
-  // Pass isLast prop to TimelineContent children
   const enhancedChildren = Children.map(children, (child) => {
     if (isValidElement(child) && child.type === TimelineContent) {
       return cloneElement(child, {
@@ -53,9 +54,11 @@ function TimelineItem({
   })
 
   return (
-    <div
+    <li
       className={cn('relative flex items-start gap-4', className)}
       data-timeline-item
+      aria-posinset={index + 1}
+      aria-setsize={setsize}
     >
       <div className={TIMELINE_STYLES.iconContainer}>
         <div className={TIMELINE_STYLES.iconBackground} />
@@ -69,7 +72,7 @@ function TimelineItem({
       </div>
 
       {enhancedChildren}
-    </div>
+    </li>
   )
 }
 
@@ -84,7 +87,6 @@ function TimelineContent({
   className,
   isLast,
 }: TimelineContentProps) {
-  // Extract title and timestamp from children to create header layout
   const childrenArray = Children.toArray(children)
   let titleElement: React.ReactNode = null
   let timestampElement: React.ReactNode = null
@@ -109,7 +111,6 @@ function TimelineContent({
       className={cn('min-w-0 flex-1', !isLast && 'pb-6', className)}
       data-testid={isLast ? 'timeline-content-last' : 'timeline-content'}
     >
-      {/* Header with title and timestamp */}
       {(titleElement || timestampElement) && (
         <div className="mb-1 flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">{titleElement}</div>
@@ -118,8 +119,6 @@ function TimelineContent({
           )}
         </div>
       )}
-
-      {/* Other content (description, etc.) */}
       {otherChildren.length > 0 && (
         <div className="space-y-1">{otherChildren}</div>
       )}
@@ -130,13 +129,28 @@ function TimelineContent({
 export interface TimelineTitleProps {
   children: ReactNode
   className?: string
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div'
 }
 
-function TimelineTitle({ children, className }: TimelineTitleProps) {
+function TimelineTitle({
+  children,
+  className,
+  as = 'div',
+}: TimelineTitleProps) {
+  if (as === 'div') {
+    return (
+      <div
+        className={cn('text-heading-xs', TIMELINE_STYLES.transition, className)}
+      >
+        {children}
+      </div>
+    )
+  }
+
   return (
     <Heading
       variant="xs"
-      as="h3"
+      as={as}
       className={cn(TIMELINE_STYLES.transition, className)}
     >
       {children}
@@ -185,15 +199,6 @@ export interface TimelineSeparatorProps {
   className?: string
 }
 
-function TimelineSeparator({ className }: TimelineSeparatorProps) {
-  return (
-    <div
-      className={cn('bg-border-neutral-softest mx-6 h-px w-full', className)}
-      data-testid="timeline-separator"
-    />
-  )
-}
-
 export interface TimelineRootProps {
   children: ReactNode
   className?: string
@@ -206,17 +211,24 @@ function TimelineRoot({
   hasMore = false,
 }: TimelineRootProps) {
   const childrenArray = Children.toArray(children)
-  const itemCount = childrenArray.length
+  const itemsOnly = childrenArray.filter(
+    (child) => isValidElement(child) && child.type === TimelineItem
+  )
+  const itemCount = itemsOnly.length
   const timelineRef = useRef<HTMLDivElement>(null)
   const [lineHeight, setLineHeight] = useState<number | null>(null)
 
-  const enhancedChildren = childrenArray.map((child, index) => {
+  let itemIndex = 0
+  const enhancedChildren = childrenArray.map((child) => {
     if (isValidElement(child) && child.type === TimelineItem) {
-      return cloneElement(child, {
+      const cloned = cloneElement(child, {
         ...child.props,
-        index,
-        isLast: index === itemCount - 1,
+        index: itemIndex,
+        isLast: itemIndex === itemCount - 1,
+        setsize: itemCount,
       })
+      itemIndex += 1
+      return cloned
     }
     return child
   })
@@ -256,9 +268,11 @@ function TimelineRoot({
                     ? `calc(100% - 2.5rem)`
                     : `calc(100% - 4.5rem)`,
               }}
+              aria-hidden="true"
+              data-testid="timeline-connector"
             />
           )}
-          <div className="space-y-6">{enhancedChildren}</div>
+          <ol className="space-y-6">{enhancedChildren}</ol>
         </div>
       )}
     </div>
@@ -271,7 +285,6 @@ const Timeline = Object.assign(TimelineRoot, {
   Title: TimelineTitle,
   Description: TimelineDescription,
   Timestamp: TimelineTimestamp,
-  Separator: TimelineSeparator,
 })
 
 export { Timeline }
