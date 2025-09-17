@@ -107,17 +107,17 @@ const buttonVariants = cva(
       },
       variant: {
         brand:
-          'relative bg-btn-brand hover:bg-btn-brand-hover text-btn-brand hover:text-btn-brand-hover disabled:bg-btn-brand-disabled disabled:text-btn-brand-disabled disabled:opacity-100 before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-[2px] focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
+          'relative bg-btn-brand hover:bg-btn-brand-hover text-btn-brand hover:text-btn-brand-hover disabled:bg-btn-brand-disabled disabled:text-btn-brand-disabled before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-[2px] focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
         primary:
-          'bg-btn-primary text-btn-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-primary-hover hover:text-btn-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-primary-active active:text-btn-primary-active active:shadow-none disabled:bg-btn-primary-disabled disabled:text-btn-primary-disabled disabled:opacity-100',
+          'bg-btn-primary text-btn-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-primary-hover hover:text-btn-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-primary-active active:text-btn-primary-active active:shadow-none disabled:bg-btn-primary-disabled disabled:text-btn-primary-disabled',
         secondary:
-          'bg-btn-secondary text-btn-secondary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.25)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.1)_inset] hover:bg-btn-secondary-hover hover:text-btn-secondary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.2)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.15)_inset] active:bg-btn-secondary-active active:text-btn-secondary-active active:shadow-none disabled:bg-btn-secondary-disabled disabled:text-btn-secondary-disabled disabled:opacity-100',
+          'bg-btn-secondary text-btn-secondary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.25)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.1)_inset] hover:bg-btn-secondary-hover hover:text-btn-secondary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.2)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.15)_inset] active:bg-btn-secondary-active active:text-btn-secondary-active active:shadow-none disabled:bg-btn-secondary-disabled disabled:text-btn-secondary-disabled',
         tertiary:
-          'bg-transparent text-btn-tertiary hover:bg-btn-secondary-hover hover:text-btn-tertiary-hover active:bg-btn-secondary-active active:text-btn-tertiary-active disabled:text-btn-tertiary-disabled disabled:opacity-100',
+          'bg-transparent text-btn-tertiary hover:bg-btn-secondary-hover hover:text-btn-tertiary-hover active:bg-btn-secondary-active active:text-btn-tertiary-active disabled:text-btn-tertiary-disabled',
         'destructive-primary':
-          'bg-btn-destructive text-btn-destructive-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-destructive-hover hover:text-btn-destructive-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-destructive-active active:text-btn-destructive-primary-active active:shadow-none disabled:bg-btn-destructive-disabled disabled:text-btn-destructive-primary-disabled disabled:opacity-100',
+          'bg-btn-destructive text-btn-destructive-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-destructive-hover hover:text-btn-destructive-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-destructive-active active:text-btn-destructive-primary-active active:shadow-none disabled:bg-btn-destructive-disabled disabled:text-btn-destructive-primary-disabled',
         'destructive-secondary':
-          'bg-transparent text-btn-destructive-secondary hover:text-btn-destructive-secondary-hover active:text-btn-destructive-secondary-active disabled:text-btn-destructive-secondary-disabled disabled:opacity-100',
+          'bg-transparent text-btn-destructive-secondary hover:text-btn-destructive-secondary-hover active:text-btn-destructive-secondary-active disabled:text-btn-destructive-secondary-disabled',
       },
       size: {
         xs: 'h-7 px-2 py-1 text-xs gap-1 [&_svg]:size-3',
@@ -152,19 +152,7 @@ const buttonVariants = cva(
   }
 )
 
-type Attributes = Pick<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  | 'disabled'
-  | 'onClick'
-  | 'type'
-  | 'children'
-  | 'role'
-  | 'onMouseEnter'
-  | 'onMouseLeave'
-  | 'onMouseDown'
-  | 'onMouseUp'
-  | 'onMouseMove'
->
+type Attributes = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'style'>
 
 export interface ButtonProps extends Attributes {
   asChild?: boolean
@@ -192,7 +180,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const [isPressed, setIsPressed] = React.useState(false)
     const [cursorPosition, setCursorPosition] = React.useState<{
       x: number
       y: number
@@ -376,7 +363,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonDimensionsRef.current = null
           // Explicitly set target to ensure reset
           gradientRefs.current.target = 220
-          setIsPressed(false)
         }
         onMouseLeave?.(e)
       },
@@ -385,7 +371,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleMouseDown = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        setIsPressed(true)
         onMouseDown?.(e)
       },
       [onMouseDown]
@@ -393,7 +378,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleMouseUp = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        setIsPressed(false)
         onMouseUp?.(e)
       },
       [onMouseUp]
@@ -437,11 +421,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant, size, context }),
-          isPressed && 'active:scale-[0.98] active:duration-75',
-          className
-        )}
+        className={cn(buttonVariants({ variant, size, context }), className)}
         ref={combinedRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
