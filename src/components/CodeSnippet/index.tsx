@@ -48,9 +48,14 @@ export interface CodeSnippetProps {
    */
   shimmer?: boolean
   /**
-   * Additional CSS classes to apply to the code snippet.
+   * Additional CSS classes to apply to the code snippet container
    */
   className?: string
+
+  /**
+   * Additional CSS classes to apply to the code snippet inner container (e.g the Codehike Pre component).
+   */
+  snippetClassName?: string
   /**
    * Custom annotation handlers to be added to the default handlers.
    */
@@ -80,6 +85,7 @@ export function CodeSnippet({
   onSelectOrCopy,
   shimmer = false,
   className,
+  snippetClassName,
   showLineNumbers = false,
   customHandlers = [],
 }: CodeSnippetProps) {
@@ -169,7 +175,8 @@ export function CodeSnippet({
             className={cn(
               'highlighted-code inline-flex w-fit self-center font-mono outline-none',
               fontSizeMap[fontSize],
-              isMultiline && 'min-w-32'
+              isMultiline && 'min-w-32',
+              snippetClassName
             )}
             onBeforeInput={handleBeforeInput}
             handlers={preHandlers}
