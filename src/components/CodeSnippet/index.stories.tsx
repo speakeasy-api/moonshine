@@ -278,3 +278,13 @@ export const WithAnnotations: Story = {
     showLineNumbers: true,
   },
 }
+
+export const WithSnippetClassName: Story = {
+  args: {
+    code: `const reallyLongLine = 'this is a really long line of code that will overflow the container'`,
+    language: 'javascript',
+    copyable: true,
+    showLineNumbers: true,
+    snippetClassName: 'whitespace-pre-line max-w-lg',
+  },
+}
