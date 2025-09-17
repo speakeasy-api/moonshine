@@ -446,4 +446,61 @@ describe('Timeline Component', () => {
       expect(screen.getByText('Default Test')).toBeInTheDocument()
     })
   })
+
+  describe('Custom Styling and Props', () => {
+    it('applies custom className to timeline root', () => {
+      render(
+        <Timeline className="custom-timeline">
+          <Timeline.Item>
+            <Timeline.Content>
+              <Timeline.Title>Test</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      expect(
+        screen.getByRole('list').closest('.custom-timeline')
+      ).toBeInTheDocument()
+    })
+
+    it('applies custom className to timeline items', () => {
+      render(
+        <Timeline>
+          <Timeline.Item className="custom-item">
+            <Timeline.Content>
+              <Timeline.Title>Test Item</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      expect(screen.getByRole('listitem')).toHaveClass('custom-item')
+    })
+
+    it('applies custom className to timeline content', () => {
+      render(
+        <Timeline>
+          <Timeline.Item>
+            <Timeline.Content className="custom-content">
+              <Timeline.Title>Test Content</Timeline.Title>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline>
+      )
+
+      expect(screen.getByTestId('timeline-content-last')).toHaveClass(
+        'custom-content'
+      )
+    })
+  })
+
+  describe('Edge Cases', () => {
+    it('handles empty timeline gracefully', () => {
+      render(<Timeline>{[]}</Timeline>)
+
+      // Should render without crashing, but no list since no items
+      expect(screen.queryByRole('list')).not.toBeInTheDocument()
+    })
+  })
 })
