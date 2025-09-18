@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-08-25T18:18:23.510Z
+This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:27:34.139Z
 
 ### Typography Utilities
 
@@ -722,6 +722,269 @@ This section is auto-generated from the CSS files. Last updated: 2025-08-25T18:1
 }
 ```
 
+#### `text-btn-brand`
+
+```css
+.text-btn-brand {
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+}
+```
+
+#### `text-btn-brand-hover`
+
+```css
+.text-btn-brand-hover {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-brand-active`
+
+```css
+.text-btn-brand-active {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-brand-disabled`
+
+```css
+.text-btn-brand-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+}
+```
+
+#### `text-btn-primary`
+
+```css
+.text-btn-primary {
+  color: var(--color-neutral-100);
+
+  /* dark variant */
+    color: var(--color-neutral-900);
+}
+```
+
+#### `text-btn-primary-hover`
+
+```css
+.text-btn-primary-hover {
+  color: var(--color-base-white);
+
+  /* dark variant */
+    color: var(--color-base-black);
+}
+```
+
+#### `text-btn-primary-active`
+
+```css
+.text-btn-primary-active {
+  color: var(--color-base-white);
+
+  /* dark variant */
+    color: var(--color-base-black);
+}
+```
+
+#### `text-btn-primary-disabled`
+
+```css
+.text-btn-primary-disabled {
+  color: var(--color-neutral-100);
+  opacity: 0.4;
+
+  /* dark variant */
+    color: var(--color-neutral-900);
+    opacity: 0.4;
+}
+```
+
+#### `text-btn-secondary`
+
+```css
+.text-btn-secondary {
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+}
+```
+
+#### `text-btn-secondary-hover`
+
+```css
+.text-btn-secondary-hover {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-secondary-active`
+
+```css
+.text-btn-secondary-active {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-secondary-disabled`
+
+```css
+.text-btn-secondary-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+}
+```
+
+#### `text-btn-tertiary`
+
+```css
+.text-btn-tertiary {
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+}
+```
+
+#### `text-btn-tertiary-hover`
+
+```css
+.text-btn-tertiary-hover {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-tertiary-active`
+
+```css
+.text-btn-tertiary-active {
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
+}
+```
+
+#### `text-btn-tertiary-disabled`
+
+```css
+.text-btn-tertiary-disabled {
+  color: var(--color-neutral-900);
+  opacity: 0.4;
+
+  /* dark variant */
+    color: var(--color-neutral-100);
+    opacity: 0.4;
+}
+```
+
+#### `text-btn-destructive-primary`
+
+```css
+.text-btn-destructive-primary {
+  color: var(--color-base-white);
+}
+```
+
+#### `text-btn-destructive-primary-hover`
+
+```css
+.text-btn-destructive-primary-hover {
+  color: var(--color-base-white);
+}
+```
+
+#### `text-btn-destructive-primary-active`
+
+```css
+.text-btn-destructive-primary-active {
+  color: var(--color-base-white);
+}
+```
+
+#### `text-btn-destructive-primary-disabled`
+
+```css
+.text-btn-destructive-primary-disabled {
+  color: var(--color-base-white);
+  opacity: 0.4;
+}
+```
+
+#### `text-btn-destructive-secondary`
+
+```css
+.text-btn-destructive-secondary {
+  color: var(--color-feedback-red-600);
+
+  /* dark variant */
+    color: var(--color-feedback-red-400);
+}
+```
+
+#### `text-btn-destructive-secondary-hover`
+
+```css
+.text-btn-destructive-secondary-hover {
+  color: var(--color-feedback-red-700);
+
+  /* dark variant */
+    color: var(--color-feedback-red-500);
+}
+```
+
+#### `text-btn-destructive-secondary-active`
+
+```css
+.text-btn-destructive-secondary-active {
+  color: var(--color-feedback-red-800);
+
+  /* dark variant */
+    color: var(--color-feedback-red-600);
+}
+```
+
+#### `text-btn-destructive-secondary-disabled`
+
+```css
+.text-btn-destructive-secondary-disabled {
+  color: var(--color-feedback-red-600);
+  opacity: 0.4;
+
+  /* dark variant */
+    color: var(--color-feedback-red-400);
+    opacity: 0.4;
+}
+```
+
 #### `text-warning`
 
 ```css
@@ -754,6 +1017,22 @@ This section is auto-generated from the CSS files. Last updated: 2025-08-25T18:1
 }
 ```
 
+#### `bg-gradient-green`
+
+```css
+.bg-gradient-green {
+  background: var(--gradient-brand-green);
+}
+```
+
+#### `bg-gradient-red`
+
+```css
+.bg-gradient-red {
+  background: var(--gradient-brand-red);
+}
+```
+
 #### `bg-surface-primary`
 
 ```css
@@ -781,6 +1060,188 @@ This section is auto-generated from the CSS files. Last updated: 2025-08-25T18:1
 ```css
 .bg-warning {
   background-color: var(--bg-warning);
+}
+```
+
+#### `bg-btn-brand`
+
+```css
+.bg-btn-brand {
+  background-color: var(--color-base-white);
+
+  /* dark variant */
+    background-color: var(--color-base-black);
+}
+```
+
+#### `bg-btn-brand-hover`
+
+```css
+.bg-btn-brand-hover {
+  background-color: var(--color-neutral-100);
+
+  /* dark variant */
+    background-color: var(--color-neutral-900);
+}
+```
+
+#### `bg-btn-brand-active`
+
+```css
+.bg-btn-brand-active {
+  background-color: var(--color-neutral-200);
+
+  /* dark variant */
+    background-color: var(--color-neutral-800);
+}
+```
+
+#### `bg-btn-brand-disabled`
+
+```css
+.bg-btn-brand-disabled {
+  background-color: var(--color-base-white);
+
+  /* dark variant */
+    background-color: var(--color-base-black);
+}
+```
+
+#### `bg-btn-primary`
+
+```css
+.bg-btn-primary {
+  background-color: var(--color-neutral-800);
+
+  /* dark variant */
+    background-color: var(--color-neutral-200);
+}
+```
+
+#### `bg-btn-primary-hover`
+
+```css
+.bg-btn-primary-hover {
+  background-color: var(--color-neutral-900);
+
+  /* dark variant */
+    background-color: var(--color-neutral-100);
+}
+```
+
+#### `bg-btn-primary-active`
+
+```css
+.bg-btn-primary-active {
+  background-color: var(--color-base-black);
+
+  /* dark variant */
+    background-color: var(--color-base-white);
+}
+```
+
+#### `bg-btn-primary-disabled`
+
+```css
+.bg-btn-primary-disabled {
+  background-color: var(--color-neutral-800);
+  opacity: 0.4;
+
+  /* dark variant */
+    background-color: var(--color-neutral-200);
+    opacity: 0.4;
+}
+```
+
+#### `bg-btn-secondary`
+
+```css
+.bg-btn-secondary {
+  background-color: var(--color-neutral-200);
+
+  /* dark variant */
+    background-color: var(--color-neutral-800);
+}
+```
+
+#### `bg-btn-secondary-hover`
+
+```css
+.bg-btn-secondary-hover {
+  background-color: var(--color-neutral-300);
+
+  /* dark variant */
+    background-color: var(--color-neutral-700);
+}
+```
+
+#### `bg-btn-secondary-active`
+
+```css
+.bg-btn-secondary-active {
+  background-color: var(--color-neutral-400);
+
+  /* dark variant */
+    background-color: var(--color-neutral-600);
+}
+```
+
+#### `bg-btn-secondary-disabled`
+
+```css
+.bg-btn-secondary-disabled {
+  background-color: var(--color-neutral-200);
+  opacity: 0.4;
+
+  /* dark variant */
+    background-color: var(--color-neutral-800);
+    opacity: 0.4;
+}
+```
+
+#### `bg-btn-destructive`
+
+```css
+.bg-btn-destructive {
+  background-color: var(--color-feedback-red-600);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-400);
+}
+```
+
+#### `bg-btn-destructive-hover`
+
+```css
+.bg-btn-destructive-hover {
+  background-color: var(--color-feedback-red-700);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-500);
+}
+```
+
+#### `bg-btn-destructive-active`
+
+```css
+.bg-btn-destructive-active {
+  background-color: var(--color-feedback-red-800);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-600);
+}
+```
+
+#### `bg-btn-destructive-disabled`
+
+```css
+.bg-btn-destructive-disabled {
+  background-color: var(--color-feedback-red-600);
+  opacity: 0.4;
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-400);
+    opacity: 0.4;
 }
 ```
 

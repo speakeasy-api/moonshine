@@ -199,6 +199,9 @@ export {
 
 export { cn } from '@/lib/utils'
 
+// Timeline
+export { Timeline } from '@/components/Timeline'
+
 /** START BETA COMPONENTS */
 import { CLIWizard } from '@/components/__beta__/CLIWizard'
 
