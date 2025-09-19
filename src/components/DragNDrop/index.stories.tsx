@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Draggable } from './Draggable'
 import { DragNDropArea } from './DragNDropArea'
 import { Droppable } from './Droppable'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { DragEndEvent } from '@dnd-kit/core'
 import { cn } from '@/lib/utils'
 

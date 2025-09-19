@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react/*'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { IconButton } from './'
 import {
   PlusIcon as LucidePlusIcon,
@@ -6,7 +6,7 @@ import {
   Settings,
   Search,
 } from 'lucide-react'
-import { fn as storybookActionFn } from '@storybook/test'
+import { fn as storybookActionFn } from 'storybook/test'
 
 const meta: Meta<typeof IconButton> = {
   component: IconButton,
@@ -279,11 +279,11 @@ export const Accessibility: Story = {
           {`// ❌ TypeScript error - missing aria-label
 <IconButton icon={<PlusIcon />} variant="primary" />
 
-// ✅ TypeScript happy - aria-label provided  
-<IconButton 
-  icon={<PlusIcon />} 
-  variant="primary" 
-  aria-label="Add item" 
+// ✅ TypeScript happy - aria-label provided
+<IconButton
+  icon={<PlusIcon />}
+  variant="primary"
+  aria-label="Add item"
 />`}
         </pre>
       </div>

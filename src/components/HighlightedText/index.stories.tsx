@@ -1,5 +1,5 @@
 import { Color, highlightBgMap, HighlightedText, mutedBgMap } from '.'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta: Meta<typeof HighlightedText> = {
   component: HighlightedText,

@@ -1,5 +1,5 @@
 import { PullRequestLink } from '.'
-import { StoryObj, Meta } from '@storybook/react/*'
+import { StoryObj, Meta } from '@storybook/react-vite'
 
 const meta: Meta<typeof PullRequestLink> = {
   component: PullRequestLink,

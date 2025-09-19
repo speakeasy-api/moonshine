@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { ResizablePanel } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 

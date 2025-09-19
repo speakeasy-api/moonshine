@@ -1,6 +1,6 @@
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { Tabs } from '.'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta: Meta<typeof Tabs> = {
   component: Tabs,

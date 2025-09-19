@@ -1,6 +1,6 @@
 import { supportedLanguages } from '@/types'
 import { LanguageIndicator } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 
 const meta: Meta<typeof LanguageIndicator> = {
   component: LanguageIndicator,

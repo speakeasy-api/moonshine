@@ -1,6 +1,6 @@
 import { Icon } from '@/components/Icon'
 import { CodePlayground, CodePlaygroundSnippets } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { useState } from 'react'
 
 const meta: Meta<typeof CodePlayground> = {

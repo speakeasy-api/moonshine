@@ -1,9 +1,9 @@
-import { DocsContainer } from '@storybook/blocks'
+import { DocsContainer } from '@storybook/addon-docs/blocks'
 import React, { useEffect, useState } from 'react'
-import { themes } from '@storybook/theming'
+import { themes } from 'storybook/theming'
 import { speakeasyTheme } from './manager'
 
-import { addons } from '@storybook/preview-api'
+import { addons } from 'storybook/preview-api'
 
 const DARK_MODE_EVENT_NAME = 'DARK_MODE'
 

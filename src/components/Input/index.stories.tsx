@@ -1,6 +1,6 @@
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { Input, InputProps } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',

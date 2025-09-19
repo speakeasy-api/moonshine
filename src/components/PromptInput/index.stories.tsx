@@ -1,6 +1,6 @@
 import { Attachment, PromptInput, Suggestion } from '@/components/PromptInput'
-import { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
+import { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 import { useState, useCallback, useRef } from 'react'
 
 const meta: Meta<typeof PromptInput> = {

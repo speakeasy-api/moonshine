@@ -1,5 +1,5 @@
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Button } from '../Button'
 
 const meta: Meta<typeof Tooltip> = {

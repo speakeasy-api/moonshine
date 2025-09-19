@@ -1,7 +1,7 @@
 import { DndContext } from '@dnd-kit/core'
 import { ActionBar } from '.'
-import { StoryObj, Meta } from '@storybook/react'
-import { fn } from '@storybook/test'
+import { StoryObj, Meta } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 
 const meta: Meta<typeof ActionBar> = {
   parameters: {

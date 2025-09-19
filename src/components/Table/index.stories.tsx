@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Column, Group, Table, TableProps } from '.'
 import { faker } from '@faker-js/faker'
 import { useState } from 'react'

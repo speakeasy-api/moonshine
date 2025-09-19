@@ -34,16 +34,21 @@ export type ResponsiveValue<T> = T | { [key in Breakpoint]?: T }
 export const directionOptions = ['row', 'column'] as const
 export type Direction = (typeof directionOptions)[number]
 
+export const tailwindScale = [
+  0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24,
+  28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
+] as const
+
 // Gap
-export const gapValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
+export const gapValues = tailwindScale
 export type Gap = (typeof gapValues)[number]
 
 // Grid Columns
-export const gridColumnValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+export const gridColumnValues = tailwindScale
 export type Columns = (typeof gridColumnValues)[number]
 
 // Padding
-export const paddingValues = [0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
+export const paddingValues = tailwindScale
 export type PaddingValue = (typeof paddingValues)[number]
 
 export type PaddingPerAxis = { x?: PaddingValue; y?: PaddingValue }

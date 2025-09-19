@@ -1,4 +1,4 @@
-import type { Preview, Decorator } from '@storybook/react'
+import type { Preview, Decorator } from '@storybook/react-vite'
 import '../src/global.css'
 import './fonts.css'
 import React from 'react'

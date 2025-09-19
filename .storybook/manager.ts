@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming'
+import { create } from 'storybook/theming'
 
 // Define the colors and styles for the theme
 export const speakeasyTheme = create({

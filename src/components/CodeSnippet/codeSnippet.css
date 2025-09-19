@@ -74,7 +74,7 @@
   background: conic-gradient(
       from calc(var(--rotation) - 80deg) at var(--x) 30px,
       transparent 0,
-      var(--border-neutral-hover) 20%,
+      var(--border-neutral-softest) 20%,
       transparent 25%
     ),
     transparent;

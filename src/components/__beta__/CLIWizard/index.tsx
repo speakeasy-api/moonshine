@@ -8,7 +8,6 @@ import { Text } from '../../Text'
 import { Heading } from '../../Heading'
 import { TerminalCommand } from './terminal-command'
 import { Terminal } from './terminal'
-import { Stack } from '../../Stack'
 import { WizardStep } from '@/components/Wizard/types'
 
 /**
@@ -23,8 +22,6 @@ export interface CLIWizardProps {
   steps: WizardStep[]
   currentStep: number
   completedSteps: number[]
-  initiallyCollapsed?: boolean
-  hideStepCount?: boolean
   onStepComplete?: (stepIndex: number) => void
 }
 
@@ -64,8 +61,6 @@ export function CLIWizard({
   steps,
   currentStep,
   completedSteps,
-  initiallyCollapsed = false,
-  hideStepCount = false,
   onStepComplete,
 }: CLIWizardProps) {
   const [activeStep, setActiveStep] = React.useState(
@@ -75,7 +70,6 @@ export function CLIWizard({
     setActiveStep(Math.min(currentStep - 1, steps.length - 1))
   }, [currentStep, steps.length])
 
-  const [isCollapsed, setIsCollapsed] = React.useState(initiallyCollapsed)
   const [copiedCommands, setCopiedCommands] = React.useState<Set<string>>(
     new Set()
   )
@@ -91,117 +85,99 @@ export function CLIWizard({
   return (
     <motion.div
       layout
-      className="border-neutral-softest relative overflow-hidden border-b select-none"
+      className="relative overflow-hidden select-none"
       transition={{
         duration: 0.3,
         ease: [0.645, 0.045, 0.355, 1],
       }}
     >
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="w-full py-6"
-        aria-label={
-          isCollapsed
-            ? 'Expand getting started guide'
-            : 'Collapse getting started guide'
-        }
-      >
-        <div className="flex items-center justify-between">
-          <Heading variant="md" as="h2">
+      <div className="w-full py-6">
+        <div className="flex items-center">
+          <Heading variant="lg" as="h2">
             Getting Started
           </Heading>
-          <Stack direction="horizontal" align="center" gap={3}>
-            {!hideStepCount && (
-              <Text muted variant="xs">
-                {completedSteps.length} / {steps.length} steps completed
-              </Text>
-            )}
-            <ExpandChevron isCollapsed={isCollapsed} />
-          </Stack>
         </div>
-      </button>
+      </div>
 
       <AnimatePresence initial={false}>
-        {!isCollapsed && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{
-              duration: 0.3,
-              ease: [0.645, 0.045, 0.355, 1],
-            }}
-            className="overflow-hidden"
-          >
-            <div className="mt-4 grid grid-cols-1 gap-8 pb-6 md:grid-cols-12">
-              <SidebarSteps
-                steps={steps}
-                activeStep={activeStep}
-                isStepComplete={isStepComplete}
-                onSelectStep={setActiveStep}
-              />
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{
+            duration: 0.3,
+            ease: [0.645, 0.045, 0.355, 1],
+          }}
+          className="overflow-hidden"
+        >
+          <div className="mt-4 grid grid-cols-1 gap-8 pb-6 md:grid-cols-12">
+            <SidebarSteps
+              steps={steps}
+              activeStep={activeStep}
+              isStepComplete={isStepComplete}
+              onSelectStep={setActiveStep}
+            />
 
-              <div className="md:col-span-6 md:col-start-7">
-                <Terminal
-                  path={
-                    currentStepCommands[activeCommandIndex]?.path ??
-                    '~/sdk-project'
-                  }
+            <div className="md:col-span-7">
+              <Terminal
+                path={
+                  currentStepCommands[activeCommandIndex]?.path ??
+                  '~/sdk-project'
+                }
+              >
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.645, 0.045, 0.355, 1],
+                  }}
                 >
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{
-                      duration: 0.3,
-                      ease: [0.645, 0.045, 0.355, 1],
-                    }}
-                  >
-                    <div className="space-y-6">
-                      <AnimatePresence mode="wait">
-                        {currentStepCommands.map((command, i) => (
-                          <motion.div
-                            key={`${activeStep}-${command.id}`}
-                            {...fadeUp(i)}
-                          >
-                            <TerminalCommand
-                              code={command.code}
-                              language={command.language}
-                              comment={command.comment}
-                              copyable
-                              fontSize="small"
-                              path={command.path}
-                              isActive={
-                                !copiedCommands.has(command.code) &&
-                                i === activeCommandIndex
-                              }
-                              onSelectOrCopy={() => {
-                                const newCopied = new Set(copiedCommands)
-                                newCopied.add(command.code)
-                                setCopiedCommands(newCopied)
+                  <div className="space-y-6">
+                    <AnimatePresence mode="wait">
+                      {currentStepCommands.map((command, i) => (
+                        <motion.div
+                          key={`${activeStep}-${command.id}`}
+                          {...fadeUp(i)}
+                        >
+                          <TerminalCommand
+                            code={command.code}
+                            language={command.language}
+                            comment={command.comment}
+                            copyable
+                            fontSize="small"
+                            path={command.path}
+                            isActive={
+                              !copiedCommands.has(command.code) &&
+                              i === activeCommandIndex
+                            }
+                            onSelectOrCopy={() => {
+                              const newCopied = new Set(copiedCommands)
+                              newCopied.add(command.code)
+                              setCopiedCommands(newCopied)
 
-                                const allCommandsCopied =
-                                  currentStepCommands.every((c) =>
-                                    newCopied.has(c.code)
-                                  )
-                                if (
-                                  allCommandsCopied &&
-                                  !isStepComplete(activeStep)
-                                ) {
-                                  onStepComplete?.(activeStep + 1)
-                                }
-                              }}
-                            />
-                          </motion.div>
-                        ))}
-                      </AnimatePresence>
-                    </div>
-                  </motion.div>
-                </Terminal>
-              </div>
+                              const allCommandsCopied =
+                                currentStepCommands.every((c) =>
+                                  newCopied.has(c.code)
+                                )
+                              if (
+                                allCommandsCopied &&
+                                !isStepComplete(activeStep)
+                              ) {
+                                onStepComplete?.(activeStep + 1)
+                              }
+                            }}
+                          />
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              </Terminal>
             </div>
-          </motion.div>
-        )}
+          </div>
+        </motion.div>
       </AnimatePresence>
     </motion.div>
   )
@@ -319,8 +295,8 @@ function CircleOrCheck({
 }) {
   const variants = {
     complete: {
-      circle: 'bg-emerald-500',
-      text: 'text-black',
+      circle: 'bg-emerald-600',
+      text: 'text-white',
     },
     active: {
       circle: 'bg-surface-tertiary-inverse',
@@ -358,7 +334,7 @@ function CircleOrCheck({
               exit={{ opacity: 0, scale: 0.5 }}
               transition={{ duration: 0.2 }}
             >
-              <Check className="h-3 w-3" />
+              <Check className="size-3" strokeWidth={2.5} />
             </motion.div>
           ) : (
             <motion.div

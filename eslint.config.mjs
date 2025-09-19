@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook'
+
 // @ts-check
 
 import eslint from '@eslint/js'
@@ -42,6 +45,9 @@ export default tseslint.config(
 
       'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
       'unused-imports/no-unused-imports': 'error',
+
+      'storybook/no-redundant-story-name': 'off',
+
       'unused-imports/no-unused-vars': [
         'warn',
         {
@@ -52,5 +58,6 @@ export default tseslint.config(
         },
       ],
     },
-  }
+  },
+  ...storybook.configs['flat/recommended']
 )

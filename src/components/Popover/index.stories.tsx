@@ -1,5 +1,5 @@
 import { Popover, PopoverContent, PopoverTrigger } from '.'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from '../Button'
 
 const meta: Meta<typeof Popover> = {
