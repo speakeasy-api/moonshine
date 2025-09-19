@@ -174,7 +174,28 @@ const AppLayoutSidebar = ({
     const sidebar = sidebarRef.current
     if (!sidebar || !hoverExpandsSidebar) return
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = (e: MouseEvent) => {
+      // Check if mouse coordinates are within ThemeSwitcher bounding box
+      // If so, we don't want to expand the sidebar
+      const themeSwitcherElement = sidebar.querySelector(
+        '[data-theme-switcher]'
+      )
+      let isWithinThemeSwitcher = false
+
+      if (themeSwitcherElement) {
+        const rect = themeSwitcherElement.getBoundingClientRect()
+        const padding = 4 // Add small padding to account for margins/hover areas
+        isWithinThemeSwitcher =
+          e.clientX >= rect.left - padding &&
+          e.clientX <= rect.right + padding &&
+          e.clientY >= rect.top - padding &&
+          e.clientY <= rect.bottom + padding
+      }
+
+      if (isWithinThemeSwitcher) {
+        return
+      }
+
       // Only expand if currently collapsed
       if (!collapsed) return
       // Clear any existing timeout
@@ -248,7 +269,7 @@ interface AppLayoutThemeSwitcherProps {
 const AppLayoutThemeSwitcher = ({ className }: AppLayoutThemeSwitcherProps) => {
   const { collapsed } = useAppLayout()
   return (
-    <motion.div className={cn('mt-auto mb-6', className)}>
+    <motion.div data-theme-switcher className={cn('mt-auto mb-6', className)}>
       <ThemeSwitcher orientation={collapsed ? 'vertical' : 'horizontal'} />
     </motion.div>
   )

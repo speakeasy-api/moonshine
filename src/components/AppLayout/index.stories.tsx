@@ -58,6 +58,7 @@ export const Default: Story = {
             icon="users"
           />
         </AppLayout.Nav>
+        <AppLayout.ThemeSwitcher />
       </AppLayout.Sidebar>,
       <AppLayout.SurfaceHeader key="surface-header">
         <AppLayout.CollapseButton />
