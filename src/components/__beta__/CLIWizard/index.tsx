@@ -8,7 +8,6 @@ import { Text } from '../../Text'
 import { Heading } from '../../Heading'
 import { TerminalCommand } from './terminal-command'
 import { Terminal } from './terminal'
-import { Stack } from '../../Stack'
 import { WizardStep } from '@/components/Wizard/types'
 
 /**
@@ -23,7 +22,6 @@ export interface CLIWizardProps {
   steps: WizardStep[]
   currentStep: number
   completedSteps: number[]
-  hideStepCount?: boolean
   onStepComplete?: (stepIndex: number) => void
 }
 
@@ -63,7 +61,6 @@ export function CLIWizard({
   steps,
   currentStep,
   completedSteps,
-  hideStepCount = false,
   onStepComplete,
 }: CLIWizardProps) {
   const [activeStep, setActiveStep] = React.useState(
