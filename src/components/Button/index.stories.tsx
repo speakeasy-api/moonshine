@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react/*'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { Button, ButtonProps } from './'
 import { PlusIcon as LucidePlusIcon, ChevronRight } from 'lucide-react'
 import { fn as storybookActionFn } from 'storybook/test'

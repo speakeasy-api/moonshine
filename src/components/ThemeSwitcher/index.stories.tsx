@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ThemeSwitcher } from '.'
 
-const meta: Meta<typeof Text> = {
+const meta: Meta<typeof ThemeSwitcher> = {
   component: ThemeSwitcher,
   tags: ['autodocs'],
 }
 
 export default meta
-type Story = StoryObj<typeof Text>
+type Story = StoryObj<typeof ThemeSwitcher>
 
 export const LightMode: Story = {
   globals: { theme: 'light' },
