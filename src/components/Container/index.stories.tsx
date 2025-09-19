@@ -1,5 +1,5 @@
 import { Container } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Card, Grid } from '@/index'
 
 const meta: Meta<typeof Container> = {

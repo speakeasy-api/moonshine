@@ -1,8 +1,8 @@
-import { expect, within } from '@storybook/test'
-import { userEvent } from '@storybook/test'
+import { expect, within } from 'storybook/test'
+import { userEvent } from 'storybook/test'
 import { CodeSnippet } from '.'
-import { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
+import { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 import { InnerLine } from 'codehike/code'
 
 const meta: Meta<typeof CodeSnippet> = {

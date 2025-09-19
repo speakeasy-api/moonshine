@@ -1,7 +1,7 @@
 import { Alert } from '.'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { variants } from './types'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const defaultDecorators = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

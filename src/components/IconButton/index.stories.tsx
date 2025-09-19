@@ -6,7 +6,7 @@ import {
   Settings,
   Search,
 } from 'lucide-react'
-import { fn as storybookActionFn } from '@storybook/test'
+import { fn as storybookActionFn } from 'storybook/test'
 
 const meta: Meta<typeof IconButton> = {
   component: IconButton,

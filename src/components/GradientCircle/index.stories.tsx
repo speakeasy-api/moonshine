@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { GradientCircle } from '.'
 import { useEffect, useState } from 'react'
 import isChromatic from 'chromatic/isChromatic'

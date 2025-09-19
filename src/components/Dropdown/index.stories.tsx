@@ -6,7 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Button } from '../Button'
 import { Stack } from '../Stack'
 import { Icon } from '../Icon'

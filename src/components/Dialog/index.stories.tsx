@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { Dialog } from '.'
 import { Button } from '../Button'
 import { Heading } from '../Heading'

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Stack } from '.'
 import { createSampleChildren } from '@/lib/storybookUtils'
 import { cn } from '@/lib/utils'

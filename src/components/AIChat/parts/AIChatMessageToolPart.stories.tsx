@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AIChatMessageToolPart } from './AIChatMessageToolPart'
 
 const meta: Meta<typeof AIChatMessageToolPart> = {

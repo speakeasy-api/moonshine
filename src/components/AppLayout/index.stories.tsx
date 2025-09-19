@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { AppLayout } from '.'
 import { AppLayoutProvider } from './provider'
 import { Heading } from '../Heading'
@@ -556,4 +556,30 @@ export const Polymorphic: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
+}
+
+export const WithHomeNavigationOnBrandLogo: Story = {
+  name: 'With Home Navigation On Brand Logo',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar" onHomeNavigation={() => alert('Home')}>
+        <AppLayout.Nav>
+          <AppLayout.NavItem title="Home" icon="house" />
+
+          <AppLayout.NavItem title="Settings" icon="settings" />
+          <AppLayout.NavItem title="Users" icon="users" />
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem active>Home</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
 }

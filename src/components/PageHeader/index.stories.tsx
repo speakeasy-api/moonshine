@@ -1,5 +1,5 @@
 import { PageHeader } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Button } from '../Button'
 import { Icon } from '../Icon'
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import CLIWizard from './index'
 import { Container } from '@/components/Container'
 import { WizardStep } from '@/components/Wizard/types'

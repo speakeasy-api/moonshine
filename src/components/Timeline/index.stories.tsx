@@ -1,6 +1,6 @@
 import React from 'react'
 import { Timeline } from '.'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Button } from '../Button'
 import {
   Code,

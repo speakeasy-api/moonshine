@@ -123,10 +123,29 @@ AppLayoutSurface.displayName = 'AppLayout.Surface'
 interface AppLayoutSidebarProps {
   className?: string
   children?: React.ReactNode
+
+  /**
+   * A React.ReactNode to render instead of the default Logo.
+   */
   Logo?: React.ReactNode
+
+  /**
+   * A function to call when the the brand logo is clicked.
+   */
+  onHomeNavigation?: () => void
+
+  /**
+   * The delay in milliseconds before the sidebar expands when hovered.
+   */
+  hoverIntentDelay?: number
 }
 
-const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
+const AppLayoutSidebar = ({
+  children,
+  className,
+  onHomeNavigation,
+  hoverIntentDelay = 500,
+}: AppLayoutSidebarProps) => {
   const {
     collapsed,
     setCollapsed,
@@ -168,7 +187,7 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
         setCollapsed(false)
         _setExpandedByHover(true) // Mark as expanded by hover
         hoverTimeoutRef.current = null
-      }, 250) // 250ms delay
+      }, hoverIntentDelay)
     }
 
     const handleMouseLeave = () => {
@@ -209,10 +228,10 @@ const AppLayoutSidebar = ({ children, className }: AppLayoutSidebarProps) => {
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
       <div className="flex flex-col gap-4 px-2">
-        {/* TODO: Gram will use a different logo so we need a way of making this dynamic */}
         <Logo
           variant={collapsed ? 'icon' : 'wordmark'}
-          className={cn(!collapsed && 'min-w-[140px]')}
+          className={cn('cursor-pointer', !collapsed && 'min-w-[140px]')}
+          onClick={onHomeNavigation}
         />
         {nav}
       </div>
@@ -510,7 +529,7 @@ const AppLayoutNavItem = React.forwardRef<
             <Comp
               ref={ref}
               className={cn(
-                'text-muted-foreground hover:text-foreground flex h-9 w-fit cursor-pointer items-center gap-3',
+                'text-muted-foreground hover:text-foreground flex h-9 w-fit w-full cursor-pointer items-center gap-3',
                 active && 'text-foreground',
                 disabled &&
                   'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',

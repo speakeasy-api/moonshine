@@ -1,6 +1,6 @@
 import { LoggedInUserMenu } from '.'
-import { StoryObj, Meta } from '@storybook/react'
-import { fn, userEvent, within, screen, expect } from '@storybook/test'
+import { StoryObj, Meta } from '@storybook/react-vite'
+import { fn, userEvent, within, screen, expect } from 'storybook/test'
 import { Icon } from '../Icon'
 
 const meta: Meta<typeof LoggedInUserMenu> = {

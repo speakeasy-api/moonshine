@@ -1,7 +1,7 @@
 import React from 'react'
 import { Wizard } from '.'
 import { type WizardStep } from './types'
-import { StoryObj, Meta } from '@storybook/react'
+import { StoryObj, Meta } from '@storybook/react-vite'
 import { Badge, Heading } from '@/index'
 
 const meta: Meta<typeof Wizard> = {

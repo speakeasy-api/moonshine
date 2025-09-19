@@ -1,5 +1,5 @@
 import { CodeEditor, CodeEditorTabProps } from '.'
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { faker } from '@faker-js/faker'
 import { Icon } from '@/components/Icon'
 import { Key } from '../KeyHint'

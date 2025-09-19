@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import { ContextDropdown } from '.'
 import { useModal } from '../../hooks/useModal'
 import { Button } from '../Button'
