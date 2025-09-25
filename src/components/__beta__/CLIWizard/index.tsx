@@ -207,7 +207,7 @@ function SidebarSteps({
           return (
             <div key={index}>
               <div className="flex items-stretch">
-                <div className="flex flex-col items-center px-1">
+                <div className="flex flex-col items-center">
                   <div className="flex h-6 items-center justify-center">
                     <CircleOrCheck
                       isComplete={complete}
