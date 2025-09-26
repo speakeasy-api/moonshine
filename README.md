@@ -1,6 +1,7 @@
 # 🥃 Moonshine 🥃
 
 [![NPM](https://img.shields.io/badge/npm-moonshine@latest-blue)](https://www.npmjs.com/package/@speakeasy-api/moonshine)
+<a href="https://moonshine.speakeasy.com/" target="_blank"><img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg"></a>
 
 Speakeasy's design system.
 
