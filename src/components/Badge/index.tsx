@@ -31,7 +31,7 @@ type BadgeVariantsCva = {
 
 const badgeVariants = cva<BadgeVariantsCva>(
   cn(
-    'inline-flex text-xs select-none rounded-full px-3 py-1 border rounded-sm',
+    'inline-flex text-xs select-none rounded-full px-3 py-1 border rounded-xs tracking-[0.03em]',
     'font-mono uppercase'
   ),
   {
