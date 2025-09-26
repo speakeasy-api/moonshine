@@ -95,6 +95,7 @@ export {
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
+  TooltipPortal,
 } from '@/components/Tooltip'
 export {
   Popover,
