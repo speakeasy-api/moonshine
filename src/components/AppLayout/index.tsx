@@ -6,11 +6,12 @@ import React, {
   HTMLAttributes,
   useRef,
   useEffect,
+  useState,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Logo } from '../Logo'
 import {
   Tooltip,
@@ -467,28 +468,31 @@ interface AppLayoutNavProps extends HTMLAttributes<HTMLDivElement> {
 
 const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
   return (
-    <nav className={cn('mt-3 flex flex-col items-start', className)} {...props}>
+    <nav
+      className={cn('mt-3 flex flex-col items-start gap-3', className)}
+      {...props}
+    >
       {children}
     </nav>
   )
 }
 
 AppLayoutNav.displayName = 'AppLayout.Nav'
+export interface NavItemRenderFnProps {
+  title: string
+  icon: React.ReactNode
+  active?: boolean
+  disabled?: boolean
+}
+
+type NavItemRenderFn = (props: NavItemRenderFnProps) => React.ReactNode
 
 export interface AppLayoutNavItemProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   title: string
   icon: IconName
   children?: React.ReactNode
-  render?: ({
-    title,
-    icon,
-    active,
-  }: {
-    title: string
-    icon: React.ReactNode
-    active?: boolean
-  }) => React.ReactNode
+  render?: NavItemRenderFn
   className?: string
   active?: boolean
   disabled?: boolean
@@ -534,13 +538,52 @@ const AppLayoutNavItem = React.forwardRef<
       </motion.span>
     )
 
+    const subNavItems = Children.toArray(children).filter((child) => {
+      if (!isValidElement(child)) return false
+      const type = child.type as { displayName?: string }
+      return type.displayName === 'AppLayout.SubNavItem'
+    })
+
+    const [isSubNavItemsOpen, setIsSubNavItemsOpen] = useState(false)
+
     const content = asChild ? (
       children
     ) : (
-      <>
-        {iconElement}
-        {titleElement}
-      </>
+      <div className="flex w-full flex-col items-start gap-2">
+        <div className="flex w-full items-center gap-2">
+          {iconElement}
+          {titleElement}
+
+          {subNavItems.length > 0 && (
+            <button
+              className="text-muted-foreground hover:text-foreground ml-auto"
+              onClick={() => setIsSubNavItemsOpen(!isSubNavItemsOpen)}
+            >
+              <Icon
+                name={isSubNavItemsOpen ? 'chevron-up' : 'chevron-down'}
+                className="size-4 text-current"
+              />
+            </button>
+          )}
+        </div>
+        <AnimatePresence>
+          {subNavItems.length > 0 && isSubNavItemsOpen && (
+            <div className="mb-2 ml-8 flex flex-col gap-1">
+              {subNavItems.map((child, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {child}
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </AnimatePresence>
+      </div>
     )
 
     return (
@@ -550,7 +593,7 @@ const AppLayoutNavItem = React.forwardRef<
             <Comp
               ref={ref}
               className={cn(
-                'text-muted-foreground hover:text-foreground flex h-9 w-fit w-full cursor-pointer items-center gap-3',
+                'text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center gap-3',
                 active && 'text-foreground',
                 disabled &&
                   'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
@@ -615,6 +658,94 @@ const AppLayoutNavItemGroup = ({
 
 AppLayoutNavItemGroup.displayName = 'AppLayout.NavItemGroup'
 
+interface SubNavItemRenderFnProps {
+  title: string
+  active?: boolean
+  disabled?: boolean
+}
+
+type SubNavItemRenderFn = (props: SubNavItemRenderFnProps) => React.ReactNode
+interface AppLayoutSubNavItemProps
+  extends Omit<AppLayoutNavItemProps, 'icon' | 'render'> {
+  className?: string
+  render?: SubNavItemRenderFn
+}
+
+const AppLayoutSubNavItem = React.forwardRef<
+  HTMLAnchorElement,
+  AppLayoutSubNavItemProps
+>(
+  (
+    {
+      asChild = false,
+      title,
+      render,
+      className,
+      active,
+      disabled,
+      children,
+      ...rest
+    },
+    ref
+  ) => {
+    const { collapsed } = useAppLayout()
+
+    if (render) {
+      return render({ title, active, disabled, ...rest })
+    }
+
+    const Comp = asChild ? Slot : 'a'
+
+    // SubNavItems are only visible when the sidebar is expanded
+    if (collapsed) {
+      return null
+    }
+
+    const content = asChild ? (
+      children
+    ) : (
+      <span className="typography-body-sm">{title}</span>
+    )
+
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Comp
+              ref={ref}
+              className={cn(
+                'text-muted-foreground hover:text-foreground relative flex w-full cursor-pointer items-center gap-3',
+                active && 'text-foreground',
+                disabled &&
+                  'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
+                className
+              )}
+              {...rest}
+              {...(asChild && {
+                'data-title': title,
+                'data-active': active,
+                'data-disabled': disabled,
+              })}
+            >
+              {content}
+            </Comp>
+          </TooltipTrigger>
+          <TooltipContent
+            className="bg-foreground text-background border-foreground flex flex-row items-center gap-2 text-sm"
+            side="right"
+            hidden={!collapsed || disabled}
+          >
+            <TooltipArrow className="fill-foreground" />
+            {title}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
+  }
+)
+
+AppLayoutSubNavItem.displayName = 'AppLayout.SubNavItem'
+
 const AppLayout = AppLayoutBase as typeof AppLayoutBase & {
   Surface: typeof AppLayoutSurface
   SurfaceHeader: typeof AppLayoutSurfaceHeader
@@ -628,6 +759,7 @@ const AppLayout = AppLayoutBase as typeof AppLayoutBase & {
   Nav: typeof AppLayoutNav
   NavItem: typeof AppLayoutNavItem
   NavItemGroup: typeof AppLayoutNavItemGroup
+  SubNavItem: typeof AppLayoutSubNavItem
 }
 
 AppLayout.Surface = AppLayoutSurface
@@ -642,5 +774,6 @@ AppLayout.ThemeSwitcher = AppLayoutThemeSwitcher
 AppLayout.Nav = AppLayoutNav
 AppLayout.NavItem = AppLayoutNavItem
 AppLayout.NavItemGroup = AppLayoutNavItemGroup
+AppLayout.SubNavItem = AppLayoutSubNavItem
 
 export { AppLayout }

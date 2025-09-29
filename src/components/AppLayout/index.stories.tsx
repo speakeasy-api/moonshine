@@ -584,3 +584,33 @@ export const WithHomeNavigationOnBrandLogo: Story = {
     ],
   },
 }
+
+export const WithSubNavItems: Story = {
+  name: 'With Sub Nav Items',
+  args: {
+    children: [
+      <AppLayout.Sidebar key="sidebar">
+        <AppLayout.Nav>
+          <AppLayout.NavItem title="SDKS" icon="package">
+            <AppLayout.SubNavItem title="Overview" icon="house" />
+            <AppLayout.SubNavItem title="Tests" icon="beaker" />
+            <AppLayout.SubNavItem title="Documentation" icon="book" />
+          </AppLayout.NavItem>
+
+          <AppLayout.NavItem title="Users" icon="users" />
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>,
+      <AppLayout.SurfaceHeader key="surface-header">
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+        <AppLayout.Breadcrumb>
+          <AppLayout.BreadcrumbItem active>Home</AppLayout.BreadcrumbItem>
+          <AppLayout.BreadcrumbItem>Settings</AppLayout.BreadcrumbItem>
+        </AppLayout.Breadcrumb>
+      </AppLayout.SurfaceHeader>,
+      <AppLayout.Surface className="p-4" key="surface">
+        <SurfaceContent />
+      </AppLayout.Surface>,
+    ],
+  },
+}
