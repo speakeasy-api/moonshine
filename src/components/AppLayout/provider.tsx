@@ -24,6 +24,9 @@ export const AppLayoutProvider = ({
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
   const [expandedByHover, setExpandedByHover] = useState(false)
 
+  // Used to auto-collapse other NavItems which have sub items when a new one is opened
+  const [activeNavItem, setActiveNavItem] = useState<string | null>(null)
+
   // respond to defaultCollapsed changes
   useEffect(() => {
     setCollapsed(defaultCollapsed)
@@ -39,6 +42,8 @@ export const AppLayoutProvider = ({
         hoverExpandsSidebar,
         _expandedByHover: expandedByHover,
         _setExpandedByHover: setExpandedByHover,
+        _activeNavItem: activeNavItem,
+        _setActiveNavItem: setActiveNavItem,
       }}
     >
       {children}

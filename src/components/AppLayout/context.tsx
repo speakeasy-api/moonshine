@@ -26,11 +26,17 @@ export interface AppLayoutContextType {
   // track if sidebar was expanded by hover vs manual toggle
   _expandedByHover: boolean
   _setExpandedByHover: (expandedByHover: boolean) => void
+
+  // Used to auto-collapse other NavItems which have sub items when a new one is opened
+  _activeNavItem: string | null
+  _setActiveNavItem: (activeNavItem: string | null) => void
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
   collapsed: false,
   setCollapsed: () => {},
+  _activeNavItem: null,
+  _setActiveNavItem: () => {},
   keybinds: {
     toggle: {
       key: 'L',

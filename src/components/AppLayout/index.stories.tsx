@@ -503,6 +503,7 @@ const FakeLink = ({
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return <a href={to} {...props} />
 }
+
 const CustomLink = ({
   to,
   ...props
@@ -583,6 +584,11 @@ export const WithHomeNavigationOnBrandLogo: Story = {
       </AppLayout.Surface>,
     ],
   },
+  render: (args) => (
+    <AppLayoutProvider defaultCollapsed>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
 }
 
 export const WithSubNavItems: Story = {
@@ -591,11 +597,23 @@ export const WithSubNavItems: Story = {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
-          <AppLayout.NavItem title="SDKS" icon="package">
-            <AppLayout.SubNavItem title="Overview" icon="house" />
-            <AppLayout.SubNavItem title="Tests" icon="beaker" />
-            <AppLayout.SubNavItem title="Documentation" icon="book" />
-          </AppLayout.NavItem>
+          <AppLayout.NavItemGroup name="Generate">
+            <AppLayout.NavItem
+              defaultSubNavItemsOpen
+              title="SDKS"
+              icon="package"
+            >
+              <AppLayout.SubNavItem title="Overview" active />
+              <AppLayout.SubNavItem title="Tests" />
+              <AppLayout.SubNavItem title="Documentation" />
+            </AppLayout.NavItem>
+
+            <AppLayout.NavItem title="Terraform" icon="server-cog">
+              <AppLayout.SubNavItem title="Overview" />
+              <AppLayout.SubNavItem title="Tests" />
+              <AppLayout.SubNavItem title="Documentation" />
+            </AppLayout.NavItem>
+          </AppLayout.NavItemGroup>
 
           <AppLayout.NavItem title="Users" icon="users" />
         </AppLayout.Nav>
@@ -613,4 +631,9 @@ export const WithSubNavItems: Story = {
       </AppLayout.Surface>,
     ],
   },
+  render: (args) => (
+    <AppLayoutProvider defaultCollapsed={false}>
+      <AppLayout {...args} />
+    </AppLayoutProvider>
+  ),
 }

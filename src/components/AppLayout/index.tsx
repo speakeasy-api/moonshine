@@ -7,11 +7,12 @@ import React, {
   useRef,
   useEffect,
   useState,
+  useCallback,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Logo } from '../Logo'
 import {
   Tooltip,
@@ -249,7 +250,7 @@ const AppLayoutSidebar = ({
       ref={sidebarRef}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
-      <div className="flex flex-col gap-4 px-2">
+      <div className="flex flex-col gap-3 px-2">
         <Logo
           variant={collapsed ? 'icon' : 'wordmark'}
           className={cn('cursor-pointer', !collapsed && 'min-w-[140px]')}
@@ -468,10 +469,7 @@ interface AppLayoutNavProps extends HTMLAttributes<HTMLDivElement> {
 
 const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
   return (
-    <nav
-      className={cn('mt-3 flex flex-col items-start gap-3', className)}
-      {...props}
-    >
+    <nav className={cn('mt-3 flex flex-col items-start', className)} {...props}>
       {children}
     </nav>
   )
@@ -497,6 +495,7 @@ export interface AppLayoutNavItemProps
   active?: boolean
   disabled?: boolean
   asChild?: boolean
+  defaultSubNavItemsOpen?: boolean
 }
 
 const AppLayoutNavItem = React.forwardRef<
@@ -513,6 +512,7 @@ const AppLayoutNavItem = React.forwardRef<
       active,
       disabled,
       children,
+      defaultSubNavItemsOpen = false,
       ...rest
     },
     ref
@@ -544,46 +544,91 @@ const AppLayoutNavItem = React.forwardRef<
       return type.displayName === 'AppLayout.SubNavItem'
     })
 
-    const [isSubNavItemsOpen, setIsSubNavItemsOpen] = useState(false)
+    const [isSubNavItemsOpen, setIsSubNavItemsOpen] = useState(
+      defaultSubNavItemsOpen
+    )
+
+    const { _setActiveNavItem, _activeNavItem } = useAppLayout()
+
+    // Close this nav item when another nav item becomes active
+    useEffect(() => {
+      if (
+        _activeNavItem !== null &&
+        _activeNavItem !== title &&
+        isSubNavItemsOpen
+      ) {
+        setIsSubNavItemsOpen(false)
+      }
+    }, [_activeNavItem, title, isSubNavItemsOpen])
+
+    const toggleSubNavItems = useCallback(() => {
+      const newOpenState = !isSubNavItemsOpen
+      setIsSubNavItemsOpen(newOpenState)
+
+      // Only set as active if we're opening, not closing
+      if (newOpenState) {
+        _setActiveNavItem(title)
+      } else {
+        _setActiveNavItem(null)
+      }
+    }, [isSubNavItemsOpen, title, _setActiveNavItem])
 
     const content = asChild ? (
       children
     ) : (
-      <div className="flex w-full flex-col items-start gap-2">
-        <div className="flex w-full items-center gap-2">
+      <motion.div className="flex w-full flex-col items-start gap-1">
+        <div
+          className={cn(
+            'flex w-full items-center gap-2',
+            subNavItems.length > 0 && !collapsed && 'cursor-pointer'
+          )}
+          onClick={
+            subNavItems.length > 0 && !collapsed ? toggleSubNavItems : undefined
+          }
+        >
           {iconElement}
           {titleElement}
 
-          {subNavItems.length > 0 && (
-            <button
-              className="text-muted-foreground hover:text-foreground ml-auto"
-              onClick={() => setIsSubNavItemsOpen(!isSubNavItemsOpen)}
-            >
-              <Icon
-                name={isSubNavItemsOpen ? 'chevron-up' : 'chevron-down'}
-                className="size-4 text-current"
-              />
-            </button>
+          {subNavItems.length > 0 && !collapsed && (
+            <Icon
+              name={isSubNavItemsOpen ? 'chevron-up' : 'chevron-down'}
+              className="text-muted-foreground ml-auto size-4"
+            />
           )}
         </div>
-        <AnimatePresence>
-          {subNavItems.length > 0 && isSubNavItemsOpen && (
-            <div className="mb-2 ml-8 flex flex-col gap-1">
-              {subNavItems.map((child, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {child}
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </AnimatePresence>
-      </div>
+        <motion.div
+          className="ml-8 overflow-hidden"
+          initial={false}
+          animate={{
+            height: subNavItems.length > 0 && isSubNavItemsOpen ? 'auto' : 0,
+            marginBottom: subNavItems.length > 0 && isSubNavItemsOpen ? 8 : 0,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+        >
+          <div className="flex flex-col gap-1">
+            {subNavItems.map((child, index) => (
+              <motion.div
+                key={index}
+                initial={false}
+                animate={{
+                  opacity: isSubNavItemsOpen ? 1 : 0,
+                  y: isSubNavItemsOpen ? 0 : -4,
+                }}
+                transition={{
+                  duration: 0.15,
+                  delay: isSubNavItemsOpen ? index * 0.03 : 0,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+              >
+                {child}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </motion.div>
     )
 
     return (
@@ -649,9 +694,11 @@ const AppLayoutNavItemGroup = ({
 }: AppLayoutNavItemGroupProps) => {
   const { collapsed } = useAppLayout()
   return (
-    <div className={cn('mb-4 flex flex-col', className)} {...props}>
-      {!collapsed && <div className="text-codeline-sm uppercase">{name}</div>}
-      {children}
+    <div className={cn('mb-3 flex w-full flex-col', className)} {...props}>
+      {!collapsed && (
+        <div className="text-codeline-sm mb-2 uppercase">{name}</div>
+      )}
+      <div className="flex flex-col gap-1">{children}</div>
     </div>
   )
 }
