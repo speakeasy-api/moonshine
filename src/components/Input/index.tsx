@@ -34,7 +34,7 @@ export function Input({
     },
     [props.onFocus]
   )
-  const onBlur = useCallback(
+  const handleBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (props.onBlur) {
         props.onBlur(event)
