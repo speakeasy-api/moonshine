@@ -25,7 +25,7 @@ export function Input({
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false)
 
-  const handleFocus = useCallback(
+  const onFocus = useCallback(
     (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (props.onFocus) {
         props.onFocus(event)
@@ -34,7 +34,7 @@ export function Input({
     },
     [props.onFocus]
   )
-  const handleBlur = useCallback(
+  const onBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (props.onBlur) {
         props.onBlur(event)
@@ -49,14 +49,14 @@ export function Input({
     onChange,
     placeholder,
     disabled,
-    onFocus: handleFocus,
-    onBlur: handleBlur,
   } as const
 
   let element: React.ReactNode = (
     <input
       {...commonProps}
       {...props}
+      onFocus={onFocus}
+      onBlur={onBlur}
       className={cn(
         'bg-surface-primary-default placeholder:text-placeholder text-default h-full w-full text-sm shadow-none outline-none disabled:cursor-not-allowed disabled:opacity-50',
         isFocused && 'placeholder:text-default'
@@ -69,6 +69,8 @@ export function Input({
       <textarea
         {...commonProps}
         {...props}
+        onFocus={onFocus}
+        onBlur={onBlur}
         cols={30}
         rows={10}
         className={cn(
