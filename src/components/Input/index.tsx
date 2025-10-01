@@ -25,7 +25,7 @@ export function Input({
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false)
 
-  const onFocus = useCallback(
+  const handleFocus = useCallback(
     (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (props.onFocus) {
         props.onFocus(event)
