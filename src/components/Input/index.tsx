@@ -69,8 +69,8 @@ export function Input({
       <textarea
         {...commonProps}
         {...props}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         cols={30}
         rows={10}
         className={cn(
