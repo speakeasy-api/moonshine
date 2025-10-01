@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-vite'
 import { Modal } from '.'
 import { ModalProvider } from '@/context/ModalContext'
 import { useModal } from '@/hooks/useModal'
-import { memo, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { faker } from '@faker-js/faker'
 import { Button, Icon } from '@/index'
 
@@ -36,25 +36,29 @@ const Underlay = memo(() => {
 })
 
 const ModalRenderer = ({
+  className,
   closable = false,
   multiScreen = false,
 }: {
   closable?: boolean
   multiScreen?: boolean
+  className?: string
 }) => {
   const { openScreen, pushScreen } = useModal()
 
-  const addScreen = () => {
+  const addScreen = useCallback(() => {
     pushScreen({
       id: faker.string.uuid(),
       title: faker.lorem.sentence({ min: 1, max: 3 }),
       component: <div>{faker.lorem.paragraph()}</div>,
+      closable,
     })
-  }
+  }, [pushScreen, closable])
 
   useEffect(() => {
     openScreen({
       id: '1',
+      closable,
       title: 'Lorem ipsum dolor sit amet',
       component: (
         <div className="text-body-md flex flex-col gap-3">
@@ -84,7 +88,7 @@ const ModalRenderer = ({
   return (
     <div>
       <Underlay />
-      <Modal closable={closable} />
+      <Modal className={className} />
     </div>
   )
 }
@@ -114,6 +118,16 @@ export const MultiScreen: Story = {
     return (
       <ModalProvider>
         <ModalRenderer closable={false} multiScreen />
+      </ModalProvider>
+    )
+  },
+}
+
+export const CustomClassName: Story = {
+  render: () => {
+    return (
+      <ModalProvider>
+        <ModalRenderer className="bg-red-500" />
       </ModalProvider>
     )
   },
