@@ -260,9 +260,15 @@ const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
           recents={props.recents ?? []}
           {...props}
           orgs={state.orgs}
+          filterOrgFunc={(org, search) =>
+            org.slug.toLowerCase().includes(search.toLowerCase())
+          }
+          filterWorkspaceFunc={(workspace, search) =>
+            workspace.slug.toLowerCase().includes(search.toLowerCase())
+          }
         />
 
-        <div className="border-border mt-8 flex flex-col gap-2 border-t pt-4">
+        <div className="border-neutral-softest mt-8 flex flex-col gap-2 border-t pt-4">
           <b>Selected org:</b> {state.selectedOrg?.label ?? 'none'}
           <b>Selected workspaceId:</b>{' '}
           {state.selectedWorkspace?.label ?? 'none'}

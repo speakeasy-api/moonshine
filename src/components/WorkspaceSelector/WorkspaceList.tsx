@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ScrollingList } from './ScrollingList'
 import { VirtuosoHandle } from 'react-virtuoso'
 import { SearchBox } from './SearchBox'
+import { Text } from '../Text'
 
 interface WorkspaceListProps {
   selectedOrg: Org
@@ -14,6 +15,7 @@ interface WorkspaceListProps {
   handleCreateViewOpen: () => void
   handleSelect: (org: Org, workspace: Workspace) => void
   enableCreate?: boolean
+  filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
 }
 
 export function WorkspaceList({
@@ -22,6 +24,7 @@ export function WorkspaceList({
   handleCreateViewOpen,
   handleSelect,
   enableCreate = true,
+  filterWorkspaceFunc,
 }: WorkspaceListProps) {
   const virtuoso = useRef<VirtuosoHandle | null>(null)
   const [search, setSearch] = useState('')
@@ -33,10 +36,10 @@ export function WorkspaceList({
   useEffect(() => {
     setFilteredWorkspaces(
       selectedOrg?.workspaces.filter((workspace) =>
-        workspace.slug.toLowerCase().includes(search.toLowerCase())
-      ) || []
+        filterWorkspaceFunc(workspace, search)
+      )
     )
-  }, [search, selectedOrg?.workspaces])
+  }, [search, selectedOrg?.workspaces, filterWorkspaceFunc])
 
   useEffect(() => {
     if (selectedWorkspace && virtuoso.current) {
@@ -89,13 +92,13 @@ export function WorkspaceList({
         />
       )}
       {enableCreate && (
-        <div className="bg-background border-t">
+        <div className="bg-background border-neutral-softest border-t">
           <CommandItem
             onSelect={handleCreateViewOpen}
             className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
           >
             <Icon name="plus" />
-            Create workspace
+            <Text>Create workspace</Text>
           </CommandItem>
         </div>
       )}

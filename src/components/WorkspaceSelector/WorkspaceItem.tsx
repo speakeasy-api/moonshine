@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { CommandItem } from '../Command'
 import { GradientCircle } from '../GradientCircle'
 import { Org, Workspace } from '.'
-import { Icon } from '../Icon'
+import { Text } from '../Text'
 import { forwardRef } from 'react'
 
 interface WorkspaceItemProps {
@@ -24,19 +24,13 @@ export const WorkspaceItem = forwardRef<HTMLDivElement, WorkspaceItemProps>(
         value={`workspace-${selectedOrg.id}-${workspace.id}`}
         onSelect={() => handleSelect(selectedOrg, workspace)}
         className={cn(
-          'hover:!bg-accent data-[selected=true]:!bg-accent flex w-full max-w-full cursor-pointer flex-row gap-3 p-4 text-base',
+          'hover:!bg-accent/40 data-[selected=true]:!bg-accent/40 flex w-full max-w-full cursor-pointer flex-row gap-3 rounded-none p-4 text-base',
           isSelected && 'font-semibold',
           !workspace.active && 'opacity-50'
         )}
       >
         <GradientCircle name={workspace.label} />
-        <span className="truncate">{workspace.label}</span>
-
-        {isSelected && (
-          <div className="ml-auto">
-            <Icon name="chevron-right" size="small" />
-          </div>
-        )}
+        <Text className="truncate">{workspace.label}</Text>
       </CommandItem>
     )
   }

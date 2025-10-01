@@ -6,6 +6,7 @@ import { CommandGroup, CommandItem } from '../Command'
 import { Icon } from '../Icon'
 import { useState, useRef, useEffect } from 'react'
 import { SearchBox } from './SearchBox'
+import { Text } from '../Text'
 
 interface RecentWorkspacesProps {
   orgsWithFilteredWorkspaces: Org[]
@@ -68,13 +69,13 @@ export function RecentWorkspaces({
         }}
       />
 
-      <div className="bg-background border-t">
+      <div className="bg-background border-neutral-softest border-t">
         <CommandItem
           onSelect={handleCreateViewOpen}
           className={cn('m-1 cursor-pointer !items-center p-4 text-base')}
         >
           <Icon name="plus" />
-          Create workspace
+          <Text>Create workspace</Text>
         </CommandItem>
       </div>
     </div>
