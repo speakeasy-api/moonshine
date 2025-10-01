@@ -8,7 +8,6 @@ import { WorkspaceList } from './WorkspaceList'
 import './styles.css'
 import { RecentWorkspaces } from './RecentWorkspaces'
 import { Text } from '../Text'
-import { Separator } from '../Separator'
 import { Logo } from '../Logo'
 import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
@@ -51,6 +50,9 @@ export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
   showCreateWorkspaceView?: boolean
 
   defaultSelectedOrg?: Org
+
+  filterOrgFunc: (org: Org, search: string) => boolean
+  filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
 }
 
 const useViewTransition = () => {
@@ -90,6 +92,8 @@ export function WorkspaceSelector({
   createTriggersSelection = false,
   showCreateWorkspaceView = false,
   defaultSelectedOrg,
+  filterOrgFunc,
+  filterWorkspaceFunc,
 }: WorkspaceSelectorProps) {
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
@@ -225,7 +229,7 @@ export function WorkspaceSelector({
     <div
       ref={containerRef}
       style={{ height }}
-      className="workspace-selector border-border flex w-full flex-grow overflow-hidden rounded-md border"
+      className="workspace-selector border-neutral-softest flex w-full flex-grow overflow-hidden rounded-md border"
     >
       {createOrgViewOpen ? (
         <div
@@ -271,6 +275,8 @@ export function WorkspaceSelector({
             recents={recents}
             handleCreateWorkspaceViewOpen={handleCreateWorkspaceViewOpen}
             handleSelectOrg={handleSelectOrg}
+            filterOrgFunc={filterOrgFunc}
+            filterWorkspaceFunc={filterWorkspaceFunc}
           />
         </div>
       )}
@@ -290,6 +296,8 @@ interface WorkspaceViewContentsProps {
   recents: Org[]
   handleCreateWorkspaceViewOpen: () => void
   handleSelectOrg: (org: Org) => void
+  filterOrgFunc: (org: Org, search: string) => boolean
+  filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
 }
 
 function WorkspaceViewContents({
@@ -304,6 +312,8 @@ function WorkspaceViewContents({
   recents,
   handleCreateWorkspaceViewOpen,
   handleSelectOrg,
+  filterOrgFunc,
+  filterWorkspaceFunc,
 }: WorkspaceViewContentsProps) {
   const showRecentsView = React.useMemo(
     () => recents.length > 0 && showRecents,
@@ -311,14 +321,16 @@ function WorkspaceViewContents({
   )
   return (
     <>
-      <div className="bg-popover flex h-full w-1/3 flex-col items-center justify-center">
-        <div className="flex max-w-80 flex-col items-center justify-center px-8 text-center">
+      <div className="bg-surface-primary border-neutral-softest flex h-full flex-1/3 flex-col items-center justify-center border-r">
+        <div className="flex h-full max-w-80 flex-col items-center justify-center px-8 text-center">
           <Stack align="center" gap={4}>
             <div className="flex h-16 w-16 items-center justify-center">
               <Logo variant="icon" className="size-12" />
             </div>
             <Stack align="center" gap={2}>
-              <Heading variant="xl">Select your workspace</Heading>
+              <Heading variant="xl" className="whitespace-nowrap">
+                Select your workspace
+              </Heading>
               <Text muted>
                 Select or create the workspace you want to use for this project.
               </Text>
@@ -327,9 +339,7 @@ function WorkspaceViewContents({
         </div>
       </div>
 
-      <Separator orientation="vertical" />
-
-      <div className="w-2/3">
+      <div className="w-full flex-2/3">
         <Command shouldFilter={false}>
           {showRecentsView ? (
             <div className="flex w-full flex-grow flex-row">
@@ -340,6 +350,7 @@ function WorkspaceViewContents({
                 onSelectRecent={() => setShowRecents(true)}
                 showRecents={showRecents}
                 enableRecents={recents.length > 0}
+                filterOrgFunc={(org, search) => filterOrgFunc(org, search)}
               />
               <RecentWorkspaces
                 onSelect={(org, workspace) =>
@@ -360,6 +371,7 @@ function WorkspaceViewContents({
                 onSelectRecent={() => setShowRecents(true)}
                 showRecents={showRecents}
                 enableRecents={recents.length > 0}
+                filterOrgFunc={(org, search) => filterOrgFunc(org, search)}
               />
               <WorkspaceList
                 selectedOrg={selectedOrg!}
@@ -368,6 +380,9 @@ function WorkspaceViewContents({
                   handleSelect(org, workspace, false)
                 }
                 selectedWorkspace={selectedWorkspace}
+                filterWorkspaceFunc={(workspace, search) =>
+                  filterWorkspaceFunc(workspace, search)
+                }
               />
             </div>
           ) : (
