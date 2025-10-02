@@ -110,7 +110,7 @@ export function CreateWorkspace({
             </div>
             <div className="flex flex-col">
               <div
-                className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-input/5 ease-in-out-expo mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 transition-[border-color] duration-500 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 data-[invalid=true]:border-red-400/75"
+                className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-neutral-softest ease-in-out-expo mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 transition-[border-color] duration-500 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 data-[invalid=true]:border-red-400/75"
                 onClick={focusInput}
                 data-invalid={isInvalid}
               >
@@ -145,7 +145,7 @@ export function CreateWorkspace({
                     placeholder="your-new-workspace"
                     value={newWorkspaceName}
                     onChange={handleChange}
-                    className="border-input text-foreground/80 placeholder:text-muted-foreground/50 ring-offset-background text-md flex h-10 w-full min-w-fit flex-1 flex-grow bg-transparent px-2 py-1.5 pl-0 text-lg outline-none"
+                    className="border-neutral-softest text-foreground/80 placeholder:text-muted-foreground/50 ring-offset-background text-md flex h-10 w-full min-w-fit flex-1 flex-grow bg-transparent px-2 py-1.5 pl-0 text-lg outline-none"
                   />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export function CreateWorkspace({
         </div>
       </div>
 
-      <div className="border-input bg-background flex border-t px-8 py-4">
+      <div className="border-neutral-softest bg-background flex border-t px-8 py-4">
         {backButtonEnabled && onBack && (
           <Button variant="secondary" onClick={onBack}>
             <Icon name="chevron-left" size="small" />

@@ -49,14 +49,14 @@ export function Input({
     onChange,
     placeholder,
     disabled,
-    onFocus: handleFocus,
-    onBlur: handleBlur,
   } as const
 
   let element: React.ReactNode = (
     <input
       {...commonProps}
       {...props}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       className={cn(
         'bg-surface-primary-default placeholder:text-placeholder text-default h-full w-full text-sm shadow-none outline-none disabled:cursor-not-allowed disabled:opacity-50',
         isFocused && 'placeholder:text-default'
@@ -69,6 +69,8 @@ export function Input({
       <textarea
         {...commonProps}
         {...props}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         cols={30}
         rows={10}
         className={cn(

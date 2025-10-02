@@ -1,5 +1,4 @@
 import { RefObject } from 'react'
-import { CommandInput } from '../Command'
 import { Icon } from '../Icon'
 
 interface SearchBoxProps {
@@ -16,13 +15,14 @@ export function SearchBox({
   placeholder,
 }: SearchBoxProps) {
   return (
-    <div className="relative flex items-center gap-2 border-b p-3">
-      <CommandInput
+    <div className="border-neutral-softest relative flex items-center gap-2 border-b p-3">
+      <Icon name="search" className="text-muted-foreground" />
+      <input
         ref={inputRef}
         placeholder={placeholder}
         value={search}
         className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-base outline-none disabled:cursor-not-allowed disabled:opacity-50"
-        onValueChange={setSearch}
+        onChange={(e) => setSearch(e.target.value)}
       />
 
       <div className="absolute right-3">
