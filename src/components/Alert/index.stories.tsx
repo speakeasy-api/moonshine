@@ -6,7 +6,7 @@ import { Button } from '../Button'
 const defaultDecorators = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Story: any) => (
-    <div className="m-auto flex h-screen max-w-3xl items-center">{Story()}</div>
+    <div className="m-auto flex max-w-6xl items-center p-10">{Story()}</div>
   ),
 ]
 const meta: Meta<typeof Alert> = {

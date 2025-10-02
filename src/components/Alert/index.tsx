@@ -57,7 +57,7 @@ const AlertIcon = React.forwardRef<
     className={cn('mt-2 size-6 flex-shrink-0 self-start', className)}
     {...props}
   >
-    {name && <Icon name={name} size={size} strokeWidth={1.5} />}
+    {name && <Icon name={name} size={size} strokeWidth={1.75} />}
   </div>
 ))
 AlertIcon.displayName = 'Alert.Icon'
