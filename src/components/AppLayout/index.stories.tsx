@@ -5,9 +5,11 @@ import { Heading } from '../Heading'
 import { Text } from '../Text'
 import { Icon } from '../Icon'
 import { Button } from '../Button'
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import React, { useState } from 'react'
 import { MoonshineConfigProvider } from '@/context/ConfigContext'
 import { useAppLayout } from '@/hooks/useAppLayout'
+import { useSidebarInteractionLock } from '@/hooks/useSidebarInteractionLock'
 
 type Story = StoryObj<typeof AppLayout>
 
@@ -583,4 +585,79 @@ export const WithHomeNavigationOnBrandLogo: Story = {
       </AppLayout.Surface>,
     ],
   },
+}
+
+const SidebarPopoverDemo = () => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+  const { collapsed } = useAppLayout()
+
+  // Use the hook to prevent sidebar collapse when popover is open
+  useSidebarInteractionLock(isPopoverOpen)
+
+  return (
+    <AppLayout>
+      <AppLayout.Sidebar>
+        <AppLayout.Nav>
+          <AppLayout.NavItem href="#" icon="house" title="Home">
+            Home
+          </AppLayout.NavItem>
+          <AppLayout.NavItem href="#" icon="settings" title="Settings">
+            Settings
+          </AppLayout.NavItem>
+          <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+            <PopoverTrigger asChild>
+              <button className="mt-1 flex flex-row items-center gap-3">
+                <Icon name="circle-plus" className="size-6" strokeWidth={1.1} />
+
+                {!collapsed && (
+                  <span className="typography-body-sm">Add new</span>
+                )}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="start" className="w-80">
+              <div className="space-y-2">
+                <h4 className="font-medium">Sidebar Popover</h4>
+                <p className="text-muted-foreground text-sm">
+                  This popover extends beyond the sidebar. When open, the
+                  sidebar won't auto-collapse when you hover over it.
+                </p>
+                <Button size="sm" onClick={() => setIsPopoverOpen(false)}>
+                  Close
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </AppLayout.Nav>
+      </AppLayout.Sidebar>
+      <AppLayout.SurfaceHeader>
+        <AppLayout.CollapseButton />
+        <AppLayout.HeaderDivider />
+
+        <Text variant="md">Sidebar Popover Demo</Text>
+      </AppLayout.SurfaceHeader>
+      <AppLayout.Surface className="p-4">
+        <div className="flex flex-col gap-1 space-y-4">
+          <Text>
+            This story demonstrates the sidebar interaction lock feature:
+          </Text>
+          <ul className="list-inside list-disc space-y-2 text-sm">
+            <li>Collapse the sidebar by clicking the toggle or using Cmd+B</li>
+            <li>Hover over the collapsed sidebar to expand it</li>
+            <li>Click the plus icon in the sidebar to open the popover</li>
+            <li>Move your mouse into the popover content</li>
+            <li>Notice the sidebar stays expanded instead of collapsing</li>
+            <li>Close the popover and the normal hover behavior resumes</li>
+          </ul>
+        </div>
+      </AppLayout.Surface>
+    </AppLayout>
+  )
+}
+
+export const WithSidebarPopover: Story = {
+  render: () => (
+    <AppLayoutProvider defaultCollapsed hoverExpandsSidebar>
+      <SidebarPopoverDemo />
+    </AppLayoutProvider>
+  ),
 }
