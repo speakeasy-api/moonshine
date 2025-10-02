@@ -9,7 +9,7 @@ import React from 'react'
 import { useModal } from '@/hooks/useModal'
 import { Screen } from '@/context/ModalContext'
 
-const MotionHeading = motion(Heading)
+const MotionHeading = motion.create(Heading)
 
 const animationDuration = 0.15
 
