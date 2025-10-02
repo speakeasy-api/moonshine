@@ -26,6 +26,18 @@ export interface AppLayoutContextType {
   // track if sidebar was expanded by hover vs manual toggle
   _expandedByHover: boolean
   _setExpandedByHover: (expandedByHover: boolean) => void
+
+  /**
+   * Prevents the sidebar from collapsing when interactive content
+   * (like popovers, dropdowns) extends beyond the sidebar boundaries.
+   * Returns a cleanup function to release the lock.
+   */
+  lockSidebarInteraction: () => () => void
+
+  /**
+   * Check if sidebar interaction is currently locked
+   */
+  isSidebarInteractionLocked: boolean
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
@@ -40,4 +52,6 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
   hoverExpandsSidebar: true,
   _expandedByHover: false,
   _setExpandedByHover: () => {},
+  lockSidebarInteraction: () => () => {},
+  isSidebarInteractionLocked: false,
 })

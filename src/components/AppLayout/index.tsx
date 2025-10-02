@@ -152,6 +152,7 @@ const AppLayoutSidebar = ({
     hoverExpandsSidebar,
     _expandedByHover,
     _setExpandedByHover,
+    isSidebarInteractionLocked,
   } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
@@ -218,6 +219,11 @@ const AppLayoutSidebar = ({
         hoverTimeoutRef.current = null
       }
 
+      // Don't auto-collapse if sidebar interaction is locked (e.g., popover is open)
+      if (isSidebarInteractionLocked) {
+        return
+      }
+
       // Only collapse if it was expanded by hover, not manually
       if (expandedByHoverRef.current) {
         setCollapsed(true)
@@ -238,7 +244,13 @@ const AppLayoutSidebar = ({
       sidebar.removeEventListener('mouseenter', handleMouseEnter)
       sidebar.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [hoverExpandsSidebar, collapsed, setCollapsed, _setExpandedByHover])
+  }, [
+    hoverExpandsSidebar,
+    collapsed,
+    setCollapsed,
+    _setExpandedByHover,
+    isSidebarInteractionLocked,
+  ])
 
   return (
     <motion.div
