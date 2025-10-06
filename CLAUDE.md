@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:27:34.139Z
+This section is auto-generated from the CSS files. Last updated: 2025-10-06T12:38:18.088Z
 
 ### Typography Utilities
 
@@ -258,7 +258,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -271,7 +274,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.1;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -284,7 +290,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.2;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -297,7 +306,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.3;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -310,7 +322,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.375;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -323,7 +338,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.4;
   letter-spacing: -0.04em;
   font-family: var(--font-tobias);
-  color: var(--text-display);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -336,7 +354,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.375;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-xl);
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
 }
 ```
 
@@ -349,7 +370,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.5;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-lg);
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
 }
 ```
 
@@ -362,7 +386,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-md);
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
 }
 ```
 
@@ -375,7 +402,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-sm);
+  color: var(--color-neutral-800);
+
+  /* dark variant */
+    color: var(--color-neutral-200);
 }
 ```
 
@@ -388,7 +418,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   line-height: 1.6;
   letter-spacing: 0.0015em;
   font-family: var(--font-diatype);
-  color: var(--text-heading-xs);
+  color: var(--color-neutral-800);
+
+  /* dark variant */
+    color: var(--color-neutral-200);
 }
 ```
 
@@ -526,7 +559,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-highlight {
-  color: var(--text-highlight);
+  color: var(--color-neutral-900);
+
+  /* dark variant */
+    color: var(--color-neutral-100);
 }
 ```
 
@@ -534,7 +570,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default {
-  color: var(--text-default);
+  color: var(--color-neutral-700);
+
+  /* dark variant */
+    color: var(--color-neutral-300);
 }
 ```
 
@@ -542,7 +581,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-muted {
-  color: var(--text-muted);
+  color: var(--color-neutral-900-64);
+
+  /* dark variant */
+    color: var(--color-neutral-100-64);
 }
 ```
 
@@ -550,7 +592,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-placeholder {
-  color: var(--text-placeholder);
+  color: var(--color-neutral-900-56);
+
+  /* dark variant */
+    color: var(--color-neutral-100-56);
 }
 ```
 
@@ -558,7 +603,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-disabled {
-  color: var(--text-disabled);
+  color: var(--color-neutral-900-40);
+
+  /* dark variant */
+    color: var(--color-neutral-100-40);
 }
 ```
 
@@ -566,7 +614,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-highlight-fixed-dark {
-  color: var(--text-highlight-fixed-dark);
+  color: var(--color-base-black);
 }
 ```
 
@@ -574,7 +622,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-fixed-dark {
-  color: var(--text-default-fixed-dark);
+  color: var(--color-neutral-900);
 }
 ```
 
@@ -582,7 +630,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-muted-fixed-dark {
-  color: var(--text-muted-fixed-dark);
+  color: var(--color-neutral-900-64);
 }
 ```
 
@@ -590,7 +638,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-highlight-fixed-light {
-  color: var(--text-highlight-fixed-light);
+  color: var(--color-base-white);
 }
 ```
 
@@ -598,7 +646,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-fixed-light {
-  color: var(--text-default-fixed-light);
+  color: var(--color-neutral-100);
 }
 ```
 
@@ -606,7 +654,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-muted-fixed-light {
-  color: var(--text-muted-fixed-light);
+  color: var(--color-neutral-100-64);
 }
 ```
 
@@ -614,7 +662,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-highlight-inverse {
-  color: var(--text-highlight-inverse);
+  color: var(--color-base-white);
+
+  /* dark variant */
+    color: var(--color-base-black);
 }
 ```
 
@@ -622,7 +673,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-inverse {
-  color: var(--text-default-inverse);
+  color: var(--color-neutral-100);
+
+  /* dark variant */
+    color: var(--color-neutral-900);
 }
 ```
 
@@ -630,7 +684,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-muted-inverse {
-  color: var(--text-muted-inverse);
+  color: var(--color-neutral-100-64);
+
+  /* dark variant */
+    color: var(--color-neutral-900-64);
 }
 ```
 
@@ -638,7 +695,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-primary {
-  color: var(--text-link-primary);
+  color: var(--color-brand-blue-600);
+
+  /* dark variant */
+    color: var(--color-brand-blue-300);
 }
 ```
 
@@ -646,7 +706,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-secondary {
-  color: var(--text-link-secondary);
+  color: var(--color-base-black);
+
+  /* dark variant */
+    color: var(--color-base-white);
 }
 ```
 
@@ -654,7 +717,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-visited {
-  color: var(--text-link-visited);
+  color: var(--color-feedback-violet-600);
+
+  /* dark variant */
+    color: var(--color-feedback-violet-300);
 }
 ```
 
@@ -662,7 +728,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-destructive {
-  color: var(--text-default-destructive);
+  color: var(--color-feedback-red-700);
+
+  /* dark variant */
+    color: var(--color-feedback-red-300);
 }
 ```
 
@@ -670,7 +739,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-destructive {
-  color: var(--text-link-destructive);
+  color: var(--color-feedback-red-900);
+
+  /* dark variant */
+    color: var(--color-feedback-red-100);
 }
 ```
 
@@ -678,7 +750,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-information {
-  color: var(--text-default-information);
+  color: var(--color-feedback-blue-700);
+
+  /* dark variant */
+    color: var(--color-feedback-blue-300);
 }
 ```
 
@@ -686,7 +761,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-information {
-  color: var(--text-link-information);
+  color: var(--color-feedback-blue-900);
+
+  /* dark variant */
+    color: var(--color-feedback-blue-100);
 }
 ```
 
@@ -694,7 +772,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-success {
-  color: var(--text-default-success);
+  color: var(--color-feedback-green-700);
+
+  /* dark variant */
+    color: var(--color-feedback-green-300);
 }
 ```
 
@@ -702,7 +783,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-success {
-  color: var(--text-link-success);
+  color: var(--color-feedback-green-900);
+
+  /* dark variant */
+    color: var(--color-feedback-green-100);
 }
 ```
 
@@ -710,7 +794,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-default-warning {
-  color: var(--text-default-warning);
+  color: var(--color-feedback-orange-700);
+
+  /* dark variant */
+    color: var(--color-feedback-orange-300);
 }
 ```
 
@@ -718,7 +805,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-link-warning {
-  color: var(--text-link-warning);
+  color: var(--color-feedback-orange-900);
+
+  /* dark variant */
+    color: var(--color-feedback-orange-100);
 }
 ```
 
@@ -989,7 +1079,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .text-warning {
-  color: var(--text-warning);
+  color: var(--color-feedback-orange-700);
+
+  /* dark variant */
+    color: var(--color-feedback-orange-300);
 }
 ```
 
@@ -1059,7 +1152,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-warning {
-  background-color: var(--bg-warning);
+  background-color: var(--color-feedback-orange-100);
+
+  /* dark variant */
+    background-color: var(--color-feedback-orange-900);
 }
 ```
 
@@ -1101,6 +1197,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 ```css
 .bg-btn-brand-disabled {
   background-color: var(--color-base-white);
+  opacity: 1;
+  color: var(--text-muted);
 
   /* dark variant */
     background-color: var(--color-base-black);
@@ -1249,7 +1347,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-primary-default {
-  background-color: var(--bg-surface-primary-default);
+  background-color: var(--color-base-white);
+
+  /* dark variant */
+    background-color: var(--color-base-black);
 }
 ```
 
@@ -1257,7 +1358,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-primary-inverse {
-  background-color: var(--bg-surface-primary-inverse);
+  background-color: var(--color-base-black);
+
+  /* dark variant */
+    background-color: var(--color-base-white);
 }
 ```
 
@@ -1265,7 +1369,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-secondary-default {
-  background-color: var(--bg-surface-secondary-default);
+  background-color: var(--color-neutral-100);
+
+  /* dark variant */
+    background-color: var(--color-neutral-900);
 }
 ```
 
@@ -1273,7 +1380,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-secondary-inverse {
-  background-color: var(--bg-surface-secondary-inverse);
+  background-color: var(--color-neutral-900);
+
+  /* dark variant */
+    background-color: var(--color-neutral-100);
 }
 ```
 
@@ -1281,7 +1391,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-tertiary-default {
-  background-color: var(--bg-surface-tertiary-default);
+  background-color: var(--color-neutral-200);
+
+  /* dark variant */
+    background-color: var(--color-neutral-800);
 }
 ```
 
@@ -1289,7 +1402,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-tertiary-inverse {
-  background-color: var(--bg-surface-tertiary-inverse);
+  background-color: var(--color-neutral-800);
+
+  /* dark variant */
+    background-color: var(--color-neutral-200);
 }
 ```
 
@@ -1297,7 +1413,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-highlight {
-  background-color: var(--bg-highlight);
+  background-color: var(--color-neutral-300);
+
+  /* dark variant */
+    background-color: var(--color-neutral-700);
 }
 ```
 
@@ -1305,7 +1424,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-active {
-  background-color: var(--bg-active);
+  background-color: var(--color-neutral-200);
+
+  /* dark variant */
+    background-color: var(--color-neutral-800);
 }
 ```
 
@@ -1313,7 +1435,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-default {
-  background-color: var(--bg-default);
+  background-color: var(--color-neutral-100);
+
+  /* dark variant */
+    background-color: var(--color-neutral-900);
 }
 ```
 
@@ -1321,7 +1446,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-muted {
-  background-color: var(--bg-muted);
+  background-color: var(--color-neutral-100-56);
+
+  /* dark variant */
+    background-color: var(--color-neutral-900-56);
 }
 ```
 
@@ -1329,7 +1457,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-inset {
-  background-color: var(--bg-inset);
+  background-color: var(--color-base-white);
+
+  /* dark variant */
+    background-color: var(--color-base-black);
 }
 ```
 
@@ -1337,7 +1468,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-primary-fixed-light {
-  background-color: var(--bg-surface-primary-fixed-light);
+  background-color: var(--color-base-white);
 }
 ```
 
@@ -1345,7 +1476,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-secondary-fixed-light {
-  background-color: var(--bg-surface-secondary-fixed-light);
+  background-color: var(--color-neutral-100);
 }
 ```
 
@@ -1353,7 +1484,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-tertiary-fixed-light {
-  background-color: var(--bg-surface-tertiary-fixed-light);
+  background-color: var(--color-neutral-200);
 }
 ```
 
@@ -1361,7 +1492,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-primary-fixed-dark {
-  background-color: var(--bg-surface-primary-fixed-dark);
+  background-color: var(--color-base-black);
 }
 ```
 
@@ -1369,7 +1500,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-secondary-fixed-dark {
-  background-color: var(--bg-surface-secondary-fixed-dark);
+  background-color: var(--color-neutral-900);
 }
 ```
 
@@ -1377,7 +1508,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-surface-tertiary-fixed-dark {
-  background-color: var(--bg-surface-tertiary-fixed-dark);
+  background-color: var(--color-neutral-800);
 }
 ```
 
@@ -1385,7 +1516,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-destructive-highlight {
-  background-color: var(--bg-destructive-highlight);
+  background-color: var(--color-feedback-red-600);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-400);
 }
 ```
 
@@ -1393,7 +1527,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-destructive-default {
-  background-color: var(--bg-destructive-default);
+  background-color: var(--color-feedback-red-500);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-500);
 }
 ```
 
@@ -1401,7 +1538,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-destructive-muted {
-  background-color: var(--bg-destructive-muted);
+  background-color: var(--color-feedback-red-500-56);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-500-56);
 }
 ```
 
@@ -1409,7 +1549,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-destructive-softest {
-  background-color: var(--bg-destructive-softest);
+  background-color: var(--color-feedback-red-100);
+
+  /* dark variant */
+    background-color: var(--color-feedback-red-900);
 }
 ```
 
@@ -1417,7 +1560,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-information-highlight {
-  background-color: var(--bg-information-highlight);
+  background-color: var(--color-feedback-blue-600);
+
+  /* dark variant */
+    background-color: var(--color-feedback-blue-400);
 }
 ```
 
@@ -1425,7 +1571,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-information-default {
-  background-color: var(--bg-information-default);
+  background-color: var(--color-feedback-blue-500);
+
+  /* dark variant */
+    background-color: var(--color-feedback-blue-500);
 }
 ```
 
@@ -1433,7 +1582,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-information-muted {
-  background-color: var(--bg-information-muted);
+  background-color: var(--color-feedback-blue-500-56);
+
+  /* dark variant */
+    background-color: var(--color-feedback-blue-500-56);
 }
 ```
 
@@ -1441,7 +1593,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-information-softest {
-  background-color: var(--bg-information-softest);
+  background-color: var(--color-feedback-blue-100);
+
+  /* dark variant */
+    background-color: var(--color-feedback-blue-900);
 }
 ```
 
@@ -1449,7 +1604,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-success-highlight {
-  background-color: var(--bg-success-highlight);
+  background-color: var(--color-feedback-green-600);
+
+  /* dark variant */
+    background-color: var(--color-feedback-green-400);
 }
 ```
 
@@ -1457,7 +1615,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-success-default {
-  background-color: var(--bg-success-default);
+  background-color: var(--color-feedback-green-500);
+
+  /* dark variant */
+    background-color: var(--color-feedback-green-500);
 }
 ```
 
@@ -1465,7 +1626,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-success-muted {
-  background-color: var(--bg-success-muted);
+  background-color: var(--color-feedback-green-500-56);
+
+  /* dark variant */
+    background-color: var(--color-feedback-green-500-56);
 }
 ```
 
@@ -1473,7 +1637,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-success-softest {
-  background-color: var(--bg-success-softest);
+  background-color: var(--color-feedback-green-100);
+
+  /* dark variant */
+    background-color: var(--color-feedback-green-900);
 }
 ```
 
@@ -1481,7 +1648,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-warning-highlight {
-  background-color: var(--bg-warning-highlight);
+  background-color: var(--color-feedback-orange-600);
+
+  /* dark variant */
+    background-color: var(--color-feedback-orange-400);
 }
 ```
 
@@ -1489,7 +1659,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-warning-default {
-  background-color: var(--bg-warning-default);
+  background-color: var(--color-feedback-orange-500);
+
+  /* dark variant */
+    background-color: var(--color-feedback-orange-500);
 }
 ```
 
@@ -1497,7 +1670,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-warning-muted {
-  background-color: var(--bg-warning-muted);
+  background-color: var(--color-feedback-orange-500-56);
+
+  /* dark variant */
+    background-color: var(--color-feedback-orange-500-56);
 }
 ```
 
@@ -1505,7 +1681,10 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .bg-warning-softest {
-  background-color: var(--bg-warning-softest);
+  background-color: var(--color-feedback-orange-100);
+
+  /* dark variant */
+    background-color: var(--color-feedback-orange-900);
 }
 ```
 
@@ -1523,7 +1702,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-warning {
-  border-color: var(--border-warning);
+  border-color: var(--color-feedback-orange-300);
   border-width: 1px;
   border-style: solid;
 }
@@ -1533,7 +1712,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-active {
-  border-color: var(--border-neutral-active);
+  border-color: var(--color-neutral-600);
 }
 ```
 
@@ -1541,7 +1720,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-hover {
-  border-color: var(--border-neutral-hover);
+  border-color: var(--color-neutral-500);
 }
 ```
 
@@ -1549,7 +1728,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-default {
-  border-color: var(--border-neutral-default);
+  border-color: var(--color-neutral-400);
 }
 ```
 
@@ -1557,7 +1736,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-disabled {
-  border-color: var(--border-neutral-disabled);
+  border-color: var(--color-neutral-400-40);
   opacity: 0.4;
 }
 ```
@@ -1566,7 +1745,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-softest {
-  border-color: var(--border-neutral-softest);
+  border-color: var(--color-neutral-200);
 }
 ```
 
@@ -1574,7 +1753,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-inset {
-  border-color: var(--border-neutral-inset);
+  border-color: var(--color-base-white);
 }
 ```
 
@@ -1582,7 +1761,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-neutral-alpha {
-  border-color: var(--border-neutral-alpha);
+  border-color: hsla(0, 0%, 0%, 0.2);
 }
 ```
 
@@ -1590,7 +1769,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-destructive-highlight {
-  border-color: var(--border-destructive-highlight);
+  border-color: var(--color-feedback-red-600);
 }
 ```
 
@@ -1598,7 +1777,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-destructive-default {
-  border-color: var(--border-destructive-default);
+  border-color: var(--color-feedback-red-500);
 }
 ```
 
@@ -1606,7 +1785,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-destructive-muted {
-  border-color: var(--border-destructive-muted);
+  border-color: var(--color-feedback-red-500-56);
 }
 ```
 
@@ -1614,7 +1793,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-destructive-softest {
-  border-color: var(--border-destructive-softest);
+  border-color: var(--color-feedback-red-300);
 }
 ```
 
@@ -1622,7 +1801,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-information-highlight {
-  border-color: var(--border-information-highlight);
+  border-color: var(--color-feedback-blue-600);
 }
 ```
 
@@ -1630,7 +1809,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-information-default {
-  border-color: var(--border-information-default);
+  border-color: var(--color-feedback-blue-500);
 }
 ```
 
@@ -1638,7 +1817,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-information-muted {
-  border-color: var(--border-information-muted);
+  border-color: var(--color-feedback-blue-500-56);
 }
 ```
 
@@ -1646,7 +1825,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-information-softest {
-  border-color: var(--border-information-softest);
+  border-color: var(--color-feedback-blue-300);
 }
 ```
 
@@ -1654,7 +1833,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-success-highlight {
-  border-color: var(--border-success-highlight);
+  border-color: var(--color-feedback-green-600);
 }
 ```
 
@@ -1662,7 +1841,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-success-default {
-  border-color: var(--border-success-default);
+  border-color: var(--color-feedback-green-500);
 }
 ```
 
@@ -1670,7 +1849,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-success-muted {
-  border-color: var(--border-success-muted);
+  border-color: var(--color-feedback-green-500-56);
 }
 ```
 
@@ -1678,7 +1857,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-success-softest {
-  border-color: var(--border-success-softest);
+  border-color: var(--color-feedback-green-300);
 }
 ```
 
@@ -1686,7 +1865,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-warning-highlight {
-  border-color: var(--border-warning-highlight);
+  border-color: var(--color-feedback-orange-600);
 }
 ```
 
@@ -1694,7 +1873,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-warning-default {
-  border-color: var(--border-warning-default);
+  border-color: var(--color-feedback-orange-500);
 }
 ```
 
@@ -1702,7 +1881,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-warning-muted {
-  border-color: var(--border-warning-muted);
+  border-color: var(--color-feedback-orange-500-56);
 }
 ```
 
@@ -1710,7 +1889,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-warning-softest {
-  border-color: var(--border-warning-softest);
+  border-color: var(--color-feedback-orange-300);
 }
 ```
 
@@ -1718,7 +1897,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .border-focus {
-  border-color: var(--border-focus);
+  border-color: var(--color-brand-blue-600);
 }
 ```
 
@@ -1737,7 +1916,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .underline-link-primary {
-  color: var(--underline-link-primary);
+  color: var(--color-brand-blue-600);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
 }
@@ -1747,7 +1926,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .underline-link-secondary {
-  color: var(--underline-link-secondary);
+  color: var(--color-base-black);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
 }
@@ -1757,7 +1936,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .underline-link-visited {
-  color: var(--underline-link-visited);
+  color: var(--color-feedback-violet-600);
   text-decoration: underline;
   text-underline-offset: 0.125rem;
 }
@@ -1767,7 +1946,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-highlight {
-  fill: var(--fill-neutral-highlight);
+  fill: var(--color-base-black);
 }
 ```
 
@@ -1775,7 +1954,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-active {
-  fill: var(--fill-neutral-active);
+  fill: var(--color-neutral-900);
 }
 ```
 
@@ -1783,7 +1962,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-default {
-  fill: var(--fill-neutral-default);
+  fill: var(--color-neutral-800);
 }
 ```
 
@@ -1791,7 +1970,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-muted {
-  fill: var(--fill-neutral-muted);
+  fill: var(--color-neutral-800-56);
 }
 ```
 
@@ -1799,7 +1978,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-highlight-fixed-dark {
-  fill: var(--fill-neutral-highlight-fixed-dark);
+  fill: var(--color-base-black);
 }
 ```
 
@@ -1807,7 +1986,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-default-fixed-dark {
-  fill: var(--fill-neutral-default-fixed-dark);
+  fill: var(--color-neutral-800);
 }
 ```
 
@@ -1815,7 +1994,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-muted-fixed-dark {
-  fill: var(--fill-neutral-muted-fixed-dark);
+  fill: var(--color-neutral-900-56);
 }
 ```
 
@@ -1823,7 +2002,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-highlight-fixed-light {
-  fill: var(--fill-neutral-highlight-fixed-light);
+  fill: var(--color-base-white);
 }
 ```
 
@@ -1831,7 +2010,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-default-fixed-light {
-  fill: var(--fill-neutral-default-fixed-light);
+  fill: var(--color-neutral-100);
 }
 ```
 
@@ -1839,7 +2018,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-muted-fixed-light {
-  fill: var(--fill-neutral-muted-fixed-light);
+  fill: var(--color-neutral-100-56);
 }
 ```
 
@@ -1847,7 +2026,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-highlight-inverse {
-  fill: var(--fill-neutral-highlight-inverse);
+  fill: var(--color-base-white);
 }
 ```
 
@@ -1855,7 +2034,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-default-inverse {
-  fill: var(--fill-neutral-default-inverse);
+  fill: var(--color-neutral-100);
 }
 ```
 
@@ -1863,7 +2042,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-neutral-muted-inverse {
-  fill: var(--fill-neutral-muted-inverse);
+  fill: var(--color-neutral-100-56);
 }
 ```
 
@@ -1871,7 +2050,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-link-primary {
-  fill: var(--fill-link-primary);
+  fill: var(--color-brand-blue-600);
 }
 ```
 
@@ -1879,7 +2058,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-link-secondary {
-  fill: var(--fill-link-secondary);
+  fill: var(--color-base-black);
 }
 ```
 
@@ -1887,7 +2066,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-link-visited {
-  fill: var(--fill-link-visited);
+  fill: var(--color-feedback-violet-600);
 }
 ```
 
@@ -1895,7 +2074,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-destructive-highlight {
-  fill: var(--fill-destructive-highlight);
+  fill: var(--color-feedback-red-600);
 }
 ```
 
@@ -1903,7 +2082,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-destructive-default {
-  fill: var(--fill-destructive-default);
+  fill: var(--color-feedback-red-500);
 }
 ```
 
@@ -1911,7 +2090,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-destructive-muted {
-  fill: var(--fill-destructive-muted);
+  fill: var(--color-feedback-red-600-56);
 }
 ```
 
@@ -1919,7 +2098,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-information-highlight {
-  fill: var(--fill-information-highlight);
+  fill: var(--color-feedback-blue-600);
 }
 ```
 
@@ -1927,7 +2106,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-information-default {
-  fill: var(--fill-information-default);
+  fill: var(--color-feedback-blue-500);
 }
 ```
 
@@ -1935,7 +2114,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-information-muted {
-  fill: var(--fill-information-muted);
+  fill: var(--color-feedback-blue-500-56);
 }
 ```
 
@@ -1943,7 +2122,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-success-highlight {
-  fill: var(--fill-success-highlight);
+  fill: var(--color-feedback-green-600);
 }
 ```
 
@@ -1951,7 +2130,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-success-default {
-  fill: var(--fill-success-default);
+  fill: var(--color-feedback-green-500);
 }
 ```
 
@@ -1959,7 +2138,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-success-muted {
-  fill: var(--fill-success-muted);
+  fill: var(--color-feedback-green-500-56);
 }
 ```
 
@@ -1967,7 +2146,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-warning-highlight {
-  fill: var(--fill-warning-highlight);
+  fill: var(--color-feedback-orange-600);
 }
 ```
 
@@ -1975,7 +2154,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-warning-default {
-  fill: var(--fill-warning-default);
+  fill: var(--color-feedback-orange-500);
 }
 ```
 
@@ -1983,7 +2162,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .fill-warning-muted {
-  fill: var(--fill-warning-muted);
+  fill: var(--color-feedback-orange-500-56);
 }
 ```
 
@@ -1991,7 +2170,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-highlight {
-  stroke: var(--stroke-neutral-highlight);
+  stroke: var(--color-base-black);
 }
 ```
 
@@ -1999,7 +2178,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-active {
-  stroke: var(--stroke-neutral-active);
+  stroke: var(--color-neutral-900);
 }
 ```
 
@@ -2007,7 +2186,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-default {
-  stroke: var(--stroke-neutral-default);
+  stroke: var(--color-neutral-800);
 }
 ```
 
@@ -2015,7 +2194,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-muted {
-  stroke: var(--stroke-neutral-muted);
+  stroke: var(--color-neutral-800-56);
 }
 ```
 
@@ -2023,7 +2202,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-highlight-fixed-dark {
-  stroke: var(--stroke-neutral-highlight-fixed-dark);
+  stroke: var(--color-base-black);
 }
 ```
 
@@ -2031,7 +2210,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-default-fixed-dark {
-  stroke: var(--stroke-neutral-default-fixed-dark);
+  stroke: var(--color-neutral-800);
 }
 ```
 
@@ -2039,7 +2218,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-muted-fixed-dark {
-  stroke: var(--stroke-neutral-muted-fixed-dark);
+  stroke: var(--color-neutral-900-56);
 }
 ```
 
@@ -2047,7 +2226,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-highlight-fixed-light {
-  stroke: var(--stroke-neutral-highlight-fixed-light);
+  stroke: var(--color-base-white);
 }
 ```
 
@@ -2055,7 +2234,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-default-fixed-light {
-  stroke: var(--stroke-neutral-default-fixed-light);
+  stroke: var(--color-neutral-100);
 }
 ```
 
@@ -2063,7 +2242,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-muted-fixed-light {
-  stroke: var(--stroke-neutral-muted-fixed-light);
+  stroke: var(--color-neutral-100-56);
 }
 ```
 
@@ -2071,7 +2250,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-highlight-inverse {
-  stroke: var(--stroke-neutral-highlight-inverse);
+  stroke: var(--color-base-white);
 }
 ```
 
@@ -2079,7 +2258,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-default-inverse {
-  stroke: var(--stroke-neutral-default-inverse);
+  stroke: var(--color-neutral-100);
 }
 ```
 
@@ -2087,7 +2266,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-neutral-muted-inverse {
-  stroke: var(--stroke-neutral-muted-inverse);
+  stroke: var(--color-neutral-100-56);
 }
 ```
 
@@ -2095,7 +2274,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-link-primary {
-  stroke: var(--stroke-link-primary);
+  stroke: var(--color-brand-blue-600);
 }
 ```
 
@@ -2103,7 +2282,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-link-secondary {
-  stroke: var(--stroke-link-secondary);
+  stroke: var(--color-base-black);
 }
 ```
 
@@ -2111,7 +2290,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-link-visited {
-  stroke: var(--stroke-link-visited);
+  stroke: var(--color-feedback-violet-600);
 }
 ```
 
@@ -2119,7 +2298,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-destructive-highlight {
-  stroke: var(--stroke-destructive-highlight);
+  stroke: var(--color-feedback-red-600);
 }
 ```
 
@@ -2127,7 +2306,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-destructive-default {
-  stroke: var(--stroke-destructive-default);
+  stroke: var(--color-feedback-red-500);
 }
 ```
 
@@ -2135,7 +2314,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-destructive-muted {
-  stroke: var(--stroke-destructive-muted);
+  stroke: var(--color-feedback-red-600-56);
 }
 ```
 
@@ -2143,7 +2322,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-information-highlight {
-  stroke: var(--stroke-information-highlight);
+  stroke: var(--color-feedback-blue-600);
 }
 ```
 
@@ -2151,7 +2330,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-information-default {
-  stroke: var(--stroke-information-default);
+  stroke: var(--color-feedback-blue-500);
 }
 ```
 
@@ -2159,7 +2338,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-information-muted {
-  stroke: var(--stroke-information-muted);
+  stroke: var(--color-feedback-blue-500-56);
 }
 ```
 
@@ -2167,7 +2346,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-success-highlight {
-  stroke: var(--stroke-success-highlight);
+  stroke: var(--color-feedback-green-600);
 }
 ```
 
@@ -2175,7 +2354,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-success-default {
-  stroke: var(--stroke-success-default);
+  stroke: var(--color-feedback-green-500);
 }
 ```
 
@@ -2183,7 +2362,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-success-muted {
-  stroke: var(--stroke-success-muted);
+  stroke: var(--color-feedback-green-500-56);
 }
 ```
 
@@ -2191,7 +2370,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-warning-highlight {
-  stroke: var(--stroke-warning-highlight);
+  stroke: var(--color-feedback-orange-600);
 }
 ```
 
@@ -2199,7 +2378,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-warning-default {
-  stroke: var(--stroke-warning-default);
+  stroke: var(--color-feedback-orange-500);
 }
 ```
 
@@ -2207,7 +2386,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 
 ```css
 .stroke-warning-muted {
-  stroke: var(--stroke-warning-muted);
+  stroke: var(--color-feedback-orange-500-56);
 }
 ```
 
