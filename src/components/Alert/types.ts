@@ -4,7 +4,7 @@ export const variants = [
   'error',
   'warning',
   'info',
-  'feature',
+  'brand',
 ] as const
 export type Variant = (typeof variants)[number]
 
