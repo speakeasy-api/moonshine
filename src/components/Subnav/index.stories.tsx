@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Subnav>
 const defaultRenderItem = (item: { label: string; href: string }) => (
   <div className="px-4 py-3 text-sm">
     {item.label}{' '}
-    {item.label === 'Contact' && <Badge variant="secondary">new</Badge>}
+    {item.label === 'Contact' && <Badge variant="neutral">new</Badge>}
   </div>
 )
 

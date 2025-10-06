@@ -19,6 +19,16 @@ export type ButtonSize = (typeof buttonSizes)[number]
 export const buttonContexts = ['product', 'marketing'] as const
 export type ButtonContext = (typeof buttonContexts)[number]
 
+// Badge variants
+export const badgeVariants = [
+  'neutral',
+  'destructive',
+  'information',
+  'success',
+  'warning',
+] as const
+export type BadgeVariant = (typeof badgeVariants)[number]
+
 // Generic
 export type Orientation = 'horizontal' | 'vertical'
 
