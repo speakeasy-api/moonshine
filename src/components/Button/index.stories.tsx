@@ -411,3 +411,200 @@ export const WithStates: Story = {
     </div>
   ),
 }
+
+export const RainbowButtonZIndexFix: Story = {
+  render: () => (
+    <div className="relative z-50 space-y-4">
+      <Button variant="brand">Normal</Button>
+    </div>
+  ),
+}
+
+export const BrandButtonInStackingContexts: Story = {
+  name: 'Brand Button in Various Stacking Contexts',
+  render: () => (
+    <div className="space-y-8 p-4">
+      <div>
+        <h3 className="mb-4 text-sm font-medium">
+          ✅ Brand Button Working in All Contexts
+        </h3>
+        <p className="text-muted mb-6 text-sm">
+          The brand button now works correctly in all stacking contexts thanks
+          to built-in fixes.
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <h4 className="mb-3 text-sm font-medium">Flex Containers</h4>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 rounded border bg-white p-3">
+              <span>Navigation:</span>
+              <Button variant="brand" size="sm">
+                <Button.LeftIcon>
+                  <PlusIcon />
+                </Button.LeftIcon>
+                <Button.Text>Add</Button.Text>
+              </Button>
+            </div>
+
+            <div className="flex min-h-8 max-w-full items-center gap-1.5 truncate rounded border bg-white p-2">
+              <a className="text-muted-foreground hover:text-foreground cursor-pointer rounded px-1.5">
+                Home
+              </a>
+              <span className="text-muted-foreground">/</span>
+              <a className="text-muted-foreground hover:text-foreground cursor-pointer rounded px-1.5">
+                Projects
+              </a>
+              <div className="ml-auto">
+                <Button variant="brand" size="sm">
+                  <Button.LeftIcon>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="4,17 10,11 4,5"></polyline>
+                      <line x1="12" x2="20" y1="19" y2="19"></line>
+                    </svg>
+                  </Button.LeftIcon>
+                  <Button.Text>Generate</Button.Text>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="mb-3 text-sm font-medium">Grid Layouts</h4>
+          <div className="grid grid-cols-[1fr_auto] items-center gap-4 rounded border bg-white p-3">
+            <div>
+              <h5 className="font-medium">Project Settings</h5>
+              <p className="text-muted text-sm">Configure your project</p>
+            </div>
+            <Button variant="brand">
+              <Button.Text>Save Changes</Button.Text>
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="mb-3 text-sm font-medium">High Z-Index Contexts</h4>
+          <div className="relative z-[9999] rounded border bg-white p-3">
+            <div className="flex items-center justify-between">
+              <span>Modal Header</span>
+              <Button variant="brand" size="sm">
+                <Button.Text>Action</Button.Text>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="mb-3 text-sm font-medium">Transform Contexts</h4>
+          <div className="scale-100 transform rounded border bg-white p-3">
+            <div className="flex items-center gap-3">
+              <span>Transformed container:</span>
+              <Button variant="brand" size="sm">
+                <Button.Text>Works!</Button.Text>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="mb-3 text-sm font-medium">
+            Overflow Hidden Containers
+          </h4>
+          <div className="overflow-hidden rounded border bg-white p-3">
+            <div className="flex items-center gap-3">
+              <span>Clipped container:</span>
+              <Button variant="brand" size="sm">
+                <Button.Text>Still works!</Button.Text>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="mb-3 text-sm font-medium">Complex Nested Layouts</h4>
+          <div className="bg-surface-secondary rounded-lg p-4">
+            <div className="bg-surface-primary rounded border">
+              <div className="flex items-center justify-between border-b p-4">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">Complex Layout</span>
+                </div>
+                <Button variant="brand" size="sm">
+                  <Button.LeftIcon>
+                    <PlusIcon />
+                  </Button.LeftIcon>
+                  <Button.Text>Create</Button.Text>
+                </Button>
+              </div>
+              <div className="p-4 pb-6">
+                <div className="flex min-h-8 max-w-full items-center gap-1.5">
+                  <a className="text-muted-foreground hover:text-foreground cursor-pointer rounded px-1.5">
+                    Workspace
+                  </a>
+                  <span className="text-muted-foreground">/</span>
+                  <a className="text-muted-foreground hover:text-foreground cursor-pointer rounded px-1.5">
+                    Project
+                  </a>
+                  <span className="text-muted-foreground">/</span>
+                  <span className="text-foreground">Current</span>
+                  <div className="ml-auto">
+                    <Button variant="brand" size="sm">
+                      <Button.LeftIcon>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="4,17 10,11 4,5"></polyline>
+                          <line x1="12" x2="20" y1="19" y2="19"></line>
+                        </svg>
+                      </Button.LeftIcon>
+                      <Button.Text>Generate</Button.Text>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates the brand button working correctly in various stacking contexts that previously caused issues with the rainbow outline.
+
+**Fixed Issues:**
+- ✅ Flex containers with \`items-center\`
+- ✅ Containers with \`overflow: hidden\`
+- ✅ High z-index contexts
+- ✅ Transform contexts
+- ✅ Complex nested layouts
+- ✅ Grid layouts
+
+**Technical Solution:**
+The component now uses \`transform: translateZ(0)\` to create an isolated stacking context and a separate background span element to ensure proper layering of the rainbow outline pseudo-elements.
+        `,
+      },
+    },
+  },
+}
