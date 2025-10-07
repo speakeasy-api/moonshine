@@ -107,7 +107,7 @@ const buttonVariants = cva(
       },
       variant: {
         brand:
-          'relative bg-btn-brand hover:bg-btn-brand-hover text-btn-brand hover:text-btn-brand-hover disabled:bg-btn-brand-disabled disabled:text-btn-brand-disabled before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-[2px] focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
+          'relative text-btn-brand hover:text-btn-brand-hover disabled:text-btn-brand-disabled [transform:translateZ(0)] before:absolute before:content-[""] before:-z-10 before:pointer-events-none [--gradient-rotation:220deg] before:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:absolute after:content-[""] after:-z-20 after:pointer-events-none after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100 after:bg-[conic-gradient(from_var(--gradient-rotation),hsl(334,54%,13%),hsl(4,67%,47%),hsl(23,96%,62%),hsl(68,52%,72%),hsl(108,24%,41%),hsl(154,100%,7%),hsl(220,100%,12%),hsl(214,69%,50%),hsl(216,100%,80%),hsl(334,54%,13%))] after:blur-[2px] focus-visible:ring-2 focus-visible:ring-offset-3 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)]',
         primary:
           'bg-btn-primary text-btn-primary shadow-[0px_2px_1px_0px_rgba(255,255,255,0.1)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.2)_inset] hover:bg-btn-primary-hover hover:text-btn-primary-hover hover:shadow-[0px_2px_1px_0px_rgba(255,255,255,0.08)_inset,0px_-2px_1px_0px_rgba(0,0,0,0.25)_inset] active:bg-btn-primary-active active:text-btn-primary-active active:shadow-none disabled:bg-btn-primary-disabled disabled:text-btn-primary-disabled',
         secondary:
@@ -430,7 +430,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onMouseUp={handleMouseUp}
         {...props}
       >
-        {processedChildren}
+        {isBrandVariant && (
+          <span className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 z-10 rounded-[inherit]" />
+        )}
+        <span className={cn('relative z-20', isBrandVariant ? '' : '')}>
+          {processedChildren}
+        </span>
       </Comp>
     )
   }
