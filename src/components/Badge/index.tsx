@@ -46,7 +46,7 @@ const BadgeText = React.forwardRef<
 BadgeText.displayName = 'BadgeText'
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap select-none font-mono uppercase tracking-[0.03em] rounded-xs border transition-colors h-5 px-1 py-1 text-[12px] leading-[12px] gap-1 [&_svg]:size-3',
+  'inline-flex items-center justify-center whitespace-nowrap select-none font-mono uppercase tracking-[0.01em] rounded-xs border transition-colors h-5 px-1 py-1 text-[12px] leading-[12px] gap-1 [&_svg]:size-3',
   {
     variants: {
       variant: {
