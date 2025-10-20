@@ -144,7 +144,7 @@ const AppLayoutSidebar = ({
   children,
   className,
   onHomeNavigation,
-  hoverIntentDelay = 500,
+  hoverIntentDelay = 700,
 }: AppLayoutSidebarProps) => {
   const {
     collapsed,
