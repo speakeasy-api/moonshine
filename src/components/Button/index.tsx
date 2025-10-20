@@ -249,6 +249,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const isBrandVariant = variant === 'brand'
 
+    // Get gap class for the current size
+    const getGapClass = (size: ButtonSize) => {
+      switch (size) {
+        case 'xs':
+          return 'gap-1'
+        case 'sm':
+          return 'gap-1.5'
+        case 'md':
+          return 'gap-2'
+        case 'lg':
+          return 'gap-2.5'
+        default:
+          return 'gap-2'
+      }
+    }
+
     // Only run animation frame when brand variant is active
     useAnimationFrame(
       React.useCallback(
@@ -430,12 +446,24 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onMouseUp={handleMouseUp}
         {...props}
       >
-        {isBrandVariant && (
-          <span className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 z-10 rounded-[inherit]" />
+        {asChild ? (
+          props.children
+        ) : (
+          <>
+            {isBrandVariant && (
+              <span className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 z-10 rounded-[inherit]" />
+            )}
+            <span
+              className={cn(
+                'relative flex items-center justify-center',
+                getGapClass(size),
+                isBrandVariant ? `z-20` : ''
+              )}
+            >
+              {processedChildren}
+            </span>
+          </>
         )}
-        <span className={cn('relative z-20', isBrandVariant ? '' : '')}>
-          {processedChildren}
-        </span>
       </Comp>
     )
   }
