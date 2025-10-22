@@ -18,7 +18,7 @@ export const Pre = forwardRef<HTMLPreElement, PreProps>(
       <pre
         ref={ref}
         className={cn(
-          'inline-block font-mono outline-none',
+          'inline-block w-full font-mono outline-none',
           wordWrap && 'whitespace-pre-wrap',
           className
         )}
