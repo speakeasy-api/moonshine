@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:27:34.139Z
+This section is auto-generated from the CSS files. Last updated: 2025-10-22T12:39:42.229Z
 
 ### Typography Utilities
 
@@ -1101,6 +1101,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 ```css
 .bg-btn-brand-disabled {
   background-color: var(--color-base-white);
+  opacity: 1;
+  color: var(--text-muted);
 
   /* dark variant */
     background-color: var(--color-base-black);

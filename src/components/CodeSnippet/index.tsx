@@ -1,13 +1,18 @@
-import { useCallback, useState, useEffect, useRef, useMemo } from 'react'
+import { useCallback, useState, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { ProgrammingLanguage, Size } from '@/types'
-import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import { AnimatePresence, motion } from 'motion/react'
 import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
-import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
+import {
+  highlightCode,
+  HighlightedCode,
+  LIGHT_THEME,
+  DARK_THEME,
+} from '@/lib/codeUtils'
 import { useConfig } from '@/hooks/useConfig'
+import { Pre } from '../CodeHighlight/Pre'
 
 export interface CodeSnippetProps {
   /**
@@ -19,8 +24,8 @@ export interface CodeSnippetProps {
    */
   copyable?: boolean
   /**
-   * One of the known Speakeasy target languages, or a language that Codehike supports.
-   * The full list of supported languages is available at https://codehike.org/docs/concepts/code#languages
+   * One of the known Speakeasy target languages, or a language that Shiki supports.
+   * The full list of supported languages is available at https://shiki.style/languages
    */
   language: ProgrammingLanguage | string
   /**
@@ -53,13 +58,9 @@ export interface CodeSnippetProps {
   className?: string
 
   /**
-   * Additional CSS classes to apply to the code snippet inner container (e.g the Codehike Pre component).
+   * Additional CSS classes to apply to the code snippet inner container (e.g the Pre component).
    */
   snippetClassName?: string
-  /**
-   * Custom annotation handlers to be added to the default handlers.
-   */
-  customHandlers?: AnnotationHandler[]
 }
 
 const fontSizeMap: Record<Size, string> = {
@@ -87,7 +88,6 @@ export function CodeSnippet({
   className,
   snippetClassName,
   showLineNumbers = false,
-  customHandlers = [],
 }: CodeSnippetProps) {
   const [copying, setCopying] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
@@ -122,21 +122,16 @@ export function CodeSnippet({
   const isMultiline = code.split('\n').length > 1
   const { theme } = useConfig()
 
-  // Get the code handlers for line numbers and animations, then add custom handlers
-  const preHandlers = useMemo<AnnotationHandler[]>(() => {
-    const defaultHandlers = getCodeHandlers(showLineNumbers, true)
-    return [...defaultHandlers, ...customHandlers]
-  }, [showLineNumbers, customHandlers])
-
   // Directly highlight the code when code or language changes
   useEffect(() => {
     if (!language) return
 
+    const shikiTheme = theme === 'dark' ? DARK_THEME : LIGHT_THEME
     // Use the highlightCode utility directly
-    highlightCode(code, language).then((highlighted) => {
+    highlightCode(code, language, shikiTheme).then((highlighted) => {
       setHighlightedCodeState(highlighted)
     })
-  }, [code, language])
+  }, [code, language, theme])
 
   const handleCopy = useCallback(() => {
     setCopying(true)
@@ -179,7 +174,7 @@ export function CodeSnippet({
               snippetClassName
             )}
             onBeforeInput={handleBeforeInput}
-            handlers={preHandlers}
+            showLineNumbers={showLineNumbers}
           />
         )}
 

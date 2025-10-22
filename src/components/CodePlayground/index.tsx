@@ -1,4 +1,3 @@
-import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import {
   useCallback,
   useEffect,
@@ -18,15 +17,21 @@ import {
   SelectValue,
 } from '@/components/Select'
 import { prettyLanguageName, SupportedLanguage } from '@/types'
-import { wordWrapping } from './wordWrap'
 import '@/styles/codeSyntax.css'
 import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { AnimatePresence } from 'motion/react'
 import { Icon } from '@/components/Icon'
 import { Skeleton } from '@/components/Skeleton'
-import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
+import {
+  highlightCode,
+  HighlightedCode,
+  LIGHT_THEME,
+  DARK_THEME,
+} from '@/lib/codeUtils'
 import React from 'react'
+import { Pre } from '../CodeHighlight/Pre'
+import { useConfig } from '@/hooks/useConfig'
 
 const copyIconVariants = {
   hidden: { opacity: 0, scale: 0.5 },
@@ -100,13 +105,6 @@ export interface CodePlaygroundProps {
   onChangeLanguage?: (language: SupportedLanguage) => void
 
   /**
-   * Whether to animate the code when the language is changed.
-   *
-   * @default true
-   */
-  animateOnLanguageChange?: boolean
-
-  /**
    * Whether to show the language selector.
    */
   showLanguageSelector?: boolean
@@ -127,7 +125,6 @@ const CodePlayground = ({
   className,
   onChangeLanguage,
   error,
-  animateOnLanguageChange = true,
   showLineNumbers = true,
   showLanguageSelector = true,
   wordWrap = true,
@@ -158,22 +155,8 @@ const CodePlayground = ({
   )
 
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
-  const selectedCode = useMemo<CodePlaygroundSnippet>(
-    () => snippets[selectedLanguage]!,
-    [selectedLanguage, snippets]
-  )
-
-  const preHandlers = useMemo<AnnotationHandler[]>(() => {
-    // Get the base handlers (lineNumbers and tokenTransitions)
-    const handlers = getCodeHandlers(showLineNumbers, animateOnLanguageChange)
-
-    // Add wordWrap handler if needed
-    if (wordWrap) {
-      handlers.push(wordWrapping)
-    }
-
-    return handlers
-  }, [animateOnLanguageChange, showLineNumbers, wordWrap])
+  const selectedCode = snippets[selectedLanguage]!
+  const { theme } = useConfig()
 
   const loadingSkeleton = useMemo(() => {
     // Try to measure the existing height of the code container if code has
@@ -193,19 +176,18 @@ const CodePlayground = ({
     )
   }, [codeRef.current])
 
-  const codeContents = useMemo(() => {
-    return error ? (
-      error
-    ) : selectedCode.loading ? (
-      <div className="flex items-center p-4">{loadingSkeleton}</div>
-    ) : highlighted ? (
-      <Pre
-        code={highlighted}
-        handlers={preHandlers}
-        className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
-      />
-    ) : null
-  }, [selectedCode.loading, highlighted, error])
+  const codeContents = error ? (
+    error
+  ) : selectedCode.loading ? (
+    <div className="flex items-center p-4">{loadingSkeleton}</div>
+  ) : highlighted ? (
+    <Pre
+      code={highlighted}
+      showLineNumbers={showLineNumbers}
+      wordWrap={wordWrap}
+      className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
+    />
+  ) : null
 
   const foundCustomCodeContainer = useMemo(
     () =>
@@ -218,35 +200,29 @@ const CodePlayground = ({
     [validChildren]
   )
 
-  const code = useMemo(
-    () =>
-      foundCustomCodeContainer ? (
-        React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
-          __children__: codeContents,
-          ref: codeRef,
-        })
-      ) : (
-        <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
-      ),
-    [foundCustomCodeContainer, codeContents]
+  const code = foundCustomCodeContainer ? (
+    React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
+      __children__: codeContents,
+      ref: codeRef,
+    })
+  ) : (
+    <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
   )
-  const footer = useMemo(
-    () =>
-      validChildren.find(
-        (child) =>
-          isValidElement(child) &&
-          (child.type as { displayName?: string }).displayName ===
-            'CodePlayground.Footer'
-      ),
-    [validChildren]
+
+  const footer = validChildren.find(
+    (child) =>
+      isValidElement(child) &&
+      (child.type as { displayName?: string }).displayName ===
+        'CodePlayground.Footer'
   )
 
   const updateHighlighted = useCallback(
     async (code: string, language: SupportedLanguage) => {
-      const highlighted = await highlightCode(code, language)
+      const shikiTheme = theme === 'dark' ? DARK_THEME : LIGHT_THEME
+      const highlighted = await highlightCode(code, language, shikiTheme)
       setHighlighted(highlighted)
     },
-    []
+    [theme]
   )
 
   const [copying, setCopying] = useState(false)
@@ -263,13 +239,7 @@ const CodePlayground = ({
     if (selectedCode.code) {
       updateHighlighted(selectedCode.code, selectedLanguage)
     }
-  }, [selectedCode, selectedLanguage])
-
-  useEffect(() => {
-    if (selectedCode.code) {
-      updateHighlighted(selectedCode.code, selectedLanguage)
-    }
-  }, [selectedCode, selectedLanguage])
+  }, [selectedCode, selectedLanguage, updateHighlighted])
 
   const handleChangeLanguage = useCallback(
     (language: SupportedLanguage) => {

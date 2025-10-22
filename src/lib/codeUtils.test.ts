@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest'
 import {
   removeCodeHikeAnnotations,
   highlightCode,
-  getCodeHandlers,
   getMappedLanguage,
   isProgrammingLanguage,
-  CODEHIKE_THEME,
+  LIGHT_THEME,
+  DARK_THEME,
 } from './codeUtils'
 import { ProgrammingLanguage } from '@/types'
 
@@ -97,33 +97,28 @@ const x = 1`
   describe('highlightCode', () => {
     it('should highlight code with supported language', async () => {
       const result = await highlightCode('console.log("test")', 'typescript')
-      expect(result).toHaveProperty('value')
+      expect(result).toHaveProperty('lines')
+      expect(result).toHaveProperty('code')
+      expect(result).toHaveProperty('lang')
+      expect(result.lines).toBeInstanceOf(Array)
+      expect(result.code).toBe('console.log("test")')
     })
 
-    it('should handle unsupported language', async () => {
+    it('should handle unsupported language gracefully', async () => {
       const result = await highlightCode('console.log("test")', 'unsupported')
-      expect(result).toHaveProperty('value')
-    })
-  })
-
-  describe('getCodeHandlers', () => {
-    it('should return only transitions by default', () => {
-      const handlers = getCodeHandlers()
-      expect(handlers).toHaveLength(1)
-      expect(handlers[0]).toBeDefined()
+      expect(result).toHaveProperty('lines')
+      expect(result).toHaveProperty('code')
+      expect(result.code).toBe('console.log("test")')
     })
 
-    it('should include line numbers and transitions when line numbers are enabled', () => {
-      const handlers = getCodeHandlers(true)
-      expect(handlers).toHaveLength(2)
-      expect(handlers[0]).toBeDefined()
-      expect(handlers[1]).toBeDefined()
-    })
-
-    it('should include only transitions when transitions are enabled', () => {
-      const handlers = getCodeHandlers(false, true)
-      expect(handlers).toHaveLength(1)
-      expect(handlers[0]).toBeDefined()
+    it('should use specified theme', async () => {
+      const result = await highlightCode(
+        'const x = 1',
+        'javascript',
+        DARK_THEME
+      )
+      expect(result).toHaveProperty('lines')
+      expect(result.lines[0].tokens).toBeDefined()
     })
   })
 
@@ -136,7 +131,8 @@ const x = 1`
         bash: 'bash',
         json: 'json',
         go: 'go',
-        dotnet: 'c#',
+        dotnet: 'csharp',
+        csharp: 'csharp',
         java: 'java',
       } as const
 
@@ -178,9 +174,10 @@ const x = 1`
     })
   })
 
-  describe('CODEHIKE_THEME', () => {
-    it('should have the correct theme value', () => {
-      expect(CODEHIKE_THEME).toBe('github-from-css')
+  describe('themes', () => {
+    it('should have correct theme values', () => {
+      expect(LIGHT_THEME).toBe('github-light')
+      expect(DARK_THEME).toBe('github-dark')
     })
   })
 })

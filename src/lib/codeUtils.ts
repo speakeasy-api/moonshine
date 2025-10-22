@@ -1,53 +1,70 @@
-import { highlight, AnnotationHandler, RawCode } from 'codehike/code'
+import { codeToTokens, BundledLanguage, BundledTheme } from 'shiki'
 import { ProgrammingLanguage, SupportedLanguage } from '@/types'
-import { lineNumbers } from '@/components/CodePlayground/lineNumbers'
-import { tokenTransitions } from '@/components/CodePlayground/tokenTransitions'
 
-export const CODEHIKE_THEME = 'github-from-css' as const
+export const LIGHT_THEME = 'github-light' as const
+export const DARK_THEME = 'github-dark' as const
 
-/**
- * Highlights code using the standardized theme across the application
- */
-export async function highlightCode(
-  code: string,
-  language: SupportedLanguage | string
-) {
-  // Clean the code by removing annotations
-  const cleanCode = removeCodeHikeAnnotations(code)
+export interface CodeToken {
+  content: string
+  color?: string
+  fontStyle?: number
+}
 
-  const rawCode: RawCode = {
-    value: code, // Use original code for highlighting
-    lang: isProgrammingLanguage(language)
-      ? getMappedLanguage(language)
-      : language,
-    meta: '',
-  }
-  const highlighted = await highlight(rawCode, CODEHIKE_THEME)
+export interface CodeLine {
+  tokens: CodeToken[]
+}
 
-  return {
-    ...highlighted,
-    code: cleanCode, // Return the clean code without annotations
-  }
+export interface HighlightedCode {
+  lines: CodeLine[]
+  code: string
+  lang: string
 }
 
 /**
- * Returns an array of handlers for code highlighting with consistent options
+ * Highlights code using Shiki
  */
-export function getCodeHandlers(
-  showLineNumbers = false,
-  useTransitions = true
-): AnnotationHandler[] {
-  const handlers: AnnotationHandler[] = []
+export async function highlightCode(
+  code: string,
+  language: SupportedLanguage | string,
+  theme: BundledTheme = LIGHT_THEME
+): Promise<HighlightedCode> {
+  // Clean the code by removing annotations
+  const cleanCode = removeCodeHikeAnnotations(code)
 
-  if (showLineNumbers) {
-    handlers.push(lineNumbers)
+  const lang = isProgrammingLanguage(language)
+    ? getMappedLanguage(language)
+    : (language as BundledLanguage)
+
+  try {
+    const tokens = await codeToTokens(cleanCode, {
+      lang,
+      theme,
+    })
+
+    const lines: CodeLine[] = tokens.tokens.map((line) => ({
+      tokens: line.map((token) => ({
+        content: token.content,
+        color: token.color,
+        fontStyle: token.fontStyle,
+      })),
+    }))
+
+    return {
+      lines,
+      code: cleanCode,
+      lang,
+    }
+  } catch (error) {
+    console.error('Error highlighting code:', error)
+    // Fallback to plain text
+    return {
+      lines: cleanCode.split('\n').map((line) => ({
+        tokens: [{ content: line || '\n' }],
+      })),
+      code: cleanCode,
+      lang,
+    }
   }
-
-  if (useTransitions) {
-    handlers.push(tokenTransitions)
-  }
-
-  return handlers
 }
 
 /**
@@ -55,7 +72,7 @@ export function getCodeHandlers(
  */
 export function getMappedLanguage(
   language: ProgrammingLanguage | SupportedLanguage
-): string {
+): BundledLanguage {
   switch (language) {
     case 'javascript':
       return 'js'
@@ -71,7 +88,7 @@ export function getMappedLanguage(
       return 'go'
     case 'dotnet':
     case 'csharp':
-      return 'c#'
+      return 'csharp'
     case 'java':
       return 'java'
     case 'ruby':
@@ -83,7 +100,7 @@ export function getMappedLanguage(
     case 'terraform':
       return 'hcl'
     default:
-      return language as string
+      return language as BundledLanguage
   }
 }
 
