@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Check, ChevronUp } from 'lucide-react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { Text } from '../../Text'
 import { Heading } from '../../Heading'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { Icon } from '../Icon'
 import { assert } from '@/lib/typeUtils'
 import { Heading } from '../Heading'

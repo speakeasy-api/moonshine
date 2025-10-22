@@ -59,6 +59,7 @@
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
+    "@storybook/addon-docs": "^9.1.7",
     "@storybook/addon-links": "^9.1.7",
     "@storybook/addon-themes": "^9.1.7",
     "@storybook/builder-vite": "^9.1.7",
@@ -77,6 +78,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-refresh": "^0.4.14",
+    "eslint-plugin-storybook": "9.1.7",
     "eslint-plugin-unused-imports": "^4.1.4",
     "jsdom": "^25.0.1",
     "postcss": "^8.4.47",
@@ -93,9 +95,7 @@
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-dynamic-import": "^1.6.0",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^2.1.4",
-    "eslint-plugin-storybook": "9.1.7",
-    "@storybook/addon-docs": "^9.1.7"
+    "vitest": "^2.1.4"
   },
   "peerDependencies": {
     "@types/react": "^18.3.11 || ^19.0.0",
@@ -126,7 +126,6 @@
     "cmdk": "^1.1.1",
     "codehike": "^1.0.4",
     "date-fns": "^4.1.0",
-    "framer-motion": "^11.11.11",
     "motion": "^12.6.3",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^2.1.7",

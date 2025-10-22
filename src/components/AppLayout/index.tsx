@@ -10,7 +10,7 @@ import React, {
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
 import { useAppLayout } from '@/hooks/useAppLayout'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Logo } from '../Logo'
 import {
   Tooltip,

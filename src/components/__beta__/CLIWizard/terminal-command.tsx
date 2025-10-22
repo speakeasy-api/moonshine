@@ -8,7 +8,7 @@
 
 import React from 'react'
 import { Check, Copy } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { TerminalPrompt, TerminalOutput } from './terminal'
 import { cn } from '@/lib/utils'
 

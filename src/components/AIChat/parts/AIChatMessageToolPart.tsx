@@ -1,4 +1,4 @@
-import { motion, MotionConfig } from 'framer-motion'
+import { motion, MotionConfig } from 'motion/react'
 import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { cn } from '../../../lib/utils'
