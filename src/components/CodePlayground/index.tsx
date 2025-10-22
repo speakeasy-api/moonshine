@@ -185,7 +185,7 @@ const CodePlayground = ({
       code={highlighted}
       showLineNumbers={showLineNumbers}
       wordWrap={wordWrap}
-      className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
+      className="bg-muted/15 dark:bg-background relative m-0 mr-4 w-full px-4 py-3 text-sm"
     />
   ) : null
 
