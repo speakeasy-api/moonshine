@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { motion, Transition, AnimatePresence } from 'framer-motion'
+import { motion, Transition, AnimatePresence } from 'motion/react'
 import {
   useState,
   useRef,

@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Icon } from '../Icon'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { IconName } from '../Icon/names'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 

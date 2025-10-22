@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface HighlightedTextProps
