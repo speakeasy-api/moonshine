@@ -25,6 +25,18 @@ export {
 export { UserAvatar, type UserAvatarProps } from '@/components/UserAvatar'
 export { Subnav, type SubnavItem, type SubnavProps } from '@/components/Subnav'
 export { CodeSnippet, type CodeSnippetProps } from '@/components/CodeSnippet'
+export { Pre, type PreProps } from '@/components/CodeHighlight/Pre'
+export {
+  highlightCode,
+  getMappedLanguage,
+  isProgrammingLanguage,
+  removeCodeHikeAnnotations,
+  LIGHT_THEME,
+  DARK_THEME,
+  type HighlightedCode,
+  type CodeLine,
+  type CodeToken,
+} from '@/lib/codeUtils'
 export {
   LoggedInUserMenu,
   type LoggedInUserProps,

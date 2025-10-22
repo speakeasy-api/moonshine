@@ -323,14 +323,6 @@ export const NoLineNumbers: Story = {
   },
 }
 
-export const NoAnimations: Story = {
-  ...Default,
-  args: {
-    ...Default.args,
-    animateOnLanguageChange: false,
-  },
-}
-
 export const OverflowingCode: Story = {
   ...Default,
   args: {
