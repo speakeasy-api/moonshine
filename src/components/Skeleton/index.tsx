@@ -32,10 +32,13 @@ export interface SkeletonProps {
 export function Skeleton({ children, className }: SkeletonProps) {
   return (
     <div className="flex w-full flex-col items-start gap-2.5 select-none">
-      {Children.toArray(children).map((child) => {
+      {Children.toArray(children).map((child, index) => {
         if (typeof child === 'string') {
           return (
-            <div className="skeleton h-5 max-w-max min-w-36 rounded-lg text-transparent">
+            <div
+              key={index}
+              className="skeleton h-5 max-w-max min-w-36 rounded-lg text-transparent"
+            >
               {child}
             </div>
           )
