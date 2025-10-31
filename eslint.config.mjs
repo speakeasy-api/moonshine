@@ -20,6 +20,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   includeIgnoreFile(gitignorePath),
+  ...storybook.configs['flat/recommended'],
   {
     ignores: ['scripts/generate-utility-docs.js'],
   },
@@ -58,6 +59,5 @@ export default tseslint.config(
         },
       ],
     },
-  },
-  ...storybook.configs['flat/recommended']
+  }
 )
