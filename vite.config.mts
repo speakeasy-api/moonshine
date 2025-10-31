@@ -44,10 +44,21 @@ export default defineConfig({
       // e.g. `lucide-react/dynamicIconImports`.
       external: (id) => {
         const externals = [
+          'ai',
+          '@dnd-kit/core',
+          '@dnd-kit/modifiers',
+          '@dnd-kit/utilities',
           'react',
           'react-dom',
           'react/jsx-runtime',
           'lucide-react',
+          '@rive-app/react-canvas-lite',
+          'motion',
+          'react-markdown',
+          'remark-gfm',
+          'shiki',
+          'react-virtuoso',
+          'react-resizable-panels',
         ]
         return externals.some((pkg) => id === pkg || id.startsWith(pkg + '/'))
       },

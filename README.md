@@ -13,10 +13,10 @@ Speakeasy's design system.
 pnpm add @speakeasy-api/moonshine
 ```
 
-Make sure you install Lucide as it is a peer dependency of this package:
+Make sure you install the peer dependencies of this package:
 
 ```
-pnpm add lucide-react
+pnpm add lucide-react @dnd-kit/core @dnd-kit/modifiers @dnd-kit/utilities react react-dom motion react-markdown remark-gfm shiki react-virtuoso react-resizable-panels @rive-app/react-canvas-lite ai
 ```
 
 ### 2. Configure Tailwind CSS
