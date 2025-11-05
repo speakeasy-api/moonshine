@@ -4,8 +4,6 @@ import React, {
   isValidElement,
   PropsWithChildren,
   HTMLAttributes,
-  useRef,
-  useEffect,
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
@@ -32,7 +30,6 @@ interface AppLayoutProps extends PropsWithChildren {
 const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
   const { collapsed } = useAppLayout()
 
-  // Single pass through children to find all layout components
   const childComponents = Children.toArray(children).reduce(
     (acc, child) => {
       if (!isValidElement(child)) return acc
@@ -63,7 +60,6 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
       header: null as React.ReactElement | null,
     }
   )
-
   const { sidebar, surface, surfaceHeader, header } = childComponents
 
   return (
@@ -73,7 +69,7 @@ const AppLayoutBase = ({ children, className }: AppLayoutProps) => {
         className
       )}
     >
-      {sidebar}
+      {!collapsed && sidebar}
 
       <motion.div
         layout
@@ -133,27 +129,14 @@ interface AppLayoutSidebarProps {
    * A function to call when the the brand logo is clicked.
    */
   onHomeNavigation?: () => void
-
-  /**
-   * The delay in milliseconds before the sidebar expands when hovered.
-   */
-  hoverIntentDelay?: number
 }
 
 const AppLayoutSidebar = ({
   children,
   className,
   onHomeNavigation,
-  hoverIntentDelay = 700,
 }: AppLayoutSidebarProps) => {
-  const {
-    collapsed,
-    setCollapsed,
-    hoverExpandsSidebar,
-    _expandedByHover,
-    _setExpandedByHover,
-    isSidebarInteractionLocked,
-  } = useAppLayout()
+  const { collapsed } = useAppLayout()
 
   const [nav, rest] = partitionBy(Children.toArray(children), (child) => {
     if (!isValidElement(child)) return false
@@ -161,106 +144,14 @@ const AppLayoutSidebar = ({
     return type.displayName === 'AppLayout.Nav'
   })
 
-  const sidebarRef = useRef<HTMLDivElement>(null)
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const expandedByHoverRef = useRef(_expandedByHover)
-
-  // Keep ref in sync with state
-  useEffect(() => {
-    expandedByHoverRef.current = _expandedByHover
-  }, [_expandedByHover])
-
-  // Handle hover intent when the sidebar is collapsed
-  useEffect(() => {
-    const sidebar = sidebarRef.current
-    if (!sidebar || !hoverExpandsSidebar) return
-
-    const handleMouseEnter = (e: MouseEvent) => {
-      // Check if mouse coordinates are within ThemeSwitcher bounding box
-      // If so, we don't want to expand the sidebar
-      const themeSwitcherElement = sidebar.querySelector(
-        '[data-theme-switcher]'
-      )
-      let isWithinThemeSwitcher = false
-
-      if (themeSwitcherElement) {
-        const rect = themeSwitcherElement.getBoundingClientRect()
-        const padding = 4 // Add small padding to account for margins/hover areas
-        isWithinThemeSwitcher =
-          e.clientX >= rect.left - padding &&
-          e.clientX <= rect.right + padding &&
-          e.clientY >= rect.top - padding &&
-          e.clientY <= rect.bottom + padding
-      }
-
-      if (isWithinThemeSwitcher) {
-        return
-      }
-
-      // Only expand if currently collapsed
-      if (!collapsed) return
-      // Clear any existing timeout
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-      }
-
-      // Set a delay before expanding
-      hoverTimeoutRef.current = setTimeout(() => {
-        setCollapsed(false)
-        _setExpandedByHover(true) // Mark as expanded by hover
-        hoverTimeoutRef.current = null
-      }, hoverIntentDelay)
-    }
-
-    const handleMouseLeave = () => {
-      // Clear the timeout if mouse leaves before delay completes
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-        hoverTimeoutRef.current = null
-      }
-
-      // Don't auto-collapse if sidebar interaction is locked (e.g., popover is open)
-      if (isSidebarInteractionLocked) {
-        return
-      }
-
-      // Only collapse if it was expanded by hover, not manually
-      if (expandedByHoverRef.current) {
-        setCollapsed(true)
-        _setExpandedByHover(false)
-      }
-    }
-
-    // Add listeners when hover expansion is enabled
-    sidebar.addEventListener('mouseenter', handleMouseEnter)
-    sidebar.addEventListener('mouseleave', handleMouseLeave)
-
-    // Cleanup function - always runs when effect re-runs or component unmounts
-    return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-        hoverTimeoutRef.current = null
-      }
-      sidebar.removeEventListener('mouseenter', handleMouseEnter)
-      sidebar.removeEventListener('mouseleave', handleMouseLeave)
-    }
-  }, [
-    hoverExpandsSidebar,
-    collapsed,
-    setCollapsed,
-    _setExpandedByHover,
-    isSidebarInteractionLocked,
-  ])
-
   return (
     <motion.div
       initial={false}
       layout="position"
-      className={cn('mt-4 flex w-fit flex-col items-start', className)}
-      ref={sidebarRef}
+      className={cn('mt-4 flex w-fit flex-col items-start px-1', className)}
       transition={{ duration: 0.25, type: 'spring', bounce: 0 }}
     >
-      <div className="flex flex-col gap-4 px-2">
+      <div className="flex flex-col gap-4">
         <Logo
           variant={collapsed ? 'icon' : 'wordmark'}
           className={cn('cursor-pointer', !collapsed && 'min-w-[140px]')}
@@ -268,7 +159,8 @@ const AppLayoutSidebar = ({
         />
         {nav}
       </div>
-      {rest}
+
+      <div className="flex h-full flex-col gap-1">{rest}</div>
     </motion.div>
   )
 }
@@ -396,8 +288,7 @@ interface AppLayoutCollapseButtonProps extends PropsWithChildren {
 const AppLayoutCollapseButton = ({
   className,
 }: AppLayoutCollapseButtonProps) => {
-  const { collapsed, setCollapsed, keybinds, _setExpandedByHover } =
-    useAppLayout()
+  const { collapsed, setCollapsed, keybinds } = useAppLayout()
   useAppLayoutKeys()
   return (
     <div className={cn('flex items-center gap-2', className)}>
@@ -408,7 +299,6 @@ const AppLayoutCollapseButton = ({
               className="group typography-body-md hover:bg-accent hover:text-primary rounded-md p-1.5"
               onClick={() => {
                 setCollapsed(!collapsed)
-                _setExpandedByHover(false) // Reset hover state on manual toggle
               }}
               aria-label="Toggle sidebar"
             >
@@ -479,7 +369,10 @@ interface AppLayoutNavProps extends HTMLAttributes<HTMLDivElement> {
 
 const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
   return (
-    <nav className={cn('mt-3 flex flex-col items-start', className)} {...props}>
+    <nav
+      className={cn('mt-3 flex flex-col items-start gap-1', className)}
+      {...props}
+    >
       {children}
     </nav>
   )
@@ -533,7 +426,7 @@ const AppLayoutNavItem = React.forwardRef<
 
     const Comp = asChild ? Slot : 'a'
     const iconElement = (
-      <Icon name={icon} className="size-6" strokeWidth={1.3} />
+      <Icon name={icon} className="size-5" strokeWidth={1.3} />
     )
     const titleElement = collapsed ? null : (
       <motion.span
@@ -562,8 +455,8 @@ const AppLayoutNavItem = React.forwardRef<
             <Comp
               ref={ref}
               className={cn(
-                'text-muted-foreground hover:text-foreground flex h-9 w-fit w-full cursor-pointer items-center gap-3',
-                active && 'text-foreground',
+                'text-muted-foreground hover:text-foreground hover:bg-accent flex h-8 w-full cursor-pointer items-center gap-3 rounded-md px-2',
+                active && 'text-foreground bg-accent',
                 disabled &&
                   'hover:text-muted-foreground cursor-default opacity-50 hover:bg-transparent',
                 className
@@ -616,11 +509,10 @@ const AppLayoutNavItemGroup = ({
   name,
   ...props
 }: AppLayoutNavItemGroupProps) => {
-  const { collapsed } = useAppLayout()
   return (
-    <div className={cn('mb-4 flex flex-col', className)} {...props}>
-      {!collapsed && <div className="text-codeline-sm uppercase">{name}</div>}
-      {children}
+    <div className={cn('mb-4 flex w-full flex-col', className)} {...props}>
+      <div className="text-codeline-sm mb-1.5 px-2 uppercase">{name}</div>
+      <div className="flex flex-col gap-1">{children}</div>
     </div>
   )
 }
