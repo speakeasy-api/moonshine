@@ -131,10 +131,6 @@ export {
 export { AppLayoutProvider } from '@/components/AppLayout/provider'
 export { useAppLayout } from '@/hooks/useAppLayout'
 
-// For usage within AppLayout's to prevent auto-collapse behaviour if the sidebar is collapsed and a popover is open
-// that extends beyond the sidebar boundaries
-export { useSidebarInteractionLock } from '@/hooks/useSidebarInteractionLock'
-
 export { ActionBar, type ActionBarProps } from '@/components/ActionBar'
 export {
   Key,
