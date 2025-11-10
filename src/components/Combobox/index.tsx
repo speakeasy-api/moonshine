@@ -52,6 +52,10 @@ interface ComboboxBaseProps<T extends string = string> {
   emptyText?: string
   searchPlaceholder?: string
   iconOnly?: boolean
+  createOptions?: {
+    handleCreate: (search: string) => void
+    renderCreatePrompt?: (search: string) => JSX.Element
+  }
 }
 
 export type ComboboxProps<T extends string = string> = ComboboxBaseProps<T> &
@@ -72,7 +76,9 @@ export function Combobox<T extends string = string>({
   placeholder = 'Select option...',
   emptyText = 'No option found.',
   searchPlaceholder = 'Search...',
+
   iconOnly = false,
+  createOptions,
 }: ComboboxProps<T>) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
@@ -185,6 +191,19 @@ export function Combobox<T extends string = string>({
                 )}
               />
             )}
+            {(() => {
+              if (!createOptions || search.length === 0) return null
+              const { renderCreatePrompt, handleCreate } = createOptions
+              return (
+                <CommandGroup>
+                  <CommandItem onSelect={() => handleCreate(search)}>
+                    {renderCreatePrompt
+                      ? renderCreatePrompt(search)
+                      : `Create ${search}`}
+                  </CommandItem>
+                </CommandGroup>
+              )
+            })()}
           </CommandList>
         </Command>
       </PopoverContent>
