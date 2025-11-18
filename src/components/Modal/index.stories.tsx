@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { Modal } from '.'
-import { ModalProvider } from '@/context/ModalContext'
+import { ModalProvider, Screen } from '@/context/ModalContext'
 import { useModal } from '@/hooks/useModal'
 import { memo, useEffect } from 'react'
 import { faker } from '@faker-js/faker'
@@ -39,10 +39,12 @@ const ModalRenderer = ({
   closable = false,
   multiScreen = false,
   layout = 'default',
+  onClose,
 }: {
   closable?: boolean
   multiScreen?: boolean
   layout?: 'default' | 'custom'
+  onClose?: (screen: Screen) => void
 }) => {
   const { openScreen, pushScreen } = useModal()
 
@@ -86,7 +88,7 @@ const ModalRenderer = ({
   return (
     <div>
       <Underlay />
-      <Modal closable={closable} layout={layout} />
+      <Modal closable={closable} layout={layout} onClose={onClose} />
     </div>
   )
 }
@@ -116,6 +118,19 @@ export const MultiScreen: Story = {
     return (
       <ModalProvider>
         <ModalRenderer closable={false} multiScreen />
+      </ModalProvider>
+    )
+  },
+}
+
+export const CustomOnCloseAction: Story = {
+  render: () => {
+    return (
+      <ModalProvider>
+        <ModalRenderer
+          closable
+          onClose={(screen) => alert(`closed screen with id ${screen.id}`)}
+        />
       </ModalProvider>
     )
   },

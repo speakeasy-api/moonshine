@@ -11,27 +11,36 @@ import { useModal } from '@/hooks/useModal'
 import { cn } from '@/lib/utils'
 import { IconButton } from '@/components/IconButton'
 import { Icon } from '../Icon'
+import { Screen } from '@/context/ModalContext'
 
 export interface ModalProps {
   closable?: boolean
   className?: string
   layout: 'default' | 'custom'
+  onClose?: (currentScreen: Screen) => void
 }
 
 export const Modal = ({
   closable = false,
   className,
   layout = 'default',
+  onClose,
 }: ModalProps) => {
   const { screens, currentIndex, isOpen, close } = useModal()
-
   const currentScreen = screens[currentIndex]
+
+  const handleOpenChange = (open: boolean) => {
+    if (closable && !open) {
+      close()
+      onClose?.(currentScreen)
+    }
+  }
 
   if (!isOpen) return null
   if (!currentScreen) return null
 
   return (
-    <Dialog open={isOpen} onOpenChange={closable ? close : undefined}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogPortal>
         <DialogOverlay className="bg-surface-secondary fixed top-0 z-10 h-screen w-screen opacity-85" />
 
