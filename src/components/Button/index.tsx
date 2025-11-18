@@ -98,7 +98,7 @@ const ButtonText = React.forwardRef<
 ButtonText.displayName = 'ButtonText'
 
 const buttonVariants = cva(
-  'relative inline-flex items-center justify-center whitespace-nowrap text-sm font-mono uppercase tracking-[0.01em] transition-all select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'relative inline-flex items-center justify-center whitespace-nowrap text-sm font-mono uppercase tracking-[0.01em] transition-all select-none cursor-pointer focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       context: {
