@@ -28,10 +28,10 @@ export const Modal = ({ closable = false, className }: ModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={closable ? close : undefined}>
       <DialogPortal>
-        <DialogOverlay className="bg-surface-secondary fixed h-screen w-screen opacity-85" />
+        <DialogOverlay className="bg-surface-secondary fixed top-0 z-10 h-screen w-screen opacity-85" />
         <DialogContent
           className={cn(
-            'bg-surface-primary border-neutral-default fixed top-1/2 left-1/2 z-10 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md p-10 shadow-lg outline-none',
+            'bg-surface-primary border-neutral-default fixed top-1/2 left-1/2 z-20 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md p-10 shadow-lg outline-none',
             className
           )}
         >
