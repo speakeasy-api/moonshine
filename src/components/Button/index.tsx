@@ -406,7 +406,52 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }
     }, [isBrandVariant])
 
-    const Comp = asChild ? Slot : 'button'
+    // Custom Slot wrapper for brand variant
+    const BrandSlot = React.forwardRef<
+      HTMLElement,
+      React.ComponentProps<typeof Slot>
+    >((slotProps, slotRef) => {
+      if (!isBrandVariant) {
+        return <Slot {...slotProps} ref={slotRef} />
+      }
+
+      // For brand variant, we need to inject the brand span
+      const child = React.Children.only(slotProps.children)
+      if (!React.isValidElement(child)) {
+        return <Slot {...slotProps} ref={slotRef} />
+      }
+
+      // Create brand span
+      const brandSpan = (
+        <span
+          key="brand-bg"
+          className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 -z-10 rounded-[inherit]"
+        />
+      )
+
+      // Clone child with brand span injected
+      const childWithBrand = React.cloneElement(
+        child as React.ReactElement<React.ComponentProps<typeof Slot>>,
+        {
+          ...child.props,
+          children: (child.props as React.ComponentProps<typeof Slot>).children
+            ? [
+                brandSpan,
+                (child.props as React.ComponentProps<typeof Slot>).children,
+              ]
+            : brandSpan,
+        }
+      )
+
+      return (
+        <Slot {...slotProps} ref={slotRef}>
+          {childWithBrand}
+        </Slot>
+      )
+    })
+    BrandSlot.displayName = 'BrandSlot'
+
+    const Comp = asChild ? BrandSlot : 'button'
     const combinedRef = React.useCallback(
       (node: HTMLButtonElement | null) => {
         buttonRef.current = node
@@ -423,7 +468,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Auto-wrap raw text children in Button.Text (only when not using asChild)
     const processedChildren = React.useMemo(() => {
       if (asChild) {
-        // When asChild is true, return children as-is for Slot to handle
+        // When asChild is true, return children as-is - BrandSlot will handle brand logic
         return props.children
       }
 
@@ -447,7 +492,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {asChild ? (
-          props.children
+          processedChildren
         ) : (
           <>
             {isBrandVariant && (

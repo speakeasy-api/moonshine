@@ -2,6 +2,8 @@ import { Meta, StoryObj } from '@storybook/react-vite'
 import { Button, ButtonProps } from './'
 import { PlusIcon as LucidePlusIcon, ChevronRight } from 'lucide-react'
 import { fn as storybookActionFn } from 'storybook/test'
+import { Heading } from '../Heading'
+import { Text } from '../Text'
 
 const meta: Meta<typeof Button> = {
   component: Button,
@@ -438,7 +440,7 @@ export const BrandButtonInStackingContexts: Story = {
         <div>
           <h4 className="mb-3 text-sm font-medium">Flex Containers</h4>
           <div className="space-y-3">
-            <div className="flex items-center gap-3 rounded border bg-white p-3">
+            <div className="bg-surface-secondary flex items-center gap-3 rounded border p-3">
               <span>Navigation:</span>
               <Button variant="brand" size="sm">
                 <Button.LeftIcon>
@@ -448,7 +450,7 @@ export const BrandButtonInStackingContexts: Story = {
               </Button>
             </div>
 
-            <div className="flex min-h-8 max-w-full items-center gap-1.5 truncate rounded border bg-white p-2">
+            <div className="bg-surface-secondary flex min-h-8 max-w-full items-center gap-1.5 truncate rounded border p-2">
               <a className="text-muted-foreground hover:text-foreground cursor-pointer rounded px-1.5">
                 Home
               </a>
@@ -483,7 +485,7 @@ export const BrandButtonInStackingContexts: Story = {
 
         <div>
           <h4 className="mb-3 text-sm font-medium">Grid Layouts</h4>
-          <div className="grid grid-cols-[1fr_auto] items-center gap-4 rounded border bg-white p-3">
+          <div className="bg-surface-secondary grid grid-cols-[1fr_auto] items-center gap-4 rounded border p-3">
             <div>
               <h5 className="font-medium">Project Settings</h5>
               <p className="text-muted text-sm">Configure your project</p>
@@ -496,7 +498,7 @@ export const BrandButtonInStackingContexts: Story = {
 
         <div>
           <h4 className="mb-3 text-sm font-medium">High Z-Index Contexts</h4>
-          <div className="relative z-[9999] rounded border bg-white p-3">
+          <div className="bg-surface-secondary relative z-[9999] rounded border p-3">
             <div className="flex items-center justify-between">
               <span>Modal Header</span>
               <Button variant="brand" size="sm">
@@ -508,7 +510,7 @@ export const BrandButtonInStackingContexts: Story = {
 
         <div>
           <h4 className="mb-3 text-sm font-medium">Transform Contexts</h4>
-          <div className="scale-100 transform rounded border bg-white p-3">
+          <div className="bg-surface-secondary scale-100 transform rounded border p-3">
             <div className="flex items-center gap-3">
               <span>Transformed container:</span>
               <Button variant="brand" size="sm">
@@ -522,7 +524,7 @@ export const BrandButtonInStackingContexts: Story = {
           <h4 className="mb-3 text-sm font-medium">
             Overflow Hidden Containers
           </h4>
-          <div className="overflow-hidden rounded border bg-white p-3">
+          <div className="bg-surface-secondary overflow-hidden rounded border p-3">
             <div className="flex items-center gap-3">
               <span>Clipped container:</span>
               <Button variant="brand" size="sm">
@@ -607,4 +609,28 @@ The component now uses \`transform: translateZ(0)\` to create an isolated stacki
       },
     },
   },
+}
+
+export const BrandButtonAsChild: Story = {
+  render: () => (
+    <div className="space-y-8 p-4">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <Heading>Brand Button as Child</Heading>
+          <Text>
+            The following is a hyperlink element using the Button's{' '}
+            <pre className="bg-surface-secondary mx-1 inline-block rounded px-1.5">
+              asChild
+            </pre>
+            prop.
+          </Text>
+        </div>
+        <div>
+          <Button variant="brand" asChild>
+            <a href="#">Link as Button</a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  ),
 }
