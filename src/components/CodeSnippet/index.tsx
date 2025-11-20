@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect, useRef } from 'react'
 import { cn } from '../../lib/utils'
 import { ProgrammingLanguage, Size } from '../../types'
 import { AnimatePresence, motion } from 'motion/react'
-import '@/styles/codeSyntax.css'
+import '../../styles/codeSyntax.css'
 import './codeSnippet.css'
 import { Icon } from '../Icon'
 import {

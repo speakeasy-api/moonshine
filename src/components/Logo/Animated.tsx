@@ -8,9 +8,7 @@ import {
 } from '@rive-app/react-canvas-lite'
 import { cva } from 'class-variance-authority'
 import { FC, useEffect, useState } from 'react'
-
-// read rive file from local directory into arraybuffer
-const riveFile = await import('./speakeasy-logo.riv')
+import riveFileUrl from './speakeasy-logo.riv'
 
 const stackLogoClass = cva('relative', {
   variants: {
@@ -54,7 +52,7 @@ export const AnimatedLogo = ({
   const theme = useTheme()
   const [stateMachine, setStateMachine] = useState<StateMachine>('loop-dark')
   const { rive, RiveComponent } = useRive({
-    src: riveFile.default,
+    src: riveFileUrl,
     stateMachines: stateMachine,
     autoplay: true,
     layout: new Layout({

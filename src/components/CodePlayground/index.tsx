@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '../Select'
 import { prettyLanguageName, SupportedLanguage } from '../../types'
-import '@/styles/codeSyntax.css'
+import '../../styles/codeSyntax.css'
 import { motion } from 'motion/react'
 import { cn } from '../../lib/utils'
 import { AnimatePresence } from 'motion/react'
