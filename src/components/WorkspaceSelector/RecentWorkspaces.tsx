@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { Org, Workspace } from '.'
 import { WorkspaceItem } from './WorkspaceItem'
 import { ScrollingList } from './ScrollingList'

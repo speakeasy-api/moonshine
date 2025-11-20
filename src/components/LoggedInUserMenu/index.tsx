@@ -10,7 +10,7 @@ import { Stack } from '../Stack'
 import { UserAvatar } from '../UserAvatar'
 import { UserAvatarProps } from '../UserAvatar'
 import React, { Children, Fragment, ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 export interface LoggedInUserProps extends UserAvatarProps {
   email: string

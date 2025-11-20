@@ -9,7 +9,7 @@
 
 import * as React from 'react'
 import { TerminalIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../../lib/utils'
 
 interface TerminalProps {
   children: React.ReactNode

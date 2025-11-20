@@ -1,4 +1,4 @@
-import { cn, partitionBy } from '@/lib/utils'
+import { cn, partitionBy } from '../../lib/utils'
 import React, {
   Children,
   isValidElement,
@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { Icon } from '../Icon'
-import { useAppLayout } from '@/hooks/useAppLayout'
+import { useAppLayout } from '../../hooks/useAppLayout'
 import { motion } from 'motion/react'
 import { Logo } from '../Logo'
 import {

@@ -1,7 +1,7 @@
 import { StoryObj, Meta } from '@storybook/react-vite'
 import { Icon } from '.'
 import { customIconNames, iconNames } from './names'
-import { sizes } from '@/types'
+import { sizes } from '../../types'
 
 type Story = StoryObj<typeof Icon>
 

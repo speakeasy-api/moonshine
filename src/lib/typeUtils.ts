@@ -8,8 +8,8 @@ import {
   ResponsiveValue,
   Size,
   sizes,
-} from '@/types'
-import { Group } from '@/components/Table'
+} from '../types'
+import { Group } from '../components/Table'
 
 /**
  * Create a range of numbers from 0 to N

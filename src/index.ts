@@ -1,31 +1,31 @@
 import './global.css'
 
-export { isGroupOf } from '@/lib/typeUtils'
-export { Grid, type GridProps } from '@/components/Grid'
-export { Stack, type StackProps } from '@/components/Stack'
-export { Button, type ButtonProps } from '@/components/Button'
-export { Card, type CardProps } from '@/components/Card'
-export { Icon, type IconProps } from '@/components/Icon'
-export { isIconName } from '@/components/Icon/isIconName'
-export { type IconName } from '@/components/Icon/names'
-export { Separator, type SeparatorProps } from '@/components/Separator'
-export { Skeleton, type SkeletonProps } from '@/components/Skeleton'
-export { Badge, type BadgeProps } from '@/components/Badge'
-export { Heading, type HeadingProps } from '@/components/Heading'
-export { Text, type TextProps } from '@/components/Text'
-export { Score, type ScoreValue } from '@/components/Score'
-export { Logo, type LogoProps } from '@/components/Logo'
-export { AnimatedLogo } from '@/components/Logo/Animated'
-export { Container, type ContainerProps } from '@/components/Container'
-export { Combobox, type ComboboxProps } from '@/components/Combobox'
+export { isGroupOf } from './lib/typeUtils'
+export { Grid, type GridProps } from './components/Grid'
+export { Stack, type StackProps } from './components/Stack'
+export { Button, type ButtonProps } from './components/Button'
+export { Card, type CardProps } from './components/Card'
+export { Icon, type IconProps } from './components/Icon'
+export { isIconName } from './components/Icon/isIconName'
+export { type IconName } from './components/Icon/names'
+export { Separator, type SeparatorProps } from './components/Separator'
+export { Skeleton, type SkeletonProps } from './components/Skeleton'
+export { Badge, type BadgeProps } from './components/Badge'
+export { Heading, type HeadingProps } from './components/Heading'
+export { Text, type TextProps } from './components/Text'
+export { Score, type ScoreValue } from './components/Score'
+export { Logo, type LogoProps } from './components/Logo'
+export { AnimatedLogo } from './components/Logo/Animated'
+export { Container, type ContainerProps } from './components/Container'
+export { Combobox, type ComboboxProps } from './components/Combobox'
 export {
   TargetLanguageIcon,
   type TargetLanguageIconProps,
-} from '@/components/TargetLanguageIcon'
-export { UserAvatar, type UserAvatarProps } from '@/components/UserAvatar'
-export { Subnav, type SubnavItem, type SubnavProps } from '@/components/Subnav'
-export { CodeSnippet, type CodeSnippetProps } from '@/components/CodeSnippet'
-export { Pre, type PreProps } from '@/components/CodeHighlight/Pre'
+} from './components/TargetLanguageIcon'
+export { UserAvatar, type UserAvatarProps } from './components/UserAvatar'
+export { Subnav, type SubnavItem, type SubnavProps } from './components/Subnav'
+export { CodeSnippet, type CodeSnippetProps } from './components/CodeSnippet'
+export { Pre, type PreProps } from './components/CodeHighlight/Pre'
 export {
   highlightCode,
   getMappedLanguage,
@@ -36,61 +36,61 @@ export {
   type HighlightedCode,
   type CodeLine,
   type CodeToken,
-} from '@/lib/codeUtils'
+} from './lib/codeUtils'
 export {
   LoggedInUserMenu,
   type LoggedInUserProps,
-} from '@/components/LoggedInUserMenu'
+} from './components/LoggedInUserMenu'
 export {
   PromptInput,
   type PromptInputProps,
   type Suggestion,
   type Attachment,
-} from '@/components/PromptInput'
+} from './components/PromptInput'
 export {
   WorkspaceSelector,
   type Org,
   type Workspace,
   type WorkspaceSelectorProps,
-} from '@/components/WorkspaceSelector'
-export { Wizard, type WizardProps } from '@/components/Wizard'
-export { type WizardStep, type WizardCommand } from '@/components/Wizard/types'
+} from './components/WorkspaceSelector'
+export { Wizard, type WizardProps } from './components/Wizard'
+export { type WizardStep, type WizardCommand } from './components/Wizard/types'
 export {
   MoonshineConfigProvider,
   type MoonshineConfigProviderProps,
-} from '@/context/ConfigContext'
-export { useConfig as useMoonshineConfig } from '@/hooks/useConfig'
-export { useTheme as useMoonshineTheme, type Theme } from '@/hooks/useTheme'
-export { default as useTailwindBreakpoint } from '@/hooks/useTailwindBreakpoint'
+} from './context/ConfigContext'
+export { useConfig as useMoonshineConfig } from './hooks/useConfig'
+export { useTheme as useMoonshineTheme, type Theme } from './hooks/useTheme'
+export { default as useTailwindBreakpoint } from './hooks/useTailwindBreakpoint'
 export {
   GradientCircle,
   type GradientCircleProps,
-} from '@/components/GradientCircle'
-export { Alert, type AlertProps } from '@/components/Alert'
-export { Tabs, type TabProps } from '@/components/Tabs'
+} from './components/GradientCircle'
+export { Alert, type AlertProps } from './components/Alert'
+export { Tabs, type TabProps } from './components/Tabs'
 export {
   Table,
   type TableProps,
   type Column,
   type Group,
-} from '@/components/Table'
-export { Input, type InputProps } from '@/components/Input'
+} from './components/Table'
+export { Input, type InputProps } from './components/Input'
 export {
   type SupportedLanguage,
   supportedLanguages,
   isSupportedLanguage,
-} from '@/types'
-export { PageHeader, type PageHeaderProps } from '@/components/PageHeader'
+} from './types'
+export { PageHeader, type PageHeaderProps } from './components/PageHeader'
 
-export { ExternalPill, type ExternalPillProps } from '@/components/ExternalPill'
+export { ExternalPill, type ExternalPillProps } from './components/ExternalPill'
 export {
   LanguageIndicator,
   type LanguageIndicatorProps,
-} from '@/components/LanguageIndicator'
+} from './components/LanguageIndicator'
 export {
   PullRequestLink,
   type PullRequestLinkProps,
-} from '@/components/PullRequestLink'
+} from './components/PullRequestLink'
 export {
   Select,
   SelectGroup,
@@ -101,73 +101,73 @@ export {
   SelectScrollDownButton,
   SelectScrollUpButton,
   SelectSeparator,
-} from '@/components/Select'
+} from './components/Select'
 export {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
   TooltipPortal,
-} from '@/components/Tooltip'
+} from './components/Tooltip'
 export {
   Popover,
   PopoverContent,
   PopoverTrigger,
   PopoverAnchor,
   PopoverPortal,
-} from '@/components/Popover'
-export { Facepile, type FacepileProps } from '@/components/Facepile'
-export { Link, type LinkProps } from '@/components/Link'
-export { Dialog } from '@/components/Dialog'
-export { Switch, type SwitchProps } from '@/components/Switch'
-export { SegmentedButton } from '@/components/SegmentedButton'
+} from './components/Popover'
+export { Facepile, type FacepileProps } from './components/Facepile'
+export { Link, type LinkProps } from './components/Link'
+export { Dialog } from './components/Dialog'
+export { Switch, type SwitchProps } from './components/Switch'
+export { SegmentedButton } from './components/SegmentedButton'
 // AppLayout
 export {
   AppLayout,
   type AppLayoutNavItemProps,
   type AppLayoutNavItemGroupProps,
   type AppLayoutBreadcrumbItemProps,
-} from '@/components/AppLayout'
-export { AppLayoutProvider } from '@/components/AppLayout/provider'
-export { useAppLayout } from '@/hooks/useAppLayout'
+} from './components/AppLayout'
+export { AppLayoutProvider } from './components/AppLayout/provider'
+export { useAppLayout } from './hooks/useAppLayout'
 
-export { ActionBar, type ActionBarProps } from '@/components/ActionBar'
+export { ActionBar, type ActionBarProps } from './components/ActionBar'
 export {
   Key,
   type KeyProps,
   KeyHint,
   type KeyHintProps,
-} from '@/components/KeyHint'
+} from './components/KeyHint'
 export {
   HighlightedText,
   type HighlightedTextProps,
-} from '@/components/HighlightedText'
+} from './components/HighlightedText'
 export {
   DragNDropArea,
   type DragNDropAreaProps,
-} from '@/components/DragNDrop/DragNDropArea'
-export { DragOverlay } from '@/components/DragNDrop/DragOverlay'
+} from './components/DragNDrop/DragNDropArea'
+export { DragOverlay } from './components/DragNDrop/DragOverlay'
 export {
   Draggable,
   type DraggableProps,
-} from '@/components/DragNDrop/Draggable'
+} from './components/DragNDrop/Draggable'
 export {
   Droppable,
   type DroppableProps,
-} from '@/components/DragNDrop/Droppable'
+} from './components/DragNDrop/Droppable'
 export {
   ResizablePanel,
   type ResizablePanelProps,
-} from '@/components/ResizablePanel'
+} from './components/ResizablePanel'
 export {
   CodePlayground,
   type CodePlaygroundProps,
   type CodePlaygroundSnippets,
-} from '@/components/CodePlayground'
+} from './components/CodePlayground'
 export {
   CodeEditor,
   type CodeEditorLayoutProps,
-} from '@/components/CodeEditorLayout'
+} from './components/CodeEditorLayout'
 export {
   Command,
   CommandGroup,
@@ -178,7 +178,7 @@ export {
   CommandSeparator,
   CommandShortcut,
   CommandDialog,
-} from '@/components/Command'
+} from './components/Command'
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -195,28 +195,28 @@ export {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-} from '@/components/Dropdown'
+} from './components/Dropdown'
 
 // ContextDropdown
-export { ContextDropdown } from '@/components/ContextDropdown'
-export { ModalProvider } from '@/context/ModalContext'
-export { useModal } from '@/hooks/useModal'
+export { ContextDropdown } from './components/ContextDropdown'
+export { ModalProvider } from './context/ModalContext'
+export { useModal } from './hooks/useModal'
 
 // Modal
-export { Modal, type ModalProps } from '@/components/Modal'
+export { Modal, type ModalProps } from './components/Modal'
 
 export {
   ThemeSwitcher,
   type ThemeSwitcherProps,
-} from '@/components/ThemeSwitcher'
+} from './components/ThemeSwitcher'
 
-export { cn } from '@/lib/utils'
+export { cn } from './lib/utils'
 
 // Timeline
-export { Timeline } from '@/components/Timeline'
+export { Timeline } from './components/Timeline'
 
 /** START BETA COMPONENTS */
-import { CLIWizard } from '@/components/__beta__/CLIWizard'
+import { CLIWizard } from './components/__beta__/CLIWizard'
 
 export const beta = {
   // TODO: This component is not yet reusable, it's only for use on the SDK Overview page right now
@@ -228,7 +228,7 @@ export {
   AIChatContainer,
   AIChatMessage,
   AIChatMessageComposer,
-} from '@/components/AIChat'
-export { useToolCallApproval } from '@/components/AIChat/toolCallApproval'
+} from './components/AIChat'
+export { useToolCallApproval } from './components/AIChat/toolCallApproval'
 
 /** END BETA COMPONENTS */

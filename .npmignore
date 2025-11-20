@@ -1,0 +1,63 @@
+# Exclude story files
+**/*.stories.tsx
+**/*.stories.ts
+**/*.stories.mdx
+
+# Exclude test files
+**/*.test.tsx
+**/*.test.ts
+
+# Exclude test directories
+**/__tests__/
+**/test/
+
+# Exclude dist artifacts
+dist/
+src/dist/
+
+# Exclude development files
+.storybook/
+storybook-static/
+integration/
+tests/
+*.log
+build-storybook.log
+.eslintcache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Exclude source maps (not needed for pure TS)
+**/*.map
+
+# Exclude node_modules
+node_modules/
+
+# Exclude git files
+.git/
+.gitignore
+.gitattributes
+
+# Exclude CI/CD
+.github/
+
+# Exclude config files (not needed by consumers)
+vite.config.mts
+postcss.config.mjs
+eslint.config.mjs
+components.json
+tsconfig.json
+pnpm-lock.yaml
+.prettierrc*
+.prettierignore
+.editorconfig
+.releaserc.json
+.vscode/
+
+# Exclude old package tarballs
+*.tgz
+
+# Exclude docs (README and LICENSE are auto-included)
+CLAUDE.md
+*.md
+!README.md
+

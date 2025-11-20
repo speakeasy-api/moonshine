@@ -4,7 +4,7 @@ import { DragNDropArea } from './DragNDropArea'
 import { Droppable } from './Droppable'
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { DragEndEvent } from '@dnd-kit/core'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 const meta: Meta<typeof Droppable> = {
   component: Droppable,

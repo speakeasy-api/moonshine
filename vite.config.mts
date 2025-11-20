@@ -1,4 +1,8 @@
-import { resolve } from 'path'
+/**
+ * We no longer bundle Moonshine, and distribute it as pure TypeScript.
+ * However, we still need Vite for storybook.
+ */
+
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
@@ -26,9 +30,4 @@ export default defineConfig({
   },
   base: './',
   define: process.env.VITEST ? {} : { global: 'window' },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-    },
-  },
 })

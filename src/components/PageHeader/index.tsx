@@ -3,8 +3,8 @@ import { Heading } from '../Heading'
 import { Separator } from '../Separator'
 
 import styles from './styles.module.css'
-import { cn } from '@/lib/utils'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
+import { cn } from '../../lib/utils'
+import useTailwindBreakpoint from '../../hooks/useTailwindBreakpoint'
 import { Link, LinkProps } from '../Link'
 
 export interface PageHeaderProps extends PropsWithChildren {

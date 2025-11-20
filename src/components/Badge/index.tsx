@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
-import { cn } from '@/lib/utils'
-import { BadgeVariant } from '@/types'
+import { cn } from '../../lib/utils'
+import { BadgeVariant } from '../../types'
 
 const BadgeLeftIcon = React.forwardRef<
   HTMLSpanElement,

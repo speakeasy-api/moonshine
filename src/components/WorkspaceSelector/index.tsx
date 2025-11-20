@@ -12,7 +12,7 @@ import { Logo } from '../Logo'
 import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
 import { Heading } from '../Heading'
-import { GlobalWorkspaceSelectorProps } from '@/types'
+import { GlobalWorkspaceSelectorProps } from '../../types'
 
 export interface Org {
   id: string

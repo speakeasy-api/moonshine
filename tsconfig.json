@@ -15,12 +15,6 @@
     "rootDir": "./src",
     "incremental": true,
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-    },
-    "baseUrl": ".",
     "types": [
       "@testing-library/jest-dom",
       "vite/client",
@@ -34,8 +28,8 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
     "src/**/*.stories.@(mdx|tsx)",
-    "src/**/*.test.@(ts|tsx)"
+    "src/**/*.test.@(ts|tsx)",
+    "src/index.mdx"
   ]
 }

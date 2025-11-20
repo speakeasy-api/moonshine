@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { Facepile } from '.'
-import { sizes } from '@/types'
+import { sizes } from '../../types'
 
 const meta: Meta<typeof Facepile> = {
   component: Facepile,

@@ -7,7 +7,7 @@ import {
   LIGHT_THEME,
   DARK_THEME,
 } from './codeUtils'
-import { ProgrammingLanguage } from '@/types'
+import { ProgrammingLanguage } from '../types'
 
 describe('codeUtils', () => {
   describe('removeCodeHikeAnnotations', () => {

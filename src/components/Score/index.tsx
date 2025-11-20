@@ -1,8 +1,8 @@
-import { Size } from '@/types'
-import type { Range } from '@/lib/typeUtils'
+import { Size } from '../../types'
+import type { Range } from '../../lib/typeUtils'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import styles from './index.module.css'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 export type ScoreValue = Range<100>
 

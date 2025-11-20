@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { Size } from '@/types'
+import { cn } from '../../lib/utils'
+import { Size } from '../../types'
 import './gradientCircle.css'
 import { useMemo } from 'react'
 

@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { Command as CommandPrimitive } from 'cmdk'
-import { cn } from '@/lib/utils'
-import { Icon } from '@/components/Icon'
+import { cn } from '../../lib/utils'
+import { Icon } from '../Icon'
 import { DialogContent } from '@radix-ui/react-dialog'
 import { DialogProps } from '@radix-ui/react-dialog'
 import { Dialog } from '../Dialog'

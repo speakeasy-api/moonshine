@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { Virtuoso } from 'react-virtuoso'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/Button'
+import { cn } from '../../lib/utils'
+import { Button } from '../Button'
 import {
   Command,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
-import { ButtonProps } from '@/components/Button'
+} from '../Command'
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
+import { ButtonProps } from '../Button'
 import { Icon } from '../Icon'
 
 // I don't like that these aren't based on REM but I'm not sure how to fix it right now

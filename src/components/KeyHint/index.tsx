@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { Icon } from '@/components/Icon'
+import { cn } from '../../lib/utils'
+import { Icon } from '../Icon'
 
 type Modifier = 'shift' | 'ctrlorcommand' | 'alt' | 'meta' | 'esc'
 

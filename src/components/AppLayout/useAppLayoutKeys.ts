@@ -1,4 +1,4 @@
-import { useAppLayout } from '@/hooks/useAppLayout'
+import { useAppLayout } from '../../hooks/useAppLayout'
 import { useCallback, useEffect } from 'react'
 
 export function useAppLayoutKeys() {

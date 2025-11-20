@@ -8,18 +8,18 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { Loader2 } from 'lucide-react'
-import { isGroupOf } from '@/lib/typeUtils'
+import { isGroupOf } from '../../lib/typeUtils'
 import styles from './styles.module.css'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/Tooltip'
-import { Button } from '@/components/Button'
-import { ExpandChevron } from '@/components/__beta__/CLIWizard'
+} from '../Tooltip'
+import { Button } from '../Button'
+import { ExpandChevron } from '../__beta__/CLIWizard'
 import { TableProvider } from './context/tableProvider'
 import { useTable } from './context/context'
 

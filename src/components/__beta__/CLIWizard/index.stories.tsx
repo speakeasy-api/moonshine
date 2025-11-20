@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import CLIWizard from './index'
-import { Container } from '@/components/Container'
-import { WizardStep } from '@/components/Wizard/types'
+import { Container } from '../../Container/index'
+import { WizardStep } from '../../Wizard/types'
 
 const steps: WizardStep[] = [
   {

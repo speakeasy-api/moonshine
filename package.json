@@ -27,10 +27,6 @@
     "type": "git",
     "url": "https://github.com/speakeasy-api/moonshine.git"
   },
-  "files": [
-    "src",
-    "types"
-  ],
   "scripts": {
     "type-check": "tsc --noEmit --skipLibCheck",
     "prepack": "pnpm type-check",

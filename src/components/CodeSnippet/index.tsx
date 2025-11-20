@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from 'react'
-import { cn } from '@/lib/utils'
-import { ProgrammingLanguage, Size } from '@/types'
+import { cn } from '../../lib/utils'
+import { ProgrammingLanguage, Size } from '../../types'
 import { AnimatePresence, motion } from 'motion/react'
 import '@/styles/codeSyntax.css'
 import './codeSnippet.css'
@@ -10,8 +10,8 @@ import {
   HighlightedCode,
   LIGHT_THEME,
   DARK_THEME,
-} from '@/lib/codeUtils'
-import { useConfig } from '@/hooks/useConfig'
+} from '../../lib/codeUtils'
+import { useConfig } from '../../hooks/useConfig'
 import { Pre } from '../CodeHighlight/Pre'
 
 export interface CodeSnippetProps {

@@ -33,13 +33,15 @@ Add this to the top of your project's CSS file where you configure Tailwind:
 
 **Note:** The `@reference` directive is required for Tailwind v4 to recognize Moonshine's custom utilities and make them available in your project.
 
-### 3. Import Moonshine's Compiled CSS
+### 3. Import Moonshine's CSS
 
 In your main app file (or root layout):
 
 ```ts
 import '@speakeasy-api/moonshine/moonshine.css'
 ```
+
+**Note:** Moonshine distributes as pure TypeScript, and Vite will process the CSS from source automatically.
 
 ### 4. Set up the Provider
 
@@ -52,7 +54,7 @@ import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
 </MoonshineConfigProvider>
 ```
 
-### 5. Configure Custom Fonts (Optional)
+### 6. Configure Custom Fonts (Optional)
 
 Moonshine uses custom fonts (Diatype, Tobias). If you have licenses for these fonts, add them to your project:
 
@@ -79,7 +81,7 @@ Moonshine uses custom fonts (Diatype, Tobias). If you have licenses for these fo
 
 If you don't have these fonts, the design system will fall back to system fonts.
 
-### 6. Use Components and Utilities
+### 7. Use Components and Utilities
 
 ```tsx
 import { Grid } from '@speakeasy-api/moonshine'
@@ -112,7 +114,7 @@ The types are automatically generated during the build process and include:
 
 💡 **Tip**: This prevents typos and helps you discover available utilities without leaving your editor!
 
-The package is built with [vite](https://vitejs.dev/), and is distributed in both [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS](https://nodejs.org/api/modules.html#modules-commonjs) formats.
+The package is built with [vite](https://vitejs.dev/) and distributed as **pure TypeScript**. Consumers using Vite will transpile the TypeScript on-the-fly, eliminating the need for a separate build step when linking the library locally.
 
 ### Using Tailwind Merge
 
@@ -206,8 +208,7 @@ import type { MoonshineClasses } from '@speakeasy-api/moonshine/types/utilities'
 
 1. Clone the repository
 2. Run `pnpm install` to install the dependencies
-3. Run `pnpm build` to build the package
-4. Run `pnpm storybook` to start the storybook server
+3. Run `pnpm storybook` to start the storybook server
 
 If you'd like to develop Moonshine in tandem with another app, you can follow the steps outlined below in the **Linking the library locally** section.
 
@@ -264,18 +265,33 @@ Run `pnpm test` to run the tests.
 
 ### Linking the library locally
 
-Run `pnpm build:watch` within Moonshine to build the library and watch for changes.
+Since Moonshine distributes as pure TypeScript, linking is much simpler - no build step required!
 
-Then run `pnpm link ../path/to/moonshine` within the app that will use the library. For the registry `webapp` directory (assuming a standard cloning setup where `moonshine` is a sibling of the registry repo), it would be:
+1. **Link the library** from within your consuming app:
 
 ```bash
 pnpm link ../path/to/moonshine
 ```
 
-The lockfile file within your app should referenced the linked copy:
+For example, if `moonshine` is a sibling of your app directory:
+
+```bash
+pnpm link ../moonshine
+```
+
+2. **Start your dev server** - Vite will automatically transpile the TypeScript from the linked library.
+
+The lockfile within your app should reference the linked copy:
 
 ```yaml
 '@speakeasy-api/moonshine':
-  specifier: ^0.43.1
+  specifier: ^2.0.0-alpha.1
   version: link:../../../../moonshine
 ```
+
+**Benefits of pure TypeScript distribution:**
+
+- ✅ No need to run `tsc` in watch mode
+- ✅ No build conflicts between library and consumer
+- ✅ Instant updates when you change source files
+- ✅ Simpler development workflow

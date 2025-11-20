@@ -1,7 +1,7 @@
 import React from 'react'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Gap, Padding, ResponsiveValue } from '@/types'
-import { gapMapper, paddingMapper, wrapMapper } from '@/lib/responsiveMappers'
+import { cn, getResponsiveClasses } from '../../lib/utils'
+import { Gap, Padding, ResponsiveValue } from '../../types'
+import { gapMapper, paddingMapper, wrapMapper } from '../../lib/responsiveMappers'
 
 type StackDirection = 'horizontal' | 'vertical'
 type StackAlign = 'stretch' | 'start' | 'center' | 'end' | 'baseline'

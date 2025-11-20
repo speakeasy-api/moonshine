@@ -6,7 +6,7 @@ import { GradientCircle } from '../GradientCircle'
 import { Separator } from '../Separator'
 import { Text } from '../Text'
 import { Button } from '../Button'
-import { Heading } from '@/index'
+import { Heading } from '../../index'
 
 interface CreateOrgProps {
   onSubmit: (name: string) => Promise<Org>

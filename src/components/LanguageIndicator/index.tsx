@@ -1,6 +1,6 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-172/language-indicator-component
-import { cn } from '@/lib/utils'
-import { SupportedLanguage } from '@/types'
+import { cn } from '../../lib/utils'
+import { SupportedLanguage } from '../../types'
 
 export interface LanguageIndicatorProps {
   language: SupportedLanguage

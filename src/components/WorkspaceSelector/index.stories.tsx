@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Org, Workspace, WorkspaceSelector, WorkspaceSelectorProps } from '.'
-import { Container } from '@/index'
+import { Container } from '../../index'
 import { CreateResult } from './CreateWorkspace'
 import { expect, userEvent, within } from 'storybook/test'
 import { faker } from '@faker-js/faker'

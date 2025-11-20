@@ -10,7 +10,7 @@ import React from 'react'
 import { Check, Copy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { TerminalPrompt, TerminalOutput } from './terminal'
-import { cn } from '@/lib/utils'
+import { cn } from '../../../lib/utils'
 
 interface TerminalCommandProps {
   code: string

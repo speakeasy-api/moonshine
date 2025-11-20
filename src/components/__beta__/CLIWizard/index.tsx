@@ -3,12 +3,12 @@
 import * as React from 'react'
 import { Check, ChevronUp } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { cn } from '@/lib/utils'
-import { Text } from '../../Text'
-import { Heading } from '../../Heading'
+import { cn } from '../../../lib/utils'
+import { Text } from '../../Text/index'
+import { Heading } from '../../Heading/index'
 import { TerminalCommand } from './terminal-command'
 import { Terminal } from './terminal'
-import { WizardStep } from '@/components/Wizard/types'
+import { WizardStep } from '../../Wizard/types'
 
 /**
  * TODO before moving out of beta:

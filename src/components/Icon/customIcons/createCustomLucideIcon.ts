@@ -1,4 +1,4 @@
-import { cn, toKebabCase } from '@/lib/utils'
+import { cn, toKebabCase } from '../../../lib/utils'
 import { Icon, IconNode, LucideProps } from 'lucide-react'
 import { createElement, forwardRef } from 'react'
 
