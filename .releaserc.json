@@ -3,8 +3,7 @@
     "main",
     {
       "name": "alpha",
-      "prerelease": "alpha",
-      "range": "2.x"
+      "prerelease": "alpha"
     }
   ],
   "plugins": [
