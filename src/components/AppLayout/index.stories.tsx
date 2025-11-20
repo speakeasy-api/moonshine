@@ -6,8 +6,8 @@ import { Text } from '../Text'
 import { Icon } from '../Icon'
 import { Button } from '../Button'
 import React, { useState } from 'react'
-import { MoonshineConfigProvider } from '@/context/ConfigContext'
-import { useAppLayout } from '@/hooks/useAppLayout'
+import { MoonshineConfigProvider } from '../../context/ConfigContext'
+import { useAppLayout } from '../../hooks/useAppLayout'
 
 type Story = StoryObj<typeof AppLayout>
 

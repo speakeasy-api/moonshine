@@ -7,11 +7,11 @@ import {
   DialogPortal,
   DialogTitle,
 } from '@radix-ui/react-dialog'
-import { useModal } from '@/hooks/useModal'
-import { cn } from '@/lib/utils'
-import { IconButton } from '@/components/IconButton'
+import { useModal } from '../../hooks/useModal'
+import { cn } from '../../lib/utils'
+import { IconButton } from '../IconButton'
 import { Icon } from '../Icon'
-import { Screen } from '@/context/ModalContext'
+import { Screen } from '../../context/ModalContext'
 
 export interface ModalProps {
   closable?: boolean

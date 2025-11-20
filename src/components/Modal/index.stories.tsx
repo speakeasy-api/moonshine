@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { Modal } from '.'
-import { ModalProvider, Screen } from '@/context/ModalContext'
-import { useModal } from '@/hooks/useModal'
+import { ModalProvider, Screen } from '../../context/ModalContext'
+import { useModal } from '../../hooks/useModal'
 import { memo, useEffect } from 'react'
 import { faker } from '@faker-js/faker'
-import { Button, Icon } from '@/index'
+import { Button, Icon } from '../../index'
 
 faker.seed(123)
 

@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { ResizablePanel } from '.'
 import { StoryObj, Meta } from '@storybook/react-vite'
 import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 const meta: Meta<typeof ResizablePanel> = {
   component: ResizablePanel,

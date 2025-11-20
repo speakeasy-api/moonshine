@@ -1,16 +1,11 @@
 import * as React from 'react'
 
-import {
-  Command,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
+import { Command, CommandInput, CommandItem, CommandList } from '../Command'
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Org } from '.'
-import { Icon } from '@/components/Icon'
+import { Icon } from '../Icon'
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 interface OrgSelectorProps {
   orgs: Org[]

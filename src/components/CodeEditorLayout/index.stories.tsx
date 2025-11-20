@@ -1,7 +1,7 @@
 import { CodeEditor, CodeEditorTabProps } from '.'
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { faker } from '@faker-js/faker'
-import { Icon } from '@/components/Icon'
+import { Icon } from '../Icon'
 import { Key } from '../KeyHint'
 import { useState } from 'react'
 

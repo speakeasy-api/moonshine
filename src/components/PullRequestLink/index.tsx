@@ -1,6 +1,6 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-174/pull-request-link-component
-import { assertNever } from '@/lib/assert'
-import { cn } from '@/lib/utils'
+import { assertNever } from '../../lib/assert'
+import { cn } from '../../lib/utils'
 import { GitPullRequest, GitPullRequestClosed, Merge } from 'lucide-react'
 
 type Status = 'open' | 'closed' | 'merged'

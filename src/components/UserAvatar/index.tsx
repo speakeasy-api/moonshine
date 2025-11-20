@@ -1,8 +1,8 @@
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { ResponsiveValue, Size } from '@/types'
+import { cn, getResponsiveClasses } from '../../lib/utils'
+import { ResponsiveValue, Size } from '../../types'
 import { userAvatarSizeMap } from './sizeMap'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
+import useTailwindBreakpoint from '../../hooks/useTailwindBreakpoint'
+import { resolveSizeForBreakpoint } from '../../lib/responsiveUtils'
 import { userAvatarSizeMapper } from './sizeMap'
 
 export interface UserAvatarProps {

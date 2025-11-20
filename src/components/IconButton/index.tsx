@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, ButtonIcon } from '../Button'
-import { ButtonVariant, ButtonSize, ButtonContext } from '@/types'
-import { cn } from '@/lib/utils'
+import { ButtonVariant, ButtonSize, ButtonContext } from '../../types'
+import { cn } from '../../lib/utils'
 
 type Attributes = Pick<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

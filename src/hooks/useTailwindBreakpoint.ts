@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from 'react'
-import { Breakpoint } from '@/types.js'
-import debounce from '@/lib/debounce'
+import { Breakpoint } from '../types.js'
+import debounce from '../lib/debounce'
 
 // Define breakpoints in pixels matching Tailwind's default breakpoints
 const breakpointValues = {

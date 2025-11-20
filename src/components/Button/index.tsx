@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
-import { cn } from '@/lib/utils'
-import { ButtonSize, ButtonVariant, ButtonContext } from '@/types'
+import { cn } from '../../lib/utils'
+import { ButtonSize, ButtonVariant, ButtonContext } from '../../types'
 
 // Lerp for angles, taking the shortest path around the circle
 const lerpAngle = (a: number, b: number, t: number) => {

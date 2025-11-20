@@ -1,12 +1,12 @@
-import { Icon } from '@/components/Icon'
-import { IconName } from '@/components/Icon/names'
+import { Icon } from '../Icon/index'
+import { IconName } from '../Icon/names'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/Tooltip'
-import { cn } from '@/lib/utils'
+} from '../Tooltip/index'
+import { cn } from '../../lib/utils'
 import {
   useDraggable,
   DraggableAttributes,

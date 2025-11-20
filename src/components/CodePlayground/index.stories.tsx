@@ -1,4 +1,4 @@
-import { Icon } from '@/components/Icon'
+import { Icon } from '../Icon'
 import { CodePlayground, CodePlaygroundSnippets } from '.'
 import { StoryObj, Meta } from '@storybook/react-vite'
 import { useState } from 'react'

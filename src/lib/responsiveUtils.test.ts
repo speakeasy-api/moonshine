@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { resolveSizeForBreakpoint } from './responsiveUtils'
-import { breakpoints, sizes } from '@/types'
+import { breakpoints, sizes } from '../types'
 
 describe('resolveSizeForBreakpoint', () => {
   test('single value returns the same value', () => {

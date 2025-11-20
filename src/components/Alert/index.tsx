@@ -1,9 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import { Modifier, Variant } from './types'
-import { Icon } from '@/components/Icon'
+import { Icon } from '../Icon'
 import { iconNames } from '../Icon/names'
 import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 const flexClasses = 'flex flex-row items-center gap-3'
 

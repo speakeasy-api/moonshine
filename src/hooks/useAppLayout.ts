@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AppLayoutContext } from '@/components/AppLayout/context'
+import { AppLayoutContext } from '../components/AppLayout/context'
 
 export const useAppLayout = () => {
   const context = useContext(AppLayoutContext)

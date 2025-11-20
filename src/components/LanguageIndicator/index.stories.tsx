@@ -1,4 +1,4 @@
-import { supportedLanguages } from '@/types'
+import { supportedLanguages } from '../../types'
 import { LanguageIndicator } from '.'
 import { StoryObj, Meta } from '@storybook/react-vite'
 

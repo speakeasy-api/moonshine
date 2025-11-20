@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import React, { ReactElement, useEffect, useState } from 'react'
 
 export interface TabProps<I extends string> {

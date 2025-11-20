@@ -1,5 +1,5 @@
-import { Icon } from '@/components/Icon'
-import { cn } from '@/lib/utils'
+import { Icon } from '../Icon'
+import { cn } from '../../lib/utils'
 import {
   isValidElement,
   ReactNode,

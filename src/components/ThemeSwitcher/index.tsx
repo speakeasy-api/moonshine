@@ -1,11 +1,11 @@
 'use client'
 
 import { ReactNode, useId, useMemo } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { Moon, Sun } from 'lucide-react'
-import { useIsMounted } from '@/hooks/useIsMounted'
-import { useConfig } from '@/hooks/useConfig'
-import { Theme } from '@/context/theme'
+import { useIsMounted } from '../../hooks/useIsMounted'
+import { useConfig } from '../../hooks/useConfig'
+import { Theme } from '../../context/theme'
 import { motion } from 'motion/react'
 
 const THEMES: { key: Theme; icon: ReactNode }[] = [

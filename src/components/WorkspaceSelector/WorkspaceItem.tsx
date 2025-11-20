@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { CommandItem } from '../Command'
 import { GradientCircle } from '../GradientCircle'
 import { Org, Workspace } from '.'

@@ -1,4 +1,4 @@
-import { ProgrammingLanguage } from '@/types'
+import { ProgrammingLanguage } from '../../types'
 
 export interface WizardCommand {
   id: string

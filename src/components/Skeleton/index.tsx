@@ -1,5 +1,5 @@
 import { Children, cloneElement, isValidElement } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import './skeleton.css'
 
 export interface SkeletonProps {

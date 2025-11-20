@@ -1,5 +1,5 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-171/input-component
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { Icon } from '../Icon'
 import { IconName } from '../Icon/names'
 import { useCallback, useState } from 'react'

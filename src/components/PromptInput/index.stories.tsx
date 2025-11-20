@@ -1,4 +1,4 @@
-import { Attachment, PromptInput, Suggestion } from '@/components/PromptInput'
+import { Attachment, PromptInput, Suggestion } from '../PromptInput'
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { fn } from 'storybook/test'
 import { useState, useCallback, useRef } from 'react'

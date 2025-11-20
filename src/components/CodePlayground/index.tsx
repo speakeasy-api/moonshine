@@ -15,23 +15,23 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/Select'
-import { prettyLanguageName, SupportedLanguage } from '@/types'
-import '@/styles/codeSyntax.css'
+} from '../Select'
+import { prettyLanguageName, SupportedLanguage } from '../../types'
+import '../../styles/codeSyntax.css'
 import { motion } from 'motion/react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import { AnimatePresence } from 'motion/react'
-import { Icon } from '@/components/Icon'
-import { Skeleton } from '@/components/Skeleton'
+import { Icon } from '../Icon'
+import { Skeleton } from '../Skeleton'
 import {
   highlightCode,
   HighlightedCode,
   LIGHT_THEME,
   DARK_THEME,
-} from '@/lib/codeUtils'
+} from '../../lib/codeUtils'
 import React from 'react'
 import { Pre } from '../CodeHighlight/Pre'
-import { useConfig } from '@/hooks/useConfig'
+import { useConfig } from '../../hooks/useConfig'
 
 const copyIconVariants = {
   hidden: { opacity: 0, scale: 0.5 },

@@ -1,7 +1,7 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-173/external-pill-component
 import React, { useState, useEffect } from 'react'
 import { Icon as FallbackIcon } from '../Icon'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 
 type AllExternalIcons =
   | 'github'

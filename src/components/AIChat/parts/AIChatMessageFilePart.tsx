@@ -1,5 +1,5 @@
 import { cn } from '../../../lib/utils'
-import { Text } from '../../Text'
+import { Text } from '../../Text/index'
 import type { BasePartProps } from '../types'
 
 export interface AIChatMessageFilePartProps extends BasePartProps {

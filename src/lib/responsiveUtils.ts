@@ -1,4 +1,4 @@
-import { Breakpoint, breakpoints, Gap, ResponsiveValue, Size } from '@/types'
+import { Breakpoint, breakpoints, Gap, ResponsiveValue, Size } from '../types'
 import { isResponsiveValueObject, isSize } from './typeUtils'
 
 export const gapMapper = (gap: Gap) => `gap-${gap}`

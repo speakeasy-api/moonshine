@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Stack } from '.'
-import { createSampleChildren } from '@/lib/storybookUtils'
-import { cn } from '@/lib/utils'
+import { createSampleChildren } from '../../lib/storybookUtils'
+import { cn } from '../../lib/utils'
 
 const meta: Meta<typeof Stack> = {
   component: Stack,

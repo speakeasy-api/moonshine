@@ -1,5 +1,5 @@
 import { codeToTokens, BundledLanguage, BundledTheme } from 'shiki'
-import { ProgrammingLanguage, SupportedLanguage } from '@/types'
+import { ProgrammingLanguage, SupportedLanguage } from '../types'
 
 export const LIGHT_THEME = 'github-light' as const
 export const DARK_THEME = 'github-dark' as const
@@ -55,7 +55,10 @@ export async function highlightCode(
       lang,
     }
   } catch (error) {
-    console.error('Error highlighting code:', error)
+    // Only log errors outside of test environment
+    if (!process.env.VITEST && !process.env.NODE_ENV?.includes('test')) {
+      console.error('Error highlighting code:', error)
+    }
     // Fallback to plain text
     return {
       lines: cleanCode.split('\n').map((line) => ({
