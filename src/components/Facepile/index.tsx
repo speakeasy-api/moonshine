@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { ResponsiveValue, Size } from '../../types'
 import { UserAvatar, UserAvatarProps } from '../UserAvatar'
-import {
-  userAvatarSizeMap,
-  userAvatarSizeMapper,
-} from '../UserAvatar/sizeMap'
+import { userAvatarSizeMap, userAvatarSizeMapper } from '../UserAvatar/sizeMap'
 import { cn, getResponsiveClasses } from '../../lib/utils'
 import useTailwindBreakpoint from '../../hooks/useTailwindBreakpoint'
 import { resolveSizeForBreakpoint } from '../../lib/responsiveUtils'

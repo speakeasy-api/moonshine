@@ -1,11 +1,6 @@
 import * as React from 'react'
 
-import {
-  Command,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '../Command'
+import { Command, CommandInput, CommandItem, CommandList } from '../Command'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Org } from '.'
 import { Icon } from '../Icon'
