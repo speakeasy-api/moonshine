@@ -97,6 +97,47 @@ const ButtonText = React.forwardRef<
 ))
 ButtonText.displayName = 'ButtonText'
 
+const BrandSlot = React.forwardRef<
+  HTMLElement,
+  React.ComponentProps<typeof Slot> & { isBrandVariant?: boolean }
+>(({ isBrandVariant = false, ...slotProps }, slotRef) => {
+  if (!isBrandVariant) {
+    return <Slot {...slotProps} ref={slotRef} />
+  }
+
+  const child = React.Children.only(slotProps.children)
+  if (!React.isValidElement(child)) {
+    return <Slot {...slotProps} ref={slotRef} />
+  }
+
+  const brandSpan = (
+    <span
+      key="brand-bg"
+      className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 -z-10 rounded-[inherit]"
+    />
+  )
+
+  const childWithBrand = React.cloneElement(
+    child as React.ReactElement<React.ComponentProps<typeof Slot>>,
+    {
+      ...child.props,
+      children: (child.props as React.ComponentProps<typeof Slot>).children
+        ? [
+            brandSpan,
+            (child.props as React.ComponentProps<typeof Slot>).children,
+          ]
+        : brandSpan,
+    }
+  )
+
+  return (
+    <Slot {...slotProps} ref={slotRef}>
+      {childWithBrand}
+    </Slot>
+  )
+})
+BrandSlot.displayName = 'BrandSlot'
+
 const buttonVariants = cva(
   'relative inline-flex items-center justify-center whitespace-nowrap text-sm font-mono uppercase tracking-[0.01em] transition-all select-none cursor-pointer focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-[var(--bg-surface-primary-default)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
@@ -406,51 +447,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }
     }, [isBrandVariant])
 
-    // Custom Slot wrapper for brand variant
-    const BrandSlot = React.forwardRef<
-      HTMLElement,
-      React.ComponentProps<typeof Slot>
-    >((slotProps, slotRef) => {
-      if (!isBrandVariant) {
-        return <Slot {...slotProps} ref={slotRef} />
-      }
-
-      // For brand variant, we need to inject the brand span
-      const child = React.Children.only(slotProps.children)
-      if (!React.isValidElement(child)) {
-        return <Slot {...slotProps} ref={slotRef} />
-      }
-
-      // Create brand span
-      const brandSpan = (
-        <span
-          key="brand-bg"
-          className="bg-btn-brand hover:bg-btn-brand-hover disabled:bg-btn-brand-disabled pointer-events-none absolute inset-0 -z-10 rounded-[inherit]"
-        />
-      )
-
-      // Clone child with brand span injected
-      const childWithBrand = React.cloneElement(
-        child as React.ReactElement<React.ComponentProps<typeof Slot>>,
-        {
-          ...child.props,
-          children: (child.props as React.ComponentProps<typeof Slot>).children
-            ? [
-                brandSpan,
-                (child.props as React.ComponentProps<typeof Slot>).children,
-              ]
-            : brandSpan,
-        }
-      )
-
-      return (
-        <Slot {...slotProps} ref={slotRef}>
-          {childWithBrand}
-        </Slot>
-      )
-    })
-    BrandSlot.displayName = 'BrandSlot'
-
     const Comp = asChild ? BrandSlot : 'button'
     const combinedRef = React.useCallback(
       (node: HTMLButtonElement | null) => {
@@ -489,6 +485,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onMouseMove={handleMouseMove}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        {...(asChild ? { isBrandVariant } : {})}
         {...props}
       >
         {asChild ? (
