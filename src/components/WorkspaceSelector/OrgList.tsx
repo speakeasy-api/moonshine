@@ -13,7 +13,7 @@ interface OrgListProps {
   orgs: Org[]
   enableRecents: boolean
   showRecents: boolean
-  selectedOrg: Org | null
+  selectedOrg?: Org
   setSelectedOrg: (org: Org) => void
   onSelectRecent: () => void
   filterOrgFunc: (org: Org, search: string) => boolean

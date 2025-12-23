@@ -10,7 +10,7 @@ import { SearchBox } from './SearchBox'
 import { Text } from '../Text'
 
 interface WorkspaceListProps {
-  selectedOrg: Org
+  selectedOrg?: Org
   selectedWorkspace: Workspace | null
   handleCreateViewOpen: () => void
   handleSelect: (org: Org, workspace: Workspace) => void
@@ -29,20 +29,13 @@ export function WorkspaceList({
   const virtuoso = useRef<VirtuosoHandle | null>(null)
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
-  const [filteredWorkspaces, setFilteredWorkspaces] = useState<Workspace[]>(
-    selectedOrg.workspaces
-  )
+  const filteredWorkspaces =
+    selectedOrg?.workspaces.filter((workspace) =>
+      filterWorkspaceFunc(workspace, search)
+    ) ?? []
 
   useEffect(() => {
-    setFilteredWorkspaces(
-      selectedOrg.workspaces.filter((workspace) =>
-        filterWorkspaceFunc(workspace, search)
-      )
-    )
-  }, [search, selectedOrg.workspaces, filterWorkspaceFunc])
-
-  useEffect(() => {
-    if (selectedWorkspace && virtuoso.current) {
+    if (selectedOrg && selectedWorkspace && virtuoso.current) {
       const index = selectedOrg.workspaces.findIndex(
         (workspace) => workspace.slug === selectedWorkspace.slug
       )
@@ -50,11 +43,11 @@ export function WorkspaceList({
       setTimeout(() => {
         virtuoso.current?.scrollToIndex({
           index,
-          behavior: selectedOrg.workspaces.length < 10 ? 'smooth' : 'auto',
+          behavior: 'smooth',
         })
       }, 100)
     }
-  }, [selectedWorkspace, selectedOrg.workspaces])
+  }, [selectedWorkspace, selectedOrg])
 
   return (
     <div className="flex h-full w-full flex-col @[640px]:w-2/3">
@@ -64,7 +57,7 @@ export function WorkspaceList({
         search={search}
         setSearch={setSearch}
       />
-      {filteredWorkspaces.length === 0 ? (
+      {!selectedOrg || filteredWorkspaces.length === 0 ? (
         <div className="flex flex-grow items-center justify-center">
           <p className="text-body">
             {search.length > 0

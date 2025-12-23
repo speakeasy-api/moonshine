@@ -98,8 +98,8 @@ export function WorkspaceSelector({
 }: WorkspaceSelectorProps) {
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
-  const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(
-    defaultSelectedOrg ?? orgs[0]
+  const [selectedOrg, setSelectedOrg] = React.useState<Org | undefined>(
+    defaultSelectedOrg
   )
   const [createWorkspaceViewOpen, setCreateWorkspaceViewOpen] = React.useState(
     showCreateWorkspaceView ?? false
@@ -167,7 +167,7 @@ export function WorkspaceSelector({
                   ...prev,
                   workspaces: [...prev.workspaces, workspace],
                 }
-              : null
+              : undefined
           )
           setNewWorkspaceName('')
           setCreateWorkspaceViewOpen(false)
@@ -227,7 +227,7 @@ export function WorkspaceSelector({
   }, [startTransition])
 
   const backToOrgSelector = React.useCallback(() => {
-    setSelectedOrg(null)
+    setSelectedOrg(undefined)
   }, [])
 
   return (
@@ -292,7 +292,7 @@ export function WorkspaceSelector({
 
 interface WorkspaceViewContentsProps {
   orgs: Org[]
-  selectedOrg: Org | null
+  selectedOrg?: Org
   selectedWorkspace: Workspace | null
   handleSelect: (org: Org, workspace: Workspace, clearSearch: boolean) => void
   showRecents: boolean
@@ -420,7 +420,7 @@ function WorkspaceViewContents({
                 )}
               >
                 <WorkspaceList
-                  selectedOrg={selectedOrg ?? orgs[0]}
+                  selectedOrg={selectedOrg}
                   handleCreateViewOpen={handleCreateWorkspaceViewOpen}
                   handleSelect={(org, workspace) =>
                     handleSelect(org, workspace, false)

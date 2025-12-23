@@ -12,7 +12,7 @@ interface RecentWorkspacesProps {
   orgsWithFilteredWorkspaces: Org[]
   onSelect: (org: Org, workspace: Workspace) => void
   fullWidth?: boolean
-  selectedOrg: Org | null
+  selectedOrg?: Org
   selectedWorkspace: Workspace | null
   handleCreateViewOpen: () => void
 }
