@@ -51,7 +51,7 @@ export function OrgList({
   }, [selectedOrg, orgs])
 
   return (
-    <div className="border-neutral-softest flex w-1/3 flex-col border-r">
+    <div className="border-neutral-softest flex h-full w-full flex-col @[640px]:w-1/3 @[640px]:border-r">
       <SearchBox
         inputRef={inputRef}
         placeholder="Search organizations..."
@@ -69,7 +69,7 @@ export function OrgList({
               onSelect={() => setSelectedOrg(org)}
               value={`org-${org.slug}`}
               className={cn(
-                'hover:!bg-accent/40 flex max-w-lg cursor-pointer flex-row gap-3 rounded-none p-4 text-base',
+                'hover:!bg-accent/40 flex cursor-pointer flex-row gap-3 rounded-none p-4 text-base @[640px]:max-w-lg',
                 !showRecents &&
                   selectedOrg?.slug === org.slug &&
                   'bg-accent/40 text-accent-foreground font-semibold'

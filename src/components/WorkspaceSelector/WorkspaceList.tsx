@@ -30,35 +30,34 @@ export function WorkspaceList({
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const [filteredWorkspaces, setFilteredWorkspaces] = useState<Workspace[]>(
-    selectedOrg?.workspaces || []
+    selectedOrg.workspaces
   )
 
   useEffect(() => {
     setFilteredWorkspaces(
-      selectedOrg?.workspaces.filter((workspace) =>
+      selectedOrg.workspaces.filter((workspace) =>
         filterWorkspaceFunc(workspace, search)
       )
     )
-  }, [search, selectedOrg?.workspaces, filterWorkspaceFunc])
+  }, [search, selectedOrg.workspaces, filterWorkspaceFunc])
 
   useEffect(() => {
     if (selectedWorkspace && virtuoso.current) {
-      const index = selectedOrg?.workspaces.findIndex(
+      const index = selectedOrg.workspaces.findIndex(
         (workspace) => workspace.slug === selectedWorkspace.slug
       )
 
-      // wait for the ref to update
       setTimeout(() => {
         virtuoso.current?.scrollToIndex({
           index,
-          behavior: selectedOrg?.workspaces.length < 10 ? 'smooth' : 'auto',
+          behavior: selectedOrg.workspaces.length < 10 ? 'smooth' : 'auto',
         })
       }, 100)
     }
-  }, [selectedWorkspace, selectedOrg?.workspaces])
+  }, [selectedWorkspace, selectedOrg.workspaces])
 
   return (
-    <div className="flex w-2/3 flex-col">
+    <div className="flex h-full w-full flex-col @[640px]:w-2/3">
       <SearchBox
         inputRef={inputRef}
         placeholder="Search workspaces..."
@@ -83,10 +82,7 @@ export function WorkspaceList({
               workspace={workspace}
               selectedOrg={selectedOrg}
               handleSelect={handleSelect}
-              isSelected={
-                selectedOrg.id === selectedOrg.id &&
-                selectedWorkspace?.id === workspace.id
-              }
+              isSelected={selectedWorkspace?.id === workspace.id}
             />
           )}
         />
