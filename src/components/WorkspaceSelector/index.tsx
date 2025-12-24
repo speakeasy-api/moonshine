@@ -31,7 +31,7 @@ export interface Workspace {
   updatedAt: Date
 }
 
-export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
+interface WorkspaceSelectorBaseProps extends GlobalWorkspaceSelectorProps {
   onCreateOrg: (newOrgName: string) => Promise<Org>
 
   /**
@@ -48,13 +48,21 @@ export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
    */
   createTriggersSelection?: boolean
 
-  showCreateWorkspaceView?: boolean
-
-  defaultSelectedOrg?: Org
-
   filterOrgFunc: (org: Org, search: string) => boolean
   filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
 }
+
+export type WorkspaceSelectorProps = WorkspaceSelectorBaseProps &
+  (
+    | {
+        showCreateWorkspaceView: true
+        defaultSelectedOrg: Org
+      }
+    | {
+        showCreateWorkspaceView?: false
+        defaultSelectedOrg?: Org
+      }
+  )
 
 const useViewTransition = () => {
   const [isTransitioning, setIsTransitioning] = React.useState(false)

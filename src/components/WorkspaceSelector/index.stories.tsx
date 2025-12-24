@@ -246,8 +246,29 @@ const useWorkspaceSelectorState = (initialOrgs: Org[] = sampleData) => {
   }
 }
 
+// Props type that preserves the discriminated union
+type WorkspaceSelectorWithStateProps =
+  | ({
+      showCreateWorkspaceView: true
+      defaultSelectedOrg: Org
+    } & Partial<
+      Omit<
+        WorkspaceSelectorProps,
+        'showCreateWorkspaceView' | 'defaultSelectedOrg'
+      >
+    >)
+  | ({
+      showCreateWorkspaceView?: false
+      defaultSelectedOrg?: Org
+    } & Partial<
+      Omit<
+        WorkspaceSelectorProps,
+        'showCreateWorkspaceView' | 'defaultSelectedOrg'
+      >
+    >)
+
 // Simplified component
-const WorkspaceSelectorWithState = (props: Partial<WorkspaceSelectorProps>) => {
+const WorkspaceSelectorWithState = (props: WorkspaceSelectorWithStateProps) => {
   const state = useWorkspaceSelectorState(props.orgs)
 
   return (
@@ -473,9 +494,9 @@ export const WithCreateWorkspaceViewShownByDefault: Story = {
 export const WithSearchableOrgSelector: Story = {
   ...Default,
   render: () => {
+    // Set seed once before generating all orgs for consistent data
+    faker.seed(42)
     const orgs = Array.from({ length: 5000 }).map(() => {
-      // Set seed to ensure consistent data
-      faker.seed(42)
       const slug = faker.lorem.slug({ min: 1, max: 3 })
       return {
         id: faker.string.uuid(),
@@ -486,7 +507,13 @@ export const WithSearchableOrgSelector: Story = {
         updatedAt: new Date(),
       }
     })
-    return <WorkspaceSelectorWithState showCreateWorkspaceView orgs={orgs} />
+    return (
+      <WorkspaceSelectorWithState
+        showCreateWorkspaceView
+        orgs={orgs}
+        defaultSelectedOrg={orgs[0]}
+      />
+    )
   },
 }
 
