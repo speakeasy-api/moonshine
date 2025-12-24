@@ -13,6 +13,7 @@ import { Stack } from '../Stack'
 import { CreateOrg } from './CreateOrg'
 import { Heading } from '../Heading'
 import { GlobalWorkspaceSelectorProps } from '@/types'
+import { cn } from '@/lib/utils'
 
 export interface Org {
   id: string
@@ -30,7 +31,7 @@ export interface Workspace {
   updatedAt: Date
 }
 
-export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
+interface WorkspaceSelectorBaseProps extends GlobalWorkspaceSelectorProps {
   onCreateOrg: (newOrgName: string) => Promise<Org>
 
   /**
@@ -47,13 +48,21 @@ export interface WorkspaceSelectorProps extends GlobalWorkspaceSelectorProps {
    */
   createTriggersSelection?: boolean
 
-  showCreateWorkspaceView?: boolean
-
-  defaultSelectedOrg?: Org
-
   filterOrgFunc: (org: Org, search: string) => boolean
   filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
 }
+
+export type WorkspaceSelectorProps = WorkspaceSelectorBaseProps &
+  (
+    | {
+        showCreateWorkspaceView: true
+        defaultSelectedOrg: Org
+      }
+    | {
+        showCreateWorkspaceView?: false
+        defaultSelectedOrg?: Org
+      }
+  )
 
 const useViewTransition = () => {
   const [isTransitioning, setIsTransitioning] = React.useState(false)
@@ -97,8 +106,8 @@ export function WorkspaceSelector({
 }: WorkspaceSelectorProps) {
   const [selectedWorkspace, setSelectedWorkspace] =
     React.useState<Workspace | null>(null)
-  const [selectedOrg, setSelectedOrg] = React.useState<Org | null>(
-    defaultSelectedOrg ?? orgs[0]
+  const [selectedOrg, setSelectedOrg] = React.useState<Org | undefined>(
+    defaultSelectedOrg
   )
   const [createWorkspaceViewOpen, setCreateWorkspaceViewOpen] = React.useState(
     showCreateWorkspaceView ?? false
@@ -166,7 +175,7 @@ export function WorkspaceSelector({
                   ...prev,
                   workspaces: [...prev.workspaces, workspace],
                 }
-              : null
+              : undefined
           )
           setNewWorkspaceName('')
           setCreateWorkspaceViewOpen(false)
@@ -225,10 +234,14 @@ export function WorkspaceSelector({
     )
   }, [startTransition])
 
+  const backToOrgSelector = React.useCallback(() => {
+    setSelectedOrg(undefined)
+  }, [])
+
   return (
     <div
       ref={containerRef}
-      style={{ height }}
+      style={{ height, containerType: 'inline-size' }}
       className="workspace-selector border-neutral-softest flex w-full flex-grow overflow-hidden rounded-md border"
     >
       {createOrgViewOpen ? (
@@ -261,7 +274,7 @@ export function WorkspaceSelector({
           style={{
             viewTransitionName: isTransitioning ? 'workspace-content' : '',
           }}
-          className="flex w-full"
+          className="flex w-full flex-col @[640px]:flex-row"
         >
           <WorkspaceViewContents
             orgs={orgs}
@@ -277,6 +290,7 @@ export function WorkspaceSelector({
             handleSelectOrg={handleSelectOrg}
             filterOrgFunc={filterOrgFunc}
             filterWorkspaceFunc={filterWorkspaceFunc}
+            backToOrgSelector={backToOrgSelector}
           />
         </div>
       )}
@@ -286,7 +300,7 @@ export function WorkspaceSelector({
 
 interface WorkspaceViewContentsProps {
   orgs: Org[]
-  selectedOrg: Org | null
+  selectedOrg?: Org
   selectedWorkspace: Workspace | null
   handleSelect: (org: Org, workspace: Workspace, clearSearch: boolean) => void
   showRecents: boolean
@@ -298,6 +312,7 @@ interface WorkspaceViewContentsProps {
   handleSelectOrg: (org: Org) => void
   filterOrgFunc: (org: Org, search: string) => boolean
   filterWorkspaceFunc: (workspace: Workspace, search: string) => boolean
+  backToOrgSelector: () => void
 }
 
 function WorkspaceViewContents({
@@ -314,6 +329,7 @@ function WorkspaceViewContents({
   handleSelectOrg,
   filterOrgFunc,
   filterWorkspaceFunc,
+  backToOrgSelector,
 }: WorkspaceViewContentsProps) {
   const showRecentsView = React.useMemo(
     () => recents.length > 0 && showRecents,
@@ -321,7 +337,8 @@ function WorkspaceViewContents({
   )
   return (
     <>
-      <div className="bg-surface-primary border-neutral-softest flex h-full flex-1/3 flex-col items-center justify-center border-r">
+      {/* Wide container layout (>= 640px) - Left sidebar with title */}
+      <div className="bg-surface-primary border-neutral-softest hidden h-full flex-1/3 flex-col items-center justify-center border-r @[640px]:flex">
         <div className="flex h-full max-w-80 flex-col items-center justify-center px-8 text-center">
           <Stack align="center" gap={4}>
             <div className="flex h-16 w-16 items-center justify-center">
@@ -339,8 +356,15 @@ function WorkspaceViewContents({
         </div>
       </div>
 
-      <div className="w-full flex-2/3">
-        <Command shouldFilter={false}>
+      {/* Narrow container header (< 640px) */}
+      <div className="border-neutral-softest flex w-full items-center gap-3 border-b px-4 py-3 @[640px]:hidden">
+        <Logo variant="icon" className="size-8" />
+        <Heading variant="xs">Select workspace</Heading>
+      </div>
+
+      {/* Main content area */}
+      <div className="flex h-full w-full flex-1 flex-col overflow-hidden @[640px]:flex-2/3">
+        <Command shouldFilter={false} className="h-full w-full">
           {showRecentsView ? (
             <div className="flex w-full flex-grow flex-row">
               <OrgList
@@ -363,27 +387,58 @@ function WorkspaceViewContents({
               />
             </div>
           ) : orgs.length > 0 ? (
-            <div className="flex h-full flex-row">
-              <OrgList
-                orgs={orgs}
-                selectedOrg={selectedOrg}
-                setSelectedOrg={handleSelectOrg}
-                onSelectRecent={() => setShowRecents(true)}
-                showRecents={showRecents}
-                enableRecents={recents.length > 0}
-                filterOrgFunc={(org, search) => filterOrgFunc(org, search)}
-              />
-              <WorkspaceList
-                selectedOrg={selectedOrg!}
-                handleCreateViewOpen={handleCreateWorkspaceViewOpen}
-                handleSelect={(org, workspace) =>
-                  handleSelect(org, workspace, false)
-                }
-                selectedWorkspace={selectedWorkspace}
-                filterWorkspaceFunc={(workspace, search) =>
-                  filterWorkspaceFunc(workspace, search)
-                }
-              />
+            <div className="flex h-full w-full flex-1 flex-col @[640px]:flex-row">
+              {/* Back button - narrow only, when org selected */}
+              <div
+                className={cn(
+                  'border-neutral-softest flex-shrink-0 border-b p-3 @[640px]:hidden',
+                  selectedOrg ? 'flex' : 'hidden'
+                )}
+              >
+                <button
+                  onClick={backToOrgSelector}
+                  className="text-body-sm text-link-primary hover:text-link-secondary flex items-center gap-2"
+                >
+                  <span>←</span>
+                  <span>Back to organizations</span>
+                </button>
+              </div>
+
+              {/* OrgList - always in wide, only when no org selected in narrow */}
+              <div
+                className={cn(
+                  selectedOrg ? 'hidden @[640px]:contents' : 'contents'
+                )}
+              >
+                <OrgList
+                  orgs={orgs}
+                  selectedOrg={selectedOrg}
+                  setSelectedOrg={handleSelectOrg}
+                  onSelectRecent={() => setShowRecents(true)}
+                  showRecents={showRecents}
+                  enableRecents={recents.length > 0}
+                  filterOrgFunc={(org, search) => filterOrgFunc(org, search)}
+                />
+              </div>
+
+              {/* WorkspaceList - always in wide, only when org selected in narrow */}
+              <div
+                className={cn(
+                  selectedOrg ? 'contents' : 'hidden @[640px]:contents'
+                )}
+              >
+                <WorkspaceList
+                  selectedOrg={selectedOrg}
+                  handleCreateViewOpen={handleCreateWorkspaceViewOpen}
+                  handleSelect={(org, workspace) =>
+                    handleSelect(org, workspace, false)
+                  }
+                  selectedWorkspace={selectedWorkspace}
+                  filterWorkspaceFunc={(workspace, search) =>
+                    filterWorkspaceFunc(workspace, search)
+                  }
+                />
+              </div>
             </div>
           ) : (
             <CommandEmpty
