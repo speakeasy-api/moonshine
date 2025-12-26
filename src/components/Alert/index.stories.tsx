@@ -1,12 +1,12 @@
 import { Alert } from '.'
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { variants } from './types'
-import { fn } from 'storybook/test'
+import { Button } from '../Button'
 
 const defaultDecorators = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Story: any) => (
-    <div className="m-auto flex h-full max-w-xl flex-col gap-2">{Story()}</div>
+    <div className="m-auto flex max-w-6xl items-center p-10">{Story()}</div>
   ),
 ]
 const meta: Meta<typeof Alert> = {
@@ -18,6 +18,9 @@ const meta: Meta<typeof Alert> = {
       options: variants,
     },
   },
+  parameters: {
+    layout: 'fullscreen',
+  },
 }
 
 export default meta
@@ -27,7 +30,30 @@ type Story = StoryObj<typeof Alert>
 export const Default: Story = {
   args: {
     variant: 'default',
-    children: 'This is an alert',
+    children: [
+      <Alert.Icon name="info" />,
+      <Alert.Title>Default Alert</Alert.Title>,
+      <Alert.Description>This is a default alert message.</Alert.Description>,
+      <Alert.Dismiss />,
+    ],
+  },
+  decorators: defaultDecorators,
+}
+
+export const DefaultWithCTA: Story = {
+  args: {
+    variant: 'default',
+    children: [
+      <Alert.Icon name="info" />,
+      <Alert.Title>Default Alert</Alert.Title>,
+      <Alert.Description>This is a default alert message.</Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Got it</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
@@ -35,7 +61,22 @@ export const Default: Story = {
 export const Success: Story = {
   args: {
     variant: 'success',
-    children: 'This is an alert',
+    children: [
+      <Alert.Icon name="check" />,
+      <Alert.Title>Success!</Alert.Title>,
+      <Alert.Description>
+        Your changes have been saved successfully.
+      </Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Continue</Button.Text>
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Button.Text>View Changes</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
@@ -43,7 +84,22 @@ export const Success: Story = {
 export const Error: Story = {
   args: {
     variant: 'error',
-    children: 'This is an alert',
+    children: [
+      <Alert.Icon name="circle-alert" />,
+      <Alert.Title>Error</Alert.Title>,
+      <Alert.Description>
+        Something went wrong. Please try again.
+      </Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Retry</Button.Text>
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Button.Text>Cancel</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
@@ -51,15 +107,20 @@ export const Error: Story = {
 export const Warning: Story = {
   args: {
     variant: 'warning',
-    children: 'This is an alert',
-  },
-  decorators: defaultDecorators,
-}
-
-export const Feature: Story = {
-  args: {
-    variant: 'feature',
-    children: 'This is an alert',
+    children: [
+      <Alert.Icon name="circle-alert" />,
+      <Alert.Title>Warning</Alert.Title>,
+      <Alert.Description>This action cannot be undone.</Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Confirm</Button.Text>
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Button.Text>Cancel</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
@@ -67,28 +128,22 @@ export const Feature: Story = {
 export const Info: Story = {
   args: {
     variant: 'info',
-    children: 'This is an alert',
-  },
-  decorators: defaultDecorators,
-}
-
-export const Inline: Story = {
-  args: {
-    variant: 'default',
-    inline: true,
-    children: 'This is an alert',
-  },
-  decorators: defaultDecorators,
-}
-
-export const Dismissible: Story = {
-  args: {
-    variant: 'default',
-    dismissible: true,
-    children: 'This is an alert',
-    onDismiss: fn().mockImplementation(() => {
-      console.log('dismissed')
-    }),
+    children: [
+      <Alert.Icon name="info" />,
+      <Alert.Title>Information</Alert.Title>,
+      <Alert.Description>
+        Here's some helpful information for you.
+      </Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Learn More</Button.Text>
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Button.Text>Dismiss</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
@@ -96,27 +151,37 @@ export const Dismissible: Story = {
 export const Multiline: Story = {
   args: {
     variant: 'error',
-    dismissible: true,
-    children: (
-      <div className="my-1 flex flex-col">
-        <h2 className="text-lg font-semibold">Whoops!</h2>
-        <p className="text-sm">
-          We couldn't find the API you were looking for.
-        </p>
-      </div>
-    ),
+    children: [
+      <Alert.Icon name="circle-alert" />,
+      <Alert.Title>Whoops!</Alert.Title>,
+      <Alert.Description>
+        We couldn't find the API you were looking for.
+      </Alert.Description>,
+      <Alert.Footer>
+        <Button variant="primary" size="sm">
+          <Button.Text>Go Back</Button.Text>
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Button.Text>Report Issue</Button.Text>
+        </Button>
+      </Alert.Footer>,
+      <Alert.Dismiss />,
+    ],
   },
   decorators: defaultDecorators,
 }
 
-export const WithContainer: Story = {
+export const Brand: Story = {
   args: {
-    variant: 'default',
-    useContainer: true,
-    children: 'This is an alert',
+    variant: 'brand',
+    children: [
+      <Alert.Icon name="star" />,
+      <Alert.Title>Brand Alert</Alert.Title>,
+      <Alert.Description>
+        This alert features our signature rainbow border.
+      </Alert.Description>,
+      <Alert.Dismiss />,
+    ],
   },
-  parameters: {
-    decorators: [],
-  },
-  decorators: [(Story) => <div className="w-screen">{Story()}</div>],
+  decorators: defaultDecorators,
 }
