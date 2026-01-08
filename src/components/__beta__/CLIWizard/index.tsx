@@ -197,7 +197,7 @@ function SidebarSteps({
   onSelectStep,
 }: SidebarStepsProps) {
   return (
-    <div className="relative md:col-span-5">
+    <div className="relative self-center md:col-span-5">
       <div className="space-y-4">
         {steps.map((step, index) => {
           const complete = isStepComplete(index)
