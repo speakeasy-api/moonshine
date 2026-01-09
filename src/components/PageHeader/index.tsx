@@ -44,8 +44,9 @@ const ContextBar: React.FC<ContextBarProps> = ({ children, className }) => {
 }
 ContextBar.displayName = 'PageHeader.ContextBar'
 
-interface ParentLinkProps
-  extends PropsWithChildren<Pick<LinkProps, 'href' | 'onClick'>> {
+interface ParentLinkProps extends PropsWithChildren<
+  Pick<LinkProps, 'href' | 'onClick'>
+> {
   className?: string
 }
 

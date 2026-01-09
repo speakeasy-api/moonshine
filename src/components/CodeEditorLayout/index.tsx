@@ -127,8 +127,7 @@ const CodeEditorPane = ({
 CodeEditorPane.displayName = 'CodeEditor.Pane'
 
 export interface CodeEditorTabsProps
-  extends PropsWithChildren,
-    HTMLAttributes<HTMLDivElement> {
+  extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
@@ -160,8 +159,10 @@ const CodeEditorTabs = ({
 }
 CodeEditorTabs.displayName = 'CodeEditor.Tabs'
 
-export interface CodeEditorTabProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick' | 'title'> {
+export interface CodeEditorTabProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onClick' | 'title'
+> {
   id: string
   title?: string | ReactNode
   className?: string
@@ -323,8 +324,7 @@ const CodeEditorTab = ({
 CodeEditorTab.displayName = 'CodeEditor.Tab'
 
 export interface CodeEditorCommandBarProps
-  extends PropsWithChildren,
-    HTMLAttributes<HTMLDivElement> {
+  extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
@@ -348,8 +348,7 @@ const CodeEditorCommandBar = ({
 CodeEditorCommandBar.displayName = 'CodeEditor.CommandBar'
 
 export interface CodeEditorCustomElementProps
-  extends PropsWithChildren,
-    HTMLAttributes<HTMLDivElement> {
+  extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
@@ -367,8 +366,7 @@ const CustomTabElement = ({
 CustomTabElement.displayName = 'CodeEditor.CustomTabElement'
 
 export interface CodeEditorEmptyProps
-  extends PropsWithChildren,
-    HTMLAttributes<HTMLDivElement> {
+  extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 

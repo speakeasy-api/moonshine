@@ -2,8 +2,7 @@ import { cn } from '@/lib/utils'
 import { motion, useInView } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-export interface HighlightedTextProps
-  extends React.HTMLAttributes<HTMLSpanElement> {
+export interface HighlightedTextProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: string
   color?: Color
   muted?: boolean

@@ -15,11 +15,10 @@ export interface ModelSelectorConfig {
   availableModels: { label: string; value: string }[]
 }
 
-export interface AIChatContainerProps
-  extends Omit<
-    AIChatContextValue,
-    'model' | 'onModelChange' | 'availableModels' | 'toolCallApproval'
-  > {
+export interface AIChatContainerProps extends Omit<
+  AIChatContextValue,
+  'model' | 'onModelChange' | 'availableModels' | 'toolCallApproval'
+> {
   modelSelector?: ModelSelectorConfig
   className?: string
   components?: Partial<AIChatComponents>

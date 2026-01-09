@@ -2,8 +2,10 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { HighlightedCode } from '@/lib/codeUtils'
 import { cn } from '@/lib/utils'
 
-export interface PreProps
-  extends Omit<HTMLAttributes<HTMLPreElement>, 'children'> {
+export interface PreProps extends Omit<
+  HTMLAttributes<HTMLPreElement>,
+  'children'
+> {
   code: HighlightedCode
   showLineNumbers?: boolean
   wordWrap?: boolean
