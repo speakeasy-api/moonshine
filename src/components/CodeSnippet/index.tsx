@@ -13,6 +13,7 @@ import {
 } from '@/lib/codeUtils'
 import { useConfig } from '@/hooks/useConfig'
 import { Pre } from '../CodeHighlight/Pre'
+import { preventDefault } from '@/lib/events'
 
 export interface CodeSnippetProps {
   /**
@@ -142,9 +143,6 @@ export function CodeSnippet({
     }, 1000)
   }, [highlightedCodeState?.code, code])
 
-  const handleBeforeInput = (event: React.KeyboardEvent<HTMLPreElement>) =>
-    event.preventDefault()
-
   return (
     <div
       data-theme={theme}
@@ -173,7 +171,7 @@ export function CodeSnippet({
               isMultiline && 'min-w-32',
               snippetClassName
             )}
-            onBeforeInput={handleBeforeInput}
+            onBeforeInput={preventDefault}
             showLineNumbers={showLineNumbers}
           />
         )}

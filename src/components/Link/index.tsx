@@ -53,8 +53,7 @@ const iconWrapperVariants = cva('inline-block', {
   },
 })
 
-export interface LinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode
   variant?: LinkVariant
   size?: TextVariant

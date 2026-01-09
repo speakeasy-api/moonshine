@@ -325,8 +325,10 @@ const CodePlayground = ({
 
 CodePlayground.displayName = 'CodePlayground'
 
-export interface CodePlaygroundCodeProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface CodePlaygroundCodeProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   className?: string
 
   /**
@@ -351,8 +353,7 @@ const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
 
 CodePlaygroundCode.displayName = 'CodePlayground.Code'
 
-export interface CodePlaygroundHeaderProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface CodePlaygroundHeaderProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
@@ -370,8 +371,7 @@ const CodePlaygroundHeader = ({
 
 CodePlaygroundHeader.displayName = 'CodePlayground.Header'
 
-export interface CodePlaygroundFooterProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface CodePlaygroundFooterProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 

@@ -228,8 +228,7 @@ const AppLayoutBreadcrumbDivider = () => {
   )
 }
 
-export interface AppLayoutBreadcrumbItemProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface AppLayoutBreadcrumbItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string
   active?: boolean
   children?: React.ReactNode
@@ -380,8 +379,7 @@ const AppLayoutNav = ({ children, className, ...props }: AppLayoutNavProps) => {
 
 AppLayoutNav.displayName = 'AppLayout.Nav'
 
-export interface AppLayoutNavItemProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface AppLayoutNavItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   title: string
   icon: IconName
   children?: React.ReactNode
@@ -488,8 +486,7 @@ const AppLayoutNavItem = React.forwardRef<
 
 AppLayoutNavItem.displayName = 'AppLayout.NavItem'
 
-export interface AppLayoutNavItemGroupProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface AppLayoutNavItemGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string
 
   /**

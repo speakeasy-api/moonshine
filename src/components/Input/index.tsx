@@ -4,8 +4,9 @@ import { Icon } from '../Icon'
 import { IconName } from '../Icon/names'
 import { useCallback, useState } from 'react'
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+export interface InputProps extends React.InputHTMLAttributes<
+  HTMLInputElement | HTMLTextAreaElement
+> {
   icon?: IconName
   multiline?: boolean
   error?: boolean

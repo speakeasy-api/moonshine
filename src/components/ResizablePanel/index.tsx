@@ -9,8 +9,9 @@ import {
   PanelResizeHandle,
 } from 'react-resizable-panels'
 
-export interface ResizeHandleProps
-  extends ComponentProps<typeof PanelResizeHandle> {
+export interface ResizeHandleProps extends ComponentProps<
+  typeof PanelResizeHandle
+> {
   children?: ReactNode
 }
 
@@ -30,7 +31,7 @@ const ResizablePanel = ({
   children,
   className,
   useDefaultHandle = true,
-  onResize,
+  onLayout,
   ...props
 }: ResizablePanelProps) => {
   const validChildren = useMemo(
@@ -47,7 +48,7 @@ const ResizablePanel = ({
   )
 
   return (
-    <PanelGroup onResize={onResize} {...props} className={className}>
+    <PanelGroup onLayout={onLayout} {...props} className={className}>
       {React.Children.map(validChildren, (child, index) => {
         if (!isValidElement(child)) return child
         return (

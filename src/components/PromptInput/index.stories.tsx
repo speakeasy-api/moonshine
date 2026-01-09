@@ -133,7 +133,7 @@ export const WithAttachments: Story = {
         name: 'notes.txt',
         type: 'text/plain',
         size: 1000,
-        bytes: new Uint8Array([]),
+        bytes: new ArrayBuffer(),
         onRemove: fn(),
       },
     ],
