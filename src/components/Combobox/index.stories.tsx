@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useState } from 'react'
 import { Combobox } from './index'
 
 const meta: Meta<typeof Combobox> = {
@@ -193,5 +194,35 @@ export const SearchableGroupedList: Story = {
     groups: generateGroupedList(20, 50),
     placeholder: 'Type to filter groups...',
     searchPlaceholder: 'Search groups and items...',
+  },
+}
+
+// Create new item example - demonstrates dynamic options
+export const WithCreateOption: Story = {
+  render: () => {
+    const [options, setOptions] = useState(generateList(10))
+    const [value, setValue] = useState<string | undefined>()
+
+    return (
+      <Combobox
+        options={options}
+        value={value!}
+        onValueChange={setValue}
+        placeholder="Search or create..."
+        searchPlaceholder="Type to search or create..."
+        createOptions={{
+          handleCreate: (query) => {
+            const newValue = query.toLowerCase().replace(/\s+/g, '-')
+            setOptions([...options, { value: newValue, label: query }])
+            setValue(newValue)
+          },
+          renderCreatePrompt: (query) => (
+            <span>
+              Create <strong>{query}</strong>
+            </span>
+          ),
+        }}
+      />
+    )
   },
 }
