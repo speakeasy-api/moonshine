@@ -2,7 +2,6 @@ import type { Preview, Decorator } from '@storybook/react-vite'
 import '../src/global.css'
 import './fonts.css'
 import React from 'react'
-import { allModes } from './modes'
 import { withThemeByClassName } from '@storybook/addon-themes'
 import { ThemedDocsContainer } from './themedDocsContainer'
 
