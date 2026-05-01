@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const baseURL = process.env.VISUAL_TEST_BASE_URL ?? 'http://127.0.0.1:57606'
+
 export default defineConfig({
   testDir: './tests/visual',
   fullyParallel: true,
@@ -9,12 +11,19 @@ export default defineConfig({
   reporter: 'html',
   expect: {
     toHaveScreenshot: {
+      animations: 'disabled',
+      caret: 'hide',
       maxDiffPixelRatio: 0.001,
+      scale: 'css',
       stylePath: './tests/visual/screenshot.css',
     },
   },
   use: {
-    baseURL: 'http://127.0.0.1:57606',
+    baseURL,
+    colorScheme: 'light',
+    deviceScaleFactor: 1,
+    locale: 'en-US',
+    timezoneId: 'UTC',
     trace: 'on-first-retry',
   },
   projects: [

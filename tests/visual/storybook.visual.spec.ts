@@ -23,6 +23,11 @@ type StorybookIndex = {
   >
 }
 
+const storybookGlobals = new URLSearchParams({
+  globals: 'theme:light',
+  viewMode: 'story',
+})
+
 const visualStories = [
   {
     importPath: 'src/components/Button/index.stories.tsx',
@@ -77,7 +82,7 @@ for (const story of visualStories) {
   test(`${story.snapshotName} matches baseline`, async ({ page }) => {
     const storyId = await findStoryId(page, story)
 
-    await page.goto(`/iframe.html?id=${storyId}&viewMode=story`)
+    await page.goto(`/iframe.html?id=${storyId}&${storybookGlobals}`)
     await page.evaluate(() => document.fonts.ready)
 
     const canvas = page.locator('#storybook-root')
