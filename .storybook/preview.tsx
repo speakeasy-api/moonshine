@@ -45,16 +45,6 @@ const preview: Preview = {
     docs: {
       container: ThemedDocsContainer,
     },
-
-    // Tells Chromatic to test each story in both light and dark modes
-    chromatic: {
-      // Delay to allow for things to mount
-      delay: 500,
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
-    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

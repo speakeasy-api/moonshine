@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite'
 import { GradientCircle } from '.'
 import { useEffect, useState } from 'react'
-import isChromatic from 'chromatic/isChromatic'
 
 const meta: Meta<typeof GradientCircle> = {
   component: GradientCircle,
@@ -77,7 +76,7 @@ export const WithTransition: Story = {
   args: {
     name,
     showInitial: true,
-    transition: isChromatic() ? true : false,
+    transition: true,
     size: '2xl',
   },
   render: (args) => {
