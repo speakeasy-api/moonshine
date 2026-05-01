@@ -47,9 +47,11 @@
     "lint:fix": "eslint --fix",
     "test": "vitest",
     "test:visual": "playwright test -c playwright.visual.config.ts",
+    "test:visual:all": "VISUAL_TEST_SCOPE=all playwright test -c playwright.visual.config.ts",
     "test:visual:ui": "playwright test -c playwright.visual.config.ts --ui",
     "test:visual:codegen": "playwright test -c playwright.visual.config.ts codegen",
     "test:visual:update": "playwright test -c playwright.visual.config.ts --update-snapshots",
+    "test:visual:update:all": "VISUAL_TEST_SCOPE=all playwright test -c playwright.visual.config.ts --update-snapshots",
     "analyze-bundle": "npx vite-bundle-visualizer",
     "generate:docs": "node scripts/generate-utility-docs.js",
     "postbuild": "pnpm generate:docs"

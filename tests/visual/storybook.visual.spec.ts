@@ -1,26 +1,26 @@
-import { expect, type Page, test } from '@playwright/test'
+import { expect, type Page, type TestInfo, test } from '@playwright/test'
+
+type StorybookEntry = {
+  exportName?: string
+  id?: string
+  importPath?: string
+  name?: string
+  tags?: string[]
+  title?: string
+  type?: string
+}
 
 type StorybookIndex = {
-  stories?: Record<
-    string,
-    {
-      exportName?: string
-      importPath?: string
-      name?: string
-      title?: string
-      type?: string
-    }
-  >
-  entries?: Record<
-    string,
-    {
-      exportName?: string
-      importPath?: string
-      name?: string
-      title?: string
-      type?: string
-    }
-  >
+  stories?: Record<string, StorybookEntry>
+  entries?: Record<string, StorybookEntry>
+}
+
+type VisualStory = {
+  exportName?: string
+  id?: string
+  importPath: string
+  name: string
+  snapshotName: string
 }
 
 const storybookGlobals = new URLSearchParams({
@@ -28,7 +28,15 @@ const storybookGlobals = new URLSearchParams({
   viewMode: 'story',
 })
 
-const visualStories = [
+const visualScope = process.env.VISUAL_TEST_SCOPE ?? 'curated'
+
+const skipVisualTags = new Set([
+  'no-visual-test',
+  'skip-visual-test',
+  'visual:skip',
+])
+
+const curatedStories: VisualStory[] = [
   {
     importPath: 'src/components/Button/index.stories.tsx',
     exportName: 'Primary',
@@ -55,12 +63,16 @@ const visualStories = [
   },
 ]
 
-async function findStoryId(page: Page, story: (typeof visualStories)[number]) {
+async function getStorybookEntries(page: Page) {
   const response = await page.request.get('/index.json')
   expect(response.ok()).toBe(true)
 
   const index = (await response.json()) as StorybookIndex
-  const entries = index.stories ?? index.entries ?? {}
+  return index.stories ?? index.entries ?? {}
+}
+
+async function findStoryId(page: Page, story: VisualStory) {
+  const entries = await getStorybookEntries(page)
   const match = Object.entries(entries).find(([, entry]) => {
     return (
       entry.type === 'story' &&
@@ -78,15 +90,67 @@ async function findStoryId(page: Page, story: (typeof visualStories)[number]) {
   return match[0]
 }
 
-for (const story of visualStories) {
-  test(`${story.snapshotName} matches baseline`, async ({ page }) => {
-    const storyId = await findStoryId(page, story)
+function getGeneratedStories(entries: Record<string, StorybookEntry>) {
+  return Object.entries(entries)
+    .filter(([, entry]) => {
+      return (
+        entry.type === 'story' &&
+        Boolean(entry.importPath) &&
+        !entry.tags?.some((tag) => skipVisualTags.has(tag))
+      )
+    })
+    .map(([id, entry]) => {
+      return {
+        id,
+        importPath: entry.importPath ?? '',
+        name: entry.name ?? id,
+        snapshotName: `${id}.png`,
+      } satisfies VisualStory
+    })
+}
 
-    await page.goto(`/iframe.html?id=${storyId}&${storybookGlobals}`)
-    await page.evaluate(() => document.fonts.ready)
+async function expectStoryToMatchSnapshot(
+  page: Page,
+  story: VisualStory,
+  testInfo: TestInfo
+) {
+  const storyId = story.id ?? (await findStoryId(page, story))
 
-    const canvas = page.locator('#storybook-root')
-    await expect(canvas).toBeVisible()
-    await expect(canvas).toHaveScreenshot(story.snapshotName)
+  await page.goto(`/iframe.html?id=${storyId}&${storybookGlobals}`)
+  await page.evaluate(() => document.fonts.ready)
+
+  const canvas = page.locator('#storybook-root')
+  await expect(canvas).toBeVisible()
+
+  const snapshotName =
+    visualScope === 'all'
+      ? ['all-stories', testInfo.project.name, story.snapshotName]
+      : story.snapshotName
+
+  await expect(canvas).toHaveScreenshot(snapshotName)
+}
+
+if (visualScope === 'all') {
+  test('all indexed stories match baselines', async ({ page }, testInfo) => {
+    const stories = getGeneratedStories(await getStorybookEntries(page))
+    expect(stories.length).toBeGreaterThan(0)
+
+    for (const story of stories) {
+      await test.step(`${story.importPath}#${story.name}`, async () => {
+        await expectStoryToMatchSnapshot(page, story, testInfo)
+      })
+    }
   })
+} else {
+  for (const story of curatedStories) {
+    test(`${story.snapshotName} matches baseline`, async ({
+      page,
+    }, testInfo) => {
+      await expectStoryToMatchSnapshot(page, story, testInfo)
+    })
+  }
+}
+
+if (visualScope !== 'curated' && visualScope !== 'all') {
+  throw new Error(`Unsupported VISUAL_TEST_SCOPE: ${visualScope}`)
 }
