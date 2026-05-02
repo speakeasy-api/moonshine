@@ -35,4 +35,12 @@ export default defineConfig({
       },
     },
   ],
+  webServer: process.env.CI
+    ? {
+        command: 'pnpm storybook:build && pnpm storybook:serve',
+        url: `${baseURL}/index.json`,
+        reuseExistingServer: false,
+        timeout: 120 * 1000,
+      }
+    : undefined,
 })
