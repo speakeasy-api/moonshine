@@ -1,6 +1,19 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const baseURL = process.env.VISUAL_TEST_BASE_URL ?? 'http://127.0.0.1:57606'
+const isUpdatingSnapshots = process.argv.some((arg) => {
+  return (
+    arg === '-u' ||
+    arg === '--update-snapshots' ||
+    arg.startsWith('--update-snapshots=')
+  )
+})
+
+if (isUpdatingSnapshots && process.platform !== 'linux') {
+  throw new Error(
+    'Visual snapshots must be updated in Linux. Use pnpm test:visual:update.'
+  )
+}
 
 export default defineConfig({
   testDir: './tests/visual',

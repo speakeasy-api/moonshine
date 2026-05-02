@@ -2,7 +2,11 @@
 set -euo pipefail
 
 readonly image="mcr.microsoft.com/playwright:v1.59.1-noble"
-readonly command="${1:-test:visual}"
+
+command=("$@")
+if [ ${#command[@]} -eq 0 ]; then
+  command=(pnpm test:visual)
+fi
 
 docker run --rm \
   --ipc=host \
@@ -11,10 +15,10 @@ docker run --rm \
   -v moonshine-pnpm-store:/pnpm/store \
   -w /work \
   "$image" \
-  bash -lc "
+  bash -lc '
     corepack enable &&
     corepack prepare pnpm@9.0.0 --activate &&
     pnpm config set store-dir /pnpm/store &&
     pnpm install --frozen-lockfile &&
-    CI=true pnpm ${command}
-  "
+    CI=true "$@"
+  ' bash "${command[@]}"
