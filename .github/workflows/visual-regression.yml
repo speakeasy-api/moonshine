@@ -7,16 +7,17 @@ on:
 jobs:
   visual-regression:
     timeout-minutes: 60
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+      options: --ipc=host
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
     - name: Install dependencies
-      run: npm install -g pnpm && pnpm install --frozen-lockfile
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install chromium
+      run: |
+        corepack enable
+        corepack prepare pnpm@9.0.0 --activate
+        pnpm install --frozen-lockfile
     - name: Run visual regression tests
       run: pnpm test:visual
     - uses: actions/upload-artifact@v4
