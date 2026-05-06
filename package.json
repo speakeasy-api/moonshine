@@ -41,7 +41,6 @@
     "prepack": "pnpm build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
@@ -52,7 +51,6 @@
   "author": "Speakeasy",
   "license": "ISC",
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.1.1",
     "@eslint/compat": "^1.2.2",
     "@eslint/js": "^9.13.0",
     "@faker-js/faker": "^9.2.0",
@@ -73,7 +71,6 @@
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@vitejs/plugin-react": "^4.3.3",
-    "chromatic": "^11.16.3",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

@@ -9,9 +9,6 @@ const meta: Meta<typeof Wizard> = {
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
-    chromatic: {
-      delay: 1000,
-    },
   },
 }
 
