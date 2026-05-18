@@ -16,6 +16,8 @@ describe('Button', () => {
       </Button>
     )
     const text = screen.getByText('Click me')
+    expect(text.tagName).toBe('SPAN')
     expect(text).toHaveClass('text-trim-cap')
+    expect(text).not.toHaveClass('relative') // button wrapper has 'relative', text span does not
   })
 })
