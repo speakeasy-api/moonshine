@@ -8,4 +8,14 @@ describe('Button', () => {
 
     expect(screen.getByText('Click me')).toBeInTheDocument()
   })
+
+  it('ButtonText has text-trim-cap class for optical alignment', () => {
+    render(
+      <Button>
+        <Button.Text>Click me</Button.Text>
+      </Button>
+    )
+    const text = screen.getByText('Click me')
+    expect(text).toHaveClass('text-trim-cap')
+  })
 })
