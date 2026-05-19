@@ -125,7 +125,7 @@ Add new `@source` declarations in global.css:
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2026-01-09T14:16:51.730Z
+This section is auto-generated from the CSS files. Last updated: 2026-05-19T16:25:14.779Z
 
 ### Typography Utilities
 
@@ -480,6 +480,15 @@ This section is auto-generated from the CSS files. Last updated: 2026-01-09T14:1
   letter-spacing: 0.0025em;
   font-family: var(--font-diatype-mono);
   color: var(--text-default);
+}
+```
+
+#### `text-trim-cap`
+
+```css
+.text-trim-cap {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 }
 ```
 
