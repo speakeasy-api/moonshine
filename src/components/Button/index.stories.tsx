@@ -149,6 +149,39 @@ export const WithRightIcon: Story = {
   },
 }
 
+export const IconAlignment: Story = {
+  name: 'Icon + Text Alignment (all sizes)',
+  render: () => (
+    <div className="flex flex-col gap-4">
+      {(['xs', 'sm', 'md', 'lg'] as const).map((size) => (
+        <div key={size} className="flex items-center gap-3">
+          <Button size={size} variant="secondary">
+            <Button.LeftIcon>
+              <PlusIcon />
+            </Button.LeftIcon>
+            <Button.Text>Label</Button.Text>
+            <Button.RightIcon>
+              <ChevronRight />
+            </Button.RightIcon>
+          </Button>
+          <Button size={size} variant="primary">
+            <Button.LeftIcon>
+              <PlusIcon />
+            </Button.LeftIcon>
+            <Button.Text>Label</Button.Text>
+          </Button>
+          <Button size={size} variant="tertiary">
+            <Button.Text>Label</Button.Text>
+            <Button.RightIcon>
+              <ChevronRight />
+            </Button.RightIcon>
+          </Button>
+        </div>
+      ))}
+    </div>
+  ),
+}
+
 // Migration guide
 export const ValidationExamples: Story = {
   name: 'API Validation (Check Console)',
