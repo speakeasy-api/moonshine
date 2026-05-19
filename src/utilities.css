@@ -276,7 +276,7 @@
 
 /*
   Custom util to fix a minor issue with the font Diatype Mono. The font has
-  extra spacing for decenders which shifts the mathematical center upwards,
+  extra spacing for descenders which shifts the mathematical center upwards,
   causing text that is vertically centered to appear slightly off.
   This is a draft css prop but is supported by Chrome / Safari (not Firefox).
   The utility trims the extra space to better align the text vertically.
