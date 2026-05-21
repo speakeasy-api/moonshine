@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Column, Group, Table, TableProps } from '.'
+import {
+  Table,
+  type Column,
+  type Group,
+  type SortDescriptor,
+  type TableProps,
+} from '.'
+import { sortTableData } from './sorting'
 import { faker } from '@faker-js/faker'
 import { useState } from 'react'
 import { SupportedLanguage, supportedLanguages } from '@/types'
@@ -108,6 +115,40 @@ const defaultArgs: ListTableProps = {
 
 type ListTableProps = TableProps<SDK> & { data: SDK[] }
 
+const sortableColumns: Column<SDK>[] = defaultArgs.columns.map(
+  (column): Column<SDK> => {
+    if (column.key === 'name') {
+      return {
+        ...column,
+        id: 'sdk-name',
+        sortable: true,
+        sortValue: (row) => `${row.org}/${row.name}`,
+      }
+    }
+
+    if (column.key === 'version') {
+      return {
+        ...column,
+        id: 'sdk-version',
+        sortable: true,
+        sortValue: (row) => row.version,
+      }
+    }
+
+    if (column.key === 'lastGeneratedAt') {
+      return {
+        ...column,
+        id: 'sdk-last-generated-at',
+        sortable: true,
+        sortLabel: 'Last Generated',
+        sortValue: (row) => row.lastGeneratedAt,
+      }
+    }
+
+    return column
+  }
+)
+
 const TableWithState = (args: ListTableProps) => {
   const [data, setData] = useState<SDK[]>(args.data)
   return (
@@ -121,9 +162,37 @@ const TableWithState = (args: ListTableProps) => {
   )
 }
 
+const SortableTableWithState = (args: ListTableProps) => {
+  const [data, setData] = useState<SDK[]>(args.data)
+  const [sort, setSort] = useState<SortDescriptor | null>(null)
+
+  const sortedData = sortTableData(data, args.columns, sort) as SDK[]
+
+  return (
+    <Table
+      {...args}
+      data={sortedData}
+      sort={sort}
+      onSortChange={setSort}
+      onLoadMore={async () => {
+        setData((prev) => [...prev, ...generateSDKs(2)])
+      }}
+    />
+  )
+}
+
 export const Default: StoryObj<ListTableProps> = {
   args: defaultArgs,
   render: (args) => <TableWithState {...args} />,
+}
+
+export const Sortable: StoryObj<ListTableProps> = {
+  args: {
+    ...defaultArgs,
+    columns: sortableColumns,
+    hasMore: false,
+  },
+  render: (args) => <SortableTableWithState {...args} />,
 }
 
 export const Condensed: StoryObj<ListTableProps> = {

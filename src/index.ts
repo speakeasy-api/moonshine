@@ -73,7 +73,11 @@ export {
   type TableProps,
   type Column,
   type Group,
+  type SortDescriptor,
+  type SortDirection,
+  type SortValue,
 } from '@/components/Table'
+export { sortTableData } from '@/components/Table/sorting'
 export { Input, type InputProps } from '@/components/Input'
 export {
   type SupportedLanguage,

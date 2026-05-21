@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react'
 import { cn } from '@/lib/utils'
-import { Loader2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, ArrowUpDown, Loader2 } from 'lucide-react'
 import { isGroupOf } from '@/lib/typeUtils'
 import styles from './styles.module.css'
 import {
@@ -22,13 +22,42 @@ import { Button } from '@/components/Button'
 import { ExpandChevron } from '@/components/__beta__/CLIWizard'
 import { TableProvider } from './context/tableProvider'
 import { useTable } from './context/context'
+import { getColumnSortId, isSortableColumn } from './sorting'
 
-export type Column<T extends object> = {
-  key: keyof T | string
+export type SortDirection = 'asc' | 'desc'
+
+export type SortValue = string | number | boolean | Date | null | undefined
+
+type ColumnKey<T extends object> = keyof T | string
+
+export type SortDescriptor = {
+  id: string
+  direction: SortDirection
+}
+
+type BaseColumn<T extends object> = {
+  key: ColumnKey<T>
+  id?: string
   header: ReactNode
   render?: (row: T) => ReactNode
   width?: `${number}fr` | `${number}px` | 'auto' | undefined
 }
+
+export type SortableColumn<T extends object> = BaseColumn<T> & {
+  sortable: true
+  sortLabel?: string
+  sortValue: (row: T) => SortValue
+  sortCompare?: (a: T, b: T) => number
+}
+
+type UnsortableColumn<T extends object> = BaseColumn<T> & {
+  sortable?: false
+  sortLabel?: never
+  sortValue?: never
+  sortCompare?: never
+}
+
+export type Column<T extends object> = SortableColumn<T> | UnsortableColumn<T>
 
 export type Group<T extends object> = {
   key: string
@@ -53,6 +82,8 @@ export type TableProps<T extends object> = {
   className?: string
   cellPadding?: CellPadding
   hideHeader?: boolean
+  sort?: SortDescriptor | null
+  onSortChange?: (sort: SortDescriptor | null) => void
 }
 
 export type TableWrapperProps<T extends object> =
@@ -66,6 +97,31 @@ function expandColumn<T extends object>(): Column<T> {
     key: 'expand',
     header: '',
     width: `64px`, // 32px is padding, 32px is the width of the expand button
+  }
+}
+
+function warnOnDuplicateSortableIds<T extends object>(columns: Column<T>[]) {
+  if (process.env.NODE_ENV === 'production') {
+    return
+  }
+
+  const seen = new Set<string>()
+
+  for (const column of columns) {
+    if (!isSortableColumn(column)) {
+      continue
+    }
+
+    const id = getColumnSortId(column)
+
+    if (seen.has(id)) {
+      console.warn(
+        `Table sortable columns must have unique ids. Duplicate id: ${id}`
+      )
+      return
+    }
+
+    seen.add(id)
   }
 }
 
@@ -129,6 +185,8 @@ function TableRoot<T extends object>(
     columns = [expandColumn(), ...columns]
   }
 
+  warnOnDuplicateSortableIds(columns)
+
   const colWidths = useMemo(
     () => columns.map((column) => column.width ?? '1fr').join(' '),
     [columns]
@@ -160,6 +218,8 @@ function TableRoot<T extends object>(
     className,
     hideHeader,
     cellPadding,
+    sort,
+    onSortChange,
   } = props
 
   const [isLoading, setIsLoading] = useState(false)
@@ -188,7 +248,13 @@ function TableRoot<T extends object>(
       ref={tableRef}
       expandedRowKeys={expandedRowKeys}
     >
-      {!hideHeader && <Table.Header columns={columns} />}
+      {!hideHeader && (
+        <Table.Header
+          columns={columns}
+          sort={sort}
+          onSortChange={onSortChange}
+        />
+      )}
       <Table.Body
         data={data}
         ref={tableBodyRef}
@@ -208,6 +274,8 @@ function TableRoot<T extends object>(
 
 type HeaderProps<T extends object> = {
   columns: Column<T>[]
+  sort?: SortDescriptor | null
+  onSortChange?: (sort: SortDescriptor | null) => void
   className?: string
 }
 
@@ -227,6 +295,109 @@ function HeaderContainer({
   )
 }
 
+function getSortDirection<T extends object>(
+  column: Column<T>,
+  sort: SortDescriptor | null | undefined
+) {
+  return sort?.id === getColumnSortId(column) ? sort.direction : undefined
+}
+
+function getSortLabel<T extends object>(column: SortableColumn<T>) {
+  return (
+    column.sortLabel ??
+    (typeof column.header === 'string'
+      ? column.header
+      : getColumnSortId(column))
+  )
+}
+
+function getNextSort<T extends object>(
+  column: SortableColumn<T>,
+  sort: SortDescriptor | null | undefined
+): SortDescriptor | null {
+  const direction = getSortDirection(column, sort)
+  const id = getColumnSortId(column)
+
+  if (direction === 'asc') {
+    return { id, direction: 'desc' }
+  }
+
+  if (direction === 'desc') {
+    return null
+  }
+
+  return { id, direction: 'asc' }
+}
+
+function getSortButtonLabel<T extends object>(
+  column: SortableColumn<T>,
+  sort: SortDescriptor | null | undefined
+) {
+  const label = getSortLabel(column)
+  const direction = getSortDirection(column, sort)
+
+  if (direction === 'asc') {
+    return `Sort by ${label} descending`
+  }
+
+  if (direction === 'desc') {
+    return `Clear sort for ${label}`
+  }
+
+  return `Sort by ${label} ascending`
+}
+
+function SortableHeaderCell<T extends object>({
+  column,
+  sort,
+  onSortChange,
+}: {
+  column: Column<T>
+  sort?: SortDescriptor | null
+  onSortChange?: (sort: SortDescriptor | null) => void
+}) {
+  if (!isSortableColumn(column) || !onSortChange) {
+    return <HeaderCell>{column.header}</HeaderCell>
+  }
+
+  const direction = getSortDirection(column, sort)
+  const isSorted = direction !== undefined
+  const Icon =
+    direction === 'asc'
+      ? ArrowUp
+      : direction === 'desc'
+        ? ArrowDown
+        : ArrowUpDown
+
+  return (
+    <HeaderCell
+      aria-sort={
+        direction === 'asc'
+          ? 'ascending'
+          : direction === 'desc'
+            ? 'descending'
+            : undefined
+      }
+    >
+      <button
+        type="button"
+        className="group flex h-full w-full min-w-0 items-center gap-1 text-left font-medium"
+        aria-label={getSortButtonLabel(column, sort)}
+        onClick={() => onSortChange(getNextSort(column, sort))}
+      >
+        <span className="min-w-0 truncate">{column.header}</span>
+        <Icon
+          aria-hidden="true"
+          className={cn(
+            'size-3.5 shrink-0 transition-colors',
+            isSorted ? 'text-body' : 'text-body-muted group-hover:text-body'
+          )}
+        />
+      </button>
+    </HeaderCell>
+  )
+}
+
 function Header<T extends object>(
   props: HeaderProps<T> | PropsWithChildrenAndClassName
 ) {
@@ -242,7 +413,12 @@ function Header<T extends object>(
     <HeaderContainer className={props.className}>
       <tr className="table-header [grid-column:1/-1] grid [grid-template-columns:subgrid] border-b">
         {props.columns.map((column) => (
-          <HeaderCell key={column.key.toString()}>{column.header}</HeaderCell>
+          <SortableHeaderCell
+            key={`${column.key.toString()}-${column.id ?? ''}`}
+            column={column}
+            sort={props.sort}
+            onSortChange={props.onSortChange}
+          />
         ))}
       </tr>
     </HeaderContainer>
@@ -661,12 +837,15 @@ function LoadMore<T extends object>({
   )
 }
 
-function HeaderCell({
-  className,
-  children,
-}: PropsWithChildren<{ className?: string }>) {
+type HeaderCellProps = React.ThHTMLAttributes<HTMLTableCellElement> &
+  PropsWithChildren<{
+    className?: string
+  }>
+
+function HeaderCell({ className, children, ...props }: HeaderCellProps) {
   return (
     <th
+      {...props}
       className={cn(
         styles.tableHeader,
         'text-body flex items-center align-middle font-medium whitespace-nowrap select-none',

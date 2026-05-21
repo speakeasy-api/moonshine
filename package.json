@@ -37,7 +37,7 @@
     "clean": "rimraf dist",
     "build": "pnpm clean && vite build",
     "build:watch": "vite build --watch --mode development",
-    "type-check": "tsc --noEmit --skipLibCheck",
+    "type-check": "tsc -p tsconfig.typecheck.json --skipLibCheck",
     "prepack": "pnpm build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
