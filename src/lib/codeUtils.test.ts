@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
   removeCodeHikeAnnotations,
   highlightCode,
@@ -105,10 +105,12 @@ const x = 1`
     })
 
     it('should handle unsupported language gracefully', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       const result = await highlightCode('console.log("test")', 'unsupported')
       expect(result).toHaveProperty('lines')
       expect(result).toHaveProperty('code')
       expect(result.code).toBe('console.log("test")')
+      consoleSpy.mockRestore()
     })
 
     it('should use specified theme', async () => {
