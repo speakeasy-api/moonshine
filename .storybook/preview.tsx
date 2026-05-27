@@ -37,7 +37,7 @@ const preview: Preview = {
     backgrounds: {
       options: {
         light: { name: 'light', value: '#fff' },
-        dark: { name: 'dark', value: 'hsl(0, 0%, 7%)' }
+        dark: { name: 'dark', value: 'hsl(0, 0%, 7%)' },
       },
     },
 

@@ -123,7 +123,7 @@ export const MobileView: Story = {
   globals: {
     viewport: {
       value: 'mobile1',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 }
