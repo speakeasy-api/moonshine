@@ -39,7 +39,7 @@
     "build:watch": "vite build --watch --mode development",
     "type-check": "tsc -p tsconfig.typecheck.json --skipLibCheck",
     "prepack": "pnpm build",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 7006",
     "build-storybook": "storybook build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
