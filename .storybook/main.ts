@@ -12,9 +12,6 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['./public'],
-  core: {
-    builder: '@storybook/builder-vite',
-  },
   async viteFinal(config) {
     const { mergeConfig } = await import('vite')
 
