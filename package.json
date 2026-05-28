@@ -1,7 +1,7 @@
 {
   "name": "@speakeasy-api/moonshine",
   "version": "1.9.1",
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@11.4.0",
   "description": "Speakeasy's design system Moonshine",
   "sideEffects": false,
   "main": "dist/moonshine.cjs.js",
