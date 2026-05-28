@@ -26,7 +26,7 @@ export const decorators: Decorator[] = [
 const preview: Preview = {
   parameters: {
     viewport: {
-      viewports: {
+      options: {
         small: { name: 'Small', styles: { width: '640px', height: '800px' } },
         large: {
           name: 'Large',
@@ -35,10 +35,10 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      values: [
-        { name: 'light', value: '#fff' },
-        { name: 'dark', value: 'hsl(0, 0%, 7%)' },
-      ],
+      options: {
+        light: { name: 'light', value: '#fff' },
+        dark: { name: 'dark', value: 'hsl(0, 0%, 7%)' },
+      },
     },
 
     docs: {
