@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Copy, ExternalLink, PlusIcon as LucidePlusIcon } from 'lucide-react'
 import {
   Tooltip,

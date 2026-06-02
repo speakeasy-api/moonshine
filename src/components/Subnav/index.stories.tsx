@@ -1,6 +1,6 @@
 import { Subnav } from '.'
 
-import { StoryObj, Meta } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Badge } from '../Badge'
 
 const meta: Meta<typeof Subnav> = {
