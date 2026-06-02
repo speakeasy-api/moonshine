@@ -220,3 +220,44 @@ export const AllVariants: Story = {
     </div>
   ),
 }
+
+export const AllSizes: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Badge size="sm">
+        <Badge.Text>Small</Badge.Text>
+      </Badge>
+      <Badge size="md">
+        <Badge.Text>Medium</Badge.Text>
+      </Badge>
+      <Badge size="lg">
+        <Badge.Text>Large</Badge.Text>
+      </Badge>
+    </div>
+  ),
+}
+
+export const AllSizesWithIcon: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Badge size="sm">
+        <Badge.LeftIcon>
+          <GitPullRequest />
+        </Badge.LeftIcon>
+        <Badge.Text>Small</Badge.Text>
+      </Badge>
+      <Badge size="md">
+        <Badge.LeftIcon>
+          <GitPullRequest />
+        </Badge.LeftIcon>
+        <Badge.Text>Medium</Badge.Text>
+      </Badge>
+      <Badge size="lg">
+        <Badge.LeftIcon>
+          <GitPullRequest />
+        </Badge.LeftIcon>
+        <Badge.Text>Large</Badge.Text>
+      </Badge>
+    </div>
+  ),
+}
