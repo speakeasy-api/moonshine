@@ -1,6 +1,6 @@
 /*
  * Global CSS - Main Entry Point
- * 
+ *
  * This file orchestrates the design system by:
  * 1. Importing Tailwind and plugins
  * 2. Defining custom variants
@@ -63,5 +63,7 @@
   --font-mono: var(--font-diatype-mono);
   --font-display: var(--font-tobias);
   --font-ascii: var(--font-speakeasy), var(--font-diatype-mono), monospace;
-}
 
+  /* Extended text scale */
+  --text-2xs: 0.5625rem; /* 9px */
+}

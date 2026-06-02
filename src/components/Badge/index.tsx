@@ -57,9 +57,9 @@ const badgeVariants = cva(
         warning: 'text-default-warning border-warning-softest',
       },
       size: {
-        sm: 'h-[15px] px-[3px] py-[3px] text-[9px] leading-[9px] gap-[3px] [&_svg]:size-[9px]',
-        md: 'h-5 px-1 py-1 text-[12px] leading-[12px] gap-1 [&_svg]:size-3',
-        lg: 'h-[25px] px-[5px] py-[5px] text-[15px] leading-[15px] gap-[5px] [&_svg]:size-[15px]',
+        sm: 'h-4 px-0.75 py-0.75 text-2xs leading-none gap-0.75 [&_svg]:size-2.25',
+        md: 'h-5 px-1 py-1 text-xs leading-none gap-1 [&_svg]:size-3',
+        lg: 'h-6 px-1 py-1 text-base leading-none gap-1 [&_svg]:size-4',
       },
       background: {
         true: '',
