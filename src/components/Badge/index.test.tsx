@@ -10,7 +10,6 @@ describe('Badge', () => {
   })
 
   it('accepts size prop without type error', () => {
-    // This test is a compile-time check; runtime just verifies it renders
     const { container } = render(<Badge size="sm">Test</Badge>)
     expect(container.firstChild).toBeInTheDocument()
   })
