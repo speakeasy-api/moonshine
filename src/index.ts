@@ -108,6 +108,7 @@ export {
 } from '@/components/Select'
 export {
   Tooltip,
+  type TooltipProps,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,

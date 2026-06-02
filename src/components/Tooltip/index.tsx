@@ -7,7 +7,26 @@ import { cn } from '@/lib/utils'
 
 const TooltipProvider = TooltipPrimitive.Provider
 
-const Tooltip = TooltipPrimitive.Root
+export interface TooltipProps {
+  children?: React.ReactNode
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+  /**
+   * The duration from when the pointer enters the trigger until the tooltip
+   * opens. This overrides the TooltipProvider value.
+   * @defaultValue 700
+   */
+  delayDuration?: number
+  /**
+   * When true, the tooltip closes as the pointer leaves the trigger instead of
+   * allowing hover on the tooltip content.
+   * @defaultValue false
+   */
+  disableHoverableContent?: boolean
+}
+
+const Tooltip = (props: TooltipProps) => <TooltipPrimitive.Root {...props} />
 
 const TooltipTrigger = TooltipPrimitive.Trigger
 
@@ -29,6 +48,7 @@ const TooltipContent = React.forwardRef<
     {...props}
   />
 ))
+Tooltip.displayName = 'Tooltip'
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export {
