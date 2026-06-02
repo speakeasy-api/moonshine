@@ -41,7 +41,11 @@ const BadgeText = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn('flex-1', className)} {...props} />
+  <span
+    ref={ref}
+    className={cn('text-trim-cap flex-1', className)}
+    {...props}
+  />
 ))
 BadgeText.displayName = 'BadgeText'
 
