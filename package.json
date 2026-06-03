@@ -3,7 +3,9 @@
   "version": "1.9.1",
   "packageManager": "pnpm@11.4.0",
   "description": "Speakeasy's design system Moonshine",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "dist/moonshine.cjs.js",
   "module": "dist/moonshine.es.js",
   "types": "dist/index.d.ts",
@@ -13,10 +15,7 @@
       "require": "./dist/moonshine.cjs.js",
       "import": "./dist/moonshine.es.js"
     },
-    "./moonshine.css": {
-      "require": "./dist/style.css",
-      "import": "./dist/style.css"
-    },
+    "./moonshine.css": "./dist/moonshine.css",
     "./src/global.css": {
       "require": "./src/global.css",
       "import": "./src/global.css"

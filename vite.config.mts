@@ -37,6 +37,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: packageName,
       fileName: (format) => `${packageName}.${format}.js`,
+      cssFileName: packageName,
       formats: ['es'],
     },
     rollupOptions: {
