@@ -29,6 +29,10 @@ export const badgeVariants = [
 ] as const
 export type BadgeVariant = (typeof badgeVariants)[number]
 
+// Badge sizes
+export const badgeSizes = ['sm', 'md', 'lg'] as const
+export type BadgeSize = (typeof badgeSizes)[number]
+
 // Generic
 export type Orientation = 'horizontal' | 'vertical'
 

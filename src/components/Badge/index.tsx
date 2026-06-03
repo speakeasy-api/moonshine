@@ -3,7 +3,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
-import { BadgeVariant } from '@/types'
+import { BadgeVariant, BadgeSize } from '@/types'
 
 const BadgeLeftIcon = React.forwardRef<
   HTMLSpanElement,
@@ -41,12 +41,16 @@ const BadgeText = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn('flex-1', className)} {...props} />
+  <span
+    ref={ref}
+    className={cn('text-trim-cap flex-1', className)}
+    {...props}
+  />
 ))
 BadgeText.displayName = 'BadgeText'
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap select-none font-mono uppercase tracking-[0.03em] rounded-xs border transition-colors h-5 px-1 py-1 text-[12px] leading-[12px] gap-1 [&_svg]:size-3',
+  'inline-flex items-center justify-center whitespace-nowrap select-none font-mono uppercase tracking-[0.03em] rounded-xs border transition-colors',
   {
     variants: {
       variant: {
@@ -55,6 +59,11 @@ const badgeVariants = cva(
         information: 'text-default-information border-information-softest',
         success: 'text-default-success border-success-softest',
         warning: 'text-default-warning border-warning-softest',
+      },
+      size: {
+        sm: 'h-4 px-0.75 py-0.75 text-2xs leading-none gap-0.75 [&_svg]:size-2.25',
+        md: 'h-5 px-1 py-1 text-xs leading-none gap-1 [&_svg]:size-3',
+        lg: 'h-6 px-1 py-1 text-base leading-none gap-1 [&_svg]:size-4',
       },
       background: {
         true: '',
@@ -91,6 +100,7 @@ const badgeVariants = cva(
     defaultVariants: {
       variant: 'neutral',
       background: true,
+      size: 'md',
     },
   }
 )
@@ -100,6 +110,7 @@ type Attributes = Omit<React.HTMLAttributes<HTMLSpanElement>, 'style'>
 export interface BadgeProps extends Attributes {
   asChild?: boolean
   variant?: BadgeVariant
+  size?: BadgeSize
   background?: boolean
   className?: string
   'aria-label'?: string
@@ -109,6 +120,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
       variant = 'neutral',
+      size = 'md',
       background = true,
       asChild = false,
       className,
@@ -200,7 +212,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 
     return (
       <Comp
-        className={cn(badgeVariants({ variant, background }), className)}
+        className={cn(badgeVariants({ variant, size, background }), className)}
         ref={ref}
         {...props}
       >
