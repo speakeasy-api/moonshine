@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Modal } from '.'
 import { ModalProvider, Screen } from '@/context/ModalContext'
 import { useModal } from '@/hooks/useModal'

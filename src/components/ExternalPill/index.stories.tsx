@@ -1,5 +1,5 @@
 import { ExternalPill } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta: Meta<typeof ExternalPill> = {
   component: ExternalPill,

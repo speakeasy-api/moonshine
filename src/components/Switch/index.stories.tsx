@@ -1,4 +1,4 @@
-import { StoryObj, Meta } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Switch } from '@/components/Switch'
 

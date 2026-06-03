@@ -1,5 +1,5 @@
 import { Alert } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { variants } from './types'
 import { fn } from 'storybook/test'
 

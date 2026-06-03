@@ -4,15 +4,7 @@
     "incremental": false,
     "noEmit": true,
     "rootDir": ".",
-    "moduleResolution": "bundler"
   },
   "include": ["src", "type-tests"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.stories.tsx",
-    "src/**/*.stories.mdx",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx"
-  ]
+  "exclude": ["node_modules", "dist"],
 }

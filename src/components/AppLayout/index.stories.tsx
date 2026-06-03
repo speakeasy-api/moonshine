@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AppLayout } from '.'
 import { AppLayoutProvider } from './provider'
 import { Heading } from '../Heading'

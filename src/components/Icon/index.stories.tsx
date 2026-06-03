@@ -1,4 +1,4 @@
-import { StoryObj, Meta } from '@storybook/react-vite'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Icon } from '.'
 import { customIconNames, iconNames } from './names'
 import { sizes } from '@/types'
