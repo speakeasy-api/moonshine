@@ -34,18 +34,35 @@ export interface AIChatMessageComponents {
 
 const defaultAvatars: DefaultComponents<AvatarComponents> = {
   user: ({ className }) => (
-    <div
+    <svg
+      viewBox="0 0 20 20"
+      role="img"
+      aria-label="User"
       className={cn(
-        'h-6 w-6 overflow-hidden rounded-full ring-1 ring-inset',
+        'bg-muted text-body-muted h-6 w-6 rounded-full ring-1 ring-inset',
         className
       )}
     >
-      <img
-        src={`https://avatar.vercel.sh/user.svg?size=20`}
-        alt="User"
-        className="h-full w-full"
+      <defs>
+        <linearGradient
+          id="moonshine-ai-chat-user-avatar-gradient"
+          x1="0"
+          x2="1"
+          y1="0"
+          y2="1"
+        >
+          <stop offset="0%" stopColor="#06f98c" />
+          <stop offset="100%" stopColor="#8c06f9" />
+        </linearGradient>
+      </defs>
+      <rect
+        width="20"
+        height="20"
+        fill="url(#moonshine-ai-chat-user-avatar-gradient)"
+        rx="0"
+        ry="0"
       />
-    </div>
+    </svg>
   ),
   assistant: ({ className }) => (
     <div
