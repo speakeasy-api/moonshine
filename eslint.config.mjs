@@ -42,7 +42,10 @@ export default tseslint.config(
 
       // Ensure only components are exported in a component file
       // so that HMR doesn't break
-      'react-refresh/only-export-components': 'error',
+      'react-refresh/only-export-components': [
+        'error',
+        { extraHOCs: ['assign', 'forwardRefWithGenerics'] },
+      ],
 
       'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
       'unused-imports/no-unused-imports': 'error',
