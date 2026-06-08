@@ -44,9 +44,11 @@ function TimelineItem({
   setsize,
 }: TimelineItemProps) {
   const enhancedChildren = Children.map(children, (child) => {
-    if (isValidElement(child) && child.type === TimelineContent) {
+    if (
+      isValidElement<TimelineContentProps>(child) &&
+      child.type === TimelineContent
+    ) {
       return cloneElement(child, {
-        ...child.props,
         isLast,
       })
     }
@@ -220,9 +222,11 @@ function TimelineRoot({
 
   let itemIndex = 0
   const enhancedChildren = childrenArray.map((child) => {
-    if (isValidElement(child) && child.type === TimelineItem) {
+    if (
+      isValidElement<TimelineItemProps>(child) &&
+      child.type === TimelineItem
+    ) {
       const cloned = cloneElement(child, {
-        ...child.props,
         index: itemIndex,
         isLast: itemIndex === itemCount - 1,
         setsize: itemCount,

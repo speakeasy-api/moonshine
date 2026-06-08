@@ -54,7 +54,7 @@ interface ComboboxBaseProps<T extends string = string> {
   iconOnly?: boolean
   createOptions?: {
     handleCreate: (search: string) => void
-    renderCreatePrompt?: (search: string) => JSX.Element
+    renderCreatePrompt?: (search: string) => React.ReactElement
   }
 }
 

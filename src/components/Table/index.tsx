@@ -537,7 +537,7 @@ const Body = React.forwardRef(function Body<T extends object>(
   props: {
     ref?: React.ForwardedRef<HTMLTableSectionElement>
   } & (BodyProps<T> | PropsWithChildrenAndClassName)
-) => JSX.Element
+) => React.ReactElement
 
 type RowProps<T extends object> = {
   row: T

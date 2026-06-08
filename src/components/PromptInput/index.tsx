@@ -49,7 +49,7 @@ export interface PromptInputProps {
   /**
    * The ref to the file input.
    */
-  fileInputRef?: React.RefObject<HTMLInputElement>
+  fileInputRef?: React.RefObject<HTMLInputElement | null>
 
   /**
    * The file types that are accepted by the file input.

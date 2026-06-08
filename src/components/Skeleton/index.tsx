@@ -44,17 +44,14 @@ export function Skeleton({ children, className }: SkeletonProps) {
           )
         }
 
-        if (isValidElement(child))
-          return cloneElement<HTMLElement>(
-            child as React.ReactElement<HTMLElement>,
-            {
-              className: cn(
-                'skeleton max-w-full text-transparent h-5 rounded-lg',
-                className,
-                child.props.className
-              ),
-            }
-          )
+        if (isValidElement<{ className?: string }>(child))
+          return cloneElement(child, {
+            className: cn(
+              'skeleton max-w-full text-transparent h-5 rounded-lg',
+              className,
+              child.props.className
+            ),
+          })
       })}
     </div>
   )

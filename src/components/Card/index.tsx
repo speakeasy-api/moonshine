@@ -134,7 +134,10 @@ const Card: FC<CardProps> = ({ children, onClick, href, className }) => {
   )
 
   const hasButtonElement = Children.toArray(validChildren).some((child) => {
-    if (React.isValidElement(child) && child.type === CardHeader) {
+    if (
+      React.isValidElement<CardHeaderProps>(child) &&
+      child.type === CardHeader
+    ) {
       return child.props.rightElement?.type === 'button'
     }
     return false

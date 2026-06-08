@@ -134,7 +134,9 @@ export function Wizard({
             return (
               <div
                 key={index}
-                ref={(el) => stepRefs.current.set(stepNumber, el)}
+                ref={(el) => {
+                  stepRefs.current.set(stepNumber, el)
+                }}
               >
                 <div
                   className={cn(
