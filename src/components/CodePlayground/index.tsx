@@ -201,10 +201,13 @@ const CodePlayground = ({
   )
 
   const code = foundCustomCodeContainer ? (
-    React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
-      __children__: codeContents,
-      ref: codeRef,
-    })
+    React.cloneElement(
+      foundCustomCodeContainer as React.ReactElement<CodePlaygroundCodeElementProps>,
+      {
+        __children__: codeContents,
+        ref: codeRef,
+      }
+    )
   ) : (
     <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
   )
@@ -336,6 +339,9 @@ export interface CodePlaygroundCodeProps extends Omit<
    */
   __children__?: React.ReactNode
 }
+
+type CodePlaygroundCodeElementProps = CodePlaygroundCodeProps &
+  React.RefAttributes<HTMLDivElement>
 
 const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
   ({ className, __children__, ...props }, ref) => {

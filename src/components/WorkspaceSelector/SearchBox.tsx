@@ -2,7 +2,7 @@ import { RefObject } from 'react'
 import { Icon } from '../Icon'
 
 interface SearchBoxProps {
-  inputRef: RefObject<HTMLInputElement>
+  inputRef: RefObject<HTMLInputElement | null>
   search: string
   setSearch: (search: string) => void
   placeholder: string

@@ -22,7 +22,7 @@ const StoryRenderer = (args: SegmentedButtonProps) => {
     React.Children.forEach(args.children, (child) => {
       if (
         foundActiveId === null &&
-        React.isValidElement(child) &&
+        React.isValidElement<SegmentedButtonItemProps>(child) &&
         child.props.active &&
         child.props.id
       ) {
@@ -34,7 +34,11 @@ const StoryRenderer = (args: SegmentedButtonProps) => {
 
     let firstId: string | null = null
     React.Children.forEach(args.children, (child) => {
-      if (firstId === null && React.isValidElement(child) && child.props.id) {
+      if (
+        firstId === null &&
+        React.isValidElement<SegmentedButtonItemProps>(child) &&
+        child.props.id
+      ) {
         firstId = child.props.id as string
       }
     })
@@ -48,7 +52,7 @@ const StoryRenderer = (args: SegmentedButtonProps) => {
   return (
     <SegmentedButton {...args}>
       {React.Children.map(args.children, (child) => {
-        if (!React.isValidElement(child)) {
+        if (!React.isValidElement<SegmentedButtonItemProps>(child)) {
           return child
         }
 

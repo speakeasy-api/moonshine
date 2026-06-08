@@ -47,7 +47,9 @@ const FADE_TRANSITION: Transition = {
 }
 
 const useDebounce = (callback: () => void, delay: number) => {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  )
 
   useEffect(() => {
     return () => {

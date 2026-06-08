@@ -28,8 +28,8 @@ const useAnimationFrame = (
   callback: (timestamp: number, delta: number) => void,
   enabled: boolean = true
 ) => {
-  const requestRef = React.useRef<number>()
-  const previousTimeRef = React.useRef<number>()
+  const requestRef = React.useRef<number | undefined>(undefined)
+  const previousTimeRef = React.useRef<number | undefined>(undefined)
 
   const animate = React.useCallback(
     (timestamp: number) => {
@@ -121,18 +121,15 @@ const BrandSlot = React.forwardRef<
     />
   )
 
-  const childWithBrand = React.cloneElement(
-    child as React.ReactElement<React.ComponentProps<typeof Slot>>,
-    {
-      ...child.props,
-      children: (child.props as React.ComponentProps<typeof Slot>).children
-        ? [
-            brandSpan,
-            (child.props as React.ComponentProps<typeof Slot>).children,
-          ]
-        : brandSpan,
-    }
-  )
+  const typedChild = child as React.ReactElement<
+    React.ComponentProps<typeof Slot>
+  >
+
+  const childWithBrand = React.cloneElement(typedChild, {
+    children: typedChild.props.children
+      ? [brandSpan, typedChild.props.children]
+      : brandSpan,
+  })
 
   return (
     <Slot {...slotProps} ref={slotRef}>

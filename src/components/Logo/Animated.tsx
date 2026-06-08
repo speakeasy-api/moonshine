@@ -7,7 +7,7 @@ import {
   useViewModelInstanceBoolean,
 } from '@rive-app/react-canvas-lite'
 import { cva } from 'class-variance-authority'
-import { FC, useEffect, useState } from 'react'
+import { ComponentProps, FC, useEffect, useState } from 'react'
 
 // read rive file from local directory into arraybuffer
 const riveFile = await import('./speakeasy-logo.riv')
@@ -157,7 +157,7 @@ const WordmarkSvg: FC<{ size: Size }> = ({ size = 'md' }) => (
   </>
 )
 
-const LogoSvg: FC<JSX.IntrinsicElements['svg']> = (props) => {
+const LogoSvg: FC<ComponentProps<'svg'>> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
