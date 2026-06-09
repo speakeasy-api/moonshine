@@ -41,7 +41,7 @@
       var(--skeleton-animation-background-color-end)
     );
     animation: skeleton-shimmer var(--skeleton-animation-duration) infinite;
-    content: '';
+    content: "";
   }
 }
 

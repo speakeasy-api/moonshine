@@ -1,31 +1,31 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import { Card } from './'
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import { Card } from "./";
 
-describe('Card', () => {
-  it('renders the children', () => {
+describe("Card", () => {
+  it("renders the children", () => {
     render(
       <Card>
         <Card.Header>Header</Card.Header>
         <Card.Content>Content</Card.Content>
-        <Card.Footer content={{ text: 'Footer' }} />
-      </Card>
-    )
+        <Card.Footer content={{ text: "Footer" }} />
+      </Card>,
+    );
 
-    expect(screen.getAllByText(/Header|Content|Footer/).length).toBe(3)
-  })
+    expect(screen.getAllByText(/Header|Content|Footer/).length).toBe(3);
+  });
 
-  it('omits invalid children', () => {
+  it("omits invalid children", () => {
     render(
       <Card>
         <Card.Header>Header</Card.Header>
         <Card.Content>Content</Card.Content>
-        <Card.Footer content={{ text: 'Footer' }} />
+        <Card.Footer content={{ text: "Footer" }} />
         <div>Invalid child</div>
-      </Card>
-    )
+      </Card>,
+    );
 
-    expect(screen.getAllByText(/Header|Content|Footer/).length).toBe(3)
-    expect(screen.queryByText(/Invalid child/)).toBeNull()
-  })
-})
+    expect(screen.getAllByText(/Header|Content|Footer/).length).toBe(3);
+    expect(screen.queryByText(/Invalid child/)).toBeNull();
+  });
+});

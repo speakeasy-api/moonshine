@@ -1,11 +1,11 @@
-import { cn, toKebabCase } from '@/lib/utils'
-import { Icon, IconNode, LucideProps } from 'lucide-react'
-import { createElement, forwardRef } from 'react'
+import { cn, toKebabCase } from "@/lib/utils";
+import { Icon, IconNode, LucideProps } from "lucide-react";
+import { createElement, forwardRef } from "react";
 
 const createCustomLucideIcon = (
   iconName: string,
   iconNode: IconNode,
-  lucideProps?: Partial<LucideProps>
+  lucideProps?: Partial<LucideProps>,
 ) => {
   const Component = forwardRef<SVGSVGElement, LucideProps>(
     ({ className, ...props }, ref) =>
@@ -14,12 +14,12 @@ const createCustomLucideIcon = (
         iconNode,
         className: cn(`lucide-${toKebabCase(iconName)}`, className),
         ...{ ...(lucideProps ?? {}), ...props },
-      })
-  )
+      }),
+  );
 
-  Component.displayName = `${iconName}`
+  Component.displayName = `${iconName}`;
 
-  return Component
-}
+  return Component;
+};
 
-export default createCustomLucideIcon
+export default createCustomLucideIcon;

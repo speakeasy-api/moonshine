@@ -1,29 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Org } from '.'
-import { Command } from '../Command'
-import { Text } from '../Text'
-import { Icon } from '../Icon'
-import { Button, Heading, Stack } from '@/index'
-import { Separator } from '../Separator'
-import { GradientCircle } from '../GradientCircle'
+import React, { useCallback, useEffect, useState } from "react";
+import { Org } from ".";
+import { Command } from "../Command";
+import { Text } from "../Text";
+import { Icon } from "../Icon";
+import { Button, Heading, Stack } from "@/index";
+import { Separator } from "../Separator";
+import { GradientCircle } from "../GradientCircle";
 
-import { cn } from '@/lib/utils'
-import { OrgSelector } from './OrgSelector'
+import { cn } from "@/lib/utils";
+import { OrgSelector } from "./OrgSelector";
 
 export interface CreateResult {
-  success: boolean
-  error?: string
+  success: boolean;
+  error?: string;
 }
 
 interface CreateWorkspaceProps {
-  open: boolean
-  selectedOrg: Org
-  allOrgs: Org[]
-  onBack?: () => void
-  onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>
-  newWorkspaceName: string
-  setNewWorkspaceName: (name: string) => void
-  backButtonEnabled?: boolean
+  open: boolean;
+  selectedOrg: Org;
+  allOrgs: Org[];
+  onBack?: () => void;
+  onSubmit: (org: Org, workspaceName: string) => Promise<CreateResult>;
+  newWorkspaceName: string;
+  setNewWorkspaceName: (name: string) => void;
+  backButtonEnabled?: boolean;
 }
 
 export function CreateWorkspace({
@@ -36,45 +36,45 @@ export function CreateWorkspace({
   setNewWorkspaceName,
   backButtonEnabled = true,
 }: CreateWorkspaceProps) {
-  const createInputRef = React.useRef<HTMLInputElement>(null)
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [currentOrg, setCurrentOrg] = useState(selectedOrg)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const createInputRef = React.useRef<HTMLInputElement>(null);
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [currentOrg, setCurrentOrg] = useState(selectedOrg);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (open) {
       setTimeout(() => {
-        createInputRef.current?.focus()
-      }, 300)
+        createInputRef.current?.focus();
+      }, 300);
     }
-  }, [open])
+  }, [open]);
 
   useEffect(() => {
     // Focus the input when the org changes
-    focusInput()
-  }, [currentOrg])
+    focusInput();
+  }, [currentOrg]);
 
   const focusInput = () => {
-    createInputRef.current?.focus()
-  }
+    createInputRef.current?.focus();
+  };
 
   const handleSubmit = async () => {
-    setIsSubmitting(true)
-    const result = await onSubmit(currentOrg, newWorkspaceName)
-    setIsSubmitting(false)
+    setIsSubmitting(true);
+    const result = await onSubmit(currentOrg, newWorkspaceName);
+    setIsSubmitting(false);
     if (!result.success) {
-      setError(result.error ?? 'Unknown error')
+      setError(result.error ?? "Unknown error");
     }
-  }
+  };
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setNewWorkspaceName(e.target.value)
-      setIsInvalid(!e.target.validity.valid)
+      setNewWorkspaceName(e.target.value);
+      setIsInvalid(!e.target.validity.valid);
     },
-    [setNewWorkspaceName, setIsInvalid]
-  )
+    [setNewWorkspaceName, setIsInvalid],
+  );
 
   return (
     <Command className="relative">
@@ -110,7 +110,7 @@ export function CreateWorkspace({
             </div>
             <div className="flex flex-col">
               <div
-                className="focus-within:outline-muted/50 shadow-muted bg-input/10 border-neutral-softest ease-in-out-expo mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border px-4 py-1 transition-[border-color] duration-500 focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 data-[invalid=true]:border-red-400/75"
+                className="mt-5 flex w-full max-w-[660px] flex-row items-center justify-stretch gap-2 rounded-md border border-neutral-softest bg-input/10 px-4 py-1 shadow-muted transition-[border-color] duration-500 ease-in-out-expo focus-within:shadow-sm focus-within:outline focus-within:outline-1 focus-within:outline-offset-0 focus-within:outline-muted/50 data-[invalid=true]:border-red-400/75"
                 onClick={focusInput}
                 data-invalid={isInvalid}
               >
@@ -124,15 +124,15 @@ export function CreateWorkspace({
                   <span
                     title={currentOrg.slug}
                     className={cn(
-                      'text-foreground/80 text-lg font-semibold whitespace-pre select-none',
+                      "text-lg font-semibold whitespace-pre text-foreground/80 select-none",
                       currentOrg.slug.length > 20 &&
-                        'max-w-40 truncate whitespace-pre'
+                        "max-w-40 truncate whitespace-pre",
                     )}
                   >
                     {currentOrg.slug}
                   </span>
                 )}
-                <span className="text-muted-foreground/50 mx-2 text-lg select-none">
+                <span className="mx-2 text-lg text-muted-foreground/50 select-none">
                   /
                 </span>
                 <div className="flex w-full">
@@ -145,7 +145,7 @@ export function CreateWorkspace({
                     placeholder="your-new-workspace"
                     value={newWorkspaceName}
                     onChange={handleChange}
-                    className="border-neutral-softest text-foreground/80 placeholder:text-muted-foreground/50 ring-offset-background text-md flex h-10 w-full min-w-fit flex-1 flex-grow bg-transparent px-2 py-1.5 pl-0 text-lg outline-none"
+                    className="text-md flex h-10 w-full min-w-fit flex-1 flex-grow border-neutral-softest bg-transparent px-2 py-1.5 pl-0 text-lg text-foreground/80 ring-offset-background outline-none placeholder:text-muted-foreground/50"
                   />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export function CreateWorkspace({
         </div>
       </div>
 
-      <div className="border-neutral-softest bg-background flex border-t px-8 py-4">
+      <div className="flex border-t border-neutral-softest bg-background px-8 py-4">
         {backButtonEnabled && onBack && (
           <Button variant="secondary" onClick={onBack}>
             <Icon name="chevron-left" size="small" />
@@ -186,11 +186,11 @@ export function CreateWorkspace({
             {isSubmitting ? (
               <Icon name="loader" className="animate-spin" />
             ) : (
-              'Create'
+              "Create"
             )}
           </Button>
         </div>
       </div>
     </Command>
-  )
+  );
 }

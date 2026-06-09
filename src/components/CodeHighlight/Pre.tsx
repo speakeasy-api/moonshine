@@ -1,28 +1,28 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import { HighlightedCode } from '@/lib/codeUtils'
-import { cn } from '@/lib/utils'
+import { forwardRef, HTMLAttributes } from "react";
+import { HighlightedCode } from "@/lib/codeUtils";
+import { cn } from "@/lib/utils";
 
 export interface PreProps extends Omit<
   HTMLAttributes<HTMLPreElement>,
-  'children'
+  "children"
 > {
-  code: HighlightedCode
-  showLineNumbers?: boolean
-  wordWrap?: boolean
+  code: HighlightedCode;
+  showLineNumbers?: boolean;
+  wordWrap?: boolean;
 }
 
 export const Pre = forwardRef<HTMLPreElement, PreProps>(
   (
     { code, showLineNumbers = false, wordWrap = false, className, ...props },
-    ref
+    ref,
   ) => {
     return (
       <pre
         ref={ref}
         className={cn(
-          'inline-block font-mono outline-none',
-          wordWrap && 'whitespace-pre-wrap',
-          className
+          "inline-block font-mono outline-none",
+          wordWrap && "whitespace-pre-wrap",
+          className,
         )}
         {...props}
       >
@@ -30,23 +30,23 @@ export const Pre = forwardRef<HTMLPreElement, PreProps>(
           {code.lines.map((line, lineIndex) => (
             <div
               key={lineIndex}
-              className={cn('flex flex-row', wordWrap && 'flex-wrap')}
+              className={cn("flex flex-row", wordWrap && "flex-wrap")}
             >
               {showLineNumbers && (
-                <span className="text-body-muted pr-3 select-none">
+                <span className="pr-3 text-body-muted select-none">
                   {lineIndex + 1}
                 </span>
               )}
-              <span className={cn('inline-block', wordWrap && 'flex-1')}>
+              <span className={cn("inline-block", wordWrap && "flex-1")}>
                 {line.tokens.map((token, tokenIndex) => (
                   <span
                     key={tokenIndex}
                     style={{
                       color: token.color,
-                      fontStyle: token.fontStyle ? 'italic' : undefined,
+                      fontStyle: token.fontStyle ? "italic" : undefined,
                       fontWeight:
                         token.fontStyle && token.fontStyle & 1
-                          ? 'bold'
+                          ? "bold"
                           : undefined,
                     }}
                   >
@@ -58,8 +58,8 @@ export const Pre = forwardRef<HTMLPreElement, PreProps>(
           ))}
         </code>
       </pre>
-    )
-  }
-)
+    );
+  },
+);
 
-Pre.displayName = 'Pre'
+Pre.displayName = "Pre";

@@ -1,30 +1,30 @@
-import { Breakpoint, ResponsiveValue } from '@/types'
-import { clsx, type ClassValue } from 'clsx'
-import { extendTailwindMerge } from 'tailwind-merge'
-import { isResponsiveValueObject } from './typeUtils'
+import { Breakpoint, ResponsiveValue } from "@/types";
+import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
+import { isResponsiveValueObject } from "./typeUtils";
 
 const customTwMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': [
+      "font-size": [
         {
           text: [
             (value: string) =>
-              ['heading', 'body', 'codeline', 'display'].some((element) =>
-                value.includes(element)
+              ["heading", "body", "codeline", "display"].some((element) =>
+                value.includes(element),
               ) &&
-              ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].some((element) =>
-                value.includes(element)
+              ["xs", "sm", "md", "lg", "xl", "2xl"].some((element) =>
+                value.includes(element),
               ),
           ],
         },
       ],
     },
   },
-})
+});
 
 export function cn(...inputs: ClassValue[]) {
-  return customTwMerge(clsx(inputs))
+  return customTwMerge(clsx(inputs));
 }
 
 /**
@@ -41,24 +41,24 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function getResponsiveClasses<T>(
   value: ResponsiveValue<T>,
-  mapper: (val: T, breakpoint: Breakpoint) => string
+  mapper: (val: T, breakpoint: Breakpoint) => string,
 ): string {
   if (isResponsiveValueObject(value)) {
     return Object.entries(value)
       .filter(([, val]) => val !== undefined)
       .map(([breakpoint, val]) => {
-        const resolvedClasses = mapper(val as T, breakpoint as Breakpoint)
-        const classFragments = resolvedClasses.split(' ')
+        const resolvedClasses = mapper(val as T, breakpoint as Breakpoint);
+        const classFragments = resolvedClasses.split(" ");
 
         return classFragments
           .map((fragment) => {
-            return breakpoint === 'xs' ? fragment : `${breakpoint}:${fragment}`
+            return breakpoint === "xs" ? fragment : `${breakpoint}:${fragment}`;
           })
-          .join(' ')
+          .join(" ");
       })
-      .join(' ')
+      .join(" ");
   }
-  return mapper(value as T, 'xs')
+  return mapper(value as T, "xs");
 }
 
 /**
@@ -68,18 +68,18 @@ export function getResponsiveClasses<T>(
  * @returns {string} A kebabized string
  */
 export const toKebabCase = (string: string) =>
-  string.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+  string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 
 export const partitionBy = <T>(
   array: T[],
-  predicate: (item: T) => boolean
+  predicate: (item: T) => boolean,
 ): [T[], T[]] => {
   return array.reduce(
     (acc: [T[], T[]], item: T): [T[], T[]] => {
-      const key = predicate(item) ? 0 : 1
-      acc[key].push(item)
-      return acc
+      const key = predicate(item) ? 0 : 1;
+      acc[key].push(item);
+      return acc;
     },
-    [[], []]
-  )
-}
+    [[], []],
+  );
+};

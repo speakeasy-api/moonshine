@@ -1,22 +1,22 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
 export interface KeybindConfig {
   /**
    * The keybind to trigger the action
    * Will be CMDOrCTRL + key
    */
-  key: string
-  description: string
+  key: string;
+  description: string;
 }
 
 export interface AppLayoutContextType {
-  collapsed: boolean
-  setCollapsed: (collapsed: boolean) => void
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
 
   // keybind config
   keybinds: {
-    toggle: KeybindConfig
-  }
+    toggle: KeybindConfig;
+  };
 }
 
 export const AppLayoutContext = createContext<AppLayoutContextType>({
@@ -24,8 +24,8 @@ export const AppLayoutContext = createContext<AppLayoutContextType>({
   setCollapsed: () => {},
   keybinds: {
     toggle: {
-      key: 'L',
-      description: 'Toggle',
+      key: "L",
+      description: "Toggle",
     },
   },
-})
+});

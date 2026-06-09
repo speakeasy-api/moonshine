@@ -20,7 +20,7 @@ reviews:
   auto_approve: disabled
   ignore:
     files:
-      - '**/*.svg'
+      - "**/*.svg"
       - docs/
       - tests/visual/storybook.visual.spec.ts-snapshots/
     pr_labels:

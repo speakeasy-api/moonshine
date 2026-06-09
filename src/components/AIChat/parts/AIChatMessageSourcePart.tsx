@@ -1,13 +1,13 @@
-import { cn } from '../../../lib/utils'
-import { Text } from '../../Text'
-import type { BasePartProps } from '../types'
+import { cn } from "../../../lib/utils";
+import { Text } from "../../Text";
+import type { BasePartProps } from "../types";
 
 export interface AIChatMessageSourcePartProps extends BasePartProps {
   source: {
-    id: string
-    url: string
-    title?: string
-  }
+    id: string;
+    url: string;
+    title?: string;
+  };
 }
 
 export function AIChatMessageSourcePart({
@@ -17,8 +17,8 @@ export function AIChatMessageSourcePart({
   return (
     <div
       className={cn(
-        'rounded-md border border-neutral-600 bg-neutral-800 p-3',
-        className
+        "rounded-md border border-neutral-600 bg-neutral-800 p-3",
+        className,
       )}
     >
       <div className="mb-1 flex items-center gap-2">
@@ -54,5 +54,5 @@ export function AIChatMessageSourcePart({
         </Text>
       </div>
     </div>
-  )
+  );
 }

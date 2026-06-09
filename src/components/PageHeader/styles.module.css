@@ -1,27 +1,27 @@
 .pageHeader {
-    display: grid;
-    grid-template-areas: "context-bar" "title-bar" "footer";
+  display: grid;
+  grid-template-areas: "context-bar" "title-bar" "footer";
 }
 
 .contextBar {
-    grid-area: context-bar;
+  grid-area: context-bar;
 }
 
 .titleBar {
-    display: grid;
-    grid-area: title-bar;
-    grid-template-areas: "title-area actions";
-    grid-template-columns: auto 1fr;
+  display: grid;
+  grid-area: title-bar;
+  grid-template-areas: "title-area actions";
+  grid-template-columns: auto 1fr;
 }
 
 .titleArea {
-    grid-area: title-area;
+  grid-area: title-area;
 }
 
 .actions {
-    grid-area: actions;
+  grid-area: actions;
 }
 
 .footer {
-    grid-area: footer;
+  grid-area: footer;
 }

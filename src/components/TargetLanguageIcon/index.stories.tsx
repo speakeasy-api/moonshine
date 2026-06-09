@@ -1,49 +1,49 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { TargetLanguageIcon } from './index'
-import { sizes, supportedLanguages } from '@/types'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { TargetLanguageIcon } from "./index";
+import { sizes, supportedLanguages } from "@/types";
 
 const meta: Meta<typeof TargetLanguageIcon> = {
-  title: 'Components/TargetLanguageIcon',
+  title: "Components/TargetLanguageIcon",
   component: TargetLanguageIcon,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
+      control: "select",
       options: sizes,
     },
     language: {
-      control: 'select',
+      control: "select",
       options: supportedLanguages,
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof TargetLanguageIcon>
+export default meta;
+type Story = StoryObj<typeof TargetLanguageIcon>;
 
 export const Typescript: Story = {
   args: {
-    language: 'typescript',
+    language: "typescript",
   },
-}
+};
 
 export const Python: Story = {
   args: {
-    language: 'python',
+    language: "python",
   },
-}
+};
 
 export const Java: Story = {
   args: {
-    language: 'java',
+    language: "java",
   },
-}
+};
 
 // Show all sizes
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      {(['small', 'medium', 'large', 'xl', '2xl'] as const).map((size) => (
+      {(["small", "medium", "large", "xl", "2xl"] as const).map((size) => (
         <TargetLanguageIcon key={size} language="typescript" size={size} />
       ))}
     </div>
@@ -56,7 +56,7 @@ export const Sizes: Story = {
       control: false,
     },
   },
-}
+};
 
 // Grid of all supported languages
 export const Grid: Story = {
@@ -67,4 +67,4 @@ export const Grid: Story = {
       ))}
     </div>
   ),
-}
+};

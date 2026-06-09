@@ -1,58 +1,58 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Heading } from '.'
+import { Heading } from ".";
 
 const meta: Meta<typeof Heading> = {
   component: Heading,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Heading>
+type Story = StoryObj<typeof Heading>;
 
 export const ExtraLarge: Story = {
   args: {
-    variant: 'xl',
-    children: 'CLI not connected',
+    variant: "xl",
+    children: "CLI not connected",
   },
-}
+};
 
 export const Large: Story = {
   args: {
-    variant: 'lg',
-    children: 'Creating a new target',
+    variant: "lg",
+    children: "Creating a new target",
   },
-}
+};
 
 export const Medium: Story = {
   args: {
-    variant: 'md',
-    children: 'Select SDKs',
+    variant: "md",
+    children: "Select SDKs",
   },
-}
+};
 
 export const Small: Story = {
   args: {
-    variant: 'sm',
-    children: 'Run your first GitHub Action',
+    variant: "sm",
+    children: "Run your first GitHub Action",
   },
-}
+};
 
 export const ExtraSmall: Story = {
   args: {
-    variant: 'xs',
+    variant: "xs",
     children: "Let's get you setup with a new target!",
   },
-}
+};
 
 export const AsH6: Story = {
   args: {
-    as: 'h6',
-    variant: 'xl',
-    children: 'CLI not connected',
+    as: "h6",
+    variant: "xl",
+    children: "CLI not connected",
   },
-}
+};
 
 export const AllVariants: Story = {
   render: () => (
@@ -64,4 +64,4 @@ export const AllVariants: Story = {
       <Heading variant="xs">Let's get you setup with a new target!</Heading>
     </div>
   ),
-}
+};

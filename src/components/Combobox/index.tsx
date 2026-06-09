@@ -1,17 +1,17 @@
-import * as React from 'react'
-import { Virtuoso } from 'react-virtuoso'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/Button'
+import * as React from "react";
+import { Virtuoso } from "react-virtuoso";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/Button";
 import {
   Command,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
-import { ButtonProps } from '@/components/Button'
-import { Icon } from '../Icon'
+} from "@/components/Command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/Popover";
+import { ButtonProps } from "@/components/Button";
+import { Icon } from "../Icon";
 
 // I don't like that these aren't based on REM but I'm not sure how to fix it right now
 const COMBOBOX_CONFIG = {
@@ -21,112 +21,112 @@ const COMBOBOX_CONFIG = {
     padding: 8,
     max: 300,
   },
-} as const
+} as const;
 
 export interface ComboboxOption<T extends string = string> {
-  value: T
-  label: string
-  disabled?: boolean
+  value: T;
+  label: string;
+  disabled?: boolean;
 }
 
 export interface ComboboxGroup<T extends string = string> {
-  label: string
-  options: ComboboxOption<T>[]
+  label: string;
+  options: ComboboxOption<T>[];
 }
 
 type ComboboxDataProps<T extends string = string> =
   | { options: ComboboxOption<T>[]; groups?: never }
-  | { options?: never; groups: ComboboxGroup<T>[] }
+  | { options?: never; groups: ComboboxGroup<T>[] };
 
 interface ComboboxBaseProps<T extends string = string> {
-  value: T
-  onValueChange: (value: T | undefined) => void
-  variant?: ButtonProps['variant']
-  size?: ButtonProps['size']
-  disabled?: boolean
-  loading?: boolean
-  error?: boolean
-  errorText?: string
-  searchable?: boolean
-  placeholder?: string
-  emptyText?: string
-  searchPlaceholder?: string
-  iconOnly?: boolean
+  value: T;
+  onValueChange: (value: T | undefined) => void;
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
+  disabled?: boolean;
+  loading?: boolean;
+  error?: boolean;
+  errorText?: string;
+  searchable?: boolean;
+  placeholder?: string;
+  emptyText?: string;
+  searchPlaceholder?: string;
+  iconOnly?: boolean;
   createOptions?: {
-    handleCreate: (search: string) => void
-    renderCreatePrompt?: (search: string) => React.ReactElement
-  }
+    handleCreate: (search: string) => void;
+    renderCreatePrompt?: (search: string) => React.ReactElement;
+  };
 }
 
 export type ComboboxProps<T extends string = string> = ComboboxBaseProps<T> &
-  ComboboxDataProps<T>
+  ComboboxDataProps<T>;
 
 export function Combobox<T extends string = string>({
   options,
   groups,
   value,
   onValueChange,
-  variant = 'secondary',
-  size = 'md',
+  variant = "secondary",
+  size = "md",
   disabled,
   loading,
   error,
-  errorText = 'An error occurred',
+  errorText = "An error occurred",
   searchable = true,
-  placeholder = 'Select option...',
-  emptyText = 'No option found.',
-  searchPlaceholder = 'Search...',
+  placeholder = "Select option...",
+  emptyText = "No option found.",
+  searchPlaceholder = "Search...",
 
   iconOnly = false,
   createOptions,
 }: ComboboxProps<T>) {
-  const [open, setOpen] = React.useState(false)
-  const [search, setSearch] = React.useState('')
+  const [open, setOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
 
   const allOptions = React.useMemo(() => {
-    if (options) return options
-    if (groups) return groups.flatMap((group) => group.options)
-    return []
-  }, [options, groups])
+    if (options) return options;
+    if (groups) return groups.flatMap((group) => group.options);
+    return [];
+  }, [options, groups]);
 
   // TODO: Make the search more efficient and fuzzier
   const filteredItems = React.useMemo(() => {
-    const items = groups || (options ? [{ label: '', options }] : [])
-    if (!search) return items
+    const items = groups || (options ? [{ label: "", options }] : []);
+    if (!search) return items;
 
     return items
       .map((group) => ({
         label: group.label,
         options: group.options.filter((option) =>
-          option.label.toLowerCase().includes(search.toLowerCase())
+          option.label.toLowerCase().includes(search.toLowerCase()),
         ),
       }))
-      .filter((group) => group.options.length > 0)
-  }, [search, options, groups])
+      .filter((group) => group.options.length > 0);
+  }, [search, options, groups]);
 
   const virtuosoHeight = React.useMemo(() => {
-    const { row, header, padding, max } = COMBOBOX_CONFIG.heights
-    const shouldShowHeaders = filteredItems.some((group) => group.label)
-    const headerHeight = shouldShowHeaders ? filteredItems.length * header : 0
+    const { row, header, padding, max } = COMBOBOX_CONFIG.heights;
+    const shouldShowHeaders = filteredItems.some((group) => group.label);
+    const headerHeight = shouldShowHeaders ? filteredItems.length * header : 0;
     const contentHeight = filteredItems.reduce(
       (sum, group) => sum + group.options.length * row,
-      headerHeight
-    )
+      headerHeight,
+    );
 
-    return Math.min(contentHeight + padding, max)
-  }, [filteredItems])
+    return Math.min(contentHeight + padding, max);
+  }, [filteredItems]);
 
   const handleSelect = React.useCallback(
     (currentValue: string) => {
-      const newValue = currentValue === value ? undefined : (currentValue as T)
-      onValueChange?.(newValue)
-      setOpen(false)
-      setSearch('')
+      const newValue = currentValue === value ? undefined : (currentValue as T);
+      onValueChange?.(newValue);
+      setOpen(false);
+      setSearch("");
     },
-    [value, onValueChange]
-  )
+    [value, onValueChange],
+  );
 
-  const selectedOption = allOptions.find((option) => option.value === value)
+  const selectedOption = allOptions.find((option) => option.value === value);
 
   return (
     <Popover open={open} onOpenChange={disabled ? undefined : setOpen}>
@@ -178,8 +178,10 @@ export function Combobox<T extends string = string>({
                       >
                         <div
                           className={cn(
-                            'mr-2 h-4 w-4',
-                            value === option.value ? 'opacity-100' : 'opacity-0'
+                            "mr-2 h-4 w-4",
+                            value === option.value
+                              ? "opacity-100"
+                              : "opacity-0",
                           )}
                         >
                           <Icon name="check" />
@@ -192,8 +194,8 @@ export function Combobox<T extends string = string>({
               />
             )}
             {(() => {
-              if (!createOptions || search.length === 0) return null
-              const { renderCreatePrompt, handleCreate } = createOptions
+              if (!createOptions || search.length === 0) return null;
+              const { renderCreatePrompt, handleCreate } = createOptions;
               return (
                 <CommandGroup>
                   <CommandItem onSelect={() => handleCreate(search)}>
@@ -202,11 +204,11 @@ export function Combobox<T extends string = string>({
                       : `Create ${search}`}
                   </CommandItem>
                 </CommandGroup>
-              )
+              );
             })()}
           </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

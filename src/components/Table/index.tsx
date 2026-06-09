@@ -7,130 +7,130 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from 'react'
-import { cn } from '@/lib/utils'
-import { ArrowDown, ArrowUp, ArrowUpDown, Loader2 } from 'lucide-react'
-import { isGroupOf } from '@/lib/typeUtils'
-import styles from './styles.module.css'
+} from "react";
+import { cn } from "@/lib/utils";
+import { ArrowDown, ArrowUp, ArrowUpDown, Loader2 } from "lucide-react";
+import { isGroupOf } from "@/lib/typeUtils";
+import styles from "./styles.module.css";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/Tooltip'
-import { Button } from '@/components/Button'
-import { ExpandChevron } from '@/components/__beta__/CLIWizard'
-import { TableProvider } from './context/tableProvider'
-import { useTable } from './context/context'
-import { getColumnSortId, isSortableColumn } from './sorting'
+} from "@/components/Tooltip";
+import { Button } from "@/components/Button";
+import { ExpandChevron } from "@/components/__beta__/CLIWizard";
+import { TableProvider } from "./context/tableProvider";
+import { useTable } from "./context/context";
+import { getColumnSortId, isSortableColumn } from "./sorting";
 
-export type SortDirection = 'asc' | 'desc'
+export type SortDirection = "asc" | "desc";
 
-export type SortValue = string | number | boolean | Date | null | undefined
+export type SortValue = string | number | boolean | Date | null | undefined;
 
-type ColumnKey<T extends object> = keyof T | string
+type ColumnKey<T extends object> = keyof T | string;
 
 export type SortDescriptor = {
-  id: string
-  direction: SortDirection
-}
+  id: string;
+  direction: SortDirection;
+};
 
 type BaseColumn<T extends object> = {
-  key: ColumnKey<T>
-  id?: string
-  header: ReactNode
-  render?: (row: T) => ReactNode
-  width?: `${number}fr` | `${number}px` | 'auto' | undefined
-}
+  key: ColumnKey<T>;
+  id?: string;
+  header: ReactNode;
+  render?: (row: T) => ReactNode;
+  width?: `${number}fr` | `${number}px` | "auto" | undefined;
+};
 
 export type SortableColumn<T extends object> = BaseColumn<T> & {
-  sortable: true
-  sortLabel?: string
-  sortValue: (row: T) => SortValue
-  sortCompare?: (a: T, b: T) => number
-}
+  sortable: true;
+  sortLabel?: string;
+  sortValue: (row: T) => SortValue;
+  sortCompare?: (a: T, b: T) => number;
+};
 
 type UnsortableColumn<T extends object> = BaseColumn<T> & {
-  sortable?: false
-  sortLabel?: never
-  sortValue?: never
-  sortCompare?: never
-}
+  sortable?: false;
+  sortLabel?: never;
+  sortValue?: never;
+  sortCompare?: never;
+};
 
-export type Column<T extends object> = SortableColumn<T> | UnsortableColumn<T>
+export type Column<T extends object> = SortableColumn<T> | UnsortableColumn<T>;
 
 export type Group<T extends object> = {
-  key: string
-  items: T[]
-  [k: string]: unknown
-}
+  key: string;
+  items: T[];
+  [k: string]: unknown;
+};
 
-type CellPadding = 'normal' | 'condensed' | 'spacious'
+type CellPadding = "normal" | "condensed" | "spacious";
 
-type PropsWithChildrenAndClassName = PropsWithChildren<{ className?: string }>
+type PropsWithChildrenAndClassName = PropsWithChildren<{ className?: string }>;
 
 export type TableProps<T extends object> = {
-  columns: Column<T>[]
-  data: T[] | Group<T>[]
-  rowKey: (row: T) => string | number
-  onRowClick?: (row: T) => void
-  renderGroupHeader?: (group: Group<T>) => ReactNode
-  renderExpandedContent?: (row: T) => ReactNode
-  onLoadMore?: () => Promise<void> | (() => void)
-  hasMore?: boolean
-  noResultsMessage?: ReactNode
-  className?: string
-  cellPadding?: CellPadding
-  hideHeader?: boolean
-  sort?: SortDescriptor | null
-  onSortChange?: (sort: SortDescriptor | null) => void
-}
+  columns: Column<T>[];
+  data: T[] | Group<T>[];
+  rowKey: (row: T) => string | number;
+  onRowClick?: (row: T) => void;
+  renderGroupHeader?: (group: Group<T>) => ReactNode;
+  renderExpandedContent?: (row: T) => ReactNode;
+  onLoadMore?: () => Promise<void> | (() => void);
+  hasMore?: boolean;
+  noResultsMessage?: ReactNode;
+  className?: string;
+  cellPadding?: CellPadding;
+  hideHeader?: boolean;
+  sort?: SortDescriptor | null;
+  onSortChange?: (sort: SortDescriptor | null) => void;
+};
 
 export type TableWrapperProps<T extends object> =
   PropsWithChildrenAndClassName & {
-    columns: Column<T>[]
-    cellPadding?: CellPadding
-  }
+    columns: Column<T>[];
+    cellPadding?: CellPadding;
+  };
 
 function expandColumn<T extends object>(): Column<T> {
   return {
-    key: 'expand',
-    header: '',
+    key: "expand",
+    header: "",
     width: `64px`, // 32px is padding, 32px is the width of the expand button
-  }
+  };
 }
 
 function warnOnDuplicateSortableIds<T extends object>(columns: Column<T>[]) {
-  if (process.env.NODE_ENV === 'production') {
-    return
+  if (process.env.NODE_ENV === "production") {
+    return;
   }
 
-  const seen = new Set<string>()
+  const seen = new Set<string>();
 
   for (const column of columns) {
     if (!isSortableColumn(column)) {
-      continue
+      continue;
     }
 
-    const id = getColumnSortId(column)
+    const id = getColumnSortId(column);
 
     if (seen.has(id)) {
       console.warn(
-        `Table sortable columns must have unique ids. Duplicate id: ${id}`
-      )
-      return
+        `Table sortable columns must have unique ids. Duplicate id: ${id}`,
+      );
+      return;
     }
 
-    seen.add(id)
+    seen.add(id);
   }
 }
 
 type TableContainerProps = PropsWithChildrenAndClassName & {
-  tableDepth: number
-  colWidths: string
-  cellPadding?: CellPadding
-  expandedRowKeys?: Set<string | number>
-}
+  tableDepth: number;
+  colWidths: string;
+  cellPadding?: CellPadding;
+  expandedRowKeys?: Set<string | number>;
+};
 
 const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
   (
@@ -142,55 +142,55 @@ const TableContainer = forwardRef<HTMLTableElement, TableContainerProps>(
       cellPadding,
       expandedRowKeys,
     },
-    ref
+    ref,
   ) => {
     return (
       <TableProvider depth={tableDepth} expandedRowKeys={expandedRowKeys}>
         <table
           style={
-            { '--grid-template-columns': colWidths } as React.CSSProperties
+            { "--grid-template-columns": colWidths } as React.CSSProperties
           }
           ref={ref}
           className={cn(
             styles.table,
-            'relative grid w-full caption-bottom [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)] overflow-x-auto overflow-y-hidden rounded-lg border text-sm',
-            tableDepth > 1 && 'rounded-none border-none',
-            className
+            "relative grid w-full caption-bottom [border-collapse:separate] [border-spacing:0] [grid-template-columns:var(--grid-template-columns)] overflow-x-auto overflow-y-hidden rounded-lg border text-sm",
+            tableDepth > 1 && "rounded-none border-none",
+            className,
           )}
           data-cell-padding={cellPadding}
         >
           {children}
         </table>
       </TableProvider>
-    )
-  }
-)
+    );
+  },
+);
 
 function TableRoot<T extends object>(
-  props: TableProps<T> | TableWrapperProps<T>
+  props: TableProps<T> | TableWrapperProps<T>,
 ) {
-  const { depth } = useTable()
-  const tableDepth = depth + 1
+  const { depth } = useTable();
+  const tableDepth = depth + 1;
 
-  const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
-  const tableRef = useRef<HTMLTableElement | null>(null)
+  const tableBodyRef = useRef<HTMLTableSectionElement | null>(null);
+  const tableRef = useRef<HTMLTableElement | null>(null);
 
-  let columns = props.columns
+  let columns = props.columns;
 
   // We add the expand column here so that all parts of the table know about it, particularly needed for widths
   if (
     !propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props) &&
     props.renderExpandedContent
   ) {
-    columns = [expandColumn(), ...columns]
+    columns = [expandColumn(), ...columns];
   }
 
-  warnOnDuplicateSortableIds(columns)
+  warnOnDuplicateSortableIds(columns);
 
   const colWidths = useMemo(
-    () => columns.map((column) => column.width ?? '1fr').join(' '),
-    [columns]
-  )
+    () => columns.map((column) => column.width ?? "1fr").join(" "),
+    [columns],
+  );
 
   if (propsHasChildren<TableWrapperProps<T>, TableProps<T>>(props)) {
     return (
@@ -203,7 +203,7 @@ function TableRoot<T extends object>(
       >
         {props.children}
       </TableContainer>
-    )
+    );
   }
 
   const {
@@ -220,24 +220,24 @@ function TableRoot<T extends object>(
     cellPadding,
     sort,
     onSortChange,
-  } = props
+  } = props;
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const handleLoadMore = async () => {
-    setIsLoading(true)
-    await onLoadMore?.()
-    setIsLoading(false)
-  }
+    setIsLoading(true);
+    await onLoadMore?.();
+    setIsLoading(false);
+  };
 
   const expandedRowKeys = useMemo(() => {
     if (!isGroupOf<T>(data)) {
       return new Set(
         data
-          .filter((row) => 'defaultExpanded' in row && row.defaultExpanded)
-          .map((row) => rowKey(row as T))
-      )
+          .filter((row) => "defaultExpanded" in row && row.defaultExpanded)
+          .map((row) => rowKey(row as T)),
+      );
     }
-  }, [data, rowKey])
+  }, [data, rowKey]);
 
   return (
     <TableContainer
@@ -269,15 +269,15 @@ function TableRoot<T extends object>(
         onRowClick={onRowClick}
       />
     </TableContainer>
-  )
+  );
 }
 
 type HeaderProps<T extends object> = {
-  columns: Column<T>[]
-  sort?: SortDescriptor | null
-  onSortChange?: (sort: SortDescriptor | null) => void
-  className?: string
-}
+  columns: Column<T>[];
+  sort?: SortDescriptor | null;
+  onSortChange?: (sort: SortDescriptor | null) => void;
+  className?: string;
+};
 
 function HeaderContainer({
   className,
@@ -286,65 +286,65 @@ function HeaderContainer({
   return (
     <thead
       className={cn(
-        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
-        className
+        "[grid-column:1/-1] grid [grid-template-columns:subgrid]",
+        className,
       )}
     >
       {children}
     </thead>
-  )
+  );
 }
 
 function getSortDirection<T extends object>(
   column: Column<T>,
-  sort: SortDescriptor | null | undefined
+  sort: SortDescriptor | null | undefined,
 ) {
-  return sort?.id === getColumnSortId(column) ? sort.direction : undefined
+  return sort?.id === getColumnSortId(column) ? sort.direction : undefined;
 }
 
 function getSortLabel<T extends object>(column: SortableColumn<T>) {
   return (
     column.sortLabel ??
-    (typeof column.header === 'string'
+    (typeof column.header === "string"
       ? column.header
       : getColumnSortId(column))
-  )
+  );
 }
 
 function getNextSort<T extends object>(
   column: SortableColumn<T>,
-  sort: SortDescriptor | null | undefined
+  sort: SortDescriptor | null | undefined,
 ): SortDescriptor | null {
-  const direction = getSortDirection(column, sort)
-  const id = getColumnSortId(column)
+  const direction = getSortDirection(column, sort);
+  const id = getColumnSortId(column);
 
-  if (direction === 'asc') {
-    return { id, direction: 'desc' }
+  if (direction === "asc") {
+    return { id, direction: "desc" };
   }
 
-  if (direction === 'desc') {
-    return null
+  if (direction === "desc") {
+    return null;
   }
 
-  return { id, direction: 'asc' }
+  return { id, direction: "asc" };
 }
 
 function getSortButtonLabel<T extends object>(
   column: SortableColumn<T>,
-  sort: SortDescriptor | null | undefined
+  sort: SortDescriptor | null | undefined,
 ) {
-  const label = getSortLabel(column)
-  const direction = getSortDirection(column, sort)
+  const label = getSortLabel(column);
+  const direction = getSortDirection(column, sort);
 
-  if (direction === 'asc') {
-    return `Sort by ${label} descending`
+  if (direction === "asc") {
+    return `Sort by ${label} descending`;
   }
 
-  if (direction === 'desc') {
-    return `Clear sort for ${label}`
+  if (direction === "desc") {
+    return `Clear sort for ${label}`;
   }
 
-  return `Sort by ${label} ascending`
+  return `Sort by ${label} ascending`;
 }
 
 function SortableHeaderCell<T extends object>({
@@ -352,30 +352,30 @@ function SortableHeaderCell<T extends object>({
   sort,
   onSortChange,
 }: {
-  column: Column<T>
-  sort?: SortDescriptor | null
-  onSortChange?: (sort: SortDescriptor | null) => void
+  column: Column<T>;
+  sort?: SortDescriptor | null;
+  onSortChange?: (sort: SortDescriptor | null) => void;
 }) {
   if (!isSortableColumn(column) || !onSortChange) {
-    return <HeaderCell>{column.header}</HeaderCell>
+    return <HeaderCell>{column.header}</HeaderCell>;
   }
 
-  const direction = getSortDirection(column, sort)
-  const isSorted = direction !== undefined
+  const direction = getSortDirection(column, sort);
+  const isSorted = direction !== undefined;
   const Icon =
-    direction === 'asc'
+    direction === "asc"
       ? ArrowUp
-      : direction === 'desc'
+      : direction === "desc"
         ? ArrowDown
-        : ArrowUpDown
+        : ArrowUpDown;
 
   return (
     <HeaderCell
       aria-sort={
-        direction === 'asc'
-          ? 'ascending'
-          : direction === 'desc'
-            ? 'descending'
+        direction === "asc"
+          ? "ascending"
+          : direction === "desc"
+            ? "descending"
             : undefined
       }
     >
@@ -389,24 +389,24 @@ function SortableHeaderCell<T extends object>({
         <Icon
           aria-hidden="true"
           className={cn(
-            'size-3.5 shrink-0 transition-colors',
-            isSorted ? 'text-body' : 'text-body-muted group-hover:text-body'
+            "size-3.5 shrink-0 transition-colors",
+            isSorted ? "text-body" : "text-body-muted group-hover:text-body",
           )}
         />
       </button>
     </HeaderCell>
-  )
+  );
 }
 
 function Header<T extends object>(
-  props: HeaderProps<T> | PropsWithChildrenAndClassName
+  props: HeaderProps<T> | PropsWithChildrenAndClassName,
 ) {
   if (propsHasChildren<PropsWithChildrenAndClassName, HeaderProps<T>>(props)) {
     return (
       <HeaderContainer className={props.className}>
         {props.children}
       </HeaderContainer>
-    )
+    );
   }
 
   return (
@@ -414,7 +414,7 @@ function Header<T extends object>(
       <tr className="table-header [grid-column:1/-1] grid [grid-template-columns:subgrid] border-b">
         {props.columns.map((column) => (
           <SortableHeaderCell
-            key={`${column.key.toString()}-${column.id ?? ''}`}
+            key={`${column.key.toString()}-${column.id ?? ""}`}
             column={column}
             sort={props.sort}
             onSortChange={props.onSortChange}
@@ -422,22 +422,22 @@ function Header<T extends object>(
         ))}
       </tr>
     </HeaderContainer>
-  )
+  );
 }
 
 type BodyProps<T extends object> = {
-  columns: Column<T>[]
-  data: T[] | Group<T>[]
-  rowKey: (row: T) => string | number
-  onRowClick?: (row: T) => void
-  noResultsMessage?: ReactNode
-  renderGroupHeader?: (group: Group<T>) => ReactNode
-  renderExpandedContent?: (row: T) => ReactNode
-  hasMore?: boolean
-  handleLoadMore?: () => void
-  isLoading?: boolean
-  className?: string
-}
+  columns: Column<T>[];
+  data: T[] | Group<T>[];
+  rowKey: (row: T) => string | number;
+  onRowClick?: (row: T) => void;
+  noResultsMessage?: ReactNode;
+  renderGroupHeader?: (group: Group<T>) => ReactNode;
+  renderExpandedContent?: (row: T) => ReactNode;
+  hasMore?: boolean;
+  handleLoadMore?: () => void;
+  isLoading?: boolean;
+  className?: string;
+};
 
 const BodyContainer = forwardRef<
   HTMLTableSectionElement,
@@ -447,25 +447,25 @@ const BodyContainer = forwardRef<
     <tbody
       ref={ref}
       className={cn(
-        'relative [grid-column:1/-1] grid [grid-template-columns:subgrid]',
-        className
+        "relative [grid-column:1/-1] grid [grid-template-columns:subgrid]",
+        className,
       )}
     >
       {children}
     </tbody>
-  )
-})
+  );
+});
 
 const Body = React.forwardRef(function Body<T extends object>(
   props: BodyProps<T> | PropsWithChildrenAndClassName,
-  ref: React.ForwardedRef<HTMLTableSectionElement>
+  ref: React.ForwardedRef<HTMLTableSectionElement>,
 ) {
   if (propsHasChildren<PropsWithChildrenAndClassName, BodyProps<T>>(props)) {
     return (
       <BodyContainer ref={ref} className={props.className}>
         {props.children}
       </BodyContainer>
-    )
+    );
   }
 
   const {
@@ -480,7 +480,7 @@ const Body = React.forwardRef(function Body<T extends object>(
     isLoading,
     className,
     renderExpandedContent,
-  } = props
+  } = props;
 
   const renderRow = (row: T | Group<T>) => {
     if (isGroupOf<T>(row)) {
@@ -493,7 +493,7 @@ const Body = React.forwardRef(function Body<T extends object>(
           key={row.key}
           onRowClick={onRowClick}
         />
-      )
+      );
     } else if (renderExpandedContent) {
       return (
         <RowExpandable
@@ -504,7 +504,7 @@ const Body = React.forwardRef(function Body<T extends object>(
           key={rowKey(row)}
           onClick={onRowClick}
         />
-      )
+      );
     } else {
       return (
         <Row
@@ -513,12 +513,12 @@ const Body = React.forwardRef(function Body<T extends object>(
           columns={columns}
           onClick={onRowClick}
         />
-      )
+      );
     }
-  }
+  };
 
   return (
-    <BodyContainer ref={ref} className={cn(hasMore && 'pb-16', className)}>
+    <BodyContainer ref={ref} className={cn(hasMore && "pb-16", className)}>
       {data.length === 0 ? (
         <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
       ) : (
@@ -532,37 +532,37 @@ const Body = React.forwardRef(function Body<T extends object>(
         />
       )}
     </BodyContainer>
-  )
+  );
 }) as <T extends object>(
   props: {
-    ref?: React.ForwardedRef<HTMLTableSectionElement>
-  } & (BodyProps<T> | PropsWithChildrenAndClassName)
-) => React.ReactElement
+    ref?: React.ForwardedRef<HTMLTableSectionElement>;
+  } & (BodyProps<T> | PropsWithChildrenAndClassName),
+) => React.ReactElement;
 
 type RowProps<T extends object> = {
-  row: T
-  onClick?: (row: T) => void
-  columns: Column<T>[]
-  className?: string
-}
+  row: T;
+  onClick?: (row: T) => void;
+  columns: Column<T>[];
+  className?: string;
+};
 
 type RowContainerProps = {
-  onClick?: () => void
-} & PropsWithChildrenAndClassName
+  onClick?: () => void;
+} & PropsWithChildrenAndClassName;
 
 function RowContainer({ className, children, onClick }: RowContainerProps) {
   return (
     <tr
       className={cn(
-        'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none',
-        onClick && 'cursor-pointer',
-        className
+        "-z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none hover:bg-muted/50 data-[state=selected]:bg-muted",
+        onClick && "cursor-pointer",
+        className,
       )}
       onClick={onClick}
     >
       {children}
     </tr>
-  )
+  );
 }
 
 function Row<T extends object>(props: RowProps<T> | RowContainerProps) {
@@ -571,10 +571,10 @@ function Row<T extends object>(props: RowProps<T> | RowContainerProps) {
       <RowContainer className={props.className} onClick={props.onClick}>
         {props.children}
       </RowContainer>
-    )
+    );
   }
 
-  const { row, onClick, columns, className } = props
+  const { row, onClick, columns, className } = props;
   return (
     <RowContainer
       className={className}
@@ -584,7 +584,7 @@ function Row<T extends object>(props: RowProps<T> | RowContainerProps) {
         <Cell key={column.key.toString()} column={column} row={row} />
       ))}
     </RowContainer>
-  )
+  );
 }
 
 function RowExpandable<T extends object>({
@@ -595,26 +595,26 @@ function RowExpandable<T extends object>({
   renderExpandedContent,
   className,
 }: {
-  row: T
-  columns: Column<T>[]
-  rowKey: (row: T) => string | number
-  renderExpandedContent: (row: T) => ReactNode
-  onClick?: (row: T) => void
-  className?: string
+  row: T;
+  columns: Column<T>[];
+  rowKey: (row: T) => string | number;
+  renderExpandedContent: (row: T) => ReactNode;
+  onClick?: (row: T) => void;
+  className?: string;
 }) {
-  const { expandedRowKeys, toggleExpanded } = useTable()
+  const { expandedRowKeys, toggleExpanded } = useTable();
 
-  const isExpanded = expandedRowKeys.has(rowKey(row))
+  const isExpanded = expandedRowKeys.has(rowKey(row));
 
   const expand = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    toggleExpanded(rowKey(row))
-  }
+    e.stopPropagation();
+    toggleExpanded(rowKey(row));
+  };
 
   const content = useMemo(
     () => renderExpandedContent(row),
-    [renderExpandedContent, row]
-  )
+    [renderExpandedContent, row],
+  );
 
   const renderExpandCol = useCallback(() => {
     return content ? (
@@ -624,30 +624,30 @@ function RowExpandable<T extends object>({
             <div className="flex w-full justify-end">
               <Button
                 onClick={expand}
-                variant={'tertiary'}
+                variant={"tertiary"}
                 className={`h-6 w-6`}
               >
                 <ExpandChevron isCollapsed={!isExpanded} />
               </Button>
             </div>
           </TooltipTrigger>
-          <TooltipContent>{isExpanded ? 'Collapse' : 'Expand'}</TooltipContent>
+          <TooltipContent>{isExpanded ? "Collapse" : "Expand"}</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    ) : null
-  }, [expand, isExpanded, content])
+    ) : null;
+  }, [expand, isExpanded, content]);
 
-  const expandCol = columns.find((column) => column.key === expandColumn().key)
+  const expandCol = columns.find((column) => column.key === expandColumn().key);
 
   if (expandCol) {
-    expandCol.render = renderExpandCol
+    expandCol.render = renderExpandCol;
   }
 
-  let onClickFn = onClick
+  let onClickFn = onClick;
 
   // If there's some expanded content to show and onClick is not provided, let the row expand when clicked
   if (!onClick && content) {
-    onClickFn = () => toggleExpanded(rowKey(row))
+    onClickFn = () => toggleExpanded(rowKey(row));
   }
 
   return (
@@ -661,14 +661,14 @@ function RowExpandable<T extends object>({
       {/* This grid stuff is a cute way to make the height animate smoothly when expanding/collapsing */}
       <div
         className={cn(
-          '[grid-column:1/-1] grid overflow-hidden transition-[grid-template-rows] duration-300',
-          isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+          "[grid-column:1/-1] grid overflow-hidden transition-[grid-template-rows] duration-300",
+          isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
       >
         <div className="min-h-0 overflow-auto">{content}</div>
       </div>
     </>
-  )
+  );
 }
 
 function RowGroup<T extends object>({
@@ -679,18 +679,18 @@ function RowGroup<T extends object>({
   className,
   onRowClick,
 }: {
-  group: Group<T>
-  columns: Column<T>[]
-  rowKey: (row: T) => string | number
-  renderGroupHeader?: (group: Group<T>) => ReactNode
-  className?: string
-  onRowClick?: (row: T) => void
+  group: Group<T>;
+  columns: Column<T>[];
+  rowKey: (row: T) => string | number;
+  renderGroupHeader?: (group: Group<T>) => ReactNode;
+  className?: string;
+  onRowClick?: (row: T) => void;
 }) {
   return (
     <div
       className={cn(
-        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
-        className
+        "[grid-column:1/-1] grid [grid-template-columns:subgrid]",
+        className,
       )}
     >
       <div className="[grid-column:1/-1]">{renderGroupHeader?.(group)}</div>
@@ -703,14 +703,14 @@ function RowGroup<T extends object>({
         />
       ))}
     </div>
-  )
+  );
 }
 
 type CellProps<T extends object> = {
-  row: T
-  column: Column<T>
-  className?: string
-}
+  row: T;
+  column: Column<T>;
+  className?: string;
+};
 
 function CellContainer({ children, className }: PropsWithChildrenAndClassName) {
   return (
@@ -718,34 +718,34 @@ function CellContainer({ children, className }: PropsWithChildrenAndClassName) {
       className={cn(
         styles.tableCell,
         `flex max-w-full items-center`,
-        className
+        className,
       )}
     >
       <SubtableIndendation />
       {children}
     </td>
-  )
+  );
 }
 
 function Cell<T extends object>(
-  props: CellProps<T> | PropsWithChildrenAndClassName
+  props: CellProps<T> | PropsWithChildrenAndClassName,
 ) {
   if (propsHasChildren<PropsWithChildrenAndClassName, CellProps<T>>(props)) {
     return (
       <CellContainer className={props.className}>
         {props.children}
       </CellContainer>
-    )
+    );
   }
 
-  const { row, column, className } = props
+  const { row, column, className } = props;
   const content = column.render
     ? column.render(row)
     : isKeyOfT<T>(column.key, row)
       ? String(row[column.key])
-      : ''
+      : "";
 
-  return <CellContainer className={className}>{content}</CellContainer>
+  return <CellContainer className={className}>{content}</CellContainer>;
 }
 
 function NoResultsMessage({
@@ -755,23 +755,23 @@ function NoResultsMessage({
   const Wrapper = ({ children, className }: PropsWithChildrenAndClassName) => (
     <div
       className={cn(
-        '[grid-column:1/-1] grid [grid-template-columns:subgrid]',
-        className
+        "[grid-column:1/-1] grid [grid-template-columns:subgrid]",
+        className,
       )}
     >
       {children}
     </div>
-  )
+  );
 
   const ContentWrapper = ({ children }: PropsWithChildren) => (
     <div className="[grid-column:1/-1]">{children}</div>
-  )
+  );
 
   return (
     <Wrapper className={className}>
       <ContentWrapper>{children}</ContentWrapper>
     </Wrapper>
-  )
+  );
 }
 
 function LoadMore<T extends object>({
@@ -779,48 +779,48 @@ function LoadMore<T extends object>({
   handleLoadMore,
   isLoading,
 }: {
-  columns: Column<T>[]
-  handleLoadMore: () => void
-  isLoading?: boolean
+  columns: Column<T>[];
+  handleLoadMore: () => void;
+  isLoading?: boolean;
 }) {
   const RowWrapper = ({
     children,
     className,
   }: PropsWithChildren<{ className?: string }>) => {
-    const colWidths = columns.map((column) => column.width ?? '1fr').join(' ')
+    const colWidths = columns.map((column) => column.width ?? "1fr").join(" ");
     return (
       <tr
-        style={{ '--grid-template-columns': colWidths } as React.CSSProperties}
+        style={{ "--grid-template-columns": colWidths } as React.CSSProperties}
         className={cn(
-          'absolute right-0 bottom-0 left-0 -z-0 [grid-column:1/-1] grid min-h-16 max-w-full cursor-pointer [grid-template-columns:var(--grid-template-columns)] items-center border-b opacity-30 transition-colors',
-          className
+          "absolute right-0 bottom-0 left-0 -z-0 [grid-column:1/-1] grid min-h-16 max-w-full cursor-pointer [grid-template-columns:var(--grid-template-columns)] items-center border-b opacity-30 transition-colors",
+          className,
         )}
       >
         {children}
       </tr>
-    )
-  }
+    );
+  };
 
   const ButtonWrapper = ({ children }: PropsWithChildren) => (
     <div className="absolute right-0 bottom-0 left-0 z-10 flex min-h-14 w-full items-center justify-center py-4">
       {children}
     </div>
-  )
+  );
 
   return (
     <>
       <RowWrapper
-        className={cn(isLoading && 'animate-pulse opacity-100 duration-[2.5s]')}
+        className={cn(isLoading && "animate-pulse opacity-100 duration-[2.5s]")}
       >
         {columns.map((column) => (
           <Cell key={column.key.toString()}>
-            <div className="bg-muted h-4 w-full rounded" />
+            <div className="h-4 w-full rounded bg-muted" />
           </Cell>
         ))}
       </RowWrapper>
       <ButtonWrapper>
         <button
-          className="focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium whitespace-nowrap normal-case transition-colors select-none focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+          className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium whitespace-nowrap normal-case transition-colors select-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
           onClick={handleLoadMore}
         >
           {isLoading ? (
@@ -829,18 +829,18 @@ function LoadMore<T extends object>({
               <Loader2 className="animate-spin" />
             </>
           ) : (
-            'Load more'
+            "Load more"
           )}
         </button>
       </ButtonWrapper>
     </>
-  )
+  );
 }
 
 type HeaderCellProps = React.ThHTMLAttributes<HTMLTableCellElement> &
   PropsWithChildren<{
-    className?: string
-  }>
+    className?: string;
+  }>;
 
 function HeaderCell({ className, children, ...props }: HeaderCellProps) {
   return (
@@ -848,32 +848,32 @@ function HeaderCell({ className, children, ...props }: HeaderCellProps) {
       {...props}
       className={cn(
         styles.tableHeader,
-        'text-body flex items-center align-middle font-medium whitespace-nowrap select-none',
-        className
+        "flex items-center align-middle font-medium whitespace-nowrap text-body select-none",
+        className,
       )}
     >
       <SubtableIndendation />
       {children}
     </th>
-  )
+  );
 }
 
 // Has the effect of "indenting" subtables while still allowing them to occupy the full width of the parent table
 function SubtableIndendation() {
-  const { depth } = useTable()
+  const { depth } = useTable();
   return depth > 1 ? (
     <div style={{ minWidth: `${16 * (depth - 1)}px` }} />
-  ) : null
+  ) : null;
 }
 
 function propsHasChildren<P extends PropsWithChildren, Q extends object>(
-  props: P | Q
+  props: P | Q,
 ): props is P {
-  return 'children' in props && props.children !== undefined
+  return "children" in props && props.children !== undefined;
 }
 
 function isKeyOfT<T extends object>(key: unknown, data: T): key is keyof T {
-  return typeof key === 'string' && Object.keys(data).includes(key)
+  return typeof key === "string" && Object.keys(data).includes(key);
 }
 
 export const Table = Object.assign(TableRoot, {
@@ -883,4 +883,4 @@ export const Table = Object.assign(TableRoot, {
   Cell,
   RowGroup,
   NoResultsMessage,
-})
+});

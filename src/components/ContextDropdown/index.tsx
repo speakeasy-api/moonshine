@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { Icon } from '../Icon'
-import { assert } from '@/lib/typeUtils'
-import { Heading } from '../Heading'
-import React from 'react'
-import { useModal } from '@/hooks/useModal'
-import { Screen } from '@/context/ModalContext'
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Icon } from "../Icon";
+import { assert } from "@/lib/typeUtils";
+import { Heading } from "../Heading";
+import React from "react";
+import { useModal } from "@/hooks/useModal";
+import { Screen } from "@/context/ModalContext";
 
-const MotionHeading = motion.create(Heading)
+const MotionHeading = motion.create(Heading);
 
-const animationDuration = 0.15
+const animationDuration = 0.15;
 
 interface ContextDropdownProps {
-  renderTitle?: (screen: Screen, index: number) => React.ReactNode
+  renderTitle?: (screen: Screen, index: number) => React.ReactNode;
 }
 
 export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
@@ -25,52 +25,52 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
     close,
     popScreen,
     navigationDirection,
-  } = useModal()
+  } = useModal();
 
   // Animation variants for title and content
   const slideVariants = {
     enter: (isForward: boolean) => ({
-      x: isForward ? '100%' : '-100%',
+      x: isForward ? "100%" : "-100%",
       opacity: 0,
-      width: '100%',
+      width: "100%",
     }),
     center: {
       x: 0,
       opacity: 1,
-      width: '100%',
+      width: "100%",
     },
     exit: (isForward: boolean) => ({
-      x: isForward ? '-100%' : '100%',
+      x: isForward ? "-100%" : "100%",
       opacity: 0,
-      width: '100%',
+      width: "100%",
     }),
-  }
+  };
 
   // Handle escape key to close modal
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        close()
+      if (e.key === "Escape") {
+        close();
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
+      document.addEventListener("keydown", handleEscape);
       // Prevent body scrolling when modal is open
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'auto'
-    }
-  }, [isOpen, close])
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen, close]);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
-  const currentScreen = screens[currentIndex]
-  assert(currentScreen, 'No current screen')
-  const isForward = navigationDirection === 'forward'
+  const currentScreen = screens[currentIndex];
+  assert(currentScreen, "No current screen");
+  const isForward = navigationDirection === "forward";
 
   return (
     <AnimatePresence>
@@ -87,7 +87,7 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
               {currentIndex > 0 && (
                 <button
                   onClick={popScreen}
-                  className="hover:bg-muted mr-2 rounded-full border p-2 disabled:opacity-50 disabled:hover:bg-transparent"
+                  className="mr-2 rounded-full border p-2 hover:bg-muted disabled:opacity-50 disabled:hover:bg-transparent"
                   aria-label="Go back"
                 >
                   <Icon name="chevron-left" className="size-4" />
@@ -106,7 +106,7 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
                     animate="center"
                     exit="exit"
                     variant="sm"
-                    transition={{ type: 'tween', duration: animationDuration }}
+                    transition={{ type: "tween", duration: animationDuration }}
                   >
                     {renderTitle
                       ? renderTitle(currentScreen, currentIndex)
@@ -119,7 +119,7 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
             {/* Static right side with close button */}
             <button
               onClick={close}
-              className="hover:bg-muted rounded-full border p-2"
+              className="rounded-full border p-2 hover:bg-muted"
               aria-label="Close modal"
             >
               <Icon name="x" className="size-4" />
@@ -137,7 +137,7 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ type: 'tween', duration: animationDuration }}
+                transition={{ type: "tween", duration: animationDuration }}
               >
                 {currentScreen.component}
               </motion.div>
@@ -146,5 +146,5 @@ export function ContextDropdown({ renderTitle }: ContextDropdownProps) {
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  );
 }

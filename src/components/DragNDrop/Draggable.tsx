@@ -6,17 +6,17 @@ import {
   Over,
   Data,
   UniqueIdentifier,
-} from '@dnd-kit/core'
-import type { ClientRect } from '@dnd-kit/core/dist/types/rect'
-import { CSS } from '@dnd-kit/utilities'
-import { MutableRefObject } from 'react'
+} from "@dnd-kit/core";
+import type { ClientRect } from "@dnd-kit/core/dist/types/rect";
+import { CSS } from "@dnd-kit/utilities";
+import { MutableRefObject } from "react";
 
 export interface DraggableChildrenProps {
-  over: Over | null
-  active: Active | null
-  activeNodeRect: ClientRect | null
-  isDragging: boolean
-  node: MutableRefObject<HTMLElement | null> | null
+  over: Over | null;
+  active: Active | null;
+  activeNodeRect: ClientRect | null;
+  isDragging: boolean;
+  node: MutableRefObject<HTMLElement | null> | null;
 }
 
 export interface DraggableProps<TData> extends DndMonitorListener {
@@ -27,21 +27,21 @@ export interface DraggableProps<TData> extends DndMonitorListener {
    */
   children:
     | React.ReactNode
-    | ((props: DraggableChildrenProps) => React.ReactNode)
+    | ((props: DraggableChildrenProps) => React.ReactNode);
 
   /**
    * The unique identifier for the draggable.
    */
-  id: UniqueIdentifier
+  id: UniqueIdentifier;
 
-  className?: string
+  className?: string;
 
-  disabled?: boolean
+  disabled?: boolean;
 
   /**
    * The data to pass to the draggable of generic type TData.
    */
-  data?: TData
+  data?: TData;
 }
 
 export function Draggable<TData extends Data>({
@@ -69,17 +69,17 @@ export function Draggable<TData extends Data>({
     id,
     data,
     disabled,
-  })
+  });
   useDndMonitor({
     onDragEnd,
     onDragStart,
     onDragCancel,
     onDragOver,
-  })
+  });
 
   const style: React.CSSProperties = {
     transform: CSS.Translate.toString(transform),
-  }
+  };
 
   return (
     <div
@@ -89,9 +89,9 @@ export function Draggable<TData extends Data>({
       {...listeners}
       className={className}
     >
-      {typeof children === 'function'
+      {typeof children === "function"
         ? children({ over, active, activeNodeRect, isDragging, node })
         : children}
     </div>
-  )
+  );
 }

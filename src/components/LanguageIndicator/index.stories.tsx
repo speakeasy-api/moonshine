@@ -1,95 +1,95 @@
-import { supportedLanguages } from '@/types'
-import { LanguageIndicator } from '.'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import { supportedLanguages } from "@/types";
+import { LanguageIndicator } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof LanguageIndicator> = {
   component: LanguageIndicator,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof LanguageIndicator>
+type Story = StoryObj<typeof LanguageIndicator>;
 
 export const Typescript: Story = {
   args: {
-    language: 'typescript',
+    language: "typescript",
   },
-}
+};
 
 export const Go: Story = {
   args: {
-    language: 'go',
+    language: "go",
   },
-}
+};
 
 export const Java: Story = {
   args: {
-    language: 'java',
+    language: "java",
   },
-}
+};
 
 export const Python: Story = {
   args: {
-    language: 'python',
+    language: "python",
   },
-}
+};
 
 export const Csharp: Story = {
   args: {
-    language: 'csharp',
+    language: "csharp",
   },
-}
+};
 
 export const Ruby: Story = {
   args: {
-    language: 'ruby',
+    language: "ruby",
   },
-}
+};
 
 export const PHP: Story = {
   args: {
-    language: 'php',
+    language: "php",
   },
-}
+};
 
 export const Terraform: Story = {
   args: {
-    language: 'terraform',
+    language: "terraform",
   },
-}
+};
 
 export const Unity: Story = {
   args: {
-    language: 'unity',
+    language: "unity",
   },
-}
+};
 
 export const Swift: Story = {
   args: {
-    language: 'swift',
+    language: "swift",
   },
-}
+};
 
 export const Postman: Story = {
   args: {
-    language: 'postman',
+    language: "postman",
   },
-}
+};
 
 export const AllIcons: Story = {
   render: () => (
-    <div className="bg-card flex w-32 flex-col flex-wrap gap-1.5 rounded-lg p-3">
+    <div className="flex w-32 flex-col flex-wrap gap-1.5 rounded-lg bg-card p-3">
       {supportedLanguages.map((language) => (
         <LanguageIndicator key={language} language={language} />
       ))}
     </div>
   ),
-}
+};
 
 export const IndicatorOnly: Story = {
   args: {
-    language: 'typescript',
+    language: "typescript",
     indicatorOnly: true,
   },
-}
+};

@@ -1,11 +1,11 @@
-import { DndContext } from '@dnd-kit/core'
-import { ActionBar } from '.'
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { fn } from 'storybook/test'
+import { DndContext } from "@dnd-kit/core";
+import { ActionBar } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 
 const meta: Meta<typeof ActionBar> = {
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
   component: ActionBar,
   decorators: [
@@ -15,15 +15,15 @@ const meta: Meta<typeof ActionBar> = {
       </DndContext>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof ActionBar>
+type Story = StoryObj<typeof ActionBar>;
 
 export const Default: Story = {
   args: {
-    id: 'action-bar-1',
+    id: "action-bar-1",
     initialPosition: { x: 300, y: 300 },
     onChangePosition: fn(),
     onDragStart: fn(),
@@ -42,11 +42,11 @@ export const Default: Story = {
       <ActionBar.Item iconName="activity">Activity</ActionBar.Item>,
     ],
   },
-}
+};
 
 export const NonDraggable: Story = {
   args: {
     ...Default.args,
     draggable: false,
   },
-}
+};

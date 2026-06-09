@@ -1,17 +1,17 @@
-import { CollisionDetection, DndContext, Modifier } from '@dnd-kit/core'
-import { restrictToWindowEdges } from '@dnd-kit/modifiers'
+import { CollisionDetection, DndContext, Modifier } from "@dnd-kit/core";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 
 export interface DragNDropAreaProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 
-  modifiers?: Modifier[]
+  modifiers?: Modifier[];
 
-  className?: string
+  className?: string;
 
-  collisionDetectionAlgo?: CollisionDetection
+  collisionDetectionAlgo?: CollisionDetection;
 }
 
-const defaultModifiers: Modifier[] = [restrictToWindowEdges]
+const defaultModifiers: Modifier[] = [restrictToWindowEdges];
 
 export function DragNDropArea({
   children,
@@ -26,5 +26,5 @@ export function DragNDropArea({
     >
       <div className={className}>{children}</div>
     </DndContext>
-  )
+  );
 }

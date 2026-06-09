@@ -6,40 +6,40 @@
  * - Add an animation around the active command
  */
 
-import React from 'react'
-import { Check, Copy } from 'lucide-react'
-import { motion } from 'motion/react'
-import { TerminalPrompt, TerminalOutput } from './terminal'
-import { cn } from '@/lib/utils'
+import React from "react";
+import { Check, Copy } from "lucide-react";
+import { motion } from "motion/react";
+import { TerminalPrompt, TerminalOutput } from "./terminal";
+import { cn } from "@/lib/utils";
 
 interface TerminalCommandProps {
-  code: string
-  language: string
-  onSelectOrCopy?: () => void
-  copyable?: boolean
-  fontSize?: 'small' | 'medium' | 'large'
-  isActive?: boolean
-  comment?: string
-  path?: string
+  code: string;
+  language: string;
+  onSelectOrCopy?: () => void;
+  copyable?: boolean;
+  fontSize?: "small" | "medium" | "large";
+  isActive?: boolean;
+  comment?: string;
+  path?: string;
 }
 
 export function TerminalCommand({
   code,
   onSelectOrCopy,
   copyable = true,
-  fontSize = 'medium',
+  fontSize = "medium",
   isActive = false,
   comment,
   path,
 }: TerminalCommandProps) {
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = React.useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
-    onSelectOrCopy?.()
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    onSelectOrCopy?.();
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="group relative">
@@ -47,37 +47,37 @@ export function TerminalCommand({
         <button
           onClick={handleCopy}
           className="w-full text-left"
-          aria-label={copied ? 'Copied' : 'Copy command'}
+          aria-label={copied ? "Copied" : "Copy command"}
         >
           <div
             className={cn(
-              'relative -mx-2 rounded-md px-2 py-0.5 transition-colors',
-              isActive && 'bg-emerald-500/10',
-              !isActive && 'hover:bg-active'
+              "relative -mx-2 rounded-md px-2 py-0.5 transition-colors",
+              isActive && "bg-emerald-500/10",
+              !isActive && "hover:bg-active",
             )}
           >
             <div className="flex items-start gap-2">
               <span className="text-emerald-500 select-none">$</span>
               <span
                 className={cn(
-                  'text-default mt-0.5 flex-1 font-mono font-medium tracking-normal select-text',
-                  fontSize === 'small' && 'text-sm',
-                  fontSize === 'medium' && 'text-base',
-                  fontSize === 'large' && 'text-lg'
+                  "mt-0.5 flex-1 font-mono font-medium tracking-normal text-default select-text",
+                  fontSize === "small" && "text-sm",
+                  fontSize === "medium" && "text-base",
+                  fontSize === "large" && "text-lg",
                 )}
               >
                 {code}
               </span>
               {copyable && (
                 <span
-                  className={cn('mt-1.5 shrink-0', isActive && 'opacity-100')}
+                  className={cn("mt-1.5 shrink-0", isActive && "opacity-100")}
                 >
                   {copied ? (
                     <motion.div
                       initial={{ scale: 0.8 }}
                       animate={{ scale: 1 }}
                       transition={{
-                        type: 'spring',
+                        type: "spring",
                         stiffness: 200,
                         damping: 10,
                       }}
@@ -87,8 +87,8 @@ export function TerminalCommand({
                   ) : (
                     <Copy
                       className={cn(
-                        'h-3.5 w-3.5 transition-colors',
-                        'text-body-muted group-hover:text-body'
+                        "h-3.5 w-3.5 transition-colors",
+                        "text-body-muted group-hover:text-body",
                       )}
                     />
                   )}
@@ -104,5 +104,5 @@ export function TerminalCommand({
         </TerminalOutput>
       )}
     </div>
-  )
+  );
 }

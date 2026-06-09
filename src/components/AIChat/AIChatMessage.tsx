@@ -1,35 +1,35 @@
-import { cn } from '../../lib/utils'
+import { cn } from "../../lib/utils";
 import {
   BaseComponents,
   DefaultComponents,
   FcOrClassName,
   renderComponent,
-} from './componentsTypes'
-import { AIChatMessageFilePart } from './parts/AIChatMessageFilePart'
-import { AIChatMessageReasoningPart } from './parts/AIChatMessageReasoningPart'
-import { AIChatMessageSourcePart } from './parts/AIChatMessageSourcePart'
-import { AIChatMessageTextPart } from './parts/AIChatMessageTextPart'
+} from "./componentsTypes";
+import { AIChatMessageFilePart } from "./parts/AIChatMessageFilePart";
+import { AIChatMessageReasoningPart } from "./parts/AIChatMessageReasoningPart";
+import { AIChatMessageSourcePart } from "./parts/AIChatMessageSourcePart";
+import { AIChatMessageTextPart } from "./parts/AIChatMessageTextPart";
 import {
   AIChatMessageToolPart,
   AIChatMessageToolPartComponents,
-} from './parts/AIChatMessageToolPart'
-import type { ChatMessage } from './types'
+} from "./parts/AIChatMessageToolPart";
+import type { ChatMessage } from "./types";
 
 export interface AIChatMessageProps {
-  message: ChatMessage
-  className?: string
-  components?: Partial<AIChatMessageComponents>
+  message: ChatMessage;
+  className?: string;
+  components?: Partial<AIChatMessageComponents>;
 }
 
 interface AvatarComponents extends BaseComponents {
-  user: FcOrClassName<unknown>
-  assistant: FcOrClassName<unknown>
-  system: FcOrClassName<unknown>
+  user: FcOrClassName<unknown>;
+  assistant: FcOrClassName<unknown>;
+  system: FcOrClassName<unknown>;
 }
 
 export interface AIChatMessageComponents {
-  toolCall: Partial<AIChatMessageToolPartComponents>
-  avatar: Partial<AvatarComponents>
+  toolCall: Partial<AIChatMessageToolPartComponents>;
+  avatar: Partial<AvatarComponents>;
 }
 
 const defaultAvatars: DefaultComponents<AvatarComponents> = {
@@ -39,8 +39,8 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
       role="img"
       aria-label="User"
       className={cn(
-        'bg-muted text-body-muted h-6 w-6 rounded-full ring-1 ring-inset',
-        className
+        "h-6 w-6 rounded-full bg-muted text-body-muted ring-1 ring-inset",
+        className,
       )}
     >
       <defs>
@@ -67,8 +67,8 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
   assistant: ({ className }) => (
     <div
       className={cn(
-        'flex h-6 w-6 items-center justify-center rounded border text-[10px] font-medium',
-        className
+        "flex h-6 w-6 items-center justify-center rounded border text-[10px] font-medium",
+        className,
       )}
     >
       AI
@@ -77,7 +77,7 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
   system: ({ className }) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('h-6 w-6', className)}
+      className={cn("h-6 w-6", className)}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -90,7 +90,7 @@ const defaultAvatars: DefaultComponents<AvatarComponents> = {
       />
     </svg>
   ),
-}
+};
 
 export function AIChatMessage({
   message,
@@ -98,37 +98,37 @@ export function AIChatMessage({
   components,
 }: AIChatMessageProps) {
   return (
-    <li role="listitem" className={cn('px-4 py-3', className)}>
+    <li role="listitem" className={cn("px-4 py-3", className)}>
       <div className="flex items-start gap-2">
         <div className="flex-shrink-0">
           {renderComponent(
             defaultAvatars,
             components?.avatar,
             message.role,
-            {}
+            {},
           )}
         </div>
         <div className="flex flex-1 flex-col gap-4">
           {message.parts.map((part, index) => {
             switch (part.type) {
-              case 'text':
-                return <AIChatMessageTextPart key={index} text={part.text} />
-              case 'reasoning':
+              case "text":
+                return <AIChatMessageTextPart key={index} text={part.text} />;
+              case "reasoning":
                 return (
                   <AIChatMessageReasoningPart
                     key={index}
                     reasoning={part.reasoning}
                   />
-                )
-              case 'tool-invocation':
+                );
+              case "tool-invocation":
                 return (
                   <AIChatMessageToolPart
                     key={index}
                     toolInvocation={part.toolInvocation}
                     components={components?.toolCall}
                   />
-                )
-              case 'file':
+                );
+              case "file":
                 return (
                   <AIChatMessageFilePart
                     key={index}
@@ -136,17 +136,17 @@ export function AIChatMessage({
                     data={part.data}
                     fileName={part.fileName}
                   />
-                )
-              case 'source':
+                );
+              case "source":
                 return (
                   <AIChatMessageSourcePart key={index} source={part.source} />
-                )
+                );
               default:
-                return null
+                return null;
             }
           })}
         </div>
       </div>
     </li>
-  )
+  );
 }

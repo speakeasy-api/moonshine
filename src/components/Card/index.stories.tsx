@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Badge } from '../Badge'
-import { Card } from '.'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Badge } from "../Badge";
+import { Card } from ".";
 
 const meta: Meta<typeof Card> = {
   component: Card,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
-type Story = StoryObj<typeof Card>
+export default meta;
+type Story = StoryObj<typeof Card>;
 
 export const Default: Story = {
   args: {
@@ -24,10 +24,10 @@ export const Default: Story = {
         pellentesque purus curabitur penatibus placerat suspendisse vehicula
         rutrum.
       </Card.Content>,
-      <Card.Footer key="footer" content={{ text: 'Footer' }} />,
+      <Card.Footer key="footer" content={{ text: "Footer" }} />,
     ],
   },
-}
+};
 
 export const WithNoHeader: Story = {
   args: {
@@ -43,10 +43,10 @@ export const WithNoHeader: Story = {
         pellentesque purus curabitur penatibus placerat suspendisse vehicula
         rutrum.
       </Card.Content>,
-      <Card.Footer key="footer" content={{ text: 'Footer' }} />,
+      <Card.Footer key="footer" content={{ text: "Footer" }} />,
     ],
   },
-}
+};
 
 export const WithNoFooter: Story = {
   args: {
@@ -65,7 +65,7 @@ export const WithNoFooter: Story = {
       </Card.Content>,
     ],
   },
-}
+};
 
 export const WithInvalidChildren: Story = {
   args: {
@@ -94,7 +94,7 @@ export const WithInvalidChildren: Story = {
       <div key="invalid">Won't be rendered</div>,
     ],
   },
-}
+};
 
 export const WithHref: Story = {
   args: {
@@ -107,9 +107,9 @@ export const WithHref: Story = {
         <Badge>Something went wrong</Badge>
       </Card.Content>,
     ],
-    href: '/test',
+    href: "/test",
   },
-}
+};
 
 export const WithSubheader: Story = {
   args: {
@@ -127,7 +127,7 @@ export const WithSubheader: Story = {
       </Card.Content>,
     ],
   },
-}
+};
 
 export const WithLongSubheader: Story = {
   args: {
@@ -141,7 +141,7 @@ export const WithLongSubheader: Story = {
       <Card.Content key="content">Main content area of the card.</Card.Content>,
     ],
   },
-}
+};
 
 export const WithSubheaderAndFooter: Story = {
   args: {
@@ -153,10 +153,10 @@ export const WithSubheaderAndFooter: Story = {
         This example shows how the subheader works together with other card
         elements including the footer.
       </Card.Content>,
-      <Card.Footer key="footer" content={{ text: 'Created by Team' }} />,
+      <Card.Footer key="footer" content={{ text: "Created by Team" }} />,
     ],
   },
-}
+};
 
 export const WithLeftIcon: Story = {
   args: {
@@ -165,8 +165,8 @@ export const WithLeftIcon: Story = {
         key="header"
         subheader="With an icon on the left"
         icon={{
-          name: 'component',
-          size: 'medium',
+          name: "component",
+          size: "medium",
         }}
       >
         Card with Left Icon
@@ -176,7 +176,7 @@ export const WithLeftIcon: Story = {
       </Card.Content>,
     ],
   },
-}
+};
 
 export const WithCustomRightElement: Story = {
   args: {
@@ -185,9 +185,9 @@ export const WithCustomRightElement: Story = {
         key="header"
         subheader="Custom right element"
         rightElement={{
-          type: 'button',
-          label: 'Action',
-          onClick: () => console.log('clicked'),
+          type: "button",
+          label: "Action",
+          onClick: () => console.log("clicked"),
         }}
       >
         Card with Button
@@ -197,7 +197,7 @@ export const WithCustomRightElement: Story = {
       </Card.Content>,
     ],
   },
-}
+};
 
 export const WithGauge: Story = {
   args: {
@@ -206,7 +206,7 @@ export const WithGauge: Story = {
         key="header"
         subheader="With gauge"
         rightElement={{
-          type: 'gauge',
+          type: "gauge",
           value: 75,
         }}
       >
@@ -217,7 +217,7 @@ export const WithGauge: Story = {
       </Card.Content>,
     ],
   },
-}
+};
 
 export const AsLink: Story = {
   args: {
@@ -229,9 +229,9 @@ export const AsLink: Story = {
         This card acts as a link to another page
       </Card.Content>,
     ],
-    href: '/some-page',
+    href: "/some-page",
   },
-}
+};
 
 export const WithGaugeAndLink: Story = {
   args: {
@@ -240,7 +240,7 @@ export const WithGaugeAndLink: Story = {
         key="header"
         subheader="With gauge and navigation"
         rightElement={{
-          type: 'gauge',
+          type: "gauge",
           value: 75,
         }}
       >
@@ -251,9 +251,9 @@ export const WithGaugeAndLink: Story = {
         Try clicking anywhere on the card.
       </Card.Content>,
     ],
-    href: '/dashboard',
+    href: "/dashboard",
   },
-}
+};
 
 export const WithActionButtonAndFooterLink: Story = {
   args: {
@@ -261,9 +261,9 @@ export const WithActionButtonAndFooterLink: Story = {
       <Card.Header
         key="header"
         rightElement={{
-          type: 'button',
-          label: 'View Details',
-          onClick: () => console.log('clicked'),
+          type: "button",
+          label: "View Details",
+          onClick: () => console.log("clicked"),
         }}
       >
         Card with Action Button
@@ -272,16 +272,16 @@ export const WithActionButtonAndFooterLink: Story = {
       <Card.Footer
         key="footer"
         content={{
-          text: 'Last updated:',
+          text: "Last updated:",
           link: {
-            label: 'View history',
-            href: '/history',
+            label: "View history",
+            href: "/history",
           },
         }}
       />,
     ],
   },
-}
+};
 
 export const ConflictingInteractions: Story = {
   args: {
@@ -290,9 +290,9 @@ export const ConflictingInteractions: Story = {
         key="header"
         subheader="Button will work, card click will be disabled"
         rightElement={{
-          type: 'button',
-          label: 'Action',
-          onClick: () => console.log('button clicked'),
+          type: "button",
+          label: "Action",
+          onClick: () => console.log("button clicked"),
         }}
       >
         Card with Button
@@ -303,6 +303,6 @@ export const ConflictingInteractions: Story = {
         clickable elements. Try clicking the button vs clicking the card.
       </Card.Content>,
     ],
-    href: '/will-be-ignored', // This will be ignored due to button presence
+    href: "/will-be-ignored", // This will be ignored due to button presence
   },
-}
+};

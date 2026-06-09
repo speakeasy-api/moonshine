@@ -1,12 +1,12 @@
-import { Icon } from '@/components/Icon'
-import { IconName } from '@/components/Icon/names'
+import { Icon } from "@/components/Icon";
+import { IconName } from "@/components/Icon/names";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/Tooltip'
-import { cn } from '@/lib/utils'
+} from "@/components/Tooltip";
+import { cn } from "@/lib/utils";
 import {
   useDraggable,
   DraggableAttributes,
@@ -15,24 +15,24 @@ import {
   DragEndEvent,
   DragStartEvent,
   Modifier,
-} from '@dnd-kit/core'
-import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import { useState } from 'react'
-import { DragNDropArea } from '../DragNDrop/DragNDropArea'
+} from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { useState } from "react";
+import { DragNDropArea } from "../DragNDrop/DragNDropArea";
 
 interface ActionBarProps {
-  children: React.ReactNode
-  id: string
-  initialPosition: Translate
-  onChangePosition?: (position: Translate) => void
-  onDragStart?: (event: DragStartEvent) => void
-  onDragEnd?: (event: DragEndEvent) => void
-  draggable?: boolean
+  children: React.ReactNode;
+  id: string;
+  initialPosition: Translate;
+  onChangePosition?: (position: Translate) => void;
+  onDragStart?: (event: DragStartEvent) => void;
+  onDragEnd?: (event: DragEndEvent) => void;
+  draggable?: boolean;
 
   /**
    * dnd-kit modifiers (https://docs.dndkit.com/api-documentation/modifiers)
    */
-  modifiers?: Modifier[]
+  modifiers?: Modifier[];
 }
 
 const ActionBarInternal = ({
@@ -44,10 +44,10 @@ const ActionBarInternal = ({
     <DragNDropArea modifiers={modifiers}>
       <Root {...props}>{children}</Root>
     </DragNDropArea>
-  )
-}
+  );
+};
 
-ActionBarInternal.displayName = 'ActionBar'
+ActionBarInternal.displayName = "ActionBar";
 
 const Root = ({
   children,
@@ -60,32 +60,32 @@ const Root = ({
 }: ActionBarProps) => {
   const { setNodeRef, attributes, listeners, transform } = useDraggable({
     id,
-  })
+  });
 
-  const [state, setState] = useState<Translate>(initialPosition)
+  const [state, setState] = useState<Translate>(initialPosition);
 
   useDndMonitor({
     onDragEnd: (event: DragEndEvent) => {
       setState((prev) => ({
         x: prev.x + event.delta.x,
         y: prev.y + event.delta.y,
-      }))
+      }));
       onChangePosition?.({
         x: state.x + event.delta.x,
         y: state.y + event.delta.y,
-      })
-      onDragEnd?.(event)
+      });
+      onDragEnd?.(event);
     },
     onDragStart: (event: DragStartEvent) => {
-      onDragStart?.(event)
+      onDragStart?.(event);
     },
-  })
+  });
 
   const transformStyle: React.CSSProperties = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
       }
-    : {}
+    : {};
 
   return (
     <div
@@ -95,7 +95,7 @@ const Root = ({
         left: state.x,
         ...transformStyle,
       }}
-      className="bg-card fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border py-2 pr-2 pl-2 shadow-lg shadow-white/5"
+      className="fixed flex min-w-36 flex-row items-center justify-center gap-3 rounded-lg border bg-card py-2 pr-2 pl-2 shadow-lg shadow-white/5"
     >
       {draggable && (
         <>
@@ -105,17 +105,17 @@ const Root = ({
       )}
       {children}
     </div>
-  )
-}
+  );
+};
 
-Root.displayName = 'ActionBar.Root'
+Root.displayName = "ActionBar.Root";
 
 interface ActionBarItemProps {
-  children: React.ReactNode
-  onClick?: () => void
-  disabled?: boolean
-  className?: string
-  iconName: IconName
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+  iconName: IconName;
 }
 
 const ActionBarItem = ({
@@ -131,11 +131,11 @@ const ActionBarItem = ({
         <TooltipTrigger
           onClick={onClick}
           className={cn(
-            'text-foreground flex cursor-pointer items-center justify-center select-none last-of-type:mr-1',
-            'focus: focus:rounded-md focus:ring-1 focus:ring-blue-500/70 focus:ring-offset-4 focus:ring-offset-slate-900 focus:outline-none',
-            !disabled && 'hover:text-foreground cursor-pointer',
-            disabled && 'text-body-muted/70 cursor-not-allowed',
-            className
+            "flex cursor-pointer items-center justify-center text-foreground select-none last-of-type:mr-1",
+            "focus: focus:rounded-md focus:ring-1 focus:ring-blue-500/70 focus:ring-offset-4 focus:ring-offset-slate-900 focus:outline-none",
+            !disabled && "cursor-pointer hover:text-foreground",
+            disabled && "cursor-not-allowed text-body-muted/70",
+            className,
           )}
         >
           <Icon name={iconName} size="small" />
@@ -145,40 +145,40 @@ const ActionBarItem = ({
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-ActionBarItem.displayName = 'ActionBar.Item'
+ActionBarItem.displayName = "ActionBar.Item";
 
 const ActionBarSeparator = () => {
   return (
     <div className="h-full min-h-4 w-[0.5px] bg-zinc-200 dark:bg-zinc-700" />
-  )
-}
+  );
+};
 
-ActionBarSeparator.displayName = 'ActionBar.Separator'
+ActionBarSeparator.displayName = "ActionBar.Separator";
 
 const ActionBarHandle = ({
   listeners,
   attributes,
 }: {
-  listeners: SyntheticListenerMap | undefined
-  attributes: DraggableAttributes | undefined
+  listeners: SyntheticListenerMap | undefined;
+  attributes: DraggableAttributes | undefined;
 }) => {
   return (
     <div
       {...listeners}
       {...attributes}
-      className="text-body-muted hover:text-foreground active:text-foreground h-full cursor-move"
+      className="h-full cursor-move text-body-muted hover:text-foreground active:text-foreground"
     >
       <Icon name="grip-vertical" className="h-4 w-4" />
     </div>
-  )
-}
+  );
+};
 
 export const ActionBar = Object.assign(ActionBarInternal, {
   Item: ActionBarItem,
   Separator: ActionBarSeparator,
-})
+});
 
-export type { ActionBarProps, ActionBarItemProps }
+export type { ActionBarProps, ActionBarItemProps };

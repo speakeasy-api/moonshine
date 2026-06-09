@@ -1,32 +1,32 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { cn } from '../../lib/utils'
-import { IconButton } from '../IconButton'
-import { Icon } from '../Icon'
-import { AIChatModelSelector } from './AIChatModelSelector'
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { cn } from "../../lib/utils";
+import { IconButton } from "../IconButton";
+import { Icon } from "../Icon";
+import { AIChatModelSelector } from "./AIChatModelSelector";
 import {
   DefaultComponents,
   FcOrClassName,
   renderComponent,
-} from './componentsTypes'
-import { useAIChat } from './context'
+} from "./componentsTypes";
+import { useAIChat } from "./context";
 
 export interface AIChatMessageComposerProps {
-  className?: string
-  components?: Partial<AIChatMessageComposerComponents>
+  className?: string;
+  components?: Partial<AIChatMessageComposerComponents>;
 }
 
 export type AIChatMessageComposerComponents = {
   submitButton: FcOrClassName<{
-    disabled?: boolean
-    type: 'submit'
-  }>
+    disabled?: boolean;
+    type: "submit";
+  }>;
   modelSelector: FcOrClassName<{
-    model: string
-    onModelChange: (model: string) => void
-    availableModels: { label: string; value: string }[]
-  }>
-  additionalActions: ReactNode
-}
+    model: string;
+    onModelChange: (model: string) => void;
+    availableModels: { label: string; value: string }[];
+  }>;
+  additionalActions: ReactNode;
+};
 
 const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
   submitButton: ({
@@ -34,9 +34,9 @@ const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
     type,
     className,
   }: {
-    disabled?: boolean
-    type: 'submit'
-    className: string
+    disabled?: boolean;
+    type: "submit";
+    className: string;
   }) => (
     <IconButton
       type={type}
@@ -44,7 +44,7 @@ const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
       variant="secondary"
       icon={<Icon name="arrow-up" className="size-4" />}
       aria-label="Send message"
-      className={cn('h-8 w-8 rounded-[7px]', className)}
+      className={cn("h-8 w-8 rounded-[7px]", className)}
     />
   ),
   modelSelector: ({
@@ -53,19 +53,19 @@ const defaultComponents: DefaultComponents<AIChatMessageComposerComponents> = {
     availableModels,
     className,
   }: {
-    model: string
-    onModelChange: (model: string) => void
-    availableModels: { label: string; value: string }[]
-    className: string
+    model: string;
+    onModelChange: (model: string) => void;
+    availableModels: { label: string; value: string }[];
+    className: string;
   }) => (
     <AIChatModelSelector
       modelSelector={{ model, onModelChange, availableModels }}
       /* Inner border radius = outer border radius (rounded-lg = 8px) - border width (1px) = 7px */
-      className={cn('rounded-[7px]', className)}
+      className={cn("rounded-[7px]", className)}
     />
   ),
   additionalActions: null,
-}
+};
 
 export function AIChatMessageComposer({
   className,
@@ -78,55 +78,55 @@ export function AIChatMessageComposer({
     onModelChange,
     availableModels,
     initialInput,
-  } = useAIChat()
-  const [message, setMessage] = useState(initialInput || '')
-  const [isFocused, setIsFocused] = useState(false)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  } = useAIChat();
+  const [message, setMessage] = useState(initialInput || "");
+  const [isFocused, setIsFocused] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const adjustHeight = () => {
-    const textarea = textareaRef.current
-    if (!textarea) return
-    textarea.style.height = 'auto'
-    textarea.style.height = `${textarea.scrollHeight}px`
-  }
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
 
   // Initialize height on mount and adjust on content change
   useEffect(() => {
-    adjustHeight()
-  }, [message])
+    adjustHeight();
+  }, [message]);
 
   // Set initial input only once when component mounts with an initialInput
   useEffect(() => {
     if (initialInput) {
-      setMessage(initialInput)
+      setMessage(initialInput);
     }
-  }, [])
+  }, []);
 
   const handleSubmit = (e?: React.FormEvent) => {
-    e?.preventDefault()
+    e?.preventDefault();
     if (message.trim() && onSendMessage && !isLoading) {
-      onSendMessage(message)
-      setMessage('')
+      onSendMessage(message);
+      setMessage("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto'
+        textareaRef.current.style.height = "auto";
       }
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSubmit()
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className={cn('mt-auto p-4', className)}>
+    <form onSubmit={handleSubmit} className={cn("mt-auto p-4", className)}>
       <div className="flex flex-col">
         <div
           className={cn(
-            'flex flex-col overflow-hidden rounded-lg border transition-shadow',
-            isFocused && 'ring-1 ring-offset-1'
+            "flex flex-col overflow-hidden rounded-lg border transition-shadow",
+            isFocused && "ring-1 ring-offset-1",
           )}
         >
           <textarea
@@ -139,10 +139,10 @@ export function AIChatMessageComposer({
             placeholder="Send a message..."
             rows={1}
             className={cn(
-              'max-h-[300px] min-h-[44px] w-full resize-none bg-transparent px-4 pt-3',
+              "max-h-[300px] min-h-[44px] w-full resize-none bg-transparent px-4 pt-3",
               // 'text-neutral-50 placeholder:text-neutral-400',
-              'focus:outline-none',
-              'text-sm'
+              "focus:outline-none",
+              "text-sm",
             )}
             disabled={isLoading}
           />
@@ -154,22 +154,22 @@ export function AIChatMessageComposer({
                 renderComponent(
                   defaultComponents,
                   components,
-                  'modelSelector',
+                  "modelSelector",
                   {
                     model,
                     onModelChange,
                     availableModels,
-                  }
+                  },
                 )}
               {components?.additionalActions}
             </div>
-            {renderComponent(defaultComponents, components, 'submitButton', {
+            {renderComponent(defaultComponents, components, "submitButton", {
               disabled: !message.trim() || isLoading,
-              type: 'submit',
+              type: "submit",
             })}
           </div>
         </div>
       </div>
     </form>
-  )
+  );
 }

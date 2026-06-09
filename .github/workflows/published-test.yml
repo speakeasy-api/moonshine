@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -17,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - run: pnpm install
       - run: pnpm pack
@@ -27,7 +26,6 @@ jobs:
 
       - run: pnpm install --no-frozen-lockfile
         working-directory: integration
-
 
       - run: pnpm test
         working-directory: integration

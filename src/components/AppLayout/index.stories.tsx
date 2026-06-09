@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { AppLayout } from '.'
-import { AppLayoutProvider } from './provider'
-import { Heading } from '../Heading'
-import { Text } from '../Text'
-import { Icon } from '../Icon'
-import { Button } from '../Button'
-import React, { useState } from 'react'
-import { MoonshineConfigProvider } from '@/context/ConfigContext'
-import { useAppLayout } from '@/hooks/useAppLayout'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { AppLayout } from ".";
+import { AppLayoutProvider } from "./provider";
+import { Heading } from "../Heading";
+import { Text } from "../Text";
+import { Icon } from "../Icon";
+import { Button } from "../Button";
+import React, { useState } from "react";
+import { MoonshineConfigProvider } from "@/context/ConfigContext";
+import { useAppLayout } from "@/hooks/useAppLayout";
 
-type Story = StoryObj<typeof AppLayout>
+type Story = StoryObj<typeof AppLayout>;
 
 const meta: Meta<typeof AppLayout> = {
-  title: 'Components/AppLayout',
+  title: "Components/AppLayout",
   component: AppLayout,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-}
+};
 
-export default meta
+export default meta;
 
 const SurfaceContent = () => {
   return (
@@ -34,8 +34,8 @@ const SurfaceContent = () => {
         </Text>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -43,18 +43,18 @@ export const Default: Story = {
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
             active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -65,7 +65,7 @@ export const Default: Story = {
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+          <AppLayout.BreadcrumbItem onClick={() => alert("Home")}>
             Home
           </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
@@ -81,17 +81,17 @@ export const Default: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const WithNavItemGroups: Story = {
-  name: 'With Nav Item Groups',
+  name: "With Nav Item Groups",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItemGroup name="General">
             <AppLayout.NavItem
-              onClick={() => alert('Home')}
+              onClick={() => alert("Home")}
               title="Home"
               icon="house"
             />
@@ -125,27 +125,27 @@ export const WithNavItemGroups: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const CustomSurfaceHeader: Story = {
-  name: 'Custom Surface Header',
+  name: "Custom Surface Header",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
             active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -170,12 +170,12 @@ export const CustomSurfaceHeader: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 const HomePage = ({
   handlePageChange,
 }: {
-  handlePageChange: (page: AllPages) => void
+  handlePageChange: (page: AllPages) => void;
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -187,13 +187,13 @@ const HomePage = ({
       </Text>
 
       <div>
-        <Button onClick={() => handlePageChange('settings')}>
+        <Button onClick={() => handlePageChange("settings")}>
           Go to settings
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const SettingsPage = () => {
   return (
@@ -205,58 +205,58 @@ const SettingsPage = () => {
         the app.
       </Text>
     </div>
-  )
-}
+  );
+};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-const allPages = ['home', 'settings'] as const
-type AllPages = (typeof allPages)[number]
+const allPages = ["home", "settings"] as const;
+type AllPages = (typeof allPages)[number];
 const SurfaceTransition = () => {
-  const [page, setPage] = useState<AllPages>('settings')
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [direction, setDirection] = useState<'forward' | 'backward'>('forward')
+  const [page, setPage] = useState<AllPages>("settings");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [direction, setDirection] = useState<"forward" | "backward">("forward");
 
   const handlePageChange = (newPage: AllPages) => {
-    if (newPage === page || isTransitioning) return // Don't transition if already on that page or transitioning
+    if (newPage === page || isTransitioning) return; // Don't transition if already on that page or transitioning
 
-    setIsTransitioning(true)
+    setIsTransitioning(true);
 
     // Determine direction: 'one' -> 'two' = forward (left to right), 'two' -> 'one' = backward (right to left)
-    const isForward = page === 'home' && newPage === 'settings'
-    const newDirection = isForward ? 'forward' : 'backward'
+    const isForward = page === "home" && newPage === "settings";
+    const newDirection = isForward ? "forward" : "backward";
 
     // Set direction first, then start transition after a micro-task
-    setDirection(newDirection)
+    setDirection(newDirection);
 
     // Set CSS variables on document root for view transition pseudo-elements
     const slideOutTransform = isForward
-      ? 'translateX(-100%)'
-      : 'translateX(100%)'
+      ? "translateX(-100%)"
+      : "translateX(100%)";
     const slideInTransform = isForward
-      ? 'translateX(100%)'
-      : 'translateX(-100%)'
+      ? "translateX(100%)"
+      : "translateX(-100%)";
 
     document.documentElement.style.setProperty(
-      '--slide-out-transform',
-      slideOutTransform
-    )
+      "--slide-out-transform",
+      slideOutTransform,
+    );
     document.documentElement.style.setProperty(
-      '--slide-in-transform',
-      slideInTransform
-    )
+      "--slide-in-transform",
+      slideInTransform,
+    );
 
     // Use setTimeout to ensure direction is applied before transition starts
     setTimeout(() => {
       document
         .startViewTransition(() => {
-          setPage(newPage)
+          setPage(newPage);
         })
         .finished.then(() => {
-          console.log('Transition finished')
-          setIsTransitioning(false)
-        })
-    }, 0)
-  }
+          console.log("Transition finished");
+          setIsTransitioning(false);
+        });
+    }, 0);
+  };
 
   return (
     <div>
@@ -311,15 +311,15 @@ const SurfaceTransition = () => {
             <AppLayout.CollapseButton />
             <AppLayout.Breadcrumb>
               <AppLayout.BreadcrumbItem
-                active={page === 'home'}
-                onClick={() => handlePageChange('home')}
+                active={page === "home"}
+                onClick={() => handlePageChange("home")}
               >
                 Home
               </AppLayout.BreadcrumbItem>
-              {page === 'settings' && (
+              {page === "settings" && (
                 <AppLayout.BreadcrumbItem
-                  active={page === 'settings'}
-                  onClick={() => handlePageChange('settings')}
+                  active={page === "settings"}
+                  onClick={() => handlePageChange("settings")}
                 >
                   Settings
                 </AppLayout.BreadcrumbItem>
@@ -327,11 +327,11 @@ const SurfaceTransition = () => {
             </AppLayout.Breadcrumb>
           </AppLayout.SurfaceHeader>
           <AppLayout.Surface
-            style={{ viewTransitionName: 'page-transition' }}
+            style={{ viewTransitionName: "page-transition" }}
             data-direction={direction}
             className="p-4"
           >
-            {page === 'home' ? (
+            {page === "home" ? (
               <HomePage handlePageChange={handlePageChange} />
             ) : (
               <SettingsPage />
@@ -340,32 +340,32 @@ const SurfaceTransition = () => {
         </AppLayout>
       </AppLayoutProvider>
     </div>
-  )
-}
+  );
+};
 export const SurfaceTransitionStory: Story = {
-  name: 'Surface Transition',
+  name: "Surface Transition",
   render: () => <SurfaceTransition />,
-}
+};
 
 export const WithFullScreenSurface: Story = {
-  name: 'With Full Screen Surface',
+  name: "With Full Screen Surface",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
             active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -375,19 +375,19 @@ export const WithFullScreenSurface: Story = {
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+          <AppLayout.BreadcrumbItem onClick={() => alert("Home")}>
             Home
           </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
         </AppLayout.Breadcrumb>
       </AppLayout.SurfaceHeader>,
       <AppLayout.Surface className="p-0" key="surface">
-        <div className="bg-surface-primary flex h-full w-full flex-col">
+        <div className="flex h-full w-full flex-col bg-surface-primary">
           <div className="flex items-center justify-center py-4">
             <Text>This is a full screen surface</Text>
           </div>
 
-          <div className="border-neutral-softest mt-auto flex items-center justify-center border-t py-4">
+          <div className="mt-auto flex items-center justify-center border-t border-neutral-softest py-4">
             <Text>
               This content is pushed to the bottom but doesn't overflow the
               viewport
@@ -402,17 +402,17 @@ export const WithFullScreenSurface: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const CustomExtraSidebarChildren: Story = {
-  name: 'Custom Extra Sidebar Children',
+  name: "Custom Extra Sidebar Children",
   args: {
     children: [
       <AppLayout.Sidebar className="max-h-full" key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItemGroup name="General">
             <AppLayout.NavItem
-              onClick={() => alert('Home')}
+              onClick={() => alert("Home")}
               title="Home"
               icon="house"
               active
@@ -450,41 +450,41 @@ export const CustomExtraSidebarChildren: Story = {
         theme={context.globals.theme}
         /** TODO: support changing the storybook context value from the story */
         setTheme={(theme) => {
-          console.log('theme', theme)
+          console.log("theme", theme);
         }}
       >
         <AppLayout {...args} />
       </MoonshineConfigProvider>
     </AppLayoutProvider>
   ),
-}
+};
 
 // Demonstrates polymorphic `asChild` prop for NavItem and BreadcrumbItem
 const FakeLink = ({
   to,
   ...props
 }: {
-  to: string
+  to: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  return <a href={to} {...props} />
-}
+  return <a href={to} {...props} />;
+};
 const CustomLink = ({
   to,
   ...props
 }: {
-  to: string
+  to: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  const { collapsed } = useAppLayout()
+  const { collapsed } = useAppLayout();
   return (
     <FakeLink to={to} {...props}>
       <Icon name="settings" className="size-6" strokeWidth={1.3} />
       {!collapsed && <span className="typography-body-sm">Settings</span>}
     </FakeLink>
-  )
-}
+  );
+};
 
 export const Polymorphic: Story = {
-  name: 'Polymorphic Components',
+  name: "Polymorphic Components",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
@@ -522,13 +522,13 @@ export const Polymorphic: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const WithHomeNavigationOnBrandLogo: Story = {
-  name: 'With Home Navigation On Brand Logo',
+  name: "With Home Navigation On Brand Logo",
   args: {
     children: [
-      <AppLayout.Sidebar key="sidebar" onHomeNavigation={() => alert('Home')}>
+      <AppLayout.Sidebar key="sidebar" onHomeNavigation={() => alert("Home")}>
         <AppLayout.Nav>
           <AppLayout.NavItem title="Home" icon="house" active />
           <AppLayout.NavItem title="Settings" icon="settings" />
@@ -547,4 +547,4 @@ export const WithHomeNavigationOnBrandLogo: Story = {
       </AppLayout.Surface>,
     ],
   },
-}
+};

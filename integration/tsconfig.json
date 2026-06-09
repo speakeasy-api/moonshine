@@ -13,8 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "types": [
-      "@testing-library/jest-dom"
-    ],
-  },
+    "types": ["@testing-library/jest-dom"]
+  }
 }

@@ -1,21 +1,21 @@
-import { Icon } from '../Icon'
+import { Icon } from "../Icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../Dropdown'
-import { Stack } from '../Stack'
-import { UserAvatar } from '../UserAvatar'
-import { UserAvatarProps } from '../UserAvatar'
-import React, { Children, Fragment, ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+} from "../Dropdown";
+import { Stack } from "../Stack";
+import { UserAvatar } from "../UserAvatar";
+import { UserAvatarProps } from "../UserAvatar";
+import React, { Children, Fragment, ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export interface LoggedInUserProps extends UserAvatarProps {
-  email: string
-  children?: ReactNode | ReactNode[]
-  onSignOut: () => void
+  email: string;
+  children?: ReactNode | ReactNode[];
+  onSignOut: () => void;
 }
 
 const Root: React.FC<LoggedInUserProps> = ({
@@ -23,14 +23,14 @@ const Root: React.FC<LoggedInUserProps> = ({
   name,
   onSignOut,
   imageUrl,
-  size = 'small',
+  size = "small",
   children,
 }) => {
   const validChildren = Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
-      (child.type === MenuItem || child.type === Seperator)
-  )
+      (child.type === MenuItem || child.type === Seperator),
+  );
 
   return (
     <DropdownMenu>
@@ -46,14 +46,14 @@ const Root: React.FC<LoggedInUserProps> = ({
         </LoggedInMenuContent>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
-Root.displayName = 'LoggedInUserMenu'
+  );
+};
+Root.displayName = "LoggedInUserMenu";
 
-interface LoggedInMenuContentProps extends Omit<LoggedInUserProps, 'imageUrl'> {
-  email: string
-  children?: ReactNode | ReactNode[]
-  onSignOut: () => void
+interface LoggedInMenuContentProps extends Omit<LoggedInUserProps, "imageUrl"> {
+  email: string;
+  children?: ReactNode | ReactNode[];
+  onSignOut: () => void;
 }
 
 const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
@@ -66,7 +66,7 @@ const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
     <>
       <Stack padding={3}>
         <div className="truncate text-sm font-semibold">{name}</div>
-        <div className="text-body truncate text-sm" title={email}>
+        <div className="truncate text-sm text-body" title={email}>
           {email}
         </div>
       </Stack>
@@ -79,13 +79,13 @@ const LoggedInMenuContent: React.FC<LoggedInMenuContentProps> = ({
         Logout
       </MenuItem>
     </>
-  )
-}
+  );
+};
 
 interface LoggedInMenuItemProps {
-  onSelect: () => void
-  children?: ReactNode | ReactNode[]
-  className?: string
+  onSelect: () => void;
+  children?: ReactNode | ReactNode[];
+  className?: string;
 }
 
 const MenuItem: React.FC<LoggedInMenuItemProps> = ({
@@ -96,21 +96,21 @@ const MenuItem: React.FC<LoggedInMenuItemProps> = ({
   return (
     <DropdownMenuItem
       onSelect={onSelect}
-      className={cn('cursor-pointer p-3', className)}
+      className={cn("cursor-pointer p-3", className)}
     >
       {children}
     </DropdownMenuItem>
-  )
-}
-MenuItem.displayName = 'LoggedInUserMenu.MenuItem'
+  );
+};
+MenuItem.displayName = "LoggedInUserMenu.MenuItem";
 
 const Seperator: React.FC = () => {
   return (
     <DropdownMenuSeparator data-component="separator" className="peer my-0" />
-  )
-}
+  );
+};
 
 export const LoggedInUserMenu = Object.assign(Root, {
   MenuItem,
   Seperator,
-})
+});

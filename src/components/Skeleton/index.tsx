@@ -1,6 +1,6 @@
-import { Children, cloneElement, isValidElement } from 'react'
-import { cn } from '@/lib/utils'
-import './skeleton.css'
+import { Children, cloneElement, isValidElement } from "react";
+import { cn } from "@/lib/utils";
+import "./skeleton.css";
 
 export interface SkeletonProps {
   /**
@@ -22,18 +22,18 @@ export interface SkeletonProps {
    *   <div className="h-5 w-48 rounded-lg" />
    * </Skeleton>
    */
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * The class name to apply to each child.
    */
-  className?: string
+  className?: string;
 }
 
 export function Skeleton({ children, className }: SkeletonProps) {
   return (
     <div className="flex w-full flex-col items-start gap-2.5 select-none">
       {Children.toArray(children).map((child, index) => {
-        if (typeof child === 'string') {
+        if (typeof child === "string") {
           return (
             <div
               key={index}
@@ -41,18 +41,18 @@ export function Skeleton({ children, className }: SkeletonProps) {
             >
               {child}
             </div>
-          )
+          );
         }
 
         if (isValidElement<{ className?: string }>(child))
           return cloneElement(child, {
             className: cn(
-              'skeleton max-w-full text-transparent h-5 rounded-lg',
+              "skeleton h-5 max-w-full rounded-lg text-transparent",
               className,
-              child.props.className
+              child.props.className,
             ),
-          })
+          });
       })}
     </div>
-  )
+  );
 }

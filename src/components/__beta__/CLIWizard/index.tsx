@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Check, ChevronUp } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
-import { cn } from '@/lib/utils'
-import { Text } from '../../Text'
-import { Heading } from '../../Heading'
-import { TerminalCommand } from './terminal-command'
-import { Terminal } from './terminal'
-import { WizardStep } from '@/components/Wizard/types'
+import * as React from "react";
+import { Check, ChevronUp } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/lib/utils";
+import { Text } from "../../Text";
+import { Heading } from "../../Heading";
+import { TerminalCommand } from "./terminal-command";
+import { Terminal } from "./terminal";
+import { WizardStep } from "@/components/Wizard/types";
 
 /**
  * TODO before moving out of beta:
@@ -19,10 +19,10 @@ import { WizardStep } from '@/components/Wizard/types'
  */
 
 export interface CLIWizardProps {
-  steps: WizardStep[]
-  currentStep: number
-  completedSteps: number[]
-  onStepComplete?: (stepIndex: number) => void
+  steps: WizardStep[];
+  currentStep: number;
+  completedSteps: number[];
+  onStepComplete?: (stepIndex: number) => void;
 }
 
 const fadeUp = (i: number) => ({
@@ -30,32 +30,32 @@ const fadeUp = (i: number) => ({
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -10 },
   transition: { delay: i * 0.1 },
-})
+});
 
 const chevronVariants = {
   up: { rotate: 0 },
   down: { rotate: 180 },
-}
+};
 
 export const ExpandChevron = ({
   isCollapsed,
 }: {
-  isCollapsed: boolean | undefined
+  isCollapsed: boolean | undefined;
 }) => {
   return (
     <motion.div
       initial="up"
-      animate={isCollapsed ? 'down' : 'up'}
+      animate={isCollapsed ? "down" : "up"}
       variants={chevronVariants}
       transition={{
         duration: 0.2,
         ease: [0.215, 0.61, 0.355, 1],
       }}
     >
-      <ChevronUp className="text-default h-4 w-4" />
+      <ChevronUp className="h-4 w-4 text-default" />
     </motion.div>
-  )
-}
+  );
+};
 
 export function CLIWizard({
   steps,
@@ -64,23 +64,25 @@ export function CLIWizard({
   onStepComplete,
 }: CLIWizardProps) {
   const [activeStep, setActiveStep] = React.useState(
-    Math.min(currentStep - 1, steps.length - 1)
-  )
+    Math.min(currentStep - 1, steps.length - 1),
+  );
   React.useEffect(() => {
-    setActiveStep(Math.min(currentStep - 1, steps.length - 1))
-  }, [currentStep, steps.length])
+    setActiveStep(Math.min(currentStep - 1, steps.length - 1));
+  }, [currentStep, steps.length]);
 
   const [copiedCommands, setCopiedCommands] = React.useState<Set<string>>(
-    new Set()
-  )
+    new Set(),
+  );
 
   const isStepComplete = (stepIndex: number) =>
-    completedSteps.includes(stepIndex + 1)
+    completedSteps.includes(stepIndex + 1);
 
-  const currentStepCommands = steps[activeStep]?.commands || []
+  const currentStepCommands = steps[activeStep]?.commands || [];
   const activeCommandIndex = React.useMemo(() => {
-    return currentStepCommands.findIndex((cmd) => !copiedCommands.has(cmd.code))
-  }, [copiedCommands, currentStepCommands])
+    return currentStepCommands.findIndex(
+      (cmd) => !copiedCommands.has(cmd.code),
+    );
+  }, [copiedCommands, currentStepCommands]);
 
   return (
     <motion.div
@@ -102,7 +104,7 @@ export function CLIWizard({
       <AnimatePresence initial={false}>
         <motion.div
           initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
+          animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{
             duration: 0.3,
@@ -122,12 +124,12 @@ export function CLIWizard({
               <Terminal
                 path={
                   currentStepCommands[activeCommandIndex]?.path ??
-                  '~/sdk-project'
+                  "~/sdk-project"
                 }
               >
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
+                  animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{
                     duration: 0.3,
@@ -153,19 +155,19 @@ export function CLIWizard({
                               i === activeCommandIndex
                             }
                             onSelectOrCopy={() => {
-                              const newCopied = new Set(copiedCommands)
-                              newCopied.add(command.code)
-                              setCopiedCommands(newCopied)
+                              const newCopied = new Set(copiedCommands);
+                              newCopied.add(command.code);
+                              setCopiedCommands(newCopied);
 
                               const allCommandsCopied =
                                 currentStepCommands.every((c) =>
-                                  newCopied.has(c.code)
-                                )
+                                  newCopied.has(c.code),
+                                );
                               if (
                                 allCommandsCopied &&
                                 !isStepComplete(activeStep)
                               ) {
-                                onStepComplete?.(activeStep + 1)
+                                onStepComplete?.(activeStep + 1);
                               }
                             }}
                           />
@@ -180,14 +182,14 @@ export function CLIWizard({
         </motion.div>
       </AnimatePresence>
     </motion.div>
-  )
+  );
 }
 
 interface SidebarStepsProps {
-  steps: WizardStep[]
-  activeStep: number
-  isStepComplete: (stepIndex: number) => boolean
-  onSelectStep: (stepIndex: number) => void
+  steps: WizardStep[];
+  activeStep: number;
+  isStepComplete: (stepIndex: number) => boolean;
+  onSelectStep: (stepIndex: number) => void;
 }
 
 function SidebarSteps({
@@ -200,8 +202,8 @@ function SidebarSteps({
     <div className="relative self-center md:col-span-5">
       <div className="space-y-4">
         {steps.map((step, index) => {
-          const complete = isStepComplete(index)
-          const active = activeStep === index
+          const complete = isStepComplete(index);
+          const active = activeStep === index;
           // const isLastStep = index === steps.length - 1
 
           return (
@@ -243,7 +245,7 @@ function SidebarSteps({
                         key={`desc-${index}`}
                         id={`step-content-${index}`}
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{
                           duration: 0.2,
@@ -258,11 +260,11 @@ function SidebarSteps({
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 // TODO: Add line between steps, layout still needs work
@@ -289,39 +291,39 @@ function CircleOrCheck({
   isActive,
   index,
 }: {
-  isComplete: boolean
-  isActive: boolean
-  index: number
+  isComplete: boolean;
+  isActive: boolean;
+  index: number;
 }) {
   const variants = {
     complete: {
-      circle: 'bg-emerald-600',
-      text: 'text-white',
+      circle: "bg-emerald-600",
+      text: "text-white",
     },
     active: {
-      circle: 'bg-surface-tertiary-inverse',
-      text: 'text-default-inverse',
+      circle: "bg-surface-tertiary-inverse",
+      text: "text-default-inverse",
     },
     default: {
-      circle: 'bg-surface-tertiary-default',
-      text: 'text-default',
+      circle: "bg-surface-tertiary-default",
+      text: "text-default",
     },
-  }
+  };
 
-  const variant = isComplete ? 'complete' : isActive ? 'active' : 'default'
-  const { circle, text } = variants[variant]
+  const variant = isComplete ? "complete" : isActive ? "active" : "default";
+  const { circle, text } = variants[variant];
 
   return (
     <div className="relative z-20 flex h-6 w-6 items-center justify-center">
       <motion.div
-        className={cn('absolute inset-0 rounded-full', circle)}
+        className={cn("absolute inset-0 rounded-full", circle)}
         initial={false}
       />
       <motion.div
         className={cn(
-          'relative z-20 flex h-full w-full items-center justify-center rounded-full',
+          "relative z-20 flex h-full w-full items-center justify-center rounded-full",
           circle,
-          text
+          text,
         )}
         initial={false}
       >
@@ -351,7 +353,7 @@ function CircleOrCheck({
         </AnimatePresence>
       </motion.div>
     </div>
-  )
+  );
 }
 
-export default CLIWizard
+export default CLIWizard;

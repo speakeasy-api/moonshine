@@ -1,4 +1,4 @@
-import { isGroupOf } from '@/lib/typeUtils'
+import { isGroupOf } from "@/lib/typeUtils";
 import type {
   Column,
   Group,
@@ -6,73 +6,73 @@ import type {
   SortDescriptor,
   SortDirection,
   SortValue,
-} from './index'
+} from "./index";
 
 export function isSortableColumn<T extends object>(
-  column: Column<T>
+  column: Column<T>,
 ): column is SortableColumn<T> {
-  return column.sortable === true
+  return column.sortable === true;
 }
 
 export function getColumnSortId<T extends object>(column: Column<T>) {
-  return column.id ?? column.key.toString()
+  return column.id ?? column.key.toString();
 }
 
 function isGroupedData<T extends object>(
-  data: T[] | Group<T>[]
+  data: T[] | Group<T>[],
 ): data is Group<T>[] {
-  return data.every((item) => isGroupOf<T>(item))
+  return data.every((item) => isGroupOf<T>(item));
 }
 
 function normalizeSortValue(value: Exclude<SortValue, null | undefined>) {
-  return value instanceof Date ? value.getTime() : value
+  return value instanceof Date ? value.getTime() : value;
 }
 
 export function compareSortValues(a: SortValue, b: SortValue): number {
-  if (a == null && b == null) return 0
-  if (a == null) return 1
-  if (b == null) return -1
+  if (a == null && b == null) return 0;
+  if (a == null) return 1;
+  if (b == null) return -1;
 
-  const normalizedA = normalizeSortValue(a)
-  const normalizedB = normalizeSortValue(b)
+  const normalizedA = normalizeSortValue(a);
+  const normalizedB = normalizeSortValue(b);
 
-  if (typeof normalizedA === 'string' && typeof normalizedB === 'string') {
+  if (typeof normalizedA === "string" && typeof normalizedB === "string") {
     return normalizedA.localeCompare(normalizedB, undefined, {
       numeric: true,
-      sensitivity: 'base',
-    })
+      sensitivity: "base",
+    });
   }
 
-  if (normalizedA === normalizedB) return 0
+  if (normalizedA === normalizedB) return 0;
 
-  return normalizedA > normalizedB ? 1 : -1
+  return normalizedA > normalizedB ? 1 : -1;
 }
 
 export function sortRows<T extends object>(
   rows: T[],
   column: SortableColumn<T>,
-  direction: SortDirection
+  direction: SortDirection,
 ) {
   return rows
     .map((row, index) => ({ row, index }))
     .sort((a, b) => {
-      const aValue = column.sortValue(a.row)
-      const bValue = column.sortValue(b.row)
+      const aValue = column.sortValue(a.row);
+      const bValue = column.sortValue(b.row);
 
-      if (aValue == null && bValue != null) return 1
-      if (bValue == null && aValue != null) return -1
+      if (aValue == null && bValue != null) return 1;
+      if (bValue == null && aValue != null) return -1;
 
       const comparison = column.sortCompare
         ? column.sortCompare(a.row, b.row)
-        : compareSortValues(aValue, bValue)
+        : compareSortValues(aValue, bValue);
 
       if (comparison === 0) {
-        return a.index - b.index
+        return a.index - b.index;
       }
 
-      return direction === 'asc' ? comparison : -comparison
+      return direction === "asc" ? comparison : -comparison;
     })
-    .map(({ row }) => row)
+    .map(({ row }) => row);
 }
 
 /**
@@ -103,27 +103,27 @@ export function sortRows<T extends object>(
 export function sortTableData<T extends object>(
   data: T[] | Group<T>[],
   columns: Column<T>[],
-  sort: SortDescriptor | null | undefined
+  sort: SortDescriptor | null | undefined,
 ): T[] | Group<T>[] {
   if (!sort) {
-    return data
+    return data;
   }
 
   const column = columns.find(
     (candidate) =>
-      getColumnSortId(candidate) === sort.id && isSortableColumn(candidate)
-  )
+      getColumnSortId(candidate) === sort.id && isSortableColumn(candidate),
+  );
 
   if (!column || !isSortableColumn(column)) {
-    return data
+    return data;
   }
 
   if (isGroupedData(data)) {
     return data.map((group) => ({
       ...group,
       items: sortRows(group.items, column, sort.direction),
-    }))
+    }));
   }
 
-  return sortRows(data, column, sort.direction)
+  return sortRows(data, column, sort.direction);
 }
