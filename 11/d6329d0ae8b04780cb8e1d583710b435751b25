@@ -1,0 +1,19 @@
+.github/workflows/publish.yml
+  s_b69539d61aad6b::t_1b1776d554c9cf 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "11d6329d0ae8b04780cb8e1d583710b435751b25",
+  "prompts": {},
+  "sessions": {
+    "s_b69539d61aad6b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ea92b-2e29-71c1-91f8-f3f990f52e93",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Alex Martin <alex.martin@speakeasy.com>"
+    }
+  }
+}
