@@ -29,7 +29,7 @@ function getFallbackColor(name: string | undefined) {
   const firstLetter = name[0].toLowerCase();
 
   const index = firstLetter.charCodeAt(0) - "a".charCodeAt(0);
-  return fallbackColors[index % fallbackColors.length];
+  return fallbackColors[Math.abs(index) % fallbackColors.length];
 }
 
 export function UserAvatar({

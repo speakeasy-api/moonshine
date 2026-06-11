@@ -48,11 +48,11 @@ export function Tabs<I extends string>({
   className,
 }: TabsProps<I>) {
   const [activeTab, setActiveTab] = useState<I>(
-    selectedTab || children[0].props.id,
+    selectedTab ?? children[0].props.id,
   );
 
   useEffect(() => {
-    setActiveTab(selectedTab || children[0].props.id);
+    setActiveTab(selectedTab ?? children[0].props.id);
   }, [selectedTab]);
 
   const validChildren = React.Children.toArray(children).filter(
