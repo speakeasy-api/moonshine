@@ -28,7 +28,7 @@ export function TableProvider({
         return newSet;
       });
     },
-    [expandedRowKeys, setExpandedRowKeys],
+    [setExpandedRowKeys],
   );
 
   return (

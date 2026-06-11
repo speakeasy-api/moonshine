@@ -35,7 +35,7 @@ const SegmentedButtonBase = ({ children, className }: SegmentedButtonProps) => {
           },
         );
       }),
-    [children],
+    [children, hoveredId],
   );
 
   return (
