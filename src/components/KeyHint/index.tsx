@@ -47,7 +47,7 @@ function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
   return (
     <div className="flex flex-row items-center gap-1">
       {modifiers.map((modifier, index) => (
-        <React.Fragment key={modifier}>
+        <React.Fragment key={`${modifier}-${index}`}>
           <Key value={modifierMap[modifier]} />
           {index < modifiers.length - 1 && (
             <span className="text-sm text-body-muted">+</span>
@@ -56,7 +56,7 @@ function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
       ))}
       {keys.length > 0 && <span className="text-sm text-body-muted">+</span>}
       {keys.map((key, index) => (
-        <React.Fragment key={key}>
+        <React.Fragment key={`${key}-${index}`}>
           <Key value={key.toUpperCase()} />
           {index < keys.length - 1 && (
             <span className="text-sm text-body-muted">+</span>
