@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 /**
  * TODO: Before moving out of beta
@@ -7,20 +7,20 @@
  *   - Use different colors for the termainal window, may offend windows users
  */
 
-import * as React from 'react'
-import { TerminalIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import * as React from "react";
+import { TerminalIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TerminalProps {
-  children: React.ReactNode
-  path?: string
+  children: React.ReactNode;
+  path?: string;
 }
 
-export function Terminal({ children, path = '~' }: TerminalProps) {
+export function Terminal({ children, path = "~" }: TerminalProps) {
   return (
-    <div className="bg-surface-secondary-default border-neutral-softest flex h-full flex-col overflow-hidden rounded-lg border">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg border border-neutral-softest bg-surface-secondary-default">
       {/* Header */}
-      <div className="bg-surface-tertiary-default flex h-10 items-center justify-between px-4">
+      <div className="flex h-10 items-center justify-between bg-surface-tertiary-default px-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
             <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
@@ -39,19 +39,19 @@ export function Terminal({ children, path = '~' }: TerminalProps) {
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 interface TerminalPromptProps {
-  path?: string
-  branch?: string
-  children: React.ReactNode
-  isActive?: boolean
-  time?: string
+  path?: string;
+  branch?: string;
+  children: React.ReactNode;
+  isActive?: boolean;
+  time?: string;
 }
 
 export function TerminalPrompt({
-  path = '~',
+  path = "~",
   branch,
   children,
   time,
@@ -70,14 +70,14 @@ export function TerminalPrompt({
       </div>
       <div className="rounded-lg">{children}</div>
     </div>
-  )
+  );
 }
 
 interface TerminalOutputProps {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 export function TerminalOutput({ children, className }: TerminalOutputProps) {
-  return <div className={cn('pl-4 text-zinc-400', className)}>{children}</div>
+  return <div className={cn("pl-4 text-zinc-400", className)}>{children}</div>;
 }

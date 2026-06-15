@@ -1,12 +1,12 @@
-import { cn } from '@/lib/utils'
-import React, { ReactElement, useEffect, useState } from 'react'
+import { cn } from "@/lib/utils";
+import React, { ReactElement, useEffect, useState } from "react";
 
 export interface TabProps<I extends string> {
-  children: React.ReactNode
-  active?: boolean
-  id: I
-  onClick?: () => void
-  className?: string
+  children: React.ReactNode;
+  active?: boolean;
+  id: I;
+  onClick?: () => void;
+  className?: string;
 }
 
 const Tab = function Tab<I extends string>({
@@ -18,28 +18,28 @@ const Tab = function Tab<I extends string>({
   return (
     <div
       className={cn(
-        'text-body mb-[-1px] cursor-pointer px-4 py-2 text-sm',
+        "mb-[-1px] cursor-pointer px-4 py-2 text-sm text-body",
         active &&
-          'bg-background text-foreground rounded-t-lg border-t border-r border-l',
-        className
+          "rounded-t-lg border-t border-r border-l bg-background text-foreground",
+        className,
       )}
       onClick={onClick}
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
 export interface TabsProps<I extends string> {
-  children: Array<ReactElement<TabProps<I>>>
-  selectedTab: I
-  onTabChange: (identifier: I) => void
-  className?: string
+  children: Array<ReactElement<TabProps<I>>>;
+  selectedTab: I;
+  onTabChange: (identifier: I) => void;
+  className?: string;
 }
 
 type TypeWithDisplayName = {
-  displayName?: string
-}
+  displayName?: string;
+};
 
 export function Tabs<I extends string>({
   children,
@@ -48,24 +48,24 @@ export function Tabs<I extends string>({
   className,
 }: TabsProps<I>) {
   const [activeTab, setActiveTab] = useState<I>(
-    selectedTab || children[0].props.id
-  )
+    selectedTab || children[0].props.id,
+  );
 
   useEffect(() => {
-    setActiveTab(selectedTab || children[0].props.id)
-  }, [selectedTab])
+    setActiveTab(selectedTab || children[0].props.id);
+  }, [selectedTab]);
 
   const validChildren = React.Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
-      (child.type as TypeWithDisplayName).displayName === 'Tabs.Tab'
-  ) as Array<React.ReactElement<TabProps<I>>>
+      (child.type as TypeWithDisplayName).displayName === "Tabs.Tab",
+  ) as Array<React.ReactElement<TabProps<I>>>;
 
   return (
     <div
       className={cn(
-        'border-border flex flex-row justify-start gap-2 border-b select-none',
-        className
+        "flex flex-row justify-start gap-2 border-b border-border select-none",
+        className,
       )}
     >
       {React.Children.map(validChildren, (child) => {
@@ -73,15 +73,15 @@ export function Tabs<I extends string>({
           ...child.props,
           active: child.props.id === activeTab,
           onClick: () => {
-            setActiveTab(child.props.id)
-            child.props.onClick?.()
-            onTabChange?.(child.props.id)
+            setActiveTab(child.props.id);
+            child.props.onClick?.();
+            onTabChange?.(child.props.id);
           },
-        })
+        });
       })}
     </div>
-  )
+  );
 }
 
-Tab.displayName = 'Tabs.Tab'
-Tabs.Tab = Tab
+Tab.displayName = "Tabs.Tab";
+Tabs.Tab = Tab;

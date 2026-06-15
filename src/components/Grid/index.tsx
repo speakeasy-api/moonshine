@@ -2,10 +2,10 @@ import {
   colSpanMapper,
   gapMapper,
   paddingMapper,
-} from '@/lib/responsiveMappers'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { Columns, Gap, Padding, ResponsiveValue } from '@/types'
-import { isValidElement, ReactElement } from 'react'
+} from "@/lib/responsiveMappers";
+import { cn, getResponsiveClasses } from "@/lib/utils";
+import { Columns, Gap, Padding, ResponsiveValue } from "@/types";
+import { isValidElement, ReactElement } from "react";
 
 export interface GridProps {
   /**
@@ -22,7 +22,7 @@ export interface GridProps {
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
    */
-  columns?: ResponsiveValue<Columns>
+  columns?: ResponsiveValue<Columns>;
 
   /**
    * The gap between the grid items.
@@ -38,7 +38,7 @@ export interface GridProps {
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
    */
-  gap?: ResponsiveValue<Gap>
+  gap?: ResponsiveValue<Gap>;
 
   /**
    * The Grid.Item children of the grid.
@@ -48,13 +48,13 @@ export interface GridProps {
    *   <Grid.Item>Item 2</Grid.Item>
    * </Grid>
    */
-  children: Array<ReactElement<typeof GridItem>>
+  children: Array<ReactElement<typeof GridItem>>;
 
   /**
    * If true, the grid will wrap its children.
    * @default false
    */
-  wrap?: boolean
+  wrap?: boolean;
 
   /**
    * Can be an object of responsive Padding values, or just Padding values.
@@ -74,15 +74,15 @@ export interface GridProps {
    * @example Responsive Padding per side with different values for each side
    * padding: { xs: 0, md: 0, lg: 0, xl: { top: 10, right: 0, bottom: 10, left: 0 } }
    */
-  padding?: ResponsiveValue<Padding>
+  padding?: ResponsiveValue<Padding>;
 
-  className?: string
+  className?: string;
 }
 
-const columnsMapper = (columns: Columns) => `grid-cols-${columns}`
+const columnsMapper = (columns: Columns) => `grid-cols-${columns}`;
 
 const isValidGridChild = (child: ReactElement) =>
-  isValidElement(child) && child.type === GridItem
+  isValidElement(child) && child.type === GridItem;
 
 const Grid = ({
   children,
@@ -92,33 +92,33 @@ const Grid = ({
   padding = 0,
   className,
 }: GridProps) => {
-  const validGridChildren = children.filter(isValidGridChild)
+  const validGridChildren = children.filter(isValidGridChild);
   return (
     <div
       className={cn(
-        'grid',
+        "grid",
         getResponsiveClasses(columns, columnsMapper),
         getResponsiveClasses(gap, gapMapper),
-        !wrap && 'grid-flow-col',
+        !wrap && "grid-flow-col",
         getResponsiveClasses(padding, paddingMapper),
-        className
+        className,
       )}
     >
       {validGridChildren}
     </div>
-  )
-}
+  );
+};
 
 type PermittedHTMLAttributes = Omit<
   React.HTMLAttributes<HTMLDivElement>,
-  'className'
->
+  "className"
+>;
 
 interface GridItemProps extends PermittedHTMLAttributes {
-  children: React.ReactNode
-  colSpan?: ResponsiveValue<number>
-  padding?: ResponsiveValue<Padding>
-  className?: string
+  children: React.ReactNode;
+  colSpan?: ResponsiveValue<number>;
+  padding?: ResponsiveValue<Padding>;
+  className?: string;
 }
 
 const GridItem = ({
@@ -131,20 +131,20 @@ const GridItem = ({
   return (
     <div
       className={cn(
-        'grid-item',
+        "grid-item",
         colSpan && getResponsiveClasses(colSpan, colSpanMapper),
         padding && getResponsiveClasses(padding, paddingMapper),
-        className
+        className,
       )}
       {...props}
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
 const GridWithSubcomponents = Object.assign(Grid, {
   Item: GridItem,
-})
+});
 
-export { GridWithSubcomponents as Grid }
+export { GridWithSubcomponents as Grid };

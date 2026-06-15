@@ -1,57 +1,57 @@
-import { motion, MotionConfig } from 'motion/react'
-import { CheckIcon, UserCheck, XIcon } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
-import { cn } from '../../../lib/utils'
-import { Button } from '../../Button'
-import { IconButton } from '../../IconButton'
-import { Text } from '../../Text'
+import { motion, MotionConfig } from "motion/react";
+import { CheckIcon, UserCheck, XIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { cn } from "../../../lib/utils";
+import { Button } from "../../Button";
+import { IconButton } from "../../IconButton";
+import { Text } from "../../Text";
 import {
   BaseComponents,
   DefaultComponents,
   FcOrClassName,
   renderComponent,
-} from '../componentsTypes'
-import { useAIChat } from '../context'
+} from "../componentsTypes";
+import { useAIChat } from "../context";
 import {
   TOOL_CALL_ERROR_MESSAGE,
   TOOL_CALL_REJECTED_MESSAGE,
-} from '../toolCallApproval'
-import type { BasePartProps } from '../types'
+} from "../toolCallApproval";
+import type { BasePartProps } from "../types";
 
-type ToolInvocationState = 'partial-call' | 'call' | 'result'
+type ToolInvocationState = "partial-call" | "call" | "result";
 
-type ToolInvocationStatus = 'pending' | 'in-progress' | 'success' | 'error'
+type ToolInvocationStatus = "pending" | "in-progress" | "success" | "error";
 
 interface ToolInvocation {
-  state: ToolInvocationState
-  toolCallId: string
-  toolName: string
-  args: Record<string, unknown>
-  result?: unknown
+  state: ToolInvocationState;
+  toolCallId: string;
+  toolName: string;
+  args: Record<string, unknown>;
+  result?: unknown;
 }
 
 export interface AIChatMessageToolPartProps extends BasePartProps {
-  toolInvocation: ToolInvocation
-  components?: Partial<AIChatMessageToolPartComponents>
-  onAccept?: () => void
-  onReject?: () => void
+  toolInvocation: ToolInvocation;
+  components?: Partial<AIChatMessageToolPartComponents>;
+  onAccept?: () => void;
+  onReject?: () => void;
 }
 
 export interface AIChatMessageToolPartComponents extends BaseComponents {
-  toolName: FcOrClassName<ToolInvocation & { confirmMessage?: string }>
-  statusIndicator: FcOrClassName<{ status: ToolInvocationStatus }>
-  input: FcOrClassName<Omit<ToolInvocation, 'args'> & { args: string }>
-  result: FcOrClassName<Omit<ToolInvocation, 'result'> & { result: string }>
+  toolName: FcOrClassName<ToolInvocation & { confirmMessage?: string }>;
+  statusIndicator: FcOrClassName<{ status: ToolInvocationStatus }>;
+  input: FcOrClassName<Omit<ToolInvocation, "args"> & { args: string }>;
+  result: FcOrClassName<Omit<ToolInvocation, "result"> & { result: string }>;
 }
 
 const inputResultClassName =
-  'typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground bg-muted'
+  "typography-body-xs max-h-48 overflow-auto rounded p-2 break-all whitespace-pre-wrap text-foreground bg-muted";
 
 const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   toolName: ({ toolName, confirmMessage, className }) => (
     <Text
       variant="xs"
-      className={cn('text-foreground flex-1 py-1 font-medium', className)}
+      className={cn("flex-1 py-1 font-medium text-foreground", className)}
     >
       {confirmMessage || toolName}
     </Text>
@@ -61,7 +61,7 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   ),
   input: ({ args, className }) => (
     <>
-      <Text variant="xs" className="text-foreground mb-1 font-medium">
+      <Text variant="xs" className="mb-1 font-medium text-foreground">
         Input
       </Text>
       <pre className={cn(inputResultClassName, className)}>{args}</pre>
@@ -69,83 +69,85 @@ const defaultComponents: DefaultComponents<AIChatMessageToolPartComponents> = {
   ),
   result: ({ result, className }) => (
     <>
-      <Text variant="xs" className="text-foreground mb-1 font-medium">
+      <Text variant="xs" className="mb-1 font-medium text-foreground">
         Result
       </Text>
       <pre className={cn(inputResultClassName, className)}>{result}</pre>
     </>
   ),
-}
+};
 
 export function AIChatMessageToolPart({
   toolInvocation,
   className,
   components,
 }: AIChatMessageToolPartProps) {
-  const { state, toolCallId, args, result } = toolInvocation
-  const [isExpanded, setIsExpanded] = useState(false)
+  const { state, toolCallId, args, result } = toolInvocation;
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const { toolCallApproval } = useAIChat()
-  const isPending = toolCallId === toolCallApproval?.pendingToolCall?.toolCallId
+  const { toolCallApproval } = useAIChat();
+  const isPending =
+    toolCallId === toolCallApproval?.pendingToolCall?.toolCallId;
 
   useEffect(() => {
     if (isPending) {
-      setIsExpanded(true)
+      setIsExpanded(true);
     }
-  }, [isPending])
+  }, [isPending]);
 
   useEffect(() => {
-    if (state === 'result') {
-      setIsExpanded(false)
+    if (state === "result") {
+      setIsExpanded(false);
     } else {
-      setIsExpanded(true)
+      setIsExpanded(true);
     }
-  }, [state])
+  }, [state]);
 
   // Format the result for display
   const formatResult = (result: unknown): string => {
-    if (typeof result === 'string') return result
-    if (typeof result === 'object' && result !== null)
-      return JSON.stringify(result as Record<string, unknown>, null, 2)
-    return String(result)
-  }
+    if (typeof result === "string") return result;
+    if (typeof result === "object" && result !== null)
+      return JSON.stringify(result as Record<string, unknown>, null, 2);
+    return String(result);
+  };
 
   const status = useMemo(() => {
-    if (isPending) return 'pending'
-    if (state === 'call') return 'in-progress'
-    if (state === 'result') {
-      if (formatResult(result).includes(TOOL_CALL_ERROR_MESSAGE)) return 'error'
+    if (isPending) return "pending";
+    if (state === "call") return "in-progress";
+    if (state === "result") {
+      if (formatResult(result).includes(TOOL_CALL_ERROR_MESSAGE))
+        return "error";
       if (formatResult(result).includes(TOOL_CALL_REJECTED_MESSAGE))
-        return 'error'
-      return 'success'
+        return "error";
+      return "success";
     }
-    return 'pending'
-  }, [state, isPending, result])
+    return "pending";
+  }, [state, isPending, result]);
 
   return (
     <MotionConfig transition={{ duration: 0.2 }}>
       <motion.div
         className={cn(
-          'overflow-hidden rounded-lg border transition-all duration-300',
-          className
+          "overflow-hidden rounded-lg border transition-all duration-300",
+          className,
         )}
         initial={false}
-        animate={isExpanded ? 'expanded' : 'collapsed'}
+        animate={isExpanded ? "expanded" : "collapsed"}
       >
         {/* Header */}
         <div
-          className={cn('bg-muted flex items-center gap-3 px-4 py-2', {
-            'border-b': isExpanded,
+          className={cn("flex items-center gap-3 bg-muted px-4 py-2", {
+            "border-b": isExpanded,
           })}
         >
           {/* Status Indicator */}
           <div className="relative flex h-6 w-6 items-center justify-center">
-            {renderComponent(defaultComponents, components, 'statusIndicator', {
+            {renderComponent(defaultComponents, components, "statusIndicator", {
               status,
             })}
           </div>
           {/* Tool Name */}
-          {renderComponent(defaultComponents, components, 'toolName', {
+          {renderComponent(defaultComponents, components, "toolName", {
             ...toolInvocation,
             confirmMessage: toolCallApproval?.pendingToolCall?.confirmMessage,
           })}
@@ -156,7 +158,7 @@ export function AIChatMessageToolPart({
               variant="tertiary"
               onClick={() => setIsExpanded(!isExpanded)}
               className="h-6 w-6"
-              aria-label={isExpanded ? 'Collapse' : 'Expand'}
+              aria-label={isExpanded ? "Collapse" : "Expand"}
               icon={
                 <motion.svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -168,8 +170,8 @@ export function AIChatMessageToolPart({
                     expanded: { rotate: 180 },
                     collapsed: { rotate: 0 },
                   }}
-                  animate={isExpanded ? 'expanded' : 'collapsed'}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                  animate={isExpanded ? "expanded" : "collapsed"}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
                   <path
                     strokeLinecap="round"
@@ -187,10 +189,10 @@ export function AIChatMessageToolPart({
         <motion.div
           variants={{
             expanded: {
-              height: 'auto',
+              height: "auto",
               opacity: 1,
               maskImage:
-                'linear-gradient(to bottom, black 100%, transparent 100%)',
+                "linear-gradient(to bottom, black 100%, transparent 100%)",
               transition: {
                 height: { duration: 0.3 },
                 opacity: { duration: 0.2, delay: 0.1 },
@@ -201,7 +203,7 @@ export function AIChatMessageToolPart({
               height: 0,
               opacity: 0,
               maskImage:
-                'linear-gradient(to bottom, black 50%, transparent 100%)',
+                "linear-gradient(to bottom, black 50%, transparent 100%)",
               transition: {
                 height: { duration: 0.3 },
                 opacity: { duration: 0.1 },
@@ -214,11 +216,11 @@ export function AIChatMessageToolPart({
           <motion.div
             variants={{
               expanded: {
-                filter: 'blur(0px)',
+                filter: "blur(0px)",
                 opacity: 1,
               },
               collapsed: {
-                filter: 'blur(2px)',
+                filter: "blur(2px)",
                 opacity: 0,
               },
             }}
@@ -232,26 +234,26 @@ export function AIChatMessageToolPart({
                   collapsed: { y: -10, opacity: 0 },
                 }}
               >
-                {renderComponent(defaultComponents, components, 'input', {
+                {renderComponent(defaultComponents, components, "input", {
                   ...toolInvocation,
                   args: JSON.stringify(
                     args as Record<string, unknown>,
                     null,
-                    2
+                    2,
                   ),
                 })}
               </motion.div>
             ) : null}
 
             {/* Tool Result */}
-            {state === 'result' && result ? (
+            {state === "result" && result ? (
               <motion.div
                 variants={{
                   expanded: { y: 0, opacity: 1 },
                   collapsed: { y: -10, opacity: 0 },
                 }}
               >
-                {renderComponent(defaultComponents, components, 'result', {
+                {renderComponent(defaultComponents, components, "result", {
                   ...toolInvocation,
                   result: formatResult(result),
                 })}
@@ -262,13 +264,13 @@ export function AIChatMessageToolPart({
 
         {/* Approve / Reject Footer */}
         {isPending && (
-          <div className="bg-muted flex justify-end border-t px-4 py-2">
+          <div className="flex justify-end border-t bg-muted px-4 py-2">
             <div className="flex items-center gap-1.5">
               <Button
                 variant="tertiary"
                 size="sm"
                 onClick={toolCallApproval?.pendingToolCall?.reject}
-                className="hover:bg-background hover:text-foreground h-7 border border-transparent px-3 text-sm"
+                className="h-7 border border-transparent px-3 text-sm hover:bg-background hover:text-foreground"
               >
                 Reject
               </Button>
@@ -276,7 +278,7 @@ export function AIChatMessageToolPart({
               <Button
                 size="sm"
                 onClick={toolCallApproval?.pendingToolCall?.approve}
-                className="bg-foreground text-background h-7 border border-transparent px-3 text-sm"
+                className="h-7 border border-transparent bg-foreground px-3 text-sm text-background"
               >
                 Accept
               </Button>
@@ -285,43 +287,43 @@ export function AIChatMessageToolPart({
         )}
       </motion.div>
     </MotionConfig>
-  )
+  );
 }
 
 const StatusIndicator = ({
   status,
   className,
 }: {
-  status: ToolInvocationStatus
-  className: string
+  status: ToolInvocationStatus;
+  className: string;
 }) => {
-  const widthHeight = 'h-3 w-3'
-  const baseClassName = `${widthHeight} flex items-center justify-center rounded-full`
+  const widthHeight = "h-3 w-3";
+  const baseClassName = `${widthHeight} flex items-center justify-center rounded-full`;
 
   switch (status) {
-    case 'success':
+    case "success":
       return (
         <motion.div
-          className={cn(baseClassName, 'bg-success', className)}
+          className={cn(baseClassName, "bg-success", className)}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          transition={{ type: "spring", stiffness: 500, damping: 15 }}
         >
           <CheckIcon className="h-full w-full" />
         </motion.div>
-      )
-    case 'error':
+      );
+    case "error":
       return (
         <motion.div
-          className={cn(baseClassName, 'bg-destructive', className)}
+          className={cn(baseClassName, "bg-destructive", className)}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          transition={{ type: "spring", stiffness: 500, damping: 15 }}
         >
           <XIcon className="h-full w-full" />
         </motion.div>
-      )
-    case 'pending':
+      );
+    case "pending":
       return (
         <>
           {/* Track */}
@@ -341,21 +343,21 @@ const StatusIndicator = ({
             <div
               className="h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
               style={{
-                animation: 'spin 3s linear infinite',
+                animation: "spin 3s linear infinite",
               }}
             />
           </motion.div>
           <motion.div
-            className={cn('relative h-4 w-4 rounded-full', className)}
+            className={cn("relative h-4 w-4 rounded-full", className)}
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+            transition={{ type: "spring", stiffness: 500, damping: 15 }}
           >
             <UserCheck className="h-full w-full" />
           </motion.div>
         </>
-      )
-    case 'in-progress':
+      );
+    case "in-progress":
       return (
         <>
           {/* Track */}
@@ -375,21 +377,21 @@ const StatusIndicator = ({
             <div
               className="border-information-fill h-full w-full rounded-full border-2 [border-top-color:transparent] [border-left-color:transparent]"
               style={{
-                animation: 'spin 1s linear infinite',
+                animation: "spin 1s linear infinite",
               }}
             />
           </motion.div>
           <motion.div
             className={cn(
               widthHeight,
-              'bg-information-fill relative rounded-full',
-              className
+              "bg-information-fill relative rounded-full",
+              className,
             )}
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+            transition={{ type: "spring", stiffness: 500, damping: 15 }}
           />
         </>
-      )
+      );
   }
-}
+};

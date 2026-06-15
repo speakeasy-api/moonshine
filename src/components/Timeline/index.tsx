@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, {
   useLayoutEffect,
@@ -7,32 +7,32 @@ import React, {
   isValidElement,
   cloneElement,
   Children,
-} from 'react'
-import type { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
-import { Text } from '../Text'
-import { Heading } from '../Heading'
+} from "react";
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { Text } from "../Text";
+import { Heading } from "../Heading";
 
 const TIMELINE_STYLES = {
-  line: 'bg-surface-tertiary-default',
+  line: "bg-surface-tertiary-default",
   iconContainer:
-    'relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full',
+    "relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full",
   iconBackground:
-    'bg-surface-primary-default border-border-neutral-softest absolute inset-0 rounded-full border-2 transition-all duration-300',
-  iconContent: 'relative z-10 flex h-full w-full items-center justify-center',
+    "bg-surface-primary-default border-border-neutral-softest absolute inset-0 rounded-full border-2 transition-all duration-300",
+  iconContent: "relative z-10 flex h-full w-full items-center justify-center",
   iconIcon:
-    'text-muted flex items-center justify-center transition-colors duration-300 [&>svg]:h-4 [&>svg]:w-4',
-  iconNumber: 'text-muted text-sm font-medium transition-colors duration-300',
-  transition: 'transition-opacity duration-300',
-} as const
+    "text-muted flex items-center justify-center transition-colors duration-300 [&>svg]:h-4 [&>svg]:w-4",
+  iconNumber: "text-muted text-sm font-medium transition-colors duration-300",
+  transition: "transition-opacity duration-300",
+} as const;
 
 export interface TimelineItemProps {
-  icon?: ReactNode
-  children: ReactNode
-  className?: string
-  index?: number
-  isLast?: boolean
-  setsize?: number
+  icon?: ReactNode;
+  children: ReactNode;
+  className?: string;
+  index?: number;
+  isLast?: boolean;
+  setsize?: number;
 }
 
 function TimelineItem({
@@ -50,14 +50,14 @@ function TimelineItem({
     ) {
       return cloneElement(child, {
         isLast,
-      })
+      });
     }
-    return child
-  })
+    return child;
+  });
 
   return (
     <li
-      className={cn('relative flex items-start gap-4', className)}
+      className={cn("relative flex items-start gap-4", className)}
       data-timeline-item
       aria-posinset={index + 1}
       aria-setsize={setsize}
@@ -75,13 +75,13 @@ function TimelineItem({
 
       {enhancedChildren}
     </li>
-  )
+  );
 }
 
 export interface TimelineContentProps {
-  children: ReactNode
-  className?: string
-  isLast?: boolean
+  children: ReactNode;
+  className?: string;
+  isLast?: boolean;
 }
 
 function TimelineContent({
@@ -89,29 +89,29 @@ function TimelineContent({
   className,
   isLast,
 }: TimelineContentProps) {
-  const childrenArray = Children.toArray(children)
-  let titleElement: React.ReactNode = null
-  let timestampElement: React.ReactNode = null
-  const otherChildren: React.ReactNode[] = []
+  const childrenArray = Children.toArray(children);
+  let titleElement: React.ReactNode = null;
+  let timestampElement: React.ReactNode = null;
+  const otherChildren: React.ReactNode[] = [];
 
   childrenArray.forEach((child) => {
     if (isValidElement(child)) {
       if (child.type === TimelineTitle) {
-        titleElement = child
+        titleElement = child;
       } else if (child.type === TimelineTimestamp) {
-        timestampElement = child
+        timestampElement = child;
       } else {
-        otherChildren.push(child)
+        otherChildren.push(child);
       }
     } else {
-      otherChildren.push(child)
+      otherChildren.push(child);
     }
-  })
+  });
 
   return (
     <div
-      className={cn('min-w-0 flex-1', !isLast && 'pb-6', className)}
-      data-testid={isLast ? 'timeline-content-last' : 'timeline-content'}
+      className={cn("min-w-0 flex-1", !isLast && "pb-6", className)}
+      data-testid={isLast ? "timeline-content-last" : "timeline-content"}
     >
       {(titleElement || timestampElement) && (
         <div className="mb-1 flex items-start justify-between gap-4">
@@ -125,28 +125,28 @@ function TimelineContent({
         <div className="space-y-1">{otherChildren}</div>
       )}
     </div>
-  )
+  );
 }
 
 export interface TimelineTitleProps {
-  children: ReactNode
-  className?: string
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div'
+  children: ReactNode;
+  className?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div";
 }
 
 function TimelineTitle({
   children,
   className,
-  as = 'div',
+  as = "div",
 }: TimelineTitleProps) {
-  if (as === 'div') {
+  if (as === "div") {
     return (
       <div
-        className={cn('text-heading-xs', TIMELINE_STYLES.transition, className)}
+        className={cn("text-heading-xs", TIMELINE_STYLES.transition, className)}
       >
         {children}
       </div>
-    )
+    );
   }
 
   return (
@@ -157,12 +157,12 @@ function TimelineTitle({
     >
       {children}
     </Heading>
-  )
+  );
 }
 
 export interface TimelineDescriptionProps {
-  children: ReactNode
-  className?: string
+  children: ReactNode;
+  className?: string;
 }
 
 function TimelineDescription({
@@ -173,16 +173,16 @@ function TimelineDescription({
     <Text
       variant="sm"
       muted
-      className={cn('leading-relaxed', TIMELINE_STYLES.transition, className)}
+      className={cn("leading-relaxed", TIMELINE_STYLES.transition, className)}
     >
       {children}
     </Text>
-  )
+  );
 }
 
 export interface TimelineTimestampProps {
-  children: ReactNode
-  className?: string
+  children: ReactNode;
+  className?: string;
 }
 
 function TimelineTimestamp({ children, className }: TimelineTimestampProps) {
@@ -194,17 +194,17 @@ function TimelineTimestamp({ children, className }: TimelineTimestampProps) {
     >
       {children}
     </Text>
-  )
+  );
 }
 
 export interface TimelineSeparatorProps {
-  className?: string
+  className?: string;
 }
 
 export interface TimelineRootProps {
-  children: ReactNode
-  className?: string
-  hasMore?: boolean
+  children: ReactNode;
+  className?: string;
+  hasMore?: boolean;
 }
 
 function TimelineRoot({
@@ -212,15 +212,15 @@ function TimelineRoot({
   className,
   hasMore = false,
 }: TimelineRootProps) {
-  const childrenArray = Children.toArray(children)
+  const childrenArray = Children.toArray(children);
   const itemsOnly = childrenArray.filter(
-    (child) => isValidElement(child) && child.type === TimelineItem
-  )
-  const itemCount = itemsOnly.length
-  const timelineRef = useRef<HTMLDivElement>(null)
-  const [lineHeight, setLineHeight] = useState<number | null>(null)
+    (child) => isValidElement(child) && child.type === TimelineItem,
+  );
+  const itemCount = itemsOnly.length;
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [lineHeight, setLineHeight] = useState<number | null>(null);
 
-  let itemIndex = 0
+  let itemIndex = 0;
   const enhancedChildren = childrenArray.map((child) => {
     if (
       isValidElement<TimelineItemProps>(child) &&
@@ -230,41 +230,41 @@ function TimelineRoot({
         index: itemIndex,
         isLast: itemIndex === itemCount - 1,
         setsize: itemCount,
-      })
-      itemIndex += 1
-      return cloned
+      });
+      itemIndex += 1;
+      return cloned;
     }
-    return child
-  })
+    return child;
+  });
 
   useLayoutEffect(() => {
     if (timelineRef.current && itemCount > 1) {
       const timelineItems = timelineRef.current.querySelectorAll(
-        '[data-timeline-item]'
-      )
+        "[data-timeline-item]",
+      );
       if (timelineItems.length >= 2) {
-        const lastItem = timelineItems[timelineItems.length - 1] as HTMLElement
+        const lastItem = timelineItems[timelineItems.length - 1] as HTMLElement;
 
         // Calculate distance from center of first icon to center of last icon
-        const firstIconCenter = 24 // 1.5rem (top-6) + 0.75rem (half of 3rem icon height)
-        const lastItemTop = lastItem.offsetTop
-        const baseHeight = lastItemTop + 24 - firstIconCenter // 24px = center of last icon
+        const firstIconCenter = 24; // 1.5rem (top-6) + 0.75rem (half of 3rem icon height)
+        const lastItemTop = lastItem.offsetTop;
+        const baseHeight = lastItemTop + 24 - firstIconCenter; // 24px = center of last icon
 
         // If hasMore is true, extend the line by an additional 2rem (32px) past the last icon
-        const calculatedHeight = hasMore ? baseHeight + 32 : baseHeight
+        const calculatedHeight = hasMore ? baseHeight + 32 : baseHeight;
 
-        setLineHeight(calculatedHeight)
+        setLineHeight(calculatedHeight);
       }
     }
-  }, [itemCount, children, hasMore])
+  }, [itemCount, children, hasMore]);
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn("relative", className)}>
       {itemCount > 0 && (
         <div className="relative" ref={timelineRef}>
           {itemCount > 1 && (
             <div
-              className={cn(TIMELINE_STYLES.line, 'absolute top-6 left-6 w-px')}
+              className={cn(TIMELINE_STYLES.line, "absolute top-6 left-6 w-px")}
               style={{
                 height: lineHeight
                   ? `${lineHeight}px`
@@ -280,7 +280,7 @@ function TimelineRoot({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 const Timeline = Object.assign(TimelineRoot, {
@@ -289,6 +289,6 @@ const Timeline = Object.assign(TimelineRoot, {
   Title: TimelineTitle,
   Description: TimelineDescription,
   Timestamp: TimelineTimestamp,
-})
+});
 
-export { Timeline }
+export { Timeline };

@@ -3,17 +3,17 @@
     var(--cell-padding-inline, 1rem);
 
   /* Density modes: condensed, normal, spacious */
-  &:where([data-cell-padding='condensed']) {
+  &:where([data-cell-padding="condensed"]) {
     --cell-padding-block: 0.5rem;
     --cell-padding-inline: 0.75rem;
   }
 
-  &:where([data-cell-padding='normal']) {
+  &:where([data-cell-padding="normal"]) {
     --cell-padding-block: 0.75rem;
     --cell-padding-inline: 1rem;
   }
 
-  &:where([data-cell-padding='spacious']) {
+  &:where([data-cell-padding="spacious"]) {
     --cell-padding-block: 1rem;
     --cell-padding-inline: 1.25rem;
   }

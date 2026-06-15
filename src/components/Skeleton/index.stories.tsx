@@ -1,13 +1,13 @@
-import { Skeleton } from '.'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Skeleton } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof Skeleton> = {
   component: Skeleton,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Skeleton>
+type Story = StoryObj<typeof Skeleton>;
 
 export const Default: Story = {
   args: {
@@ -25,7 +25,7 @@ export const Default: Story = {
       </p>,
     ],
   },
-}
+};
 
 export const WithComplexChildren: Story = {
   render: (args) => (
@@ -44,21 +44,21 @@ export const WithComplexChildren: Story = {
       </Skeleton>
     </div>
   ),
-}
+};
 
 export const WithEmptyChildren: Story = {
   args: {
     children: [
-      <div className="bg-muted h-5 w-60 rounded-lg" />,
-      <div className="bg-muted h-5 w-48 rounded-lg" />,
-      <div className="bg-muted h-5 w-40 rounded-lg" />,
+      <div className="h-5 w-60 rounded-lg bg-muted" />,
+      <div className="h-5 w-48 rounded-lg bg-muted" />,
+      <div className="h-5 w-40 rounded-lg bg-muted" />,
     ],
   },
-}
+};
 
 export const WithClassName: Story = {
   args: {
-    className: 'bg-muted/50',
+    className: "bg-muted/50",
     children: [
       <p>
         Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
@@ -73,4 +73,4 @@ export const WithClassName: Story = {
       </p>,
     ],
   },
-}
+};

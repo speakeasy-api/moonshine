@@ -6,49 +6,49 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTitle,
-} from '@radix-ui/react-dialog'
-import { useModal } from '@/hooks/useModal'
-import { cn } from '@/lib/utils'
-import { IconButton } from '@/components/IconButton'
-import { Icon } from '../Icon'
-import { Screen } from '@/context/ModalContext'
+} from "@radix-ui/react-dialog";
+import { useModal } from "@/hooks/useModal";
+import { cn } from "@/lib/utils";
+import { IconButton } from "@/components/IconButton";
+import { Icon } from "../Icon";
+import { Screen } from "@/context/ModalContext";
 
 export interface ModalProps {
-  closable?: boolean
-  className?: string
-  layout: 'default' | 'custom'
-  onClose?: (currentScreen: Screen) => void
+  closable?: boolean;
+  className?: string;
+  layout: "default" | "custom";
+  onClose?: (currentScreen: Screen) => void;
 }
 
 export const Modal = ({
   closable = false,
   className,
-  layout = 'default',
+  layout = "default",
   onClose,
 }: ModalProps) => {
-  const { screens, currentIndex, isOpen, close } = useModal()
-  const currentScreen = screens[currentIndex]
+  const { screens, currentIndex, isOpen, close } = useModal();
+  const currentScreen = screens[currentIndex];
 
   const handleOpenChange = (open: boolean) => {
     if (closable && !open) {
-      close()
-      onClose?.(currentScreen)
+      close();
+      onClose?.(currentScreen);
     }
-  }
+  };
 
-  if (!isOpen) return null
-  if (!currentScreen) return null
+  if (!isOpen) return null;
+  if (!currentScreen) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogPortal>
-        <DialogOverlay className="bg-surface-secondary fixed top-0 z-10 h-screen w-screen opacity-85" />
+        <DialogOverlay className="fixed top-0 z-10 h-screen w-screen bg-surface-secondary opacity-85" />
 
-        {layout === 'default' ? (
+        {layout === "default" ? (
           <DialogContent
             className={cn(
-              'bg-surface-primary border-neutral-default fixed top-1/2 left-1/2 z-20 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md p-10 shadow-lg outline-none',
-              className
+              "fixed top-1/2 left-1/2 z-20 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md border-neutral-default bg-surface-primary p-10 shadow-lg outline-none",
+              className,
             )}
           >
             {closable && (
@@ -76,8 +76,8 @@ export const Modal = ({
         ) : (
           <DialogContent
             className={cn(
-              'bg-surface-primary border-neutral-default fixed top-1/2 left-1/2 z-20 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md p-10 shadow-lg outline-none',
-              className
+              "fixed top-1/2 left-1/2 z-20 flex h-auto max-h-[85vh] min-h-[40vh] w-[90vw] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col gap-3 overflow-y-auto rounded-md border-neutral-default bg-surface-primary p-10 shadow-lg outline-none",
+              className,
             )}
           >
             {closable && (
@@ -100,5 +100,5 @@ export const Modal = ({
         )}
       </DialogPortal>
     </Dialog>
-  )
-}
+  );
+};

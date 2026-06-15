@@ -1,142 +1,142 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { ResponsiveValue, Size } from '@/types'
-import { UserAvatar, UserAvatarProps } from '@/components/UserAvatar'
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ResponsiveValue, Size } from "@/types";
+import { UserAvatar, UserAvatarProps } from "@/components/UserAvatar";
 import {
   userAvatarSizeMap,
   userAvatarSizeMapper,
-} from '@/components/UserAvatar/sizeMap'
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
+} from "@/components/UserAvatar/sizeMap";
+import { cn, getResponsiveClasses } from "@/lib/utils";
+import useTailwindBreakpoint from "@/hooks/useTailwindBreakpoint";
+import { resolveSizeForBreakpoint } from "@/lib/responsiveUtils";
 
-type FacepileVariant = 'interactive' | 'static'
-type AvatarProps = Omit<UserAvatarProps, 'size'> & { href?: string }
+type FacepileVariant = "interactive" | "static";
+type AvatarProps = Omit<UserAvatarProps, "size"> & { href?: string };
 
 export interface FacepileProps {
-  avatars: AvatarProps[]
-  maxFaces?: number
-  avatarSize?: ResponsiveValue<Size>
-  variant?: FacepileVariant
-  tooltips?: boolean
-  className?: string
+  avatars: AvatarProps[];
+  maxFaces?: number;
+  avatarSize?: ResponsiveValue<Size>;
+  variant?: FacepileVariant;
+  tooltips?: boolean;
+  className?: string;
 }
 
 export function Facepile({
   avatars = [],
   maxFaces = 3,
-  avatarSize = 'medium',
-  variant = 'interactive',
+  avatarSize = "medium",
+  variant = "interactive",
   tooltips = true,
   className,
 }: FacepileProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null)
-  const [tooltipVisible, setTooltipVisible] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const isHovered = useRef(false)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null);
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isHovered = useRef(false);
 
-  const breakpoint = useTailwindBreakpoint()
+  const breakpoint = useTailwindBreakpoint();
   const resolvedSize = resolveSizeForBreakpoint(
     breakpoint,
     avatarSize,
-    'medium'
-  )
+    "medium",
+  );
 
-  const overlap = 0.6
-  const size = userAvatarSizeMap[resolvedSize] * 4 // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
-  const offsetX = size * overlap // How much each avatar overlaps
+  const overlap = 0.6;
+  const size = userAvatarSizeMap[resolvedSize] * 4; // *4 as avatarSizeMap is a record of tailwind sizes - possibly a better way to do this
+  const offsetX = size * overlap; // How much each avatar overlaps
 
-  const visibleFaces = avatars.slice(0, maxFaces)
-  const hiddenFaces = avatars.slice(maxFaces)
-  const extraFaces = Math.max(0, avatars.length - maxFaces)
+  const visibleFaces = avatars.slice(0, maxFaces);
+  const hiddenFaces = avatars.slice(maxFaces);
+  const extraFaces = Math.max(0, avatars.length - maxFaces);
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const tooltipRef = useRef<HTMLDivElement>(null)
-  const [tooltipWidth, setTooltipWidth] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipWidth, setTooltipWidth] = useState(0);
 
   useEffect(() => {
     if (tooltipRef.current) {
       const updateTooltipWidth = () => {
         if (tooltipRef.current?.offsetWidth) {
-          setTooltipWidth(tooltipRef.current!.offsetWidth)
+          setTooltipWidth(tooltipRef.current!.offsetWidth);
         }
-      }
-      updateTooltipWidth()
-      const resizeObserver = new ResizeObserver(updateTooltipWidth)
-      resizeObserver.observe(tooltipRef.current)
-      return () => resizeObserver.disconnect()
+      };
+      updateTooltipWidth();
+      const resizeObserver = new ResizeObserver(updateTooltipWidth);
+      resizeObserver.observe(tooltipRef.current);
+      return () => resizeObserver.disconnect();
     }
-  }, [hoveredIndex, visibleFaces])
+  }, [hoveredIndex, visibleFaces]);
 
   useEffect(() => {
     if (hoveredIndex !== null) {
-      setTooltipVisible(true)
-      setPrevHoveredIndex(hoveredIndex)
+      setTooltipVisible(true);
+      setPrevHoveredIndex(hoveredIndex);
     } else {
-      setTooltipVisible(false)
+      setTooltipVisible(false);
     }
-  }, [hoveredIndex])
+  }, [hoveredIndex]);
 
   const getTooltipPosition = (index: number, tooltipWidth: number) => {
-    const avatarCenter = index * offsetX + size / 2
-    return avatarCenter - tooltipWidth / 2
-  }
+    const avatarCenter = index * offsetX + size / 2;
+    return avatarCenter - tooltipWidth / 2;
+  };
 
   const handleContainerMouseLeave = () => {
-    setHoveredIndex(null)
-    setIsExpanded(false)
-    isHovered.current = false
-  }
+    setHoveredIndex(null);
+    setIsExpanded(false);
+    isHovered.current = false;
+  };
 
   const handleContainerMouseEnter = () => {
-    isHovered.current = true
-  }
+    isHovered.current = true;
+  };
 
   const handleMouseEnter = (index: number) => {
-    setHoveredIndex(index)
+    setHoveredIndex(index);
     if (index < maxFaces) {
-      setIsExpanded(false)
+      setIsExpanded(false);
     } else {
-      setIsExpanded(true)
+      setIsExpanded(true);
     }
-  }
+  };
 
   const handleHoverExpand = () => {
-    if (variant === 'interactive') {
+    if (variant === "interactive") {
       setTimeout(() => {
         if (isHovered.current) {
-          setIsExpanded(true)
+          setIsExpanded(true);
         }
-      }, 400)
+      }, 400);
     }
-  }
+  };
 
   const containerWidth = isExpanded
     ? avatars.length * offsetX + size - offsetX
     : visibleFaces.length * offsetX +
       size -
       offsetX +
-      (extraFaces > 0 ? offsetX : 0)
+      (extraFaces > 0 ? offsetX : 0);
 
   const getTooltipAnimation = (index: number | null) => {
-    if (prevHoveredIndex === null || index === null) return {}
-    const direction = index > prevHoveredIndex ? 1 : -1
+    if (prevHoveredIndex === null || index === null) return {};
+    const direction = index > prevHoveredIndex ? 1 : -1;
     return {
       initial: { opacity: 0, x: -15 * direction },
       animate: { opacity: 1, x: 0 },
       exit: { opacity: 0, x: 20 * direction },
       transition: { duration: 0.2 },
-    }
-  }
+    };
+  };
 
   return (
     <motion.div
       ref={containerRef}
-      className={cn('relative', className)}
+      className={cn("relative", className)}
       style={{ height: size }}
       animate={{ width: containerWidth }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
       onMouseEnter={handleContainerMouseEnter}
       onMouseLeave={handleContainerMouseLeave}
     >
@@ -148,16 +148,16 @@ export function Facepile({
           index={index}
           size={size}
           offsetX={offsetX}
-          hoveredIndex={variant === 'interactive' ? hoveredIndex : null}
+          hoveredIndex={variant === "interactive" ? hoveredIndex : null}
           handleMouseEnter={handleMouseEnter}
           totalFaces={visibleFaces.length}
           isExpanded={isExpanded}
           maxFaces={maxFaces}
-          interactive={variant === 'static' ? false : true}
+          interactive={variant === "static" ? false : true}
         />
       ))}
 
-      {variant === 'interactive' && (
+      {variant === "interactive" && (
         <AnimatePresence>
           {isExpanded &&
             hiddenFaces.map((face, index) => (
@@ -177,7 +177,7 @@ export function Facepile({
                 initial={{ opacity: 0, scale: 0.5, x: -size / 2 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.5, x: -size / 2 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
               />
             ))}
         </AnimatePresence>
@@ -194,7 +194,7 @@ export function Facepile({
               x: getTooltipPosition(hoveredIndex ?? 0, tooltipWidth),
             }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             className={`pointer-events-none absolute left-0 z-10 flex h-5 items-center justify-center rounded-full bg-black px-2 text-xs font-medium whitespace-nowrap text-white`}
             style={{
               top: size + 4,
@@ -219,12 +219,12 @@ export function Facepile({
             left: visibleFaces.length * offsetX,
           }}
           onMouseEnter={handleHoverExpand}
-          whileHover={{ scale: variant === 'interactive' ? 1.1 : 1 }}
+          whileHover={{ scale: variant === "interactive" ? 1.1 : 1 }}
         >
           <div
             className={cn(
-              'border-background ml-1.5 flex items-center justify-center rounded-full border-2 bg-gray-200 text-sm font-medium text-gray-600',
-              getResponsiveClasses(avatarSize, userAvatarSizeMapper)
+              "ml-1.5 flex items-center justify-center rounded-full border-2 border-background bg-gray-200 text-sm font-medium text-gray-600",
+              getResponsiveClasses(avatarSize, userAvatarSizeMapper),
             )}
           >
             +{extraFaces}
@@ -232,7 +232,7 @@ export function Facepile({
         </motion.div>
       )}
     </motion.div>
-  )
+  );
 }
 
 function AvatarWrapper({
@@ -249,17 +249,17 @@ function AvatarWrapper({
   interactive,
   ...motionProps
 }: {
-  avatar: AvatarProps
-  avatarSize?: ResponsiveValue<Size>
-  index: number
-  size: number
-  offsetX: number
-  hoveredIndex: number | null
-  handleMouseEnter: (index: number) => void
-  totalFaces: number
-  isExpanded: boolean
-  maxFaces: number
-  interactive: boolean
+  avatar: AvatarProps;
+  avatarSize?: ResponsiveValue<Size>;
+  index: number;
+  size: number;
+  offsetX: number;
+  hoveredIndex: number | null;
+  handleMouseEnter: (index: number) => void;
+  totalFaces: number;
+  isExpanded: boolean;
+  maxFaces: number;
+  interactive: boolean;
 } & React.ComponentProps<typeof motion.div>) {
   return (
     <motion.div
@@ -286,7 +286,7 @@ function AvatarWrapper({
                 ? size * 0.2
                 : -size * 0.2,
       }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onMouseEnter={() => handleMouseEnter(index)}
       {...motionProps}
     >
@@ -308,5 +308,5 @@ function AvatarWrapper({
         />
       )}
     </motion.div>
-  )
+  );
 }

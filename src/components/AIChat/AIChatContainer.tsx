@@ -1,35 +1,35 @@
-import { ReactNode } from 'react'
-import { cn } from '../../lib/utils'
-import { AIChatMessageComponents } from './AIChatMessage'
+import { ReactNode } from "react";
+import { cn } from "../../lib/utils";
+import { AIChatMessageComponents } from "./AIChatMessage";
 import {
   AIChatMessageComposer,
   AIChatMessageComposerComponents,
-} from './AIChatMessageComposer'
-import { AIChatMessageList } from './AIChatMessageList'
-import { AIChatContext } from './context'
-import type { AIChatContextValue, ToolCallApprovalProps } from './types'
+} from "./AIChatMessageComposer";
+import { AIChatMessageList } from "./AIChatMessageList";
+import { AIChatContext } from "./context";
+import type { AIChatContextValue, ToolCallApprovalProps } from "./types";
 
 export interface ModelSelectorConfig {
-  model: string
-  onModelChange: (v: string) => void
-  availableModels: { label: string; value: string }[]
+  model: string;
+  onModelChange: (v: string) => void;
+  availableModels: { label: string; value: string }[];
 }
 
 export interface AIChatContainerProps extends Omit<
   AIChatContextValue,
-  'model' | 'onModelChange' | 'availableModels' | 'toolCallApproval'
+  "model" | "onModelChange" | "availableModels" | "toolCallApproval"
 > {
-  modelSelector?: ModelSelectorConfig
-  className?: string
-  components?: Partial<AIChatComponents>
-  toolCallApproval?: ToolCallApprovalProps
-  children?: ReactNode
-  initialInput?: string
+  modelSelector?: ModelSelectorConfig;
+  className?: string;
+  components?: Partial<AIChatComponents>;
+  toolCallApproval?: ToolCallApprovalProps;
+  children?: ReactNode;
+  initialInput?: string;
 }
 
 interface AIChatComponents {
-  composer: Partial<AIChatMessageComposerComponents>
-  message: Partial<AIChatMessageComponents>
+  composer: Partial<AIChatMessageComposerComponents>;
+  message: Partial<AIChatMessageComponents>;
 }
 
 export function AIChatContainer({
@@ -56,7 +56,7 @@ export function AIChatContainer({
         initialInput,
       }}
     >
-      <div className={cn('flex h-full min-h-0 max-w-3xl flex-col', className)}>
+      <div className={cn("flex h-full min-h-0 max-w-3xl flex-col", className)}>
         <div className="flex-1 overflow-hidden">
           <AIChatMessageList components={components?.message} />
         </div>
@@ -66,5 +66,5 @@ export function AIChatContainer({
         {children}
       </div>
     </AIChatContext.Provider>
-  )
+  );
 }

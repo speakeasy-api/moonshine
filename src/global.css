@@ -12,16 +12,16 @@
 /* ============================================
  * CORE IMPORTS
  * ============================================ */
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
 /* ============================================
  * DESIGN SYSTEM IMPORTS
  * Order matters: base tokens must come before utilities
  * ============================================ */
-@import './base.css';
-@import './utilities.css';
+@import "./base.css";
+@import "./utilities.css";
 
 /* ============================================
  * CUSTOM VARIANTS
@@ -41,15 +41,23 @@
  * ============================================ */
 
 /* Spacing Utilities */
-@source inline("{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}");
+@source inline(
+  "{,sm:,md:,lg:,xl:,2xl:}{p-,px-,py-,pr-,pb-,pl-,pt-}{0,0.5,1,2,3,4,5,6,8,10,12,16}"
+);
 @source inline("{,sm:,md:,lg:,xl:,2xl:}gap-{0,0.5,1,2,3,4,5,6,8,10,12,16}");
 
 /* Grid & Flexbox */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
 @source inline("{,sm:,md:,lg:,xl:,2xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
-@source inline("{,sm:,md:,lg:,xl:,2xl:}flex-{row,col,nowrap,wrap,wrap-reverse,none,1,auto,initial,grow,shrink}");
-@source inline("{,sm:,md:,lg:,xl:,2xl:}justify-{start,center,end,between,evenly}");
-@source inline("{,sm:,md:,lg:,xl:,2xl:}items-{start,center,end,stretch,baseline}");
+@source inline(
+  "{,sm:,md:,lg:,xl:,2xl:}flex-{row,col,nowrap,wrap,wrap-reverse,none,1,auto,initial,grow,shrink}"
+);
+@source inline(
+  "{,sm:,md:,lg:,xl:,2xl:}justify-{start,center,end,between,evenly}"
+);
+@source inline(
+  "{,sm:,md:,lg:,xl:,2xl:}items-{start,center,end,stretch,baseline}"
+);
 
 /* Sizing */
 @source inline("{,sm:,md:,lg:,xl:,2xl:}size-{8,12,16,24,32}");

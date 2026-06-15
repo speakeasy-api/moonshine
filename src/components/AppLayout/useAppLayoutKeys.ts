@@ -1,8 +1,8 @@
-import { useAppLayout } from '@/hooks/useAppLayout'
-import { useCallback, useEffect } from 'react'
+import { useAppLayout } from "@/hooks/useAppLayout";
+import { useCallback, useEffect } from "react";
 
 export function useAppLayoutKeys() {
-  const { keybinds, collapsed, setCollapsed } = useAppLayout()
+  const { keybinds, collapsed, setCollapsed } = useAppLayout();
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -10,17 +10,17 @@ export function useAppLayoutKeys() {
         (event.metaKey || event.ctrlKey) &&
         event.key.toLowerCase() === keybinds.toggle.key.toLowerCase()
       ) {
-        event.preventDefault()
-        setCollapsed(!collapsed)
+        event.preventDefault();
+        setCollapsed(!collapsed);
       }
     },
-    [keybinds, collapsed, setCollapsed]
-  )
+    [keybinds, collapsed, setCollapsed],
+  );
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [handleKeyDown])
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 }

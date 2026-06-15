@@ -1,26 +1,26 @@
-import { useEffect, useRef } from 'react'
-import { cn } from '../../lib/utils'
-import { AIChatMessage, AIChatMessageComponents } from './AIChatMessage'
-import { useAIChat } from './context'
+import { useEffect, useRef } from "react";
+import { cn } from "../../lib/utils";
+import { AIChatMessage, AIChatMessageComponents } from "./AIChatMessage";
+import { useAIChat } from "./context";
 
 export interface AIChatMessageListProps {
-  components?: Partial<AIChatMessageComponents>
-  className?: string
+  components?: Partial<AIChatMessageComponents>;
+  className?: string;
 }
 
 export function AIChatMessageList({
   components,
   className,
 }: AIChatMessageListProps) {
-  const { messages } = useAIChat()
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { messages } = useAIChat();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
-    <ul role="log" className={cn('h-full overflow-y-auto', className)}>
+    <ul role="log" className={cn("h-full overflow-y-auto", className)}>
       {messages.map((message) => (
         <AIChatMessage
           key={message.id}
@@ -30,5 +30,5 @@ export function AIChatMessageList({
       ))}
       <div ref={messagesEndRef} />
     </ul>
-  )
+  );
 }

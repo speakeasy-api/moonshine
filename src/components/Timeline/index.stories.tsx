@@ -1,7 +1,7 @@
-import React from 'react'
-import { Timeline } from '.'
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Button } from '../Button'
+import React from "react";
+import { Timeline } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "../Button";
 import {
   Code,
   Palette,
@@ -13,20 +13,20 @@ import {
   CheckCircle,
   Clock,
   ChevronDown,
-} from 'lucide-react'
+} from "lucide-react";
 
 const meta: Meta<typeof Timeline> = {
   component: Timeline,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
   argTypes: {},
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Timeline>
+type Story = StoryObj<typeof Timeline>;
 
 // Composable API Stories
 export const ComposableBasic: Story = {
@@ -87,11 +87,11 @@ export const ComposableBasic: Story = {
     docs: {
       description: {
         story:
-          'Composable Timeline API with full control over content structure.',
+          "Composable Timeline API with full control over content structure.",
       },
     },
   },
-}
+};
 
 export const ComposableCustomContent: Story = {
   render: () => (
@@ -114,7 +114,7 @@ export const ComposableCustomContent: Story = {
           <Timeline.Title>API Integration</Timeline.Title>
           <Timeline.Description>
             Connecting external services and third-party APIs.
-            <div className="bg-warning-softest border-warning-softest mt-2 rounded border p-2">
+            <div className="mt-2 rounded border border-warning-softest bg-warning-softest p-2">
               <div className="text-warning-default text-xs">
                 ⚠️ Rate limit: 450/500 requests
               </div>
@@ -129,7 +129,7 @@ export const ComposableCustomContent: Story = {
           <Timeline.Title>Performance Testing</Timeline.Title>
           <Timeline.Description>
             Load testing and optimization.
-            <div className="text-muted mt-2 text-xs">
+            <div className="mt-2 text-xs text-muted">
               Estimated duration: 2-3 days
             </div>
           </Timeline.Description>
@@ -142,11 +142,11 @@ export const ComposableCustomContent: Story = {
     docs: {
       description: {
         story:
-          'Timeline with custom content including status indicators and rich formatting.',
+          "Timeline with custom content including status indicators and rich formatting.",
       },
     },
   },
-}
+};
 
 export const ComposableMinimal: Story = {
   render: () => (
@@ -174,11 +174,11 @@ export const ComposableMinimal: Story = {
     docs: {
       description: {
         story:
-          'Minimal timeline with just titles, showcasing default icons and numbering.',
+          "Minimal timeline with just titles, showcasing default icons and numbering.",
       },
     },
   },
-}
+};
 
 export const ComposableWithTimestamps: Story = {
   render: () => (
@@ -243,11 +243,11 @@ export const ComposableWithTimestamps: Story = {
     docs: {
       description: {
         story:
-          'Timeline showcasing the Timestamp component with detailed time information for each milestone.',
+          "Timeline showcasing the Timestamp component with detailed time information for each milestone.",
       },
     },
   },
-}
+};
 
 export const ComposableWithSemanticHeadings: Story = {
   render: () => (
@@ -293,11 +293,11 @@ export const ComposableWithSemanticHeadings: Story = {
     docs: {
       description: {
         story:
-          'Timeline with proper semantic heading structure using the `as` prop for accessibility.',
+          "Timeline with proper semantic heading structure using the `as` prop for accessibility.",
       },
     },
   },
-}
+};
 
 export const ComposableWithHasMore: Story = {
   render: () => (
@@ -348,7 +348,7 @@ export const ComposableWithHasMore: Story = {
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => alert('Loading more timeline items...')}
+          onClick={() => alert("Loading more timeline items...")}
         >
           <ChevronDown className="mr-2 h-4 w-4" />
           Load More
@@ -364,4 +364,4 @@ export const ComposableWithHasMore: Story = {
       },
     },
   },
-}
+};

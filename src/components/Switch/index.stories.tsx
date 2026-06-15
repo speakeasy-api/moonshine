@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Switch } from '@/components/Switch'
+import { Switch } from "@/components/Switch";
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
+  title: "Components/Switch",
   component: Switch,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <div className="m-auto mt-20 max-w-96">
@@ -13,15 +13,15 @@ const meta: Meta<typeof Switch> = {
       </div>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Switch>
+type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
   args: {
     disabled: false,
     checked: false,
   },
-}
+};

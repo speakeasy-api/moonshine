@@ -1,10 +1,10 @@
-import { cn } from '../../../lib/utils'
-import { Text } from '../../Text'
-import type { BasePartProps } from '../types'
+import { cn } from "../../../lib/utils";
+import { Text } from "../../Text";
+import type { BasePartProps } from "../types";
 
 export interface AIChatMessageToolInvocationPartProps extends BasePartProps {
-  toolName: string
-  toolInput?: Record<string, unknown>
+  toolName: string;
+  toolInput?: Record<string, unknown>;
 }
 
 export function AIChatMessageToolInvocationPart({
@@ -15,8 +15,8 @@ export function AIChatMessageToolInvocationPart({
   return (
     <div
       className={cn(
-        'rounded-md border border-neutral-600 bg-neutral-800 p-3',
-        className
+        "rounded-md border border-neutral-600 bg-neutral-800 p-3",
+        className,
       )}
     >
       <div className="mb-1 flex items-center gap-2">
@@ -43,11 +43,11 @@ export function AIChatMessageToolInvocationPart({
           <Text variant="xs" className="mb-1 font-medium text-neutral-200">
             Input:
           </Text>
-          <pre className="typography-body-xs rounded bg-neutral-900 p-2 whitespace-pre-wrap text-neutral-300">
+          <pre className="rounded bg-neutral-900 p-2 typography-body-xs whitespace-pre-wrap text-neutral-300">
             {JSON.stringify(toolInput, null, 2)}
           </pre>
         </div>
       )}
     </div>
-  )
+  );
 }

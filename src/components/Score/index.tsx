@@ -1,81 +1,81 @@
-import { Size } from '@/types'
-import type { Range } from '@/lib/typeUtils'
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
-import styles from './index.module.css'
-import { cn } from '@/lib/utils'
+import { Size } from "@/types";
+import type { Range } from "@/lib/typeUtils";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import styles from "./index.module.css";
+import { cn } from "@/lib/utils";
 
-export type ScoreValue = Range<100>
+export type ScoreValue = Range<100>;
 
 interface ThresholdStyles {
   /**
    * The color of the track when the score is greater than the threshold.
    */
-  [key: number]: string
+  [key: number]: string;
 }
 
 export interface ScoreProps {
   /**
    * The score to display. Must be between 0 and 100.
    */
-  score: ScoreValue
+  score: ScoreValue;
   /**
    * The size of the score component e.g small, medium, large, xl, 2xl
    */
-  size?: Size
+  size?: Size;
   /**
    * Whether to show the label.
    */
-  showLabel?: boolean
+  showLabel?: boolean;
   /**
    * The color of the track.
    */
-  trackColor?: string
+  trackColor?: string;
   /**
    * Custom definition of thresholds for color changes.
    * e.g [50, 75] will change color to green at 75%, orange at 50%. Otherwise red.
    */
-  thresholds?: ThresholdStyles
+  thresholds?: ThresholdStyles;
 
-  animate?: boolean
+  animate?: boolean;
 
-  animationDuration?: number
-  className?: string
+  animationDuration?: number;
+  className?: string;
 }
 
 const transition = {
   length: 1000, // ms
   step: 200, // ms
   delay: 0, // ms
-}
-const gapPercent = 5
-const strokeWidth = 10
-const circleSize = 100
-const radius = circleSize / 2 - strokeWidth / 2
-const circumference = 2 * Math.PI * radius
-const percentToDegree = 360 / 100 // deg
-const percentToPx = circumference / 100 // px
-const offsetFactor = 0
-const offsetFactorSecondary = 1 - offsetFactor
+};
+const gapPercent = 5;
+const strokeWidth = 10;
+const circleSize = 100;
+const radius = circleSize / 2 - strokeWidth / 2;
+const circumference = 2 * Math.PI * radius;
+const percentToDegree = 360 / 100; // deg
+const percentToPx = circumference / 100; // px
+const offsetFactor = 0;
+const offsetFactorSecondary = 1 - offsetFactor;
 
 const sizeMap: Record<Size, number> = {
   small: 40,
   medium: 50,
   large: 60,
   xl: 70,
-  '2xl': 80,
-}
+  "2xl": 80,
+};
 
 const defaultThresholds: ThresholdStyles = {
-  0: 'var(--score-low)',
-  40: 'var(--score-mid)',
-  60: 'var(--score-high)',
-}
+  0: "var(--score-low)",
+  40: "var(--score-mid)",
+  60: "var(--score-high)",
+};
 
-const defaultTrackColor = 'var(--score-track)'
+const defaultTrackColor = "var(--score-track)";
 
 export function Score({
   score,
-  size = 'large',
+  size = "large",
   showLabel = true,
   trackColor = defaultTrackColor,
   thresholds = defaultThresholds,
@@ -84,31 +84,31 @@ export function Score({
   className,
 }: ScoreProps) {
   const [scoreInternal, setScoreInternal] = useState<ScoreValue>(
-    animate ? 0 : score
-  )
-  const strokePercent = scoreInternal // %
+    animate ? 0 : score,
+  );
+  const strokePercent = scoreInternal; // %
 
   useEffect(() => {
     if (animate) {
-      const stepSize = Math.max(1, Math.floor(score / 20)) // Increase by 5% of total at minimum
+      const stepSize = Math.max(1, Math.floor(score / 20)); // Increase by 5% of total at minimum
       const interval = setInterval(() => {
         setScoreInternal((prevScore) => {
           if (prevScore >= score) {
-            clearInterval(interval)
-            return score
+            clearInterval(interval);
+            return score;
           }
-          return Math.min(prevScore + stepSize, score) as ScoreValue
-        })
-      }, animationDuration) // Reduced interval time for smoother animation
-      return () => clearInterval(interval)
+          return Math.min(prevScore + stepSize, score) as ScoreValue;
+        });
+      }, animationDuration); // Reduced interval time for smoother animation
+      return () => clearInterval(interval);
     }
-  }, [])
+  }, []);
 
   const progressColour = useMemo(() => {
     for (const [threshold, color] of Object.entries(thresholds).reverse()) {
-      if (scoreInternal >= Number(threshold)) return color
+      if (scoreInternal >= Number(threshold)) return color;
     }
-  }, [scoreInternal, thresholds])
+  }, [scoreInternal, thresholds]);
 
   const primaryStrokeDasharray = () => {
     if (
@@ -116,15 +116,15 @@ export function Score({
       strokePercent > 100 - gapPercent * 2 * offsetFactor
     ) {
       // calculation to gradually shift back to 0 offset as progress nears 100% when offsetFactor > 0
-      const subtract = -strokePercent + 100
+      const subtract = -strokePercent + 100;
 
-      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`
+      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`;
     } else {
-      const subtract = gapPercent * 2 * offsetFactor
+      const subtract = gapPercent * 2 * offsetFactor;
 
-      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`
+      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`;
     }
-  }
+  };
 
   const secondaryStrokeDasharray = () => {
     if (
@@ -132,15 +132,15 @@ export function Score({
       strokePercent < gapPercent * 2 * offsetFactorSecondary
     ) {
       // calculation to gradually shift back to 1 secondary offset as progress nears 100% when offsetFactorSecondary < 1
-      const subtract = strokePercent
+      const subtract = strokePercent;
 
-      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`
+      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`;
     } else {
-      const subtract = gapPercent * 2 * offsetFactorSecondary
+      const subtract = gapPercent * 2 * offsetFactorSecondary;
 
-      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`
+      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`;
     }
-  }
+  };
 
   const primaryTransform = () => {
     if (
@@ -148,15 +148,15 @@ export function Score({
       strokePercent > 100 - gapPercent * 2 * offsetFactor
     ) {
       // calculation to gradually shift back to 0 offset as progress nears 100% when offsetFactor > 0
-      const add = 0.5 * (-strokePercent + 100)
+      const add = 0.5 * (-strokePercent + 100);
 
-      return `rotate(${-90 + add * percentToDegree}deg)`
+      return `rotate(${-90 + add * percentToDegree}deg)`;
     } else {
-      const add = gapPercent * offsetFactor
+      const add = gapPercent * offsetFactor;
 
-      return `rotate(${-90 + add * percentToDegree}deg)`
+      return `rotate(${-90 + add * percentToDegree}deg)`;
     }
-  }
+  };
 
   const secondaryTransform = () => {
     if (
@@ -164,15 +164,15 @@ export function Score({
       strokePercent < gapPercent * 2 * offsetFactorSecondary
     ) {
       // calculation to gradually shift back to 1 secondary offset as progress nears 100% when offsetFactorSecondary < 1
-      const subtract = 0.5 * strokePercent
+      const subtract = 0.5 * strokePercent;
 
-      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`
+      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`;
     } else {
-      const subtract = gapPercent * offsetFactorSecondary
+      const subtract = gapPercent * offsetFactorSecondary;
 
-      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`
+      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`;
     }
-  }
+  };
 
   const primaryOpacity = () => {
     if (
@@ -180,9 +180,9 @@ export function Score({
       strokePercent < gapPercent * 2 * offsetFactor &&
       strokePercent < gapPercent * 2 * offsetFactorSecondary
     ) {
-      return 0
-    } else return 1
-  }
+      return 0;
+    } else return 1;
+  };
 
   const secondaryOpacity = () => {
     if (
@@ -191,9 +191,9 @@ export function Score({
         strokePercent > 100 - gapPercent * 2 * offsetFactor &&
         strokePercent > 100 - gapPercent * 2 * offsetFactorSecondary)
     ) {
-      return 0
-    } else return 1
-  }
+      return 0;
+    } else return 1;
+  };
 
   return (
     <svg
@@ -205,9 +205,9 @@ export function Score({
       className={cn(styles.svg, className)}
       style={
         {
-          '--stroke-width': strokeWidth,
-          '--transition-length': `${transition?.length}ms`,
-          '--delay': `${transition?.delay}ms`,
+          "--stroke-width": strokeWidth,
+          "--transition-length": `${transition?.length}ms`,
+          "--delay": `${transition?.delay}ms`,
         } as CSSProperties
       }
       fill="none"
@@ -218,8 +218,8 @@ export function Score({
         r={radius}
         style={
           {
-            '--track-colour': trackColor,
-            '--track-stroke-dasharray': secondaryStrokeDasharray(),
+            "--track-colour": trackColor,
+            "--track-stroke-dasharray": secondaryStrokeDasharray(),
             transform: secondaryTransform(),
             opacity: secondaryOpacity(),
           } as CSSProperties
@@ -233,10 +233,10 @@ export function Score({
         r={radius}
         style={
           {
-            '--progress-colour': progressColour,
-            '--progress-stroke-dasharray': primaryStrokeDasharray(),
-            '--transition-length': `${transition?.length}ms`,
-            '--delay': `${transition?.delay}ms`,
+            "--progress-colour": progressColour,
+            "--progress-stroke-dasharray": primaryStrokeDasharray(),
+            "--transition-length": `${transition?.length}ms`,
+            "--delay": `${transition?.delay}ms`,
             transform: primaryTransform(),
             opacity: primaryOpacity(),
           } as CSSProperties
@@ -254,9 +254,9 @@ export function Score({
           className={styles.text}
           style={
             {
-              '--progress-colour': progressColour,
-              '--transition-length': `${transition?.length}ms`,
-              '--delay': `${transition?.delay}ms`,
+              "--progress-colour": progressColour,
+              "--transition-length": `${transition?.length}ms`,
+              "--delay": `${transition?.delay}ms`,
             } as CSSProperties
           }
         >
@@ -264,5 +264,5 @@ export function Score({
         </text>
       )}
     </svg>
-  )
+  );
 }

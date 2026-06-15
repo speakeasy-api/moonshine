@@ -1,30 +1,30 @@
-import { Icon } from '@/components/Icon'
-import { cn } from '@/lib/utils'
-import React, { Children, isValidElement, useMemo, useState } from 'react'
-import { ComponentProps, ReactNode } from 'react'
+import { Icon } from "@/components/Icon";
+import { cn } from "@/lib/utils";
+import React, { Children, isValidElement, useMemo, useState } from "react";
+import { ComponentProps, ReactNode } from "react";
 import {
   ImperativePanelHandle,
   Panel,
   PanelGroup,
   PanelResizeHandle,
-} from 'react-resizable-panels'
+} from "react-resizable-panels";
 
 export interface ResizeHandleProps extends ComponentProps<
   typeof PanelResizeHandle
 > {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 const ResizeHandle = ({ children, ...props }: ResizeHandleProps) => {
-  return <PanelResizeHandle {...props}>{children}</PanelResizeHandle>
-}
+  return <PanelResizeHandle {...props}>{children}</PanelResizeHandle>;
+};
 
-ResizeHandle.displayName = 'ResizablePanel.ResizeHandle'
+ResizeHandle.displayName = "ResizablePanel.ResizeHandle";
 
 export interface ResizablePanelProps extends ComponentProps<typeof PanelGroup> {
-  children: ReactNode
-  className?: string
-  useDefaultHandle?: boolean
+  children: ReactNode;
+  className?: string;
+  useDefaultHandle?: boolean;
 }
 
 const ResizablePanel = ({
@@ -37,20 +37,20 @@ const ResizablePanel = ({
   const validChildren = useMemo(
     () =>
       Children.toArray(children).filter((child) => {
-        if (!isValidElement(child)) return false
-        const type = child.type as { displayName?: string }
+        if (!isValidElement(child)) return false;
+        const type = child.type as { displayName?: string };
         return (
-          type.displayName === 'ResizablePanel.Pane' ||
-          type.displayName === 'ResizablePanel.ResizeHandle'
-        )
+          type.displayName === "ResizablePanel.Pane" ||
+          type.displayName === "ResizablePanel.ResizeHandle"
+        );
       }),
-    [children]
-  )
+    [children],
+  );
 
   return (
     <PanelGroup onLayout={onLayout} {...props} className={className}>
       {React.Children.map(validChildren, (child, index) => {
-        if (!isValidElement(child)) return child
+        if (!isValidElement(child)) return child;
         return (
           <>
             {child}
@@ -59,16 +59,16 @@ const ResizablePanel = ({
               <DefaultResizeHandle direction={props.direction} />
             )}
           </>
-        )
+        );
       })}
     </PanelGroup>
-  )
-}
+  );
+};
 
 export interface PaneProps extends ComponentProps<typeof Panel> {
-  children: ReactNode
-  className?: string
-  panelRef?: React.LegacyRef<ImperativePanelHandle>
+  children: ReactNode;
+  className?: string;
+  panelRef?: React.LegacyRef<ImperativePanelHandle>;
 }
 
 const Pane = ({ children, className, panelRef, ...props }: PaneProps) => {
@@ -76,17 +76,17 @@ const Pane = ({ children, className, panelRef, ...props }: PaneProps) => {
     <Panel className={className} {...props} ref={panelRef}>
       {children}
     </Panel>
-  )
-}
+  );
+};
 
-Pane.displayName = 'ResizablePanel.Pane'
+Pane.displayName = "ResizablePanel.Pane";
 
 const DefaultResizeHandle = ({
   direction,
 }: {
-  direction: 'horizontal' | 'vertical'
+  direction: "horizontal" | "vertical";
 }) => {
-  const [isResizing, setIsResizing] = useState(false)
+  const [isResizing, setIsResizing] = useState(false);
   return (
     <PanelResizeHandle
       onDragging={(dragging) => setIsResizing(dragging)}
@@ -95,26 +95,26 @@ const DefaultResizeHandle = ({
         fine: 10,
       }}
       className={cn(
-        'relative border-[1.25px] border-zinc-900/50',
-        isResizing && 'border-foreground/10'
+        "relative border-[1.25px] border-zinc-900/50",
+        isResizing && "border-foreground/10",
       )}
     >
       <div
         className={cn(
-          'bg-card text-body-muted absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border shadow-sm shadow-zinc-400/5',
-          direction === 'vertical' ? 'cursor-ns-resize' : 'cursor-ew-resize',
-          isResizing && 'text-foreground'
+          "absolute top-[50%] flex translate-x-[-50%] items-center justify-center rounded-md border bg-card text-body-muted shadow-sm shadow-zinc-400/5",
+          direction === "vertical" ? "cursor-ns-resize" : "cursor-ew-resize",
+          isResizing && "text-foreground",
         )}
       >
         <Icon name="grip-vertical" className="h-8 w-5" />
       </div>
     </PanelResizeHandle>
-  )
-}
+  );
+};
 
 const ResizablePanelWithSubcomponents = Object.assign(ResizablePanel, {
   Pane,
   ResizeHandle,
-})
+});
 
-export { ResizablePanelWithSubcomponents as ResizablePanel }
+export { ResizablePanelWithSubcomponents as ResizablePanel };

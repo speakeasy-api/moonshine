@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Copy, ExternalLink, PlusIcon as LucidePlusIcon } from 'lucide-react'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Copy, ExternalLink, PlusIcon as LucidePlusIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipProvider,
   TooltipTrigger,
-} from '.'
-import { Button } from '../Button'
-import { IconButton } from '../IconButton'
+} from ".";
+import { Button } from "../Button";
+import { IconButton } from "../IconButton";
 
 const meta: Meta<typeof Tooltip> = {
   component: Tooltip,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'Tooltip wraps Radix Tooltip primitives with Moonshine styling. Use `TooltipTrigger asChild` with Button or IconButton so the trigger remains the interactive element.',
+          "Tooltip wraps Radix Tooltip primitives with Moonshine styling. Use `TooltipTrigger asChild` with Button or IconButton so the trigger remains the interactive element.",
       },
     },
   },
@@ -29,14 +29,14 @@ const meta: Meta<typeof Tooltip> = {
       </TooltipProvider>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Tooltip>
+type Story = StoryObj<typeof Tooltip>;
 
 function PlusIcon(props: React.ComponentProps<typeof LucidePlusIcon>) {
-  return <LucidePlusIcon {...props} />
+  return <LucidePlusIcon {...props} />;
 }
 
 export const Default: Story = {
@@ -54,11 +54,11 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          'The default pattern uses `TooltipTrigger asChild` so the Button receives pointer and focus events directly.',
+          "The default pattern uses `TooltipTrigger asChild` so the Button receives pointer and focus events directly.",
       },
     },
   },
-}
+};
 
 export const WithIconButton: Story = {
   args: {
@@ -77,11 +77,11 @@ export const WithIconButton: Story = {
     docs: {
       description: {
         story:
-          'Icon-only actions should keep a visible tooltip and an accessible `aria-label` on the IconButton.',
+          "Icon-only actions should keep a visible tooltip and an accessible `aria-label` on the IconButton.",
       },
     },
   },
-}
+};
 
 export const WithButtonIcons: Story = {
   args: {
@@ -105,11 +105,11 @@ export const WithButtonIcons: Story = {
     docs: {
       description: {
         story:
-          'Tooltip works with Button compound components, including left and right icons.',
+          "Tooltip works with Button compound components, including left and right icons.",
       },
     },
   },
-}
+};
 
 export const Placement: Story = {
   args: {
@@ -126,14 +126,14 @@ export const Placement: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'TooltipContent accepts Radix placement props such as `side`.',
+        story: "TooltipContent accepts Radix placement props such as `side`.",
       },
     },
   },
-}
+};
 
 export const WithPortal: Story = {
-  name: 'With Portal',
+  name: "With Portal",
   args: {
     defaultOpen: true,
     children: [
@@ -151,11 +151,11 @@ export const WithPortal: Story = {
     docs: {
       description: {
         story:
-          'Use TooltipPortal when the tooltip needs to escape parent stacking or overflow contexts.',
+          "Use TooltipPortal when the tooltip needs to escape parent stacking or overflow contexts.",
       },
     },
   },
-}
+};
 
 export const DelayDuration: Story = {
   args: {
@@ -173,11 +173,11 @@ export const DelayDuration: Story = {
     docs: {
       description: {
         story:
-          '`delayDuration` can be set per Tooltip when a specific interaction needs to feel faster or slower than the provider default.',
+          "`delayDuration` can be set per Tooltip when a specific interaction needs to feel faster or slower than the provider default.",
       },
     },
   },
-}
+};
 
 export const DisabledTrigger: Story = {
   args: {
@@ -198,8 +198,8 @@ export const DisabledTrigger: Story = {
     docs: {
       description: {
         story:
-          'Disabled buttons do not emit pointer or focus events. Wrap the disabled control in a focusable element when the tooltip needs to explain why it is disabled.',
+          "Disabled buttons do not emit pointer or focus events. Wrap the disabled control in a focusable element when the tooltip needs to explain why it is disabled.",
       },
     },
   },
-}
+};

@@ -1,20 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Text } from '.'
-import { Stack } from '../Stack'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Text } from ".";
+import { Stack } from "../Stack";
 
 const meta: Meta<typeof Text> = {
   component: Text,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
-type Story = StoryObj<typeof Text>
+export default meta;
+type Story = StoryObj<typeof Text>;
 
 export const Default: Story = {
   args: {
-    children: 'Default text example',
+    children: "Default text example",
   },
-}
+};
 
 export const AllVariants: Story = {
   render: () => (
@@ -25,7 +25,7 @@ export const AllVariants: Story = {
       <Text variant="xs">Extra small text</Text>
     </Stack>
   ),
-}
+};
 
 export const WithDifferentElements: Story = {
   render: () => (
@@ -38,7 +38,7 @@ export const WithDifferentElements: Story = {
       </Text>
     </Stack>
   ),
-}
+};
 
 export const MutedText: Story = {
   render: () => (
@@ -57,13 +57,13 @@ export const MutedText: Story = {
       </Text>
     </Stack>
   ),
-}
+};
 
 export const CombinedExample: Story = {
   render: () => (
     <Stack gap={4}>
       <div>
-        <Text variant="lg">Regular large text</Text>{' '}
+        <Text variant="lg">Regular large text</Text>{" "}
         <Text variant="lg" muted>
           Muted large text
         </Text>
@@ -73,13 +73,13 @@ export const CombinedExample: Story = {
           Small span text
         </Text>
         <Text as="span" variant="sm" muted>
-          {' '}
+          {" "}
           with muted text
         </Text>
       </div>
     </Stack>
   ),
-}
+};
 
 export const WhitespaceHandling: Story = {
   render: () => (
@@ -87,7 +87,7 @@ export const WhitespaceHandling: Story = {
       <div>
         <Text variant="sm">Normal whitespace (default):</Text>
 
-        <div className="border-border max-w-[300px] border">
+        <div className="max-w-[300px] border border-border">
           <Text>
             This is normal text that will wrap naturally when it reaches the end
             of its container.
@@ -97,7 +97,7 @@ export const WhitespaceHandling: Story = {
 
       <div>
         <Text variant="sm">Nowrap:</Text>
-        <div className="border-border max-w-[300px] border">
+        <div className="max-w-[300px] border border-border">
           <Text whiteSpace="nowrap">
             This text will not wrap and will overflow its container
           </Text>
@@ -105,4 +105,4 @@ export const WhitespaceHandling: Story = {
       </div>
     </Stack>
   ),
-}
+};

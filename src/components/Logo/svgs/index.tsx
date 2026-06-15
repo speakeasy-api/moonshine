@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 interface SvgProps extends React.SVGProps<SVGSVGElement> {
-  muted?: boolean
+  muted?: boolean;
 }
 
 export function Wordmark({ className, muted, ...props }: SvgProps) {
@@ -14,8 +14,8 @@ export function Wordmark({ className, muted, ...props }: SvgProps) {
       viewBox={`0 0 140 24`}
       preserveAspectRatio="xMidYMid meet"
       className={cn(
-        muted ? 'text-foreground/80' : 'text-foreground dark:text-primary',
-        className
+        muted ? "text-foreground/80" : "text-foreground dark:text-primary",
+        className,
       )}
       {...props}
     >
@@ -78,7 +78,7 @@ export function Wordmark({ className, muted, ...props }: SvgProps) {
         </g>
       </g>
     </svg>
-  )
+  );
 }
 
 export function Logo({ className, muted, ...props }: SvgProps) {
@@ -93,9 +93,9 @@ export function Logo({ className, muted, ...props }: SvgProps) {
       preserveAspectRatio="xMidYMid meet"
       className={cn(
         muted
-          ? 'text-foreground/80 h-[24px] w-[24px]'
-          : 'dark:text-primary text-black',
-        className
+          ? "h-[24px] w-[24px] text-foreground/80"
+          : "text-black dark:text-primary",
+        className,
       )}
       {...props}
     >
@@ -122,5 +122,5 @@ export function Logo({ className, muted, ...props }: SvgProps) {
         />
       </g>
     </svg>
-  )
+  );
 }

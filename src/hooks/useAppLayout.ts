@@ -1,10 +1,10 @@
-import { useContext } from 'react'
-import { AppLayoutContext } from '@/components/AppLayout/context'
+import { useContext } from "react";
+import { AppLayoutContext } from "@/components/AppLayout/context";
 
 export const useAppLayout = () => {
-  const context = useContext(AppLayoutContext)
+  const context = useContext(AppLayoutContext);
   if (!context) {
-    throw new Error('useAppLayout must be used within an AppLayoutProvider')
+    throw new Error("useAppLayout must be used within an AppLayoutProvider");
   }
-  return context
-}
+  return context;
+};

@@ -1,4 +1,4 @@
-import { Grid } from '@/components/Grid'
+import { Grid } from "@/components/Grid";
 
 /**
  * Create a list of sample children for testing and rendering in storybook
@@ -8,13 +8,13 @@ export function createSampleChildren(count: number, attachTestIds?: boolean) {
     return (
       <div
         key={index}
-        className="bg-muted text-body flex min-w-[100px] items-center justify-center rounded-md p-4 text-center"
+        className="flex min-w-[100px] items-center justify-center rounded-md bg-muted p-4 text-center text-body"
         data-testid={attachTestIds ? `sample-child-${index + 1}` : undefined}
       >
         {index + 1}
       </div>
-    )
-  })
+    );
+  });
 }
 
 export function createSampleGridChildren(count: number) {
@@ -22,5 +22,5 @@ export function createSampleGridChildren(count: number) {
     <Grid.Item key={child.key} {...child.props}>
       {child}
     </Grid.Item>
-  ))
+  ));
 }

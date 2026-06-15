@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   GitPullRequest,
   Info,
   CheckCircle,
   AlertTriangle,
   XCircle,
-} from 'lucide-react'
+} from "lucide-react";
 
-import { Badge } from '.'
+import { Badge } from ".";
 
 const meta: Meta<typeof Badge> = {
   component: Badge,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Badge>
+type Story = StoryObj<typeof Badge>;
 
 export const Neutral: Story = {
   args: {
-    children: 'Neutral',
-    variant: 'neutral',
+    children: "Neutral",
+    variant: "neutral",
   },
-}
+};
 
 export const NeutralWithIcon: Story = {
   render: () => (
@@ -34,14 +34,14 @@ export const NeutralWithIcon: Story = {
       <Badge.Text>Neutral</Badge.Text>
     </Badge>
   ),
-}
+};
 
 export const Information: Story = {
   args: {
-    children: 'Information',
-    variant: 'information',
+    children: "Information",
+    variant: "information",
   },
-}
+};
 
 export const InformationWithIcon: Story = {
   render: () => (
@@ -52,14 +52,14 @@ export const InformationWithIcon: Story = {
       <Badge.Text>Information</Badge.Text>
     </Badge>
   ),
-}
+};
 
 export const Success: Story = {
   args: {
-    children: 'Success',
-    variant: 'success',
+    children: "Success",
+    variant: "success",
   },
-}
+};
 
 export const SuccessWithIcon: Story = {
   render: () => (
@@ -70,14 +70,14 @@ export const SuccessWithIcon: Story = {
       <Badge.Text>Success</Badge.Text>
     </Badge>
   ),
-}
+};
 
 export const Warning: Story = {
   args: {
-    children: 'Warning',
-    variant: 'warning',
+    children: "Warning",
+    variant: "warning",
   },
-}
+};
 
 export const WarningWithIcon: Story = {
   render: () => (
@@ -88,14 +88,14 @@ export const WarningWithIcon: Story = {
       <Badge.Text>Warning</Badge.Text>
     </Badge>
   ),
-}
+};
 
 export const Destructive: Story = {
   args: {
-    children: 'Destructive',
-    variant: 'destructive',
+    children: "Destructive",
+    variant: "destructive",
   },
-}
+};
 
 export const DestructiveWithIcon: Story = {
   render: () => (
@@ -106,7 +106,7 @@ export const DestructiveWithIcon: Story = {
       <Badge.Text>Destructive</Badge.Text>
     </Badge>
   ),
-}
+};
 
 export const WithBackground: Story = {
   render: () => (
@@ -143,7 +143,7 @@ export const WithBackground: Story = {
       </Badge>
     </div>
   ),
-}
+};
 
 export const WithoutBackground: Story = {
   render: () => (
@@ -180,7 +180,7 @@ export const WithoutBackground: Story = {
       </Badge>
     </div>
   ),
-}
+};
 
 export const AllVariants: Story = {
   render: () => (
@@ -219,7 +219,7 @@ export const AllVariants: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const AllSizes: Story = {
   render: () => (
@@ -235,7 +235,7 @@ export const AllSizes: Story = {
       </Badge>
     </div>
   ),
-}
+};
 
 export const AllSizesWithIcon: Story = {
   render: () => (
@@ -260,4 +260,4 @@ export const AllSizesWithIcon: Story = {
       </Badge>
     </div>
   ),
-}
+};

@@ -1,38 +1,38 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Grid } from '.'
-import { createSampleGridChildren } from '@/lib/storybookUtils'
+import { Grid } from ".";
+import { createSampleGridChildren } from "@/lib/storybookUtils";
 
 const meta: Meta<typeof Grid> = {
   component: Grid,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
-type Story = StoryObj<typeof Grid>
+export default meta;
+type Story = StoryObj<typeof Grid>;
 
-const columnCount = 6
+const columnCount = 6;
 export const Default: Story = {
   args: {
     children: createSampleGridChildren(columnCount),
     columns: columnCount,
     gap: 5,
   },
-}
+};
 
 export const WithCustomGap: Story = {
   args: {
     ...Default.args,
     gap: 10,
   },
-}
+};
 
 export const WithResponsiveColumns: Story = {
   args: {
     ...Default.args,
     columns: { xs: 1, md: 2, lg: 3 },
   },
-}
+};
 
 export const WithCustomColspan: Story = {
   args: {
@@ -44,11 +44,11 @@ export const WithCustomColspan: Story = {
         colSpan={index === 0 ? 2 : undefined}
         {...child.props}
       >
-        {index === 0 ? 'Colspan 2' : 'Colspan 1'}
+        {index === 0 ? "Colspan 2" : "Colspan 1"}
       </Grid.Item>
     )),
   },
-}
+};
 
 export const WithResponsiveColspan: Story = {
   args: {
@@ -59,11 +59,11 @@ export const WithResponsiveColspan: Story = {
         colSpan={index === 0 ? { xs: 2, md: 3, lg: 4 } : undefined}
         {...child.props}
       >
-        {index === 0 ? 'Colspan 2' : 'Colspan 1'}
+        {index === 0 ? "Colspan 2" : "Colspan 1"}
       </Grid.Item>
     )),
   },
-}
+};
 
 export const WithInvalidChildren: Story = {
   args: {
@@ -73,21 +73,21 @@ export const WithInvalidChildren: Story = {
       <div key="invalid-child">Invalid child - will be dropped</div>,
     ],
   },
-}
+};
 
 export const WithPadding: Story = {
   args: {
     ...Default.args,
     padding: 10,
   },
-}
+};
 
 export const WithResponsivePadding: Story = {
   args: {
     ...Default.args,
     padding: { xs: 0, md: 10, lg: 16 },
   },
-}
+};
 
 export const WithResponsivePaddingPerSide: Story = {
   args: {
@@ -98,14 +98,14 @@ export const WithResponsivePaddingPerSide: Story = {
       lg: { top: 16, right: 0, bottom: 16, left: 0 },
     },
   },
-}
+};
 
 export const WithResponsivePaddingPerAxis: Story = {
   args: {
     ...WithResponsivePaddingPerSide.args,
     padding: { xs: 0, md: { x: 10, y: 0 }, lg: { x: 16, y: 0 } },
   },
-}
+};
 
 export const WithGridItemPadding: Story = {
   args: {
@@ -125,4 +125,4 @@ export const WithGridItemPadding: Story = {
       </Grid.Item>,
     ],
   },
-}
+};

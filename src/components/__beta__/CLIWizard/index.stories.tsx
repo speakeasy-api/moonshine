@@ -1,69 +1,69 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import CLIWizard from './index'
-import { Container } from '@/components/Container'
-import { WizardStep } from '@/components/Wizard/types'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import CLIWizard from "./index";
+import { Container } from "@/components/Container";
+import { WizardStep } from "@/components/Wizard/types";
 
 const steps: WizardStep[] = [
   {
-    title: 'Create your first SDK',
+    title: "Create your first SDK",
     description:
-      'Generate an SDK, terraform provider, or documentation from your OpenAPI Spec.',
+      "Generate an SDK, terraform provider, or documentation from your OpenAPI Spec.",
     commands: [
       {
-        id: 'brew-install',
-        code: 'brew install speakeasy-api/homebrew-tap/speakeasy',
-        comment: 'Install Speakeasy',
-        language: 'bash',
-        path: '~',
+        id: "brew-install",
+        code: "brew install speakeasy-api/homebrew-tap/speakeasy",
+        comment: "Install Speakeasy",
+        language: "bash",
+        path: "~",
       },
       {
-        id: 'quickstart',
-        code: 'speakeasy quickstart',
-        comment: 'Run quickstart',
-        language: 'bash',
-        path: '~',
+        id: "quickstart",
+        code: "speakeasy quickstart",
+        comment: "Run quickstart",
+        language: "bash",
+        path: "~",
       },
     ],
   },
   {
-    title: 'Run your first GitHub Action',
-    description: 'Set up automated SDK updates with GitHub Actions.',
+    title: "Run your first GitHub Action",
+    description: "Set up automated SDK updates with GitHub Actions.",
     commands: [
       {
-        id: 'navigate-to-sdk-directory',
-        code: 'cd your_sdk_directory',
-        comment: 'Navigate to SDK directory',
-        language: 'bash',
-        path: '~',
+        id: "navigate-to-sdk-directory",
+        code: "cd your_sdk_directory",
+        comment: "Navigate to SDK directory",
+        language: "bash",
+        path: "~",
       },
       {
-        id: 'configure-github',
-        code: 'speakeasy configure github',
-        comment: 'Configure GitHub',
-        language: 'bash',
-        path: '~/your_sdk_directory',
+        id: "configure-github",
+        code: "speakeasy configure github",
+        comment: "Configure GitHub",
+        language: "bash",
+        path: "~/your_sdk_directory",
       },
     ],
   },
   {
-    title: 'Publish your SDK',
-    description: 'Configure and publish your SDK to package managers.',
+    title: "Publish your SDK",
+    description: "Configure and publish your SDK to package managers.",
     commands: [
       {
-        id: 'configure-publishing',
-        code: 'speakeasy configure publishing',
-        comment: 'Configure publishing',
-        language: 'bash',
-        path: '~/your_sdk_directory',
+        id: "configure-publishing",
+        code: "speakeasy configure publishing",
+        comment: "Configure publishing",
+        language: "bash",
+        path: "~/your_sdk_directory",
       },
     ],
   },
-]
+];
 
 const meta: Meta<typeof CLIWizard> = {
   component: CLIWizard,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   decorators: [
     (Story) => (
@@ -72,11 +72,11 @@ const meta: Meta<typeof CLIWizard> = {
       </Container>
     ),
   ],
-  tags: ['autodocs'],
-} satisfies Meta<typeof CLIWizard>
+  tags: ["autodocs"],
+} satisfies Meta<typeof CLIWizard>;
 
-export default meta
-type Story = StoryObj<typeof CLIWizard>
+export default meta;
+type Story = StoryObj<typeof CLIWizard>;
 
 export const Default: Story = {
   args: {
@@ -84,10 +84,10 @@ export const Default: Story = {
     currentStep: 1,
     completedSteps: [],
     onStepComplete: (stepIndex) => {
-      console.log(`Step ${stepIndex} completed!`)
+      console.log(`Step ${stepIndex} completed!`);
     },
   },
-}
+};
 
 export const WithCompletedSteps: Story = {
   args: {
@@ -95,10 +95,10 @@ export const WithCompletedSteps: Story = {
     currentStep: 2,
     completedSteps: [1],
     onStepComplete: (stepIndex) => {
-      console.log(`Step ${stepIndex} completed!`)
+      console.log(`Step ${stepIndex} completed!`);
     },
   },
-}
+};
 
 export const AllStepsCompleted: Story = {
   args: {
@@ -106,10 +106,10 @@ export const AllStepsCompleted: Story = {
     currentStep: 3,
     completedSteps: [1, 2, 3],
     onStepComplete: (stepIndex) => {
-      console.log(`Step ${stepIndex} completed!`)
+      console.log(`Step ${stepIndex} completed!`);
     },
   },
-}
+};
 
 export const MobileView: Story = {
   args: {
@@ -117,13 +117,13 @@ export const MobileView: Story = {
     currentStep: 1,
     completedSteps: [],
     onStepComplete: (stepIndex) => {
-      console.log(`Step ${stepIndex} completed!`)
+      console.log(`Step ${stepIndex} completed!`);
     },
   },
   globals: {
     viewport: {
-      value: 'mobile1',
+      value: "mobile1",
       isRotated: false,
     },
   },
-}
+};
