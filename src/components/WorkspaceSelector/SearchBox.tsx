@@ -29,6 +29,8 @@ export function SearchBox({
         {search && (
           <button
             className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm text-muted-foreground hover:bg-accent"
+            type="button"
+            aria-label="Clear search"
             onClick={() => setSearch("")}
           >
             <Icon name="x" size="small" />

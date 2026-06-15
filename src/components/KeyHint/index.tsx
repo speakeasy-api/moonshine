@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/Icon";
+import React from "react";
 
 type Modifier = "shift" | "ctrlorcommand" | "alt" | "meta" | "esc";
 
@@ -46,21 +47,21 @@ function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
   return (
     <div className="flex flex-row items-center gap-1">
       {modifiers.map((modifier, index) => (
-        <>
+        <React.Fragment key={`${modifier}-${index}`}>
           <Key value={modifierMap[modifier]} />
           {index < modifiers.length - 1 && (
             <span className="text-sm text-body-muted">+</span>
           )}
-        </>
+        </React.Fragment>
       ))}
       {keys.length > 0 && <span className="text-sm text-body-muted">+</span>}
       {keys.map((key, index) => (
-        <>
+        <React.Fragment key={`${key}-${index}`}>
           <Key value={key.toUpperCase()} />
           {index < keys.length - 1 && (
             <span className="text-sm text-body-muted">+</span>
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
@@ -96,13 +97,14 @@ export function KeyHint({
       <div className="flex w-full flex-row items-center self-start border-b px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-body-muted uppercase select-none dark:text-body-muted/80">
         <div>{titleText}</div>
         {dismissable && (
-          <div
+          <button
+            type="button"
             className="ml-auto cursor-pointer hover:text-foreground"
             onClick={onDismiss}
-            title="Close"
+            aria-label="Dismiss"
           >
             <Icon name="x" className="h-3.5 w-3.5" />
-          </div>
+          </button>
         )}
       </div>
       <div className="flex flex-row items-center gap-1 px-4 py-3.5">

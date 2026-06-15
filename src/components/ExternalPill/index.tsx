@@ -45,6 +45,7 @@ export function ExternalPill({
     <a
       href={href}
       target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       title={title}
       className={cn(
         "inline-flex flex-row items-center gap-1.5 rounded-xl border px-3.5 py-2 text-zinc-700 transition-colors duration-500 hover:border-zinc-300 hover:bg-zinc-50 hover:text-black dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 hover:dark:text-white",
