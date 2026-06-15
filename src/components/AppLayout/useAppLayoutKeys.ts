@@ -11,10 +11,10 @@ export function useAppLayoutKeys() {
         event.key.toLowerCase() === keybinds.toggle.key.toLowerCase()
       ) {
         event.preventDefault();
-        setCollapsed((prev) => !prev);
+        setCollapsed(!collapsed);
       }
     },
-    [keybinds, setCollapsed],
+    [keybinds, collapsed, setCollapsed],
   );
 
   useEffect(() => {
