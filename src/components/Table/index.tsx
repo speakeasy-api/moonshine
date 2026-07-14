@@ -36,6 +36,11 @@ export type Group<T extends object> = {
   [k: string]: unknown
 }
 
+export type RenderRow<T extends object> = (
+  row: T,
+  rowElement: React.ReactElement
+) => ReactNode
+
 type CellPadding = 'normal' | 'condensed' | 'spacious'
 
 type PropsWithChildrenAndClassName = PropsWithChildren<{ className?: string }>
@@ -45,6 +50,13 @@ export type TableProps<T extends object> = {
   data: T[] | Group<T>[]
   rowKey: (row: T) => string | number
   onRowClick?: (row: T) => void
+  /**
+   * Wrap each data row. `rowElement` is the row's `<tr>` element, which
+   * forwards refs and extra props, so it can back e.g. a Radix
+   * `ContextMenuTrigger asChild`. Return `rowElement` (possibly wrapped)
+   * to render the row.
+   */
+  renderRow?: RenderRow<T>
   renderGroupHeader?: (group: Group<T>) => ReactNode
   renderExpandedContent?: (row: T) => ReactNode
   onLoadMore?: () => Promise<void> | (() => void)
@@ -152,6 +164,7 @@ function TableRoot<T extends object>(
     data,
     rowKey,
     onRowClick,
+    renderRow,
     onLoadMore,
     hasMore,
     noResultsMessage,
@@ -201,6 +214,7 @@ function TableRoot<T extends object>(
         handleLoadMore={handleLoadMore}
         isLoading={isLoading}
         onRowClick={onRowClick}
+        renderRow={renderRow}
       />
     </TableContainer>
   )
@@ -254,6 +268,7 @@ type BodyProps<T extends object> = {
   data: T[] | Group<T>[]
   rowKey: (row: T) => string | number
   onRowClick?: (row: T) => void
+  renderRow?: RenderRow<T>
   noResultsMessage?: ReactNode
   renderGroupHeader?: (group: Group<T>) => ReactNode
   renderExpandedContent?: (row: T) => ReactNode
@@ -298,6 +313,7 @@ const Body = React.forwardRef(function Body<T extends object>(
     rowKey,
     hasMore,
     onRowClick,
+    renderRow,
     noResultsMessage,
     renderGroupHeader,
     handleLoadMore,
@@ -306,7 +322,7 @@ const Body = React.forwardRef(function Body<T extends object>(
     renderExpandedContent,
   } = props
 
-  const renderRow = (row: T | Group<T>) => {
+  const renderBodyRow = (row: T | Group<T>) => {
     if (isGroupOf<T>(row)) {
       return (
         <RowGroup
@@ -316,6 +332,7 @@ const Body = React.forwardRef(function Body<T extends object>(
           renderGroupHeader={renderGroupHeader}
           key={row.key}
           onRowClick={onRowClick}
+          renderRow={renderRow}
         />
       )
     } else if (renderExpandedContent) {
@@ -327,6 +344,7 @@ const Body = React.forwardRef(function Body<T extends object>(
           renderExpandedContent={renderExpandedContent}
           key={rowKey(row)}
           onClick={onRowClick}
+          renderRow={renderRow}
         />
       )
     } else {
@@ -336,6 +354,7 @@ const Body = React.forwardRef(function Body<T extends object>(
           key={rowKey(row)}
           columns={columns}
           onClick={onRowClick}
+          renderRow={renderRow}
         />
       )
     }
@@ -346,7 +365,7 @@ const Body = React.forwardRef(function Body<T extends object>(
       {data.length === 0 ? (
         <NoResultsMessage>{noResultsMessage}</NoResultsMessage>
       ) : (
-        data.map(renderRow)
+        data.map(renderBodyRow)
       )}
       {hasMore && handleLoadMore && (
         <LoadMore
@@ -368,38 +387,48 @@ type RowProps<T extends object> = {
   onClick?: (row: T) => void
   columns: Column<T>[]
   className?: string
+  renderRow?: RenderRow<T>
 }
 
 type RowContainerProps = {
   onClick?: () => void
-} & PropsWithChildrenAndClassName
+} & PropsWithChildrenAndClassName &
+  Omit<
+    React.ComponentPropsWithoutRef<'tr'>,
+    'onClick' | 'className' | 'children'
+  >
 
-function RowContainer({ className, children, onClick }: RowContainerProps) {
-  return (
-    <tr
-      className={cn(
-        'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none',
-        onClick && 'cursor-pointer',
-        className
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </tr>
-  )
-}
+const RowContainer = forwardRef<HTMLTableRowElement, RowContainerProps>(
+  function RowContainer({ className, children, onClick, ...rest }, ref) {
+    return (
+      <tr
+        ref={ref}
+        className={cn(
+          'hover:bg-muted/50 data-[state=selected]:bg-muted -z-0 [grid-column:1/-1] grid max-w-full [grid-template-columns:subgrid] border-b transition-colors last:border-none',
+          onClick && 'cursor-pointer',
+          className
+        )}
+        onClick={onClick}
+        {...rest}
+      >
+        {children}
+      </tr>
+    )
+  }
+)
 
 function Row<T extends object>(props: RowProps<T> | RowContainerProps) {
   if (propsHasChildren<RowContainerProps, RowProps<T>>(props)) {
+    const { className, onClick, children, ...rest } = props
     return (
-      <RowContainer className={props.className} onClick={props.onClick}>
-        {props.children}
+      <RowContainer className={className} onClick={onClick} {...rest}>
+        {children}
       </RowContainer>
     )
   }
 
-  const { row, onClick, columns, className } = props
-  return (
+  const { row, onClick, columns, className, renderRow } = props
+  const rowElement = (
     <RowContainer
       className={className}
       onClick={onClick ? () => onClick(row) : undefined}
@@ -409,6 +438,7 @@ function Row<T extends object>(props: RowProps<T> | RowContainerProps) {
       ))}
     </RowContainer>
   )
+  return <>{renderRow ? renderRow(row, rowElement) : rowElement}</>
 }
 
 function RowExpandable<T extends object>({
@@ -418,6 +448,7 @@ function RowExpandable<T extends object>({
   rowKey,
   renderExpandedContent,
   className,
+  renderRow,
 }: {
   row: T
   columns: Column<T>[]
@@ -425,6 +456,7 @@ function RowExpandable<T extends object>({
   renderExpandedContent: (row: T) => ReactNode
   onClick?: (row: T) => void
   className?: string
+  renderRow?: RenderRow<T>
 }) {
   const { expandedRowKeys, toggleExpanded } = useTable()
 
@@ -481,6 +513,7 @@ function RowExpandable<T extends object>({
         onClick={onClickFn}
         columns={columns}
         className={className}
+        renderRow={renderRow}
       />
       {/* This grid stuff is a cute way to make the height animate smoothly when expanding/collapsing */}
       <div
@@ -502,6 +535,7 @@ function RowGroup<T extends object>({
   renderGroupHeader,
   className,
   onRowClick,
+  renderRow,
 }: {
   group: Group<T>
   columns: Column<T>[]
@@ -509,6 +543,7 @@ function RowGroup<T extends object>({
   renderGroupHeader?: (group: Group<T>) => ReactNode
   className?: string
   onRowClick?: (row: T) => void
+  renderRow?: RenderRow<T>
 }) {
   return (
     <div
@@ -524,6 +559,7 @@ function RowGroup<T extends object>({
           key={rowKey(row)}
           columns={columns}
           onClick={onRowClick}
+          renderRow={renderRow}
         />
       ))}
     </div>
