@@ -1,59 +1,59 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { IconButton } from './'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { IconButton } from "./";
 import {
   PlusIcon as LucidePlusIcon,
   Heart,
   Settings,
   Search,
-} from 'lucide-react'
-import { fn as storybookActionFn } from 'storybook/test'
+} from "lucide-react";
+import { fn as storybookActionFn } from "storybook/test";
 
 const meta: Meta<typeof IconButton> = {
   component: IconButton,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: { type: 'select' },
+      control: { type: "select" },
       options: [
-        'brand',
-        'primary',
-        'secondary',
-        'tertiary',
-        'destructive-primary',
-        'destructive-secondary',
-        'default',
-        'destructive',
-        'outline',
-        'ghost',
-        'link',
+        "brand",
+        "primary",
+        "secondary",
+        "tertiary",
+        "destructive-primary",
+        "destructive-secondary",
+        "default",
+        "destructive",
+        "outline",
+        "ghost",
+        "link",
       ],
     },
     size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg'],
+      control: { type: "select" },
+      options: ["xs", "sm", "md", "lg"],
     },
     context: {
-      control: { type: 'select' },
-      options: ['product', 'marketing'],
+      control: { type: "select" },
+      options: ["product", "marketing"],
       description:
-        'Context determines styling - product uses rounded corners, marketing uses full pills',
+        "Context determines styling - product uses rounded corners, marketing uses full pills",
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof IconButton>
+type Story = StoryObj<typeof IconButton>;
 
 // Wrapper for Lucide PlusIcon
 function PlusIcon(props: React.ComponentProps<typeof LucidePlusIcon>) {
-  return <LucidePlusIcon {...props} />
+  return <LucidePlusIcon {...props} />;
 }
 
 const baseProps = {
   onClick: storybookActionFn(),
-  'aria-label': 'Example action',
-}
+  "aria-label": "Example action",
+};
 
 // === VARIANTS ===
 
@@ -61,46 +61,46 @@ export const Primary: Story = {
   args: {
     ...baseProps,
     icon: <PlusIcon />,
-    variant: 'primary',
-    'aria-label': 'Add item',
+    variant: "primary",
+    "aria-label": "Add item",
   },
-}
+};
 
 export const Secondary: Story = {
   args: {
     ...baseProps,
     icon: <Settings />,
-    variant: 'secondary',
-    'aria-label': 'Settings',
+    variant: "secondary",
+    "aria-label": "Settings",
   },
-}
+};
 
 export const Brand: Story = {
   args: {
     ...baseProps,
     icon: <Heart />,
-    variant: 'brand',
-    'aria-label': 'Like',
+    variant: "brand",
+    "aria-label": "Like",
   },
-}
+};
 
 export const Tertiary: Story = {
   args: {
     ...baseProps,
     icon: <Search />,
-    variant: 'tertiary',
-    'aria-label': 'Search',
+    variant: "tertiary",
+    "aria-label": "Search",
   },
-}
+};
 
 export const DestructivePrimary: Story = {
   args: {
     ...baseProps,
     icon: <PlusIcon />,
-    variant: 'destructive-primary',
-    'aria-label': 'Delete',
+    variant: "destructive-primary",
+    "aria-label": "Delete",
   },
-}
+};
 
 // === SIZES ===
 
@@ -131,10 +131,10 @@ export const Sizes: Story = {
         variant="primary"
         aria-label="Add"
       />
-      <div className="text-muted text-xs">xs, sm, md, lg</div>
+      <div className="text-xs text-muted">xs, sm, md, lg</div>
     </div>
   ),
-}
+};
 
 // === VARIANTS GRID ===
 
@@ -218,7 +218,7 @@ export const AllVariants: Story = {
       </div>
     </div>
   ),
-}
+};
 
 // === STATES ===
 
@@ -249,7 +249,7 @@ export const States: Story = {
       </div>
     </div>
   ),
-}
+};
 
 // === ACCESSIBILITY ===
 
@@ -265,7 +265,7 @@ export const Accessibility: Story = {
           variant="primary"
           aria-label="Add new item to your collection"
         />
-        <p className="text-muted mt-2 text-xs">
+        <p className="mt-2 text-xs text-muted">
           Descriptive aria-label helps screen readers understand the button's
           purpose
         </p>
@@ -275,7 +275,7 @@ export const Accessibility: Story = {
         <h3 className="mb-2 text-sm font-medium">
           🔍 TypeScript enforces accessibility
         </h3>
-        <pre className="bg-muted rounded p-2 text-xs">
+        <pre className="rounded bg-muted p-2 text-xs">
           {`// ❌ TypeScript error - missing aria-label
 <IconButton icon={<PlusIcon />} variant="primary" />
 
@@ -293,8 +293,8 @@ export const Accessibility: Story = {
     docs: {
       description: {
         story:
-          'IconButton enforces accessibility by requiring aria-label at the TypeScript level.',
+          "IconButton enforces accessibility by requiring aria-label at the TypeScript level.",
       },
     },
   },
-}
+};

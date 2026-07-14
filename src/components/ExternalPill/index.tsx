@@ -1,58 +1,59 @@
 // TODO: https://linear.app/speakeasy/issue/SXF-173/external-pill-component
-import React, { useState, useEffect } from 'react'
-import { Icon as FallbackIcon } from '../Icon'
-import { cn } from '@/lib/utils'
+import React, { useState, useEffect } from "react";
+import { Icon as FallbackIcon } from "../Icon";
+import { cn } from "@/lib/utils";
 
 type AllExternalIcons =
-  | 'github'
-  | 'npm'
-  | 'rubygems'
-  | 'nuget'
-  | 'maven'
-  | 'pypi'
-  | 'packagist'
-  | 'terraform'
-const supportedExternals = ['github', 'npm', 'rubygems']
+  | "github"
+  | "npm"
+  | "rubygems"
+  | "nuget"
+  | "maven"
+  | "pypi"
+  | "packagist"
+  | "terraform";
+const supportedExternals = ["github", "npm", "rubygems"];
 
 export interface ExternalPillProps {
-  href: string
-  icon: AllExternalIcons
-  text: React.ReactNode
-  title?: string
-  target?: '_blank' | '_self' | '_parent' | '_top'
-  className?: string
+  href: string;
+  icon: AllExternalIcons;
+  text: React.ReactNode;
+  title?: string;
+  target?: "_blank" | "_self" | "_parent" | "_top";
+  className?: string;
 }
 
 export function ExternalPill({
   href,
   icon,
   text,
-  target = '_blank',
+  target = "_blank",
   title,
   className,
 }: ExternalPillProps) {
-  const [Icon, setIcon] = useState<React.ComponentType | null>(null)
+  const [Icon, setIcon] = useState<React.ComponentType | null>(null);
 
   useEffect(() => {
     if (supportedExternals.includes(icon)) {
       import(`../../assets/icons/external/${icon}.svg?react`).then((module) =>
-        setIcon(module.default)
-      )
+        setIcon(module.default),
+      );
     }
-  }, [icon])
+  }, [icon]);
 
   return (
     <a
       href={href}
       target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       title={title}
       className={cn(
-        'inline-flex flex-row items-center gap-1.5 rounded-xl border px-3.5 py-2 text-zinc-700 transition-colors duration-500 hover:border-zinc-300 hover:bg-zinc-50 hover:text-black dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 hover:dark:text-white',
-        className
+        "inline-flex flex-row items-center gap-1.5 rounded-xl border px-3.5 py-2 text-zinc-700 transition-colors duration-500 hover:border-zinc-300 hover:bg-zinc-50 hover:text-black dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 hover:dark:text-white",
+        className,
       )}
     >
       {Icon ? <Icon /> : <FallbackIcon name="external-link" />}
       <p className="text-xs font-normal">{text}</p>
     </a>
-  )
+  );
 }

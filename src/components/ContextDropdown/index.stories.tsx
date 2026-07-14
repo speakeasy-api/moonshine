@@ -1,34 +1,34 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { ContextDropdown } from '.'
-import { useModal } from '../../hooks/useModal'
-import { Button } from '../Button'
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import { ModalProvider } from '@/context/ModalContext'
-import { faker } from '@faker-js/faker'
-import { cn } from '@/lib/utils'
-import { Heading } from '../Heading'
-import { Text } from '../Text'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ContextDropdown } from ".";
+import { useModal } from "../../hooks/useModal";
+import { Button } from "../Button";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover";
+import { ModalProvider } from "@/context/ModalContext";
+import { faker } from "@faker-js/faker";
+import { cn } from "@/lib/utils";
+import { Heading } from "../Heading";
+import { Text } from "../Text";
 
-faker.seed(123)
+faker.seed(123);
 
 const meta: Meta<typeof ContextDropdown> = {
   component: ContextDropdown,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof ContextDropdown>
+type Story = StoryObj<typeof ContextDropdown>;
 
 interface ScreenProps {
-  title: string
-  content: string
-  index: number
+  title: string;
+  content: string;
+  index: number;
 }
 
 function Screen({ title, content, index }: ScreenProps) {
-  const { pushScreen } = useModal()
-  const nextIndex = index + 1
+  const { pushScreen } = useModal();
+  const nextIndex = index + 1;
   return (
     <div className="flex h-full flex-1 flex-col gap-4 p-4">
       <Heading variant="sm" className="!leading-7">
@@ -51,7 +51,7 @@ function Screen({ title, content, index }: ScreenProps) {
                     index={nextIndex}
                   />
                 ),
-              })
+              });
             }}
           >
             Next
@@ -59,7 +59,7 @@ function Screen({ title, content, index }: ScreenProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export const Default: Story = {
@@ -72,8 +72,8 @@ export const Default: Story = {
               <Button
                 onClick={() =>
                   openScreen({
-                    id: '1',
-                    title: 'Screen 1',
+                    id: "1",
+                    title: "Screen 1",
                     component: (
                       <Screen
                         title={faker.lorem.sentence({ min: 1, max: 3 })}
@@ -90,16 +90,16 @@ export const Default: Story = {
             <PopoverContent
               align="start"
               sideOffset={10}
-              className="shadow-foreground/10 min-h-80 w-full min-w-lg overflow-hidden shadow-lg"
+              className="min-h-80 w-full min-w-lg overflow-hidden shadow-lg shadow-foreground/10"
             >
               <ContextDropdown />
             </PopoverContent>
           </Popover>
         )}
       </ModalProvider>
-    )
+    );
   },
-}
+};
 
 export const CustomTitle: Story = {
   render: () => {
@@ -111,8 +111,8 @@ export const CustomTitle: Story = {
               <Button
                 onClick={() =>
                   openScreen({
-                    id: '1',
-                    title: 'Screen 1',
+                    id: "1",
+                    title: "Screen 1",
                     component: (
                       <Screen
                         title={faker.lorem.sentence()}
@@ -129,16 +129,16 @@ export const CustomTitle: Story = {
             <PopoverContent
               align="start"
               sideOffset={10}
-              className="shadow-foreground/10 flex h-auto w-full min-w-lg flex-col shadow-lg"
+              className="flex h-auto w-full min-w-lg flex-col shadow-lg shadow-foreground/10"
             >
               <ContextDropdown
                 renderTitle={(screen, index) => (
                   <div
                     className={cn(
-                      'text-md absolute font-medium',
+                      "text-md absolute font-medium",
                       index % 2 === 0
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-indigo-600 dark:text-indigo-400'
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-indigo-600 dark:text-indigo-400",
                     )}
                   >
                     {screen.title}
@@ -149,6 +149,6 @@ export const CustomTitle: Story = {
           </Popover>
         )}
       </ModalProvider>
-    )
+    );
   },
-}
+};

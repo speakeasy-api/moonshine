@@ -1,13 +1,13 @@
 @reference '../../global.css';
 
 @property --from-color {
-  syntax: '<color>';
+  syntax: "<color>";
   inherits: false;
   initial-value: red;
 }
 
 @property --to-color {
-  syntax: '<color>';
+  syntax: "<color>";
   inherits: false;
   initial-value: blue;
 }

@@ -22,21 +22,24 @@ src/
 This file contains four main sections:
 
 1. **Primitive Tokens** - Raw design values (should not be used directly)
+
    ```css
    --color-neutral-200: hsl(0, 0%, 92%);
-   --font-diatype: 'Diatype', -apple-system, ...;
+   --font-diatype: "Diatype", -apple-system, ...;
    ```
 
 2. **Semantic/Utility Tokens** - Theme-aware variables that map to utilities
+
    ```css
    /* Light mode */
    --text-warning: var(--color-feedback-orange-700);
    --bg-warning: var(--color-feedback-orange-100);
-   
+
    /* Automatically switches in dark mode */
    ```
 
 3. **Component Tokens** - Higher-level semantic tokens
+
    ```css
    --radius: 0.625rem;
    --shadow: hsl(0 0% 50%);
@@ -67,6 +70,7 @@ Handles Tailwind configuration and imports:
 ### Why Custom Typography Utilities?
 
 Instead of allowing arbitrary combinations like:
+
 ```css
 /* ❌ Bad - leads to inconsistency */
 .heading {
@@ -75,6 +79,7 @@ Instead of allowing arbitrary combinations like:
 ```
 
 We provide semantic utilities:
+
 ```css
 /* ✅ Good - enforces design system */
 .heading {
@@ -98,6 +103,7 @@ The "utility tokens" pattern in base.css enables automatic theme switching:
 ### Preventing Design System Escape Hatches
 
 We intentionally:
+
 - Don't expose raw color values as utilities
 - Provide complete typography utilities (not individual properties)
 - Use semantic naming to guide correct usage
@@ -119,13 +125,14 @@ We intentionally:
 ### Extending Responsive Utilities
 
 Add new `@source` declarations in global.css:
+
 ```css
 @source inline("{,sm:,md:,lg:,xl:,2xl:}your-utility-{value1,value2}");
 ```
 
 ## Available Utility Classes
 
-This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:27:34.139Z
+This section is auto-generated from the CSS files. Last updated: 2026-05-19T16:25:14.779Z
 
 ### Typography Utilities
 
@@ -483,6 +490,15 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 }
 ```
 
+#### `text-trim-cap`
+
+```css
+.text-trim-cap {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+```
+
 #### `text-button-md`
 
 ```css
@@ -729,7 +745,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-neutral-900);
 
   /* dark variant */
-    color: var(--color-neutral-100);
+  color: var(--color-neutral-100);
 }
 ```
 
@@ -740,7 +756,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -751,7 +767,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -763,8 +779,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    color: var(--color-neutral-100);
-    opacity: 0.4;
+  color: var(--color-neutral-100);
+  opacity: 0.4;
 }
 ```
 
@@ -775,7 +791,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-neutral-100);
 
   /* dark variant */
-    color: var(--color-neutral-900);
+  color: var(--color-neutral-900);
 }
 ```
 
@@ -786,7 +802,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-white);
 
   /* dark variant */
-    color: var(--color-base-black);
+  color: var(--color-base-black);
 }
 ```
 
@@ -797,7 +813,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-white);
 
   /* dark variant */
-    color: var(--color-base-black);
+  color: var(--color-base-black);
 }
 ```
 
@@ -809,8 +825,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    color: var(--color-neutral-900);
-    opacity: 0.4;
+  color: var(--color-neutral-900);
+  opacity: 0.4;
 }
 ```
 
@@ -821,7 +837,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-neutral-900);
 
   /* dark variant */
-    color: var(--color-neutral-100);
+  color: var(--color-neutral-100);
 }
 ```
 
@@ -832,7 +848,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -843,7 +859,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -855,8 +871,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    color: var(--color-neutral-100);
-    opacity: 0.4;
+  color: var(--color-neutral-100);
+  opacity: 0.4;
 }
 ```
 
@@ -867,7 +883,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-neutral-900);
 
   /* dark variant */
-    color: var(--color-neutral-100);
+  color: var(--color-neutral-100);
 }
 ```
 
@@ -878,7 +894,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -889,7 +905,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-base-black);
 
   /* dark variant */
-    color: var(--color-base-white);
+  color: var(--color-base-white);
 }
 ```
 
@@ -901,8 +917,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    color: var(--color-neutral-100);
-    opacity: 0.4;
+  color: var(--color-neutral-100);
+  opacity: 0.4;
 }
 ```
 
@@ -946,7 +962,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-feedback-red-600);
 
   /* dark variant */
-    color: var(--color-feedback-red-400);
+  color: var(--color-feedback-red-400);
 }
 ```
 
@@ -957,7 +973,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-feedback-red-700);
 
   /* dark variant */
-    color: var(--color-feedback-red-500);
+  color: var(--color-feedback-red-500);
 }
 ```
 
@@ -968,7 +984,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   color: var(--color-feedback-red-800);
 
   /* dark variant */
-    color: var(--color-feedback-red-600);
+  color: var(--color-feedback-red-600);
 }
 ```
 
@@ -980,8 +996,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    color: var(--color-feedback-red-400);
-    opacity: 0.4;
+  color: var(--color-feedback-red-400);
+  opacity: 0.4;
 }
 ```
 
@@ -1040,7 +1056,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-base-white);
 
   /* dark variant */
-    background-color: var(--color-base-black);
+  background-color: var(--color-base-black);
 }
 ```
 
@@ -1051,7 +1067,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-100);
 
   /* dark variant */
-    background-color: var(--color-neutral-900);
+  background-color: var(--color-neutral-900);
 }
 ```
 
@@ -1070,7 +1086,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-base-white);
 
   /* dark variant */
-    background-color: var(--color-base-black);
+  background-color: var(--color-base-black);
 }
 ```
 
@@ -1081,7 +1097,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-100);
 
   /* dark variant */
-    background-color: var(--color-neutral-900);
+  background-color: var(--color-neutral-900);
 }
 ```
 
@@ -1092,7 +1108,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-200);
 
   /* dark variant */
-    background-color: var(--color-neutral-800);
+  background-color: var(--color-neutral-800);
 }
 ```
 
@@ -1101,9 +1117,11 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
 ```css
 .bg-btn-brand-disabled {
   background-color: var(--color-base-white);
+  opacity: 1;
+  color: var(--text-muted);
 
   /* dark variant */
-    background-color: var(--color-base-black);
+  background-color: var(--color-base-black);
 }
 ```
 
@@ -1114,7 +1132,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-800);
 
   /* dark variant */
-    background-color: var(--color-neutral-200);
+  background-color: var(--color-neutral-200);
 }
 ```
 
@@ -1125,7 +1143,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-900);
 
   /* dark variant */
-    background-color: var(--color-neutral-100);
+  background-color: var(--color-neutral-100);
 }
 ```
 
@@ -1136,7 +1154,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-base-black);
 
   /* dark variant */
-    background-color: var(--color-base-white);
+  background-color: var(--color-base-white);
 }
 ```
 
@@ -1148,8 +1166,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    background-color: var(--color-neutral-200);
-    opacity: 0.4;
+  background-color: var(--color-neutral-200);
+  opacity: 0.4;
 }
 ```
 
@@ -1160,7 +1178,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-200);
 
   /* dark variant */
-    background-color: var(--color-neutral-800);
+  background-color: var(--color-neutral-800);
 }
 ```
 
@@ -1171,7 +1189,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-300);
 
   /* dark variant */
-    background-color: var(--color-neutral-700);
+  background-color: var(--color-neutral-700);
 }
 ```
 
@@ -1182,7 +1200,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-neutral-400);
 
   /* dark variant */
-    background-color: var(--color-neutral-600);
+  background-color: var(--color-neutral-600);
 }
 ```
 
@@ -1194,8 +1212,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    background-color: var(--color-neutral-800);
-    opacity: 0.4;
+  background-color: var(--color-neutral-800);
+  opacity: 0.4;
 }
 ```
 
@@ -1206,7 +1224,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-feedback-red-600);
 
   /* dark variant */
-    background-color: var(--color-feedback-red-400);
+  background-color: var(--color-feedback-red-400);
 }
 ```
 
@@ -1217,7 +1235,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-feedback-red-700);
 
   /* dark variant */
-    background-color: var(--color-feedback-red-500);
+  background-color: var(--color-feedback-red-500);
 }
 ```
 
@@ -1228,7 +1246,7 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   background-color: var(--color-feedback-red-800);
 
   /* dark variant */
-    background-color: var(--color-feedback-red-600);
+  background-color: var(--color-feedback-red-600);
 }
 ```
 
@@ -1240,8 +1258,8 @@ This section is auto-generated from the CSS files. Last updated: 2025-09-17T00:2
   opacity: 0.4;
 
   /* dark variant */
-    background-color: var(--color-feedback-red-400);
-    opacity: 0.4;
+  background-color: var(--color-feedback-red-400);
+  opacity: 0.4;
 }
 ```
 

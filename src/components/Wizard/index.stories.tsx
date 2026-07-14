@@ -1,88 +1,85 @@
-import React from 'react'
-import { Wizard } from '.'
-import { type WizardStep } from './types'
-import { StoryObj, Meta } from '@storybook/react-vite'
-import { Badge, Heading } from '@/index'
+import React from "react";
+import { Wizard } from ".";
+import { type WizardStep } from "./types";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Badge, Heading } from "@/index";
 
 const meta: Meta<typeof Wizard> = {
   component: Wizard,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
-    chromatic: {
-      delay: 1000,
-    },
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Wizard>
+type Story = StoryObj<typeof Wizard>;
 
 const steps: WizardStep[] = [
   {
-    title: 'Create your first SDK',
+    title: "Create your first SDK",
     description:
-      'Generate an SDK, terraform provider, or documentation from your OpenAPI Spec.',
+      "Generate an SDK, terraform provider, or documentation from your OpenAPI Spec.",
     commands: [
       {
-        code: 'brew install speakeasy-api/homebrew-tap/speakeasy',
-        comment: 'Install Speakeasy',
-        language: 'bash',
-        id: 'install-speakeasy',
+        code: "brew install speakeasy-api/homebrew-tap/speakeasy",
+        comment: "Install Speakeasy",
+        language: "bash",
+        id: "install-speakeasy",
       },
       {
-        code: 'speakeasy quickstart',
-        comment: 'Run quickstart',
-        language: 'bash',
-        id: 'run-quickstart',
+        code: "speakeasy quickstart",
+        comment: "Run quickstart",
+        language: "bash",
+        id: "run-quickstart",
       },
     ],
   },
   {
-    title: 'Run your first GitHub Action',
-    description: 'Set up automated SDK updates with GitHub Actions.',
+    title: "Run your first GitHub Action",
+    description: "Set up automated SDK updates with GitHub Actions.",
     commands: [
       {
-        code: 'cd your_sdk_directory',
-        comment: 'Navigate to SDK directory',
-        language: 'bash',
-        id: 'navigate-to-sdk-directory',
+        code: "cd your_sdk_directory",
+        comment: "Navigate to SDK directory",
+        language: "bash",
+        id: "navigate-to-sdk-directory",
       },
       {
-        code: 'speakeasy configure github',
-        comment: 'Configure GitHub',
-        language: 'bash',
-        id: 'configure-github',
+        code: "speakeasy configure github",
+        comment: "Configure GitHub",
+        language: "bash",
+        id: "configure-github",
       },
     ],
   },
   {
-    title: 'Publish your SDK',
-    description: 'Configure and publish your SDK to package managers.',
+    title: "Publish your SDK",
+    description: "Configure and publish your SDK to package managers.",
     commands: [
       {
-        code: 'cd your_sdk_directory',
-        comment: 'Navigate to SDK directory',
-        language: 'bash',
-        id: 'navigate-to-sdk-directory',
+        code: "cd your_sdk_directory",
+        comment: "Navigate to SDK directory",
+        language: "bash",
+        id: "navigate-to-sdk-directory",
       },
       {
-        code: 'speakeasy configure publishing',
-        comment: 'Configure publishing',
-        language: 'bash',
-        id: 'configure-publishing',
+        code: "speakeasy configure publishing",
+        comment: "Configure publishing",
+        language: "bash",
+        id: "configure-publishing",
       },
     ],
   },
-]
+];
 
 interface WizardWithStateProps {
-  steps: WizardStep[]
+  steps: WizardStep[];
   headerContent: (
     completedSteps: number[],
-    steps: WizardStep[]
-  ) => React.ReactNode
+    steps: WizardStep[],
+  ) => React.ReactNode;
 }
 
 const WizardWithState = ({ steps, headerContent }: WizardWithStateProps) => {
@@ -93,29 +90,29 @@ const WizardWithState = ({ steps, headerContent }: WizardWithStateProps) => {
       currentStep={2}
       completedSteps={[1]}
     />
-  )
-}
+  );
+};
 
 const GetStartedHeaderContent = (
   completedSteps: number[],
-  steps: WizardStep[]
+  steps: WizardStep[],
 ) => (
   <>
     <div className="flex items-center gap-2">
       <Heading variant="xl">Get Started</Heading>
       <Badge>
         {completedSteps.length === steps.length
-          ? 'Completed'
+          ? "Completed"
           : `${completedSteps.length} of ${steps.length} steps`}
       </Badge>
     </div>
-    <p className="text-body text-sm">
+    <p className="text-sm text-body">
       {completedSteps.length === steps.length
         ? "Congratulations! You've completed all steps."
-        : 'Welcome to Speakeasy! Follow these steps to create, automate, and publish your SDK.'}
+        : "Welcome to Speakeasy! Follow these steps to create, automate, and publish your SDK."}
     </p>
   </>
-)
+);
 
 export const GetStarted: Story = {
   args: {
@@ -125,15 +122,15 @@ export const GetStarted: Story = {
     headerContent: GetStartedHeaderContent,
   },
   render: (args) => <WizardWithState {...args} />,
-}
+};
 
 export const FizzBuzz: Story = {
   args: {
     steps: [
       {
-        title: 'Create the FizzBuzz function',
+        title: "Create the FizzBuzz function",
         description:
-          'Write the basic function structure that loops from 1 to 100.',
+          "Write the basic function structure that loops from 1 to 100.",
         commands: [
           {
             code: `function fizzBuzz() {
@@ -142,15 +139,15 @@ export const FizzBuzz: Story = {
     console.log(i);
   }
 }`,
-            comment: 'Basic loop structure',
-            language: 'javascript',
-            id: 'basic-loop-structure',
+            comment: "Basic loop structure",
+            language: "javascript",
+            id: "basic-loop-structure",
           },
         ],
       },
       {
-        title: 'Add Fizz and Buzz conditions',
-        description: 'Add the logic to check for multiples of 3 and 5.',
+        title: "Add Fizz and Buzz conditions",
+        description: "Add the logic to check for multiples of 3 and 5.",
         commands: [
           {
             code: `function fizzBuzz() {
@@ -161,28 +158,28 @@ export const FizzBuzz: Story = {
     console.log(output || i);
   }
 }`,
-            comment: 'Complete FizzBuzz solution',
-            language: 'javascript',
-            id: 'complete-fizzbuzz-solution',
+            comment: "Complete FizzBuzz solution",
+            language: "javascript",
+            id: "complete-fizzbuzz-solution",
           },
         ],
       },
       {
-        title: 'Run the function',
-        description: 'Run the function to see the output.',
+        title: "Run the function",
+        description: "Run the function to see the output.",
         commands: [
           {
-            code: 'fizzBuzz()',
-            comment: 'Run the function',
-            language: 'javascript',
-            id: 'run-the-function',
+            code: "fizzBuzz()",
+            comment: "Run the function",
+            language: "javascript",
+            id: "run-the-function",
           },
         ],
       },
     ],
     headerContent: () => (
       <>
-        <p className="text-body text-sm">
+        <p className="text-sm text-body">
           Write a function that prints the numbers 1 to 100, but for multiples
           of 3 print "Fizz" instead of the number, for multiples of 5 print
           "Buzz", and for numbers which are multiples of both 3 and 5 print
@@ -192,4 +189,4 @@ export const FizzBuzz: Story = {
     ),
   },
   render: (args) => <WizardWithState {...args} />,
-}
+};

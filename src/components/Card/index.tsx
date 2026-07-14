@@ -1,35 +1,35 @@
-import { cn } from '@/lib/utils'
-import React, { FC, PropsWithChildren, ReactNode } from 'react'
-import { Icon } from '../Icon'
-import { Stack } from '../Stack'
-import { Button } from '../Button'
-import { Score } from '../Score'
-import { iconNames } from '../Icon/names'
-import { Children } from 'react'
-import { Range } from '@/lib/typeUtils'
+import { cn } from "@/lib/utils";
+import React, { FC, PropsWithChildren, ReactNode } from "react";
+import { Icon } from "../Icon";
+import { Stack } from "../Stack";
+import { Button } from "../Button";
+import { Score } from "../Score";
+import { iconNames } from "../Icon/names";
+import { Children } from "react";
+import { Range } from "@/lib/typeUtils";
 
 type RightElement =
   | {
-      type: 'button'
-      label: string
-      onClick: () => void
+      type: "button";
+      label: string;
+      onClick: () => void;
     }
   | {
-      type: 'gauge'
-      value: Range<100>
-    }
+      type: "gauge";
+      value: Range<100>;
+    };
 
 type IconProps = {
-  name: (typeof iconNames)[number]
-  size?: 'small' | 'medium' | 'large'
-}
+  name: (typeof iconNames)[number];
+  size?: "small" | "medium" | "large";
+};
 
 type CardHeaderProps = PropsWithChildren & {
-  subheader?: React.ReactNode
-  icon?: IconProps
-  rightElement?: RightElement
-  className?: string
-}
+  subheader?: React.ReactNode;
+  icon?: IconProps;
+  rightElement?: RightElement;
+  className?: string;
+};
 
 const CardHeader: FC<CardHeaderProps> = ({
   children,
@@ -40,9 +40,9 @@ const CardHeader: FC<CardHeaderProps> = ({
 }) => (
   <div
     className={cn(
-      'flex w-full flex-row gap-4',
-      subheader ? 'items-start' : 'items-center',
-      className
+      "flex w-full flex-row gap-4",
+      subheader ? "items-start" : "items-center",
+      className,
     )}
   >
     {icon && (
@@ -56,7 +56,7 @@ const CardHeader: FC<CardHeaderProps> = ({
         {children}
       </div>
       {subheader && (
-        <div className="text-card-foreground mt-1 flex items-center text-sm">
+        <div className="mt-1 flex items-center text-sm text-card-foreground">
           {subheader}
         </div>
       )}
@@ -64,65 +64,65 @@ const CardHeader: FC<CardHeaderProps> = ({
 
     {rightElement && (
       <div className="flex flex-shrink-0 justify-end gap-2">
-        {rightElement.type === 'button' && (
+        {rightElement.type === "button" && (
           <Button onClick={rightElement.onClick} variant="secondary">
             {rightElement.label}
           </Button>
         )}
-        {rightElement.type === 'gauge' && rightElement.value && (
+        {rightElement.type === "gauge" && rightElement.value && (
           <Score score={rightElement.value} size="small" />
         )}
       </div>
     )}
   </div>
-)
-CardHeader.displayName = 'CardHeader'
+);
+CardHeader.displayName = "CardHeader";
 
 interface CardContentProps extends PropsWithChildren {
-  className?: string
+  className?: string;
 }
 
 const CardContent: FC<CardContentProps> = ({ children, className }) => (
-  <div className={cn('text-sm', className)}>{children}</div>
-)
-CardContent.displayName = 'CardContent'
+  <div className={cn("text-sm", className)}>{children}</div>
+);
+CardContent.displayName = "CardContent";
 
 type FooterContent = {
-  text: string
+  text: string;
   link?: {
-    label: string
-    href: string
-  }
-}
+    label: string;
+    href: string;
+  };
+};
 
 type CardFooterProps = {
-  content: FooterContent
-  className?: string
-}
+  content: FooterContent;
+  className?: string;
+};
 
 const CardFooter: FC<CardFooterProps> = ({ content, className }) => (
-  <div className={cn('border-t px-6 py-4', className)}>
-    <div className="text-card-foreground flex items-center text-sm">
+  <div className={cn("border-t px-6 py-4", className)}>
+    <div className="flex items-center text-sm text-card-foreground">
       {content.text}
       {content.link && (
         <a
           href={content.link.href}
-          className="text-primary ml-2 hover:underline"
+          className="ml-2 text-primary hover:underline"
         >
           {content.link.label}
         </a>
       )}
     </div>
   </div>
-)
-CardFooter.displayName = 'CardFooter'
+);
+CardFooter.displayName = "CardFooter";
 
 export type CardProps = {
-  children: ReactNode | ReactNode[]
-  onClick?: () => void
-  href?: string
-  className?: string
-}
+  children: ReactNode | ReactNode[];
+  onClick?: () => void;
+  href?: string;
+  className?: string;
+};
 
 const Card: FC<CardProps> = ({ children, onClick, href, className }) => {
   const validChildren = Children.toArray(children).filter(
@@ -130,39 +130,42 @@ const Card: FC<CardProps> = ({ children, onClick, href, className }) => {
       React.isValidElement(child) &&
       (child.type === CardHeader ||
         child.type === CardContent ||
-        child.type === CardFooter)
-  )
+        child.type === CardFooter),
+  );
 
   const hasButtonElement = Children.toArray(validChildren).some((child) => {
-    if (React.isValidElement(child) && child.type === CardHeader) {
-      return child.props.rightElement?.type === 'button'
+    if (
+      React.isValidElement<CardHeaderProps>(child) &&
+      child.type === CardHeader
+    ) {
+      return child.props.rightElement?.type === "button";
     }
-    return false
-  })
+    return false;
+  });
 
   if (hasButtonElement && (onClick || href)) {
     console.warn(
-      'Card: Card-level interaction (onClick/href) will be ignored when header contains a button element. ' +
-        'This prevents confusing UX with nested clickable elements.'
-    )
+      "Card: Card-level interaction (onClick/href) will be ignored when header contains a button element. " +
+        "This prevents confusing UX with nested clickable elements.",
+    );
   }
 
-  const isInteractive = !hasButtonElement && Boolean(onClick || href)
-  const Wrapper = href && !hasButtonElement ? 'a' : 'div'
+  const isInteractive = !hasButtonElement && Boolean(onClick || href);
+  const Wrapper = href && !hasButtonElement ? "a" : "div";
   const wrapperProps = !hasButtonElement
     ? href
       ? { href }
       : onClick
         ? { onClick }
         : {}
-    : {}
+    : {};
 
   return (
     <Wrapper
       className={cn(
-        'bg-card text-card-foreground relative flex h-full w-full flex-col rounded-[8px] border shadow',
-        isInteractive && 'hover:bg-card/70 cursor-pointer',
-        className
+        "relative flex h-full w-full flex-col rounded-[8px] border bg-card text-card-foreground shadow",
+        isInteractive && "cursor-pointer hover:bg-card/70",
+        className,
       )}
       {...wrapperProps}
     >
@@ -170,24 +173,24 @@ const Card: FC<CardProps> = ({ children, onClick, href, className }) => {
         <Stack gap={3}>
           {validChildren.map((child) => {
             if (React.isValidElement(child) && child.type === CardFooter) {
-              return null
+              return null;
             }
 
-            return child
+            return child;
           })}
         </Stack>
       </div>
       {validChildren.find(
-        (child) => React.isValidElement(child) && child.type === CardFooter
+        (child) => React.isValidElement(child) && child.type === CardFooter,
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 const CardWithSubcomponents = Object.assign(Card, {
   Header: CardHeader,
   Content: CardContent,
   Footer: CardFooter,
-})
+});
 
-export { CardWithSubcomponents as Card }
+export { CardWithSubcomponents as Card };

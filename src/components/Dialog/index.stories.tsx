@@ -1,21 +1,21 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { Dialog } from '.'
-import { Button } from '../Button'
-import { Heading } from '../Heading'
-import { Stack } from '../Stack'
-import { Text } from '../Text'
-import { CodeSnippet } from '../CodeSnippet'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Dialog } from ".";
+import { Button } from "../Button";
+import { Heading } from "../Heading";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
+import { CodeSnippet } from "../CodeSnippet";
 
 const meta: Meta<typeof Dialog> = {
   component: Dialog,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Dialog>
+export default meta;
+type Story = StoryObj<typeof Dialog>;
 
 export const Default: Story = {
   args: {
@@ -65,4 +65,4 @@ export const Default: Story = {
       </Dialog.Content>,
     ],
   },
-}
+};

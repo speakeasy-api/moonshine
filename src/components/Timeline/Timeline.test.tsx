@@ -1,19 +1,19 @@
-import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import { Timeline } from './index'
-import { Code, Database } from 'lucide-react'
-import { describe, it, expect, vi } from 'vitest'
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { Timeline } from "./index";
+import { Code, Database } from "lucide-react";
+import { describe, it, expect, vi } from "vitest";
 
 // Mock ResizeObserver for layout effect tests
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
-describe('Timeline Component', () => {
-  describe('Composability and Content Organization', () => {
-    it('automatically organizes title and timestamp in header layout', () => {
+describe("Timeline Component", () => {
+  describe("Composability and Content Organization", () => {
+    it("automatically organizes title and timestamp in header layout", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -25,25 +25,25 @@ describe('Timeline Component', () => {
               <Timeline.Timestamp>2 hours ago</Timeline.Timestamp>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       const content = screen
-        .getByText('Main Title')
-        .closest('[class*="min-w-0 flex-1"]')
+        .getByText("Main Title")
+        .closest('[class*="min-w-0 flex-1"]');
       const timestamp = screen
-        .getByText('2 hours ago')
-        .closest('[class*="flex-shrink-0"]')
-      const description = screen.getByText('This should appear below')
+        .getByText("2 hours ago")
+        .closest('[class*="flex-shrink-0"]');
+      const description = screen.getByText("This should appear below");
 
       // Title and timestamp should be in the same header container
-      expect(content?.parentElement).toEqual(timestamp?.parentElement)
+      expect(content?.parentElement).toEqual(timestamp?.parentElement);
 
       // Description should be in separate content area below
-      expect(description.parentElement).toHaveClass('space-y-1')
-    })
+      expect(description.parentElement).toHaveClass("space-y-1");
+    });
 
-    it('handles mixed content types correctly', () => {
+    it("handles mixed content types correctly", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -54,21 +54,21 @@ describe('Timeline Component', () => {
               <Timeline.Timestamp>1 day ago</Timeline.Timestamp>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Title should be in header
-      expect(screen.getByText('Task Complete')).toBeInTheDocument()
+      expect(screen.getByText("Task Complete")).toBeInTheDocument();
 
       // Timestamp should be in header
-      expect(screen.getByText('1 day ago')).toBeInTheDocument()
+      expect(screen.getByText("1 day ago")).toBeInTheDocument();
 
       // Custom content and description should be in content area
-      expect(screen.getByTestId('custom-content')).toBeInTheDocument()
-      expect(screen.getByText('Standard description')).toBeInTheDocument()
-    })
+      expect(screen.getByTestId("custom-content")).toBeInTheDocument();
+      expect(screen.getByText("Standard description")).toBeInTheDocument();
+    });
 
-    it('gracefully handles missing title or timestamp', () => {
+    it("gracefully handles missing title or timestamp", () => {
       const { rerender } = render(
         <Timeline>
           <Timeline.Item>
@@ -77,11 +77,11 @@ describe('Timeline Component', () => {
               <Timeline.Description>Description text</Timeline.Description>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByText('Only Title')).toBeInTheDocument()
-      expect(screen.getByText('Description text')).toBeInTheDocument()
+      expect(screen.getByText("Only Title")).toBeInTheDocument();
+      expect(screen.getByText("Description text")).toBeInTheDocument();
 
       rerender(
         <Timeline>
@@ -91,16 +91,16 @@ describe('Timeline Component', () => {
               <Timeline.Description>Description text</Timeline.Description>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByText('Only Timestamp')).toBeInTheDocument()
-      expect(screen.getByText('Description text')).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByText("Only Timestamp")).toBeInTheDocument();
+      expect(screen.getByText("Description text")).toBeInTheDocument();
+    });
+  });
 
-  describe('Timeline Line and Layout Behavior', () => {
-    it('does not render connecting line for single item', () => {
+  describe("Timeline Line and Layout Behavior", () => {
+    it("does not render connecting line for single item", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -108,13 +108,15 @@ describe('Timeline Component', () => {
               <Timeline.Title>Single Item</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.queryByTestId('timeline-connector')).not.toBeInTheDocument()
-    })
+      expect(
+        screen.queryByTestId("timeline-connector"),
+      ).not.toBeInTheDocument();
+    });
 
-    it('renders connecting line for multiple items', () => {
+    it("renders connecting line for multiple items", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -127,13 +129,13 @@ describe('Timeline Component', () => {
               <Timeline.Title>Second</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
-    })
+      expect(screen.getByTestId("timeline-connector")).toBeInTheDocument();
+    });
 
-    it('applies correct line height calculation for hasMore prop', async () => {
+    it("applies correct line height calculation for hasMore prop", async () => {
       const { rerender } = render(
         <Timeline hasMore={false}>
           <Timeline.Item>
@@ -146,12 +148,12 @@ describe('Timeline Component', () => {
               <Timeline.Title>Second</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('timeline-connector')).toHaveStyle({
-        height: 'calc(100% - 4.5rem)',
-      })
+      expect(screen.getByTestId("timeline-connector")).toHaveStyle({
+        height: "calc(100% - 4.5rem)",
+      });
 
       rerender(
         <Timeline hasMore={true}>
@@ -165,17 +167,17 @@ describe('Timeline Component', () => {
               <Timeline.Title>Second</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       await waitFor(() => {
-        const updatedLine = screen.getByTestId('timeline-connector')
-        expect(updatedLine).toHaveAttribute('style')
-        expect(updatedLine.getAttribute('style')).toMatch(/height:\s*\d+px/)
-      })
-    })
+        const updatedLine = screen.getByTestId("timeline-connector");
+        expect(updatedLine).toHaveAttribute("style");
+        expect(updatedLine.getAttribute("style")).toMatch(/height:\s*\d+px/);
+      });
+    });
 
-    it('extends line height when hasMore is true', async () => {
+    it("extends line height when hasMore is true", async () => {
       const { rerender } = render(
         <Timeline hasMore={false}>
           <Timeline.Item>
@@ -188,12 +190,12 @@ describe('Timeline Component', () => {
               <Timeline.Title>Second</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Without hasMore, line should exist
-      const initialLine = screen.getByTestId('timeline-connector')
-      expect(initialLine).toBeInTheDocument()
+      const initialLine = screen.getByTestId("timeline-connector");
+      expect(initialLine).toBeInTheDocument();
 
       rerender(
         <Timeline hasMore={true}>
@@ -207,21 +209,21 @@ describe('Timeline Component', () => {
               <Timeline.Title>Second</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // With hasMore, the dynamic calculation should result in a taller line
       await waitFor(() => {
-        const hasMoreLine = screen.getByTestId('timeline-connector')
-        expect(hasMoreLine).toHaveAttribute('style')
+        const hasMoreLine = screen.getByTestId("timeline-connector");
+        expect(hasMoreLine).toHaveAttribute("style");
         // The line should have a pixel height when hasMore is true
-        expect(hasMoreLine.getAttribute('style')).toMatch(/height:\s*\d+px/)
-      })
-    })
-  })
+        expect(hasMoreLine.getAttribute("style")).toMatch(/height:\s*\d+px/);
+      });
+    });
+  });
 
-  describe('Icon and Index Behavior', () => {
-    it('displays custom icons when provided', () => {
+  describe("Icon and Index Behavior", () => {
+    it("displays custom icons when provided", () => {
       render(
         <Timeline>
           <Timeline.Item icon={<Code data-testid="custom-icon" />}>
@@ -229,13 +231,13 @@ describe('Timeline Component', () => {
               <Timeline.Title>With Icon</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('custom-icon')).toBeInTheDocument()
-    })
+      expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
+    });
 
-    it('displays sequential numbers when no icons provided', () => {
+    it("displays sequential numbers when no icons provided", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -253,15 +255,15 @@ describe('Timeline Component', () => {
               <Timeline.Title>Third</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByText('1')).toBeInTheDocument()
-      expect(screen.getByText('2')).toBeInTheDocument()
-      expect(screen.getByText('3')).toBeInTheDocument()
-    })
+      expect(screen.getByText("1")).toBeInTheDocument();
+      expect(screen.getByText("2")).toBeInTheDocument();
+      expect(screen.getByText("3")).toBeInTheDocument();
+    });
 
-    it('mixes icons and numbers correctly', () => {
+    it("mixes icons and numbers correctly", () => {
       render(
         <Timeline>
           <Timeline.Item icon={<Database data-testid="db-icon" />}>
@@ -274,16 +276,16 @@ describe('Timeline Component', () => {
               <Timeline.Title>Without Icon</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('db-icon')).toBeInTheDocument()
-      expect(screen.getByText('2')).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByTestId("db-icon")).toBeInTheDocument();
+      expect(screen.getByText("2")).toBeInTheDocument();
+    });
+  });
 
-  describe('Content Spacing and Layout', () => {
-    it('correctly identifies last timeline content item', () => {
+  describe("Content Spacing and Layout", () => {
+    it("correctly identifies last timeline content item", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -301,24 +303,24 @@ describe('Timeline Component', () => {
               <Timeline.Title>Last</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Should have two non-last content items
-      const regularContentElements = screen.getAllByTestId('timeline-content')
-      expect(regularContentElements).toHaveLength(2)
+      const regularContentElements = screen.getAllByTestId("timeline-content");
+      expect(regularContentElements).toHaveLength(2);
 
       // Should have exactly one last content item
-      const lastContentElement = screen.getByTestId('timeline-content-last')
-      expect(lastContentElement).toBeInTheDocument()
+      const lastContentElement = screen.getByTestId("timeline-content-last");
+      expect(lastContentElement).toBeInTheDocument();
 
       // Verify the last item contains the expected content
-      expect(lastContentElement).toHaveTextContent('Last')
-    })
-  })
+      expect(lastContentElement).toHaveTextContent("Last");
+    });
+  });
 
-  describe('Dynamic Line Height Calculation', () => {
-    it('updates line height when content changes', async () => {
+  describe("Dynamic Line Height Calculation", () => {
+    it("updates line height when content changes", async () => {
       const { rerender } = render(
         <Timeline>
           <Timeline.Item>
@@ -331,10 +333,10 @@ describe('Timeline Component', () => {
               <Timeline.Title>Short</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
+      expect(screen.getByTestId("timeline-connector")).toBeInTheDocument();
 
       // Rerender with more content
       rerender(
@@ -357,18 +359,18 @@ describe('Timeline Component', () => {
               <Timeline.Description>More content here too</Timeline.Description>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Line should still be present and potentially have different height
       await waitFor(() => {
-        expect(screen.getByTestId('timeline-connector')).toBeInTheDocument()
-      })
-    })
-  })
+        expect(screen.getByTestId("timeline-connector")).toBeInTheDocument();
+      });
+    });
+  });
 
-  describe('Accessibility and Data Attributes', () => {
-    it('applies semantic list markup (ol/li) to container and items', () => {
+  describe("Accessibility and Data Attributes", () => {
+    it("applies semantic list markup (ol/li) to container and items", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -381,17 +383,17 @@ describe('Timeline Component', () => {
               <Timeline.Title>Item Two</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // List container should be an ordered list (implicit role)
-      expect(screen.getByRole('list')).toBeInTheDocument()
+      expect(screen.getByRole("list")).toBeInTheDocument();
 
       // List items should be li elements (implicit role=listitem)
-      expect(screen.getAllByRole('listitem').length).toBe(2)
-    })
+      expect(screen.getAllByRole("listitem").length).toBe(2);
+    });
 
-    it('applies data-timeline-item attribute for layout calculations', () => {
+    it("applies data-timeline-item attribute for layout calculations", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -399,20 +401,20 @@ describe('Timeline Component', () => {
               <Timeline.Title>Test Item</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      const timelineItem = screen.getByRole('listitem')
-      expect(timelineItem).toBeInTheDocument()
+      const timelineItem = screen.getByRole("listitem");
+      expect(timelineItem).toBeInTheDocument();
       expect(timelineItem).toHaveClass(
-        'relative',
-        'flex',
-        'items-start',
-        'gap-4'
-      )
-    })
+        "relative",
+        "flex",
+        "items-start",
+        "gap-4",
+      );
+    });
 
-    it('maintains proper semantic structure with configurable heading levels', () => {
+    it("maintains proper semantic structure with configurable heading levels", () => {
       const { rerender } = render(
         <Timeline>
           <Timeline.Item>
@@ -422,12 +424,12 @@ describe('Timeline Component', () => {
               <Timeline.Timestamp>Time info</Timeline.Timestamp>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Title should be rendered as h2 when specified
-      const h2Title = screen.getByRole('heading', { level: 2 })
-      expect(h2Title).toHaveTextContent('Semantic Test')
+      const h2Title = screen.getByRole("heading", { level: 2 });
+      expect(h2Title).toHaveTextContent("Semantic Test");
 
       // Test default behavior (div, no heading role)
       rerender(
@@ -438,17 +440,17 @@ describe('Timeline Component', () => {
               <Timeline.Description>Description content</Timeline.Description>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       // Should not have heading role when using default (div)
-      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-      expect(screen.getByText('Default Test')).toBeInTheDocument()
-    })
-  })
+      expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+      expect(screen.getByText("Default Test")).toBeInTheDocument();
+    });
+  });
 
-  describe('Custom Styling and Props', () => {
-    it('applies custom className to timeline root', () => {
+  describe("Custom Styling and Props", () => {
+    it("applies custom className to timeline root", () => {
       render(
         <Timeline className="custom-timeline">
           <Timeline.Item>
@@ -456,15 +458,15 @@ describe('Timeline Component', () => {
               <Timeline.Title>Test</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
       expect(
-        screen.getByRole('list').closest('.custom-timeline')
-      ).toBeInTheDocument()
-    })
+        screen.getByRole("list").closest(".custom-timeline"),
+      ).toBeInTheDocument();
+    });
 
-    it('applies custom className to timeline items', () => {
+    it("applies custom className to timeline items", () => {
       render(
         <Timeline>
           <Timeline.Item className="custom-item">
@@ -472,13 +474,13 @@ describe('Timeline Component', () => {
               <Timeline.Title>Test Item</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByRole('listitem')).toHaveClass('custom-item')
-    })
+      expect(screen.getByRole("listitem")).toHaveClass("custom-item");
+    });
 
-    it('applies custom className to timeline content', () => {
+    it("applies custom className to timeline content", () => {
       render(
         <Timeline>
           <Timeline.Item>
@@ -486,21 +488,21 @@ describe('Timeline Component', () => {
               <Timeline.Title>Test Content</Timeline.Title>
             </Timeline.Content>
           </Timeline.Item>
-        </Timeline>
-      )
+        </Timeline>,
+      );
 
-      expect(screen.getByTestId('timeline-content-last')).toHaveClass(
-        'custom-content'
-      )
-    })
-  })
+      expect(screen.getByTestId("timeline-content-last")).toHaveClass(
+        "custom-content",
+      );
+    });
+  });
 
-  describe('Edge Cases', () => {
-    it('handles empty timeline gracefully', () => {
-      render(<Timeline>{[]}</Timeline>)
+  describe("Edge Cases", () => {
+    it("handles empty timeline gracefully", () => {
+      render(<Timeline>{[]}</Timeline>);
 
       // Should render without crashing, but no list since no items
-      expect(screen.queryByRole('list')).not.toBeInTheDocument()
-    })
-  })
-})
+      expect(screen.queryByRole("list")).not.toBeInTheDocument();
+    });
+  });
+});

@@ -1,31 +1,31 @@
-import * as React from 'react'
-import { cn } from '@/lib/utils'
-import { CodeSnippet, Heading, Text } from '@/index'
-import { useMemo } from 'react'
-import { WizardStep } from './types'
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { CodeSnippet, Heading, Text } from "@/index";
+import { useMemo } from "react";
+import { WizardStep } from "./types";
 
 export interface WizardProps {
   /**
    * The steps to display in the wizard
    */
-  steps: WizardStep[]
+  steps: WizardStep[];
 
   /**
    * The current step number, starting from 1
    */
-  currentStep: number
+  currentStep: number;
 
   /**
    * The steps that have been completed, starting from 1
    */
-  completedSteps: number[]
+  completedSteps: number[];
 
   headerContent: (
     completedSteps: number[],
-    steps: WizardStep[]
-  ) => React.ReactNode
+    steps: WizardStep[],
+  ) => React.ReactNode;
 
-  className?: string
+  className?: string;
 }
 
 export function Wizard({
@@ -36,20 +36,20 @@ export function Wizard({
   className,
 }: WizardProps) {
   const [stepHeights, setStepHeights] = React.useState<Map<number, number>>(
-    new Map()
-  )
-  const stepRefs = React.useRef<Map<number, HTMLDivElement | null>>(new Map())
+    new Map(),
+  );
+  const stepRefs = React.useRef<Map<number, HTMLDivElement | null>>(new Map());
 
   React.useEffect(() => {
-    const currentElement = stepRefs.current.get(currentStep)
+    const currentElement = stepRefs.current.get(currentStep);
     if (currentElement) {
       setStepHeights((prev) => {
-        const newMap = new Map(prev)
-        newMap.set(currentStep, currentElement.clientHeight)
-        return newMap
-      })
+        const newMap = new Map(prev);
+        newMap.set(currentStep, currentElement.clientHeight);
+        return newMap;
+      });
     }
-  }, [currentStep, completedSteps])
+  }, [currentStep, completedSteps]);
 
   // Add ResizeObserver to monitor size changes
   React.useEffect(() => {
@@ -57,36 +57,36 @@ export function Wizard({
       entries.forEach((entry) => {
         const stepNumber = Array.from(stepRefs.current.entries()).find(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ([_, el]) => el === entry.target
-        )?.[0]
+          ([_, el]) => el === entry.target,
+        )?.[0];
 
         if (stepNumber) {
           setStepHeights((prev) => {
-            const newMap = new Map(prev)
-            newMap.set(stepNumber, entry.target.clientHeight)
-            return newMap
-          })
+            const newMap = new Map(prev);
+            newMap.set(stepNumber, entry.target.clientHeight);
+            return newMap;
+          });
         }
-      })
-    })
+      });
+    });
 
     // Observe all step elements
     stepRefs.current.forEach((element) => {
       if (element) {
-        resizeObserver.observe(element)
+        resizeObserver.observe(element);
       }
-    })
+    });
 
     return () => {
-      resizeObserver.disconnect()
-    }
-  }, []) // Empty dependency array since we want to set up the observer once
+      resizeObserver.disconnect();
+    };
+  }, []); // Empty dependency array since we want to set up the observer once
 
   const getStepStatus = (index: number) => {
-    if (completedSteps.includes(index + 1)) return 'completed'
-    if (index + 1 === currentStep) return 'current'
-    return 'upcoming'
-  }
+    if (completedSteps.includes(index + 1)) return "completed";
+    if (index + 1 === currentStep) return "current";
+    return "upcoming";
+  };
 
   const trackHeight = useMemo(() => {
     return Array.from(
@@ -96,18 +96,18 @@ export function Wizard({
             ? currentStep
             : currentStep - 1,
       },
-      (_, i) => i + 1
+      (_, i) => i + 1,
     )
       .map((step) => {
-        const height = stepHeights.get(step) || 0
+        const height = stepHeights.get(step) || 0;
         // Add the top and bottom padding (py-4 = 1rem * 2 = 32px total)
-        return height + 16
+        return height + 16;
       })
-      .reduce((acc, curr) => acc + curr, 0)
-  }, [currentStep, stepHeights])
+      .reduce((acc, curr) => acc + curr, 0);
+  }, [currentStep, stepHeights]);
 
   return (
-    <div className={cn('max-w-screen-x flex flex-col gap-2', className)}>
+    <div className={cn("max-w-screen-x flex flex-col gap-2", className)}>
       <div className="border-b p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -117,9 +117,9 @@ export function Wizard({
       </div>
 
       <div className="relative mt-8 pl-3">
-        <div className="bg-border absolute top-0 bottom-0 left-7 w-px overflow-y-hidden">
+        <div className="absolute top-0 bottom-0 left-7 w-px overflow-y-hidden bg-border">
           <div
-            className="bg-primary absolute top-0 left-0 w-full transition-all duration-500"
+            className="absolute top-0 left-0 w-full bg-primary transition-all duration-500"
             style={{
               height: trackHeight,
             }}
@@ -128,37 +128,39 @@ export function Wizard({
 
         <div className="flex flex-col gap-8">
           {steps.map((step, index) => {
-            const status = getStepStatus(index)
-            const stepNumber = index + 1
+            const status = getStepStatus(index);
+            const stepNumber = index + 1;
 
             return (
               <div
                 key={index}
-                ref={(el) => stepRefs.current.set(stepNumber, el)}
+                ref={(el) => {
+                  stepRefs.current.set(stepNumber, el);
+                }}
               >
                 <div
                   className={cn(
-                    'relative pl-16',
-                    status === 'completed' && 'text-body'
+                    "relative pl-16",
+                    status === "completed" && "text-body",
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <div
                       className={cn(
-                        'absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold',
+                        "absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold",
                         // TODO: update these to use new color tokens
-                        status === 'completed' &&
-                          'bg-success-default text-highlight-fixed-light',
-                        status === 'current' &&
-                          'bg-surface-primary-inverse text-default-inverse scale-110',
-                        status === 'upcoming' && 'bg-muted text-muted'
+                        status === "completed" &&
+                          "bg-success-default text-highlight-fixed-light",
+                        status === "current" &&
+                          "scale-110 bg-surface-primary-inverse text-default-inverse",
+                        status === "upcoming" && "bg-muted text-muted",
                       )}
                     >
                       {stepNumber}
                     </div>
 
                     {/* TODO: is this the best way to handle the opacity? */}
-                    <div className={cn(status === 'upcoming' && 'opacity-50')}>
+                    <div className={cn(status === "upcoming" && "opacity-50")}>
                       <Heading variant="md" as="h2">
                         {step.title}
                       </Heading>
@@ -168,8 +170,8 @@ export function Wizard({
                   {/* TODO: is this the best way to handle the opacity? */}
                   <div
                     className={cn(
-                      'mt-2 mb-4',
-                      status === 'upcoming' && 'opacity-50'
+                      "mt-2 mb-4",
+                      status === "upcoming" && "opacity-50",
                     )}
                   >
                     <Text muted>{step.description}</Text>
@@ -177,12 +179,12 @@ export function Wizard({
 
                   <div
                     className={cn(
-                      'mt-8 flex w-full flex-col gap-5',
-                      status === 'upcoming' && 'opacity-50'
+                      "mt-8 flex w-full flex-col gap-5",
+                      status === "upcoming" && "opacity-50",
                     )}
                   >
                     {/* TODO: update this to CodeBlock component */}
-                    {status === 'current' &&
+                    {status === "current" &&
                       step.commands?.map((command, cmdIndex) => (
                         <CodeSnippet
                           key={cmdIndex}
@@ -199,10 +201,10 @@ export function Wizard({
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

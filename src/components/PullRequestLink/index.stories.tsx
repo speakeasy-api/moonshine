@@ -1,32 +1,32 @@
-import { PullRequestLink } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
+import { PullRequestLink } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof PullRequestLink> = {
   component: PullRequestLink,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
 export const Default: StoryObj<typeof PullRequestLink> = {
   args: {
-    href: 'https://github.com/speakeasy-api/speakeasy/pull/123',
+    href: "https://github.com/speakeasy-api/speakeasy/pull/123",
     prNumber: 123,
   },
-}
+};
 
 export const Closed: StoryObj<typeof PullRequestLink> = {
   ...Default.args,
   args: {
     ...Default.args,
-    status: 'closed',
+    status: "closed",
   },
-}
+};
 
 export const Merged: StoryObj<typeof PullRequestLink> = {
   ...Default.args,
   args: {
     ...Default.args,
-    status: 'merged',
+    status: "merged",
   },
-}
+};

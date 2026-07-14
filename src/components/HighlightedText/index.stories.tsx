@@ -1,47 +1,47 @@
-import { Color, highlightBgMap, HighlightedText, mutedBgMap } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
+import { Color, highlightBgMap, HighlightedText, mutedBgMap } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof HighlightedText> = {
   component: HighlightedText,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     color: {
       control: {
-        type: 'select',
-        options: ['green', 'blue', 'yellow', 'purple', 'orange'],
+        type: "select",
+        options: ["green", "blue", "yellow", "purple", "orange"],
       },
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof HighlightedText>
+type Story = StoryObj<typeof HighlightedText>;
 
 export const Default: Story = {
   args: {
-    children: 'really experiencing',
+    children: "really experiencing",
   },
   render: (args) => (
-    <p className="text-foreground text-lg">
+    <p className="text-lg text-foreground">
       Understand how users are <HighlightedText {...args} /> your site without
       drowning in numbers
     </p>
   ),
-}
+};
 
 export const Muted: Story = {
   args: {
-    children: 'highlighted text',
+    children: "highlighted text",
     muted: true,
-    color: 'orange',
+    color: "orange",
   },
-}
+};
 
 export const Multiline: Story = {
   args: {
     children:
-      'for solving complex problems but it also has the potential to cause harm if not used properly.',
+      "for solving complex problems but it also has the potential to cause harm if not used properly.",
   },
   render: (args) => (
     <p className="inline-block text-lg">
@@ -49,11 +49,11 @@ export const Multiline: Story = {
       tool <HighlightedText {...args} />
     </p>
   ),
-}
+};
 
 export const AllColors: Story = {
   args: {
-    children: 'highlighted text',
+    children: "highlighted text",
   },
   render: (args) => (
     <div className="inline-flex flex-col gap-2">
@@ -68,11 +68,11 @@ export const AllColors: Story = {
       ))}
     </div>
   ),
-}
+};
 
 export const NoAnimation: Story = {
   args: {
-    children: 'highlighted text',
+    children: "highlighted text",
     animate: false,
   },
-}
+};

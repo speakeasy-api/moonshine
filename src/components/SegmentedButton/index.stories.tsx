@@ -1,68 +1,72 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   SegmentedButton,
   SegmentedButtonItemProps,
   SegmentedButtonProps,
-} from '.'
-import { useState } from 'react'
-import React from 'react'
+} from ".";
+import { useState } from "react";
+import React from "react";
 
-type Story = StoryObj<typeof SegmentedButton>
+type Story = StoryObj<typeof SegmentedButton>;
 
 const meta: Meta<typeof SegmentedButton> = {
   component: SegmentedButton,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
 const StoryRenderer = (args: SegmentedButtonProps) => {
   const getInitialActiveId = () => {
-    let foundActiveId: string | null = null
+    let foundActiveId: string | null = null;
     React.Children.forEach(args.children, (child) => {
       if (
         foundActiveId === null &&
-        React.isValidElement(child) &&
+        React.isValidElement<SegmentedButtonItemProps>(child) &&
         child.props.active &&
         child.props.id
       ) {
-        foundActiveId = child.props.id as string
+        foundActiveId = child.props.id as string;
       }
-    })
+    });
 
-    if (foundActiveId) return foundActiveId
+    if (foundActiveId) return foundActiveId;
 
-    let firstId: string | null = null
+    let firstId: string | null = null;
     React.Children.forEach(args.children, (child) => {
-      if (firstId === null && React.isValidElement(child) && child.props.id) {
-        firstId = child.props.id as string
+      if (
+        firstId === null &&
+        React.isValidElement<SegmentedButtonItemProps>(child) &&
+        child.props.id
+      ) {
+        firstId = child.props.id as string;
       }
-    })
+    });
 
-    return firstId
-  }
+    return firstId;
+  };
 
   const [activeId, setActiveId] = useState<string | null>(() =>
-    getInitialActiveId()
-  )
+    getInitialActiveId(),
+  );
   return (
     <SegmentedButton {...args}>
       {React.Children.map(args.children, (child) => {
-        if (!React.isValidElement(child)) {
-          return child
+        if (!React.isValidElement<SegmentedButtonItemProps>(child)) {
+          return child;
         }
 
         const props: SegmentedButtonItemProps = {
-          id: child.props.id ?? '',
+          id: child.props.id ?? "",
           active: child.props.id === activeId,
           children: child.props.children,
-          onClick: () => setActiveId(child.props.id ?? ''),
-        }
-        return React.cloneElement(child, props)
+          onClick: () => setActiveId(child.props.id ?? ""),
+        };
+        return React.cloneElement(child, props);
       })}
     </SegmentedButton>
-  )
-}
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -75,7 +79,7 @@ export const Default: Story = {
     ],
   },
   render: (args) => <StoryRenderer {...args} />,
-}
+};
 
 export const TwoItems: Story = {
   args: {
@@ -87,7 +91,7 @@ export const TwoItems: Story = {
     ],
   },
   render: (args) => <StoryRenderer {...args} />,
-}
+};
 
 export const FourItems: Story = {
   args: {
@@ -101,4 +105,4 @@ export const FourItems: Story = {
     ],
   },
   render: (args) => <StoryRenderer {...args} />,
-}
+};

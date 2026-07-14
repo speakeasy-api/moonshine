@@ -13,10 +13,10 @@ Speakeasy's design system.
 pnpm add @speakeasy-api/moonshine
 ```
 
-Make sure you install Lucide as it is a peer dependency of this package:
+Make sure you install the peer dependencies of this package:
 
 ```
-pnpm add lucide-react
+pnpm add lucide-react @dnd-kit/core @dnd-kit/modifiers @dnd-kit/utilities react react-dom motion react-markdown remark-gfm shiki react-virtuoso react-resizable-panels @rive-app/react-canvas-lite ai
 ```
 
 ### 2. Configure Tailwind CSS
@@ -28,7 +28,7 @@ Add this to the top of your project's CSS file where you configure Tailwind:
 @reference "../node_modules/@speakeasy-api/moonshine/src/global.css";
 
 /* Your Tailwind setup */
-@import 'tailwindcss';
+@import "tailwindcss";
 ```
 
 **Note:** The `@reference` directive is required for Tailwind v4 to recognize Moonshine's custom utilities and make them available in your project.
@@ -38,7 +38,7 @@ Add this to the top of your project's CSS file where you configure Tailwind:
 In your main app file (or root layout):
 
 ```ts
-import '@speakeasy-api/moonshine/moonshine.css'
+import "@speakeasy-api/moonshine/moonshine.css";
 ```
 
 ### 4. Set up the Provider
@@ -46,10 +46,10 @@ import '@speakeasy-api/moonshine/moonshine.css'
 Wrap your application in the `MoonshineConfigProvider` component:
 
 ```tsx
-import { MoonshineConfigProvider } from '@speakeasy-api/moonshine'
-;<MoonshineConfigProvider themeElement={document.documentElement}>
+import { MoonshineConfigProvider } from "@speakeasy-api/moonshine";
+<MoonshineConfigProvider themeElement={document.documentElement}>
   <App />
-</MoonshineConfigProvider>
+</MoonshineConfigProvider>;
 ```
 
 ### 5. Configure Custom Fonts (Optional)
@@ -59,16 +59,16 @@ Moonshine uses custom fonts (Diatype, Tobias). If you have licenses for these fo
 ```css
 /* In your global CSS */
 @font-face {
-  font-family: 'Diatype';
-  src: url('/fonts/diatype/ABCDiatype-Regular.woff2') format('woff2');
+  font-family: "Diatype";
+  src: url("/fonts/diatype/ABCDiatype-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: block;
 }
 
 @font-face {
-  font-family: 'Diatype';
-  src: url('/fonts/diatype/ABCDiatype-Light.woff2') format('woff2');
+  font-family: "Diatype";
+  src: url("/fonts/diatype/ABCDiatype-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: block;
@@ -82,10 +82,10 @@ If you don't have these fonts, the design system will fall back to system fonts.
 ### 6. Use Components and Utilities
 
 ```tsx
-import { Grid } from '@speakeasy-api/moonshine'
+import { Grid } from "@speakeasy-api/moonshine";
 
 // Use semantic utility classes
-;<div className="text-heading-lg bg-surface-primary">Hello Moonshine!</div>
+<div className="text-heading-lg bg-surface-primary">Hello Moonshine!</div>;
 ```
 
 ### TypeScript Support for Utility Classes
@@ -93,15 +93,15 @@ import { Grid } from '@speakeasy-api/moonshine'
 Moonshine provides TypeScript types for all available utility classes to improve your development experience:
 
 ```tsx
-import type { MoonshineClasses } from '@speakeasy-api/moonshine/types/utilities'
+import type { MoonshineClasses } from "@speakeasy-api/moonshine/types/utilities";
 
 // Use for type-safe className props
 interface MyComponentProps {
-  className?: MoonshineClasses
+  className?: MoonshineClasses;
 }
 
 // Get autocomplete for all available utilities
-const styles: MoonshineClasses = 'text-heading-lg' // ✅ Autocompletes!
+const styles: MoonshineClasses = "text-heading-lg"; // ✅ Autocompletes!
 ```
 
 The types are automatically generated during the build process and include:
@@ -119,15 +119,15 @@ The package is built with [vite](https://vitejs.dev/), and is distributed in bot
 Moonshine exports a custom wrapper for Tailwind Merge to avoid unexpected clashes between semantic class names. This version should be used in favour of using tailwind merge directly.
 
 ```tsx
-import { cn } from '@speakeasy-api/moonshine'
+import { cn } from "@speakeasy-api/moonshine";
 
 return (
   <span
-    className={cn('text-body-md', props.muted ? 'text-muted' : 'text-default')}
+    className={cn("text-body-md", props.muted ? "text-muted" : "text-default")}
   >
     Lorem Ipsum
   </span>
-)
+);
 ```
 
 ## Design System Architecture
@@ -139,13 +139,11 @@ Moonshine is a utility-first design system built on top of [Tailwind CSS v4](htt
 Our CSS is organized into three main files:
 
 1. **`base.css`** - Primitive design tokens (colors, fonts, spacing scales)
-
    - Contains raw values that should **not** be used directly in components
    - Defines theme-aware semantic tokens that adapt to light/dark mode
    - Houses base element styles and resets
 
 2. **`utilities.css`** - The public API of our design system
-
    - Exposes carefully crafted utility classes like `text-heading-xl`, `bg-surface-primary`
    - Enforces typography combinations to prevent arbitrary text styling
    - Provides semantic color utilities that automatically handle theming
@@ -197,7 +195,7 @@ Ensure the `themeElement` prop in `MoonshineConfigProvider` points to the elemen
 Make sure you're importing from the correct path:
 
 ```tsx
-import type { MoonshineClasses } from '@speakeasy-api/moonshine/types/utilities'
+import type { MoonshineClasses } from "@speakeasy-api/moonshine/types/utilities";
 ```
 
 ## Contributing
@@ -275,7 +273,7 @@ pnpm link ../path/to/moonshine
 The lockfile file within your app should referenced the linked copy:
 
 ```yaml
-'@speakeasy-api/moonshine':
+"@speakeasy-api/moonshine":
   specifier: ^0.43.1
   version: link:../../../../moonshine
 ```

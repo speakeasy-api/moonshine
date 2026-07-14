@@ -1,59 +1,59 @@
-import { cn, getResponsiveClasses } from '@/lib/utils'
-import { ResponsiveValue, Size } from '@/types'
-import { userAvatarSizeMap } from './sizeMap'
-import useTailwindBreakpoint from '@/hooks/useTailwindBreakpoint'
-import { resolveSizeForBreakpoint } from '@/lib/responsiveUtils'
-import { userAvatarSizeMapper } from './sizeMap'
+import { cn, getResponsiveClasses } from "@/lib/utils";
+import { ResponsiveValue, Size } from "@/types";
+import { userAvatarSizeMap } from "./sizeMap";
+import useTailwindBreakpoint from "@/hooks/useTailwindBreakpoint";
+import { resolveSizeForBreakpoint } from "@/lib/responsiveUtils";
+import { userAvatarSizeMapper } from "./sizeMap";
 
 export interface UserAvatarProps {
-  name: string
-  imageUrl?: string
-  size?: ResponsiveValue<Size>
-  border?: boolean
-  className?: string
+  name: string;
+  imageUrl?: string;
+  size?: ResponsiveValue<Size>;
+  border?: boolean;
+  className?: string;
 }
 
 const fallbackColors = [
-  'bg-red-500',
-  'bg-orange-500',
-  'bg-yellow-500',
-  'bg-green-500',
-  'bg-blue-500',
-  'bg-purple-500',
-  'bg-pink-500',
-]
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-yellow-500",
+  "bg-green-500",
+  "bg-blue-500",
+  "bg-purple-500",
+  "bg-pink-500",
+];
 
 // deterministically returns a color based on the first letter of the name
 function getFallbackColor(name: string | undefined) {
-  if (!name) return 'bg-gray-900'
-  const firstLetter = name[0].toLowerCase()
+  if (!name) return "bg-gray-900";
+  const firstLetter = name[0].toLowerCase();
 
-  const index = firstLetter.charCodeAt(0) - 'a'.charCodeAt(0)
-  return fallbackColors[index % fallbackColors.length]
+  const index = firstLetter.charCodeAt(0) - "a".charCodeAt(0);
+  return fallbackColors[Math.abs(index) % fallbackColors.length];
 }
 
 export function UserAvatar({
   name,
   imageUrl,
-  size = 'medium',
+  size = "medium",
   border = false,
   className,
 }: UserAvatarProps) {
-  const breakpoint = useTailwindBreakpoint()
+  const breakpoint = useTailwindBreakpoint();
 
-  const resolvedSize = resolveSizeForBreakpoint(breakpoint, size, 'medium')
-  const sizeValue = userAvatarSizeMap[resolvedSize]
+  const resolvedSize = resolveSizeForBreakpoint(breakpoint, size, "medium");
+  const sizeValue = userAvatarSizeMap[resolvedSize];
 
-  const hasImage = !!imageUrl
+  const hasImage = !!imageUrl;
 
   return (
     <div
       className={cn(
-        'flex items-center justify-center overflow-hidden rounded-full bg-gray-200',
+        "flex items-center justify-center overflow-hidden rounded-full bg-gray-200",
         getResponsiveClasses(size, userAvatarSizeMapper),
         !hasImage && getFallbackColor(name),
-        border && 'border-background border-2',
-        className
+        border && "border-2 border-background",
+        className,
       )}
     >
       {hasImage ? (
@@ -78,10 +78,10 @@ export function UserAvatar({
             dy="0.075em"
             fontWeight="semibold"
           >
-            {name[0] || '✖️'}
+            {name[0] || "✖️"}
           </text>
         </svg>
       )}
     </div>
-  )
+  );
 }

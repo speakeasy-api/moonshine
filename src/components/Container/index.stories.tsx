@@ -1,15 +1,15 @@
-import { Container } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
-import { Card, Grid } from '@/index'
+import { Container } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Card, Grid } from "@/index";
 
 const meta: Meta<typeof Container> = {
   component: Container,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Container>
+type Story = StoryObj<typeof Container>;
 
 export const Default: Story = {
   args: {
@@ -30,4 +30,4 @@ export const Default: Story = {
       </Grid>,
     ],
   },
-}
+};

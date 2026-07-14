@@ -1,83 +1,83 @@
-import { sizes } from '@/types'
-import { UserAvatar } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
+import { sizes } from "@/types";
+import { UserAvatar } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof UserAvatar> = {
   component: UserAvatar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
+      control: "select",
       options: sizes,
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof UserAvatar>
+type Story = StoryObj<typeof UserAvatar>;
 
 const baseOpts = {
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
 export const Default: Story = {
   args: {
-    name: 'John Doe',
-    imageUrl: 'https://robohash.org/3',
+    name: "John Doe",
+    imageUrl: "https://robohash.org/3",
   },
   ...baseOpts,
-}
+};
 
 export const NoImageJohnDoe: Story = {
   args: {
-    name: 'John Doe',
+    name: "John Doe",
   },
   ...baseOpts,
-}
+};
 
 export const NoImageAliceSmith: Story = {
   args: {
-    name: 'Alice Smith',
+    name: "Alice Smith",
   },
   ...baseOpts,
-}
+};
 
 export const Large: Story = {
   ...Default.parameters,
   args: {
     ...Default.args,
-    size: 'large',
+    size: "large",
   },
-}
+};
 
 export const ResponsiveWithImage: Story = {
   ...Default.parameters,
   args: {
     ...Default.args,
     size: {
-      xs: 'small',
-      sm: 'small',
-      md: 'medium',
-      lg: 'large',
-      xl: 'xl',
+      xs: "small",
+      sm: "small",
+      md: "medium",
+      lg: "large",
+      xl: "xl",
     },
   },
-}
+};
 
 export const ResponsiveNoImage: Story = {
   ...Default.parameters,
   args: {
-    name: 'John Doe',
+    name: "John Doe",
     size: {
-      xs: 'small',
-      sm: 'small',
-      md: 'medium',
-      lg: 'large',
-      xl: 'xl',
+      xs: "small",
+      sm: "small",
+      md: "medium",
+      lg: "large",
+      xl: "xl",
     },
     imageUrl: undefined,
   },
-}
+};

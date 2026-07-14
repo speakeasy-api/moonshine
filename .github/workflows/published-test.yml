@@ -5,16 +5,18 @@ on:
     branches:
       - main
 
-
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
         with:
-          version: 9.0.0
+          node-version: 24
+          cache: "pnpm"
 
       - run: pnpm install
       - run: pnpm pack
@@ -24,7 +26,6 @@ jobs:
 
       - run: pnpm install --no-frozen-lockfile
         working-directory: integration
-
 
       - run: pnpm test
         working-directory: integration

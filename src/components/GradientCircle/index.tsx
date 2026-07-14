@@ -1,15 +1,15 @@
-import { cn } from '@/lib/utils'
-import { Size } from '@/types'
-import './gradientCircle.css'
-import { useMemo } from 'react'
+import { cn } from "@/lib/utils";
+import { Size } from "@/types";
+import "./gradientCircle.css";
+import { useMemo } from "react";
 
 export interface GradientCircleProps {
-  name: string
-  size?: Size
-  transition?: boolean
-  showInitial?: boolean
-  inactive?: boolean
-  className?: string
+  name: string;
+  size?: Size;
+  transition?: boolean;
+  showInitial?: boolean;
+  inactive?: boolean;
+  className?: string;
 }
 
 const initialSizeMap: Record<Size, number> = {
@@ -17,20 +17,20 @@ const initialSizeMap: Record<Size, number> = {
   medium: 24,
   large: 24,
   xl: 36,
-  '2xl': 48,
-}
+  "2xl": 48,
+};
 
 const sizeClasses = {
-  small: 'h-6 w-6 border-2',
-  medium: 'h-8 w-8 border-2',
-  large: 'h-10 w-10 border-4',
-  xl: 'h-12 w-12 border-4',
-  '2xl': 'h-20 w-20 border-4',
-}
+  small: "h-6 w-6 border-2",
+  medium: "h-8 w-8 border-2",
+  large: "h-10 w-10 border-4",
+  xl: "h-12 w-12 border-4",
+  "2xl": "h-20 w-20 border-4",
+};
 
 export function GradientCircle({
   name,
-  size = 'small',
+  size = "small",
   transition = false,
   showInitial = false,
   inactive = false,
@@ -38,8 +38,8 @@ export function GradientCircle({
 }: GradientCircleProps) {
   const initial = useMemo<string | undefined>(
     () => (name.length > 0 ? name[0].toUpperCase() : undefined),
-    [name]
-  )
+    [name],
+  );
   // Define vibrant base colors (in HSL)
   const baseColors = [
     0, // Red
@@ -51,41 +51,41 @@ export function GradientCircle({
     270, // Purple
     300, // Pink
     330, // Magenta
-  ]
+  ];
 
   // Generate hash for color selection
-  const hash = name.split('').reduce((acc, char, i) => {
-    const charCode = char.charCodeAt(0)
-    return (acc * 31 + charCode * (i + 1)) >>> 0
-  }, 5381)
+  const hash = name.split("").reduce((acc, char, i) => {
+    const charCode = char.charCodeAt(0);
+    return (acc * 31 + charCode * (i + 1)) >>> 0;
+  }, 5381);
 
   // Select base color from hash
-  const baseColorIndex = hash % baseColors.length
-  const baseHue = baseColors[baseColorIndex]
+  const baseColorIndex = hash % baseColors.length;
+  const baseHue = baseColors[baseColorIndex];
 
   // Create harmonious color pair using analogous colors (30° apart)
-  const hue1 = baseHue
-  const hue2 = (baseHue + 30) % 360 // Wrap around 360 degrees
+  const hue1 = baseHue;
+  const hue2 = (baseHue + 30) % 360; // Wrap around 360 degrees
 
   // Adjust saturation and lightness for better blending
   // First color is more saturated, second is slightly lighter
-  const fromColor = `hsl(${hue1}, 85%, 60%)`
-  const toColor = `hsl(${hue2}, 75%, 65%)`
+  const fromColor = `hsl(${hue1}, 85%, 60%)`;
+  const toColor = `hsl(${hue2}, 75%, 65%)`;
 
   return (
     <div
       className={cn(
-        'gradient-circle relative min-h-6 min-w-6 rounded-full border-white',
+        "gradient-circle relative min-h-6 min-w-6 rounded-full border-white",
         size && `${sizeClasses[size]}`,
-        inactive && 'opacity-50',
-        className
+        inactive && "opacity-50",
+        className,
       )}
       style={
         {
-          '--from-color': fromColor,
-          '--to-color': toColor,
+          "--from-color": fromColor,
+          "--to-color": toColor,
           transition: transition
-            ? '--from-color 0.5s, --to-color 2s'
+            ? "--from-color 0.5s, --to-color 2s"
             : undefined,
         } as React.CSSProperties
       }
@@ -95,7 +95,7 @@ export function GradientCircle({
           className="gradient-circle-initial"
           style={
             {
-              '--translate': initial
+              "--translate": initial
                 ? getInitialTranslateY(initial)
                 : undefined,
               fontSize: initialSizeMap[size],
@@ -106,7 +106,7 @@ export function GradientCircle({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 /**
@@ -115,29 +115,29 @@ export function GradientCircle({
  */
 function getInitialTranslateY(letter: string): [string, string] {
   switch (letter) {
-    case 'A':
-      return ['-50%', '-55%']
-    case 'B':
-      return ['-50%', '-55%']
-    case 'C':
-      return ['-54%', '-50%']
-    case 'D':
-      return ['-46%', '-50%']
-    case 'E':
-      return ['-52%', '-50%']
-    case 'F':
-      return ['-50%', '-52%']
-    case 'G':
-      return ['-52%', '-52%']
-    case 'J':
-      return ['-55%', '-52%']
-    case 'L':
-      return ['-47%', '-54%']
-    case 'Q':
-      return ['-53%', '-55%']
-    case 'R':
-      return ['-52%', '-55%']
+    case "A":
+      return ["-50%", "-55%"];
+    case "B":
+      return ["-50%", "-55%"];
+    case "C":
+      return ["-54%", "-50%"];
+    case "D":
+      return ["-46%", "-50%"];
+    case "E":
+      return ["-52%", "-50%"];
+    case "F":
+      return ["-50%", "-52%"];
+    case "G":
+      return ["-52%", "-52%"];
+    case "J":
+      return ["-55%", "-52%"];
+    case "L":
+      return ["-47%", "-54%"];
+    case "Q":
+      return ["-53%", "-55%"];
+    case "R":
+      return ["-52%", "-55%"];
     default:
-      return ['-50%', '-50%']
+      return ["-50%", "-50%"];
   }
 }

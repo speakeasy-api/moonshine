@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ThemeSwitcher } from '.'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ThemeSwitcher } from ".";
 
 const meta: Meta<typeof ThemeSwitcher> = {
   component: ThemeSwitcher,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
-type Story = StoryObj<typeof ThemeSwitcher>
+export default meta;
+type Story = StoryObj<typeof ThemeSwitcher>;
 
 export const LightMode: Story = {
-  globals: { theme: 'light' },
-}
+  globals: { theme: "light" },
+};
 
 export const DarkMode: Story = {
-  globals: { theme: 'dark' },
-}
+  globals: { theme: "dark" },
+};

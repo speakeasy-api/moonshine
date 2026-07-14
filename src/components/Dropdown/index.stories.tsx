@@ -5,20 +5,20 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
-import { Button } from '../Button'
-import { Stack } from '../Stack'
-import { Icon } from '../Icon'
+} from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "../Button";
+import { Stack } from "../Stack";
+import { Icon } from "../Icon";
 
 const meta: Meta<typeof DropdownMenu> = {
   component: DropdownMenu,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -30,7 +30,7 @@ export const Default: Story = {
         <DropdownMenuLabel>
           <Stack direction="vertical" gap={1}>
             <div>Jane Smith</div>
-            <div className="text-body text-sm font-normal">
+            <div className="text-sm font-normal text-body">
               jane@example.com
             </div>
           </Stack>
@@ -45,4 +45,4 @@ export const Default: Story = {
       </DropdownMenuContent>,
     ],
   },
-}
+};

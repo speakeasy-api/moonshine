@@ -1,101 +1,101 @@
-import { Alert } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { variants } from './types'
-import { fn } from 'storybook/test'
+import { Alert } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { variants } from "./types";
+import { fn } from "storybook/test";
 
 const defaultDecorators = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Story: any) => (
     <div className="m-auto flex h-full max-w-xl flex-col gap-2">{Story()}</div>
   ),
-]
+];
 const meta: Meta<typeof Alert> = {
   component: Alert,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
+      control: "select",
       options: variants,
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Alert>
+type Story = StoryObj<typeof Alert>;
 
 export const Default: Story = {
   args: {
-    variant: 'default',
-    children: 'This is an alert',
+    variant: "default",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Success: Story = {
   args: {
-    variant: 'success',
-    children: 'This is an alert',
+    variant: "success",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Error: Story = {
   args: {
-    variant: 'error',
-    children: 'This is an alert',
+    variant: "error",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Warning: Story = {
   args: {
-    variant: 'warning',
-    children: 'This is an alert',
+    variant: "warning",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Feature: Story = {
   args: {
-    variant: 'feature',
-    children: 'This is an alert',
+    variant: "feature",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Info: Story = {
   args: {
-    variant: 'info',
-    children: 'This is an alert',
+    variant: "info",
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Inline: Story = {
   args: {
-    variant: 'default',
+    variant: "default",
     inline: true,
-    children: 'This is an alert',
+    children: "This is an alert",
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Dismissible: Story = {
   args: {
-    variant: 'default',
+    variant: "default",
     dismissible: true,
-    children: 'This is an alert',
+    children: "This is an alert",
     onDismiss: fn().mockImplementation(() => {
-      console.log('dismissed')
+      console.log("dismissed");
     }),
   },
   decorators: defaultDecorators,
-}
+};
 
 export const Multiline: Story = {
   args: {
-    variant: 'error',
+    variant: "error",
     dismissible: true,
     children: (
       <div className="my-1 flex flex-col">
@@ -107,16 +107,16 @@ export const Multiline: Story = {
     ),
   },
   decorators: defaultDecorators,
-}
+};
 
 export const WithContainer: Story = {
   args: {
-    variant: 'default',
+    variant: "default",
     useContainer: true,
-    children: 'This is an alert',
+    children: "This is an alert",
   },
   parameters: {
     decorators: [],
   },
   decorators: [(Story) => <div className="w-screen">{Story()}</div>],
-}
+};

@@ -1,18 +1,18 @@
-import { CodeEditor, CodeEditorTabProps } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { faker } from '@faker-js/faker'
-import { Icon } from '@/components/Icon'
-import { Key } from '../KeyHint'
-import { useState } from 'react'
+import { CodeEditor, CodeEditorTabProps } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { faker } from "@faker-js/faker";
+import { Icon } from "@/components/Icon";
+import { Key } from "../KeyHint";
+import { useState } from "react";
 
-faker.seed(123)
+faker.seed(123);
 
 const meta: Meta<typeof CodeEditor> = {
   component: CodeEditor,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div className="bg-background/10 flex h-screen w-screen">
+      <div className="flex h-screen w-screen bg-background/10">
         <div className="m-6 flex w-full">
           <Story />
         </div>
@@ -20,13 +20,13 @@ const meta: Meta<typeof CodeEditor> = {
     ),
   ],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof CodeEditor>
+type Story = StoryObj<typeof CodeEditor>;
 
 export const Default: Story = {
   args: {
@@ -47,7 +47,7 @@ export const Default: Story = {
               className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
             />
           </div>
-          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+          <div className="ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border bg-background px-2 py-1">
             <Icon name="search" className="h-3 w-3" />
             <input
               type="text"
@@ -92,7 +92,7 @@ export const Default: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 export const Empty: Story = {
   args: {
@@ -113,7 +113,7 @@ export const Empty: Story = {
               className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
             />
           </div>
-          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+          <div className="ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border bg-background px-2 py-1">
             <Icon name="search" className="h-3 w-3" />
             <input
               type="text"
@@ -124,11 +124,11 @@ export const Empty: Story = {
         </div>
       </CodeEditor.CommandBar>,
       <CodeEditor.Empty>
-        <div className="bg-muted flex h-full flex-col items-center justify-center p-3">
+        <div className="flex h-full flex-col items-center justify-center bg-muted p-3">
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col items-center gap-1">
               <h2 className="text-lg font-semibold">No Tabs Open</h2>
-              <p className="text-body-muted text-sm">
+              <p className="text-sm text-body-muted">
                 Open a file to get started
               </p>
             </div>
@@ -142,7 +142,7 @@ export const Empty: Story = {
       </CodeEditor.Empty>,
     ],
   },
-}
+};
 
 export const SplitScreen: Story = {
   args: {
@@ -163,7 +163,7 @@ export const SplitScreen: Story = {
               className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
             />
           </div>
-          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+          <div className="ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border bg-background px-2 py-1">
             <Icon name="search" className="h-3 w-3" />
             <input
               type="text"
@@ -177,9 +177,9 @@ export const SplitScreen: Story = {
         <div
           className="h-full w-full"
           style={{
-            backgroundImage: 'url(https://placecats.com/600/800)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundImage: "url(https://placecats.com/600/800)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
       </CodeEditor.Pane>,
@@ -206,7 +206,7 @@ export const SplitScreen: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 export const WithTabIcons: Story = {
   args: {
@@ -227,7 +227,7 @@ export const WithTabIcons: Story = {
               className="h-3.5 w-3.5 rounded-full fill-green-500 stroke-green-500"
             />
           </div>
-          <div className="bg-background ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border px-2 py-1">
+          <div className="ml-auto flex w-full max-w-sm items-center gap-2 rounded-lg border bg-background px-2 py-1">
             <Icon name="search" className="h-3 w-3" />
             <input
               type="text"
@@ -271,11 +271,11 @@ export const WithTabIcons: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 export const TabStates: Story = {
   args: {
-    className: 'border rounded-md',
+    className: "border rounded-md",
     children: [
       <CodeEditor.Pane
         minSize={100}
@@ -337,7 +337,7 @@ export const TabStates: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 export const NoTabs: Story = {
   args: {
@@ -374,7 +374,7 @@ export const NoTabs: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 export const CustomTabElement: Story = {
   args: {
@@ -426,46 +426,46 @@ export const CustomTabElement: Story = {
       </CodeEditor.Pane>,
     ],
   },
-}
+};
 
 const Stateful = () => {
   const handleTabOpen = (id: string) => {
-    const newOpenTab = tabs.find((tab) => tab.id === id)
+    const newOpenTab = tabs.find((tab) => tab.id === id);
 
     if (!newOpenTab) {
-      return
+      return;
     }
 
     setTabs(
       tabs.map((tab) =>
-        tab.id === id ? { ...tab, active: true } : { ...tab, active: false }
-      )
-    )
-  }
+        tab.id === id ? { ...tab, active: true } : { ...tab, active: false },
+      ),
+    );
+  };
 
   const handleTabClose = (id: string) => {
-    setTabs(tabs.filter((tab) => tab.id !== id))
-  }
+    setTabs(tabs.filter((tab) => tab.id !== id));
+  };
 
   const [tabs, setTabs] = useState<CodeEditorTabProps[]>([
     {
-      id: 'openapi.yml',
+      id: "openapi.yml",
       active: true,
-      title: 'openapi.yml',
+      title: "openapi.yml",
     },
     {
-      id: 'README.md',
-      title: 'README.md',
+      id: "README.md",
+      title: "README.md",
     },
     {
-      id: 'src/index.ts',
-      title: 'src/index.ts',
+      id: "src/index.ts",
+      title: "src/index.ts",
     },
     {
-      id: 'src/auth.ts',
-      title: 'src/auth.ts',
+      id: "src/auth.ts",
+      title: "src/auth.ts",
     },
-  ])
+  ]);
 
   return (
     <CodeEditor className="overflow-hidden border">
@@ -513,9 +513,9 @@ const Stateful = () => {
         </div>
       </CodeEditor.Pane>
     </CodeEditor>
-  )
-}
+  );
+};
 
 export const Interactive: Story = {
   render: () => <Stateful />,
-}
+};

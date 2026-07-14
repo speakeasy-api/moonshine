@@ -1,17 +1,17 @@
-import { ProgrammingLanguage } from '@/types'
+import { ProgrammingLanguage } from "@/types";
 
 export interface WizardCommand {
-  id: string
-  code: string
-  language: ProgrammingLanguage
-  comment?: string
-  active?: boolean
-  path?: string
-  onSelectOrCopy?: (id: string) => void
+  id: string;
+  code: string;
+  language: ProgrammingLanguage;
+  comment?: string;
+  active?: boolean;
+  path?: string;
+  onSelectOrCopy?: (id: string) => void;
 }
 
 export interface WizardStep {
-  title: string
-  description: string
-  commands?: WizardCommand[]
+  title: string;
+  description: string;
+  commands?: WizardCommand[];
 }

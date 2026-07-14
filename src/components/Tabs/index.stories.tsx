@@ -1,10 +1,10 @@
-import { fn } from 'storybook/test'
-import { Tabs } from '.'
-import { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from "storybook/test";
+import { Tabs } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof Tabs> = {
   component: Tabs,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <div className="max-w-screen-sm flex-col items-center justify-center">
@@ -12,15 +12,15 @@ const meta: Meta<typeof Tabs> = {
       </div>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Tabs>
+type Story = StoryObj<typeof Tabs>;
 
 export const Default: Story = {
   args: {
-    selectedTab: '1',
+    selectedTab: "1",
     onTabChange: fn(),
     children: [
       <Tabs.Tab id="1" key="1" active>
@@ -40,4 +40,4 @@ export const Default: Story = {
       </Tabs.Tab>,
     ],
   },
-}
+};

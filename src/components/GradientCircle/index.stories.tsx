@@ -1,86 +1,85 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { GradientCircle } from '.'
-import { useEffect, useState } from 'react'
-import isChromatic from 'chromatic/isChromatic'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { GradientCircle } from ".";
+import { useEffect, useState } from "react";
 
 const meta: Meta<typeof GradientCircle> = {
   component: GradientCircle,
   argTypes: {
     size: {
-      options: ['small', 'medium', 'large', 'xl', '2xl'],
+      options: ["small", "medium", "large", "xl", "2xl"],
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
-const name = 'Name'
+const name = "Name";
 
 export const Default: Story = {
   args: {
     name,
   },
-}
+};
 
 export const Small: Story = {
   args: {
     name,
-    size: 'small',
+    size: "small",
   },
-}
+};
 
 export const Medium: Story = {
   args: {
     name,
-    size: 'medium',
+    size: "medium",
   },
-}
+};
 
 export const Large: Story = {
   args: {
     name,
-    size: 'large',
+    size: "large",
   },
-}
+};
 
 export const Xl: Story = {
   args: {
     name,
-    size: 'xl',
+    size: "xl",
   },
-}
+};
 
 export const WithInitial: Story = {
   args: {
     name,
     showInitial: true,
-    size: '2xl',
+    size: "2xl",
   },
-}
+};
 
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-const WithTransitionComponent = (args: Story['args']) => {
-  const [name, setName] = useState(args?.name ?? '')
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const WithTransitionComponent = (args: Story["args"]) => {
+  const [name, setName] = useState(args?.name ?? "");
 
   useEffect(() => {
     setInterval(() => {
-      setName(alphabet[Math.floor(Math.random() * alphabet.length)])
-    }, 1500)
-  }, [])
+      setName(alphabet[Math.floor(Math.random() * alphabet.length)]);
+    }, 1500);
+  }, []);
 
-  return <GradientCircle {...args} name={name} />
-}
+  return <GradientCircle {...args} name={name} />;
+};
 
 export const WithTransition: Story = {
   args: {
     name,
     showInitial: true,
-    transition: isChromatic() ? true : false,
-    size: '2xl',
+    transition: true,
+    size: "2xl",
   },
   render: (args) => {
-    return <WithTransitionComponent {...args} />
+    return <WithTransitionComponent {...args} />;
   },
-}
+};

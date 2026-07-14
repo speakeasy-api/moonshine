@@ -1,58 +1,58 @@
-import { useTheme } from '@/hooks/useTheme'
-import { cn } from '@/lib/utils'
+import { useTheme } from "@/hooks/useTheme";
+import { cn } from "@/lib/utils";
 import {
   Fit,
   Layout,
   useRive,
   useViewModelInstanceBoolean,
-} from '@rive-app/react-canvas-lite'
-import { cva } from 'class-variance-authority'
-import { FC, useEffect, useState } from 'react'
+} from "@rive-app/react-canvas-lite";
+import { cva } from "class-variance-authority";
+import { ComponentProps, FC, useEffect, useState } from "react";
 
 // read rive file from local directory into arraybuffer
-const riveFile = await import('./speakeasy-logo.riv')
+const riveFile = await import("./speakeasy-logo.riv");
 
-const stackLogoClass = cva('relative', {
+const stackLogoClass = cva("relative", {
   variants: {
     size: {
-      xl: 'size-20',
-      lg: 'size-16',
-      md: 'size-8',
-      sm: 'size-6',
+      xl: "size-20",
+      lg: "size-16",
+      md: "size-8",
+      sm: "size-6",
     },
   },
-})
+});
 
-type Size = 'sm' | 'md' | 'lg' | 'xl'
+type Size = "sm" | "md" | "lg" | "xl";
 
-type StateMachine = 'loop-dark' | 'loop-light'
+type StateMachine = "loop-dark" | "loop-light";
 
-const lettersLogoClass = cva('hidden mt-px md:block', {
+const lettersLogoClass = cva("hidden mt-px md:block", {
   variants: {
     size: {
-      xl: 'ml-4 w-[22rem] h-auto',
-      lg: 'ml-3 w-[19.75rem] h-auto',
-      md: 'ml-2 w-[9.75rem] h-auto',
-      sm: 'ml-2 w-[8.75rem] h-auto',
+      xl: "ml-4 w-[22rem] h-auto",
+      lg: "ml-3 w-[19.75rem] h-auto",
+      md: "ml-2 w-[9.75rem] h-auto",
+      sm: "ml-2 w-[8.75rem] h-auto",
     },
   },
-})
+});
 
 export const AnimatedLogo = ({
   className,
-  size = 'md',
-  variant = 'icon',
+  size = "md",
+  variant = "icon",
   onMouseEnter,
   onMouseLeave,
   ...rest
 }: {
-  className?: string
-  size?: Size
-  variant?: 'icon' | 'icon-with-wordmark'
+  className?: string;
+  size?: Size;
+  variant?: "icon" | "icon-with-wordmark";
 } & React.HTMLAttributes<HTMLDivElement>) => {
-  const [riveLoaded, setRiveLoaded] = useState(false)
-  const theme = useTheme()
-  const [stateMachine, setStateMachine] = useState<StateMachine>('loop-dark')
+  const [riveLoaded, setRiveLoaded] = useState(false);
+  const theme = useTheme();
+  const [stateMachine, setStateMachine] = useState<StateMachine>("loop-dark");
   const { rive, RiveComponent } = useRive({
     src: riveFile.default,
     stateMachines: stateMachine,
@@ -61,35 +61,35 @@ export const AnimatedLogo = ({
       fit: Fit.Contain,
     }),
     onLoad: () => {
-      setRiveLoaded(true)
+      setRiveLoaded(true);
     },
-  })
+  });
 
   const { setValue: setIsHovered } = useViewModelInstanceBoolean(
-    'isHovered',
-    rive?.viewModelInstance
-  )
+    "isHovered",
+    rive?.viewModelInstance,
+  );
 
   useEffect(() => {
-    setStateMachine(theme === 'dark' ? 'loop-dark' : 'loop-light')
-  }, [theme])
+    setStateMachine(theme === "dark" ? "loop-dark" : "loop-light");
+  }, [theme]);
 
   useEffect(() => {
     return () => {
-      rive?.cleanup()
-    }
-  }, [rive])
+      rive?.cleanup();
+    };
+  }, [rive]);
 
   return (
     <div
-      className={cn('flex items-center', className)}
+      className={cn("flex items-center", className)}
       onMouseEnter={(e) => {
-        setIsHovered(true)
-        onMouseEnter?.(e)
+        setIsHovered(true);
+        onMouseEnter?.(e);
       }}
       onMouseLeave={(e) => {
-        setIsHovered(false)
-        onMouseLeave?.(e)
+        setIsHovered(false);
+        onMouseLeave?.(e);
       }}
       {...rest}
     >
@@ -97,20 +97,20 @@ export const AnimatedLogo = ({
         <LogoSvg
           aria-hidden
           className={cn(
-            'pointer-events-none absolute top-0 left-0 size-full scale-[0.87] transition-opacity duration-100',
+            "pointer-events-none absolute top-0 left-0 size-full scale-[0.87] transition-opacity duration-100",
             {
-              'opacity-0': riveLoaded,
-            }
+              "opacity-0": riveLoaded,
+            },
           )}
         />
         <RiveComponent key={stateMachine} className="size-full" />
       </div>
-      {variant === 'icon-with-wordmark' && <WordmarkSvg size={size} />}
+      {variant === "icon-with-wordmark" && <WordmarkSvg size={size} />}
     </div>
-  )
-}
+  );
+};
 
-const WordmarkSvg: FC<{ size: Size }> = ({ size = 'md' }) => (
+const WordmarkSvg: FC<{ size: Size }> = ({ size = "md" }) => (
   <>
     <p className="sr-only">Speakeasy Logo</p>
     <svg
@@ -155,9 +155,9 @@ const WordmarkSvg: FC<{ size: Size }> = ({ size = 'md' }) => (
       />
     </svg>
   </>
-)
+);
 
-const LogoSvg: FC<JSX.IntrinsicElements['svg']> = (props) => {
+const LogoSvg: FC<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -189,5 +189,5 @@ const LogoSvg: FC<JSX.IntrinsicElements['svg']> = (props) => {
         d="M29.095 3.902 8.456.971 0 8.305l20.639 2.934 8.456-7.337Z"
       />
     </svg>
-  )
-}
+  );
+};

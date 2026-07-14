@@ -1,11 +1,11 @@
 @property --rotation {
-  syntax: '<angle>';
+  syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }
 
 @property --x {
-  syntax: '<length>';
+  syntax: "<length>";
   inherits: false;
   initial-value: 0;
 }
@@ -58,7 +58,7 @@
 }
 
 .snippet::before {
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   width: 100%;
@@ -68,10 +68,11 @@
 }
 
 .shimmer::before {
-  content: '';
+  content: "";
   display: block;
   padding: 1px;
-  background: conic-gradient(
+  background:
+    conic-gradient(
       from calc(var(--rotation) - 80deg) at var(--x) 30px,
       transparent 0,
       var(--border-neutral-softest) 20%,

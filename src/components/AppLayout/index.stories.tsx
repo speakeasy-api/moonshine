@@ -1,28 +1,26 @@
-import { Meta, StoryObj } from '@storybook/react-vite'
-import { AppLayout } from '.'
-import { AppLayoutProvider } from './provider'
-import { Heading } from '../Heading'
-import { Text } from '../Text'
-import { Icon } from '../Icon'
-import { Button } from '../Button'
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import React, { useState } from 'react'
-import { MoonshineConfigProvider } from '@/context/ConfigContext'
-import { useAppLayout } from '@/hooks/useAppLayout'
-import { useSidebarInteractionLock } from '@/hooks/useSidebarInteractionLock'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { AppLayout } from ".";
+import { AppLayoutProvider } from "./provider";
+import { Heading } from "../Heading";
+import { Text } from "../Text";
+import { Icon } from "../Icon";
+import { Button } from "../Button";
+import React, { useState } from "react";
+import { MoonshineConfigProvider } from "@/context/ConfigContext";
+import { useAppLayout } from "@/hooks/useAppLayout";
 
-type Story = StoryObj<typeof AppLayout>
+type Story = StoryObj<typeof AppLayout>;
 
 const meta: Meta<typeof AppLayout> = {
-  title: 'Components/AppLayout',
+  title: "Components/AppLayout",
   component: AppLayout,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-}
+};
 
-export default meta
+export default meta;
 
 const SurfaceContent = () => {
   return (
@@ -36,8 +34,8 @@ const SurfaceContent = () => {
         </Text>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -45,17 +43,18 @@ export const Default: Story = {
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
+            active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -66,7 +65,7 @@ export const Default: Story = {
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+          <AppLayout.BreadcrumbItem onClick={() => alert("Home")}>
             Home
           </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
@@ -78,60 +77,21 @@ export const Default: Story = {
     ],
   },
   render: (args) => (
-    <AppLayoutProvider defaultCollapsed>
+    <AppLayoutProvider defaultCollapsed={false}>
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
-
-export const WithHeader: Story = {
-  name: 'With Header',
-  args: {
-    children: [
-      <AppLayout.Header key="header" className="p-3">
-        <Text variant="sm">This layout is in beta.</Text>
-      </AppLayout.Header>,
-      <AppLayout.Sidebar key="sidebar">
-        <AppLayout.Nav>
-          <AppLayout.NavItem
-            onClick={() => alert('Home')}
-            title="Home"
-            icon="house"
-          />
-          <AppLayout.NavItem title="Settings" icon="settings" />
-          <AppLayout.NavItem title="Users" icon="users" />
-        </AppLayout.Nav>
-      </AppLayout.Sidebar>,
-      <AppLayout.SurfaceHeader key="surface-header">
-        <AppLayout.CollapseButton />
-        <div className="mr-1 ml-auto flex items-center gap-3">
-          <Button variant="secondary">
-            <Icon name="circle-plus" className="size-4" strokeWidth={1.25} />
-            <span>Add new</span>
-          </Button>
-        </div>
-      </AppLayout.SurfaceHeader>,
-      <AppLayout.Surface className="p-4" key="surface">
-        <SurfaceContent />
-      </AppLayout.Surface>,
-    ],
-  },
-  render: (args) => (
-    <AppLayoutProvider>
-      <AppLayout {...args} />
-    </AppLayoutProvider>
-  ),
-}
+};
 
 export const WithNavItemGroups: Story = {
-  name: 'With Nav Item Groups',
+  name: "With Nav Item Groups",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItemGroup name="General">
             <AppLayout.NavItem
-              onClick={() => alert('Home')}
+              onClick={() => alert("Home")}
               title="Home"
               icon="house"
             />
@@ -139,7 +99,7 @@ export const WithNavItemGroups: Story = {
             <AppLayout.NavItem title="Users" icon="users" />
           </AppLayout.NavItemGroup>
           <AppLayout.NavItemGroup name="Activity">
-            <AppLayout.NavItem title="Activity" icon="activity" />
+            <AppLayout.NavItem title="Activity" icon="activity" active />
             <AppLayout.NavItem title="Notifications" icon="bell" />
             <AppLayout.NavItem title="Messages" icon="message-circle" />
             <AppLayout.NavItem title="Users" icon="users" disabled />
@@ -165,26 +125,27 @@ export const WithNavItemGroups: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const CustomSurfaceHeader: Story = {
-  name: 'Custom Surface Header',
+  name: "Custom Surface Header",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
+            active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -209,12 +170,12 @@ export const CustomSurfaceHeader: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 const HomePage = ({
   handlePageChange,
 }: {
-  handlePageChange: (page: AllPages) => void
+  handlePageChange: (page: AllPages) => void;
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -226,13 +187,13 @@ const HomePage = ({
       </Text>
 
       <div>
-        <Button onClick={() => handlePageChange('settings')}>
+        <Button onClick={() => handlePageChange("settings")}>
           Go to settings
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const SettingsPage = () => {
   return (
@@ -244,58 +205,58 @@ const SettingsPage = () => {
         the app.
       </Text>
     </div>
-  )
-}
+  );
+};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-const allPages = ['home', 'settings'] as const
-type AllPages = (typeof allPages)[number]
+const allPages = ["home", "settings"] as const;
+type AllPages = (typeof allPages)[number];
 const SurfaceTransition = () => {
-  const [page, setPage] = useState<AllPages>('settings')
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [direction, setDirection] = useState<'forward' | 'backward'>('forward')
+  const [page, setPage] = useState<AllPages>("settings");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [direction, setDirection] = useState<"forward" | "backward">("forward");
 
   const handlePageChange = (newPage: AllPages) => {
-    if (newPage === page || isTransitioning) return // Don't transition if already on that page or transitioning
+    if (newPage === page || isTransitioning) return; // Don't transition if already on that page or transitioning
 
-    setIsTransitioning(true)
+    setIsTransitioning(true);
 
     // Determine direction: 'one' -> 'two' = forward (left to right), 'two' -> 'one' = backward (right to left)
-    const isForward = page === 'home' && newPage === 'settings'
-    const newDirection = isForward ? 'forward' : 'backward'
+    const isForward = page === "home" && newPage === "settings";
+    const newDirection = isForward ? "forward" : "backward";
 
     // Set direction first, then start transition after a micro-task
-    setDirection(newDirection)
+    setDirection(newDirection);
 
     // Set CSS variables on document root for view transition pseudo-elements
     const slideOutTransform = isForward
-      ? 'translateX(-100%)'
-      : 'translateX(100%)'
+      ? "translateX(-100%)"
+      : "translateX(100%)";
     const slideInTransform = isForward
-      ? 'translateX(100%)'
-      : 'translateX(-100%)'
+      ? "translateX(100%)"
+      : "translateX(-100%)";
 
     document.documentElement.style.setProperty(
-      '--slide-out-transform',
-      slideOutTransform
-    )
+      "--slide-out-transform",
+      slideOutTransform,
+    );
     document.documentElement.style.setProperty(
-      '--slide-in-transform',
-      slideInTransform
-    )
+      "--slide-in-transform",
+      slideInTransform,
+    );
 
     // Use setTimeout to ensure direction is applied before transition starts
     setTimeout(() => {
       document
         .startViewTransition(() => {
-          setPage(newPage)
+          setPage(newPage);
         })
         .finished.then(() => {
-          console.log('Transition finished')
-          setIsTransitioning(false)
-        })
-    }, 0)
-  }
+          console.log("Transition finished");
+          setIsTransitioning(false);
+        });
+    }, 0);
+  };
 
   return (
     <div>
@@ -341,7 +302,7 @@ const SurfaceTransition = () => {
         <AppLayout>
           <AppLayout.Sidebar>
             <AppLayout.Nav>
-              <AppLayout.NavItem title="Home" icon="house" />
+              <AppLayout.NavItem title="Home" icon="house" active />
               <AppLayout.NavItem title="Settings" icon="settings" />
               <AppLayout.NavItem title="Users" icon="users" />
             </AppLayout.Nav>
@@ -350,15 +311,15 @@ const SurfaceTransition = () => {
             <AppLayout.CollapseButton />
             <AppLayout.Breadcrumb>
               <AppLayout.BreadcrumbItem
-                active={page === 'home'}
-                onClick={() => handlePageChange('home')}
+                active={page === "home"}
+                onClick={() => handlePageChange("home")}
               >
                 Home
               </AppLayout.BreadcrumbItem>
-              {page === 'settings' && (
+              {page === "settings" && (
                 <AppLayout.BreadcrumbItem
-                  active={page === 'settings'}
-                  onClick={() => handlePageChange('settings')}
+                  active={page === "settings"}
+                  onClick={() => handlePageChange("settings")}
                 >
                   Settings
                 </AppLayout.BreadcrumbItem>
@@ -366,11 +327,11 @@ const SurfaceTransition = () => {
             </AppLayout.Breadcrumb>
           </AppLayout.SurfaceHeader>
           <AppLayout.Surface
-            style={{ viewTransitionName: 'page-transition' }}
+            style={{ viewTransitionName: "page-transition" }}
             data-direction={direction}
             className="p-4"
           >
-            {page === 'home' ? (
+            {page === "home" ? (
               <HomePage handlePageChange={handlePageChange} />
             ) : (
               <SettingsPage />
@@ -379,31 +340,32 @@ const SurfaceTransition = () => {
         </AppLayout>
       </AppLayoutProvider>
     </div>
-  )
-}
+  );
+};
 export const SurfaceTransitionStory: Story = {
-  name: 'Surface Transition',
+  name: "Surface Transition",
   render: () => <SurfaceTransition />,
-}
+};
 
 export const WithFullScreenSurface: Story = {
-  name: 'With Full Screen Surface',
+  name: "With Full Screen Surface",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItem
-            onClick={() => alert('Home')}
+            onClick={() => alert("Home")}
             title="Home"
             icon="house"
+            active
           />
           <AppLayout.NavItem
-            onClick={() => alert('Settings')}
+            onClick={() => alert("Settings")}
             title="Settings"
             icon="settings"
           />
           <AppLayout.NavItem
-            onClick={() => alert('Users')}
+            onClick={() => alert("Users")}
             title="Users"
             icon="users"
           />
@@ -413,19 +375,19 @@ export const WithFullScreenSurface: Story = {
         <AppLayout.CollapseButton />
         <AppLayout.HeaderDivider />
         <AppLayout.Breadcrumb>
-          <AppLayout.BreadcrumbItem onClick={() => alert('Home')}>
+          <AppLayout.BreadcrumbItem onClick={() => alert("Home")}>
             Home
           </AppLayout.BreadcrumbItem>
           <AppLayout.BreadcrumbItem active>Settings</AppLayout.BreadcrumbItem>
         </AppLayout.Breadcrumb>
       </AppLayout.SurfaceHeader>,
       <AppLayout.Surface className="p-0" key="surface">
-        <div className="bg-surface-secondary flex h-full w-full flex-col">
+        <div className="flex h-full w-full flex-col bg-surface-primary">
           <div className="flex items-center justify-center py-4">
             <Text>This is a full screen surface</Text>
           </div>
 
-          <div className="border-neutral-default mt-auto flex items-center justify-center border-t py-4">
+          <div className="mt-auto flex items-center justify-center border-t border-neutral-softest py-4">
             <Text>
               This content is pushed to the bottom but doesn't overflow the
               viewport
@@ -440,19 +402,20 @@ export const WithFullScreenSurface: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const CustomExtraSidebarChildren: Story = {
-  name: 'Custom Extra Sidebar Children',
+  name: "Custom Extra Sidebar Children",
   args: {
     children: [
       <AppLayout.Sidebar className="max-h-full" key="sidebar">
         <AppLayout.Nav>
           <AppLayout.NavItemGroup name="General">
             <AppLayout.NavItem
-              onClick={() => alert('Home')}
+              onClick={() => alert("Home")}
               title="Home"
               icon="house"
+              active
             />
             <AppLayout.NavItem title="Settings" icon="settings" />
             <AppLayout.NavItem title="Users" icon="users" />
@@ -487,47 +450,47 @@ export const CustomExtraSidebarChildren: Story = {
         theme={context.globals.theme}
         /** TODO: support changing the storybook context value from the story */
         setTheme={(theme) => {
-          console.log('theme', theme)
+          console.log("theme", theme);
         }}
       >
         <AppLayout {...args} />
       </MoonshineConfigProvider>
     </AppLayoutProvider>
   ),
-}
+};
 
 // Demonstrates polymorphic `asChild` prop for NavItem and BreadcrumbItem
 const FakeLink = ({
   to,
   ...props
 }: {
-  to: string
+  to: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  return <a href={to} {...props} />
-}
+  return <a href={to} {...props} />;
+};
 const CustomLink = ({
   to,
   ...props
 }: {
-  to: string
+  to: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  const { collapsed } = useAppLayout()
+  const { collapsed } = useAppLayout();
   return (
     <FakeLink to={to} {...props}>
       <Icon name="settings" className="size-6" strokeWidth={1.3} />
       {!collapsed && <span className="typography-body-sm">Settings</span>}
     </FakeLink>
-  )
-}
+  );
+};
 
 export const Polymorphic: Story = {
-  name: 'Polymorphic Components',
+  name: "Polymorphic Components",
   args: {
     children: [
       <AppLayout.Sidebar key="sidebar">
         <AppLayout.Nav>
           {/* Default anchor with href */}
-          <AppLayout.NavItem href="#" title="Home" icon="house" />
+          <AppLayout.NavItem href="#" title="Home" icon="house" active />
 
           {/* Custom Link-like component with asChild prop */}
           <AppLayout.NavItem asChild title="Settings" icon="settings">
@@ -559,16 +522,15 @@ export const Polymorphic: Story = {
       <AppLayout {...args} />
     </AppLayoutProvider>
   ),
-}
+};
 
 export const WithHomeNavigationOnBrandLogo: Story = {
-  name: 'With Home Navigation On Brand Logo',
+  name: "With Home Navigation On Brand Logo",
   args: {
     children: [
-      <AppLayout.Sidebar key="sidebar" onHomeNavigation={() => alert('Home')}>
+      <AppLayout.Sidebar key="sidebar" onHomeNavigation={() => alert("Home")}>
         <AppLayout.Nav>
-          <AppLayout.NavItem title="Home" icon="house" />
-
+          <AppLayout.NavItem title="Home" icon="house" active />
           <AppLayout.NavItem title="Settings" icon="settings" />
           <AppLayout.NavItem title="Users" icon="users" />
         </AppLayout.Nav>
@@ -585,79 +547,4 @@ export const WithHomeNavigationOnBrandLogo: Story = {
       </AppLayout.Surface>,
     ],
   },
-}
-
-const SidebarPopoverDemo = () => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const { collapsed } = useAppLayout()
-
-  // Use the hook to prevent sidebar collapse when popover is open
-  useSidebarInteractionLock(isPopoverOpen)
-
-  return (
-    <AppLayout>
-      <AppLayout.Sidebar>
-        <AppLayout.Nav>
-          <AppLayout.NavItem href="#" icon="house" title="Home">
-            Home
-          </AppLayout.NavItem>
-          <AppLayout.NavItem href="#" icon="settings" title="Settings">
-            Settings
-          </AppLayout.NavItem>
-          <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-            <PopoverTrigger asChild>
-              <button className="mt-1 flex flex-row items-center gap-3">
-                <Icon name="circle-plus" className="size-6" strokeWidth={1.1} />
-
-                {!collapsed && (
-                  <span className="typography-body-sm">Add new</span>
-                )}
-              </button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-80">
-              <div className="space-y-2">
-                <h4 className="font-medium">Sidebar Popover</h4>
-                <p className="text-muted-foreground text-sm">
-                  This popover extends beyond the sidebar. When open, the
-                  sidebar won't auto-collapse when you hover over it.
-                </p>
-                <Button size="sm" onClick={() => setIsPopoverOpen(false)}>
-                  Close
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </AppLayout.Nav>
-      </AppLayout.Sidebar>
-      <AppLayout.SurfaceHeader>
-        <AppLayout.CollapseButton />
-        <AppLayout.HeaderDivider />
-
-        <Text variant="md">Sidebar Popover Demo</Text>
-      </AppLayout.SurfaceHeader>
-      <AppLayout.Surface className="p-4">
-        <div className="flex flex-col gap-1 space-y-4">
-          <Text>
-            This story demonstrates the sidebar interaction lock feature:
-          </Text>
-          <ul className="list-inside list-disc space-y-2 text-sm">
-            <li>Collapse the sidebar by clicking the toggle or using Cmd+B</li>
-            <li>Hover over the collapsed sidebar to expand it</li>
-            <li>Click the plus icon in the sidebar to open the popover</li>
-            <li>Move your mouse into the popover content</li>
-            <li>Notice the sidebar stays expanded instead of collapsing</li>
-            <li>Close the popover and the normal hover behavior resumes</li>
-          </ul>
-        </div>
-      </AppLayout.Surface>
-    </AppLayout>
-  )
-}
-
-export const WithSidebarPopover: Story = {
-  render: () => (
-    <AppLayoutProvider defaultCollapsed hoverExpandsSidebar>
-      <SidebarPopoverDemo />
-    </AppLayoutProvider>
-  ),
-}
+};

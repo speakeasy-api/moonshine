@@ -1,25 +1,25 @@
-import { createContext } from 'react'
-import { Theme } from './theme'
+import { createContext } from "react";
+import { Theme } from "./theme";
 
 export interface ConfigContextType {
   /*
    * The current theme
    */
-  theme: Theme
+  theme: Theme;
 
   /*
    * Update the current theme
    */
-  setTheme: (theme: Theme) => void
+  setTheme: (theme: Theme) => void;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ConfigContext = createContext<ConfigContextType | undefined>(
-  undefined
-)
+  undefined,
+);
 
 export interface MoonshineConfigProviderProps extends ConfigContextType {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 /**
@@ -39,5 +39,5 @@ export function MoonshineConfigProvider({
     <ConfigContext.Provider value={{ theme, setTheme }}>
       {children}
     </ConfigContext.Provider>
-  )
+  );
 }

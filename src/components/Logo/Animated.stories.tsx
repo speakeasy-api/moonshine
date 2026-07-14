@@ -1,69 +1,69 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { AnimatedLogo } from './Animated'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { AnimatedLogo } from "./Animated";
 
 const meta: Meta<typeof AnimatedLogo> = {
   component: AnimatedLogo,
-  tags: ['autodocs'],
-  title: 'components/Logo/Animated',
-}
+  tags: ["autodocs"],
+  title: "components/Logo/Animated",
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof AnimatedLogo>
+type Story = StoryObj<typeof AnimatedLogo>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const DefaultWithWordmark: Story = {
   args: {
-    variant: 'icon-with-wordmark',
+    variant: "icon-with-wordmark",
   },
-}
+};
 
 export const Small: Story = {
   args: {
-    size: 'sm',
+    size: "sm",
   },
-}
+};
 
 export const Medium: Story = {
   args: {
-    size: 'md',
+    size: "md",
   },
-}
+};
 
 export const Large: Story = {
   args: {
-    size: 'lg',
+    size: "lg",
   },
-}
+};
 
 export const ExtraLarge: Story = {
   args: {
-    size: 'xl',
+    size: "xl",
   },
-}
+};
 
 export const Wordmark: Story = {
   args: {
-    size: 'xl',
-    variant: 'icon-with-wordmark',
+    size: "xl",
+    variant: "icon-with-wordmark",
   },
-}
+};
 
 const VariantPreview = ({
   title,
   children,
 }: {
-  title: string
-  children: React.ReactNode
+  title: string;
+  children: React.ReactNode;
 }) => (
   <div className="flex min-h-20 flex-col gap-4">
-    <h3 className="text-muted-foreground border-b pb-2 text-sm font-medium">
+    <h3 className="border-b pb-2 text-sm font-medium text-muted-foreground">
       {title}
     </h3>
     {children}
   </div>
-)
+);
 
 export const AllVariants: Story = {
   render: () => (
@@ -115,7 +115,7 @@ export const AllVariants: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const DifferentBackgroundColor: Story = {
   render: () => (
@@ -127,4 +127,4 @@ export const DifferentBackgroundColor: Story = {
       <AnimatedLogo variant="icon" />
     </div>
   ),
-}
+};

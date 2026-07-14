@@ -1,9 +1,9 @@
-import { fn } from 'storybook/test'
-import { Input, InputProps } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
+import { fn } from "storybook/test";
+import { Input, InputProps } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
+  title: "Components/Input",
   component: Input,
   decorators: [
     (Story) => (
@@ -12,33 +12,33 @@ const meta: Meta<typeof Input> = {
       </div>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Input>
+type Story = StoryObj<typeof Input>;
 
 const baseArgs: Partial<InputProps> = {
-  placeholder: 'Write something...',
+  placeholder: "Write something...",
   onChange: fn(),
-}
+};
 
 export const Default: Story = {
   args: {
     ...baseArgs,
   },
-}
+};
 
 export const WithIcon: Story = {
   args: {
     ...baseArgs,
-    icon: 'search',
+    icon: "search",
   },
-}
+};
 
 export const Multiline: Story = {
   args: {
     ...baseArgs,
     multiline: true,
   },
-}
+};

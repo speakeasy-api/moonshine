@@ -1,53 +1,53 @@
-import { LoggedInUserMenu } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
-import { fn, userEvent, within, screen, expect } from 'storybook/test'
-import { Icon } from '../Icon'
+import { LoggedInUserMenu } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn, userEvent, within, screen, expect } from "storybook/test";
+import { Icon } from "../Icon";
 
 const meta: Meta<typeof LoggedInUserMenu> = {
   component: LoggedInUserMenu,
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof LoggedInUserMenu>
+type Story = StoryObj<typeof LoggedInUserMenu>;
 
 export const Default: Story = {
   args: {
-    email: 'test@test.com',
-    name: 'John Doe',
-    imageUrl: 'https://robohash.org/3',
+    email: "test@test.com",
+    name: "John Doe",
+    imageUrl: "https://robohash.org/3",
     onSignOut: fn(),
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
 export const WithLongName: Story = {
   ...Default.parameters,
   args: {
     ...Default.args,
-    name: 'Really Long Name That Should Be Truncated',
+    name: "Really Long Name That Should Be Truncated",
   },
-}
+};
 
 export const WithLongEmail: Story = {
   ...Default.parameters,
   args: {
     ...Default.args,
-    email: 'really.really.long.email.address@test.com',
+    email: "really.really.long.email.address@test.com",
   },
-}
+};
 
 export const NoImage: Story = {
   ...Default.parameters,
   args: {
     ...Default.args,
-    name: 'Trevor Smith',
+    name: "Trevor Smith",
     imageUrl: undefined,
   },
-}
+};
 
 export const ExtraMenuItem: Story = {
   ...Default.parameters,
@@ -60,7 +60,7 @@ export const ExtraMenuItem: Story = {
       </LoggedInUserMenu.MenuItem>,
     ],
   },
-}
+};
 
 export const MultipleExtraMenuItems: Story = {
   ...Default.parameters,
@@ -86,7 +86,7 @@ export const MultipleExtraMenuItems: Story = {
       <LoggedInUserMenu.Seperator key="seperator" />,
     ],
   },
-}
+};
 
 export const Interactive: Story = {
   ...Default.parameters,
@@ -95,13 +95,13 @@ export const Interactive: Story = {
     onSignOut: fn(),
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
+    const canvas = within(canvasElement);
     await userEvent.click(
-      await canvas.findByRole('button', { name: /open menu/i }),
-      { delay: 500 }
-    )
-    await userEvent.click(screen.getByText('Logout'))
+      await canvas.findByRole("button", { name: /open menu/i }),
+      { delay: 500 },
+    );
+    await userEvent.click(screen.getByText("Logout"));
 
-    expect(Interactive.args?.onSignOut).toHaveBeenCalled()
+    expect(Interactive.args?.onSignOut).toHaveBeenCalled();
   },
-}
+};

@@ -1,4 +1,3 @@
-import { AnnotationHandler, HighlightedCode, Pre } from 'codehike/code'
 import {
   useCallback,
   useEffect,
@@ -9,55 +8,61 @@ import {
   HTMLAttributes,
   forwardRef,
   useRef,
-} from 'react'
+} from "react";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/Select'
-import { prettyLanguageName, SupportedLanguage } from '@/types'
-import { wordWrapping } from './wordWrap'
-import '@/styles/codeSyntax.css'
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
-import { AnimatePresence } from 'framer-motion'
-import { Icon } from '@/components/Icon'
-import { Skeleton } from '@/components/Skeleton'
-import { highlightCode, getCodeHandlers } from '@/lib/codeUtils'
-import React from 'react'
+} from "@/components/Select";
+import { prettyLanguageName, SupportedLanguage } from "@/types";
+import "@/styles/codeSyntax.css";
+import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
+import { AnimatePresence } from "motion/react";
+import { Icon } from "@/components/Icon";
+import { Skeleton } from "@/components/Skeleton";
+import {
+  highlightCode,
+  HighlightedCode,
+  LIGHT_THEME,
+  DARK_THEME,
+} from "@/lib/codeUtils";
+import React from "react";
+import { Pre } from "../CodeHighlight/Pre";
+import { useConfig } from "@/hooks/useConfig";
 
 const copyIconVariants = {
   hidden: { opacity: 0, scale: 0.5 },
   visible: { opacity: 1, scale: 1 },
-}
+};
 export interface CodePlaygroundSnippet {
   /**
    * The code to display in the playground.
    */
-  code?: string | undefined
+  code?: string | undefined;
   /**
    * Whether the code is loading.
    */
-  loading?: boolean | undefined
+  loading?: boolean | undefined;
 }
 
 export type CodePlaygroundSnippets = Partial<
   Record<SupportedLanguage, CodePlaygroundSnippet>
->
+>;
 
 export interface CodePlaygroundProps {
   /**
    * The children of the playground.
    * Accepts a `CodePlayground.Header` and a `CodePlayground.Footer` or a `CodePlayground.Code` component.
    */
-  children: React.ReactNode
+  children: React.ReactNode;
 
   /**
    * The error to display in the playground if the code could not be loaded.
    */
-  error?: React.ReactNode | undefined
+  error?: React.ReactNode | undefined;
 
   /**
    * An object of snippets to display in the playground.
@@ -70,53 +75,46 @@ export interface CodePlaygroundProps {
    *   }}
    * />
    */
-  snippets: CodePlaygroundSnippets
+  snippets: CodePlaygroundSnippets;
 
   /**
    * The language that should be selected when the playground is mounted.
    */
-  selectedLanguage: SupportedLanguage
+  selectedLanguage: SupportedLanguage;
 
   /**
    * Whether the code should be copyable.
    *
    * @default true
    */
-  copyable?: boolean
+  copyable?: boolean;
 
   /** Custom class name to apply to the container */
-  className?: string
+  className?: string;
 
   /**
    * Whether to wrap the code.
    *
    * @default true
    */
-  wordWrap?: boolean
+  wordWrap?: boolean;
 
   /**
    * A callback to be called when the language is changed.
    */
-  onChangeLanguage?: (language: SupportedLanguage) => void
-
-  /**
-   * Whether to animate the code when the language is changed.
-   *
-   * @default true
-   */
-  animateOnLanguageChange?: boolean
+  onChangeLanguage?: (language: SupportedLanguage) => void;
 
   /**
    * Whether to show the language selector.
    */
-  showLanguageSelector?: boolean
+  showLanguageSelector?: boolean;
 
   /**
    * Whether to show line numbers.
    *
    * @default true
    */
-  showLineNumbers?: boolean
+  showLineNumbers?: boolean;
 }
 
 const CodePlayground = ({
@@ -127,53 +125,38 @@ const CodePlayground = ({
   className,
   onChangeLanguage,
   error,
-  animateOnLanguageChange = true,
   showLineNumbers = true,
   showLanguageSelector = true,
   wordWrap = true,
 }: CodePlaygroundProps) => {
-  const codeRef = useRef<HTMLDivElement>(null)
+  const codeRef = useRef<HTMLDivElement>(null);
   const validChildren = Children.toArray(children).filter((child) => {
-    if (!isValidElement(child)) return false
-    const type = child.type as { displayName?: string }
+    if (!isValidElement(child)) return false;
+    const type = child.type as { displayName?: string };
     const isValidSubType =
-      type.displayName === 'CodePlayground.Header' ||
-      type.displayName === 'CodePlayground.Footer' ||
-      type.displayName === 'CodePlayground.Code'
+      type.displayName === "CodePlayground.Header" ||
+      type.displayName === "CodePlayground.Footer" ||
+      type.displayName === "CodePlayground.Code";
 
     if (!isValidSubType) {
       console.warn(
-        `Invalid child type: ${type.displayName}. Must be one of: CodePlayground.Header, CodePlayground.Footer`
-      )
+        `Invalid child type: ${type.displayName}. Must be one of: CodePlayground.Header, CodePlayground.Footer`,
+      );
     }
 
-    return isValidSubType
-  })
+    return isValidSubType;
+  });
 
   const header = validChildren.find(
     (child) =>
       isValidElement(child) &&
       (child.type as { displayName?: string }).displayName ===
-        'CodePlayground.Header'
-  )
+        "CodePlayground.Header",
+  );
 
-  const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
-  const selectedCode = useMemo<CodePlaygroundSnippet>(
-    () => snippets[selectedLanguage]!,
-    [selectedLanguage, snippets]
-  )
-
-  const preHandlers = useMemo<AnnotationHandler[]>(() => {
-    // Get the base handlers (lineNumbers and tokenTransitions)
-    const handlers = getCodeHandlers(showLineNumbers, animateOnLanguageChange)
-
-    // Add wordWrap handler if needed
-    if (wordWrap) {
-      handlers.push(wordWrapping)
-    }
-
-    return handlers
-  }, [animateOnLanguageChange, showLineNumbers, wordWrap])
+  const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null);
+  const selectedCode = snippets[selectedLanguage]!;
+  const { theme } = useConfig();
 
   const loadingSkeleton = useMemo(() => {
     // Try to measure the existing height of the code container if code has
@@ -181,31 +164,30 @@ const CodePlayground = ({
 
     // TODO: improve this logic
     const measuredHeight =
-      codeRef.current?.getBoundingClientRect().height ?? 400
+      codeRef.current?.getBoundingClientRect().height ?? 400;
 
-    const lines = Math.ceil(measuredHeight / 40)
+    const lines = Math.ceil(measuredHeight / 40);
     return (
       <Skeleton className={`w-full`}>
         {Array.from({ length: lines }).map((_, i) => (
           <div id={`skeleton-line-${i}`} key={i} className="h-4 w-full" />
         ))}
       </Skeleton>
-    )
-  }, [codeRef.current])
+    );
+  }, [codeRef.current]);
 
-  const codeContents = useMemo(() => {
-    return error ? (
-      error
-    ) : selectedCode.loading ? (
-      <div className="flex items-center p-4">{loadingSkeleton}</div>
-    ) : highlighted ? (
-      <Pre
-        code={highlighted}
-        handlers={preHandlers}
-        className="bg-muted/15 dark:bg-background relative m-0 mr-4 px-4 py-3 text-sm"
-      />
-    ) : null
-  }, [selectedCode.loading, highlighted, error])
+  const codeContents = error ? (
+    error
+  ) : selectedCode.loading ? (
+    <div className="flex items-center p-4">{loadingSkeleton}</div>
+  ) : highlighted ? (
+    <Pre
+      code={highlighted}
+      showLineNumbers={showLineNumbers}
+      wordWrap={wordWrap}
+      className="relative m-0 mr-4 w-full bg-muted/15 px-4 py-3 text-sm dark:bg-background"
+    />
+  ) : null;
 
   const foundCustomCodeContainer = useMemo(
     () =>
@@ -213,79 +195,70 @@ const CodePlayground = ({
         (child) =>
           isValidElement(child) &&
           (child.type as { displayName?: string }).displayName ===
-            'CodePlayground.Code'
+            "CodePlayground.Code",
       ),
-    [validChildren]
-  )
+    [validChildren],
+  );
 
-  const code = useMemo(
-    () =>
-      foundCustomCodeContainer ? (
-        React.cloneElement(foundCustomCodeContainer as React.ReactElement, {
-          __children__: codeContents,
-          ref: codeRef,
-        })
-      ) : (
-        <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
-      ),
-    [foundCustomCodeContainer, codeContents]
-  )
-  const footer = useMemo(
-    () =>
-      validChildren.find(
-        (child) =>
-          isValidElement(child) &&
-          (child.type as { displayName?: string }).displayName ===
-            'CodePlayground.Footer'
-      ),
-    [validChildren]
-  )
+  const code = foundCustomCodeContainer ? (
+    React.cloneElement(
+      foundCustomCodeContainer as React.ReactElement<CodePlaygroundCodeElementProps>,
+      {
+        __children__: codeContents,
+        ref: codeRef,
+      },
+    )
+  ) : (
+    <CodePlaygroundCode __children__={codeContents} ref={codeRef} />
+  );
+
+  const footer = validChildren.find(
+    (child) =>
+      isValidElement(child) &&
+      (child.type as { displayName?: string }).displayName ===
+        "CodePlayground.Footer",
+  );
 
   const updateHighlighted = useCallback(
     async (code: string, language: SupportedLanguage) => {
-      const highlighted = await highlightCode(code, language)
-      setHighlighted(highlighted)
+      const shikiTheme = theme === "dark" ? DARK_THEME : LIGHT_THEME;
+      const highlighted = await highlightCode(code, language, shikiTheme);
+      setHighlighted(highlighted);
     },
-    []
-  )
+    [theme],
+  );
 
-  const [copying, setCopying] = useState(false)
+  const [copying, setCopying] = useState(false);
 
   const handleCopy = useCallback(() => {
-    setCopying(true)
-    navigator.clipboard.writeText(selectedCode.code ?? '')
+    setCopying(true);
+    navigator.clipboard.writeText(selectedCode.code ?? "");
     setTimeout(() => {
-      setCopying(false)
-    }, 1000)
-  }, [selectedCode.code])
+      setCopying(false);
+    }, 1000);
+  }, [selectedCode.code]);
 
   useEffect(() => {
     if (selectedCode.code) {
-      updateHighlighted(selectedCode.code, selectedLanguage)
+      updateHighlighted(selectedCode.code, selectedLanguage);
     }
-  }, [selectedCode, selectedLanguage])
-
-  useEffect(() => {
-    if (selectedCode.code) {
-      updateHighlighted(selectedCode.code, selectedLanguage)
-    }
-  }, [selectedCode, selectedLanguage])
+  }, [selectedCode, selectedLanguage, updateHighlighted]);
 
   const handleChangeLanguage = useCallback(
     (language: SupportedLanguage) => {
-      onChangeLanguage?.(language)
+      onChangeLanguage?.(language);
     },
-    [onChangeLanguage]
-  )
+    [onChangeLanguage],
+  );
 
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-lg border shadow-md shadow-white/5',
-        className
+        "overflow-hidden rounded-lg border shadow-md shadow-white/5",
+        className,
       )}
     >
-      <div className="bg-card flex items-center border-b p-2">
+      <div className="flex items-center border-b bg-card p-2">
         <div className="select-none">{header && header}</div>
         {showLanguageSelector && (
           <div className="ml-auto">
@@ -293,7 +266,7 @@ const CodePlayground = ({
               value={selectedLanguage}
               onValueChange={handleChangeLanguage}
             >
-              <SelectTrigger className="text-body gap-1.5 !border-none !bg-transparent !p-0 !shadow-none !ring-0 select-none">
+              <SelectTrigger className="gap-1.5 !border-none !bg-transparent !p-0 text-body !shadow-none !ring-0 select-none">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent side="bottom" align="start" alignOffset={-30}>
@@ -315,7 +288,7 @@ const CodePlayground = ({
           <div className="pointer-events-auto absolute top-5 right-6 bg-transparent">
             <button
               role="button"
-              className={cn('ml-2 border-none bg-transparent outline-none')}
+              className={cn("ml-2 border-none bg-transparent outline-none")}
               onClick={handleCopy}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -350,20 +323,25 @@ const CodePlayground = ({
 
       {footer && footer}
     </div>
-  )
-}
+  );
+};
 
-CodePlayground.displayName = 'CodePlayground'
+CodePlayground.displayName = "CodePlayground";
 
-export interface CodePlaygroundCodeProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  className?: string
+export interface CodePlaygroundCodeProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children"
+> {
+  className?: string;
 
   /**
    * internal api for passing children
    */
-  __children__?: React.ReactNode
+  __children__?: React.ReactNode;
 }
+
+type CodePlaygroundCodeElementProps = CodePlaygroundCodeProps &
+  React.RefAttributes<HTMLDivElement>;
 
 const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
   ({ className, __children__, ...props }, ref) => {
@@ -371,19 +349,18 @@ const CodePlaygroundCode = forwardRef<HTMLDivElement, CodePlaygroundCodeProps>(
       <div
         ref={ref}
         {...props}
-        className={cn('bg-background overflow-auto', className)}
+        className={cn("overflow-auto bg-background", className)}
       >
         {__children__}
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-CodePlaygroundCode.displayName = 'CodePlayground.Code'
+CodePlaygroundCode.displayName = "CodePlayground.Code";
 
-export interface CodePlaygroundHeaderProps
-  extends HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+export interface CodePlaygroundHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
 }
 
 const CodePlaygroundHeader = ({
@@ -392,17 +369,16 @@ const CodePlaygroundHeader = ({
   ...props
 }: CodePlaygroundHeaderProps) => {
   return (
-    <div className={cn('bg-card flex items-center', className)} {...props}>
+    <div className={cn("flex items-center bg-card", className)} {...props}>
       {children}
     </div>
-  )
-}
+  );
+};
 
-CodePlaygroundHeader.displayName = 'CodePlayground.Header'
+CodePlaygroundHeader.displayName = "CodePlayground.Header";
 
-export interface CodePlaygroundFooterProps
-  extends HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+export interface CodePlaygroundFooterProps extends HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
 }
 
 const CodePlaygroundFooter = ({
@@ -413,17 +389,17 @@ const CodePlaygroundFooter = ({
   return (
     <div
       className={cn(
-        'bg-card flex items-center border-t p-2 select-none',
-        className
+        "flex items-center border-t bg-card p-2 select-none",
+        className,
       )}
       {...props}
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
-CodePlaygroundFooter.displayName = 'CodePlayground.Footer'
+CodePlaygroundFooter.displayName = "CodePlayground.Footer";
 
 const CodePlaygroundWithSubcomponents = Object.assign(CodePlayground, {
   Header: CodePlaygroundHeader,
@@ -436,6 +412,6 @@ const CodePlaygroundWithSubcomponents = Object.assign(CodePlayground, {
    * <CodePlayground.Code className="max-h-72 overflow-y-auto" />
    */
   Code: CodePlaygroundCode,
-})
+});
 
-export { CodePlaygroundWithSubcomponents as CodePlayground }
+export { CodePlaygroundWithSubcomponents as CodePlayground };

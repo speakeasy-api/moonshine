@@ -1,50 +1,49 @@
-import { cn } from '@/lib/utils'
-import { motion, useInView } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { cn } from "@/lib/utils";
+import { motion, useInView } from "motion/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-export interface HighlightedTextProps
-  extends React.HTMLAttributes<HTMLSpanElement> {
-  children: string
-  color?: Color
-  muted?: boolean
-  animate?: boolean
+export interface HighlightedTextProps extends React.HTMLAttributes<HTMLSpanElement> {
+  children: string;
+  color?: Color;
+  muted?: boolean;
+  animate?: boolean;
 
-  animationDuration?: number
+  animationDuration?: number;
 
   /**
    * Whether the animation should trigger when the element is in view or immediately.
    */
-  animationTrigger?: 'inView' | 'instant'
+  animationTrigger?: "inView" | "instant";
 
-  className?: string
+  className?: string;
 }
 
 export function HighlightedText({
   children,
-  color = 'green',
+  color = "green",
   muted = false,
   animate = true,
   className,
-  animationTrigger = 'inView',
+  animationTrigger = "inView",
   animationDuration = 1,
 }: HighlightedTextProps) {
-  const chars = useMemo(() => children.split(''), [children])
-  const [highlightedIndex, setHighlightedIndex] = useState<number>(0)
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: animationTrigger === 'inView' })
+  const chars = useMemo(() => children.split(""), [children]);
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: animationTrigger === "inView" });
   useEffect(() => {
     if (!animate) {
-      setHighlightedIndex(chars.length)
-      return
+      setHighlightedIndex(chars.length);
+      return;
     }
-    if (isInView || animationTrigger === 'instant') {
+    if (isInView || animationTrigger === "instant") {
       setInterval(() => {
         if (highlightedIndex < chars.length) {
-          setHighlightedIndex((prev) => prev + 1)
+          setHighlightedIndex((prev) => prev + 1);
         }
-      }, animationDuration)
+      }, animationDuration);
     }
-  }, [animate, isInView, animationTrigger, chars])
+  }, [animate, isInView, animationTrigger, chars]);
 
   const highlightedChars = useMemo(
     () =>
@@ -52,17 +51,17 @@ export function HighlightedText({
         <motion.span
           key={index}
           className={cn(
-            'py-0.5 leading-7 first:pl-0.5',
-            index === chars.length - 1 && 'pr-0.5'
+            "py-0.5 leading-7 first:pl-0.5",
+            index === chars.length - 1 && "pr-0.5",
           )}
           initial={{
             background: animate
-              ? 'transparent'
+              ? "transparent"
               : muted
                 ? mutedBgMap[color]
                 : highlightBgMap[color],
             color: animate
-              ? 'inherit'
+              ? "inherit"
               : muted
                 ? mutedFgMap[color]
                 : highlightFgMap[color],
@@ -83,11 +82,19 @@ export function HighlightedText({
           {char}
         </motion.span>
       )),
-    [chars, highlightedIndex, animate, animationTrigger, isInView, muted, color]
-  )
+    [
+      chars,
+      highlightedIndex,
+      animate,
+      animationTrigger,
+      isInView,
+      muted,
+      color,
+    ],
+  );
 
   return (
-    <div ref={ref} className={cn('relative inline', className)}>
+    <div ref={ref} className={cn("relative inline", className)}>
       {highlightedChars}
 
       {chars.slice(highlightedIndex).length > 0 && (
@@ -100,53 +107,53 @@ export function HighlightedText({
         </span>
       )}
     </div>
-  )
+  );
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const highlightColors = [
-  'green',
-  'blue',
-  'purple',
-  'orange',
-  'emerald',
-] as const
-export type Color = (typeof highlightColors)[number]
+  "green",
+  "blue",
+  "purple",
+  "orange",
+  "emerald",
+] as const;
+export type Color = (typeof highlightColors)[number];
 
 // TODO: replace these colors with new ones, and improve api for selecting/retrieving colors for consumers
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const highlightBgMap: Record<Color, string> = {
-  green: 'hsl(500,100%,75%)',
-  blue: 'hsl(200,100%,70%)',
-  purple: 'hsl(300,100%,72%)',
-  orange: 'hsl(400,100%,65%)',
-  emerald: 'hsl(150, 100%, 65%)',
-}
+  green: "hsl(500,100%,75%)",
+  blue: "hsl(200,100%,70%)",
+  purple: "hsl(300,100%,72%)",
+  orange: "hsl(400,100%,65%)",
+  emerald: "hsl(150, 100%, 65%)",
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const mutedBgMap: Record<Color, string> = {
-  green: 'hsl(500,100%,90%)',
-  blue: 'hsl(200,100%,90%)',
-  purple: 'hsl(300,100%,90%)',
-  orange: 'hsl(400,100%,90%)',
-  emerald: 'hsl(150, 100%, 90%)',
-}
+  green: "hsl(500,100%,90%)",
+  blue: "hsl(200,100%,90%)",
+  purple: "hsl(300,100%,90%)",
+  orange: "hsl(400,100%,90%)",
+  emerald: "hsl(150, 100%, 90%)",
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const mutedFgMap: Record<Color, string> = {
-  green: 'hsl(0, 0%, 10%)',
-  blue: 'hsl(0, 0%, 10%)',
-  purple: 'hsl(0, 0%, 10%)',
-  orange: 'hsl(0, 0%, 10%)',
-  emerald: 'hsl(0, 0%, 10%)',
-}
+  green: "hsl(0, 0%, 10%)",
+  blue: "hsl(0, 0%, 10%)",
+  purple: "hsl(0, 0%, 10%)",
+  orange: "hsl(0, 0%, 10%)",
+  emerald: "hsl(0, 0%, 10%)",
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const highlightFgMap: Record<Color, string> = {
-  green: 'hsl(0, 0%, 20%)',
-  blue: 'hsl(0, 0%, 20%)',
-  purple: 'hsl(0, 0%, 100%)',
-  orange: 'hsl(0, 0%, 20%)',
-  emerald: 'hsl(0, 0%, 20%)',
-}
+  green: "hsl(0, 0%, 20%)",
+  blue: "hsl(0, 0%, 20%)",
+  purple: "hsl(0, 0%, 100%)",
+  orange: "hsl(0, 0%, 20%)",
+  emerald: "hsl(0, 0%, 20%)",
+};

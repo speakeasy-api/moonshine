@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "experimentalSortPackageJson": false,
+  "ignorePatterns": ["/src/components/Icon/names.ts", "/types/utilities.d.ts"],
+  "overrides": [
+    {
+      "files": ["src/**"],
+      "options": {
+        "sortTailwindcss": {
+          "stylesheet": "./src/global.css",
+          "functions": ["clsx", "cn"],
+          "preserveWhitespace": true
+        }
+      }
+    }
+  ]
+}

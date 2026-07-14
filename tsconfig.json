@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "target": "es2019",
     "declaration": true,
@@ -16,21 +16,18 @@
     "incremental": true,
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
+      "@/*": ["./src/*"]
     },
     "baseUrl": ".",
     "types": [
       "@testing-library/jest-dom",
       "vite/client",
       "vite-plugin-svgr/client",
-      "@types/dom-view-transitions"
+      "@types/dom-view-transitions",
+      "node"
     ]
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "dist",

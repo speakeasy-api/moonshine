@@ -1,13 +1,13 @@
-import { PageHeader } from '.'
-import { StoryObj, Meta } from '@storybook/react-vite'
-import { Button } from '../Button'
-import { Icon } from '../Icon'
+import { PageHeader } from ".";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "../Button";
+import { Icon } from "../Icon";
 
 const meta: Meta<typeof PageHeader> = {
   component: PageHeader,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   decorators: [
     (Story) => (
@@ -16,10 +16,10 @@ const meta: Meta<typeof PageHeader> = {
       </div>
     ),
   ],
-}
+};
 
-export default meta
-type Story = StoryObj<typeof PageHeader>
+export default meta;
+type Story = StoryObj<typeof PageHeader>;
 
 export const Default: Story = {
   args: {
@@ -47,7 +47,7 @@ export const Default: Story = {
       </PageHeader.Footer>,
     ],
   },
-}
+};
 
 export const TitleOnly: Story = {
   args: {
@@ -59,7 +59,7 @@ export const TitleOnly: Story = {
       </PageHeader.TitleBar>,
     ],
   },
-}
+};
 
 export const WithActions: Story = {
   args: {
@@ -75,4 +75,4 @@ export const WithActions: Story = {
       </PageHeader.TitleBar>,
     ],
   },
-}
+};

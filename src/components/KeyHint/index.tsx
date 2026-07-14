@@ -1,78 +1,79 @@
-import { cn } from '@/lib/utils'
-import { Icon } from '@/components/Icon'
+import { cn } from "@/lib/utils";
+import { Icon } from "@/components/Icon";
+import React from "react";
 
-type Modifier = 'shift' | 'ctrlorcommand' | 'alt' | 'meta' | 'esc'
+type Modifier = "shift" | "ctrlorcommand" | "alt" | "meta" | "esc";
 
 function checkIsMac(): boolean {
-  if (typeof window === 'undefined') {
-    return false
+  if (typeof window === "undefined") {
+    return false;
   }
-  return /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+  return /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 }
 
 const modifierMap: Record<Modifier, string> = {
-  shift: '⇧',
-  ctrlorcommand: checkIsMac() ? '⌘' : 'Ctrl',
-  alt: checkIsMac() ? '⌥' : 'Alt',
-  meta: checkIsMac() ? '⌘' : 'Win',
-  esc: 'Esc',
-}
+  shift: "⇧",
+  ctrlorcommand: checkIsMac() ? "⌘" : "Ctrl",
+  alt: checkIsMac() ? "⌥" : "Alt",
+  meta: checkIsMac() ? "⌘" : "Win",
+  esc: "Esc",
+};
 
 export interface KeyProps {
-  value: string
-  className?: string
+  value: string;
+  className?: string;
 }
 
 export function Key({ value, className }: KeyProps) {
   return (
     <span
       className={cn(
-        'from-background to-card text-foreground/70 dark:text-foreground rounded-lg border bg-gradient-to-br px-2 py-0.5 text-sm',
-        className
+        "rounded-lg border bg-gradient-to-br from-background to-card px-2 py-0.5 text-sm text-foreground/70 dark:text-foreground",
+        className,
       )}
     >
       {value}
     </span>
-  )
+  );
 }
 
 interface KeyHintItemProps {
-  modifiers: Modifier[]
-  keys: string[]
-  actionText?: string
+  modifiers: Modifier[];
+  keys: string[];
+  actionText?: string;
 }
 
 function KeyHintKeys({ modifiers, keys }: KeyHintItemProps) {
   return (
     <div className="flex flex-row items-center gap-1">
       {modifiers.map((modifier, index) => (
-        <>
+        <React.Fragment key={`${modifier}-${index}`}>
           <Key value={modifierMap[modifier]} />
           {index < modifiers.length - 1 && (
-            <span className="text-body-muted text-sm">+</span>
+            <span className="text-sm text-body-muted">+</span>
           )}
-        </>
+        </React.Fragment>
       ))}
-      {keys.length > 0 && <span className="text-body-muted text-sm">+</span>}
+      {keys.length > 0 && <span className="text-sm text-body-muted">+</span>}
       {keys.map((key, index) => (
-        <>
+        <React.Fragment key={`${key}-${index}`}>
           <Key value={key.toUpperCase()} />
           {index < keys.length - 1 && (
-            <span className="text-body-muted text-sm">+</span>
+            <span className="text-sm text-body-muted">+</span>
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
-  )
+  );
 }
 
 export interface KeyHintProps extends React.HTMLAttributes<HTMLDivElement> {
-  modifiers: Modifier[]
-  keys: string[]
-  actionText: string
-  titleText?: string
-  dismissable?: boolean
-  onDismiss?: () => void
+  modifiers: Modifier[];
+  keys: string[];
+  actionText: string;
+  titleText?: string;
+  dismissable?: boolean;
+  onDismiss?: () => void;
 }
 
 export function KeyHint({
@@ -82,37 +83,38 @@ export function KeyHint({
   className,
   dismissable = true,
   onDismiss,
-  titleText = 'Key hint',
+  titleText = "Key hint",
   ...props
 }: KeyHintProps) {
   return (
     <div
       className={cn(
-        'inline-flex min-w-24 flex-col items-start gap-1 rounded-lg border text-base font-semibold tracking-tight text-black shadow-sm shadow-black/5 select-none dark:text-white dark:shadow-white/10',
-        className
+        "inline-flex min-w-24 flex-col items-start gap-1 rounded-lg border text-base font-semibold tracking-tight text-black shadow-sm shadow-black/5 select-none dark:text-white dark:shadow-white/10",
+        className,
       )}
       {...props}
     >
-      <div className="text-body-muted dark:text-body-muted/80 flex w-full flex-row items-center self-start border-b px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase select-none">
+      <div className="flex w-full flex-row items-center self-start border-b px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-body-muted uppercase select-none dark:text-body-muted/80">
         <div>{titleText}</div>
         {dismissable && (
-          <div
-            className="hover:text-foreground ml-auto cursor-pointer"
+          <button
+            type="button"
+            className="ml-auto cursor-pointer hover:text-foreground"
             onClick={onDismiss}
-            title="Close"
+            aria-label="Dismiss"
           >
             <Icon name="x" className="h-3.5 w-3.5" />
-          </div>
+          </button>
         )}
       </div>
       <div className="flex flex-row items-center gap-1 px-4 py-3.5">
         <KeyHintKeys modifiers={modifiers} keys={keys} />
         {actionText && (
-          <div className="text-body-muted text-sm font-normal">
+          <div className="text-sm font-normal text-body-muted">
             {actionText}
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }
