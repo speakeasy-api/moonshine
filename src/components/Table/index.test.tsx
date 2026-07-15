@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { cloneElement } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Table, type Column } from "./index";
 
@@ -189,5 +190,54 @@ describe("Table sortable headers", () => {
     expect(warn).toHaveBeenCalledWith(
       "Table sortable columns must have unique ids. Duplicate id: sdk-name",
     );
+  });
+});
+
+describe("Table renderRow", () => {
+  it("renders rows unchanged without renderRow", () => {
+    render(<Table columns={columns} data={rows} rowKey={(row) => row.name} />);
+    expect(screen.getByText("typescript")).toBeTruthy();
+    expect(screen.getByText("go")).toBeTruthy();
+  });
+
+  it("wraps every data row and forwards extra props onto the <tr>", () => {
+    const onContextMenu = vi.fn((e: React.MouseEvent) => e.preventDefault());
+    render(
+      <Table
+        columns={columns}
+        data={rows}
+        rowKey={(row) => row.name}
+        renderRow={(row, rowElement) =>
+          cloneElement(rowElement, {
+            "data-testid": `row-${row.name}`,
+            onContextMenu,
+          } as Partial<React.ComponentPropsWithoutRef<"tr">>)
+        }
+      />,
+    );
+    const row = screen.getByTestId("row-typescript");
+    expect(row.tagName).toBe("TR");
+    expect(screen.getByTestId("row-go")).toBeTruthy();
+    fireEvent.contextMenu(row);
+    expect(onContextMenu).toHaveBeenCalledTimes(1);
+  });
+
+  it("still calls onRowClick on a wrapped row", () => {
+    const onRowClick = vi.fn();
+    render(
+      <Table
+        columns={columns}
+        data={rows}
+        rowKey={(row) => row.name}
+        onRowClick={onRowClick}
+        renderRow={(row, el) =>
+          cloneElement(el, {
+            "data-testid": `row-${row.name}`,
+          } as Partial<React.ComponentPropsWithoutRef<"tr">>)
+        }
+      />,
+    );
+    fireEvent.click(screen.getByTestId("row-typescript"));
+    expect(onRowClick).toHaveBeenCalledWith(rows[0]);
   });
 });

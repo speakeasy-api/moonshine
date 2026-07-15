@@ -8,7 +8,7 @@ import {
 } from ".";
 import { sortTableData } from "./sorting";
 import { faker } from "@faker-js/faker";
-import { useState } from "react";
+import { cloneElement, useState, type ComponentPropsWithoutRef } from "react";
 import { SupportedLanguage, supportedLanguages } from "@/types";
 import { TargetLanguageIcon } from "../TargetLanguageIcon";
 import { formatDistance } from "date-fns";
@@ -362,4 +362,30 @@ export const CustomizedEvenMore: StoryObj<ListTableProps> = {
       </Table.Body>
     </Table>
   ),
+};
+
+const RenderRowDemo = (args: ListTableProps) => {
+  const [message, setMessage] = useState("Right-click a row");
+  return (
+    <div>
+      <p className="mb-4 text-body">{message}</p>
+      <Table
+        {...args}
+        renderRow={(row, rowElement) => {
+          const rowProps: Partial<ComponentPropsWithoutRef<"tr">> = {
+            onContextMenu: (e) => {
+              e.preventDefault();
+              setMessage(`Context menu on ${row.org}/${row.name}`);
+            },
+          };
+          return cloneElement(rowElement, rowProps);
+        }}
+      />
+    </div>
+  );
+};
+
+export const WithRenderRow: StoryObj<ListTableProps> = {
+  args: { ...defaultArgs, onRowClick: undefined, hasMore: false },
+  render: (args) => <RenderRowDemo {...args} />,
 };
