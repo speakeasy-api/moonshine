@@ -36,6 +36,11 @@ export function compareSortValues(a: SortValue, b: SortValue): number {
   const normalizedA = normalizeSortValue(a);
   const normalizedB = normalizeSortValue(b);
 
+  if (typeof normalizedA === "boolean" && typeof normalizedB === "boolean") {
+    if (normalizedA === normalizedB) return 0;
+    return normalizedA ? -1 : 1;
+  }
+
   if (typeof normalizedA === "string" && typeof normalizedB === "string") {
     return normalizedA.localeCompare(normalizedB, undefined, {
       numeric: true,

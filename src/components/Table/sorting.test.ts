@@ -70,12 +70,39 @@ describe("Table sorting helpers", () => {
   it("compares strings, numbers, booleans, dates, and nulls consistently", () => {
     expect(compareSortValues("a", "b")).toBeLessThan(0);
     expect(compareSortValues(2, 1)).toBeGreaterThan(0);
-    expect(compareSortValues(false, true)).toBeLessThan(0);
+    expect(compareSortValues(true, false)).toBeLessThan(0);
+    expect(compareSortValues(false, true)).toBeGreaterThan(0);
     expect(
       compareSortValues(new Date("2026-05-01"), new Date("2026-05-02")),
     ).toBeLessThan(0);
     expect(compareSortValues(null, "a")).toBeGreaterThan(0);
     expect(compareSortValues(undefined, null)).toBe(0);
+  });
+
+  it("sortRows puts enrolled employees first in ascending boolean order", () => {
+    type Employee = { name: string; enrolled: boolean };
+
+    const employees: Employee[] = [
+      { name: "Not enrolled", enrolled: false },
+      { name: "Enrolled", enrolled: true },
+    ];
+    const enrolledColumn: Column<Employee> = {
+      key: "enrolled",
+      header: "Role",
+      sortable: true,
+      sortValue: (employee) => employee.enrolled,
+    };
+
+    expect(
+      sortRows(employees, enrolledColumn, "asc").map(
+        (employee) => employee.name,
+      ),
+    ).toEqual(["Enrolled", "Not enrolled"]);
+    expect(
+      sortRows(employees, enrolledColumn, "desc").map(
+        (employee) => employee.name,
+      ),
+    ).toEqual(["Not enrolled", "Enrolled"]);
   });
 
   it("sortRows keeps null values last in both directions", () => {
