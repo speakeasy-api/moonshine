@@ -213,6 +213,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       context = "product",
       asChild = false,
       className,
+      type,
       onMouseEnter,
       onMouseLeave,
       onMouseDown,
@@ -486,6 +487,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onMouseMove={handleMouseMove}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        {...(!asChild ? { type: type ?? "button" } : {})}
         {...(asChild ? { isBrandVariant } : {})}
         {...props}
       >
